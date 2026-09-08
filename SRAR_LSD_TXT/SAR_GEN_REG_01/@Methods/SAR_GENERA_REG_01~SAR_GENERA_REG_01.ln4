@@ -1,0 +1,113 @@
+/*********************************************************************
+   ID: SAR_GENERA_REG_01
+   Nombre: Genera registro 01 para Libro Sueldo Digital
+   Fecha: 21/09/2015
+   Autor: emmanueln
+   Descripcion:  en este metodo se realiza la obtencion de los datos de la empresa, segun lo solicitado en el registro 01 para el armado del archivo
+*********************************************************************/
+begin()
+'SAR_LSD_TXT.LOAD_BLK()
+
+vCompletoNum = "0" 'variable con la que se completan los caracteres en caso de que los valores no completen los lugares asignados por el layout
+vCompletoCar = " " 'variable con la que se completan los caracteres en caso de que los valores no completen los lugares asignados por el layout
+
+'D=derecha y I=izquierda
+vmargenNum = "I"
+vmargenAlfa = "D"
+
+SAR_TXT_GENERADOR.SAR_NVA_LINEA()
+    
+'1.- Identificacion del tipo de registro
+    'campo 01: valor fijo "01" long: 2 posicion txt: 1 a 2 (alfanumerico)
+    vID_Tipo_reg = "01"
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vID_Tipo_reg,2,vCompletoCar,vmargenAlfa)
+
+
+'2.- CUIT del empleador
+    'campo 02: STD_NID_ENT long: 11 posicion txt: 3 a 13 (numerico)
+    vEmpresa = STD_NID_ENT
+    
+    vEmpresa = replace(vEmpresa,"-","") 'en caso de que haya "-" (guiones) se los borra para que el numero quede limpio
+    vEmpresa = replace(vEmpresa,".","") 'en caso de que haya "." (puntos) se los borra para que el numero quede limpio    
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vEmpresa,11,vCompletoCar,vmargenNum)
+
+
+'3.- Identificacion del envio
+    'campo 03: STD_NID_ENT long: 2 posicion txt: 14 a 15 (alfanumerico)
+    IF SAR_LSD_TXT.SAR_P_CHECK = "0" then
+        vID_Envio = "SJ"
+    Else
+        vID_Envio = "RE"
+    Endif
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vID_Envio,2,vCompletoCar,vmargenAlfa)
+    
+
+'4.- Periodo
+    'campo 04: SAR_LSD_TXT.SAR_P_INICIO long: 6 posicion txt: 16 a 21 (numerico)
+    vPeriodo = SAR_LSD_TXT.SAR_P_INICIO
+    
+    vMesPago =  tostring(dxMonth (vPeriodo),0)
+    vAnioPago = tostring(DxYear (vPeriodo),0)
+
+    IF Length(vMesPago) < 2 THEN
+       vMesPago= "0" + vMesPago
+    ENDIF
+    
+    vPeriodo = vAnioPago + vMesPago
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vPeriodo,6,vCompletoCar,vmargenNum)
+
+
+'5.- Tipo de liquidacion
+    'campo 05: SCO_HT_PAYS.SCO_PAY_FREQ_PAY long: 1 posicion txt: 22 a 22 (alfanumerico)
+    'vTipo_Liq = "004"  'se define que sea "M" mensual ya que se informara los jornalizados con un solo recibo de sueldo
+    vTipo_Liq = SAR_LSD_TXT.SCO_ID_PAY_FREQUENCY  'se define que sea "M" mensual ya que se informara los jornalizados con un solo recibo de sueldo
+    If vID_Envio = "SJ" then
+        IF vTipo_Liq = "004" THEN
+            vTipo_Liq = "M"
+        Else
+            vTipo_Liq = "Q"
+        Endif
+    else
+        vTipo_Liq = " "
+    Endif
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vTipo_Liq,1,vCompletoCar,vmargenAlfa)
+    
+    
+'6.- Numero de liquidacion
+    'campo 06:  long: 5 posicion txt: 23 a 27 (numerico/alfanumerico)
+    vNum_Liq = ""
+    If vID_Envio = "SJ" then
+        // Si se genera fichero para una paga retroactiva enviada como normal por fecha de imputacion, el numero de liquidacion es el de la fecha de pago.
+        // Si no estariamos repitiendo una liquidacion y no es posible. Es el primer registro del nodo SAR_LSD_TXT.    
+
+        IF SAR_LSD_TXT.SAR_P_CHECK_RETRO = "1" and ISNULL(SAR_LSD_TXT.SAR_P_NUM_LIQ_RETRO)= M4_FALSE THEN
+            vNum_Liq = ToString(SAR_LSD_TXT.SAR_P_NUM_LIQ_RETRO,0)
+        ELSE
+            vNum_Liq = ToString(SAR_LSD_TXT[0].SAR_NUM_LIQUIDACION,0)
+        ENDIF
+    else
+        vNum_Liq = ""
+    Endif
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vNum_Liq,5,vCompletoNum,vmargenNum)
+    
+'7.- Dias base
+    'campo 07:  long: 2 posicion txt: 28 a 29 (alfanumerico)
+    vDias_Base = ""
+    If vID_Envio = "SJ" then
+        vDias_Base = "30"
+    Endif
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vDias_Base,2,vCompletoCar,vmargenAlfa)
+    
+'8.- Cantidad de trabajadores informados en registros '04'
+    'campo 08: Suma de empleados y RH de agencia; long: 6 posicion txt: 30 a 35 (numerico)
+    vCantTrabj = "0"
+    vCantTrabj = tostring(SAR_GEN_REG_04.Count() + SAR_GEN_REG_05.Count(),0)
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vCantTrabj,6,vCompletoNum,vmargenNum)
+
+SAR_TXT_GENERADOR.SAR_FIN_LINEA()

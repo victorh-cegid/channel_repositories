@@ -1,0 +1,12 @@
+item: SAR_ID_ZONA_DGI
+name: Id Zona DGI
+column_name: SAR_ID_ZONA_DGI
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 10
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

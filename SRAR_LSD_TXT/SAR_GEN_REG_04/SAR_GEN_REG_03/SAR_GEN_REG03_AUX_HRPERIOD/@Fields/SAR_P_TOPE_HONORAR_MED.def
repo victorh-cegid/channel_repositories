@@ -1,0 +1,12 @@
+item: SAR_P_TOPE_HONORAR_MED
+name: % Tope Honorarios Medicos
+column_name: SAR_P_TOPE_HONORAR_MED
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 9
+scale: 4
+scope: RECORD
+default_value: "0"
+internal_type: 1
+item_aux: null

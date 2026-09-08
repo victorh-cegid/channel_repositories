@@ -1,0 +1,208 @@
+/****************************************************************************************
+        ID: SAR_GENERA_REG_02
+        Nombre: Genera registro 02 para Libro Sueldo Digital
+        Fecha: 29/09/2015
+        Descripcion:  en este metodo se realiza la obtencion de los datos de la empresa, 
+                        segun lo solicitado en el registro 01 para el armado del archivo
+*****************************************************************************************/
+'Inicio el nodo principal
+begin()
+
+vCompletoNum = "0" 'variable con la que se completan los caracteres en caso de que los valores no completen los lugares asignados por el layout
+vCompletoCar = " " 'variable con la que se completan los caracteres en caso de que los valores no completen los lugares asignados por el layout
+'D=derecha y I=izquierda
+vmargenNum = "I"
+vmargenAlfa = "D"
+
+vLegajo = ""
+vPeriodo = 0
+
+IF COUNT() > 0   THEN
+        SAR_GEN_REG03_PAR_CONC.DESTROYBLOCK()
+        SAR_GEN_REG03_PAR_CONC.P_ID_LEG_ENT = SAR_P_REG4_LEG_ENT 
+        SAR_GEN_REG03_PAR_CONC.load_blk()
+        WHILE ISEOF() = M4_FALSE 'mientras tengo datos recorro el acumulado
+        
+            IF vLegajo <> SCO_ID_HR OR vPeriodo <> SCO_OR_HR_PERIOD THEN 
+                'inicio los nodos que voy a utilizar
+                SAR_REG02_PERSON.LOAD_BLK()
+                SAR_REG02_PERSON.BEGIN()
+                
+                'la fecha de baja del empleado es menor que el inicio de la paga
+                IF SAR_FECHA_BAJA < SAR_P_INICIO THEN 
+                	SAR_REG02_PAYMENT_DATA. SAR_P_FIN = SAR_FECHA_BAJA
+                SAR_REG02_PAYMENT_DATA. SAR_P_INICIO = SAR_FECHA_BAJA
+                ELSE
+                	SAR_REG02_PAYMENT_DATA. SAR_P_FIN = SAR_P_FIN
+                SAR_REG02_PAYMENT_DATA. SAR_P_INICIO = SAR_P_INICIO
+                ENDIF
+
+                SAR_REG02_PAYMENT_DATA.LOAD_BLK()
+                SAR_REG02_PAYMENT_DATA.BEGIN()
+
+                SAR_REG02_WUNIT.LOAD_BLK()
+                SAR_REG02_WUNIT.BEGIN()
+                
+/* Condicion en caso de tener lic de maternidad completa no se generara el Registro 02 y 03 */
+                CodSitRevista = ""
+                SAR_GEN_REG4_H_EMP_TYPE.LOAD_BLK()
+                SAR_GEN_REG4_H_EMP_TYPE.END()
+            
+                'inicio el metodo que calcula la situacion de revista
+                SAR_M_GEN_SIT_REVISTA()
+                
+                vSitRev_1 = SRAR_SIT_REVISTA.SRAR_SIT_REV_1
+                vSitRev_2 = SRAR_SIT_REVISTA.SRAR_SIT_REV_2
+                vSitRev_3 = SRAR_SIT_REVISTA.SRAR_SIT_REV_3
+                If vSitRev_3 = vSitRev_2 Then vSitRev_3 = "00"
+                If vSitRev_1 = vSitRev_2 Then vSitRev_2 = "00"
+                
+                vNoEjecuta = 0
+                vLegajo = SCO_ID_HR
+                
+                vRegMaterSUAF = SAR_GEN_REG_04_AC_HR_PERIOD.FindRegister("SCO_ID_HR",vLegajo,M4_EQUAL)
+                vMaternidadSUAF = SAR_GEN_REG_04_AC_HR_PERIOD[vRegMaterSUAF].SAR_IND_ADH_SUAF
+                
+                If (vSitRev_1 = "5" Or vSitRev_1 = "51") And (vSitRev_2 = "00" And vSitRev_3 = "00") And vMaternidadSUAF = 0 Then vNoEjecuta = 1
+                
+                If vNoEjecuta = 1 then
+                    SAR_GEN_REG_03.SAR_P_CHECK  = SAR_P_CHECK
+                    SAR_GEN_REG_03.load_blk()
+                    
+                    vTotalCotiz = SAR_GEN_REG_03.SAR_TOT_DEV_COTIZ + SAR_GEN_REG_03.SAR_TOT_SAC_COTIZ
+                    
+                    If vTotalCotiz <> 0 then vNoEjecuta = 0
+                    
+                    SAR_GEN_REG_03.DESTROYBLOCK()
+                EndIf
+/**/                           
+                If vNoEjecuta = 0 Then    
+          
+                   'inicio la nueva linea del txt
+                    SAR_TXT_GENERADOR.SAR_NVA_LINEA()
+                   
+                   
+           '1.- Identificacion del tipo de registro
+                'campo 01: valor fijo "02" long: 2 posicion txt: 1 a 2 (alfanumerico)
+                    vID_Tipo_reg = "02"
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vID_Tipo_reg,2,vCompletoCar,vmargenAlfa)
+               
+               
+           '2.- CUIL del trabajador
+                'campo 02: SAR_REG02_PERSON.STD_SS_NUMBER long: 11 posicion txt: 3 a 13 (numerico)  
+                    IF ISNULL(SAR_REG02_PERSON.SAR_CUIL)= M4_TRUE THEN
+                        vEmpleado = SAR_REG02_PERSON.STD_SS_NUMBER
+                    ELSE
+                        vEmpleado = SAR_REG02_PERSON.SAR_CUIL
+                    ENDIF                
+                    vEmpleado = replace(vEmpleado,"-","") 'en caso de que haya "-" (guiones) se los borra para que el numero quede limpio
+                    vEmpleado = replace(vEmpleado,".","") 'en caso de que haya "." (puntos) se los borra para que el numero quede limpio
+                          
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vEmpleado,11,vCompletoCar,vmargenNum)
+               
+               
+           '3.- Legajo del trabajador
+                'campo 03: SCO_ID_HR long: 10 posicion txt: 14 a 23 (alfanumerico)
+                    vLegajo = SCO_ID_HR
+                    vPeriodo  = SCO_OR_HR_PERIOD
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vLegajo,10,vCompletoCar,vmargenAlfa)
+           
+               
+           '4.- Dependencia de revista del trabajador
+                'campo 04:  long: 50 posicion txt: 24 a 73 (alfanumerico)
+                    IF SAR_REG02_WUNIT.count() > 0 THEN                
+                        vRevTrab = SAR_REG02_WUNIT.STD_N_WORK_UNIT
+                    ELSE
+                        vRevTrab = ""
+                    ENDIF
+                   
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRevTrab,50,vCompletoCar,vmargenAlfa)
+           
+           
+           '5.- CBU de acreditacion del pago
+                'campo 05: SAR_REG02_PERSON_BANK.SUK_EMPLOYEE_REFNO long: 22 posicion txt: 74 a 95 (alfanumerico)
+                    vCBU_Liq=""
+                    IF SAR_REG02_PAYMENT_DATA.SCO_ID_PAYM_TYPE <> "01" AND SAR_REG02_PAYMENT_DATA.SCO_ID_PAYM_TYPE <> "02" AND SAR_REG02_PAYMENT_DATA.SCO_ID_PAYM_TYPE <> "04" then
+                        vCBU_Liq = SAR_REG02_PAYMENT_DATA.SUK_EMPLOYEE_REFNO
+                    ENDIF
+                   
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vCBU_Liq,22,vCompletoCar,vmargenAlfa)
+           
+                   
+           '6.- Cantidad de dias para proporcionar tope
+                'campo 06:  long: 3 posicion txt: 96 a 98 (numerico)
+                    vNum_Liq = TOSTRING(SAR_LSD_DIAS_MES_REPORTE,0)
+                    vNum_Liq = replace(vNum_Liq,".","") 'en caso de que haya "." (puntos) se los borra para que el numero quede limpio
+                    vNum_Liq = replace(vNum_Liq,",","") 'en caso de que haya "." (puntos) se los borra para que el numero quede limpio
+                   
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vNum_Liq,3,vCompletoNum,vmargenNum)    
+           
+               
+            '7.- Fecha de pago
+                'campo 07: SCO_DT_PAYMENT long: 8 posicion txt: 99 a 106 (numerico)
+                    FechaPago   = SAR_LSD_TXT[0].SAR_FECHA_PAGO
+                    vDayPago    = tostring(dxDay (FechaPago),0)
+                    vMesPago    = tostring(dxMonth (FechaPago),0)
+                    vAnioPago   = tostring(DxYear (FechaPago),0)
+           
+                    IF Length(vDayPago) < 2 THEN
+                        vDayPago = "0" + vDayPago
+                    ENDIF
+                    IF Length(vMesPago) < 2 THEN
+                        vMesPago = "0" + vMesPago
+                    ENDIF
+                    vfechaPago  = vAnioPago+vMesPago+vDayPago
+                   
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vfechaPago,8,vCompletoCar,vmargenNum)   
+      
+            '8.- Fecha de rubrica; valor por defecto en el fichero 8 espacios
+                'campo 08:  long: 8 posicion txt: 107 a 114 (numerico)
+                    vRubrica = SAR_LSD_TXT.SAR_REG02_FEC_RUBRICA
+                    If IsNull(vRubrica) = M4_TRUE Then
+                        If IsNull(SAR_LSD_TXT.SAR_P_FEC_RUBRICA) = M4_FALSE Then
+                            vdiarub = tostring(dxDay (SAR_LSD_TXT.SAR_P_FEC_RUBRICA),0)
+                            vmesrub = tostring(dxMonth (SAR_LSD_TXT.SAR_P_FEC_RUBRICA),0)
+                            vaniorub = tostring(DxYear (SAR_LSD_TXT.SAR_P_FEC_RUBRICA),0)
+                            IF Length(vdiarub) < 2 THEN
+                                vdiarub= "0" + vdiarub
+                            ENDIF
+                            IF Length(vmesrub) < 2 THEN
+                                vmesrub= "0" + vmesrub
+                            ENDIF
+                            vRubrica = vaniorub + vmesrub + vdiarub   
+                        Else
+                            vRubrica = "        "
+                        EndIf            
+                    EndIf
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRubrica,8,vCompletoCar,vmargenNum)  
+                      
+            '9.- Forma de pago
+                'campo 09: SAR_REG02_PAYMENT_DATA.SCO_ID_PAYM_TYPE long: 1 posicion txt: 115 a 115 (alfanumerico)
+                    vFormaPago = tostring(SAR_REG02_PAYMENT_DATA.SCO_ID_PAYM_TYPE,0)
+                    IF vFormaPago = "01" OR vFormaPago = "04" THEN
+                        vFormaPago = "1"
+                    ENDIF
+                    IF vFormaPago = "02" THEN
+                        vFormaPago = "2"
+                    ENDIF
+                    IF vFormaPago = "03" OR vFormaPago = "05" OR vFormaPago = "06" OR vFormaPago = "07" THEN
+                        vFormaPago = "3"
+                    ENDIF
+                              
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vFormaPago,1,vCompletoCar,vmargenAlfa)
+                      
+                      
+                  'Finalizo la linea del registro02
+                    SAR_TXT_GENERADOR.SAR_FIN_LINEA()
+                      
+                    SAR_GEN_REG_03.SAR_P_CHECK  = SAR_P_CHECK
+                    SAR_GEN_REG_03.load_PRG()
+                    SAR_GEN_REG_03.begin()
+      
+                    SAR_GEN_REG_03.SAR_GENERA_REG_03()
+                    
+                EndIf 'vNoEjecuta = 0
+            ENDIF
+        GONEXT()
+        WEND    
+ENDIF

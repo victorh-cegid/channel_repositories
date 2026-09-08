@@ -1,0 +1,121 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_EXTERNAL_ORG
+    NAME_ESP: ID Org. externa
+    REAL_NAME: STD_ID_EXTERN_ORG
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_EXTERNAL_ORG
+    NOT_NULL: true
+  - ID_FIELD: STD_N_EXT_ORG
+    NAME_ESP: Nombre org. externa
+    REAL_NAME: STD_N_EXT_ORG
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SHORT_DESCRIPTION
+    NOT_NULL: true
+  - ID_FIELD: STD_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: STD_DT_START
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: STD_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: STD_DT_END
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_EXT_HOLDING
+    NAME_ESP: ID Holding externo
+    REAL_NAME: STD_ID_EXT_HOLDING
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_EXT_HOLDING
+    NOT_NULL: false
+  - ID_FIELD: SCO_HTTP_PATH
+    NAME_ESP: Ruta Internet
+    REAL_NAME: SCO_HTTP_PATH
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: COMMENTS
+    NOT_NULL: false
+  - ID_FIELD: STD_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: STD_COMMENT
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_COMENT
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_LEGAL
+    NAME_ESP: ID Legal
+    REAL_NAME: SCO_ID_LEGAL
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SSP_VARCHAR13
+    NOT_NULL: false
+  - ID_FIELD: SCB_NIT
+    NAME_ESP: Numero identificacion
+    REAL_NAME: SCB_NIT
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCB_VARCHAR_16
+    NOT_NULL: false
+  - ID_FIELD: SCB_DIG_VERIF
+    NAME_ESP: Digito verificacion
+    REAL_NAME: SCB_DIG_VERIF
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCB_NUMBER_1
+    NOT_NULL: false
+  - ID_FIELD: SSP_ID_TP_DOC
+    NAME_ESP: ID tipo documento
+    REAL_NAME: SSP_ID_TP_DOC
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR10
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 22
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

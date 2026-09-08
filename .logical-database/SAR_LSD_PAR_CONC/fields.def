@@ -1,0 +1,321 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_LEG_ENT
+    NAME_ESP: ID Empresa
+    REAL_NAME: STD_ID_LEG_ENT
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: STD_ID_LEG_ENT
+    NOT_NULL: true
+  - ID_FIELD: SAR_DT_START
+    NAME_ESP: Inicio parametros de conceptos
+    REAL_NAME: SAR_DT_START
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_CONC_SUELDO_AFIP
+    NAME_ESP: Cod de concepto de sueldo AFIP
+    REAL_NAME: SAR_ID_CONC_SUELDO_AFIP
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: SAR_VARCHAR_6
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_CONC_SUELDO_EMPLEADOR
+    NAME_ESP: Cod de concepto de sueldo Empl
+    REAL_NAME: SAR_ID_CONC_SUELDO_EMPLEADOR
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: SAR_VARCHAR_10
+    NOT_NULL: true
+  - ID_FIELD: SAR_DT_END
+    NAME_ESP: Fin parametro de conceptos
+    REAL_NAME: SAR_DT_END
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: true
+  - ID_FIELD: SAR_DESC_EMPLEADOR
+    NAME_ESP: Descrip. del concepto Empl.
+    REAL_NAME: SAR_DESC_EMPLEADOR
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_150
+    NOT_NULL: false
+  - ID_FIELD: SAR_MARCA_REPETICION
+    NAME_ESP: Marca de repeticion
+    REAL_NAME: SAR_MARCA_REPETICION
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_SIPA_APORTE
+    NAME_ESP: SIPA - Aportes
+    REAL_NAME: SAR_SIPA_APORTE
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_SIPA_CONTRIBUCIONES
+    NAME_ESP: SIPA - Contribuciones
+    REAL_NAME: SAR_SIPA_CONTRIBUCIONES
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_INSSJYP_APORTE
+    NAME_ESP: INSSJyP - Aportes
+    REAL_NAME: SAR_INSSJYP_APORTE
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_INSSJYP_CONTRIBUCIONES
+    NAME_ESP: INSSJyP - Contribuciones
+    REAL_NAME: SAR_INSSJYP_CONTRIBUCIONES
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_OBRA_SOC_APORTES
+    NAME_ESP: Obra social - Aportes
+    REAL_NAME: SAR_OBRA_SOC_APORTES
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_OBRA_SOC_CONTRIBUCIONES
+    NAME_ESP: Obra social - Contribuciones
+    REAL_NAME: SAR_OBRA_SOC_CONTRIBUCIONES
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_FOND_SOLID_REDIST_APORT
+    NAME_ESP: Fondo Solid. Redist - Aporte
+    REAL_NAME: SAR_FOND_SOLID_REDIST_APORT
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_FOND_SOLID_REDIST_CONTR
+    NAME_ESP: Fondo Solid. Redist - Contrib
+    REAL_NAME: SAR_FOND_SOLID_REDIST_CONTR
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_RENATEA_APORT
+    NAME_ESP: RENATEA - Aportes
+    REAL_NAME: SAR_RENATEA_APORT
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_RENATEA_CONTRIB
+    NAME_ESP: RENATEA - Contribuciones
+    REAL_NAME: SAR_RENATEA_CONTRIB
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_LIBRE_1
+    NAME_ESP: Libre
+    REAL_NAME: SAR_LIBRE_1
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_ASIG_FAMILY_CONTRIB
+    NAME_ESP: Asig. Familiares - Contrib.
+    REAL_NAME: SAR_ASIG_FAMILY_CONTRIB
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_LIBRE_2
+    NAME_ESP: Libre
+    REAL_NAME: SAR_LIBRE_2
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_FOND_NAC_EMPLEO_CONTR
+    NAME_ESP: Fondo Nac. de Empleo - Contrib
+    REAL_NAME: SAR_FOND_NAC_EMPLEO_CONTR
+    POSITION: 22
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_LIBRE_3
+    NAME_ESP: Libre
+    REAL_NAME: SAR_LIBRE_3
+    POSITION: 23
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_LEY_RIESG_TRAB_CONTR
+    NAME_ESP: Ley Riesgos Trab. - Contrib
+    REAL_NAME: SAR_LEY_RIESG_TRAB_CONTR
+    POSITION: 24
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_REGIMENES_DIF_APORTE
+    NAME_ESP: Regimenes dif. - Aportes
+    REAL_NAME: SAR_REGIMENES_DIF_APORTE
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_LIBRE_4
+    NAME_ESP: Libre
+    REAL_NAME: SAR_LIBRE_4
+    POSITION: 26
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_REGIMENES_ESP_APORTE
+    NAME_ESP: Regimenes especiales - Aportes
+    REAL_NAME: SAR_REGIMENES_ESP_APORTE
+    POSITION: 27
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_LIBRE_5
+    NAME_ESP: Libre
+    REAL_NAME: SAR_LIBRE_5
+    POSITION: 28
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ACC_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_CONCEP_UNID_M
+    NAME_ESP: Concepto de unidades Mensuales
+    REAL_NAME: SAR_CONCEP_UNID_M
+    POSITION: 29
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_30
+    NOT_NULL: false
+  - ID_FIELD: SAR_CONCEP_UNID_J
+    NAME_ESP: Concepto de unidades Jornales
+    REAL_NAME: SAR_CONCEP_UNID_J
+    POSITION: 30
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_30
+    NOT_NULL: false
+  - ID_FIELD: SAR_TIPO_UNID_M
+    NAME_ESP: Tipo de unidad Mensuales
+    REAL_NAME: SAR_TIPO_UNID_M
+    POSITION: 31
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_STRING_1
+    NOT_NULL: false
+  - ID_FIELD: SAR_TIPO_UNID_J
+    NAME_ESP: tipo de unidad Jornales
+    REAL_NAME: SAR_TIPO_UNID_J
+    POSITION: 32
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_STRING_1
+    NOT_NULL: false
+  - ID_FIELD: SAR_CONCEP_IMPORTE_M
+    NAME_ESP: Concepto de importe Mensuales
+    REAL_NAME: SAR_CONCEP_IMPORTE_M
+    POSITION: 33
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_30
+    NOT_NULL: false
+  - ID_FIELD: SAR_CONCEP_IMPORTE_J
+    NAME_ESP: Concepto de importe Jornales
+    REAL_NAME: SAR_CONCEP_IMPORTE_J
+    POSITION: 34
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_30
+    NOT_NULL: false
+  - ID_FIELD: SAR_CREDITO_DEBITO
+    NAME_ESP: Credito / Debito
+    REAL_NAME: SAR_CREDITO_DEBITO
+    POSITION: 35
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_STRING_1
+    NOT_NULL: false
+  - ID_FIELD: SAR_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SAR_COMMENT
+    POSITION: 36
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: SAR_ORDEN
+    NAME_ESP: Orden Recibo papel
+    REAL_NAME: SAR_ORDEN
+    POSITION: 37
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_NUMBER_4
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 38
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 39
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 40
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

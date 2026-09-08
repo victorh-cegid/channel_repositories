@@ -1,0 +1,12 @@
+item: SAR_TP_IMPUT_99
+name: Tipo de paga en imputacion 99
+column_name: SAR_TP_IMPUT_99
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 3
+scale: 0
+scope: RECORD
+default_value: "1"
+internal_type: 1
+item_aux: null

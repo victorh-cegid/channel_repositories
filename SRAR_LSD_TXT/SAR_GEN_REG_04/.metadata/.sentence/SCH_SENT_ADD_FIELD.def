@@ -1,0 +1,21 @@
+# ID_SENTENCE | ID_WHERE_TYPE | POSITION | ALIAS_OBJECT | ID_FIELD | ID_ORDER_TYPE | ID_OBJECT | ID_CALCULUS | ID_ITEM | ID_PAYROLL_ITEM | N_PAYROLL_ITEM | ID_CONCEPT_TYPE | ID_SYNONYM | N_TRANSLATED | ID_OBJECT_NEW
+SAR_GEN_REG_04 | 1 | 1 | A | SCO_ID_LEG_ENT |  | SCO_AC_HR_PERIOD |  | SCO_ID_LEG_ENT |  |  | 2 | 301 |  | SAR_AC_HR_PERIOD
+SAR_GEN_REG_04 | 1 | 2 | A | SCO_DT_ALLOCATION | 0 | SAR_AC_HR_PERIOD |  |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 1 | 3 | A | SCO_DT_ALLOCATION | 0 | SAR_AC_HR_PERIOD |  |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 1 | 4 | A | SCO_DT_PAYMENT |  | SAR_AC_HR_PERIOD |  |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 1 | 5 | A | SCO_DT_PAYMENT |  | SAR_AC_HR_PERIOD |  |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 1 | 6 | A | SCO_DT_ALLOCATION |  | SAR_AC_HR_PERIOD |  |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 1 | 7 | A | SCO_DT_PAYMENT |  | SAR_AC_HR_PERIOD |  |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 1 | 8 | A | SCO_PAY_FREQ_ALLOC |  | SAR_AC_HR_PERIOD |  |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 1 | 9 | A | SCO_DT_ALLOCATION |  | SAR_AC_HR_PERIOD |  |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 1 | 10 | A | SCO_PAY_FREQ_ALLOC |  | SAR_AC_HR_PERIOD |  |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 1 | 11 | A | SCO_PAY_FREQ_PAYM |  | SAR_AC_HR_PERIOD |  |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 1 | 12 | A | SCO_PAY_TYPE_PAYM |  | SCO_AC_HR_PERIOD |  |  |  |  |  |  |  | SAR_AC_HR_PERIOD
+SAR_GEN_REG_04 | 2 | 1 | H | SAR_CUIL |  | STD_PERSON | -1 |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 2 | 2 | H | STD_SS_NUMBER |  | STD_PERSON | -1 |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 2 | 3 | A | SCO_ID_HR | 0 | SAR_AC_HR_PERIOD | -1 |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 2 | 4 | A | SCO_OR_HR_PERIOD | 0 | SAR_AC_HR_PERIOD | -1 |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 4 | 1 | H | SAR_CUIL | 1 | STD_PERSON | -1 |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 4 | 2 | H | STD_SS_NUMBER | 1 | STD_PERSON | -1 |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 4 | 3 | A | SCO_ID_HR | 1 | SAR_AC_HR_PERIOD | -1 |  |  |  |  |  |  | 
+SAR_GEN_REG_04 | 4 | 4 | A | SCO_OR_HR_PERIOD | 1 | SAR_AC_HR_PERIOD | -1 |  |  |  |  |  |  | 

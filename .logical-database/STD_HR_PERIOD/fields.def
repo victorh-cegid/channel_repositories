@@ -1,0 +1,417 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: STD_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: STD_OR_HR_PERIOD
+    NAME_ESP: Num. periodo
+    REAL_NAME: STD_OR_HR_PERIOD
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_OR_HR_PERIOD
+    NOT_NULL: true
+  - ID_FIELD: STD_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: STD_DT_START
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: STD_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: STD_DT_END
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_HRP_START_REASON
+    NAME_ESP: Motivo inicio
+    REAL_NAME: STD_ID_HRP_SRT_REA
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_HRP_START_REASON
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_HRP_END_REASON
+    NAME_ESP: Motivo fin.
+    REAL_NAME: STD_ID_HRP_END_REA
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_HRP_END_REASON
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_HR_TYPE
+    NAME_ESP: Tipo RH
+    REAL_NAME: STD_ID_HR_TYPE
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_HR_TYPE
+    NOT_NULL: true
+  - ID_FIELD: STD_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: STD_COMMENT
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_COMENT
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_EXTERNAL_ORG
+    NAME_ESP: ID Org. externa
+    REAL_NAME: STD_ID_EXTERN_ORG
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_EXTERNAL_ORG
+    NOT_NULL: false
+  - ID_FIELD: STD_KEY_EMPLOYEE
+    NAME_ESP: Empleado Clave
+    REAL_NAME: STD_KEY_EMPLOYEE
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_APP_10_D0
+    NOT_NULL: false
+  - ID_FIELD: STD_STRATEGIC_EMP
+    NAME_ESP: Empleado estrategico
+    REAL_NAME: STD_STRATEGIC_EMP
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_APP_10_D0
+    NOT_NULL: false
+  - ID_FIELD: SUK_CONT_SERV_REAS_ID
+    NAME_ESP: ID Motivo servicio continuo
+    REAL_NAME: SUK_CONT_SERV_REAS
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUK_VARCHAR3
+    NOT_NULL: false
+  - ID_FIELD: SSP_FEC_ANTIGUEDAD
+    NAME_ESP: Fecha de Antiguedad
+    REAL_NAME: SSP_FEC_ANTIGUEDAD
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE
+    NOT_NULL: false
+  - ID_FIELD: SSP_FEC_EXTRAS
+    NAME_ESP: Fechas Extras
+    REAL_NAME: SSP_FEC_EXTRAS
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE
+    NOT_NULL: false
+  - ID_FIELD: SSP_NUM_MATRICULA
+    NAME_ESP: Numero de Matricula
+    REAL_NAME: SSP_NUM_MATRICULA
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SSP_VARSTRING5
+    NOT_NULL: false
+  - ID_FIELD: SSP_NUM_PLURIEMPL
+    NAME_ESP: Num. Pluriempleado
+    REAL_NAME: SSP_NUM_PLURIEMPL
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_COMP_N_VETS
+    NOT_NULL: false
+  - ID_FIELD: SSP_PAGO_TA
+    NAME_ESP: Pago con Gestion del tiempo
+    REAL_NAME: SSP_PAGO_TA
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_S_10_D0
+    NOT_NULL: false
+  - ID_FIELD: SUK_ACT_LEAV_DT
+    NAME_ESP: Fecha de baja real
+    REAL_NAME: SUK_ACT_LEAV_DT
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SUK_CONT_SERV_DATE
+    NAME_ESP: Fecha servicio continuo
+    REAL_NAME: SUK_CONT_SERV_DATE
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUK_DATE
+    NOT_NULL: false
+  - ID_FIELD: SUK_LAST_WK_DT
+    NAME_ESP: Ultimo dia trabajado
+    REAL_NAME: SUK_LAST_WK_DT
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUK_DATE
+    NOT_NULL: false
+  - ID_FIELD: SUK_PROB_END_DATE
+    NAME_ESP: Fin prueba
+    REAL_NAME: SUK_PROB_END_DATE
+    POSITION: 22
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUK_DATE
+    NOT_NULL: false
+  - ID_FIELD: SUK_TERM_RESIG_DT
+    NAME_ESP: Fecha de baja
+    REAL_NAME: SUK_TERM_RESIG_DT
+    POSITION: 23
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUK_DATE
+    NOT_NULL: false
+  - ID_FIELD: SFR_DT_SENIORITY
+    NAME_ESP: Fecha de antiguedad
+    REAL_NAME: SFR_DT_SENIORITY
+    POSITION: 24
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SFR_DT_SENIORITY_GROUP
+    NAME_ESP: Fecha de antiguedad grupo
+    REAL_NAME: SFR_DT_SENIORITY_G
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SFR_DT_SENIORITY_LEG_ENT
+    NAME_ESP: Fecha de antiguedad sociedad
+    REAL_NAME: SFR_DT_SENIORITY_L
+    POSITION: 26
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: STD_DT_SEN_PROF
+    NAME_ESP: Fecha de antiguedad profesion
+    REAL_NAME: STD_DT_SEN_PROF
+    POSITION: 27
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SFR_SEN_SUP
+    NAME_ESP: Meses adicionales
+    REAL_NAME: SFR_SEN_SUP
+    POSITION: 28
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER_3
+    NOT_NULL: false
+  - ID_FIELD: SUK_PROB_RESULTS
+    NAME_ESP: Prob. Results.
+    REAL_NAME: SUK_PROB_RESULTS
+    POSITION: 29
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_NUM_1_0_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: SUK_EXT_PROB_END_DATE
+    NAME_ESP: Ext. Prob. End date
+    REAL_NAME: SUK_EXT_PROB_END_D
+    POSITION: 30
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SME_ID_HR_STATUS
+    NAME_ESP: ID Estado Plantilla
+    REAL_NAME: SME_ID_HR_STATUS
+    POSITION: 31
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SME_ID_HR_STATUS
+    NOT_NULL: false
+  - ID_FIELD: SME_SALARY
+    NAME_ESP: Salario
+    REAL_NAME: SME_SALARY
+    POSITION: 32
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SME_SALARY
+    NOT_NULL: false
+  - ID_FIELD: SSP_CHK_IRPF_MOVILIDAD
+    NAME_ESP: Indicador movilidad
+    REAL_NAME: SSP_CHK_IRPF_MOVIL
+    POSITION: 33
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER1_DEF0
+    NOT_NULL: false
+  - ID_FIELD: SSP_CHK_IRPF_PROLONG
+    NAME_ESP: Indicador prolong activ lab
+    REAL_NAME: SSP_CHK_IRPF_PROLO
+    POSITION: 34
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER1_DEF0
+    NOT_NULL: false
+  - ID_FIELD: SPO_COMENT_SAIDA
+    NAME_ESP: Comentario Salida
+    REAL_NAME: SPO_COMENT_SAIDA
+    POSITION: 35
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: VARCHAR254
+    NOT_NULL: false
+  - ID_FIELD: SPO_ID_EST_QUADRO
+    NAME_ESP: ID Estado Plantilla
+    REAL_NAME: SPO_ID_EST_QUADRO
+    POSITION: 36
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: HCO_VARCHAR4
+    NOT_NULL: false
+  - ID_FIELD: SPO_ID_EST_SALARIO
+    NAME_ESP: ID Estado Salarial
+    REAL_NAME: SPO_ID_EST_SALARIO
+    POSITION: 37
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR10
+    NOT_NULL: false
+  - ID_FIELD: SPO_EXT_TELEF
+    NAME_ESP: Extens?o Telefonica
+    REAL_NAME: SPO_EXT_TELEF
+    POSITION: 38
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: VARCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: SAR_CERTIF_ORIG
+    NAME_ESP: Num. certif. origen
+    REAL_NAME: SAR_CERTIF_ORIG
+    POSITION: 39
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR15
+    NOT_NULL: false
+  - ID_FIELD: SAR_CODIGO
+    NAME_ESP: Codigo
+    REAL_NAME: SAR_CODIGO
+    POSITION: 40
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_NUMBER_6
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_SIT_REVISTA
+    NAME_ESP: ID Motivo Baja Afip
+    REAL_NAME: SAR_ID_SIT_REVISTA
+    POSITION: 41
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ID_SIT_REVISTA
+    NOT_NULL: false
+  - ID_FIELD: SAR_LEG_ANT
+    NAME_ESP: Legajo anterior
+    REAL_NAME: SAR_LEG_ANT
+    POSITION: 42
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR_20
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_DOC
+    NAME_ESP: Id de acceso gestor documental
+    REAL_NAME: SAR_ID_DOC
+    POSITION: 43
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER8
+    NOT_NULL: false
+  - ID_FIELD: SCB_OR_HR_PER_ANT
+    NAME_ESP: Ordinal anterior
+    REAL_NAME: SCB_OR_HR_PER_ANT
+    POSITION: 43
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER_2_3
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 44
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SME_ID_MOT_BAJA_IMSS
+    NAME_ESP: ID Motivo baja IMSS
+    REAL_NAME: SME_ID_MOT_BAJA_IM
+    POSITION: 44
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SME_ID_MOT_BAJA_IMSS
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 45
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SME_OR_HR_PER_ANT
+    NAME_ESP: Ordinal anterior
+    REAL_NAME: SME_OR_HR_PER_ANT
+    POSITION: 45
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER_2_3
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 46
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false
+  - ID_FIELD: SCL_EXCLUIR_NOMINA
+    NAME_ESP: Excluir calculo indemnizacion
+    REAL_NAME: SCL_EXCLUIR_NOMINA
+    POSITION: 47
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER1_DEF0
+    NOT_NULL: false
+  - ID_FIELD: SAR_FEC_ANTIG_INDEM
+    NAME_ESP: Fecha de Antiguedad para Indem
+    REAL_NAME: SAR_FEC_ANTIG_INDEM
+    POSITION: 48
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_FECHA
+    NOT_NULL: false
+  - ID_FIELD: SCL_DT_CERTIF_VACACIONES
+    NAME_ESP: Fecha certificado vacaciones
+    REAL_NAME: SCL_DT_CERTIF_VACACIONES
+    POSITION: 49
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false

@@ -1,0 +1,12 @@
+item: SAR_MARCA_REPETICION
+name: Marca de repeticion
+column_name: SAR_MARCA_REPETICION
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 1
+scale: 0
+scope: RECORD
+default_value: "0"
+internal_type: 1
+item_aux: null

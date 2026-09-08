@@ -1,0 +1,11 @@
+item: SAR_REG02_FEC_RUBRICA
+name: Registro 02 - Fecha rubrica
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 8
+scale: 0
+scope: NODE
+default_value: null
+internal_type: 1
+item_aux: null

@@ -1,0 +1,513 @@
+/****************************************************************************************
+        ID: SAR_GENERA_REG_04
+        Nombre: Genera registro 04 para Libro Sueldo Digital
+        Fecha: 29/09/2015
+        Autor: emmanueln
+        Descripcion:  en este metodo se realiza la obtencion de los datos de la empresa, 
+                        segun lo solicitado para el armado del archivo
+*****************************************************************************************/
+
+vCompletoNum = "0" 'variable con la que se completan los caracteres en caso de que los valores no completen los lugares asignados por el layout
+vCompletoCar = " " 'variable con la que se completan los caracteres en caso de que los valores no completen los lugares asignados por el layout
+vmargenNum = "I" 'D=derecha y I=izquierda
+vmargenAlfa = "D"
+
+
+WHILE ISEOF() = M4_FALSE        'mientras tengo datos recorro el acumulado
+'inicio el metodo de los nodos a utilizar    
+    SAR_INICIAR_NODOS()
+
+'me posiciono en la linea nueva del txt
+    SAR_TXT_GENERADOR.SAR_NVA_LINEA()
+
+    
+'1.- Identificacion del tipo de registro
+    'campo 01: valor fijo "04" long: 2 posicion txt: 1 a 2 (alfanumerico)
+    vID_Tipo_reg = "04"
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vID_Tipo_reg,2,vCompletoCar,vmargenAlfa)
+    
+    
+'2.- CUIL del trabajador
+    'campo 02: SAR_GEN_REG4_STD_PERSON.STD_SS_NUMBER o SAR_GEN_REG4_STD_PERSON.SAR_CUIL long: 11 posicion txt: 3 a 13 (numerico)
+    vEmpleado = ""
+    IF ISNULL(SAR_GEN_REG4_STD_PERSON.SAR_CUIL)= M4_TRUE THEN
+        vEmpleado = SAR_GEN_REG4_STD_PERSON.STD_SS_NUMBER
+    ELSE
+        vEmpleado = SAR_GEN_REG4_STD_PERSON.SAR_CUIL
+    ENDIF    
+    vEmpleado = replace(vEmpleado,"-","") 'en caso de que haya "-" (guiones) se los elimina de la cadena para que el formato del layout sea correcto
+    vEmpleado = replace(vEmpleado,".","") 'en caso de que haya "." (puntos) se lo borra para que quede el numero limpio
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vEmpleado,11,vCompletoNum,vmargenNum)
+    
+    
+'3.- Marca de conyuge
+    'campo 03: SAR_A_CARGO_ESPOSA long: 1 posicion txt: 14 a 14 (alfanumerico)
+    vConyuge = 0
+    vConyuge = SAR_GEN_REG_04_DATOS_MAX_PAGO.SAR_A_CARGO_ESPOSA
+    IF vConyuge = NULLVALUE() or vConyuge = 0 THEN
+        vConyuge = "0"
+    ELSE
+        vConyuge = "1"
+    ENDIF
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vConyuge,1,vCompletoNum,vmargenNum)
+    
+    
+'4.- Cantidad de hijos
+    'campo 04: SAR_A_C_HIJOS_OB long: 2 posicion txt: 15 a 16 (numerico)
+    vCantHijos = ""
+    vCantHijos = FORMAT(SAR_GEN_REG_04_DATOS_MAX_PAGO.SAR_A_C_HIJOS_OB,0)
+    IF Length(vCantHijos) < 2 THEN
+       vCantHijos= "0" + vCantHijos
+    ENDIF     
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vCantHijos,2,vCompletoNum,vmargenNum)
+    
+    
+'5.-Marca de trabajador en CCT
+    'campo 05: SAR_GEN_REG4_CONVENIO.SAR_CK_CONV long: 1 posicion txt: 17 a 17 (alfanumerico)
+    vConvencionado = ""
+    IF SAR_GEN_REG4_CONVENIO.COUNT()> 0 THEN 
+        vConvencionado = mid(SAR_GEN_REG4_CONVENIO[0].SAR_CK_CONV,0,1)
+        vConvencionado = tostring(vConvencionado,0)
+        IF vConvencionado = "S" THEN
+            vConvencionado = "1"
+        ELSE
+            vConvencionado = "0"
+        ENDIF
+    ENDIF
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vConvencionado,1,vCompletoCar,vmargenAlfa)
+    
+    
+'6.- Marca de cobertura de SCVO
+    'campo 06: SAR_GEN_REG_04_AC_HR_PERIOD.SAR_IND_SEG_VIDA long: 1 posicion txt: 18 a 18 (alfanumerico)    
+    vCobertSCVO = SAR_GEN_REG_04_DATOS_MAX_PAGO.SAR_IND_SEG_VIDA
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vCobertSCVO,1,vCompletoCar,vmargenAlfa)
+           
+    
+'7.- Marca de corresponde reduccion
+    'campo 07: SFR_REG_LEGENT long: 1 posicion txt: 19 a 19 (alfanumerico)          
+    vReduccion = ""
+    vReduccion = SAR_GEN_REG_01.SFR_REG_LEGENT
+    IF vReduccion = 1 THEN
+        vReduccion = "1"
+    ELSE
+        vReduccion = "0"
+    ENDIF
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vReduccion,1,vCompletoCar,vmargenAlfa)
+        
+    
+'8.- Codigo de tipo de empleador asociado al trabajador
+    'campo 08: SFR_REG_LEGENT long: 1 posicion txt: 20 a 20 (alfanumerico)         
+    vTipoEmpleador = ""
+    vTipoEmpleador = mid(SAR_GEN_REG_01.SFR_ID_ACTIV_SECTOR,0,1)
+    IF vTipoEmpleador = NULLVALUE() THEN
+        vTipoEmpleador = "0"
+    ENDIF
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vTipoEmpleador,1,vCompletoCar,vmargenAlfa)
+    
+
+'9.- Codigo de tipo de operacion
+    'campo 09: SFR_REG_LEGENT long: 1 posicion txt: 21 a 21 (alfanumerico)          
+    VTipoOperacion = "0" 'valor fijo
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(VTipoOperacion,1,vCompletoCar,vmargenAlfa)
+    
+
+'10.- Codigo Situacion de revista
+    'campo 10: SAR_GEN_REG4_H_EMP_TYPE.SAR_ID_SIT_REVISTA long: 2 posicion txt: 22 a 23 (alfanumerico)
+    CodSitRevista = ""
+    SAR_GEN_REG4_H_EMP_TYPE.LOAD_BLK()
+    SAR_GEN_REG4_H_EMP_TYPE.END()
+
+    'inicio el metodo que calcula la situacion de revista
+    SAR_M_GEN_SIT_REVISTA()
+    CodSitRevista = SRAR_SIT_REVISTA.SRAR_SIT_REV_3
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(CodSitRevista,2,vCompletoNum,vmargenNum)
+    
+    
+'11.- Codigo Condicion
+    'campo 11: SAR_GEN_REG4_H_EMP_TYPE.SAR_ID_COD_COND long: 2 posicion txt: 24 a 25 (alfanumerico)
+    IF SAR_GEN_REG4_H_EMP_TYPE.COUNT() > 0 THEN
+        CodCondicion = SAR_GEN_REG4_H_EMP_TYPE.SAR_ID_COD_COND
+    ELSE
+        CodCondicion = ""
+    ENDIF 
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(CodCondicion,2,vCompletoCar,vmargenAlfa)        
+    
+    
+'12.- Codigo Actividad
+    'campo 12: SAR_GEN_REG4_H_ACTIVIDAD.SAR_ID_ACTIVIDAD long: 3 posicion txt: 26 a 28 (numerico)
+    IF ISNULL(SAR_GEN_REG4_H_ACTIVIDAD.SAR_ID_ACTIVIDAD)= M4_TRUE THEN
+        CodActividad = ""
+    ELSE
+        CodActividad = SAR_GEN_REG4_H_ACTIVIDAD.SAR_ID_ACTIVIDAD
+    ENDIF      
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(CodActividad,3,vCompletoNum,vmargenNum)           
+    
+    
+'13.- Codigo de modalidad de contratacion
+    'campo 13: SAR_GEN_REG4_H_EMP_TYPE.SAR_ID_MOD_CONTRAT long: 3 posicion txt: 29 a 31 (alfanumerico) 
+    IF SAR_GEN_REG4_H_EMP_TYPE.COUNT() > 0 THEN
+        vModContrat = SAR_GEN_REG4_H_EMP_TYPE.SAR_ID_MOD_CONTRAT
+    ELSE
+        vModContrat = ""
+    ENDIF 
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vModContrat,3,vCompletoCar,vmargenAlfa)
+
+    
+'14.- Codigo de siniestrado
+    'campo 14: SAR_GEN_REG4_H_EMP_TYPE.SAR_ID_COD_SINIES long: 2 posicion txt: 32 a 33 (alfanumerico)
+    IF SAR_GEN_REG4_H_EMP_TYPE.COUNT() > 0 THEN
+        vCodSiniest = SAR_GEN_REG4_H_EMP_TYPE.SAR_ID_COD_SINIES
+        IF vCodSiniest = NULLVALUE() OR vCodSiniest = "NAP" THEN
+            vCodSiniest = "00"
+        ENDIF
+    ELSE
+        vCodSiniest = "00"
+    ENDIF 
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vCodSiniest,2,vCompletoNum,vmargenNum)
+    
+'15.- Codigo de localidad
+    'campo 15: SAR_GEN_REG4_WLOC.SAR_ID_ZONA_DGI long: 2 posicion txt: 34 a 35 (alfanumerico)
+    IF ISNULL(SAR_GEN_REG4_WLOC.SAR_ID_ZONA_DGI)= M4_TRUE THEN
+        vCodLocal = "00"
+    else
+        vCodLocal = SAR_GEN_REG4_WLOC.SAR_ID_ZONA_DGI    
+    ENDIF
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vCodLocal,2,vCompletoCar,vmargenAlfa)
+    
+'16.- Situacion de revista 1
+'campo 16: SAR_M_GEN_SIT_REVISTA long: 2 posicion txt: 36 a 37 (numerico)
+    vSitRev_1 = SRAR_SIT_REVISTA.SRAR_SIT_REV_1
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vSitRev_1,2,vCompletoNum,vmargenNum)
+    
+'17.- Dia de inicio situacion de revista 1
+'campo 17: SAR_M_GEN_SIT_REVISTA long: 2 posicion txt: 38 a 39 (numerico)
+    vSitRevDay_1 = SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_1
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vSitRevDay_1,2,vCompletoNum,vmargenNum)
+    
+'18.- Situacion de revista 2
+'campo 18: SAR_M_GEN_SIT_REVISTA long: 2 posicion txt: 40 a 41 (numerico)
+    vSitRev_2 = SRAR_SIT_REVISTA.SRAR_SIT_REV_2
+    vSitRev_3 = SRAR_SIT_REVISTA.SRAR_SIT_REV_3
+    
+    IF vSitRev_3 = vSitRev_2 THEN vSitRev_3 = "00"
+
+    IF vSitRev_1 = vSitRev_2 THEN vSitRev_2 = "00"
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vSitRev_2,2,vCompletoNum,vmargenNum)
+    
+'19.- Dia de inicio situacion de revista 2
+'campo 19: SAR_M_GEN_SIT_REVISTA long: 2 posicion txt: 42 a 43 (numerico)
+    vSitRevDay_2 = SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_2
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vSitRevDay_2,2,vCompletoNum,vmargenNum)
+    
+'20.- Situacion de revista 3
+'campo 20: SAR_M_GEN_SIT_REVISTA long: 2 posicion txt: 44 a 45 (numerico)
+'    vSitRev_3  = SRAR_SIT_REVISTA.SRAR_SIT_REV_3
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vSitRev_3,2,vCompletoNum,vmargenNum)
+    
+'21.- Dia de inicio situacion de revista 3
+'campo 21: SAR_M_GEN_SIT_REVISTA long: 2 posicion txt: 46 a 47 (numerico)
+    vSitRevDay_3 = SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_3
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vSitRevDay_3,2,vCompletoNum,vmargenNum)
+
+'22.- Cantidad de dias trabajados
+'campo 22: SAR_TOT_DIAS_TRAB_SIJP long: 2 posicion txt: 48 a 49 (numerico)
+    vHsTrab = ""
+    vCantDiasTrab = ""
+    SAR_GEN_REG_04_SUMA_HRS_JORN.Load_blk()
+    If SAR_GEN_REG_04_SUMA_HRS_JORN.Count() > 0 Then
+        vHsTrab = format(SAR_GEN_REG_04_SUMA_HRS_JORN[0].SAR_TOT_HRS_TRAB_SIJP,0)
+    EndIf
+    
+    If vHsTrab = "" Or vHsTrab = "0" Then 
+        vDiasCamp22 = 0
+        vDiasMesActualCamp22 = 0
+    
+        InicioPaga = SAR_P_INICIO
+        MMInicPaga = DxMonth ( InicioPaga )
+        AAInicPaga = DxYear  ( InicioPaga )
+        
+        'calculo la cantidad de dias en el mes de la generacion del archivo
+        vDiasMesActualCamp22 = Min(DaysOfMonth(SAR_P_INICIO), 30)                       // Normalizamos
+        
+        PrimerDiaP = DxDate (                    1 , MMInicPaga , AAInicPaga )          // primer dia del mes de liquidacion
+        UltimoDiaP = DxDate ( vDiasMesActualCamp22 , MMInicPaga , AAInicPaga )          // ultimo dia del mes de liquidacion
+        
+        'calcular los dias si el empleado esta dado de alta en el mes de la generacion del archivo
+        vDiasCamp22 = CommonTime( Date30Ex(PrimerDiaP) , Date30Ex(UltimoDiaP) , Date30Ex(SAR_FECHA_ALTA) , Date30Ex(SAR_FECHA_BAJA))    
+        vDiasTrabaj = SAR_GEN_REG_04_DATOS_MAX_PAGO.SAR_TOT_DIAS_TRAB_SIJP
+        
+        If vDiasCamp22 >= vDiasMesActualCamp22 Then
+            vCantDiasTrab = "30"
+        Else
+            If vDiasTrabaj = 0 Then
+                vCantDiasTrab = tostring(vDiasCamp22, 0)
+            Else
+                vCantDiasTrab = tostring(vDiasTrabaj, 0)
+            EndIf
+        ENDIF
+    EndIf        
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vCantDiasTrab,2,vCompletoNum,vmargenNum)
+
+'23.- Cantidad de horas trabajadas
+'campo 23: SAR_TOT_HRS_TRAB_SIJP long: 3 posicion txt: 50 a 52 (numerico) 
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vHsTrab,3,vCompletoNum,vmargenNum)
+    
+
+'24.- Porcentaje de aporte adicional de seguridad social
+'campo 24: SAR_PORC_ADIC_O_SOC long: 5 posicion txt: 53 a 57 (numerico)
+    vPorcAportSegSoc = "0"
+    vPorcAportSegSoc = replace(vPorcAportSegSoc,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vPorcAportSegSoc = replace(vPorcAportSegSoc,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vPorcAportSegSoc,5,vCompletoNum,vmargenNum)
+
+
+'25.- Porcentaje de contribucion por tarea diferencial
+'campo 25: SAR_PORC_CONT_T_DIF long: 5 posicion txt: 58 a 62 (numerico)
+    vPorcContTarDif = ""
+    vPorcContTarDif = format(SAR_GEN_REG_04_DATOS_MAX_PAGO.SAR_PORC_CONT_T_DIF,2)
+    vPorcContTarDif = replace(vPorcContTarDif,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vPorcContTarDif = replace(vPorcContTarDif,",","")
+           
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vPorcContTarDif,5,vCompletoNum,vmargenNum)
+    
+    
+'26.- Codigo de obra social del trabajador
+'campo 26: SAR_ID_OBRA_SOCIAL long: 6 posicion txt: 63 a 68 (numerico)
+    vCodObSocTrabj = ToString(SAR_GEN_REG_04_DATOS_MAX_PAGO.SAR_ID_OBRA_SOCIAL,0)
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vCodObSocTrabj,6,vCompletoNum,vmargenNum)
+    
+    
+'27.- Cantidad de adherentes de obra social
+'campo 27: SAR_FAM_CARGO_OS long: 2 posicion txt: 69 a 70 (numerico)              
+    vCantAdhObSoc = format(SAR_GEN_REG_04_DATOS_MAX_PAGO.SAR_FAM_CARGO_OS,0)
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vCantAdhObSoc,2,vCompletoNum,vmargenNum)
+    
+    
+'28.- Aporte adicional de obra social
+'campo 28: SAR_TOT_AP_OBRA_SOC_SIJP long: 15 posicion txt: 71 a 85 (numerico) 
+    vAportAdicObSoc = 0   
+    vAportAdicObSoc = format(vAportAdicObSoc,2)
+    vAportAdicObSoc = replace(vAportAdicObSoc,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vAportAdicObSoc = replace(vAportAdicObSoc,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vAportAdicObSoc,15,vCompletoNum,vmargenNum)        
+    
+    
+'29.- Contribucion adicional de obra social
+'campo 29: SAR_ADIC_OB_SOCIAL_IMP long: 15 posicion txt: 86 a 100 (numerico)
+    vContrAdicObSoc = 0
+    vContrAdicObSoc = format(vContrAdicObSoc,2)
+    vContrAdicObSoc = replace(vContrAdicObSoc,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vContrAdicObSoc = replace(vContrAdicObSoc,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vContrAdicObSoc,15,vCompletoNum,vmargenNum)  
+
+
+'30.- Base para el calculo diferencial de aporte de obra social y FSR
+'campo 30:  long: 15 posicion txt: 101 a 115 (numerico)  
+    'Decreto 792/2020
+    vDif_Dec_792 = SAR_GEN_REG_04_AC_HR_PERIOD.SAR_IMP_DEC792_NRED - SAR_GEN_REG_04_AC_HR_PERIOD.SAR_IMP_DEC792
+    
+    vBaseCalcDifFSR_Aporte = SAR_GEN_REG_04_AC_HR_PERIOD.SAR_BASE_DIF_APO_OS + vDif_Dec_792
+    vBaseCalcDifFSR_Aporte = format(vBaseCalcDifFSR_Aporte,2)
+    vBaseCalcDifFSR_Aporte = replace(vBaseCalcDifFSR_Aporte,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vBaseCalcDifFSR_Aporte = replace(vBaseCalcDifFSR_Aporte,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vBaseCalcDifFSR_Aporte,15,vCompletoNum,vmargenNum)  
+    
+    
+'31.- Base para el calculo diferencial de contribuciones de obra social y FSR
+'campo 31:  long: 15 posicion txt: 116 a 130 (numerico)    
+    vBaseCalcDifFSR_Contr = SAR_GEN_REG_04_AC_HR_PERIOD.SAR_BASE_DIF_CONTR_OS + vDif_Dec_792
+    vBaseCalcDifFSR_Contr = format(vBaseCalcDifFSR_Contr,2)
+    vBaseCalcDifFSR_Contr = replace(vBaseCalcDifFSR_Contr,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vBaseCalcDifFSR_Contr = replace(vBaseCalcDifFSR_Contr,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vBaseCalcDifFSR_Contr,15,vCompletoNum,vmargenNum)  
+    
+    
+'32.- Base para el calculo diferencial Ley de Riesgos del Trabajo
+'campo 32:  long: 15 posicion txt: 131 a 145 (numerico)    
+    vBaseCalcDif_RiesgTrabj = vDif_Dec_792
+    vBaseCalcDif_RiesgTrabj = format(vBaseCalcDif_RiesgTrabj,2)
+    vBaseCalcDif_RiesgTrabj = replace(vBaseCalcDif_RiesgTrabj,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vBaseCalcDif_RiesgTrabj = replace(vBaseCalcDif_RiesgTrabj,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vBaseCalcDif_RiesgTrabj,15,vCompletoNum,vmargenNum)                          
+
+
+'33.- Remuneracion maternidad/oncopediatria para ANSeS
+'campo 33: SAR_MATER_SUAF/SAR_LIC_ONCO_IMP long: 15 posicion txt: 146 a 160 (numerico)    
+    vRemMaterANSeS = format(SAR_GEN_REG_04_AC_HR_PERIOD.SAR_MATER_SUAF+SAR_GEN_REG_04_AC_HR_PERIOD.SAR_LIC_ONCO_IMP,2)
+    vRemMaterANSeS = replace(vRemMaterANSeS,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRemMaterANSeS = replace(vRemMaterANSeS,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRemMaterANSeS,15,vCompletoNum,vmargenNum)
+    
+    
+'34.- Remuneracion bruta
+'campo 34: SAR_TOTAL_DEVENGOS long: 15 posicion txt: 161 a 175 (numerico)    
+    'vRemBruta = format(SAR_GEN_REG_04_AC_HR_PERIOD.SAR_TOTAL_DEVENGOS,2)
+    vRemBruta = format(SAR_GEN_REG_04_AC_HR_PERIOD.SAR_TOT_REM_SICOSS,2) 
+    vRemBruta = replace(vRemBruta,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRemBruta = replace(vRemBruta,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRemBruta,15,vCompletoNum,vmargenNum)  
+    
+    
+'35.- Base imponible 1
+    'campo 35: SAR_TOT_REM_IMP1_SIJP long: 15 posicion txt: 176 a 190 (numerico)    
+    vRem1 = SAR_GEN_REG_04_AC_HR_PERIOD.SAR_TOT_REM_IMP1_SIJP
+    vRem1 = format(vRem1,2)
+    vRem1 = replace(vRem1,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRem1 = replace(vRem1,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRem1,15,vCompletoNum,vmargenNum)  
+    
+    
+'36.- Base imponible 2
+'campo 36: SAR_TOT_REM_IMP2_SIJP long: 15 posicion txt: 191 a 205 (numerico)    
+    vRem2 = SAR_GEN_REG_04_AC_HR_PERIOD.SAR_TOT_REM_IMP2_SIJP
+    vRem2 = format(vRem2,2)
+    vRem2 = replace(vRem2,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRem2 = replace(vRem2,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRem2,15,vCompletoNum,vmargenNum)  
+
+
+'37.- Base imponible 3
+'campo 37: SAR_TOT_REM_IMP2_SIJP long: 15 posicion txt: 206 a 220 (numerico)    
+    vRem3 = SAR_GEN_REG_04_AC_HR_PERIOD.SAR_TOT_REM_IMP2_SIJP
+    vRem3 = format(vRem3,2)
+    vRem3 = replace(vRem3,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRem3 = replace(vRem3,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRem3,15,vCompletoNum,vmargenNum)          
+    
+                            
+'38.- Base imponible 4
+'campo 38: SAR_TOT_IMP1_SIJP_AUX_1 long: 15 posicion txt: 221 a 235 (numerico)    
+    vRem4 = SAR_GEN_REG_04_AC_HR_PERIOD.SAR_TOT_IMP1_SIJP_AUX_1
+    vRem4 = format(vRem4,2)
+    vRem4 = replace(vRem4,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRem4 = replace(vRem4,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRem4,15,vCompletoNum,vmargenNum)      
+
+
+'39.- Base imponible 5
+'campo 39: SAR_TOT_REM_IMP5_SIJP long: 15 posicion txt: 236 a 250 (numerico)    
+    vRem5 = format(SAR_GEN_REG_04_AC_HR_PERIOD.SAR_TOT_REM_IMP5_SIJP,2)
+    vRem5 = replace(vRem5,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRem5 = replace(vRem5,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRem5,15,vCompletoNum,vmargenNum)  
+    
+    
+'40.- Base imponible 6
+'campo 40:  long: 15 posicion txt: 251 a 265 (numerico)    
+    vRem6 = "0.00"
+    vRem6 = replace(vRem6,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRem6 = replace(vRem6,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRem6,15,vCompletoNum,vmargenNum)
+    
+    
+'41.- Base imponible 7
+'campo 41:  long: 15 posicion txt: 266 a 280 (numerico)    
+    vRem7 = "0.00"
+    vRem7 = replace(vRem7,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRem7 = replace(vRem7,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRem7,15,vCompletoNum,vmargenNum)
+    
+    
+'42.- Base imponible 8
+'campo 41: SAR_TOT_REM_DEC_SIJP long: 15 posicion txt: 281 a 295 (numerico)    
+    vRem8 = format(SAR_GEN_REG_04_AC_HR_PERIOD.SAR_TOT_REM_DEC_SIJP,2)
+    vRem8 = replace(vRem8,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRem8 = replace(vRem8,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRem8,15,vCompletoNum,vmargenNum)        
+    
+    
+'43.- Base imponible 9
+'campo 41: SAR_TOT_REM_DEC_SIJP long: 15 posicion txt: 281 a 295 (numerico)    
+    vRem9 = format(SAR_GEN_REG_04_AC_HR_PERIOD.SAR_REMUN_IMPO_ART,2)
+    vRem9 = replace(vRem9,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRem9 = replace(vRem9,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRem9,15,vCompletoNum,vmargenNum)         
+
+
+/*****  Inicio Cambios RG3781   *****/
+	
+'44.- Base para el calculo diferencial de aporte de Seg. Social
+'campo 44: long: 15 posicion txt: 311 a 325 (numerico)
+    vBaseDifAporteSegSoc = vDif_Dec_792
+    vBaseDifAporteSegSoc = format(vBaseDifAporteSegSoc,2)    
+    vBaseDifAporteSegSoc = replace(vBaseDifAporteSegSoc,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vBaseDifAporteSegSoc = replace(vBaseDifAporteSegSoc,",","")
+
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vBaseDifAporteSegSoc,15,vCompletoNum,vmargenNum)
+
+'45.- Base para el calculo diferencial de contribuciones de Seg Social
+'campo 45: long: 15 posicion txt: 326 a 340 (numerico)
+    vBaseDifContribSegSoc = vDif_Dec_792
+    vBaseDifContribSegSoc = format(vBaseDifContribSegSoc,2)    
+    vBaseDifContribSegSoc = replace(vBaseDifContribSegSoc,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vBaseDifContribSegSoc = replace(vBaseDifContribSegSoc,",","")
+        
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vBaseDifContribSegSoc,15,vCompletoNum,vmargenNum)
+
+'46.- Base imponible 10 
+'campo 46: long: 15 posicion txt: 341 a 355 (numerico)
+    vImpDetraer = SAR_GEN_REG_04_AC_HR_PERIOD.SAR_TOT_REDUC_IMPO
+    
+    IF vImpDetraer = 0 THEN
+        vRem10 = "0.00"
+    ELSE
+        vRem10 = format(SAR_GEN_REG_04_AC_HR_PERIOD.SAR_TOT_REM_IMP2_SIJP - SAR_GEN_REG_04_AC_HR_PERIOD.SAR_TOT_REDUC_IMPO,2)
+    ENDIF
+    
+    vRem10 = replace(vRem10,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vRem10 = replace(vRem10,",","")
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vRem10,15,vCompletoNum,vmargenNum)
+
+'47.- Importe a detraer (ley 26.473)
+'campo 47: long: 15 posicion txt: 356 a 370 (numerico)
+    vImpDetraer = format(vImpDetraer,2)
+    vImpDetraer = replace(vImpDetraer,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+    vImpDetraer = replace(vImpDetraer,",","")
+    
+    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vImpDetraer,15,vCompletoNum,vmargenNum)
+
+/*****  Fin Cambios RG3781  *****/
+
+'genero el fin de linea
+    SAR_TXT_GENERADOR.SAR_FIN_LINEA()
+    
+'limpiamos datos de situacion de revista (nodo temporal)  
+    'SAR_SIT_REVISTA.SAR_DESTROY()
+
+    GONEXT()
+WEND

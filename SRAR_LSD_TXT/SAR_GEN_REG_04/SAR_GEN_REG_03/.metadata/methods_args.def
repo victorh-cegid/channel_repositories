@@ -1,0 +1,3 @@
+# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
+SAR_INVIERTE_CREDITO | ARG_IMPORTE | OUT | NUMBER | 6 | 20 | 2 | 0
+SAR_INVIERTE_CREDITO | ARG_CREDITO_DEBITO | OUT | STRING | 2 | 255 | 0 | 1

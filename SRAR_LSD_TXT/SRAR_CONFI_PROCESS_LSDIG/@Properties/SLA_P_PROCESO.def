@@ -1,0 +1,11 @@
+item: SLA_P_PROCESO
+name: Proceso a cargar
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 100
+scale: 0
+scope: NODE
+default_value: "0.00000000"
+internal_type: 1
+item_aux: null

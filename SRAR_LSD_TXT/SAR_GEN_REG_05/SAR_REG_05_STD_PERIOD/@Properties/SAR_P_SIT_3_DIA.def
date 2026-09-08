@@ -1,0 +1,11 @@
+item: SAR_P_SIT_3_DIA
+name: Situacion de revista 3 cant. dias
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 255
+scale: 0
+scope: NODE
+default_value: null
+internal_type: 1
+item_aux: null

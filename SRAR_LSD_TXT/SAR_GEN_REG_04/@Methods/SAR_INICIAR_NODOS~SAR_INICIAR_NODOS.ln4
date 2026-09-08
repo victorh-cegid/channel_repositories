@@ -1,0 +1,26 @@
+/****************************************************************************************
+        ID: SAR_INICIAR_NODOS
+        Nombre: Genera registro 04 para Libro Sueldo Digital
+        Fecha: 29/09/2015
+        Autor: emmanueln
+        Descripcion:  en este metodo se realiza la obtencion de los datos de la empresa, 
+                        segun lo solicitado para el armado del archivo
+*****************************************************************************************/
+'SAR_GEN_REG4_CONVENIO.load_prg()
+'SAR_GEN_REG4_H_EMP_TYPE.load_prg()
+'SAR_GEN_REG4_HR_ROLE.load_prg()
+'SAR_GEN_REG4_H_ACTIVIDAD.load_prg()
+'SAR_GEN_REG4_WLOC.load_prg()
+'SAR_GEN_REG4_IND_SEG_VIDA.load_prg()
+'SAR_GEN_REG4_LEGENT.load_prg()
+'SAR_GEN_REG4_STD_PERSON.load_prg()
+
+SAR_GEN_REG4_CONVENIO.BEGIN()
+'SAR_GEN_REG4_H_EMP_TYPE.BEGIN()
+SAR_GEN_REG4_H_EMP_TYPE.END()
+SAR_GEN_REG4_HR_ROLE.BEGIN()
+SAR_GEN_REG4_H_ACTIVIDAD.BEGIN()
+SAR_GEN_REG4_WLOC.BEGIN()
+SAR_GEN_REG4_STD_PERSON.BEGIN()
+SAR_GEN_REG_04_AC_HR_PERIOD.Begin()
+SAR_GEN_REG_04_DATOS_MAX_PAGO.Begin()

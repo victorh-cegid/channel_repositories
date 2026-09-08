@@ -1,0 +1,49 @@
+/*********************************************************************
+   ID: SAR_AGREGAR_TEXTO
+   Nombre: Caracter final
+   Fecha: 17/09/2015
+   Autor: emmanueln
+   Argumentos: 
+   1.- ARG_VARIABLE (variable o campo en formato varchar) = es el valor obtenido para el archivo
+   2.- ARG_LONGITUD (numero) = tama?o que debe tener el valor
+   3.- ARG_RELLENO (varchar) = caracter con el que se debe completar en caso de que el valor sea menor o mayor a ARG_LONGITUD
+   4.- ARG_POSICION (D o I) = posicion de donde se debe agregar o quitar los caracteres que estan cmo diferencia entre ARG_VARIABLE y ARG_LONGITUD
+   
+   
+   
+   
+   Descripcion:  en este metodo se realiza el armado del archivo, corrigiendo el valor obtenido con el seteo necesario por el layout dependdiendo de la longitud y posicion del mismo
+   
+   
+*********************************************************************/
+'se calcula la diferencia en cantidad entre ARG_VARIABLE y ARG_LONGITUD
+vDato = ARG_VARIABLE
+iF ISNULL (vDato) = M4_TRUE THEN
+    vDato = ""
+ENDIF
+
+if P_LINEA = P_CARACTER_INI then
+    vSeparador = ""
+else
+    vSeparador = P_CARACTER_SEP
+endif
+
+'EN CASO DE QUE SE DEBA COMPLETAR A LA DERECHA
+
+
+vDato=mid(vDato,0,ARG_LONGITUD)
+
+
+
+IF ARG_POSICION = "D" then
+'mientras la cantidad de caracteres de vdato sea menor a la de arg_relleno, se va a completar
+    while length(vDato) < ARG_LONGITUD 
+        vDato = vDato + ARG_RELLENO
+    wend
+ELSE 
+    while length(vDato) < ARG_LONGITUD 
+        vDato = ARG_RELLENO + vDato
+    wend
+ENDIF
+
+P_LINEA = P_LINEA + vSeparador + vDato

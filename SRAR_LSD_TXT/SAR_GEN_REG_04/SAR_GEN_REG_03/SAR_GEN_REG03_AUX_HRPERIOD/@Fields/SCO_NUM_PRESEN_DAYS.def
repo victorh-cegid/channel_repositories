@@ -1,0 +1,10 @@
+item: SCO_NUM_PRESEN_DAYS
+name: Num. dias de presencia
+column_name: SCO_NUM_PRESEN_DAYS
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 6
+scale: 2
+scope: RECORD
+default_value: null

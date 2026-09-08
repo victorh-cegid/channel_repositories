@@ -1,0 +1,2 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+SAR_FECHA_CADENA | NODE | STRING | 2 | 10 | 0 | Paso de Fecha a Cadena

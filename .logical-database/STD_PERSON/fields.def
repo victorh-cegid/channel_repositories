@@ -1,0 +1,441 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: ID_ORG_MONO
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_PERSON
+    NAME_ESP: ID Persona
+    REAL_NAME: STD_ID_PERSON
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_PERSON
+    NOT_NULL: true
+  - ID_FIELD: STD_N_FAMILY_NAME_1
+    NAME_ESP: 1er apellido
+    REAL_NAME: STD_N_FAM_NAME_1
+    POSITION: 3
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_NAME
+    NOT_NULL: true
+  - ID_FIELD: STD_N_MAIDEN_NAME
+    NAME_ESP: 2? Apellido
+    REAL_NAME: STD_N_MAIDEN_NAME
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_NAME
+    NOT_NULL: false
+  - ID_FIELD: STD_N_FIRST_NAME
+    NAME_ESP: Nombre
+    REAL_NAME: STD_N_FIRST_NAME
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_NAME
+    NOT_NULL: true
+  - ID_FIELD: STD_N_USUAL_NAME
+    NAME_ESP: Nombre familiar
+    REAL_NAME: STD_N_USUAL_NAME
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_NAME
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_GENDER
+    NAME_ESP: ID Sexo
+    REAL_NAME: STD_ID_GENDER
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_GENDER
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_SALUTATION
+    NAME_ESP: ID Tratamiento
+    REAL_NAME: STD_ID_SALUTATION
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR10
+    NOT_NULL: false
+  - ID_FIELD: STD_DT_BIRTH
+    NAME_ESP: Fecha nacimiento
+    REAL_NAME: STD_DT_BIRTH
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_COUNTRY
+    NAME_ESP: ID Pais nacimiento
+    REAL_NAME: STD_ID_COUNTRY
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_COUNTRY
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_GEO_DIV
+    NAME_ESP: ID Provincia nacimiento
+    REAL_NAME: STD_ID_GEO_DIV
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_GEO_DIV
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_SUB_GEO_DIV
+    NAME_ESP: ID Poblacion nacimiento
+    REAL_NAME: STD_ID_SUB_GEO_DIV
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_SUB_GEO_DIV
+    NOT_NULL: false
+  - ID_FIELD: STD_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: STD_COMMENT
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_COMENT
+    NOT_NULL: false
+  - ID_FIELD: SSP_ID_PAIS_EMISOR
+    NAME_ESP: Pais emisor del documento
+    REAL_NAME: SSP_ID_PAIS_EMISOR
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_COUNTRY
+    NOT_NULL: false
+  - ID_FIELD: SSP_PRIMER_APELLIDO
+    NAME_ESP: Primer Apellido
+    REAL_NAME: SSP_PRIM_APELLIDO
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_NAME
+    NOT_NULL: false
+  - ID_FIELD: STD_SSN
+    NAME_ESP: N? de documento
+    REAL_NAME: STD_SSN
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SSN
+    NOT_NULL: false
+  - ID_FIELD: SCO_PHOTO
+    NAME_ESP: Fotografia
+    REAL_NAME: SCO_PHOTO
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_PHOTO
+    NOT_NULL: false
+  - ID_FIELD: SCO_HOME_PAGE
+    NAME_ESP: Pag. inicial Internet
+    REAL_NAME: SCO_HOME_PAGE
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUS_WEB_FOUND
+    NOT_NULL: false
+  - ID_FIELD: SSP_ID_TP_DOC
+    NAME_ESP: ID tipo documento
+    REAL_NAME: SSP_ID_TP_DOC
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR10
+    NOT_NULL: false
+  - ID_FIELD: SFR_N_MAIDEN_NAME
+    NAME_ESP: 2? Apellido
+    REAL_NAME: SFR_N_MAIDEN_NAME
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_NAME
+    NOT_NULL: false
+  - ID_FIELD: SFR_NM_BIRTH_PLACE
+    NAME_ESP: Localidad de nacimiento
+    REAL_NAME: SFR_NM_BIRTH_PLACE
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_NAME
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_GEO_PLACE
+    NAME_ESP: Zona Geografica
+    REAL_NAME: STD_ID_GEO_PLACE
+    POSITION: 22
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_GEO_PLACE
+    NOT_NULL: false
+  - ID_FIELD: STD_SS_KEY
+    NAME_ESP: Clave Seguridad Social
+    REAL_NAME: STD_SS_KEY
+    POSITION: 23
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING3
+    NOT_NULL: false
+  - ID_FIELD: STD_SS_NUMBER
+    NAME_ESP: CUIL
+    REAL_NAME: STD_SS_NUMBER
+    POSITION: 24
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SS_NUMBER
+    NOT_NULL: false
+  - ID_FIELD: SAR_N_MARRIED_NAME
+    NAME_ESP: Apellido de Casada
+    REAL_NAME: SAR_N_MARRIED_NAME
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: VARCHAR40
+    NOT_NULL: false
+  - ID_FIELD: SBR_ID_RACA
+    NAME_ESP: Raza
+    REAL_NAME: SBR_ID_RACA
+    POSITION: 26
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_3
+    NOT_NULL: false
+  - ID_FIELD: SCO_PHOTO_INET
+    NAME_ESP: Fotografia Internet
+    REAL_NAME: SCO_PHOTO_INET
+    POSITION: 27
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_PHOTO
+    NOT_NULL: false
+  - ID_FIELD: SGE_ID_ADD_NAME
+    NAME_ESP: Titulo nobiliario
+    REAL_NAME: SGE_ID_ADD_NAME
+    POSITION: 28
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR2
+    NOT_NULL: false
+  - ID_FIELD: SGE_ID_TITEL
+    NAME_ESP: Titulo profesional
+    REAL_NAME: SGE_ID_TITEL
+    POSITION: 29
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING3
+    NOT_NULL: false
+  - ID_FIELD: SGE_ID_VSW
+    NAME_ESP: Complemento apellido
+    REAL_NAME: SGE_ID_VSW
+    POSITION: 30
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_3
+    NOT_NULL: false
+  - ID_FIELD: SGE_N_NAME_COMPL
+    NAME_ESP: Nombre completo
+    REAL_NAME: SGE_N_NAME_COMPL
+    POSITION: 31
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_KN_CONTEXT
+    NOT_NULL: false
+  - ID_FIELD: SUK_MAIDEN_NAME
+    NAME_ESP: Apellido soltera
+    REAL_NAME: SUK_MAIDEN_NAME
+    POSITION: 32
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR50
+    NOT_NULL: false
+  - ID_FIELD: SUK_OTHER_FORENAMES
+    NAME_ESP: Otros nombres
+    REAL_NAME: SUK_OTHER_FORENAME
+    POSITION: 33
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR50
+    NOT_NULL: false
+  - ID_FIELD: SUK_PREVIOUS_SURNAMES
+    NAME_ESP: Otros apellidos
+    REAL_NAME: SUK_PREVIOUS_SURNA
+    POSITION: 34
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR50
+    NOT_NULL: false
+  - ID_FIELD: SUS_DEATH_DATE
+    NAME_ESP: Fecha defuncion
+    REAL_NAME: SUS_DEATH_DATE
+    POSITION: 35
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SCO_SMOKER
+    NAME_ESP: Fumador
+    REAL_NAME: SCO_SMOKER
+    POSITION: 36
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: BOOLEAN
+    NOT_NULL: false
+  - ID_FIELD: SCO_GB_NAME
+    NAME_ESP: Nombre
+    REAL_NAME: SCO_GB_NAME
+    POSITION: 37
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_REGION
+    NAME_ESP: Id Region
+    REAL_NAME: SCO_ID_REGION
+    POSITION: 38
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_REGION
+    NOT_NULL: false
+  - ID_FIELD: SAR_EXPEDIDO
+    NAME_ESP: Expedido
+    REAL_NAME: SAR_EXPEDIDO
+    POSITION: 39
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_SHORT_DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: SUS_VETERAN
+    NAME_ESP: Veteran
+    REAL_NAME: SUS_VETERAN
+    POSITION: 40
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_S_10_D0
+    NOT_NULL: false
+  - ID_FIELD: SUS_ID_VET_DIS_TY
+    NAME_ESP: Veteran disable type ID
+    REAL_NAME: SUS_ID_VET_DIS_TY
+    POSITION: 41
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUS_ID_VET_DIS
+    NOT_NULL: false
+  - ID_FIELD: SUS_ID_VETERAN_WHERE
+    NAME_ESP: Where veteran ID
+    REAL_NAME: SUS_ID_VETERAN_WHE
+    POSITION: 42
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUS_ID_VETERAN_WHERE
+    NOT_NULL: false
+  - ID_FIELD: SUS_ID_ETHNICITY
+    NAME_ESP: Ethnicity ID
+    REAL_NAME: SUS_ID_ETHNICITY
+    POSITION: 43
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUS_ID_ETHNICITY
+    NOT_NULL: false
+  - ID_FIELD: SCB_DIG_VER
+    NAME_ESP: Digito de verificacion
+    REAL_NAME: SCB_DIG_VER
+    POSITION: 44
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_CHECK
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_DEFUNCION
+    NAME_ESP: Fecha defuncion
+    REAL_NAME: SAR_DT_DEFUNCION
+    POSITION: 44
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SCO_BLOB_PHOTO
+    NAME_ESP: Fotografia en BBDD
+    REAL_NAME: SCO_BLOB_PHOTO
+    POSITION: 44
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_BLOB
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 45
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 46
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SME_NUM_SS
+    NAME_ESP: Numero SS
+    REAL_NAME: SME_NUM_SS
+    POSITION: 47
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_SHORT_DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 47
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false
+  - ID_FIELD: SCL_RUT
+    NAME_ESP: RUT
+    REAL_NAME: SCL_RUT
+    POSITION: 47
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SS_NUMBER
+    NOT_NULL: false
+  - ID_FIELD: SAR_CUIL
+    NAME_ESP: Cuil
+    REAL_NAME: SAR_CUIL
+    POSITION: 48
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SS_NUMBER
+    NOT_NULL: false
+  - ID_FIELD: SBR_CPF
+    NAME_ESP: CPF
+    REAL_NAME: SBR_CPF
+    POSITION: 50
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SSN
+    NOT_NULL: false
+  - ID_FIELD: SME_RFC
+    NAME_ESP: RFC
+    REAL_NAME: SME_RFC
+    POSITION: 50
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SS_NUMBER
+    NOT_NULL: false
+  - ID_FIELD: SME_CURP
+    NAME_ESP: CURP
+    REAL_NAME: SME_CURP
+    POSITION: 51
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SSN
+    NOT_NULL: false

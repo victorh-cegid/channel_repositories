@@ -1,0 +1,12 @@
+Fecha = ARG_FECHA
+
+vDia  = ToString(  DxDay(Fecha),0)
+vMes  = ToString(DxMonth(Fecha),0)
+vAnio = ToString( DxYear(Fecha),0)
+
+If Length(vDia) < 2 Then vDia = "0" + vDia
+If Length(vMes) < 2 Then vMes = "0" + vMes
+
+Cadena = vAnio + "/" + vMes + "/" + vDia
+
+Return(Cadena)

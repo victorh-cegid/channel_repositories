@@ -1,0 +1,14 @@
+/*********************************************************************
+   ID: SAR_SET_PATH
+   Nombre: Caracter final
+   Fecha: 17/09/2015
+   Autor: emmanueln
+   Argumentos: ARG_PATH
+   Descripcion: el argumento tiene como funcion insertar un valor (hasta 3 caracteres) en la linea del txt)
+*********************************************************************/
+
+IF ARG_PATH <> NULLVALUE() THEN
+    P_PATH = ARG_PATH
+ELSE
+    P_PATH = ""
+ENDIF

@@ -1,0 +1,217 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 7
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: STD_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: STD_OR_HR_PERIOD
+    NAME_ESP: Num. periodo
+    REAL_NAME: STD_OR_HR_PERIOD
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_OR_HR_PERIOD
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_LEG_ENT
+    NAME_ESP: ID Empresa
+    REAL_NAME: STD_ID_LEG_ENT
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: STD_ID_LEG_ENT
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_EXTERNAL_ORG
+    NAME_ESP: ID Org. externa
+    REAL_NAME: STD_ID_EXTERN_ORG
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: STD_ID_EXTERNAL_ORG
+    NOT_NULL: true
+  - ID_FIELD: SAR_FEC_PAGO
+    NAME_ESP: Fecha de pago
+    REAL_NAME: SAR_FEC_PAGO
+    POSITION: 6
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: STD_DATE
+    NOT_NULL: true
+  - ID_FIELD: SAR_FECHA_IMPUTACION
+    NAME_ESP: Fecha imputacion
+    REAL_NAME: SAR_FECHA_IMPUTACION
+    POSITION: 7
+    IS_PK: true
+    POS_PK: 6
+    ID_TYPE: STD_DATE
+    NOT_NULL: true
+  - ID_FIELD: SAR_FECHA_SICOSS
+    NAME_ESP: Fecha SICOSS
+    REAL_NAME: SAR_FECHA_SICOSS
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_SUELDO
+    NAME_ESP: Sueldo
+    REAL_NAME: SAR_SUELDO
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_PREC_HORA_EXTRA
+    NAME_ESP: Precio hora extra
+    REAL_NAME: SAR_PREC_HORA_EXTRA
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_SAC
+    NAME_ESP: Valor SAC
+    REAL_NAME: SAR_SAC
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_VACACIONES
+    NAME_ESP: Vacaciones
+    REAL_NAME: SAR_VACACIONES
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_CONCEPTOS_NO_REMUN
+    NAME_ESP: Conceptos no remunerativos
+    REAL_NAME: SAR_CONCEPTOS_NO_REMUN
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_ADICIONALES
+    NAME_ESP: Adicionales
+    REAL_NAME: SAR_ADICIONALES
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_PREMIOS
+    NAME_ESP: Premios
+    REAL_NAME: SAR_PREMIOS
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_PLUS_ZONA_DESFAV
+    NAME_ESP: Plus zona desfavorable
+    REAL_NAME: SAR_PLUS_ZONA_DESFAV
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_CANT_HORAS_EXTRAS
+    NAME_ESP: Cantidad horas extras
+    REAL_NAME: SAR_CANT_HORAS_EXTRAS
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CANT_HORAS
+    NOT_NULL: false
+  - ID_FIELD: SAR_BASE_REMUNERACION_ART9
+    NAME_ESP: Base de Remuneracion 9 art
+    REAL_NAME: SAR_BASE_REMUNERACION_ART9
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_PORC_ALICUOTA
+    NAME_ESP: Porcentaje alicuota
+    REAL_NAME: SAR_PORC_ALICUOTA
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_PORCENTAJE
+    NOT_NULL: false
+  - ID_FIELD: SAR_CTA_COTIZA_ART
+    NAME_ESP: Cuota de cotizacion ART
+    REAL_NAME: SAR_CTA_COTIZA_ART
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_CANT_DAY_TRAB
+    NAME_ESP: Cantidad dias trabajados
+    REAL_NAME: SAR_CANT_DAY_TRAB
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_NUM_DAY
+    NOT_NULL: false
+  - ID_FIELD: SAR_CANT_HS_TRAB
+    NAME_ESP: Cantidad horas trabajadas
+    REAL_NAME: SAR_CANT_HS_TRAB
+    POSITION: 22
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CANT_HORAS
+    NOT_NULL: false
+  - ID_FIELD: SAR_CTA_FIJA
+    NAME_ESP: Valor cuota fija
+    REAL_NAME: SAR_CTA_FIJA
+    POSITION: 23
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_ART_FINES_ESP
+    NAME_ESP: ART fondos fines especificos
+    REAL_NAME: SAR_ART_FINES_ESP
+    POSITION: 24
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 26
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 27
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

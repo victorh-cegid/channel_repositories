@@ -1,0 +1,12 @@
+item: SAR_FECHA_CORTE_IMP
+name: Fecha de corte en el impuesto
+column_name: SAR_FECHA_CORTE_IMP
+item_type: FIELD
+type: DATE
+id_m4_type: 4
+prec: 0
+scale: 0
+scope: RECORD
+default_value: "1800-01-01"
+internal_type: 1
+item_aux: null

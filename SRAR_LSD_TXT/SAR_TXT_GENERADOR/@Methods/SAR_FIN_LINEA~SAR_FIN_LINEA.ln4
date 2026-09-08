@@ -1,0 +1,11 @@
+/*********************************************************************
+   ID: SAR_NVA_LINEA
+   Nombre: Caracter final
+   Fecha: 17/09/2015
+   Autor: emmanueln
+   Argumentos: 
+   Descripcion: aqui se finalizo la linea agregando a la propiedad P_LINEA el caracter final P_CARACTER_FIN
+*********************************************************************/
+
+'finalizo la linea con el caracter final P_CARACTER_FIN
+P_LINEA = P_LINEA + P_CARACTER_FIN

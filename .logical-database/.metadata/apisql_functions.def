@@ -1,0 +1,792 @@
+functions:
+  - ID_FUNCTION: ABS
+    NAME_ESP: Valor absoluto
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: ABS(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: ADD_DAYS
+    NAME_ESP: A?adir dias
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: DATEADD(DAY, #P1, #P2)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: ADD_MONTHS
+    NAME_ESP: A?adir meses
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: DATEADD(MONTH, #P2, #P1)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: ANYOS
+    NAME_ESP: A?os transcurridos
+    ID_M4_TYPE: NUMBER
+    PREC: 4
+    FUNCTION_HEADER: (FLOOR(((DATEDIFF(DD,#P,(GETDATE())))/365)))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: AVG
+    NAME_ESP: Media
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: AVG(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: CASE_ACCENT_INSENSITIVE
+    NAME_ESP: Compara valores / Insensibilidad mayus. / acentos
+    ID_M4_TYPE: STRING
+    PREC: 400
+    FUNCTION_HEADER: #P = #P COLLATE LATIN1_GENERAL_CI_AI
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: CEILING
+    NAME_ESP: Redondeo superior
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: CEILING(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: CHR
+    NAME_ESP: Caracter
+    ID_M4_TYPE: STRING
+    PREC: 1
+    FUNCTION_HEADER: CHAR(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: CONCAT
+    NAME_ESP: Concatenar dos cadenas
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: (#P+#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: CONCAT_GENERIC
+    NAME_ESP: Concatenar
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: (ISNULL(#P1,'')) + (ISNULL(#P2,'') ) + (ISNULL(#P3,'')) + (ISNULL(#P4,'')) + ( ISNULL(#P5,''))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 3
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 4
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 5
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: COND_VALUE
+    NAME_ESP: Valor condicional
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: CASE WHEN (#P1 IS NULL) THEN (#P2) ELSE (#P3) END
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: COND
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: VAL1
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 3
+        N_ARGUMENT: VAL2
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: COUNT
+    NAME_ESP: Cuenta
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: COUNT (#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: COUNT_DISTINCT
+    NAME_ESP: Cuenta distinta
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: COUNT (DISTINCT #P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: DATALENGTH
+    NAME_ESP: TAMA?O
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: DATALENGTH(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATA
+        ID_M4_TYPE: BINARY_STRING
+  - ID_FUNCTION: DATE
+    NAME_ESP: Fecha
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: CONVERT(DATETIME,#P,120)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: DATE_DAY_WEEK
+    NAME_ESP: Fecha de dia semana
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: DATEADD(DAY,(#P1 - DATEPART(DW,#P2)) , #P2)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: DATE_DIFF
+    NAME_ESP: Diferencia de fechas
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: DATEDIFF(DD,#P2,#P1)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: DAY_MONTH
+    NAME_ESP: Dia del mes
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: REPLICATE('0',2-LEN(CONVERT(VARCHAR,DATEPART(DD,#P1))))+CONVERT(VARCHAR,DATEPART(DD,#P1))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: DAY_WEEK
+    NAME_ESP: Dia de la semana
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: CONVERT(VARCHAR,DATEPART(DW,#P))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: DAY_YEAR
+    NAME_ESP: Dia del a?o
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: REPLICATE('0',3-LEN(CONVERT(VARCHAR,DATEPART(DY,#P1))))+CONVERT(VARCHAR,DATEPART(DY,#P1))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: DECODE
+    NAME_ESP: Decodificar
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: CASE (#P1) WHEN (#P2) THEN (#P3) WHEN (#P4) THEN (#P5) END
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 3
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 4
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 5
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: DECODE_ELSE
+    NAME_ESP: Decodificar si
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: CASE (#P1) WHEN (#P2) THEN (#P3) WHEN (#P4) THEN (#P5) ELSE (#P6) END
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 3
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 4
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 5
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 6
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: EXP
+    NAME_ESP: Exponencial
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: EXP(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: FLOOR
+    NAME_ESP: Redondeo inferior
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: FLOOR(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: FORMAT_DATE
+    NAME_ESP: Formato YYYY-MM
+    ID_M4_TYPE: STRING
+    PREC: 20
+    FUNCTION_HEADER: (CONVERT(VARCHAR(7), #P1, 120))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: FORMAT_DATE_DD.MM.YYYY
+    NAME_ESP: Formato DD.MM.YYYY
+    ID_M4_TYPE: STRING
+    PREC: 20
+    FUNCTION_HEADER: CONVERT(VARCHAR(10), #P1, 104)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: FECHA
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: FORMAT_DATE_DDMMYYYY
+    NAME_ESP: Formato DDMMYYYY
+    ID_M4_TYPE: STRING
+    PREC: 20
+    FUNCTION_HEADER: REPLACE(CONVERT(VARCHAR(10), #P1, 103), '/', '')
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: FECHA
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: FORMAT_DATE_YYYY.MM.DD
+    NAME_ESP: Formato YYYY.MM.DD
+    ID_M4_TYPE: STRING
+    PREC: 20
+    FUNCTION_HEADER: CONVERT(VARCHAR(10), #P1, 102)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: Fecha
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: FORMAT_DATE_YYYYMMDD
+    NAME_ESP: Formato YYYYMMDD
+    ID_M4_TYPE: STRING
+    PREC: 20
+    FUNCTION_HEADER: CONVERT(VARCHAR(8), #P1, 112)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: FECHA
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: FOR_JSON
+    NAME_ESP: For Json
+    ID_M4_TYPE: STRING
+    PREC: 4000
+    FUNCTION_HEADER: [#P~,#P~]
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: EXPRESSION
+        ID_M4_TYPE: VARIANT
+  - ID_FUNCTION: GREATEST
+    NAME_ESP: Mayor de
+    ID_M4_TYPE: VARIANT
+    PREC: 254
+    FUNCTION_HEADER: CASE WHEN #P1 >=  #P2 THEN #P1  ELSE #P2 END
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: VARIANT
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: VARIANT
+  - ID_FUNCTION: GREATEST_DATE
+    NAME_ESP: Fecha Mayor de ....
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: dbo.GREATEST_DATE_SQLSERVER(#P1,#P2,#P3,#P4,#P5)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+      - ARGUMENT_POS: 3
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+      - ARGUMENT_POS: 4
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+      - ARGUMENT_POS: 5
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: IFNULL_DATE
+    NAME_ESP: Si es nula la fecha
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: ISNULL(#P,#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: IFNULL_NUMBER
+    NAME_ESP: Si es nulo el numero
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: ISNULL(#P,#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: IFNULL_STRING
+    NAME_ESP: Si es nula la cadena
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: ISNULL(#P,#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: INSTR
+    NAME_ESP: INSTR
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: CHARINDEX(#P2,#P1,CONVERT(NUMERIC,#P3))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: STRING
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: SEARCH_STR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 3
+        N_ARGUMENT: INDEX
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: INSTR_NUMBER
+    NAME_ESP: Buscar posicion
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: CHARINDEX(#P2,#P1,CONVERT(NUMERIC,#P3))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: STRING
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: SEARCH_STR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 3
+        N_ARGUMENT: INDEX
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: ISO_DATE
+    NAME_ESP: Fecha ISO
+    ID_M4_TYPE: STRING
+    PREC: 19
+    FUNCTION_HEADER: CONVERT(VARCHAR,#P,120)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATETIME
+  - ID_FUNCTION: LCASE
+    NAME_ESP: Convertir a minusculas
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: LOWER(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: LEAST
+    NAME_ESP: Menor de
+    ID_M4_TYPE: VARIANT
+    PREC: 254
+    FUNCTION_HEADER: CASE WHEN #P1 <=  #P2 THEN #P1  ELSE #P2 END
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: VARIANT
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: VARIANT
+  - ID_FUNCTION: LEAST_DATE
+    NAME_ESP: Fecha Menor de...
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: dbo.LEASTEST_DATE_SQLSERVER(#P1,#P2,#P3,#P4,#P5)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+      - ARGUMENT_POS: 3
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+      - ARGUMENT_POS: 4
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+      - ARGUMENT_POS: 5
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: LEFT
+    NAME_ESP: Izquierda
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: LEFT(#P,#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: LENGTH
+    NAME_ESP: Longitud
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: LEN(REPLACE(#P,' ','_'))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: LOG
+    NAME_ESP: Logaritmo
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: LOG(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: LPAD
+    NAME_ESP: Rellenar por la izquierda
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: SUBSTRING((REPLICATE(#P3,#P2)),1,(CONVERT(INT,#P2)-LEN(REPLACE(#P1,' ','_'))))+#P1
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+      - ARGUMENT_POS: 3
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: LTRIM
+    NAME_ESP: Eliminar blancos izquierda
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: LTRIM(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: MAX
+    NAME_ESP: Maximo
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: MAX(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: MAX_NUMBER
+    NAME_ESP: Maximo de numero
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: MAX(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: MIN
+    NAME_ESP: Minimo
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: MIN(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: MONTH_DATE
+    NAME_ESP: Mes de la fecha
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: DATEPART(MM,#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: NAME_USER
+    NAME_ESP: Nombre de usuario
+    ID_M4_TYPE: STRING
+    PREC: 50
+    FUNCTION_HEADER: $N_APP_USER
+  - ID_FUNCTION: PROPER
+    NAME_ESP: Primera letra en mayuscula
+    ID_M4_TYPE: STRING
+    PREC: 999
+    FUNCTION_HEADER: dbo.INITCAP(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: QUARTER
+    NAME_ESP: Numero de cuatrimestre
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: DATEPART(QQ,#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: REPLACE_SPECIAL_CHARS_SPA
+    NAME_ESP: Reemplazar caracteres especiales del espa?ol
+    ID_M4_TYPE: STRING
+    PREC: 2000
+    FUNCTION_HEADER: dbo.REPLACE_CADENA_SPA_SQLSERVER(#P1)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: RIGHT
+    NAME_ESP: Derecha
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: RIGHT(#P,#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: ROUND
+    NAME_ESP: Redondeo
+    ID_M4_TYPE: NUMBER
+    PREC: 3
+    FUNCTION_HEADER: ROUND(#P, 0)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VAL
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: RPAD
+    NAME_ESP: Rellenar por la derecha
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: #P1 + SUBSTRING((REPLICATE(#P3,#P2)),1,(CONVERT(INT,#P2)-LEN(REPLACE(#P1,' ','_'))))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+      - ARGUMENT_POS: 3
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: RTRIM
+    NAME_ESP: Eliminar blancos derecha
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: RTRIM(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: SEQUENCE
+    NAME_ESP: Secuencia
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: NEXT VALUE FOR M4RDC_SEQUENCE
+  - ID_FUNCTION: SHORT_DATE
+    NAME_ESP: Fecha corta
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: DATEADD(DD, DATEDIFF(DD, 0 ,#P), 0)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATETIME
+  - ID_FUNCTION: SHORT_TODAY
+    NAME_ESP: Fecha corta hoy
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: DATEADD(DD, DATEDIFF(DD, 0, GETDATE()), 0)
+  - ID_FUNCTION: SIGN
+    NAME_ESP: Signo
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: SIGN(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: SQRT
+    NAME_ESP: Raiz cuadrada
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: SQRT(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: SUBSTR
+    NAME_ESP: Subcadena desde-hasta el final
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: SUBSTRING(#P1,CONVERT(INTEGER,#P2),LEN(#P1)-CONVERT(INTEGER,#P2)+1)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: SUBSTRING
+    NAME_ESP: Subcadena desde-hasta
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: SUBSTRING(#P1,CONVERT(INTEGER,#P2),CONVERT(INTEGER,#P3))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+      - ARGUMENT_POS: 2
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+      - ARGUMENT_POS: 3
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: SUM
+    NAME_ESP: Suma
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: SUM(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: TIME_STAMP
+    NAME_ESP: Fecha hora
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: CONVERT(DATETIME,#P,120)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: TODAY
+    NAME_ESP: Hoy
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: GETDATE()
+  - ID_FUNCTION: TO_CHAR
+    NAME_ESP: Convertir a cadena
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: CONVERT(VARCHAR(2000),#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: NUMBER
+        ID_M4_TYPE: NUMBER
+  - ID_FUNCTION: TO_DATE
+    NAME_ESP: Convertir a fecha
+    ID_M4_TYPE: DATE
+    PREC: 0
+    FUNCTION_HEADER: CONVERT(DATETIME,#P,120)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: TO_NUMBER
+    NAME_ESP: Convertir a numero
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: CONVERT(FLOAT,#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: UCASE
+    NAME_ESP: Convertir a mayusculas
+    ID_M4_TYPE: STRING
+    PREC: 254
+    FUNCTION_HEADER: UPPER(#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: VARCHAR
+        ID_M4_TYPE: STRING
+  - ID_FUNCTION: WEEK
+    NAME_ESP: Semana
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: REPLICATE(0,2-LEN(( CEILING( CAST( DATEPART( DY, CONVERT( DATETIME, #P1, 120)) AS DECIMAL)/ 7)))) + CAST(CEILING( CAST( DATEPART( DY, CONVERT( DATETIME, #P1, 120)) AS DECIMAL)/ 7) AS CHAR(2))
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE
+  - ID_FUNCTION: YEAR_DATE
+    NAME_ESP: A?o de la fecha
+    ID_M4_TYPE: NUMBER
+    PREC: 18
+    FUNCTION_HEADER: DATEPART(YY,#P)
+    arguments:
+      - ARGUMENT_POS: 1
+        N_ARGUMENT: DATE
+        ID_M4_TYPE: DATE

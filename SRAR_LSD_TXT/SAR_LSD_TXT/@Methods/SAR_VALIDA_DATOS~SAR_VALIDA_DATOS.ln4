@@ -1,0 +1,42 @@
+'verifica que todos los datos obligatorios de la presentacion no sean null
+
+IF ISNULL(SAR_P_LEG_ENT) = M4_TRUE OR ISNULL(SAR_P_FEC_PAGO) = M4_TRUE OR ISNULL(SAR_P_PATH) = M4_TRUE THEN
+    setlog (M4_error,2,80,262) 'Se deben completar todos los datos obligatorios para la generacion del archivo "Interfaz de liquidacion y DDJJ"
+    EndVMTransaction(M4_Rollback)
+ENDIF
+
+If SAR_P_CHECK_RETRO = "1" And IsNull(SAR_P_FEC_IMP_RETRO) = M4_TRUE Then
+    setlog (M4_error,2,80,269) 'Si se marca la check "Retroactiva" es obligatorio informar el campo "Fecha de imputacion" para la generacion del archivo "Interfaz de liquidacion y DDJJ".
+    EndVMTransaction(M4_Rollback)
+EndIf
+
+If SAR_P_CHECK = "1" And (IsNull(SAR_P_ANIO_RECTIF) = M4_TRUE Or IsNull(SAR_P_MES_RECTIF) = M4_TRUE Or SAR_P_MES_RECTIF = 0) Then
+    setlog (M4_error,2,80,267) 'Si se marca la check "Rectificativa" es obligatorio informar los campos asociados "A?o" y "Mes" para la generacion del archivo "Interfaz de liquidacion y DDJJ".
+    EndVMTransaction(M4_Rollback)
+    
+ElseIf SAR_P_CHECK = "1" And Length(ToString(SAR_P_ANIO_RECTIF,0)) < 4 Then 
+    SetLog(M4_ERROR,2,80,480,"El a?o seleccionado es incorrecto, debe tener 4 digitos numericos")
+    EndVMTransaction(M4_Rollback)
+
+EndIf
+
+load_blk()
+begin()
+
+If Count() = 0 Then
+    setlog (M4_error,2,80,268) 'No existen datos para generar correctamente el archivo de "Interfaz de liquidacion y DDJJ".
+    EndVMTransaction(M4_Rollback)
+Else
+    IF SCO_ID_PAY_TYPE = "99" THEN
+        setlog (M4_error,2,80,266) 'No se puede generar el archivo "Interfaz de liquidacion y DDJJ" para una paga de Reliquidacion Anual, se debe seleccionar otra paga.
+        EndVMTransaction(M4_Rollback)
+    ENDIF
+    
+    If Count() = 0 Then
+        SetLog(M4_ERRORLOG,2,80,264) 'Falta la parametrizacion en Fechas de paga asociada a la Fecha de pago e ID Empresa seleccionados para la generacion del archivo "Interfaz de liquidacion y DDJJ".
+        EndVMTransaction(M4_ROLLBACK)
+    EndIf
+    
+    SAR_P_ID_PAY_TYPE=SCO_ID_PAY_TYPE  
+
+EndIf

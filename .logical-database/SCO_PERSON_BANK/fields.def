@@ -1,0 +1,225 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: ID_ORG_MONO
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_PERSON
+    NAME_ESP: ID Persona
+    REAL_NAME: SCO_ID_PERSON
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_PERSON
+    NOT_NULL: true
+  - ID_FIELD: SCO_OR_ACCOUNT
+    NAME_ESP: Num. sec. cuenta
+    REAL_NAME: SCO_OR_ACCOUNT
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: STD_ORDINAL_6
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: SCO_DT_START
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: SCO_DT_END
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_BANK_BRANCH
+    NAME_ESP: ID Sucursal bancaria
+    REAL_NAME: SCO_ID_BANK_BRANCH
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_BNK_BRN
+    NOT_NULL: true
+  - ID_FIELD: SCO_NM_BNK
+    NAME_ESP: Nombre banco
+    REAL_NAME: SCO_NM_BNK
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SHORT_DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: SCO_ENTITLED
+    NAME_ESP: Autorizado
+    REAL_NAME: SCO_ENTITLED
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SHORT_DESCRIPTION
+    NOT_NULL: true
+  - ID_FIELD: SCO_ACCOUNT_NUMBER
+    NAME_ESP: Num. cuenta
+    REAL_NAME: SCO_ACCOUNT_NUMBER
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SHORT_DESCRIPTION
+    NOT_NULL: true
+  - ID_FIELD: ID_CURRENCY
+    NAME_ESP: ID Moneda
+    REAL_NAME: ID_CURRENCY
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_BANKUSE
+    NAME_ESP: ID Uso banco
+    REAL_NAME: SCO_ID_BANKUSE
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_BANKUSE
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_BANKTYPE
+    NAME_ESP: ID Tipo banco
+    REAL_NAME: SCO_ID_BANKTYPE
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_BANKTYPE
+    NOT_NULL: true
+  - ID_FIELD: SCO_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SCO_COMMENT
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_COMENT
+    NOT_NULL: false
+  - ID_FIELD: SCO_GB_BANK
+    NAME_ESP: Informacion bancaria
+    REAL_NAME: SCO_GB_BANK
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: true
+  - ID_FIELD: SCO_IBAN_CODE
+    NAME_ESP: Codigo de pais
+    REAL_NAME: SCO_IBAN_CODE
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR2
+    NOT_NULL: false
+  - ID_FIELD: SCO_IBAN_KEY
+    NAME_ESP: Clave IBAN
+    REAL_NAME: SCO_IBAN_KEY
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR2
+    NOT_NULL: false
+  - ID_FIELD: SCO_GB_IBAN
+    NAME_ESP: IBAN
+    REAL_NAME: SCO_GB_IBAN
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_GB_BANK
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_STANDARD
+    NAME_ESP: ID Estandar
+    REAL_NAME: SCO_ID_STANDARD
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING9
+    NOT_NULL: false
+  - ID_FIELD: SFR_ACCOUNT_KEY
+    NAME_ESP: Digito control
+    REAL_NAME: SFR_ACCOUNT_KEY
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR2
+    NOT_NULL: false
+  - ID_FIELD: SSP_DC
+    NAME_ESP: Digito control
+    REAL_NAME: SSP_DC
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_NUMBER_2
+    NOT_NULL: false
+  - ID_FIELD: SUK_ACCOUNT_REFERENCE
+    NAME_ESP: Referencia cuenta
+    REAL_NAME: SUK_ACCOUNT_REFERE
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR_20
+    NOT_NULL: false
+  - ID_FIELD: SUK_EMPLOYEE_REFNO
+    NAME_ESP: Employee Reference Number
+    REAL_NAME: SUK_EMPLOYEE_REFNO
+    POSITION: 22
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SHORT_DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_COUNTRY
+    NAME_ESP: Id. Pais
+    REAL_NAME: STD_ID_COUNTRY
+    POSITION: 23
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING9
+    NOT_NULL: false
+  - ID_FIELD: SME_NUM_CLABE
+    NAME_ESP: Numero de CLABE 
+    REAL_NAME: SME_NUM_CLABE
+    POSITION: 24
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SME_CARACT_18
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SAR_ALIAS_CBU
+    NAME_ESP: Alias CBU
+    REAL_NAME: SAR_ALIAS_CBU
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ALIAS_CBU
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 26
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 27
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

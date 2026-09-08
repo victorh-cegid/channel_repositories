@@ -1,0 +1,65 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: SLA_ID_PROCESO
+    NAME_ESP: ID Proceso
+    REAL_NAME: SLA_ID_PROCESO
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: SLA_ID_PROCESO
+    NOT_NULL: true
+  - ID_FIELD: SLA_ID_PARAMETRO
+    NAME_ESP: ID Parametro
+    REAL_NAME: SLA_ID_PARAMETRO
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SLA_ID_PARAMETRO
+    NOT_NULL: true
+  - ID_FIELD: SLA_DETALLE
+    NAME_ESP: Detalle
+    REAL_NAME: SLA_DETALLE
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SLA_DETALLE
+    NOT_NULL: false
+  - ID_FIELD: SLA_VALOR
+    NAME_ESP: Valor
+    REAL_NAME: SLA_VALOR
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SLA_VALOR
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

@@ -1,0 +1,11 @@
+/****************************************************************************************
+        ID: SAR_INICIAR_NODOS
+        Nombre: Genera registro 04 para Libro Sueldo Digital
+        Fecha: 05/02/2018
+        Autor: estibalizfg
+        Descripcion:  en este metodo se realiza la obtencion de los datos de la empresa, 
+                        segun lo solicitado para el armado del archivo
+*****************************************************************************************/
+
+SAR_REG_05_STD_PERIOD.Begin()
+SAR_GEN_REG_5_AC_EMP_AGEN_ART.Begin()

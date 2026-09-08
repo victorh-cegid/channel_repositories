@@ -1,0 +1,153 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: ID_ORG_MONO
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: STD_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: SCO_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SCO_COMMENT
+    POSITION: 3
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_COMENT
+    NOT_NULL: false
+  - ID_FIELD: SUK_NORMAL_RETIREMENT_DT
+    NAME_ESP: Fecha de jubilacion prevista
+    REAL_NAME: SUK_NORMAL_RETIREM
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SUK_ACTUAL_RETIREMENT_DT
+    NAME_ESP: Fecha de jubilacion real
+    REAL_NAME: SUK_ACTUAL_RETIREM
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SSP_NUM_SS
+    NAME_ESP: Numero SS
+    REAL_NAME: SSP_NUM_SS
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SSP_VARSTRING8
+    NOT_NULL: false
+  - ID_FIELD: SSP_DIG_NUM_SS
+    NAME_ESP: Digito SS
+    REAL_NAME: SSP_DIG_NUM_SS
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SSP_VARSTRING2
+    NOT_NULL: false
+  - ID_FIELD: SFR_OTHER_ID
+    NAME_ESP: Otro ID
+    REAL_NAME: SFR_OTHER_ID
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_PERSON
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_SS_CENTER
+    NAME_ESP: Centro de S.S.
+    REAL_NAME: STD_ID_SS_CENTER
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_EXTERNAL_ORG
+    NOT_NULL: false
+  - ID_FIELD: SSP_PROV_NUM_SS
+    NAME_ESP: Num Provincia SS
+    REAL_NAME: SSP_PROV_NUM_SS
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SSP_VARSTRING2
+    NOT_NULL: false
+  - ID_FIELD: SSP_SSN_LEGAL
+    NAME_ESP: Nif representante legal
+    REAL_NAME: SSP_SSN_LEGAL
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SSP_SSN
+    NOT_NULL: false
+  - ID_FIELD: SSP_FEC_INI_35
+    NAME_ESP: Fecha inicio 35 a?os cotizados
+    REAL_NAME: SSP_FEC_INI_35
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SSP_FEC_INI_65
+    NAME_ESP: Fecha inicio reduccion 65 a?os
+    REAL_NAME: SSP_FEC_INI_65
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SSP_FEC_INI_EMP
+    NAME_ESP: Fecha alta Empresa para bonif
+    REAL_NAME: SSP_FEC_INI_EMP
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SPO_NUMERO_BENEF
+    NAME_ESP: Nro. Beneficiario
+    REAL_NAME: SPO_NUMERO_BENEF
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR_20
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SPO_ID_REP_FINAN
+    NAME_ESP: ID Rep. Finan.
+    REAL_NAME: SPO_ID_REP_FINAN
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: HCO_VARCHAR_6
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

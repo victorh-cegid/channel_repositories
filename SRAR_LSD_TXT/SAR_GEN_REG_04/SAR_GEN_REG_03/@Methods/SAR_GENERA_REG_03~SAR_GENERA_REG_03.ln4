@@ -1,0 +1,184 @@
+/****************************************************************************************
+        ID: SAR_GENERA_REG_03
+        Nombre: Genera registro 03 para Libro Sueldo Digital
+        Fecha: 29/09/2015
+        Autor: emmanueln
+        Descripcion:  en este metodo se realiza la obtencion de los datos de la empresa, 
+                        segun lo solicitado para el armado del archivo
+*****************************************************************************************/
+'Inicio el nodo principal
+begin()
+
+vCompletoNum = "0" 'variable con la que se completan los caracteres en caso de que los valores no completen los lugares asignados por el layout
+vCompletoCar = " " 'variable con la que se completan los caracteres en caso de que los valores no completen los lugares asignados por el layout
+
+vmargenNum = "I" 'D=derecha y I=izquierda
+vmargenAlfa = "D"
+vCantidad = 0
+vImporte = 0
+vDebitoCredito = ""
+
+'recorro el aucmulado para ver que existan datos
+IF COUNT() > 0 THEN
+    'mientras tengo datos recorro el acumulado
+    WHILE ISEOF() = M4_FALSE        
+        'recorro la tabla de parametrizacion de conceptos LSD para ver que existan datos
+        'mientra tenga datos la tabla la recorro
+        SAR_GEN_REG03_PAR_CONC.begin()
+        
+        vFreqPago = tostring(SCO_PAY_FREQ_PAYM,0) 
+        IF vFreqPago = "003" AND SAR_TIPO_SALARIO = "003" then
+            vFreqPago = "J"
+        else
+            vFreqPago = "M"
+        Endif 
+        
+        WHILE SAR_GEN_REG03_PAR_CONC.ISEOF() = M4_FALSE
+            SCO_AUX_AC_HRPERIOD_1.BEGIN()
+            'me fijo que frecuencia de pago tiene el empleado a analizar (M = Menseales '004' - J = Jornales '003')
+         
+            While SCO_AUX_AC_HRPERIOD_1.IsEOF() = M4_FALSE        // Mientras tengo datos recorro el acumulado
+                vDebitoCredito = SAR_GEN_REG03_PAR_CONC.SAR_CREDITO_DEBITO
+            
+                IF SCO_AUX_AC_HRPERIOD_1.COUNT() > 1 And SAR_GEN_REG03_PAR_CONC.SAR_MARCA_REPETICION = "0" THEN      // Mas de un registro y el concepto NO admite repeticiones
+                    SAR_HR_CON_TRAMOS()
+                    vImporte = SAR_P_IMPORTE
+                    vCantidad = SAR_P_CANTIDAD
+                    
+                    SCO_AUX_AC_HRPERIOD_1.MoveToEOF()             // Finalizamos el recorrido del acumulado de periodo de RH
+                ELSE
+                    vID_ConceptoImp = getvalue("SAR_GEN_REG03_PAR_CONC","SAR_CONCEP_IMPORTE_"+vFreqPago,-1)
+                    IF ISNULL (vID_ConceptoImp) = M4_FALSE THEN
+                        vImporte = ChannelAttribCall(-1,"", "SAR_GEN_REG03_AUX_HRPERIOD",vID_ConceptoImp, M4_ATT_SYS_TOTALIZE_SLICES)
+                    ENDIF
+                    vID_ConceptoCant = getvalue("SAR_GEN_REG03_PAR_CONC","SAR_CONCEP_UNID_"+vFreqPago,-1)
+                    IF ISNULL (vID_ConceptoCant) = M4_FALSE THEN
+                        vID_ConceptoCant = vID_ConceptoCant
+                        vCantidad = ChannelAttribCall(-1,"", "SAR_GEN_REG03_AUX_HRPERIOD",vID_ConceptoCant, M4_ATT_SYS_TOTALIZE_SLICES)
+                        vCantidad = vCantidad
+                    ENDIF
+                    
+                    SCO_AUX_AC_HRPERIOD_1.GONEXT()             // Nos movemos al siguiente registro del acumulado de periodo de RH
+                ENDIF
+
+                IF vImporte <> 0 AND ISNULL(vImporte) = M4_FALSE THEN
+                'inicio una nueva linea para el registro nuevo
+                    SAR_TXT_GENERADOR.SAR_NVA_LINEA()
+                
+                '1.- Identificacion del tipo de registro
+                    'campo 01: valor fijo "03" long: 2 posicion txt: 1 a 2 (alfanumerico)
+                    vID_Tipo_reg = "03"
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vID_Tipo_reg,2,vCompletoCar,vmargenAlfa)
+                    
+                '2.- CUIL del trabajador
+                    'campo 02: STD_SS_NUMBER o SAR_CUIL long: 11 posicion txt: 3 a 13 (numerico)
+                    vEmpleado = ""
+                    IF ISNULL(SAR_CUIL)= M4_TRUE THEN
+                        vEmpleado = STD_SS_NUMBER
+                    ELSE
+                        vEmpleado = SAR_CUIL
+                    ENDIF                
+                    'en caso de que haya "-" (guiones) o "." (puntos) se los borra para que el numero quede limpio
+                    vEmpleado = replace(vEmpleado,"-","")
+                    vEmpleado = replace(vEmpleado,".","")
+                            
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vEmpleado,11,vCompletoNum,vmargenNum)
+                                        
+                '3.- Codigo de concepto liquidado por el empleador
+                    'campo 03: SAR_GEN_REG03_PAR_CONC.SAR_ID_CONC_SUELDO_EMPLEADOR long: 10 posicion txt: 14 a 23 (alfanumerico)
+                    vID_ConcLiqEmp = SAR_GEN_REG03_PAR_CONC.SAR_ID_CONC_SUELDO_EMPLEADOR
+                    
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vID_ConcLiqEmp,10,vCompletoCar,vmargenAlfa)
+                        
+                '4.- Cantidad
+                    'campo 04:  long: 5 posicion txt: 24 a 28 (numerico)
+                    IF  ISNULL(vCantidad)= M4_TRUE THEN vCantidad = 0
+                    
+                    /* si es un concepto del SAC informamos la cantidad de dias y no el proporcional
+                        3813 S.A.C. proporcional 1er. sem.
+                        3823 S.A.C. proporcional 2do.sem.
+                        3613 S.A.C. 1er. Semestre
+                        3623 S.A.C.  2do. Semestre
+                        3633 Ajuste S.A.C. primer semestre
+                        3644 Ajuste S.A.C. segundo semestre
+                    */
+                    IF vID_ConcLiqEmp = "3813" OR vID_ConcLiqEmp = "3823" OR vID_ConcLiqEmp = "3613" OR vID_ConcLiqEmp = "3623" OR vID_ConcLiqEmp = "3633" OR vID_ConcLiqEmp = "3644" THEN
+                        SAR_CALCULA_SEMESTRE()                       
+                        vCantidad = SAR_P_DIAS_SEM * vCantidad
+                    ENDIF
+
+                    vCantidad = tostring(abs(vCantidad),2)
+                    'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+                    vCantidad = replace(vCantidad,".","")
+                    vCantidad = replace(vCantidad,",","")
+                    
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vCantidad,5,vCompletoNum,vmargenNum)
+                                        
+                '5.- Unidades
+                    'campo 05:  long: 1 posicion txt: 29 a 29 (alfanumerico)
+                    vUnidades = ""
+                    IF vFreqPago = "M" THEN
+                        vUnidades = SAR_GEN_REG03_PAR_CONC.SAR_TIPO_UNID_M
+                    ELSE
+                        vUnidades = SAR_GEN_REG03_PAR_CONC.SAR_TIPO_UNID_J
+                    ENDIF
+                    IF vUnidades = "0" THEN
+                        vUnidades = " "
+                    ENDIF
+                    
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vUnidades,1,vCompletoCar,vmargenAlfa)
+                                        
+                '6.- Importe
+                    'campo 06: M = mensuales o J = jornales long: 15 posicion txt: 30 a 44 (numerico)
+                    if vImporte < 0 then
+                        SAR_INVIERTE_CREDITO(vImporte,vDebitoCredito)
+                        vImporte = SAR_P_IMPORTE
+                        vDebitoCredito = SAR_P_CRED_DEB
+                    endif
+                    
+                    vImporte = tostring(vImporte,2)
+                    vImporte = replace(vImporte,".","") 'en caso de que haya "." (puntos) o "," se los elimina de la cadena para que el formato del layout sea correcto
+                    vImporte = replace(vImporte,",","")
+        
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vImporte,15,vCompletoNum,vmargenNum)
+                        
+                '7.- Indicador Debito / Credito
+                    'campo 07: SAR_GEN_REG03_PAR_CONC.SAR_CREDITO_DEBITO long: 1 posicion txt: 45 a 45 (alfanumerico)
+                    
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vDebitoCredito,1,vCompletoCar,vmargenAlfa)
+                                
+                '8.- Periodo de ajuste retroactivo
+                    'campo 08: SAR_FECHA_SICOSS long: 6 posicion txt: 46 a 51 (numerico)
+                    IF SCO_DT_ALLOCATION <> SCO_DT_PAYMENT And SAR_P_CHECK_RETRO = "0" THEN
+                        vMesImputacion =  tostring(dxMonth (SCO_DT_PAY_START),0)    // Inicio paga de imputacion
+                        vAnioImputacion = tostring(DxYear (SCO_DT_PAY_START),0)     // Inicio paga de imputacion
+                        
+                        IF Length(vMesImputacion) < 2 THEN
+                           vMesImputacion = "0" + vMesImputacion
+                        ENDIF
+                        vfechaImputacion = vAnioImputacion + vMesImputacion
+                    ELSE
+                        vfechaImputacion = "      "
+                    ENDIF
+                    
+                    SAR_TXT_GENERADOR.SAR_AGREGAR_TEXTO(vfechaImputacion,6,vCompletoCar,vmargenNum)                                        
+    
+                    'finalizo la linea    
+                    SAR_TXT_GENERADOR.SAR_FIN_LINEA()
+                ENDIF
+            vCantidad = 0
+            'vImporte = 0                
+            WEnd        // Recorre los datos del acumulado de periodo de RH
+
+        'me muevo al siguiente concepto
+            SAR_GEN_REG03_PAR_CONC.GONEXT()
+            'vCantidad = 0
+            vImporte = 0
+            vDebitoCredito = ""
+            SAR_P_IMPORTE = 0
+            SAR_P_CRED_DEB = ""          
+        WEND
+'me muevo al siguiente empleado                
+        GONEXT()        
+    WEND
+ENDIF
