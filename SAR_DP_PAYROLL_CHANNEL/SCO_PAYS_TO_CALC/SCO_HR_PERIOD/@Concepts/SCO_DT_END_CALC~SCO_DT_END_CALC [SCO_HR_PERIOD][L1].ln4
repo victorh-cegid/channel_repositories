@@ -1,0 +1,6 @@
+If SCO_HR_PERIOD.SCO_IS_PAL = 1 or SCO_RETRO_TERM = STD_ID_HR Then
+    dtEnd=SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC
+Else    
+    dtEnd=min(STD_DT_END,SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC)
+Endif
+Return(dtEnd)

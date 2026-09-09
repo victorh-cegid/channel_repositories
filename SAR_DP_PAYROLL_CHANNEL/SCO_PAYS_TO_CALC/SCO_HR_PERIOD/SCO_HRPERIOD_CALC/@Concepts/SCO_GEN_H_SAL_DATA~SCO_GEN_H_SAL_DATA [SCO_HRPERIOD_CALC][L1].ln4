@@ -1,0 +1,86 @@
+ins=0
+break=1
+deleted=0
+
+//Si no hay regitros en la parametrizacion, avisamos y no grabamos nada en el historico
+num = SCO_SAL_DATA_PAR.Count()
+If num = 0 then 
+    Setlog(0,1,101,61)
+    return(-1)
+Endif
+
+SCO_SAL_DATA_PAR.Begin()
+node = SCO_SAL_DATA_PAR.SCO_ID_NODE
+
+//Este metodo ha sido pensado para el nodo auxiliar del period, si se utiliza otro probablemente habra que modificarlo
+//Se ejecuta antes del flatten, con lo que tenemos 1 registro por moneda, y los registros pueden estar tramados
+//Todos los registros de la parametrizacion hacen referencia a un unico nodo
+If node = "SCO_AUX_AC_HRPERIOD" Then
+    oldPosNode=Call(node,"GetCurrent")
+//El primer registro es el correspondiente a la main currency, que es el que nos interesa
+    Call(node,"Begin")
+
+//Precision a partir de la cual se considerara que ha cambiado un dato
+    prec = ToDouble(SCO_HRPERIOD_CALC[0].SCO_SAL_DATA_PREC(node))
+
+    numHist = SCO_H_SAL_DATA.Count()
+    If numHist >0 Then
+        SCO_H_SAL_DATA.Addregister()
+        keepReg = 0
+        SCO_SAL_DATA_PAR.Begin()
+        While SCO_SAL_DATA_PAR.IsEOF() = M4_FALSE
+            field = SCO_SAL_DATA_PAR.SCO_ID_FIELD
+            If IsNull(SCO_SAL_DATA_PAR.SCO_ID_ITEM) = M4_FALSE Then
+//Como son importes, totalizamos los tramos
+                valItem = ChannelAttribCall(M4_TOTAL_SUM,"",SCO_SAL_DATA_PAR.SCO_ID_NODE,SCO_SAL_DATA_PAR.SCO_ID_ITEM,M4_ATT_SYS_TOTALIZE_SLICES)
+                SetValue("SCO_H_SAL_DATA",field,-1,valItem)
+//comparamos el nuevo valor con el anterior; si la diferencia es menor que la precision, conservamos el registro
+                If Abs(valItem-GetValue("SCO_H_SAL_DATA",field,numHist-1)) > prec Then keepReg = 1
+            ElseIf IsNull(SCO_SAL_DATA_PAR.SCO_ID_FIELD_PERCE) = M4_FALSE Then 
+//Calculamos los porcentajes
+                fieldPer = SCO_SAL_DATA_PAR.SCO_ID_FIELD_PERCE
+                valFieldPerOld = GetValue("SCO_H_SAL_DATA",fieldPer,numHist-1)
+                If valFieldPerOld <> 0 Then 
+                    valFieldPer = GetValue("SCO_H_SAL_DATA",fieldPer,numHist)
+                    valPer = Round((valFieldPer-valFieldPerOld)*100/valFieldPerOld,2)
+                    If valPer > 999.99 Then
+                        SCO_H_SAL_DATA.DESTROYREGISTER()
+                        Setlog(0,1,101,62,SCO_H_SAL_DATA.SCO_ID_HR,SCO_H_SAL_DATA.SCO_OR_HR_PERIOD)
+                        return(-1)
+                    Endif            
+                    SetValue("SCO_H_SAL_DATA",field,-1,valPer)
+                Endif
+            Endif
+            SCO_SAL_DATA_PAR.GONEXT()
+        Wend
+        If keepReg = 0 Then
+            SCO_H_SAL_DATA.DESTROYREGISTER()
+        Else
+            SCO_H_SAL_DATA.SCO_DT_START = SCO_HR_PERIOD.SCO_DT_START_CALC
+            SCO_H_SAL_DATA.SCO_DT_END = SCO_HR_PERIOD.STD_DT_END
+            SCO_H_SAL_DATA.ID_CURRENCY = GetValue(node,"ID_CURRENCY",-1)
+            SCO_H_SAL_DATA.EX_TYPE = GetValue(node,"EX_TYPE",-1)
+            SCO_H_SAL_DATA.SCO_DT_EXCHANGE = GetValue(node,"SCO_DT_EXCHANGE",-1)
+        Endif
+    Else
+        SCO_H_SAL_DATA.Addregister()
+        SCO_H_SAL_DATA.SCO_DT_START = SCO_HR_PERIOD.SCO_DT_START_CALC
+        SCO_H_SAL_DATA.SCO_DT_END = SCO_HR_PERIOD.STD_DT_END
+        SCO_H_SAL_DATA.ID_CURRENCY = GetValue(node,"ID_CURRENCY",-1)
+        SCO_H_SAL_DATA.EX_TYPE = GetValue(node,"EX_TYPE",-1)
+        SCO_H_SAL_DATA.SCO_DT_EXCHANGE = GetValue(node,"SCO_DT_EXCHANGE",-1)
+        SCO_SAL_DATA_PAR.Begin()
+        While SCO_SAL_DATA_PAR.IsEOF() = M4_FALSE
+            field = SCO_SAL_DATA_PAR.SCO_ID_FIELD
+            If IsNull(SCO_SAL_DATA_PAR.SCO_ID_ITEM) = M4_FALSE Then
+                valItem = ChannelAttribCall(M4_TOTAL_SUM,"",SCO_SAL_DATA_PAR.SCO_ID_NODE,SCO_SAL_DATA_PAR.SCO_ID_ITEM,M4_ATT_SYS_TOTALIZE_SLICES)
+                SetValue("SCO_H_SAL_DATA",field,-1,valItem)
+            Endif
+            SCO_SAL_DATA_PAR.GONEXT()
+        Wend
+    Endif
+    
+    Call(oldPosNode,node,"moveto")
+Endif
+
+return(0)

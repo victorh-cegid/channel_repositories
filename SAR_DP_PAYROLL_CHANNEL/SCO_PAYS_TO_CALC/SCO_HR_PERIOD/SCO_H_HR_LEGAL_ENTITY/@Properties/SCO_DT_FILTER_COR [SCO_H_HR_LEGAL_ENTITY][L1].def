@@ -1,0 +1,9 @@
+item: SCO_DT_FILTER_COR
+name: Filtro fecha correccion
+item_type: PROPERTY
+type: DATE
+id_m4_type: 4
+prec: 10
+scale: 0
+scope: NODE
+default_value: null

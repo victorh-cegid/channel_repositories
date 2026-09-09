@@ -1,0 +1,39 @@
+If SCO_RETRO_TERM <> STD_ID_HR then
+
+    ' Si el tipo de paga es anticipo de vacaciones 
+    
+    IF SCO_PAYS_TO_CALC.SCO_PAY_TYPE_ALLOC = "88"  THEN 
+        
+        'Elimino los registros cargados en valores incidencia para el concepto 
+        '#8005(Descuento Anticipo de Vacaciones)
+        SAR_ANTICIPO_VACACIONES.DELETE_BLK()
+        
+        'Inserto los registros en valores incidencia para 
+        'el concepto #8005 (Descuento Anticipo de Vacaciones)
+        SAR_ANTICIPO_VACACIONES.INSERT_BLK()
+    
+    ENDIF
+    
+    'Accidentes
+    
+    SAR_ACM_REC_ART.DELETE_BLK()
+    SAR_ACCID_ACT.UPDATE_BLK()
+    SAR_PRE_ACC_ART.DELETE_BLK()
+    SAR_PRE_ACC_ART.INSERT_BLK()
+    SAR_PRE_ACC_ART.UPDATE_BLK()
+    SAR_ACM_REC_ART.INSERT_BLK()
+    
+    'Vacaciones
+    SAR_VAC_DESC.DELETE_BLK()
+    SAR_VAC_DESC.INSERT_BLK()
+    SAR_VAC_DESC.UPDATE_BLK()  
+    
+     'Vacaciones a borrar
+    SAR_VAC_DELETE.DELETE_BLK()
+
+
+    'SAR_HABITUALES Insertar y actualizar
+    SAR_HABITUALES.Insert_BLK()
+    SAR_HABITUALES.Update_BLK()
+
+ENDIF

@@ -1,0 +1,15 @@
+'Este concepto es utilizado en los impresos para obtener un identificador valido.
+'Ejemplo: la empresa del empleado.
+'Se modifica condicion por caso 218327
+'IF SAR_FECHA_BAJA >= SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC AND SAR_FECHA_BAJA <= SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC THEN
+IF SAR_FECHA_BAJA <= SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC THEN
+        aux = SAR_FECHA_BAJA
+ELSE
+    IF SAR_FECHA_ALTA >= SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC AND SAR_FECHA_ALTA <= SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC THEN
+        aux = SAR_FECHA_ALTA
+    ELSE
+        aux = SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC
+    ENDIF
+ENDIF
+
+return(aux)

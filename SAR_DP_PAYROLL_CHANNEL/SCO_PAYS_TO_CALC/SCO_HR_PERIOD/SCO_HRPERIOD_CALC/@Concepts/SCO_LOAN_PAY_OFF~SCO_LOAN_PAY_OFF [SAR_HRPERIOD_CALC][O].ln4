@@ -1,0 +1,86 @@
+'Calculo de la amortizacion del prestamo segun el montaje desarollado para 4.0
+
+amort = 0
+
+mes_fecha_pago = DxMonth(SCO_DT_ALLOCATION)
+
+anyo_fecha_pago = DxYear(SCO_DT_ALLOCATION)
+
+ini_fecha_pago = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC
+    
+fin_fecha_pago = SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC
+    
+extra = 0
+
+If SAR_PAYS_TO_CALC.SCO_PAY_TYPE_ALLOC = "1" Then 'Agregado para trabajar solo con las pagas normales codigo:1
+
+
+'Recorremos las cuotas
+
+SCO_LN_QUOTAS_PAYROLL.Begin()
+    
+While SCO_LN_QUOTAS_PAYROLL.IsEOF() = False
+    
+    fecha_cuota = SCO_LN_QUOTAS_PAYROLL.SCO_DT_PAYMENT
+
+    mes_cuota = DxMonth(SCO_LN_QUOTAS_PAYROLL.SCO_DT_PAYMENT)
+
+    anyo_cuota = DxYear(SCO_LN_QUOTAS_PAYROLL.SCO_DT_PAYMENT)
+        
+    cuota_paga_extra = SCO_LN_QUOTAS_PAYROLL.SCO_EXTRA
+        
+  
+    If cuota_paga_extra = Nullvalue() then cuota_paga_extra = 0
+        
+
+    cuota_pagada = SCO_LN_QUOTAS_PAYROLL.SCO_PAYED_QUOTA
+        
+    es_especie = SCO_LN_QUOTAS_PAYROLL.SCO_LEGAL_EFFECTS
+        
+    interes_prestamo = SCO_LN_QUOTAS_PAYROLL.SCO_RATE
+        
+    fecha_pago_nomina = SCO_LN_QUOTAS_PAYROLL.SCO_PAYROLL_DATE
+        
+    cuota = SCO_LN_QUOTAS_PAYROLL.SCO_AMT_LOAN_QUOTA
+        
+    'Cambiamos la cuota a la moneda de calculo
+    
+    cuota = EXCHANGE_RATES!CURRENCY.curGetExchange(SCO_LN_QUOTAS_PAYROLL.ID_CURRENCY,ID_CURRENCY,SCO_DT_ALLOCATION,EX_TYPE,cuota)
+        
+    'No cogeremos nunca cuotas marcadas para paga manual ni pagada anticipadamentefuera de nomina
+    'Cogemos solo la cuota si no ha sido pagada o ha sido pagada por la paga actual (recalaculo)
+    'o por una paga posterior(nominas a futuro)
+    
+    'Cogemos la cuota del presente si coinciden los tipos de imputacion solo en el caso de que no sea baja este mes
+    
+    If (fecha_cuota < fin_fecha_pago) or (mes_cuota = mes_fecha_pago and anyo_cuota = anyo_fecha_pago and (cuota_paga_extra = extra or (fecha_cuota > fin_fecha_pago))) Then
+        '
+        'Agregado para nomina argentina. Si esta dado de baja en el mes, se le cobra todo
+        '
+        IF SAR_ES_BAJA = 1 THEN
+            saldo = SCO_LN_QUOTAS_PAYROLL.SCO_AMT_LOAN_LEFT
+        ELSE
+            saldo = 0
+        ENDIF
+        
+        '
+        'Fin del agregado
+        '
+        amort = amort + cuota + saldo   'aumenta la amortizacion
+    
+        'Se marca la cuota pagada
+            
+        SCO_LN_QUOTAS_PAYROLL.SCO_PAYED_QUOTA = 1
+            
+        'Se marca la cuota pagada
+
+        SCO_LN_QUOTAS_PAYROLL.SCO_PAYROLL_DATE = SCO_DT_ALLOCATION
+            
+    Endif
+        
+    SCO_LN_QUOTAS_PAYROLL.GONEXT()
+Wend
+Endif 'Fin del if de paga normal codigo:1
+
+
+RETURN(amort)

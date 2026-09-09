@@ -1,0 +1,4 @@
+'Ley de bases 2024: Esto es un concepto puente para que entre en el impuesto gravado.
+importe = 0
+If DxYear(SAR_FEC_IMPUT_IG)>2023 Then importe = SAR_GASTOS_DEC27
+Return(importe)

@@ -1,0 +1,1 @@
+Return(Round(SAR_DESC_VACACIONES,SAR_NUM_DEC))

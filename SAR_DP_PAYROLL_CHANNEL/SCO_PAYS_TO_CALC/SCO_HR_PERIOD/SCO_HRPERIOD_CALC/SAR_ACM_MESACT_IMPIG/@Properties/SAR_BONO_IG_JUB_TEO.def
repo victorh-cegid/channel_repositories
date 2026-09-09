@@ -1,0 +1,11 @@
+item: SAR_BONO_IG_JUB_TEO
+name: Ap. Jubilacion bono desc. IG teor.
+item_type: PROPERTY
+type: CURRENCY
+id_m4_type: 8
+prec: 18
+scale: 6
+scope: RECORD
+default_value: "0"
+internal_type: 15
+item_aux: ID_CURRENCY

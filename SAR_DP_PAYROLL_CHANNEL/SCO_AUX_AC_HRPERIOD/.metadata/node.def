@@ -1,0 +1,5 @@
+ID_NODE: SCO_AUX_AC_HRPERIOD
+NAME: Nodo auxiliar para el periodo del RH
+ID_TI: SCO_AUX_AC_HRPERIOD_1
+IS_ROOT: false
+IS_FREE: true

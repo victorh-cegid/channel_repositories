@@ -1,0 +1,13 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+CopyRegister | RECORD | NUMBER | 6 | 1 | 0 | Copiar registro
+DestroyBlock | BLOCK | NUMBER | 6 | 1 | 0 | Eliminar bloque
+ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor
+ExecuteGroup | BLOCK | NUMBER | 6 | 0 | 0 | Ejecutar grupo
+Flatten | RECORD | NUMBER | 6 | 1 | 0 | Flatten
+LOAD_BLK | BLOCK | NUMBER | 6 | 1 | 0 | Cargar bloque
+SCO_CALL_SORT | NODE | NUMBER | 6 | 18 | 0 | Ordena los registros del nodo
+SCO_EX_CURR | RECORD | NUMBER | 6 | 1 | 0 | Cambiar moneda
+SCO_GL_SELECT | BLOCK | NUMBER | 6 | 1 | 0 | Asignar sentencia de carga
+SCO_MOVE_RECEIPT | BLOCK | NUMBER | 6 | 18 | 0 | Mover en el recibo en pantalla
+UNFLATTEN | BLOCK | NUMBER | 6 | 4 | 0 | UNFLATTEN
+curExchangeRecord | NODE | NUMBER | 6 | 1 | 0 | Cambio moneda del registro

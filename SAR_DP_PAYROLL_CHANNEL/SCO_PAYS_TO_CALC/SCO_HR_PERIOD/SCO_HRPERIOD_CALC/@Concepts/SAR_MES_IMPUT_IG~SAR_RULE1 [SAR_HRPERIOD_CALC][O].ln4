@@ -1,0 +1,2 @@
+fecImputIg = SAR_FEC_IMPUT_IG
+Return DxMonth(fecImputIg)

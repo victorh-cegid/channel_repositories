@@ -1,0 +1,12 @@
+'dependencias
+a = SAR_TOT_REMUN_27617 + SAR_REM_27617_DEI_DEV
+
+orientacion = 2
+'fec_aplica = SAR_FEC_IMPUT_IG
+mes_ini = 1
+mes_fin = 12
+promedio = 0
+
+SAR_CALCULA_PROM_27617(orientacion,mes_ini,mes_fin,promedio)
+
+Return Round(promedio,SAR_NUM_DEC)

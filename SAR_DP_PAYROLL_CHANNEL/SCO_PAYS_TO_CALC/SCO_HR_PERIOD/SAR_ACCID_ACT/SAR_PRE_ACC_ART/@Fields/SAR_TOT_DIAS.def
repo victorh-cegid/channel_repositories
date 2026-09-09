@@ -1,0 +1,12 @@
+item: SAR_TOT_DIAS
+name: Total de dias
+column_name: SAR_TOT_DIAS
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 4
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

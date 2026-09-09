@@ -1,0 +1,13 @@
+'Este metodo filtra por fechas los registros del historico que se deben cargar 
+'Si el periodo tiene pago despues de la baja, los registros se filtran por fecha de fin
+'En cualquier otro caso, se filtran por las fechas de la paga
+
+If SCO_HR_PERIOD.SCO_IS_PAL = 1 Then
+    SCO_FILTER_DATES_PAL_PARAM = ToString(SCO_HR_PERIOD.STD_DT_END,0) + "|" + ToString(SCO_HR_PERIOD.STD_DT_END,0)
+Else
+    SCO_FILTER_DATES_PAL_PARAM = ToString(SCO_HR_PERIOD.SCO_DT_PAY_START,0) + "|" + ToString(SCO_HR_PERIOD.SCO_DT_PAY_END,0)
+Endif
+
+filter = "FROM &SCO_H_HR_PAY_F A WHERE A.DT_END >= ?(4,0,0) AND A.DT_START <= ?(4,0,0)"
+
+Return(filter)

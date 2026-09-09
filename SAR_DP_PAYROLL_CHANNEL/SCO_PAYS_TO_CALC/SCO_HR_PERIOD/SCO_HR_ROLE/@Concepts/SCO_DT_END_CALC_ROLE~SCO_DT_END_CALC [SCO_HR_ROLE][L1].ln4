@@ -1,0 +1,18 @@
+If SCO_PAYS_TO_CALC.SCO_REVISION=1 Then
+    //Debemos setear las fechas de la paga porque podemos acceder al valor de estos 
+    //conceptos desde cualquier tramo dentro de la paga, no dentro del periodo de alta 
+    //actual del empleado. Esto solo es necesario para altas retroactivas, ya que es el
+    //unico caso en el que se descuadran los tramos.
+    
+    FI=SCO_PAYS_TO_CALC.SCO_DT_START_ALLOC
+    FF=SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC
+    SetStartDate(FI)
+    SetEndDate(FF)
+EndIf
+
+If SCO_HR_PERIOD.SCO_IS_PAL = 1 Then
+    dtEnd=SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC
+Else    
+    dtEnd=min(SCO_DT_END,SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC)
+Endif
+Return(dtEnd)

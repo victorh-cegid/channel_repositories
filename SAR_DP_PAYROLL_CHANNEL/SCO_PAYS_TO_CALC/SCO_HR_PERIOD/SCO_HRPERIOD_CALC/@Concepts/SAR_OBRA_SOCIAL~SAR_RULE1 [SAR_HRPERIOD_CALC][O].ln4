@@ -1,0 +1,6 @@
+valor = 0
+If SAR_TP_IMPUT = "77" Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Then Return(0)
+base = SAR_REMUN_IMPO_OS + SAR_BASE_COTIZ_ART_OS
+porc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
+valor = base * porc / 100
+Return(valor)

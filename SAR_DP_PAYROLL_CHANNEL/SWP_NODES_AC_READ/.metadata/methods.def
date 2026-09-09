@@ -1,0 +1,6 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor
+SCO_CALC_MIN_MAX_DATE | BLOCK | NUMBER | 6 | 1 | 0 | Calcular fecha min. y max.
+SCO_DYN_CALC_MIN_MAX_DATE | BLOCK | NUMBER | 6 | 1 | 0 | Calcular fecha min. y max. nodos DYN
+SCO_PREPARE_AC_TI | BLOCK | NUMBER | 6 | 1 | 0 | Preparar nodos de AC
+SCO_SELECT_CHANNEL | BLOCK | NUMBER | 6 | 1 | 0 | Obtener Meta4Object en ejecucion

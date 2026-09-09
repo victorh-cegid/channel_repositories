@@ -1,0 +1,3 @@
+fecLsd = SCO_DT_ALLOCATION
+If TEST_IND_COT_PAGO = 1 Then fecLsd = SCO_DT_PAYMENT
+Return(fecLsd)

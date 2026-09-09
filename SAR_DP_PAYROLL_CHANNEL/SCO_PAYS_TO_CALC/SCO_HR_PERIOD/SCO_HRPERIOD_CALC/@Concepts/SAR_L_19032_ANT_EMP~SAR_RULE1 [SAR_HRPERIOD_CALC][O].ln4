@@ -1,0 +1,8 @@
+'Toma su valor a traves del metodo SAR_RET_VALOR_COMPL
+Valor = 0
+
+If IsNull(SAR_L_19032_ANT_EMP) = M4_False Then
+    Valor = SAR_L_19032_ANT_EMP
+EndIf
+
+return(Valor)

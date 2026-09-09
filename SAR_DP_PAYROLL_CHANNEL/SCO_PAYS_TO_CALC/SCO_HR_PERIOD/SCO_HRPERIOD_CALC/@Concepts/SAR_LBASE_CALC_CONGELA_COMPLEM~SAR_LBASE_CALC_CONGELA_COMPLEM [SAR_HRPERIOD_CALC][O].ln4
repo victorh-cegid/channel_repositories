@@ -1,0 +1,78 @@
+'Parametros:
+'CONPCEPTO = Concepto desde el que se llama
+'REVISION = El valor de la retroactividad del concepto 0 - Revision / 1 - Diferencia
+
+idConcepto = CONCEPTO
+rev = REVISION
+DIFERENCIA = 0
+
+'Condiciones de salida (no congela complementos)
+esBaja = 0
+If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
+indReliq = SAR_IND_PAGA_RELIQ
+If SAR_LBASE_IND_CONGELA_COMPLEM = 0 Then Return(0)
+If DxYear(SAR_FEC_IMPUT_IG) <> 2024 Then Return(0)
+If esBaja = 1 Then Return(0)
+If indReliq = 1 Then Return(0)
+If SCO_DT_ALLOCATION < DxDate(1,7,2024) Then Return(0)
+'fin condiciones de salida
+
+mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
+mes_fin_ig = DxDate(31,12,DxYear(SAR_FEC_IMPUT_IG))
+ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
+benefOrig = 0
+importeOrig = 0
+importeNuevo = 0
+diferencia = 0
+
+'Valor de la revision
+If rev = 0 Then
+    'Primer recorrido, busca el importe de complementos que habia en la paga donde se calculo el beneficio
+    ultPay = DxDate(1,1,1800)
+    For acum = 0 To ult_reg - 1
+        If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_LBASE_BENEFICIO > 0 And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT > ultPay And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <= SCO_DT_ALLOCATION Then
+            benefOrig =  benefOrig + SCO_AC_HR_PERIOD_READ_1[acum].SAR_LBASE_BENEFICIO
+            importeOrig = GetValue("SCO_AC_HR_PERIOD_READ_1",idConcepto,acum)
+            allocOrig = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION
+            tpImputOrig = SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT
+            ultPay = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT
+        EndIf
+    Next
+    'Segundo recorrido, busca el importe de complementos que hay actualmente en la misma paga de alloc donde se calculo el beneficio
+    ultPay = DxDate(1,1,1800)
+    If benefOrig > 0 Then
+        For acum = 0 To ult_reg - 1
+            If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION = allocOrig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT = tpImputOrig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT > ultPay And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <= SCO_DT_ALLOCATION Then
+                importeNuevo = GetValue("SCO_AC_HR_PERIOD_READ_1",idConcepto,acum)
+                ultPay = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT
+            EndIf
+        Next
+    EndIf
+'Valor de la diferencia
+Else
+    'Primer recorrido, busca el importe de complementos que habia en la paga donde se calculo el beneficio
+    payBenef = DxDate(1,1,1800)
+    For acum = 0 To ult_reg - 1
+        If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_LBASE_BENEFICIO > 0 And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <= SCO_DT_ALLOCATION Then
+            benefOrig = benefOrig + SCO_AC_HR_PERIOD_READ_1[acum].SAR_LBASE_BENEFICIO
+            allocOrig = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION
+            payBenef = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT
+            tpImputOrig = SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT
+        EndIf
+    Next
+    'Segundo recorrido, busca el importe de complementos que hay actualmente en la misma paga de alloc donde se calculo el beneficio
+    If benefOrig > 0 Then
+        For acum = 0 To ult_reg - 1
+            If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION = allocOrig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT = tpImputOrig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <= SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <= payBenef Then
+                importeOrig = importeOrig + GetValue("SCO_AC_HR_PERIOD_READ_1",idConcepto,acum)
+            EndIf
+            If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION = allocOrig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT = tpImputOrig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <= SCO_DT_ALLOCATION Then
+                importeNuevo = importeNuevo + GetValue("SCO_AC_HR_PERIOD_READ_1",idConcepto,acum)
+            EndIf
+        Next
+    EndIf
+EndIf
+
+DIFERENCIA = importeNuevo - importeOrig
+
+Return(0)

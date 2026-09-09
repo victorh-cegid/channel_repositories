@@ -1,0 +1,3 @@
+importe = SAR_NO_CONTRIB_SIPA
+If SAR_IND_NO_CONTRIB_SIPA = 0 Then importe = 0
+Return Round(importe,SAR_NUM_DEC)

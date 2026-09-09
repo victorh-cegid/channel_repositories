@@ -1,0 +1,7 @@
+valor = 0
+
+SAR_ACM_6_MESES_EXTR.begin()
+if SAR_ACM_6_MESES_EXTR.SAR_TOT_PROMEDIOS >= 0 Then
+    valor =SAR_ACM_6_MESES_EXTR.SAR_TOT_PROMEDIOS
+endif
+Return(valor)

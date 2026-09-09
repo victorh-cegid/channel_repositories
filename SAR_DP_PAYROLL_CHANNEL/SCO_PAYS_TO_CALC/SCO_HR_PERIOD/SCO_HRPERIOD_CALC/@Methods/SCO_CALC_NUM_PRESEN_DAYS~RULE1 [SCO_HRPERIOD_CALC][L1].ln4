@@ -1,0 +1,91 @@
+'This is only an example, we will only process days (no hours). So you can see how the 
+'theoretical time will works with the payroll
+
+'Inicialization variables
+NumDaysReal = 0
+NumTheorHours = 0
+NumTheorDays = 0
+NumTheorSat = 0
+NumTheorSun = 0
+xxx = 0
+
+'Constants
+nExecution = 1 'We only process the theoretical time, no calendars
+
+NumDays = SCO_NUM_DAYS_THEO - SCO_NUM_DAYS_CAL
+
+SCO_REAL_TIME_PERIOD.Begin()
+
+If SCO_REAL_TIME_PERIOD.IsEOF()= TRUE then
+	SCO_NUM_PRESEN_DAYS = NumDays
+	Return(0)
+EndIf
+
+'We have to suppose  that the real time in the table is the good one. That means that it has been compared with the theoretical time
+ ' In the table of real_time we can find two kind of records:
+ '	- One whose period of time is in the period of  the pay. In this case, I can take the units directly.
+ '	- Another one whose period of time cut the period of pay. In this case, I have you calculate exactly the theoretical time in the period of the pay.
+
+Do
+
+	Launch = 0
+	StartTheo = SCO_HR_PERIOD.SCO_DT_ALLOC_START
+	EndTheo = SCO_HR_PERIOD.SCO_DT_ALLOC_END
+
+	'That is an absence incidence and we have to substrat the units
+	If SCO_REAL_TIME_PERIOD.SCO_ID_INCIDENCE_TP = "1" then
+
+		If SCO_REAL_TIME_PERIOD.SCO_DT_START < StartTheo Then
+			Launch = 1
+			If SCO_REAL_TIME_PERIOD.SCO_DT_END < EndTheo Then
+				EndTheo = SCO_REAL_TIME_PERIOD.SCO_DT_END
+			EndIf
+		ElseIf IsNull(SCO_REAL_TIME_PERIOD.SCO_DT_END) <> TRUE Then
+			If SCO_REAL_TIME_PERIOD.SCO_DT_END > EndTheo Then
+				Launch = 1
+				If SCO_REAL_TIME_PERIOD.SCO_DT_START > StartTheo Then
+					StartTheo = SCO_REAL_TIME_PERIOD.SCO_DT_START
+				EndIf
+			EndIf
+		EndIf
+		If Launch = 1 Then
+			SCO_THEORETICAL_TIME!SCO_TT_HR_THEOR_TIME.SCO_CALC_THEOR_TIME(SCO_ID_HR, SCO_OR_HR_PERIOD,NullValue(),StartTheo,EndTheo,nExecution,NumTheorHours,xxx,NumTheorDays,xxx,NumTheorSat,xxx,NumTheorSun,xxx)
+
+			NumDays = NumDays - NumTheorDays
+
+		ElseIf SCO_REAL_TIME_PERIOD.SCO_ID_TIME_UNIT = "04" Then
+			NumDays = NumDays - SCO_REAL_TIME_PERIOD.SCO_UNITS
+		EndIf
+
+	Else 'This is a presence incidence
+
+		If SCO_REAL_TIME_PERIOD.SCO_ID_TIME_UNIT = "04" Then
+
+			DaysAdd = SCO_REAL_TIME_PERIOD.SCO_UNITS
+
+			If SCO_REAL_TIME_PERIOD.SCO_DT_START < StartTheo Then
+				If SCO_REAL_TIME_PERIOD.SCO_DT_END < EndTheo Then
+					DaysToProrrat = SCO_REAL_TIME_PERIOD.SCO_DT_END - SCO_REAL_TIME_PERIOD.SCO_DT_START + 1
+					DaysToTake = SCO_REAL_TIME_PERIOD.SCO_DT_END - StartTheo + 1
+					DaysAdd = SCO_REAL_TIME_PERIOD.SCO_UNITS * (DaysToTake/DaysToProrrat)
+				EndIf
+			ElseIf IsNull(SCO_REAL_TIME_PERIOD.SCO_DT_END) <> TRUE Then
+				If SCO_REAL_TIME_PERIOD.SCO_DT_END > EndTheo Then
+					DaysToProrrat = SCO_REAL_TIME_PERIOD.SCO_DT_END - SCO_REAL_TIME_PERIOD.SCO_DT_START + 1
+					DaysToTake = EndTheo - SCO_REAL_TIME_PERIOD.SCO_DT_START + 1
+					DaysAdd = SCO_REAL_TIME_PERIOD.SCO_UNITS * (DaysToTake/DaysToProrrat)
+				EndIf
+			EndIf
+
+			NumDays = NumDays + DaysAdd
+
+		EndIf
+	EndIf
+
+	SCO_REAL_TIME_PERIOD.GONEXT()
+
+Until SCO_REAL_TIME_PERIOD.IsEOF() = TRUE
+
+SCO_NUM_PRESEN_DAYS = NumDays
+
+Return(0)

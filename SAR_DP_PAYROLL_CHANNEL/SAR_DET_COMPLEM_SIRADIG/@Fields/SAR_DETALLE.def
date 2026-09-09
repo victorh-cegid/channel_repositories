@@ -1,0 +1,12 @@
+item: SAR_DETALLE
+name: Detalle
+column_name: SAR_DETALLE
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 30
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

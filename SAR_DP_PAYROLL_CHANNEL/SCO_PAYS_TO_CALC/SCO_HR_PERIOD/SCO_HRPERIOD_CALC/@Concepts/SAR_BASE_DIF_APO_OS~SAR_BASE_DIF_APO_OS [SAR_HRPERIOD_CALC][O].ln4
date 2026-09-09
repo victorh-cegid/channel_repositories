@@ -1,0 +1,2 @@
+valor = Max(SAR_BASE_DIF_APO_OS,0)
+Return Round(valor,SAR_NUM_DEC)

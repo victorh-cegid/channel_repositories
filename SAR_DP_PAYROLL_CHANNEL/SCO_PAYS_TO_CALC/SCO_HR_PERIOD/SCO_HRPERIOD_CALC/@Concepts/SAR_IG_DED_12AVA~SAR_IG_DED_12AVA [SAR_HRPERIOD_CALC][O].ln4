@@ -1,0 +1,4 @@
+'Nueva deduccion solo desde 2024
+If DxYear(SAR_FEC_IMPUT_IG)<2024 Then Return(0)
+valor = SAR_IG_DED_12AVA / 12
+Return Round(valor,SAR_NUM_DEC)

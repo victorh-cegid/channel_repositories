@@ -1,0 +1,23 @@
+'Inicializo variables
+indDeduc            = SAR_IND_DED_IG_2010           'indicador deduccion 2010
+ano_pago_act        = DxYear(SAR_FEC_IMPUT_IG)      'A?o fecha calculo actual
+mes_pago_act        = DxMonth(SAR_FEC_IMPUT_IG)     'Mes fecha calculo actual
+dia_pago_act        = DaysOfMonth(SAR_FEC_IMPUT_IG) 'Dia fecha calculo actual
+
+'Control, baja debe calcularse respecto a la fecha de pago IG
+If SAR_ES_BAJA = 1 Then
+    ano_pago_act        = DxYear(SAR_FEC_PAGO_IG)      'A?o fecha calculo actual
+    mes_pago_act        = DxMonth(SAR_FEC_PAGO_IG)     'Mes fecha calculo actual
+    dia_pago_act        = DaysOfMonth(SAR_FEC_PAGO_IG) 'Dia fecha calculo actual
+EndIf
+
+'Leemos el precio anual de los conceptos de Deduccion que figura por tabla de valores empresa
+valorAnual = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_GAN_NO_IMP",DxDate(dia_pago_act,mes_pago_act,ano_pago_act),indDeduc))
+
+'Desde el a?o fiscal 2023 se aplica zona patagonica
+indZonaPat = SAR_IND_ZONA_PAT              'indicador zona patagonica
+If ano_pago_act > 2022 And indZonaPat = 1 Then valorAnual = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_GAN_NO_IMP_REDUC",DxDate(dia_pago_act,mes_pago_act,ano_pago_act),indDeduc))
+    
+If IsNull(valorAnual) = True Then valorAnual = 0
+
+Return(valorAnual)

@@ -1,0 +1,2 @@
+dtStart=max(STD_DT_START,SCO_PAYS_TO_CALC.SCO_DT_START_ALLOC)
+Return(dtStart)

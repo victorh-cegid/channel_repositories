@@ -1,0 +1,12 @@
+# ID_SENTENCE | ID_WHERE_TYPE | POSITION | ALIAS_OBJECT | ID_FIELD | ID_ORDER_TYPE | ID_OBJECT | ID_CALCULUS | ID_ITEM | ID_PAYROLL_ITEM | N_PAYROLL_ITEM | ID_CONCEPT_TYPE | ID_SYNONYM | N_TRANSLATED | ID_OBJECT_NEW
+SAR_TOTAL_VALUES | 1 | 1 | A | ID_ITEM | 0 | SCH_TOTAL_REF |  |  |  |  |  |  |  | 
+SAR_TOTAL_VALUES | 1 | 2 | A | DT_START | 0 | SCH_TOTAL_REF |  |  |  |  |  |  |  | 
+SAR_TOTAL_VALUES | 1 | 3 | A | DT_START_USED | 0 | SCH_TOTAL_REF |  |  |  |  |  |  |  | 
+SAR_TOTAL_VALUES | 1 | 4 | A | DT_END | 0 | SCH_TOTAL_REF |  |  |  |  |  |  |  | 
+SAR_TOTAL_VALUES | 1 | 5 | A | DT_END_USED | 0 | SCH_TOTAL_REF |  |  |  |  |  |  |  | 
+SAR_TOTAL_VALUES | 1 | 6 | A | ID_TI | 0 | SCH_TOTAL_REF |  |  |  |  |  |  |  | 
+SAR_TOTAL_VALUES | 1 | 7 | A | ID_TOTAL_REF_TI | 0 | SCH_TOTAL_REF |  |  |  |  |  |  |  | 
+SAR_TOTAL_VALUES | 1 | 8 | A | ID_TOTAL_REF_TI | 0 | SCH_TOTAL_REF |  |  |  |  |  |  |  | 
+SAR_TOTAL_VALUES | 1 | 9 | A | ID_TOTAL_REF_TI | 0 | SCH_TOTAL_REF |  |  |  |  |  |  |  | 
+SAR_TOTAL_VALUES | 4 | 1 | A | ID_ITEM_USED | 1 | SCH_TOTAL_REF | -1 |  |  |  |  |  |  | 
+SAR_TOTAL_VALUES | 4 | 2 | A | IS_SUM | 1 | SCH_TOTAL_REF | -1 |  |  |  |  |  |  | 

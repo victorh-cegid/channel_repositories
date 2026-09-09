@@ -1,0 +1,5 @@
+'Dependencias
+a = SAR_CALC_SAC_27617
+
+valor = SAR_SAC_1_EXEN_MES_OE + SAR_ACM_IG_ANIO_IMPUT[0].SAR_SAC_1_EXEN_MES_OE
+Return(valor)

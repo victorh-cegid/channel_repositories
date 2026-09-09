@@ -1,0 +1,13 @@
+If SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Then Return(0)
+If SAR_TP_IMPUT = "77" And SAR_IND_PAGA_ESP_VAC = 0 Then Return(0)
+If (SAR_TP_IMPUT = "1" or SAR_TP_IMPUT = "3" or SAR_TP_IMPUT = "4") And SAR_IND_PAGA_ESP_VAC = 1 Then Return(0)
+
+aux     = SAR_IMPORTE_LICENCIAS
+base    = SAR_VACACIONES
+
+'D612 2026
+If SAR_D612_IND = 1 Then base = base - SAR_D612_PLUS_VAC_TOT
+
+valor   = base * SAR_PORC_C_SIND_VOL / 100
+
+RETURN(valor)

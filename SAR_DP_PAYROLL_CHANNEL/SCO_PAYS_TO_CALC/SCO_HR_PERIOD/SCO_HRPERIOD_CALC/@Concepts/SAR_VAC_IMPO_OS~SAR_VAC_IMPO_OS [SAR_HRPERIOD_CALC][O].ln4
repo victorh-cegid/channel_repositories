@@ -1,0 +1,7 @@
+'Es el imponible de vacaciones completo (plus vacaciones y vacaciones adelantadas)
+'dependencias
+a = SAR_REMUN_IMPO_OS
+
+importe = SAR_VAC_IMPO_PLUS_OS + SAR_VAC_IMPO_AD_OS
+
+Return(importe)

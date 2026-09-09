@@ -1,0 +1,178 @@
+'Recorre la tabla detalle complementos y aplica un tope por cada concepto SAR_DESCRIPCION diferente que encuentre en el a?o fiscal.
+importe = SAR_IMP_SIMILAR_NAT_OE
+indGravado = SAR_OE_IND_SINAT_TRIB
+
+'Evalua si corresponde calcular parte exenta
+indExento = 0
+retrib = SAR_PROM_27617_BONOS
+vValor = SAR_DED_ESP_INC.SAR_RETORNA_VAL_TRAM(3,SAR_FEC_IMPUT_IG,ID_CURRENCY)
+If vValor >= retrib Or indGravado = 2 Then indExento = 1
+If indGravado = 1 Then indExento = 0
+
+'Ley de bases, deja de existir parte exenta
+If DxYear (SAR_FEC_IMPUT_IG) > 2023 Then indExento = 0
+
+dif_meses = 0
+imp_tot = 0
+descripcion = ""
+descripcionAnte = ""
+descripcionAnual = ""
+descripcionAnteAnual = ""
+gravadoTot = 0
+exentoTot = 0
+gravado = 0
+exento = 0
+conteo = 0
+conteoAnual = 0
+
+If SAR_ES_BAJA = 1 and SAR_IG_DICIEMBRE = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
+    mes_paga_efecti = 12
+Else
+    mes_paga_efecti = DxMonth(SAR_FEC_IMPUT_IG)
+EndIf
+
+'Reliquidacion en 2023, se leen complementos desde septiembre (octubre diferidos) hasta diciembre
+indReliq = SAR_IND_PAGA_RELIQ
+If indReliq = 1 And DxYear(SAR_FEC_IMPUT_IG) = 2023 Then indReliq = 0
+
+SAR_DET_COMPLEM_SIRADIG.DESTROYBLOCK()
+SAR_DET_COMPLEM_SIRADIG.SAR_ID_HR = SCO_ID_HR
+SAR_DET_COMPLEM_SIRADIG.SAR_OR_PERIOD = SCO_OR_HR_PERIOD
+SAR_DET_COMPLEM_SIRADIG.SAR_YEAR = SAR_ANIO_IMPUT_IG
+SAR_DET_COMPLEM_SIRADIG.SAR_DETAIL = "conSimNatDetalle"
+
+numReg = SAR_DET_COMPLEM_SIRADIG.Count()
+
+For i=0 To numReg-1
+
+    'Usado para conteo anual
+    descripcionAnual = SAR_DET_COMPLEM_SIRADIG[i].SAR_DESCRIPCION
+    If descripcionAnual <> descripcionAnteAnual Then conteoAnual = conteoAnual + 1
+    descripcionAnteAnual = SAR_DET_COMPLEM_SIRADIG[i].SAR_DESCRIPCION
+    
+    'Decreto 473/23 reglamentacion AFIP, inicia periodo fiscal en octubre
+    mes_corte = 1
+    iniComp = DxMonth(SAR_DET_COMPLEM_SIRADIG[i].SAR_DT_START)
+    mesesImp = mes_paga_efecti
+    If DxYear(SAR_FEC_IMPUT_IG) = 2023 And mes_paga_efecti >= 10 Then
+        iniComp = Max(iniComp,10)
+        mes_corte = 10
+        mes_imp_ig = SAR_DIFERIDO_SEPT_2023[0].SAR_MES_IMPUT_IG
+    
+        'Situacion especial, diferidos devengado septiembre con impuesto octubre, quedan en paga de septiembre
+        If mes_imp_ig = 10 Then
+            If mes_paga_efecti = 10 Then 
+                Return(0)
+            Else
+                iniComp = Max(iniComp,11)
+                mes_corte = 11
+            EndIf
+        EndIf
+        mesesImp = mes_paga_efecti - mes_corte + 1
+    EndIf
+
+    If (DxMonth(SAR_DET_COMPLEM_SIRADIG[i].SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_DET_COMPLEM_SIRADIG[i].SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+        descripcion = SAR_DET_COMPLEM_SIRADIG[i].SAR_DESCRIPCION
+        
+        'Si encontramos un concepto diferente, consolida el exento/gravado del concepto anterior y reinicia el conteo para el nuevo concepto
+        If descripcion <> descripcionAnte Then 
+            imp_tot = 0
+            gravadoTot = gravadoTot + gravado
+            exentoTot = exentoTot + exento
+            conteo = conteo + 1
+        EndIf
+
+        If(indReliq = 1)Then
+             dif_meses = DxMonth(SAR_DET_COMPLEM_SIRADIG[i].SAR_DT_END) - DxMonth(SAR_DET_COMPLEM_SIRADIG[i].SAR_DT_START) + 1
+             imp_tot = imp_tot + (SAR_DET_COMPLEM_SIRADIG[i].SAR_MONTO * dif_meses)                                                               
+        Else
+            If (mes_paga_efecti <= DxMonth(SAR_DET_COMPLEM_SIRADIG[i].SAR_DT_END))Then
+                dif_meses = mes_paga_efecti - iniComp + 1
+                imp_tot = imp_tot + (SAR_DET_COMPLEM_SIRADIG[i].SAR_MONTO * dif_meses) 
+
+            Else
+                dif_meses = DxMonth(SAR_DET_COMPLEM_SIRADIG[i].SAR_DT_END) - iniComp + 1 
+                imp_tot   = imp_tot + (SAR_DET_COMPLEM_SIRADIG[i].SAR_MONTO * dif_meses)
+            EndIf
+        Endif
+
+        'Calcula exento/gravado del concepto en el que nos encontramos
+        importe = imp_tot
+        topeExento = Percentage(40,SAR_NO_IMP_27617)
+        
+        gravado = Max(importe - topeExento, 0)
+        exento = importe - gravado
+        
+        descripcionAnte = descripcion
+
+    EndIf
+Next
+
+'Al salir del bucle consolidamos el exento/gravado del ultimo concepto encontrado
+gravadoTot = gravadoTot + gravado
+exentoTot = exentoTot + exento
+
+'Controla si no se informo detalle, pero si importe, entonces se va a contar como un solo similar nat.
+If numReg = 0 Then
+    importe = SAR_IMP_SIMILAR_NAT_OE
+    topeExento = Percentage(40,SAR_NO_IMP_27617)
+    gravadoTot = Max(importe - topeExento, 0)
+    exentoTot = importe - gravadoTot
+    If importe <> 0 Then
+        conteo = 1
+        conteoAnual = 1
+    EndIf  
+EndIf
+
+SAR_CANT_SIMILAR_NAT_OE = conteoAnual
+
+If SAR_IMP_SIMILAR_NAT_OE = 0 Then return (0)
+
+If indExento = 0 Then
+    gravadoTot = Round(SAR_IMP_SIMILAR_NAT_OE,SAR_NUM_DEC)
+    SAR_SIMILAR_NAT_GRAV_OE = gravadoTot
+    Return (gravadoTot)
+EndIf
+
+'Controla que en 2023 - con el corte fiscal - no se supere el tope anual
+If DxYear(SAR_FEC_IMPUT_IG) = 2023 Then
+    importeCompleto = SAR_IMP_SIMILAR_NAT_OE
+    exenPeriodoSept = SAR_ACM_SEP23_IMP_REV[0].SAR_SIMILAR_NAT_EXEN_OE
+    exenPeriodoCompleto = exentoTot + exenPeriodoSept
+    maxExen = Percentage(40,SAR_NO_IMP_27617) * conteoAnual
+    If maxExen > 0 And exenPeriodoCompleto > maxExen Then
+        exentoTot = Max(0,maxExen - exenPeriodoSept)
+        gravadoTot = importeCompleto - exentoTot
+    EndIf
+EndIf
+'fin control 2023
+
+gravadoTot = Round(gravadoTot,SAR_NUM_DEC)
+exentoTot = Round (exentoTot,SAR_NUM_DEC)
+
+SAR_SIMILAR_NAT_GRAV_OE = gravadoTot
+SAR_SIMILAR_NAT_EXEN_OE = exentoTot
+
+'Calcula aportes de la parte exenta para descontar del total aportes
+porcJub = 0
+porcLey = 0
+If SAR_EDAD >= 18 Then 
+    porcJub = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
+    porcLey = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032 * SAR_PP_AP_INSSJP/100)
+EndIf
+porcObSoc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
+porcAdObSoc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
+porcSind = SAR_PORC_C_SIND_VOL + SAR_PORC_C_SIND_OBL
+
+apJubExen = Round(Percentage(porcJub,exentoTot),SAR_NUM_DEC)
+apLeyExen = Round(Percentage(porcLey,exentoTot),SAR_NUM_DEC)
+apAdObSocExen = Round(Percentage(porcAdObSoc,exentoTot) * SAR_FAM_CARGO_OS,SAR_NUM_DEC)
+apObSocExen = Round(Percentage(porcObSoc,exentoTot)+apAdObSocExen,SAR_NUM_DEC)
+apSindExen = Round(Percentage(porcSind,exentoTot),SAR_NUM_DEC)
+
+SAR_OE_SINAT_JUB = apJubExen
+SAR_OE_SINAT_JUB = apLeyExen
+SAR_OE_SINAT_JUB = apObSocExen
+SAR_OE_SINAT_JUB = apSindExen
+
+Return(gravadoTot)

@@ -1,0 +1,2 @@
+'Its value comes from the applyvalue channel. This rule can be overwritten by each standard 
+RETURN(SCO_AGREED_NET)

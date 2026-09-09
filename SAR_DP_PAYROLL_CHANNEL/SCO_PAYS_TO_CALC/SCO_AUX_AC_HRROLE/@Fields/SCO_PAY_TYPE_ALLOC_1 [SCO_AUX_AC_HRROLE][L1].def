@@ -1,0 +1,12 @@
+item: SCO_PAY_TYPE_ALLOC_1
+name: Tipo paga imputacion
+column_name: SCO_PAY_TYPE_ALLOC
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 3
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 36
+item_aux: null

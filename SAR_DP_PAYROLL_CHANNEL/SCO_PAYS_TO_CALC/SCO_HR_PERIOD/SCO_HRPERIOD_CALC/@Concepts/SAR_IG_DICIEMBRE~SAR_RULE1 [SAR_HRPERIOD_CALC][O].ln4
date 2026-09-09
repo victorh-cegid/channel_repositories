@@ -1,0 +1,6 @@
+'Activa el calculo de ganancias con las tablas de diciembre del a?o de pago, sin importar el mes
+'efectivo de pago. Segun la RG 1035 Art. 2 pto. 10. 
+'Los valores posibles son: 1 = Activa, Cualquier otro valor, desactivado
+
+'Toma su valor por valores incidencias
+return(SAR_IG_DICIEMBRE)

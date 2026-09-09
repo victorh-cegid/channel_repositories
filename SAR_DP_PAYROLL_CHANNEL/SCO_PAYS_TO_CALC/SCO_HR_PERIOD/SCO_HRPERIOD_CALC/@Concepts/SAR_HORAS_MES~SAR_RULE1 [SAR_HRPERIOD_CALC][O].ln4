@@ -1,0 +1,2 @@
+' Toma el valor del Convenio
+Return(SAR_HORAS_MES)

@@ -1,0 +1,6 @@
+'In Revision, we load the node
+iExeMode = GetValue ("SCO_HT_PAYS", "SCO_EXE_MODE", -1)
+If iExeMode <> 0 and iExeMode <> 1 Then 
+    Load_Blk()
+Endif
+Return(0)

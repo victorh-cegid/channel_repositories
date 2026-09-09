@@ -1,0 +1,20 @@
+'Dependencias
+a = SAR_REMUN_IMPO
+
+If SAR_TP_IMPUT = "77" And SAR_IND_PAGA_ESP_VAC = 0 Then Return(0)
+
+If (SAR_TP_IMPUT = "1" or SAR_TP_IMPUT = "3" or SAR_TP_IMPUT = "4") And SAR_IND_PAGA_ESP_VAC = 1 Then Return(0)
+
+edad = SAR_EDAD
+valor = 0
+
+IF edad >= 18 THEN
+    porc = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032 * SAR_PP_AP_INSSJP / 100)
+    valor = SAR_VAC_IMPO * porc / 100
+ENDIF
+    
+IF ISNULL(valor) = TRUE THEN
+    valor = 0
+ENDIF
+  
+Return(valor)

@@ -1,0 +1,9 @@
+# parent_node | parent_ti | connection_type
+SCO_AC_HR_PERIOD_READ | SCO_AC_HR_PERIOD_READ | FREE
+SCO_HRPERIOD_CALC | SCO_HRPERIOD_CALC | RECORD_BLOCK
+SCO_HR_PERIOD | SCO_HR_PERIOD | FREE
+
+# child_node | connection_type
+SCO_AC_HR_PERIOD_READ | FREE
+
+# ti | item | parent_node | parent_ti | parent_item | precedence

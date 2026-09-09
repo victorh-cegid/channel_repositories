@@ -1,0 +1,3 @@
+'Desde septiembre 2023, cambio relacionado con Decreto 473/23, se decide dejar este indicador fijo a 0.
+indicador = 0
+Return(indicador)

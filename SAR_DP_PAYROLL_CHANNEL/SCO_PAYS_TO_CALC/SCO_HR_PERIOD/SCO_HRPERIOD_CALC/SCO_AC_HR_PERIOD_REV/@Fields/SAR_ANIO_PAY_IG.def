@@ -1,0 +1,12 @@
+item: SAR_ANIO_PAY_IG
+name: A?o pago IG
+column_name: SAR_ANIO_PAY_IG
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 4
+scale: 0
+scope: RECORD
+default_value: "0"
+internal_type: 1
+item_aux: null

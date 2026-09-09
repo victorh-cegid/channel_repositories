@@ -1,0 +1,4 @@
+dEndRetro = ARG_SCO_DT_END_RETRO
+dEndCalc = SCO_DT_END_CALC_ROLE
+
+Return(max(dEndCalc,dEndRetro))

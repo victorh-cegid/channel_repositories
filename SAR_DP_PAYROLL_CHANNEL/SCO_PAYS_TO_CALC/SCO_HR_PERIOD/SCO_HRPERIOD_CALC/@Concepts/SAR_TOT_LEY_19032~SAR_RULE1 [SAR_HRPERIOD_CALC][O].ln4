@@ -1,0 +1,6 @@
+ban = SAR_TOT_M_LEY_19032
+val_otros_empl = SAR_LEY_19032_OE - SAR_ACM_PAGA_ANT_IG[0].SAR_LEY_19032_OE
+val_ant_emp = SAR_L_19032_ANT_EMP - SAR_ACM_PAGA_ANT_IG[0].SAR_L_19032_ANT_EMP
+valor = ban + val_ant_emp + val_otros_empl  
+
+Return(valor)

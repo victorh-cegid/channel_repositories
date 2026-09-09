@@ -1,0 +1,34 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+SAR_ALI_CRED_IVA_ROL | RECORD | NUMBER | 6 | 9 | 4 | Alicuota Credito Iva Rol
+SAR_CALCULA_PRECIO_FECHA | BLOCK | NUMBER | 6 | 18 | 0 | SAR_CALCULA_PRECIO_FECHA
+SAR_COEF_JORNADA | BLOCK | NUMBER | 6 | 13 | 4 | Coeficiente de jornada
+SAR_ID_ACTIVIDAD | BLOCK | STRING | 2 | 4 | 0 | Id Actividad
+SAR_ID_CENTRO_TRAB | RECORD | STRING | 2 | 8 | 0 | Centro de trabajo del empleado
+SAR_INDIC_REDUC_ZON_DES | BLOCK | NUMBER | 6 | 1 | 0 | Indicativo Reduccion por zona Art 1 Ley 23272
+SAR_IND_JORN_RED_ROL | RECORD | NUMBER | 6 | 5 | 0 | Indicador de Jornada Reducida por Rol
+SAR_PRECIO_HS_AUSENCIA_ROL | RECORD | CURRENCY | 8 | 18 | 6 | Precio horas de ausencia Rol
+SAR_P_ASIG_ESTIM_ROL | RECORD | CURRENCY | 8 | 18 | 6 | Precio por rol de la asignacion estimulo
+SAR_P_SAL_BASE | RECORD | CURRENCY | 8 | 18 | 6 | Precio sueldo Rol
+SAR_SAL_BASE_ROL | RECORD | CURRENCY | 8 | 18 | 0 | Salario base Rol
+SAR_TFUEG_IND_ROL | BLOCK | NUMBER | 6 | 1 | 0 | Indicador tierra de fuego ROL
+SAR_TOT_P_COMP_EA_ROLE | RECORD | CURRENCY | 8 | 18 | 6 | Total de devengos por roles
+SAR_U_CONC_FIJOS_ROL | BLOCK | NUMBER | 6 | 9 | 4 | Unidades conceptos fijos Rol
+SCO_COMP_BASIS | BLOCK | NUMBER | 6 | 3 | 0 | Base de remuneraciones
+SCO_CURR_DECIMALS | RECORD | NUMBER | 6 | 1 | 0 | Numero de decimales
+SCO_DT_PAY_CLOSED_ROLES | RECORD | DATE | 4 | 0 | 0 | Fecha de pago roles cerrados
+SCO_DT_PRORATE_ROLE | BLOCK | DATE | 4 | 0 | 0 | Fecha a considerar en prorateos
+SCO_DT_SLICE_ROLE | BLOCK | DATE | 4 | 0 | 0 | Fecha del tramo
+SCO_ID_JOB_CODE | BLOCK | STRING | 2 | 8 | 0 | Puesto del empleado
+SCO_ID_WORK_CENTER | BLOCK | STRING | 2 | 8 | 0 | ID Lugar trabajo
+SCO_ID_WORK_UNIT | BLOCK | STRING | 2 | 8 | 0 | ID Unidad org.
+SCO_NUM_DAYS_CAL_ROLE | BLOCK | NUMBER | 6 | 6 | 2 | Numero de dias festivos
+SCO_NUM_DAYS_THEO_ROLE | BLOCK | NUMBER | 6 | 6 | 2 | Numero de dias de tiempo teorico
+SCO_NUM_HOURS_CAL_ROLE | BLOCK | NUMBER | 6 | 6 | 2 | Numero de horas festivas
+SCO_NUM_HOURS_THEO_ROLE | BLOCK | NUMBER | 6 | 6 | 2 | Numero de horas de tiempo teorico
+SCO_NUM_PRESEN_DAYS_ROLE | BLOCK | NUMBER | 6 | 6 | 2 | Numero de dias de presencia
+SCO_PAY_FREQ_CLOSED_ROLES | RECORD | STRING | 2 | 3 | 0 | Frecuencia pago roles cerrados
+SCO_PAY_RATE | RECORD | CURRENCY | 8 | 18 | 6 | Retribucion personal
+SCO_SLICE_UNIT_ROLE | BLOCK | NUMBER | 6 | 6 | 2 | Unidades tramadas del rol
+SCO_TOT_EARNINGS | RECORD | CURRENCY | 8 | 18 | 6 | Total devengos
+SCO_UNIT_ROLE | BLOCK | NUMBER | 6 | 6 | 2 | Unidad
+SSP_ID_CENT_COSTO | BLOCK | STRING | 2 | 15 | 0 | Centro de costo

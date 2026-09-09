@@ -1,0 +1,7 @@
+'Contribucion Regimen Diferencial ART
+'Para generar dependencias.
+a = SAR_ACCIDENTE
+
+vContribDifART = (SAR_PRESTACION_ART * SAR_PORC_CONT_T_DIF)/ 100
+
+Return Round(vContribDifART,2)

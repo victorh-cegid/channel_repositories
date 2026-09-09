@@ -1,0 +1,9 @@
+node = ID_NODE
+curr = GetValue(node,"ID_CURRENCY",-1)
+If curr = "ESP" Then
+    prec = 1000
+Else
+    prec = 10
+Endif
+
+Return prec

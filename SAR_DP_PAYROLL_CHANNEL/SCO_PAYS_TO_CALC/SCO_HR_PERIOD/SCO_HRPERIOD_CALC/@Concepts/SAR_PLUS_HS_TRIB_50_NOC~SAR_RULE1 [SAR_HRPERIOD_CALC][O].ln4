@@ -1,0 +1,2 @@
+'Toma valor en el #4257
+Return (Round(SAR_PLUS_HS_TRIB_50_NOC, SCO_CURR_DECIMALS))

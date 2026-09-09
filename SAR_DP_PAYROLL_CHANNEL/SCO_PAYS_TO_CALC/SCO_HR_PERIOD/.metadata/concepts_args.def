@@ -1,0 +1,15 @@
+# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
+SCO_DT_END_CALC_RETRO | ARG_SCO_DT_END_RETRO | IN | DATE | 4 | 10 | 0 | 1
+SCO_DT_START_CALC_RETRO | ARG_SCO_DT_START_RETRO | IN | DATE | 4 | 10 | 0 | 0
+SCO_SQL_APP_PERIOD | ID_CONN | IN | NUMBER | 6 | 4 | 0 | 1
+SCO_SQL_APP_PERIOD | MASK | IN | NUMBER | 6 | 1 | 0 | 2
+SCO_SQL_APP_ROLE | ID_CONN | IN | NUMBER | 6 | 4 |  | 1
+SCO_SQL_APP_ROLE | MASK | IN | NUMBER | 6 | 1 |  | 2
+SCO_SQL_CLOSED_ROLES | ID_CONN | IN | NUMBER | 6 | 4 |  | 1
+SCO_SQL_CLOSED_ROLES | MASK | IN | NUMBER | 6 | 1 |  | 2
+SCO_SQL_PERIOD | ID_CONN | IN | NUMBER | 6 | 4 | 0 | 1
+SCO_SQL_PERIOD | MASK | IN | NUMBER | 6 | 1 | 0 | 2
+SCO_SQL_RETRO_TERMINATION | ID_CONN | IN | NUMBER | 6 | 4 |  | 1
+SCO_SQL_RETRO_TERMINATION | MASK | IN | NUMBER | 6 | 1 |  | 2
+SCO_SQL_ROLE | ID_CONN | IN | NUMBER | 6 | 4 | 0 | 1
+SCO_SQL_ROLE | MASK | IN | NUMBER | 6 | 1 |  | 2

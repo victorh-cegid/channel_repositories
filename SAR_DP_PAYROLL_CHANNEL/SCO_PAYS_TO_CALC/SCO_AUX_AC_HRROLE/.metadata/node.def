@@ -1,0 +1,5 @@
+ID_NODE: SCO_AUX_AC_HRROLE
+NAME: Nodo auxiliar para el rol del RH.
+ID_TI: SCO_AUX_AC_HRROLE_1
+IS_ROOT: false
+IS_FREE: true

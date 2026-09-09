@@ -1,0 +1,9 @@
+item: SCO_DT_CLOSE_PROC
+name: Fecha cerrada para proceso
+item_type: PROPERTY
+type: DATE
+id_m4_type: 4
+prec: 10
+scale: 0
+scope: RECORD
+default_value: null

@@ -1,0 +1,10 @@
+item: ID_TI
+name: Estructura de nodo
+column_name: ID_TI
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 30
+scale: 0
+scope: RECORD
+default_value: null

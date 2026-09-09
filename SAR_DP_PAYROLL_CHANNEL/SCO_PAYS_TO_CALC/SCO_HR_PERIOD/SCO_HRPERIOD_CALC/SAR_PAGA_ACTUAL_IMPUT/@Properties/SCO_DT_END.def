@@ -1,0 +1,9 @@
+item: SCO_DT_END
+name: Fin
+item_type: PROPERTY
+type: DATETIME
+id_m4_type: 5
+prec: 1
+scale: 0
+scope: NODE
+default_value: null

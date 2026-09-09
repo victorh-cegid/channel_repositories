@@ -1,0 +1,24 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+IF SAR_ES_BAJA = 0 THEN 
+    Return(0)
+ENDIF
+
+IF SCO_HR_PERIOD.STD_ID_HRP_END_REASON <> "16" THEN 
+    Return(0)
+ENDIF
+
+IF SAR_HRPERIOD_CALC.SAR_TIPO_SALARIO = "001" THEN
+    total_indem = SAR_TOT_INDEMNIZ 
+ELSE
+    total_indem = SAR_TOT_INDEMNIZ * SAR_DIAS_NORM_COTIZ
+ENDIF
+
+
+valor = SAR_PRE_INDEM_ANTIG + (total_indem * 13)
+IF ISNULL(valor) = TRUE THEN
+    valor = 0
+ENDIF
+RETURN(valor)

@@ -1,0 +1,234 @@
+'Permite calcular los precios que corresponden a un ausentismo que se calcule de forma similar a otro existente. 
+'Recibe 2 parametros: argIncCliente es el ID del ausentismo propio del cliente / argIncClonar el el ID del ausentismo cuyo comportamiento queremos replicar
+'Devuelve el precio del ausentismo.
+'Evita sobreescrituras de SAR_IMPORTE_LICENCIAS, si tiene este sobreescrito para alterar el comportamiento de una incidencia STD, el mismo cambio debera realizarse sobre este concepto
+
+argIncCliente = ARG_INC_CLIENTE
+argIncClonar = ARG_INC_CLONAR
+ARG_PRECIO_INC = 0
+
+If (SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1) Or SAR_TP_IMPUT = "77" Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Then Return(0)
+
+'Este concepto calcula el importe y precio de las licencias diarias y horarias
+'Obtengo la fecha de inicio y fin de cada tramo
+inicioTramo     = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysStartDate
+finTramo        = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysEndDate
+fec_ini_paga    = inicioTramo
+fec_fin_paga    = finTramo
+pr_ant          = 0
+prom            = 0
+dt_start_p      = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC 'fecha inicio de la paga
+fec_alta        = SAR_FECHA_ALTA 'fecha de alta del empleado
+MesPaga         = DxMonth(dt_start_p)
+AnioPaga        = DxYear(dt_start_p)
+MesAlta         = DxMonth(fec_alta)
+AnioAlta        = DxYear(fec_alta)
+
+'Precios relacionados con las licencias
+PRECIO_DIAS_ENF = 0 : PRECIO_DIAS_MAT = 0 : PRECIO_DIAS_LCONV = 0 : PRECIO_DIAS_LSGS = 0 : PRECIO_DIAS_HUELGA = 0 : PRECIO_DIAS_LCAS = 0 : PRECIO_DIAS_LNAC = 0 : PRECIO_DIAS_LDEF = 0 : PRECIO_DIAS_LEX = 0 : PRECIO_DIAS_DSAN = 0
+PRECIO_HS_AUSENCIA = 0 : PRECIO_HS_50 = 0 : PRECIO_HS_100 = 0 : PRECIO_DIAS_EXCED = 0 : PRECIO_DIAS_SUS_DISCI = 0 : PRECIO_DIAS_AUS_INJUST = 0 : PRECIO_LIC_S_GOC_SUELD = 0 : PRECIO_DIAS_RE_ACC = 0 : PRECIO_DIAS_RE_ENF = 0
+PRECIO_DIAS_RE_SIN = 0 : PRECIO_PL_NOC_50 = 0 : PRECIO_PL_NOC_100 = 0 : PRECIO_FER_TRAB = 0 : PRECIO_DEC792 = 0
+
+'Contabilizamos las ausencias diarias que se cargan a nivel de period
+'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de la incidencia
+sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
+SAR_REAL_TIME_PERIOD.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", argIncCliente)
+
+primerreg = 0
+ultimoreg = SAR_REAL_TIME_PERIOD.COUNT() - 1
+fec_ini_paga = SAR_REAL_TIME_PERIOD.SAR_DT_ALLOC_START
+fec_fin_paga = SAR_REAL_TIME_PERIOD.SAR_DT_ALLOC_END
+
+For i = primerreg To ultimoreg
+    motivoabs = SAR_REAL_TIME_PERIOD[i].SCO_ID_INCIDENCE
+    fec_ini_abs = SAR_REAL_TIME_PERIOD[i].SCO_DT_START
+    fec_fin_abs = SAR_REAL_TIME_PERIOD[i].SCO_DT_END
+
+    'Si la fecha de inicio del ausentismo esta comprendida en el tramo o la fecha de fin del ausentismo esta comprendida en el tramo obtenemos los precios de las licencias 
+    If (inicioTramo <= fec_ini_abs And fec_ini_abs <= finTramo) Or (inicioTramo <= fec_fin_abs And fec_ini_abs <= finTramo) Then
+        
+        'Si la fecha de inicio del ausentismo es menor a la fecha de inicio del tramo la reemplazamos
+        If fec_ini_abs < inicioTramo Then
+            fec_ini_abs = inicioTramo
+        EndIf    
+       
+        If motivoabs = argIncCliente And argIncClonar = "1" Then
+            'Calculo el precio de la enfermedad para esos dias
+            PRECIO_DIAS_ENF = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4110")
+        ElseIf motivoabs = argIncCliente And argIncClonar = "23" Then
+            'Calculo del precio de la compensacion dec 792
+            PRECIO_DEC792 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4110")
+        ElseIf motivoabs = argIncCliente And argIncClonar = "2" Then
+            'Calculo el precio de la suspension disciplinaria para esos dias
+            PRECIO_DIAS_SUS_DISCI = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4180")
+        ElseIf motivoabs = argIncCliente And argIncClonar = "3" Then
+            'Calculo el precio de la maternidad para esos dias
+            PRECIO_DIAS_MAT = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"NONE")
+        ElseIf motivoabs = argIncCliente And argIncClonar = "4" Then
+            'Calculo el precio de licencia por convenio para esos dias
+            If SAR_TIPO_SALARIO = "003" Then
+                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                    pr_ant = SAR_TOT_P_COMP_EA
+                Else   
+                    SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
+                    If SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 Then
+                        pr_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_P_COMP_EA
+                    EndIf
+                    prom = Max(SAR_PRO_VAR_ULT_6,SAR_PRO_VAR_ULT_12)
+                EndIf    
+                PRECIO_DIAS_LCONV = Round(pr_ant + (prom/SAR_HORAS_MES),2)
+            Else
+                PRECIO_DIAS_LCONV = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4060")
+            EndIf
+        ElseIf motivoabs = argIncCliente And argIncClonar = "5" Then
+            'Calculo el precio de licencia sin goce de sueldo para esos dias
+            PRECIO_LIC_S_GOC_SUELD = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4171")
+        ElseIf motivoabs = argIncCliente And argIncClonar = "6" Then
+            'Calculo el precio de la excedencia para esos dias
+            PRECIO_DIAS_EXCED = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4160")
+        ElseIf motivoabs = argIncCliente And argIncClonar = "7" Then
+            'Calculo el precio de la ausencia injustificada para esos dias
+            PRECIO_DIAS_AUS_INJUST = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4170")
+        ElseIf motivoabs = argIncCliente And argIncClonar = "8" Then
+            'Calculo el precio de huelga para esos dias
+            PRECIO_DIAS_HUELGA = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4723")
+        ElseIf motivoabs = argIncCliente And argIncClonar = "10" Then
+            'Calculo el precio de la licencia por casamiento para esos dias
+            If SAR_TIPO_SALARIO = "003" Then
+                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                    pr_ant = SAR_TOT_P_COMP_EA
+                Else   
+                    SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
+                    If SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 Then
+                        pr_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_P_COMP_EA
+                    EndIf
+                    prom = Max(SAR_PRO_VAR_ULT_6,SAR_PRO_VAR_ULT_12)
+                EndIf    
+                PRECIO_DIAS_LCAS = Round(pr_ant + (prom/SAR_HORAS_MES),2)
+            Else                
+                PRECIO_DIAS_LCAS = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4070")
+            EndIf
+        ElseIf motivoabs = argIncCliente And argIncClonar = "11" Then
+            'Calculo el precio de la licencia por nacimiemto para esos dias
+            If SAR_TIPO_SALARIO = "003" Then
+                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                    pr_ant = SAR_TOT_P_COMP_EA
+                Else   
+                    SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
+                    If SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 Then
+                        pr_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_P_COMP_EA
+                    EndIf
+                    prom = Max(SAR_PRO_VAR_ULT_6,SAR_PRO_VAR_ULT_12)
+                EndIf    
+                PRECIO_DIAS_LNAC = Round(pr_ant + (prom/SAR_HORAS_MES),2)
+            Else                
+                PRECIO_DIAS_LNAC = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4080")
+            EndIf
+                            
+        ElseIf motivoabs = argIncCliente And argIncClonar = "12" Then
+            'Calculo el importe de la licencia por defuncion para esos dias
+            If SAR_TIPO_SALARIO = "003" Then
+                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                    pr_ant = SAR_TOT_P_COMP_EA
+                Else   
+                    SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
+                    If SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 Then
+                        pr_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_P_COMP_EA
+                    EndIf
+                    prom = Max(SAR_PRO_VAR_ULT_6,SAR_PRO_VAR_ULT_12)
+                EndIf    
+                PRECIO_DIAS_LDEF = Round(pr_ant + (prom/SAR_HORAS_MES),2)
+            Else                
+                PRECIO_DIAS_LDEF = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4090")
+            EndIf
+                           
+        ElseIf motivoabs = argIncCliente And argIncClonar = "13" Then
+            'Calculo el precio de la licencia por examen para esos dias
+            If SAR_TIPO_SALARIO = "003" Then
+                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                    pr_ant = SAR_TOT_P_COMP_EA
+                Else   
+                    SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
+                    If SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 Then
+                        pr_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_P_COMP_EA
+                    EndIf
+                    prom = Max(SAR_PRO_VAR_ULT_6,SAR_PRO_VAR_ULT_12)
+                EndIf    
+                PRECIO_DIAS_LEX = Round(pr_ant + (prom/SAR_HORAS_MES),2)
+            Else                
+                PRECIO_DIAS_LEX = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4100")
+            EndIf
+                            
+        ElseIf motivoabs = argIncCliente And argIncClonar = "17" Then
+            'Calculo el precio para hemodonacion 
+            PRECIO_DIAS_DSAN = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4108")
+        ElseIf motivoabs = argIncCliente And argIncClonar = "30" Then
+            'Calculo el precio para la Reserva de Puesto por Enfermedad
+            PRECIO_DIAS_RE_ENF = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4193")
+        ElseIf motivoabs = argIncCliente And argIncClonar = "31" Then
+            'Calculo el importe para la Reserva de Puesto por Accidente
+            PRECIO_DIAS_RE_ACC = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4190")
+        ElseIf motivoabs = argIncCliente And argIncClonar = "32" Then
+            'Calculo el importe para la Reserva de Puesto por Actividad Sindical
+            PRECIO_DIAS_RE_SIN = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4195")
+        EndIf
+    EndIf           
+Next
+'Se elimina el filtro RAM aplicado al nodo
+SAR_REAL_TIME_PERIOD.REMOVEFILTER()
+
+'Incorporamos las incidencias de rol
+PRECIO_HS_AUSENCIA = 0: PRECIO_HS_50 = 0 : PRECIO_HS_100 = 0 : PRECIO_PL_NOC_50 = 0: PRECIO_PL_NOC_100 = 0 : PRECIO_FER_TRAB = 0
+
+hrRole = SAR_HR_ROLE.Count() - 1
+For j = 0 To hrRole
+    SAR_HR_ROLE.MoveTo(j)
+
+    'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de horas de feriado trabajado
+    sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
+    SAR_REAL_TIME_PER_ROLE.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", argIncCliente)
+
+    contIncRol = SAR_REAL_TIME_PER_ROLE.COUNT() -1
+    For k = 0 To contIncRol
+        fec_ini_abs = SAR_REAL_TIME_PER_ROLE[k].SCO_DT_START
+        fec_fin_abs = SAR_REAL_TIME_PER_ROLE[k].SCO_DT_END
+        'Si la fecha de inicio del ausentismo esta comprendida entre el inicio y 
+        'el fin del tramo calculo el precio a la fecha de fin de la incidencia
+        If inicioTramo <= fec_ini_abs And fec_ini_abs <= finTramo Then
+            If fec_fin_abs > fec_fin_paga Then
+                fec_fin_abs = fec_fin_paga
+            EndIf
+            fec_abs = fec_fin_abs
+            'Calculo el importe para el dia de fin de la incidencia
+            idabs = SAR_REAL_TIME_PER_ROLE[k].SCO_ID_INCIDENCE
+
+            'Hs de ausencia
+            If idabs = argIncCliente And argIncClonar = "20" Then
+                PRECIO_HS_AUSENCIA = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4463")
+            EndIf
+            'Hs Extras
+            If idabs = argIncCliente And argIncClonar = "33" Then
+                PRECIO_HS_50 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4433") * 1.5
+            ElseIf idabs = argIncCliente And argIncClonar = "34" Then
+                 PRECIO_HS_100 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4423") * 2 
+            ElseIf idabs = argIncCliente And argIncClonar = "44"  Then
+                PRECIO_PL_NOC_50 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4257") * 1.5
+            ElseIf idabs = argIncCliente And argIncClonar = "45" Then
+                PRECIO_PL_NOC_100 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4263") * 2
+            ElseIf idabs = argIncCliente And argIncClonar = "54" Then
+                PRECIO_FER_TRAB = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4473") * 2                             
+            EndIf
+        EndIf
+    Next
+    'Se elimina el filtro RAM aplicado al nodo
+    SAR_REAL_TIME_PER_ROLE.REMOVEFILTER()
+Next
+'Fin incidencias del rol
+
+precioInc = PRECIO_DIAS_DSAN + PRECIO_DIAS_ENF + PRECIO_DEC792 + PRECIO_DIAS_EXCED + PRECIO_DIAS_AUS_INJUST + PRECIO_DIAS_HUELGA + PRECIO_LIC_S_GOC_SUELD + PRECIO_DIAS_SUS_DISCI + PRECIO_DIAS_RE_ACC + PRECIO_DIAS_RE_ENF + PRECIO_DIAS_RE_SIN + PRECIO_DIAS_LCONV + PRECIO_DIAS_LCAS + PRECIO_DIAS_LNAC + PRECIO_DIAS_LDEF + PRECIO_DIAS_LEX + PRECIO_HS_AUSENCIA
+precioInc = precioInc + PRECIO_HS_AUSENCIA + PRECIO_HS_50 + PRECIO_HS_100 + PRECIO_PL_NOC_50 + PRECIO_PL_NOC_100 + PRECIO_FER_TRAB
+
+precioInc = Round(precioInc,SAR_NUM_DEC)
+ARG_PRECIO_INC = precioInc
+
+Return(0)

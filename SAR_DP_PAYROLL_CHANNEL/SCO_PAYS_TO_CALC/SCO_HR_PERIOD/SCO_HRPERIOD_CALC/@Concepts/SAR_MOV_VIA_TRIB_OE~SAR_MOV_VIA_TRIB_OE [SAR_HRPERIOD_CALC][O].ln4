@@ -1,0 +1,21 @@
+importe = SAR_MOV_VIA_TRIB_OE
+topeExento = 0
+
+'Tope desde periodo fiscal 2023
+If DxYear(SAR_FEC_IMPUT_IG)<2023 Then Return(importe) 
+
+'Ley de bases 2024, no hay parte exenta:
+If DxYear(SAR_FEC_IMPUT_IG)>2023 Then Return(importe) 
+
+If SAR_ID_TERR_LARG_DIST_OE = 1 Then
+    topeExento = 4 * SAR_GAN_NO_IMP
+ElseIf SAR_ID_LARGA_DIST_OE = 1 Then
+    topeExento = SAR_GAN_NO_IMP
+Else
+    topeExento = Percentage(40,SAR_GAN_NO_IMP)
+EndIf
+
+gravado = Max(importe - topeExento, 0)
+exento = importe - gravado
+
+Return Round(gravado,SAR_NUM_DEC)

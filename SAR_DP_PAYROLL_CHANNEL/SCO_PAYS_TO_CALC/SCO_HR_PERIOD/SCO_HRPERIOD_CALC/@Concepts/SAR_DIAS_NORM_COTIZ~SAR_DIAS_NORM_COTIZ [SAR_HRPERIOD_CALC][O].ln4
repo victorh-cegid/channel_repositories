@@ -1,0 +1,7 @@
+IF (SAR_TIPO_SALARIO = "001" Or SAR_TIPO_SALARIO = "002") THEN 'es mensual
+    valor = 30                     
+ELSEIF SAR_TIPO_SALARIO = "003" THEN 'es horario
+    valor = 240
+ENDIF
+
+Return(valor)

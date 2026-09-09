@@ -1,0 +1,1 @@
+Return(Round(SCO_PAY_RATE,SCO_CURR_DECIMALS))

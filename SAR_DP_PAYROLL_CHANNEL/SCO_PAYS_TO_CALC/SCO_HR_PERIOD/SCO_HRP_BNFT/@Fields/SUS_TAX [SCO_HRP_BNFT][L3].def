@@ -1,0 +1,12 @@
+item: SUS_TAX
+name: Antes /Despues de impuestos (A/D)
+column_name: SUS_TAX
+item_type: FIELD
+type: STRING
+id_m4_type: 1
+prec: 1
+scale: 0
+scope: RECORD
+default_value: "A"
+internal_type: 1
+item_aux: null

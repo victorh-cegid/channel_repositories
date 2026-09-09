@@ -1,0 +1,7 @@
+x = SAR_UN_PL_NOCTUR_100()..SAR_RULE_1
+
+if( SCO_PAYS_TO_CALC.SCO_REVISION = 1 ) then
+	x = SAR_UN_PL_NOCTUR_100()..SAR_UN_PL_NOCTUR_100_REV
+endif
+
+return( x )

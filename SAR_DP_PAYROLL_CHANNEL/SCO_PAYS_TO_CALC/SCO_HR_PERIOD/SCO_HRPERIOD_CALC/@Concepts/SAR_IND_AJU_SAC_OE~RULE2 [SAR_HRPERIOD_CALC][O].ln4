@@ -1,0 +1,16 @@
+'Para generar dependencias
+a = SAR_IND_AJUSTE_SAC
+
+indicador_oe = SAR_IND_AJU_SAC_OE
+
+'Comprueba si el indicador esta activo y ademas existe abono de SAC, si no es asi retorna 0
+sac_abonado = SAR_JUR_SAC_MES
+ind_pagas_ant = SAR_ACM_MES_ACTUAL[0].SAR_IND_AJU_SAC_OE
+valor = 0
+
+If (indicador_oe = 1 And sac_abonado > 0) Or ind_pagas_ant <> 0 Then valor = 1
+
+'Control para diferidos, para calcular cuota SAC si no hay pago SAC
+If SAR_IND_DIFERIDO = 1 And sac_abonado = 0 Then valor = 0
+
+Return(valor)

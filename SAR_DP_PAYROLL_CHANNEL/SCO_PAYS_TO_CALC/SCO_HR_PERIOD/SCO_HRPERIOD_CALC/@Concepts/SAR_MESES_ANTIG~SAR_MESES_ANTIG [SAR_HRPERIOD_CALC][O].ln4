@@ -1,0 +1,17 @@
+'
+'Calcula el num. de meses en alta en la empresa a la fecha de proceso
+'
+fecantig = SAR_FEC_INDEM
+
+IF IsNull(fecantig) = 1 THEN
+    fecantig = SAR_FECHA_ALTA
+ENDIF
+
+IF SAR_ES_BAJA = 1 THEN
+    fechafin = SAR_FECHA_BAJA
+ELSE
+    fechafin = SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC
+ENDIF
+nummeses = DATEDIFF(fecantig,fechafin,M4_MONTH)
+valor=nummeses
+Return(valor)

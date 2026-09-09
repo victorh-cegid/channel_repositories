@@ -1,0 +1,15 @@
+GapType	= SCO_ID_TYPE_ADJUSTMENT
+Ret		= 0
+TotNetOutAdv	= 0
+TotNetOk	= 0
+
+TotNetOutAdv =SCO_NET_WITHOUT_ADVANCES
+TotNetOk = SCO_AGREED_NET
+
+
+If GapType = "2" Then
+	Ret = Round(TotNetOutAdv - TotNetOk,3)
+Endif
+
+
+Return(Ret)

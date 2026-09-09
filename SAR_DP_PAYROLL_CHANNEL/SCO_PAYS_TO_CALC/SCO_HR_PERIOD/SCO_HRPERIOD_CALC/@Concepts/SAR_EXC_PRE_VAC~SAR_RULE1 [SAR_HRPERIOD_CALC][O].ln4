@@ -1,0 +1,98 @@
+'Excluimos del calculo los tipos de paga: Extra(2), Anticipo de Vacaciones(88), Reliquidacion impuesto(99).
+If (SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1) Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Then Return(0)
+
+'Evaluamos si se esta ejecutando una Paga Especial de Licencia por Vacaciones. En este tipo de paga se liquidan las vacaciones y no se descuentan.
+If SAR_TP_IMPUT = "77" Then Return(0)
+
+a = SAR_PRE_DESC_VAC   'Para generar dependencias
+
+'Inicializo las variables para los calculos a efectuar
+prec_vac_ant_exc  = 0                               'Precio parcial Vacaciones en exceso periodo anterior
+prec_vac_act_exc  = 0                               'Precio parcial Vacaciones en exceso periodo actual
+prec_desc_vac_exc = 0                               'Precio total Vacaciones en exceso en paga actual
+
+'Tenemos que tener en cuenta la posibilidad de que exista un tramado en el calculo de nomina. Realizamos todos los calculos en el primer tramo
+num_tramos = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysSliceNumber
+
+If num_tramos > 1 Then
+    ini_prim_tramo = GetStartDate()         'Fecha de incio del primer tramo del calculo
+
+    fecha_ini_tram = GetRunningStartDate()  'Fecha de incio del tramo en ejecucion
+
+'Solo continuamos con el calculo si nos encontramos en el primer tramo.
+    'If ini_prim_tramo <> fecha_ini_tram Then Return(0)
+EndIf
+
+'Si se han calculado dias de vacaciones en exceso, pendientes de liquidar en la paga proxima, procedemos a calcular su precio correspondiente.
+dias_tot_exc_vac  = SAR_EXC_DIAS_VAC          'Total dias en Exceso para Descuento calculados en la paga procesada 
+dias_vac_ant_desc = SAR_EXC_DIAS_VAC_DESC     'Total dias Descuento pendientes descontados en la paga procesada
+
+If dias_tot_exc_vac > 0 Then
+
+'1.- Comprobamos primero si los dias pendientes de liquidar provienen de los dias que no han podido liquidarse del saldo pendiente del mes anterior.    
+    dias_pend_mes_ant = SAR_ACM_ULT_MES[0].SAR_EXC_DIAS_VAC      'Total dias pendientes de Descuento de la paga anterior
+    dias_vac_ant_exc  = dias_pend_mes_ant - dias_vac_ant_desc                               'Total dias en exceso pendientes de Descuento no descontados en la paga actual
+        
+    If dias_vac_ant_exc > 0 Then
+        prec_vac_ant_exc = SAR_ACM_ULT_MES[0].SAR_EXC_PRE_VAC    'Precio descuento Vacaciones pendientes
+    EndIf
+    
+'2.- Comprobamos ahora los dias pendientes de liquidar para periodos vacacionales generados en el mes actual de proceso.
+    dias_vac_act_exc = dias_tot_exc_vac - dias_vac_ant_exc
+    
+    If dias_vac_act_exc > 0 Then
+        promedio = SAR_PRO_VAR_ULT_6
+        num_reg_vac = SAR_VACACIONES.Count()
+    
+        If num_reg_vac > 0 Then
+    'Si tengo mas de un tramo en el mes y varios periodos vacacionales en el mes tengo que proporcionar el precio a cada tramo por cambio de salario.
+            If SAR_DIAS_NORM_SUELD = 0 Then
+                prec_vac_act_exc = 0
+            Else
+                If num_tramos > 1 Then 
+                    For j = 0 To num_reg_vac - 1
+                        SAR_VACACIONES.MoveTo(j)
+        
+                        fec_ini_vac = SAR_VACACIONES.SCO_DT_START
+                        
+                        For i = 0 To num_tramos - 1
+                            fec_ini_tramo = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA[i]..SysStartDate
+                            fec_fin_tramo = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA[i]..SysEndDate
+        
+                            If fec_ini_tramo <= fec_ini_vac And fec_fin_tramo >= fec_ini_vac Then
+                                If SAR_DIAS_NORM_SUELD = 0 Then
+                                    prec_vac_act_exc = 0
+                                Else
+                                    If SAR_TIPO_SALARIO <> "003" Then
+                                        prec_vac_act_exc = prec_vac_act_exc + ((SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA[i] + promedio) / SAR_HRPERIOD_CALC.SAR_DIAS_NORM_SUELD)
+                                    Else
+                                        prec_vac_act_exc = prec_vac_act_exc + SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA[i] + promedio
+                                    EndIf
+                                EndIf
+                            EndIf
+                        Next
+                    Next
+                Else
+                    If SAR_TIPO_SALARIO <> "003" Then
+                        prec_vac_act_exc = (SAR_TOT_P_COMP_EA + promedio) / SAR_DIAS_NORM_SUELD
+                    Else
+                        prec_vac_act_exc = SAR_TOT_P_COMP_EA + promedio
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
+    EndIf
+
+'3.- Compruebo si el Precio del Exceso de descuento esta compuesto de un tramo salarial o no. En el caso de exisitir mas de un tramo salarial calculo la media ponderada.
+    If prec_vac_act_exc > 0 And prec_vac_ant_exc > 0 Then 
+        prec_vac_act_exc = ((prec_vac_act_exc * dias_vac_act_exc))/dias_tot_exc_vac    
+        prec_vac_ant_exc = ((prec_vac_ant_exc * dias_vac_ant_exc))/dias_tot_exc_vac
+    EndIf
+
+'Obtengo el precio mediante la media ponderada de los precios de cada periodo vacacional
+    prec_desc_vac_exc = prec_vac_ant_exc + prec_vac_act_exc
+Else
+    prec_desc_vac_exc = 0
+EndIf
+
+Return(prec_desc_vac_exc)

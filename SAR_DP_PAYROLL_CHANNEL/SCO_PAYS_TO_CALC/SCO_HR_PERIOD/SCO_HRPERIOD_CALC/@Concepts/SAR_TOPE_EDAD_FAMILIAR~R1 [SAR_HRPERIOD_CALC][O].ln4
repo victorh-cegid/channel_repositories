@@ -1,0 +1,9 @@
+'Toma Valor desde tabla de valor empresa
+
+If IsNull(#SAR_TOPE_EDAD_FAMILIAR) = M4_True Or #SAR_TOPE_EDAD_FAMILIAR = 0 Or #SAR_TOPE_EDAD_FAMILIAR = "" Then
+    'Datos obligatorios requeridos.\n \nDebe definir el valor del tope de edad del familiar a 
+    'cargo para el correcto funcionamiento de las variables #4929 - (Importe hijo para I.G.) y #4931 - (Importe otras cargas I.G.).
+    SetLog(1,122,80,10)
+Endif
+
+Return(SAR_TOPE_EDAD_FAMILIAR)

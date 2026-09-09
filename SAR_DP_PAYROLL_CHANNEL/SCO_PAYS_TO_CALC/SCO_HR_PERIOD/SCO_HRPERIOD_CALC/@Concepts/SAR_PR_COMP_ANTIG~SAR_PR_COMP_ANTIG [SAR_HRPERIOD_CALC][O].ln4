@@ -1,0 +1,18 @@
+If SAR_TP_IMPUT = "77" Then
+    Return(0)
+Endif
+
+IF SCO_ID_TYPE_ADJUSTMENT <> "1" THEN 
+    Return(0)
+ENDIF
+
+coef1   = SAR_PORC_ANT_1_PER / 100
+coef2   = SAR_PORC_ANT_2_PER / 100
+numanos = SAR_ANIOS_ANTIG
+max1    = SAR_NUM_ANOS_1_PER
+max2    = SAR_NUM_ANOS_2_PER
+anos1   = MIN(SAR_NUM_ANOS_1_PER, SAR_ANIOS_ANTIG)
+anos2   = MIN(MAX(SAR_ANIOS_ANTIG - SAR_NUM_ANOS_1_PER, 0), SAR_NUM_ANOS_2_PER)
+precio  = anos1 * coef1 * SAR_P_SUELDO + anos2 * coef2 * SAR_P_SUELDO
+
+Return(precio)

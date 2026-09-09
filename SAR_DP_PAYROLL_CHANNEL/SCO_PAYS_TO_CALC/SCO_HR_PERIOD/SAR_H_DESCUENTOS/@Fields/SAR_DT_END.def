@@ -1,0 +1,12 @@
+item: SAR_DT_END
+name: Fin del descuento
+column_name: SAR_DT_END
+item_type: FIELD
+type: DATE
+id_m4_type: 4
+prec: 0
+scale: 0
+scope: RECORD
+default_value: "4000-01-01"
+internal_type: 3
+item_aux: null

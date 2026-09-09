@@ -1,0 +1,2 @@
+'Tomara valor forzado por valores del periodo del RH
+Return(Round(SAR_UN_HS_SEM_100,SCO_CURR_DECIMALS))

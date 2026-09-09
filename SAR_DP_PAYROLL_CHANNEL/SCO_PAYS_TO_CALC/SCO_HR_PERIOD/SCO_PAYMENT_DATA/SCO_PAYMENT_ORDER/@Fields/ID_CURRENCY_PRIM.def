@@ -1,0 +1,12 @@
+item: ID_CURRENCY_PRIM
+name: Moneda ppal.
+column_name: ID_CURRENCY_PRIM
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 3
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 14
+item_aux: SCO_DT_TRANSFER

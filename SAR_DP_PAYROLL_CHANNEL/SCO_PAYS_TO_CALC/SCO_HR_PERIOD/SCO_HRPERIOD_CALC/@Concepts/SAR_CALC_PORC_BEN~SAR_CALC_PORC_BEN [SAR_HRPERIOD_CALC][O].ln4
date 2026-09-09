@@ -1,0 +1,6 @@
+'
+' Calcula el importe segun el porcentaje ingresado en la orden de pago del beneficiario
+'
+
+valor = (SAR_LIQUIDO..SysTotalSlices(TOTAL_SUM) * SAR_ASIG_LIQ_BEN_PO) / 100
+Return(valor)

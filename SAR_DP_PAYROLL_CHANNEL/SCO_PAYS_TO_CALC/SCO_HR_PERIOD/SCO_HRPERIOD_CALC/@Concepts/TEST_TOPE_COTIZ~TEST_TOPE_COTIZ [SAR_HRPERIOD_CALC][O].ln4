@@ -1,0 +1,9 @@
+'Carga nodo acum cotiz
+TEST_NODO_ACUM.DESTROY()
+TEST_NODO_ACUM.SCO_DT_START = DxDate(1,1,DxYear(SCO_DT_ALLOCATION)-1)
+TEST_NODO_ACUM.SCO_DT_END = DxDate(31,12,DxYear(SCO_DT_ALLOCATION)+1)
+TEST_NODO_ACUM.LOAD_BLK()
+'fin carga nodo acum
+
+valor = TEST_TOPE_COTIZ
+Return(valor)

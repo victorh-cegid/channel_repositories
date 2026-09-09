@@ -1,0 +1,22 @@
+IF SAR_TP_IMPUT = "77" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN 
+    Return(0)
+ENDIF
+
+val = 0
+aux = SAR_CARGA_AUSENTISM
+aux = SAR_IMPORTE_LICENCIAS
+
+precio_vac = SAR_PRE_VACACIONES
+
+'WA css 2939449
+'Arrastramos precio de vacaciones de mes anterior ya que no hay ajuste ni vacaciones que comiencen en este mes
+'If SAR_AJ_VACACIONES = 0 And SAR_ACM_ULT_MES[0].SAR_PRE_VACACIONES > 0 And SAR_VACACIONES.COUNT() = 0 Then precio_vac = SAR_ACM_ULT_MES[0].SAR_PRE_VACACIONES
+If SAR_TIPO_SALARIO = "003" Then
+    If SAR_AJ_VACACIONES = 0 And SAR_ACM_ULT_PAGO_IMPUT[0].SAR_PRE_VACACIONES > 0 And SAR_VACACIONES.COUNT() = 0 Then precio_vac = SAR_PRE_DESC_VAC
+Else
+    If SAR_AJ_VACACIONES = 0 And SAR_ACM_ULT_MES[0].SAR_PRE_VACACIONES > 0 And SAR_VACACIONES.COUNT() = 0 Then precio_vac = SAR_ACM_ULT_MES[0].SAR_PRE_VACACIONES
+EndIf
+
+val = precio_vac * SAR_DIAS_VACACIONES
+
+RETURN(val)

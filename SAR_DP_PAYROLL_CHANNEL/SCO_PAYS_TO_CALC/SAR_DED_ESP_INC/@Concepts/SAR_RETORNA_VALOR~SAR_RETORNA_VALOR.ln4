@@ -1,0 +1,28 @@
+DESTROY()
+vValor = 0
+
+PROP_FECHA = ARG_DESDE
+
+Begin()
+If Count() > 0 Then
+    IF ID_CURRENCY <> ARG_ID_CURRENCY THEN  
+       HASTA = EXCHANGE_RATES!CURRENCY.curGetExchange(ID_CURRENCY,ARG_ID_CURRENCY,SAR_DT_ALLOCATION,EX_TYPE,SAR_HASTA)
+       CUOTA = EXCHANGE_RATES!CURRENCY.curGetExchange(ID_CURRENCY,ARG_ID_CURRENCY,SAR_DT_ALLOCATION,EX_TYPE,SAR_IMPORTE)
+    ELSE
+       HASTA = SAR_HASTA
+       CUOTA = SAR_IMPORTE
+    ENDIF
+    
+    If DT_START <= ARG_DESDE AND ARG_DESDE <= DT_END Then            
+
+        vPos = Findregister("SAR_HASTA",ARG_BASE,M4_GREATER_OR_EQUAL)
+        
+        If vPos <> -1 Then
+            MoveTo(vPos)
+            vValor = SAR_IMPORTE
+            Return(vValor)              
+        EndIf
+    ENDIF    
+EndIf
+
+Return(vValor)

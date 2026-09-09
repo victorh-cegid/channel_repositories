@@ -1,0 +1,5 @@
+imp_fin = SAR_IG_FINAL
+val_ant_emp = SAR_IMP_ANT_EMP - SAR_ACM_PAGA_ANT_IG[0].SAR_IMP_ANT_EMP
+val_oe = SAR_IMP_OTROS_EMP - SAR_ACM_PAGA_ANT_IG[0].SAR_IMP_OTROS_EMP
+valor = SAR_IMPUESTO + val_ant_emp + val_oe + imp_fin
+Return(valor)

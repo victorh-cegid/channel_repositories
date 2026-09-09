@@ -1,0 +1,1 @@
+return(round(SAR_LIQUIDO,SAR_NUM_DEC))

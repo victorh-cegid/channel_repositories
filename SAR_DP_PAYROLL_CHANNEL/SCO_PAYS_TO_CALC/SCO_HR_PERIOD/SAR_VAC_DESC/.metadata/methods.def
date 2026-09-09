@@ -1,0 +1,5 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+DESFASA_MES | RECORD | NUMBER | 6 | 18 | 0 | Aplica dias de ausencia de pagas anteriores al mes
+DESTROYBLOCK | BLOCK | NUMBER | 6 | 1 | 0 | Destruir bloque
+GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente
+PROCESA_DESCUENTO | RECORD | NUMBER | 6 | 18 | 0 | Proceso para calcular descuento 

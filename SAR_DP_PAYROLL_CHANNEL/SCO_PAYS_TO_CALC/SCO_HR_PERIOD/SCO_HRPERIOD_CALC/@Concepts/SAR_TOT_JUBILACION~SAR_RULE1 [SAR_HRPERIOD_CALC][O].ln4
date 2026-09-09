@@ -1,0 +1,6 @@
+ban = SAR_TOT_M_JUB
+val_otros_empl = SAR_JUBILACION_OE - SAR_ACM_PAGA_ANT_IG[0].SAR_JUBILACION_OE
+val_ant_emp = SAR_JUB_ANT_EMP - SAR_ACM_PAGA_ANT_IG[0].SAR_JUB_ANT_EMP
+valor = ban + val_ant_emp + val_otros_empl  
+
+Return(valor)

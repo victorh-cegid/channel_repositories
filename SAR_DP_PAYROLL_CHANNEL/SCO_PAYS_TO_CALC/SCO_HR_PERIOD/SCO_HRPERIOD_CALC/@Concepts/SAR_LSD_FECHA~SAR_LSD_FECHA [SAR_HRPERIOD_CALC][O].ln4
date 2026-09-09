@@ -1,0 +1,14 @@
+fecLsd = SCO_DT_ALLOCATION
+
+lsdPay = 0
+CambioDeLinea = CHR(13) + CHR(10)
+DefineInstance("SAV_PARAMS","SAV_PARAMS", 1, 3)
+Code = "SAV_PARAMS!SAV_PARAMS.RET_VALUE("
+Code = Code + CHR(Double_Quote) + "CHANNEL_DESIGNER" + CHR(Double_Quote) 
+Code = Code + "," +CHR(Double_Quote)+ "PAYROLL_PARS" + CHR(Double_Quote)  	
+Code = Code  + "," + CHR(Double_Quote)+ "LSD_PAY" + CHR(Double_Quote)+ ")" + CambioDeLinea + "iCount = SAV_PARAMS!FINAL_RETURN.Count()" + CambioDeLinea
+Code = Code  + "If iCount > 0 Then" + CambioDeLinea + "Return(SAV_PARAMS!FINAL_RETURN[0].APP_VALUE)" + CambioDeLinea + " else " + CambioDeLinea + "return(0) " + CambioDeLinea + "endif" 
+lsdPay = ToInt(ClcExecuteLN4JIT(Code))
+
+If SAR_LSD_IND_PAGO = 1 And lsdPay = 1 Then fecLsd = SCO_DT_PAYMENT
+Return(fecLsd)

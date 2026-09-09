@@ -1,0 +1,3 @@
+aux=#SAR_ID_OBRA_SOCIAL
+valor = SAR_OBRA_SOCIAL.SAR_RETORNA_VALOR(aux)
+Return(valor)

@@ -1,0 +1,34 @@
+dStartDate = GetStartDate()
+dEndDate = GetEndDate()
+
+'Crea el registro correspondiente al coste
+Addregister()
+SCO_ID_TI = ARG_ID_TI
+SCO_ID_ITEM = ARG_ID_ITEM
+SCO_ID_BNFT_EMP_DEP = ARG_ID_BNFT_EMP_DEP 
+SCO_DT_START = ARG_DT_START
+SCO_DT_END = ARG_DT_END
+cValue = ARG_VALUE
+
+'Si las fechas de inicio y fin del valor no se corresponden con las de la paga, hay que prorratear el valor
+If SCO_DT_START_ALLOC <> SCO_DT_START or SCO_DT_END_ALLOC <> SCO_DT_END Then
+    'Asigna en el nodo SCO_BNFT_VALUES_SLICES el valor a prorratear entre las fechas de inicio y fin de la paga
+    dStartDateAlloc = SCO_DT_START_ALLOC
+    dEndDateAlloc = SCO_DT_END_ALLOC
+    SetStartDate(dStartDateAlloc)
+    SetEndDate(dEndDateAlloc)
+    SCO_BNFT_VALUES_SLICES.Addregister()
+    SCO_BNFT_VALUES_SLICES.SCO_VALUE = cValue
+    
+    'Leemos el valor entre las fechas de inicio y fin del coste, de esta forma obtenemos el coste prorrateado
+    SetStartDate(ARG_DT_START)
+    SetEndDate(ARG_DT_END)
+    cValue = SCO_PRORRATED_VALUE()
+    SCO_BNFT_VALUES_SLICES.DESTROYREGISTER()
+    
+    'Volvemos a las fechas de ejecucion
+    SetStartDate(dStartDate)
+    SetEndDate(dEndDate)
+Endif
+'Asignamos el valor (prorrateado o no) al registro
+SCO_VALUE = cValue

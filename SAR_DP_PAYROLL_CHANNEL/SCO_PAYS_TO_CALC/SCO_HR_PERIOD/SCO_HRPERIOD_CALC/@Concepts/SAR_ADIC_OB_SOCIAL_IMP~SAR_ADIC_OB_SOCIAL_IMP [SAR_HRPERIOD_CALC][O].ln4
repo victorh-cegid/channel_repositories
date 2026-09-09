@@ -1,0 +1,14 @@
+IF SAR_TP_IMPUT = "77" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+base = SAR_BASE_COTIZ_ART_OS + SAR_REMUN_IMPO_OS
+porc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
+precio = base * porc / 100
+valor = precio * SAR_FAM_CARGO_OS
+
+anssal = round(valor * SAR_PORC_ANSSAL / 100, 2)
+SAR_ANSSAL_ADIC_O_SOC = anssal
+valor = valor - anssal
+
+Return(valor)

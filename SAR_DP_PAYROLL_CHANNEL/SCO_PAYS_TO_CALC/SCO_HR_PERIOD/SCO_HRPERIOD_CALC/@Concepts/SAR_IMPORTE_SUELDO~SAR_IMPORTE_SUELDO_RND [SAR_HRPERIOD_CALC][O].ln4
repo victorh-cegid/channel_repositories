@@ -1,0 +1,1 @@
+Return(Round(SAR_IMPORTE_SUELDO,SAR_NUM_DEC))

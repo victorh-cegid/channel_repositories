@@ -1,0 +1,6 @@
+'Este control se agrega para el reporte de SIJP
+aux = SAR_U_CONC_FIJOS
+
+SAR_DIAS_ALTA_HS = SAR_DIAS_ALTA
+
+return(SAR_DIAS_ALTA_HS)

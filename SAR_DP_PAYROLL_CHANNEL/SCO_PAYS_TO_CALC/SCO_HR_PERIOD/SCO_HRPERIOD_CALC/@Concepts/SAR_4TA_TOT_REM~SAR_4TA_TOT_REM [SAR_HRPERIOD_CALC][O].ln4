@@ -1,0 +1,3 @@
+a = SAR_BASE_IMPUESTO
+valor = SAR_4TA_TOT_REM
+Return Round(valor,SAR_NUM_DEC)

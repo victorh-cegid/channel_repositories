@@ -1,0 +1,21 @@
+nmTot=0
+nmAmt=0
+
+vDes=SCO_HRPERIOD_CALC.ID_CURRENCY
+dtExch=SCO_HRPERIOD_CALC.SCO_DT_EXCHANGE
+vExType=SCO_HRPERIOD_CALC.EX_TYPE
+
+BEGIN()
+
+While ISEOF()<>TRUE 
+	vOri=ID_CURRENCY_PRIM
+	If vOri<>vDes Then
+		nmAmt=EXCHANGE_RATES!CURRENCY.curGetExchange(vOri,vDes,dtExch,vExType,SCO_AMT_PAYORDPRIM)
+	Else
+		nmAmt=SCO_AMT_PAYORDPRIM
+	EndIf
+	nmTot=nmTot+ nmAmt
+	GONEXT()
+Wend
+
+Return(nmTOT)

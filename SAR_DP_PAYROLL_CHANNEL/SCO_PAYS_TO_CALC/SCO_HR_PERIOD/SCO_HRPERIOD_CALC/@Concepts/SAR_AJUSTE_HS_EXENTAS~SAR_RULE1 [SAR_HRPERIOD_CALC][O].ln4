@@ -1,0 +1,4 @@
+'2024 Ley de bases, no hay horas exentas
+If DxYear(SAR_FEC_IMPUT_IG)>2023 Then Return(0)
+
+Return(SAR_AJUSTE_HS_EXENTAS)

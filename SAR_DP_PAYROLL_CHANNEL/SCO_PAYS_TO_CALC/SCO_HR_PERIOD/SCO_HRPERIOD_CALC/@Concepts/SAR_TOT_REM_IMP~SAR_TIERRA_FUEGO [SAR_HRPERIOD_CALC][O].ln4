@@ -1,0 +1,10 @@
+'Tierra de fuego tiene exento este concepto
+importe = SAR_TOT_REM_IMP
+excepcion = SAR_IG_CUOT_PRORRA
+
+If SAR_TFUEG_IND = 1 Then
+    SAR_TFUEG_REM_IMP = importe - excepcion
+    importe = excepcion
+EndIf
+
+Return(importe)

@@ -1,0 +1,24 @@
+'Encuentra un valor acumulado de un concepto para un mes dado.
+
+Cont    = 0
+Se_Pago = 0
+
+Registros = SCO_AC_HR_PERIOD_READ_1.Count() - 1
+If(Registros >= 0)Then
+   SCO_AC_HR_PERIOD_READ_1.MoveTo(Cont)
+   Mes = DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT)
+   If(Mes = SAR_ARG_MES)Then
+      While(Cont <= Registros)
+           SCO_AC_HR_PERIOD_READ_1.MoveTo(Cont)           
+           If(DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) = Mes) And (DxYear(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) = DxYear(SCO_DT_PAYMENT))Then           
+               VAL_CON_PAGA_ACUM = GetValue("SCO_AC_HR_PERIOD_READ_1",SAR_ARG_CONCEPTO,-1) 'Tomamos el valor del concepto en la paga acumulada.
+               If(VAL_CON_PAGA_ACUM > 0)Then
+                 Se_Pago = 1
+               EndIf
+           EndIf
+           Cont = Cont + 1 
+      Wend
+   EndIf   
+EndIf
+
+Return(Se_Pago)

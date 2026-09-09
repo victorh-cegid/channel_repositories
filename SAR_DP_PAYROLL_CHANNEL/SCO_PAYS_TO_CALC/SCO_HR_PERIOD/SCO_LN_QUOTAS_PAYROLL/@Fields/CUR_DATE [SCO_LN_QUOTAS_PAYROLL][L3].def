@@ -1,0 +1,12 @@
+item: CUR_DATE
+name: Fecha de cambio
+column_name: CUR_DATE
+item_type: FIELD
+type: DATETIME
+id_m4_type: 5
+prec: 0
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 16
+item_aux: EX_TYPE

@@ -1,0 +1,5 @@
+'Execute all the period concepts after Role and not depending on currency 
+
+SCO_HRPERIOD_CALC.ExecuteGroup("5")
+
+Return(0)

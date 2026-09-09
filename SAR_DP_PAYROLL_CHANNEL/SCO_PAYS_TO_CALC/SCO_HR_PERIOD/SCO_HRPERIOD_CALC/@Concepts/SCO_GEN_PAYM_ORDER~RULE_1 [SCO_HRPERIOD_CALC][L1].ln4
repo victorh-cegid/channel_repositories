@@ -1,0 +1,182 @@
+'****************************************************************************************** 
+' Method:       SCO_GEN_PAYM_ORDER
+' Description:  Este metodo genera las ordenes de pago segun la cantidad a pagar.
+'               La cantidad a pagar al empleado puede ser negativa. En caso de retroactividad
+'               puede ser normal, pero si no es una retroactividad, indicaria que se ha
+'               producido un error al calcular las cantidades a pagar, ya sea porque no hay
+'               datos de pago o porque se han generado pagos negativos para algun 
+'               beneficiario (el principal o cualquier otro).
+'               Segun lo explicado anteriormente, si es una retroactividad y la cantidad a
+'               pagar al empleado es negativa, se crea (o actualiza)la orden de pago con 
+'               el valor negativo.
+'               Si no es una retroactividad y la cantidad a pagar al empleado es negativa,
+'               si existe orden de pago para algun beneficiario (recalculo), la actualiza
+'               a 0 (por si se han generado pagos), y si no existen ordenes de pago, 
+'               no las crea.
+'               No se genera orden de pago para un beneficiario si su cantidad a pagar es 0
+'               (excepto en el caso indicado anteriormente del recalculo).
+'******************************************************************************************
+
+If  SCO_IND_MAIN_CURR=1 Then
+'the concept sco_gen_paym_order will be only executed if we are in main currency
+'the main currency is the correct currency assigned to the period or legal entity
+
+	SCO_NET_TO_PAY_EMP()
+'The concept net_to_pay_emp will return the value (positive or negative) of the net, after we disccount the money to pay to the beneficiaries
+'other than the employee
+'it will return a -1 in the case that the calculated amount to pay to a payment data that it is not the employee is negative
+'and it will also return a -1 if there are no payment datas defined.
+'When we are launching a retroactivity pay, SCO_NET_TO_PAY_EMP returns the net value from difference node (positive or negative)
+
+
+	nmPaymentData= SCO_PAYROLL_PAYMENT_DATA.Count()
+            
+		I=0
+		If SCO_PAYS_TO_CALC.SCO_REVISION=0 Then
+
+
+                      'in this case I take into account all the beneficiaries
+				SCO_PAYROLL_PAYMENT_DATA.Begin()
+				While I< nmPaymentData
+                   	  	  'while there are payment datas 
+					SCO_PAYROLL_PAYMENT_DATA.MoveTo(I)
+					If SCO_PAYROLL_PAYMENT_DATA.SCO_EMP_CHECK="0" Then
+                          	   'since it is not the employee we only have to apply the formula, and generate the
+                         	    'payment order for that amount of money     
+						nmValue=SCO_PAYROLL_PAYMENT_DATA.SCO_VALUE
+                                    
+					Else
+                              
+                            		 'in the case of the employee we generate the payment order for the value return by the concept sco_net_to_pay_emp
+						nmValue=SCO_NET_TO_PAY_EMP
+                              
+					EndIf
+                                //Solo en caso de que el beneficiario principal, tenga un pago negativo (no si es 0),
+                                //supondra la anulacion de los pagos de los demas beneficiarios.
+                                //Si el dato pago esta fuera de fechas, se pone a 0 su orden de pago
+					if SCO_NET_TO_PAY_EMP < 0 or SCO_PAYROLL_PAYMENT_DATA.SCO_DT_END < SCO_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA or SCO_PAYROLL_PAYMENT_DATA.SCO_DT_START > SCO_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA THEN
+						nmValue=0
+					endif
+
+					nmPaymOrder=SCO_PAYMENT_ORDER.Count()
+
+					If nmPaymOrder=1  Then
+                              
+                              'if a payment order already exists for that payment data, the we will update it
+						SCO_PAYMENT_ORDER.Begin()
+						SCO_PAYMENT_ORDER.SCO_AMT_PAYORDPRIM=nmValue
+                                    SCO_PAYMENT_ORDER.ID_CURRENCY_PRIM=ID_CURRENCY
+                                    currency=ID_CURRENCY
+                                    
+                                    SCO_PAYMENT_ORDER.EX_TYPE=EX_TYPE
+                                    dt_transf=SCO_PAYS_TO_CALC.SCO_DT_TRANSFER
+                                    dt_paym=SCO_PAYS_TO_CALC.SCO_DT_PAYMENT
+                                    IF ISNULL(dt_transf)=1 THEN
+                                        SCO_PAYMENT_ORDER.SCO_DT_TRANSFER=dt_paym
+                                    ELSE
+                                        SCO_PAYMENT_ORDER.SCO_DT_TRANSFER=dt_transf
+                                    ENDIF
+                                    'the transfer date is obtained from the node of pays,and the values of this properties are filled 
+                                    'in the node Pays_to_calc by the method Fill_Sel_Pays
+                                    'if the value of dtsfer is null we should get as dt_exchange the dt_payment
+						SCO_PAYROLL_PAYMENT_DATA.SCO_OPERATION="U"
+					Elseif SCO_NET_TO_PAY_EMP >= 0 AND nmValue > 0 THEN
+                                //Solo se inserta la orden de pago si el beneficiario que
+                                //estamos procesando tiene un pago positivo y el beneficiario
+                                //principal tiene un pago positivo o 0 .
+					
+                              'if no payment order exists for that payment data, we insert it
+						SCO_PAYMENT_ORDER.AddRegister()
+                                    
+						SCO_PAYMENT_ORDER.SCO_ID_ORIGIN_TYPE="01"
+						
+                                    dt_transf=SCO_PAYS_TO_CALC.SCO_DT_TRANSFER
+                                    dt_paym=SCO_PAYS_TO_CALC.SCO_DT_PAYMENT
+                                    IF ISNULL(dt_transf)=1 THEN
+                                        SCO_PAYMENT_ORDER.SCO_DT_TRANSFER=dt_paym
+                                    ELSE
+                                        SCO_PAYMENT_ORDER.SCO_DT_TRANSFER=dt_transf
+                                    ENDIF
+                                    'the transfer date is obtained from the node of pays,and the values of this properties are filled 
+                                    'in the node Pays_to_calc by the method Fill_Sel_Pays
+                                    'if the value of dtsfer is null we should get as dt_exchange the dt_payment
+
+						SCO_PAYMENT_ORDER.SCO_ID_PAYMORDTYPE="1"
+						SCO_PAYMENT_ORDER.ID_CURRENCY_PRIM=ID_CURRENCY
+						SCO_PAYMENT_ORDER.EX_TYPE= EX_TYPE
+						SCO_PAYMENT_ORDER.SCO_AMT_PAYORDPRIM=nmValue
+                                   
+						SCO_PAYROLL_PAYMENT_DATA.SCO_OPERATION="I"
+					EndIf   
+					I=I+1   
+				Wend
+			
+
+		Else
+                 
+            'if we are in the case of retroactivity, we only consider the employee
+			I=0
+			SCO_PAYROLL_PAYMENT_DATA.Begin()
+			While I< nmPaymentData 
+				SCO_PAYROLL_PAYMENT_DATA.MoveTo(I)
+				If SCO_PAYROLL_PAYMENT_DATA.SCO_EMP_CHECK="1" Then
+                        'only in the case of the employee 
+					if SCO_PAYROLL_PAYMENT_DATA.SCO_DT_END < SCO_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA or SCO_PAYROLL_PAYMENT_DATA.SCO_DT_START > SCO_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA THEN
+					//Si el dato pago esta fuera de fechas, se pone a 0 su orden de pago
+						nmValue=0
+					else
+						nmValue=SCO_NET_TO_PAY_EMP
+					endif
+
+					nmPaymOrder=SCO_PAYMENT_ORDER.Count()
+ 					If nmPaymOrder=1  Then
+                                    
+                              'if already exists the payment order for the employee we will update it
+						SCO_PAYMENT_ORDER.Begin()
+						SCO_PAYMENT_ORDER.SCO_AMT_PAYORDPRIM=nmValue
+                                    SCO_PAYMENT_ORDER.EX_TYPE=EX_TYPE
+                                    SCO_PAYMENT_ORDER.ID_CURRENCY_PRIM=ID_CURRENCY
+                                          
+                                    dt_transf=SCO_PAYS_TO_CALC.SCO_DT_TRANSFER
+                                    dt_paym=SCO_PAYS_TO_CALC.SCO_DT_PAYMENT
+                                    IF ISNULL(dt_transf)=1 THEN
+                                        SCO_PAYMENT_ORDER.SCO_DT_TRANSFER=dt_paym
+                                    ELSE
+                                        SCO_PAYMENT_ORDER.SCO_DT_TRANSFER=dt_transf
+                                    ENDIF
+                                    'the transfer date is obtained from the node of pays,and the values of this properties are filled 
+                                    'in the node Pays_to_calc by the method Fill_Sel_Pays
+                                    'if the value of dtsfer is null we should get as dt_exchange the dt_payment
+
+						SCO_PAYROLL_PAYMENT_DATA.SCO_OPERATION="U"
+					Else
+                                    
+                              'if there is no payment order generated for the employee
+						SCO_PAYMENT_ORDER.AddRegister()
+						SCO_PAYMENT_ORDER.SCO_ID_ORIGIN_TYPE="01"
+						dt_transf=SCO_PAYS_TO_CALC.SCO_DT_TRANSFER
+                                    dt_paym=SCO_PAYS_TO_CALC.SCO_DT_PAYMENT
+                                    IF ISNULL(dt_transf)=1 THEN
+                                        SCO_PAYMENT_ORDER.SCO_DT_TRANSFER=dt_paym
+                                    ELSE
+                                        SCO_PAYMENT_ORDER.SCO_DT_TRANSFER=dt_transf
+                                    ENDIF
+                                    'the transfer date is obtained from the node of pays,and the values of this properties are filled 
+                                    'in the node Pays_to_calc by the method Fill_Sel_Pays
+                                    'if the value of dtsfer is null we should get as dt_exchange the dt_payment
+
+						SCO_PAYMENT_ORDER.SCO_ID_PAYMORDTYPE="1"
+						SCO_PAYMENT_ORDER.ID_CURRENCY_PRIM=ID_CURRENCY
+						SCO_PAYMENT_ORDER.EX_TYPE= EX_TYPE
+						SCO_PAYMENT_ORDER.SCO_AMT_PAYORDPRIM=nmValue
+						SCO_PAYROLL_PAYMENT_DATA.SCO_OPERATION="I"
+					EndIf
+				EndIf
+				I=I+1
+                        'do this while till there are payment datas
+			Wend
+
+		EndIf
+		
+EndIf
+Return(0)

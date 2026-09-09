@@ -1,0 +1,25 @@
+'Solo retroactivas IG 2024 en periodo de devengo junio 2024
+If SCO_DT_ALLOCATION = SCO_DT_PAYMENT Or DxYear(SAR_FEC_IMPUT_IG) <> 2024 Or DxMonth(SCO_DT_ALLOCATION)>6 Then Return(0)
+
+fechaTope = DxDate(30,6,2024)
+
+mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
+mes_fin_ig = DxDate(31,12,DxYear(SAR_FEC_IMPUT_IG))
+ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
+
+'El criterio es que busca la ultima paga normal con fecha alloc junio
+ultAlloc = DxDate(1,1,1800)
+ultTpImput = "XX"
+For acum = 0 To ult_reg - 1
+    If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION <= fechaTope And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT<>"88" And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT<>"99" And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT Then
+        If SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION >= ultAlloc Then
+            ultAlloc = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION
+            ultTpImput = SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT
+        EndIf
+    EndIf
+Next
+
+'Si nos encontramos ajustando retroactivamente la misma paga recuperada en la busqueda anterior, activa el indicador de calculo de beneficio:
+If ultAlloc = SCO_DT_ALLOCATION And ultTpImput = SAR_TP_IMPUT Then SAR_LBASE_IND_CALC_BENEF = 1
+
+Return(ultAlloc)

@@ -1,0 +1,3 @@
+'Este metodo sera utilizado para incluir en el todos los controles de grabacion 
+'de nuevas funcionalidades (estandar o de modulos opcionales) del calculo 
+'y asi no modificar el metodo generico estandar de siempre SCO_SAVE_AC.

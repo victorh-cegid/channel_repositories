@@ -1,0 +1,2 @@
+'Toma valor en el #4433
+Return (Round(SAR_HS_FINDE_EXEN_50, SCO_CURR_DECIMALS))

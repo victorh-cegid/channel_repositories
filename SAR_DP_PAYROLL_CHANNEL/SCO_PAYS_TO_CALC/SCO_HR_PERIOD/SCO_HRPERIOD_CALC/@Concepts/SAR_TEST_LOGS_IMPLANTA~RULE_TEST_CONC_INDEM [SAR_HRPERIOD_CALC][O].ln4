@@ -1,0 +1,65 @@
+''Descomentar para comprobacion de clasificacion de conceptos para indemnizaciones y volver a comentar despues, el archivo queda en C:\Temp\
+
+'canal = GetChannelId()
+'pos = StrIn(canal,"_")
+'nodo = Mid(canal,0,pos)
+'
+'FileOut = "C:\Temp\" + nodo + "IndemClasificacionConceptos.txt"
+'
+'InitFile(FileOut, "Concepto SAR_TEST_LOGS_IMPLANTA regla RULE_TEST_CONC_INDEM")
+'
+'ConcatFile(FileOut, "")
+'
+'ConcatFile(FileOut, "Conceptos FIJOS:")
+'
+'ConcatFile(FileOut, "")
+''Nombre del total usado para clasificar FIJOS
+'
+'totalId = "SAR_TOT_INDEM_CONC_FIJ"
+'
+''Carga del nodo que recorre el total
+'SAR_TOTAL_VALUES.DESTROYBLOCK()
+'SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+'SAR_TOTAL_VALUES.SAR_ID_NODO_CLI = SAR_AUX_NODO_CALC
+'SAR_TOTAL_VALUES.SAR_ID_TOTAL = totalId
+'SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+'SAR_TOTAL_VALUES.Load_Blk()
+''Metodo para descartar items del total (para poder usar herencia)
+'SAR_TOTAL_VALUES.SAR_APLANAR()
+'
+'
+''Recorre la lista de conceptos variables
+'For i = 0 To SAR_TOTAL_VALUES.Count() - 1
+'    id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+'    descartado = SAR_TOTAL_VALUES[i].SAR_DESCARTADO
+'    If descartado = 0 Then ConcatFile(FileOut, id_concepto)
+'Next
+'
+'i=0
+'
+'ConcatFile(FileOut, "")
+'
+'ConcatFile(FileOut, "Conceptos VARIABLES:")
+'
+'ConcatFile(FileOut, "")
+'
+''Nombre del total usado para clasificar VARIABLES
+'totalId = "SAR_TOT_INDEM_CONC_VAR"
+''Carga del nodo que recorre el total
+'SAR_TOTAL_VALUES.DESTROYBLOCK()
+'SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+'SAR_TOTAL_VALUES.SAR_ID_NODO_CLI = SAR_AUX_NODO_CALC
+'SAR_TOTAL_VALUES.SAR_ID_TOTAL = totalId
+'SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+'SAR_TOTAL_VALUES.Load_Blk()
+''Metodo para descartar items del total (para poder usar herencia)
+'SAR_TOTAL_VALUES.SAR_APLANAR()
+'
+'
+''Recorre la lista de conceptos variables
+'For i = 0 To SAR_TOTAL_VALUES.Count() - 1
+'    id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+'    descartado = SAR_TOTAL_VALUES[i].SAR_DESCARTADO
+'    If descartado = 0 Then ConcatFile(FileOut, id_concepto)
+'Next
+'

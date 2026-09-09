@@ -1,0 +1,12 @@
+item: SAR_RAN_REM_IG_2015_PRE
+name: Rango por remuneracion IG 2015 previo
+column_name: SAR_RAN_REM_IG_2015_PRE
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 5
+scale: 2
+scope: RECORD
+default_value: "0"
+internal_type: 1
+item_aux: null

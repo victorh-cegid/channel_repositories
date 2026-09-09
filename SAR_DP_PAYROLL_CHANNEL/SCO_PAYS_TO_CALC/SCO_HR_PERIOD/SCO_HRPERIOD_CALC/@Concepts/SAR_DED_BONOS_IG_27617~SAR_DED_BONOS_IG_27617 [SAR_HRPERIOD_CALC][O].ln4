@@ -1,0 +1,8 @@
+'Exencion bonos ley 27617, hasta el 40% de la GNI cuando el indicador 27617 es 3 o menos
+If SAR_IND_APLICA_IG_27617 = 0 Or SAR_IND_APLICA_IG_27617 > 3 Then return(0)
+
+bonosPagados = SAR_TOT_BONOS_27617 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_BONOS_27617
+topeBonos = Percentage(40,SAR_GAN_NO_IMP)
+deducBonos = Min(bonosPagados,topeBonos)
+
+Return Round(deducBonos,SAR_NUM_DEC)

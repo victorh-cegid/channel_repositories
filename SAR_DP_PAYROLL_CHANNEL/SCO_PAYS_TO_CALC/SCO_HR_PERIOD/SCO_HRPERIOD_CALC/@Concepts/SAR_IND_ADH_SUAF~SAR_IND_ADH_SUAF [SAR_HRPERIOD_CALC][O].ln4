@@ -1,0 +1,5 @@
+' Toma valor por Empresa
+
+' Valor = 1 paga salario - se informa a nivel Empresa
+' Valor = 0 no paga salario - se informa a nivel Empresa
+Return(#SAR_IND_ADH_SUAF)

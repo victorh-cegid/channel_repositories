@@ -1,0 +1,10 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+COPYREGISTER | RECORD | NUMBER | 6 | 1 | 0 | Copiar registro
+ExecuteGroup | BLOCK | NUMBER | 6 |  | 0 | Ejecutar grupo
+GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente
+LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque
+SAR_CALC_HORAS_TEO_ROLE | RECORD | NUMBER | 6 | 18 | 6 | Calculo Horas Teoricas por Role
+SCO_BACK_PAY | RECORD | CURRENCY | 8 | 23 | 5 | Agregar pagos atrasados
+SCO_CALC_NUM_PRESEN_DAYS_ROLE | BLOCK | NUMBER | 6 | 18 | 0 | Calculo de dias de presencia
+SCO_CALC_THEO_TIME_ROLE | BLOCK | NUMBER | 6 | 18 | 0 | Calcular tiempo teorico por rol
+TRANSFERAPPLYVALUE | RECORD | NUMBER | 6 | 0 | 0 | Transferencia Aplicavalor

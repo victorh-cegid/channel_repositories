@@ -1,0 +1,3 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+DESTROYBLOCK | BLOCK | NUMBER | 6 | 18 | 0 | DESTROYBLOCK
+SAR_APLANAR | BLOCK | NUMBER | 6 | 1 | 0 | SAR_APLANAR

@@ -1,0 +1,11 @@
+item: SCO_ID_HR
+name: ID Recurso humano
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 9
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 0
+item_aux: null

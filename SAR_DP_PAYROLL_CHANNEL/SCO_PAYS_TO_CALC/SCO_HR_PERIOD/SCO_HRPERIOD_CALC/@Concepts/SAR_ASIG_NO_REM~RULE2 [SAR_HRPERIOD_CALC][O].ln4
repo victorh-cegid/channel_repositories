@@ -1,0 +1,7 @@
+'Usar esta regla para condiciones propias de cada cliente
+valor = SAR_ASIG_NO_REM
+
+'Se limita para paga normal y segunda quincena. Si se requiere que se genere en otra paga debe cambiarse la condicion
+If SAR_TP_IMPUT <> "1" And SAR_TP_IMPUT <> "4" Then Return(0)
+
+Return(valor)

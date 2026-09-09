@@ -1,0 +1,31 @@
+'This method will be used to update the Run Pays background
+
+IF SCO_SAVEYTD = 1  THEN
+
+	Dt_accrued = SCO_DT_PAYMENT
+	Dt_allocation = SCO_DT_ALLOCATION
+	Pay_freq_acc = SCO_PAY_FREQ_PAYM
+	Pay_freq_all = SCO_PAY_FREQ_ALLOC
+      organization = ID_ORGANIZATION
+
+	SCO_HT_RUN_PAYS.AddRegister()
+	SCO_HT_RUN_PAYS.SCO_DT_ACCRUED = Dt_accrued
+	SCO_HT_RUN_PAYS.SCO_DT_ALLOCATION = Dt_allocation
+	SCO_HT_RUN_PAYS.SCO_ID_PAY_FREQ_ACC = Pay_freq_acc
+	SCO_HT_RUN_PAYS.SCO_ID_PAY_FREQ_ALL = Pay_freq_all
+      SCO_HT_RUN_PAYS.ID_ORGANIZATION = organization
+              
+	IF Dt_accrued <> Dt_allocation THEN
+			PAY_NAME = "Paga retroactiva desde " + ToString(Dt_accrued) + " de " + ToString(Dt_allocation)
+			SCO_HT_RUN_PAYS.SCO_NM_PAY = PAY_NAME  
+		ELSE
+			PAY_NAME = "Paga " + ToString(Dt_allocation)
+			SCO_HT_RUN_PAYS.SCO_NM_PAY = PAY_NAME                                       
+		ENDIF
+	
+	BEGINTRANSACTION()
+	SCO_HT_RUN_PAYS.SCO_SQL_RUN_PAY(0,1)
+	SCO_HT_RUN_PAYS.INSERT_BLK()
+	ENDTRANSACTION(TRUE)
+ENDIF
+Return(0)

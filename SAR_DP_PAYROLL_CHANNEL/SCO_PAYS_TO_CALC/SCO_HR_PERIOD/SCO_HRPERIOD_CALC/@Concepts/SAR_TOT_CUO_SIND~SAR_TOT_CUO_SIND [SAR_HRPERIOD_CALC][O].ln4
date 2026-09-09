@@ -1,0 +1,6 @@
+ban = SAR_TOT_M_CUOSIN
+val_otros_empl = SAR_CUOTA_SINDICAL_OE - SAR_ACM_PAGA_ANT_IG[0].SAR_CUOTA_SINDICAL_OE
+val_ant_emp = SAR_SIND_ANT_EMP - SAR_ACM_PAGA_ANT_IG[0].SAR_SIND_ANT_EMP
+valor = ban + val_ant_emp + val_otros_empl
+
+Return(valor)

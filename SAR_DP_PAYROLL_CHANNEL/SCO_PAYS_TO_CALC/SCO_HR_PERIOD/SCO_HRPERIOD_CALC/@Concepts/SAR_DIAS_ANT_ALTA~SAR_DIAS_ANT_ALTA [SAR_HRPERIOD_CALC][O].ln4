@@ -1,0 +1,6 @@
+IF (SAR_ES_ALTA() = 1) THEN
+    valor = SAR_FECHA_ALTA () - SCO_PAYS_TO_CALC.SCO_DT_START_ALLOC
+ELSE
+    valor = 0
+ENDIF
+Return(valor)

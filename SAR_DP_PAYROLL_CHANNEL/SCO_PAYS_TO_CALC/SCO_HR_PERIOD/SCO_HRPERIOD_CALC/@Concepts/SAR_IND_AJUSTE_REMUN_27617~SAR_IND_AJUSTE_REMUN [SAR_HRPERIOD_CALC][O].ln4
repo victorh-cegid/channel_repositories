@@ -1,0 +1,8 @@
+'Valores posibles: 0 (Por devengado) / 1 (Por percibido)
+'Este indicador valdra 1 cuando la paga de proceso tenga como a?o de pago IG 2022 o posterior y 0 en el resto de los casos.
+'Cuando valga 0 se usaran para determinar el tramo para DEI los conceptos de remuneracion y promedios por devengado (imputacion IG en jornalizados).
+'Cuando valga 1 se usaran para determinar el tramo para DEI los conceptos por percibido.
+anioIg = SAR_ANIO_PAY_IG
+valor = 0
+If anioIg > 2021 Then valor = 1
+Return(valor)

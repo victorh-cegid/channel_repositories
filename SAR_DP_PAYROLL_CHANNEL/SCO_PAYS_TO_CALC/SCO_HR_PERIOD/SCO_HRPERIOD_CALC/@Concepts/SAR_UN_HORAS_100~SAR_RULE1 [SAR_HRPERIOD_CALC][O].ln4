@@ -1,0 +1,10 @@
+' No se ejecuta en las pagas extras, salvo si en las Pagas Extras de Aguinaldo
+If (SAR_TP_IMPUT = "2") AND SAR_IND_AGUINALDO = 0 Then Return(0)
+
+IF SAR_TP_IMPUT = "99" THEN 
+    Return(0)
+ENDIF
+
+unid_horas_100=SAR_UN_HS_SEM_100 + SAR_UN_HS_FINDE_100
+
+return (unid_horas_100)

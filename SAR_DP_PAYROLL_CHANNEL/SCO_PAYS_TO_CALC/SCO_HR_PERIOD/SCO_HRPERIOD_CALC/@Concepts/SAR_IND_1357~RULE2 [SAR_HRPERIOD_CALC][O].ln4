@@ -1,0 +1,12 @@
+'Si es informativa, anula deducciones anuales
+valor = SAR_IND_1357
+If valor = 3 Then
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_TOPE_SEG_VIDA",-1,0)
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_TOPE_SEG_RET",-1,0)
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_P_TOPE_HONORAR_MED",-1,0)
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_IMP_DEB_BAN",-1,0)
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_DEBITO_BANCARIO",-1,0)
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_PERC_RET_ADUANERAS",-1,0)
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_PAG_CUENT_EXT",-1,0)
+EndIf
+Return(valor)

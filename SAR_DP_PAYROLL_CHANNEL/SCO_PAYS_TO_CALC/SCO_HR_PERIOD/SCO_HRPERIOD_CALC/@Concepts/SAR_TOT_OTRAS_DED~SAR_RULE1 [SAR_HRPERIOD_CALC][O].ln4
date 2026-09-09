@@ -1,0 +1,6 @@
+ban = SAR_TOT_M_O_DED
+val_ant_emp = SAR_OTR_DED_ANT_EMP - SAR_ACM_PAGA_ANT_IG[0].SAR_OTR_DED_ANT_EMP
+If SAR_TP_IMPUT="99" Then ban = 0
+valor = ban + val_ant_emp 
+
+Return(valor)

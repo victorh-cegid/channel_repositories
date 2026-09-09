@@ -1,0 +1,2 @@
+/* retornamos el valor redondeado */
+return (Round(SAR_IG_T_19032,SAR_NUM_DEC))

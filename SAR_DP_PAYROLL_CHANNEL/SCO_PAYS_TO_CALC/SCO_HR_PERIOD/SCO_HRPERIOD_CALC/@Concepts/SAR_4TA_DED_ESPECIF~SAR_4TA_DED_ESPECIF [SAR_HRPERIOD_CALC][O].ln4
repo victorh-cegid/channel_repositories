@@ -1,0 +1,3 @@
+a = SAR_BASE_IMPUESTO
+valor = SAR_4TA_DED_ESPECIF
+Return(valor)

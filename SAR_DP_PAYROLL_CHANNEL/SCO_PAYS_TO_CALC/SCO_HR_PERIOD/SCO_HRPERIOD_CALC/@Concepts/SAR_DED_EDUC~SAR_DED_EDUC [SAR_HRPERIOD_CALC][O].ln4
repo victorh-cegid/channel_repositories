@@ -1,0 +1,4 @@
+'Recibe el valor de SAR_RET_VALOR_COMPL y se topa aqui
+tope = Percentage(SAR_TOPE_PORC_EDUC,SAR_TOPE_SER_DOM)
+importe = Min(SAR_DED_EDUC,tope)
+Return Round(importe,SAR_NUM_DEC)

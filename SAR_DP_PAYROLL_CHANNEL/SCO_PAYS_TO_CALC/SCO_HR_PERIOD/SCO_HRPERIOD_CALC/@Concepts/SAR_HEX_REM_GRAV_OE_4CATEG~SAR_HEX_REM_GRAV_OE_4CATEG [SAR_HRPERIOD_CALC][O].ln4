@@ -1,0 +1,3 @@
+'Para generar dependencias
+a = SAR_BASE_IMPUESTO
+Return(SAR_HEX_REM_GRAV_OE_4CATEG)

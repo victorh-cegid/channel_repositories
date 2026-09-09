@@ -1,0 +1,12 @@
+item: SCO_VALUE
+name: Valor
+column_name: SCO_VALUE
+item_type: FIELD
+type: VARIANT
+id_m4_type: 7
+prec: 67
+scale: 5
+scope: RECORD
+default_value: null
+internal_type: 23
+item_aux: ID_M4_TYPE

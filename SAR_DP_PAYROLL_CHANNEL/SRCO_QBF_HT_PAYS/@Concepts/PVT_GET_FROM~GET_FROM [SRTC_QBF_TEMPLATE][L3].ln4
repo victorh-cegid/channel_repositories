@@ -1,0 +1,9 @@
+sFrom = ""
+sIdReadObject = GetNodeReadObjectId(Getthisnodeid())
+
+if sIdReadObject<>"" then
+    ' FROM &TABLA_BASE ALIAS_TABLA_BASE 
+    sFrom = "FROM &" + sIdReadObject + " " + sIdReadObject 
+endif
+
+Return (sFrom)

@@ -1,0 +1,10 @@
+item: SAR_AJ_VACACIONES
+name: Ajuste Vacaciones
+column_name: SAR_AJ_VACACIONES
+item_type: FIELD
+type: CURRENCY
+id_m4_type: 8
+prec: 18
+scale: 6
+scope: RECORD
+default_value: null

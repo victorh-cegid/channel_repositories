@@ -1,0 +1,12 @@
+item: SAR_DT_PAGA_NORMAL
+name: Paga Normal
+column_name: SAR_DT_PAGA_NORMAL
+item_type: FIELD
+type: DATE
+id_m4_type: 4
+prec: 0
+scale: 0
+scope: RECORD
+default_value: "1800-01-01"
+internal_type: 1
+item_aux: null

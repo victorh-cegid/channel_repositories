@@ -1,0 +1,4 @@
+'Contribucion Regimen Diferencial Vac.
+vContribDifVac = ((SAR_VACACIONES + SAR_AJ_VACACIONES) * SAR_PORC_CONT_T_DIF)/ 100
+
+Return Round(vContribDifVac,2)

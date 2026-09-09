@@ -1,0 +1,6 @@
+importe = SAR_TOT_PROR_CON_AP
+
+'D612 2026
+If SAR_D612_IND_PRORR = 1 Then importe = 0
+
+Return(importe)

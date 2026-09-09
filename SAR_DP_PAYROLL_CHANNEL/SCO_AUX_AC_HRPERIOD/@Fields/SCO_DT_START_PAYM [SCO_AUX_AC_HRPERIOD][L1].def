@@ -1,0 +1,12 @@
+item: SCO_DT_START_PAYM
+name: Inicio de pago
+column_name: SCO_DT_START_PAYM
+item_type: FIELD
+type: DATE
+id_m4_type: 4
+prec: 1
+scale: 0
+scope: NODE
+default_value: null
+internal_type: 1
+item_aux: null

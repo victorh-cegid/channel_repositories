@@ -1,0 +1,12 @@
+/*------------------------------------------------------------------------------------------------------*/
+'Toma su valor por valores empresa
+ind = SAR_IND_DED_IG_2010
+
+esBaja = 0
+If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
+
+fechaAplic = SAR_FEC_IMPUT_IG
+If esBaja = 1 Then fechaAplic = SAR_FEC_PAGO_IG
+
+RETURN(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_TOPE_GAST_SEP",fechaAplic,ind))
+/*------------------------------------------------------------------------------------------------------*/

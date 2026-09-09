@@ -1,0 +1,15 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+IF SAR_PAYS_TO_CALC.SAR_MES_PROCESO <> SAR_MES_DIA_GREMIO THEN 
+    Return(0)
+ENDIF
+
+valor=(SAR_P_SUELDO + SAR_PR_COMP_ANTIG)/25
+
+IF ISNULL(valor) = TRUE THEN
+    valor = 0
+ENDIF 
+
+Return(valor)

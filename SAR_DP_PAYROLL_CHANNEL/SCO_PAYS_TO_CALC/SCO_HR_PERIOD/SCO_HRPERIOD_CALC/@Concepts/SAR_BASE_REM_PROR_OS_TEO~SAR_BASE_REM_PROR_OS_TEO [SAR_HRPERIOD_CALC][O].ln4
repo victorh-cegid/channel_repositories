@@ -1,0 +1,7 @@
+'Seran los encargados de realizar el calculo de las bases para aportes topados por devengado, tomando el importe del total prorrateable multiplicado por 
+'la remuneracion imponible y dividido por el total de devengos cotizables.
+'Dependencias
+a = SAR_TOT_DEV_COTIZ + SAR_REMUN_IMPO_OS + SAR_TOT_PROR_CON_AP
+importe = 0
+SAR_CALC_PROP_TOPE_MAX("SAR_BASE_REM_PROR_OS_TEO","SAR_TOT_DEV_COTIZ","SAR_REMUN_IMPO_OS","SAR_TOT_PROR_CON_AP",1,importe)
+Return(importe)

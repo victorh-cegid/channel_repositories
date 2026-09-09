@@ -1,0 +1,54 @@
+'Tomara valor  desde e 410 si es sabado o forzado si se precisa
+
+' No se ejecuta en las pagas extras, salvo si en las Pagas Extras de Aguinaldo
+If (SAR_TP_IMPUT = "2") AND SAR_IND_AGUINALDO = 0 Then Return(0)
+
+IF SAR_TP_IMPUT = "99" THEN 
+    Return(0)
+ENDIF
+
+id_Incidencia = "33" 'Horas extras al 50%
+horas_50_finsem = 0
+horas_50_semana = 0
+
+'Tramos
+INICIO_TRAMO = SAR_TOT_P_COMP_EA_AUX..SysStartDate
+FIN_TRAMO = SAR_TOT_P_COMP_EA_AUX..SysEndDate
+
+SAR_HR_ROLE.BEGIN()
+WHILE SAR_HR_ROLE.ISEOF() = FALSE
+
+	SAR_REAL_TIME_PER_ROLE.BEGIN()
+	IF GetCurrent ( ) = -1 THEN
+		SAR_REAL_TIME_PER_ROLE.LOAD_BLK()
+	ENDIF	
+
+	'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de horas extras al 100%
+	sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
+	SAR_REAL_TIME_PER_ROLE.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", id_Incidencia)
+	
+	'Si hay registros de horas extras al 50% los recorremos para obtener las horas
+	SAR_REAL_TIME_PER_ROLE.BEGIN()
+	WHILE SAR_REAL_TIME_PER_ROLE.ISEOF() = FALSE
+	  'fecha de inicio del ausentismo este comprendida en el tramo que se esta procesando.
+        IF INICIO_TRAMO <= SAR_REAL_TIME_PER_ROLE.SCO_DT_START AND SAR_REAL_TIME_PER_ROLE.SCO_DT_START <=  FIN_TRAMO THEN 
+            fecha_inicio=SAR_REAL_TIME_PER_ROLE.SCO_DT_START
+            dia_semana=DayOfTheWeek(fecha_inicio)
+            IF dia_semana = 6 THEN
+                'es sabado
+                horas_50_finsem = horas_50_finsem + SAR_REAL_TIME_PER_ROLE.SCO_UNITS
+            ELSE
+                horas_50_semana = horas_50_semana + SAR_REAL_TIME_PER_ROLE.SCO_UNITS
+            ENDIF
+
+        ENDIF
+	  SAR_REAL_TIME_PER_ROLE.GONEXT()
+      WEND
+	'Se elimina el filtro RAM aplicado al nodo
+	SAR_REAL_TIME_PER_ROLE.REMOVEFILTER()
+	SAR_HR_ROLE.GONEXT()
+WEND 
+
+SAR_UN_HS_SEM_50 = horas_50_semana 
+'Return las horas extras al 50 fin de semana%
+Return(horas_50_finsem)

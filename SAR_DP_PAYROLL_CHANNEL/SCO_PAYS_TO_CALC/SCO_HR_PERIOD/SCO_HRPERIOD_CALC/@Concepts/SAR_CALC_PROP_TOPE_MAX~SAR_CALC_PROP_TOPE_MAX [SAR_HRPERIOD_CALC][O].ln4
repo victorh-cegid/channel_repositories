@@ -1,0 +1,43 @@
+'Es un concepto auxiliar que se usa para calcular el tope que corresponde en proporcion a un concepto determinado.
+'Recibe cinco parametros
+'ARG_DEV_CONCEPTO: ID concepto con el importe a calcular (desde el que se llama).
+'ARG_DEV_TOTAL: ID concepto con el importe total del que ya existe su tope (por ejemplo, SAR_TOT_DEV_COTIZ)
+'ARG_DEV_TOPADO: ID concepto con el importe topado del concepto anterior (por ejemplo, SAR_REM_IMPO_JUB)
+'ARG_DEV_A_TOPAR: ID concepto con el importe a topar en proporcion respecto a los anteriores.
+'ARG_TIPO_RETRO: Criterio a aplicar en retroactividad (SAR_IND_PRORR_RETRO_TOPE)
+'   Con valor 1 se calcula el tope considerando solo los importes de la retroactividad. En este caso el mismo ejemplo anterior, si se habia superado el tope para aportes en paga normal y se habia calculado un importe de base para prorrateo, con este criterio si se abona retroactivamente una diferencia en un concepto prorrateable, al calcularse solo con los importes de la diferencia y ya haber superado el tope en paga normal, no se arrastrara base de prorrateo a la paga normal.
+'   Con valor 0 se hace un recalculo del tope de la base de prorrateo considerando todos los importes a fecha de devengo (se recalcula considerando importes de la paga normal + importes de la paga retroactiva). Por ejemplo, si se habia superado el tope para aportes en paga normal y se habia calculado un importe de base para prorrateo, con este criterio si se abona retroactivamente una diferencia en un concepto prorrateable esa base de prorrateo se va a recalcular y se arrastrara la diferencia completa que surja a la paga normal desde la que se origina la retroactividad.
+'   Retorna el importe (IMPORTE) proporcional del concepto a topar.
+
+dev_concepto = ARG_DEV_CONCEPTO
+dev_total = ARG_DEV_TOTAL
+dev_topado = ARG_DEV_TOPADO
+dev_a_topar = ARG_DEV_A_TOPAR
+ind_retro = ARG_TIPO_RETRO
+
+devCotiz = GetValue("SCO_HRPERIOD_CALC",dev_total,-1)
+remImpo = GetValue("SCO_HRPERIOD_CALC",dev_topado,-1)    
+totPror = GetValue("SCO_HRPERIOD_CALC",dev_a_topar,-1)
+importe = totPror
+
+If SCO_DT_PAYMENT = SCO_DT_ALLOCATION Then ind_retro = 0
+
+If ind_retro = 0 Then
+    If devCotiz > 0 And devCotiz > remImpo Then importe = (totPror * remImpo)/devCotiz
+Else
+    devCotiz_rev = GetValue("SCO_AC_HR_PERIOD_REV_1",dev_total,-1)
+    remImpo_rev = GetValue("SCO_AC_HR_PERIOD_REV_1",dev_topado,-1)    
+    totPror_rev = GetValue("SCO_AC_HR_PERIOD_REV_1",dev_a_topar,-1)
+    dev_concepto_rev = GetValue("SCO_AC_HR_PERIOD_REV_1",dev_concepto,-1)
+
+    devCotiz = devCotiz - devCotiz_rev
+    remImpo = remImpo - remImpo_rev
+    totPror = totPror - totPror_rev
+    importe = totPror
+    If devCotiz > 0 And devCotiz > remImpo Then importe = (totPror * remImpo)/devCotiz
+    importe = dev_concepto_rev + importe
+EndIf
+
+IMPORTE = importe
+
+Return(0)

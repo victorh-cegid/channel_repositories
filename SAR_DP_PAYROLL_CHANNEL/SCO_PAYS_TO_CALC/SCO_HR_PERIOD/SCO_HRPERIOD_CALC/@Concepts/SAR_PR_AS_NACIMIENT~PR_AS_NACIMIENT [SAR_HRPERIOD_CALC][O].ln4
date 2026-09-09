@@ -1,0 +1,2 @@
+' Toma el valor de la tabla Valores Zonas
+return(#SAR_PR_AS_NACIMIENT)

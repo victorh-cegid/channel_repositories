@@ -1,0 +1,168 @@
+'Inicializacion de varios conceptos.
+SAR_DESCUENTOS_RG3831 = 0
+SAR_RET_JUDICIAL = 0
+SAR_EMB_CUO_ALIM = 0
+
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+'Realizamos unos controles previos a la realizacion del descuento
+SAR_H_DESCUENTOS.BEGIN()
+
+'Si la moneda no es principal...
+IF SCO_IND_MAIN_CURR <> 1 THEN 
+    Return(0) 
+ENDIF
+
+DESCUENTO           = 0
+EMBARGO             = 0
+VALOR               = 0
+EMB_CUO_ALIM        = 0
+vEmbargoAnt         = 0
+vEmbargoAliAnt      = 0
+ARG_8_Ant           = 0
+stdJornal           = ""
+primerreg           = 0 
+ultimoreg           = SAR_H_DESCUENTOS.COUNT() - 1 
+cont                = 0 
+
+FOR I = primerreg  TO  ultimoreg 
+
+    SAR_H_DESCUENTOS.MOVETO(I) 
+    'Prevalece sobre los anticipos
+    Liq_Sin_Ant = SAR_TOTAL_DEVENGOS..SysTotalslices(M4_TOTAL_SUM) - SAR_TOT_RETEN_DESC..SysTotalslices(M4_TOTAL_SUM) - DESCUENTO
+    
+    If SAR_TIPO_SALARIO = "001" Or SAR_TIPO_SALARIO = "003" then
+        ' Se crea la busqueda del valor de la paga anterior que se realicen dentro del mismo mes para evitar perder el valor real del monto total de haberes.
+        SAR_SAC_AJUSTE_CONTRIB.Begin()
+
+        If SAR_TIPO_SALARIO = "003" Then stdJornal = "Jornal"
+        
+        If SAR_SAC_AJUSTE_CONTRIB.Count() > 0  Or stdJornal = "Jornal" Then
+    
+            vEmbargoAnt    = vEmbargoAnt    + SAR_SAC_AJUSTE_CONTRIB.SAR_RET_JUDICIAL
+            vEmbargoAliAnt = vEmbargoAliAnt + SAR_SAC_AJUSTE_CONTRIB.SAR_EMB_CUO_ALIM
+           
+            SCO_AC_HR_PERIOD_READ_1.BEGIN()
+            
+            If SCO_AC_HR_PERIOD_READ_1.Count() > 0 Then            
+
+                vFechaIni = DxDate("01",DxMonth(SCO_DT_ALLOCATION),DxYear(SCO_DT_ALLOCATION))
+                vfechaFin = DxDate(DaysOfMonth(SCO_DT_ALLOCATION),DxMonth(SCO_DT_ALLOCATION),DxYear(SCO_DT_ALLOCATION))
+                ARG_8_Ant = 0   'se puso aca para que resetee el valor anterior, en caso de varios descuentos.
+                
+                For a = 0 To SCO_AC_HR_PERIOD_READ_1.Count() - 1
+                
+                    SCO_AC_HR_PERIOD_READ_1.MoveTo(a)
+                    
+                    If SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= vFechaIni And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < vFechaFin And (SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_PAYM <> "88" And SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_PAYM <> "99") Then
+                        IF ISNULL(SAR_H_DESCUENTOS.SAR_ID_DMD_COMPONENT) = M4_TRUE OR SAR_H_DESCUENTOS.SAR_ID_DMD_COMPONENT = "" THEN 
+                            ARG_8_Ant = ARG_8_Ant + SAR_H_DESCUENTOS.SAR_VALOR_FIJO
+                        ELSE
+                            ARG_8_Ant = ARG_8_Ant + GetValue("SCO_AC_HR_PERIOD_READ_1",SAR_H_DESCUENTOS.SAR_ID_DMD_COMPONENT,-1)
+                        ENDIF
+                    EndIf
+                Next
+            EndIf
+        EndIf
+    Endif
+
+    IF Liq_Sin_Ant <= 0 THEN 
+       Return(0)
+    ENDIF
+
+    ARG_0 = SCO_ID_HR    
+    ARG_1 = SCO_OR_HR_PERIOD    
+    ARG_2 = SCO_PAYS_TO_CALC.SCO_DT_START_PAYM
+    ARG_3 = SCO_DT_ALLOCATION    
+    ARG_4 = SCO_PAYS_TO_CALC.SCO_DT_END_PAYM    
+    ARG_5 = SAR_TP_IMPUT
+    ARG_6 = SCO_PAYS_TO_CALC.SCO_PAY_FREQ_PAYM    
+    ARG_7 = Liq_Sin_Ant
+    ARG_8 = 0
+    
+    IF IsNull(SAR_H_DESCUENTOS.SAR_ID_DMD_COMPONENT) = TRUE THEN 
+       ARG_8 = 0 
+    ELSE 
+       ARG_8 = GetValue (SAR_H_DESCUENTOS.SAR_ID_NODE, SAR_H_DESCUENTOS.SAR_ID_DMD_COMPONENT, 0)
+    ENDIF 
+
+    ARG_8 = ARG_8 + ARG_8_Ant   
+    ARG_9 = ID_CURRENCY    
+    ARG_10 = SAR_ES_BAJA
+    ARG_11 = SAR_ANULAR_DESCUENTO
+    ARG_DESC = 0
+    ARG_RETJUD = 0
+
+    // Control de grabacion para simulaciones, si se ejecuta la nomina simulada la tabla de descuentos no se modifica.  
+    ARG_GRABA = 0
+
+    If SAR_PAYS_TO_CALC.SCO_SAVEYTD = 1 And SAR_PAYS_TO_CALC.SCO_PAY_SIMUL = 0 Then
+        ARG_GRABA = SAR_PAYS_TO_CALC.SCO_SAVEYTD 
+    EndIf   
+        
+    ARG_12 = SAR_H_DESCUENTOS.SAR_OR_DESCUENTO
+ 
+    If SAR_H_DESCUENTOS.SAR_PORCENTAJE <> 0 Then 
+        ARG_13 = 0          'Es Porcentaje del liquido 
+    Else 
+        If SAR_H_DESCUENTOS.SAR_FACTOR <> 0 Then 
+           ARG_13 = 2          'Es factor variable 
+        else 
+           ARG_13 = 1          'Es Cantidad fija 
+        endif   
+    EndIf 
+        
+    'Agregado de control con Salario minimo     
+    ARG_14 = SAR_SALARIO_MINIMO
+    ARG_15 = 0
+    
+    'Agregado de control con el Valor del SAC
+    IF SAR_H_DESCUENTOS.SAR_ID_DESCUENTO = "3" Then
+        'Se agrega la variable SAC_1ra_quinc para el caso que el SAC sea pago en la primera quincena.
+        'Se agregan los conceptos de Ajuste de SAC
+        SAR_SAC_AJUSTE_CONTRIB.BEGIN()
+        SAC = SAR_SAC_AJUSTE_CONTRIB.SAR_TOT_SAC_COTIZ + SAR_TOT_SAC_COTIZ         
+
+        If SAC > 0 Then
+            ARG_15 = SAC
+        Else
+            ARG_15 = 0
+        Endif
+        
+        IF SCO_H_HR_PAY_FREQ.SCO_ID_PAY_FREQUENCY = "003" THEN 
+            IF SAR_TP_IMPUT = "3"  AND SAR_ES_BAJA = 0 Then   'Los embargos judiciales solo se calculan en la segunda quincena. Teniendo en cuenta todo lo devengado en el mes.
+                ARG_7 = 0
+                ARG_8 = 0
+                ARG_15 = 0
+            ENDIF
+        ENDIF      
+    EndIf
+    
+    aux = DESCUENTOS!SAR_MT_H_DESCUENTOS.SAR_CALC_DESCUENTO(ARG_0,ARG_1,ARG_2,ARG_3,ARG_4,ARG_5,ARG_6,ARG_7,ARG_8,ARG_9,ARG_10,ARG_11,ARG_DESC,ARG_RETJUD,ARG_GRABA,ARG_12,ARG_13,ARG_14,ARG_15,vEmbargoAnt)
+
+    EMBARGO =  SAR_UN_DESCUENTOS * ARG_RETJUD + EMBARGO
+    
+    ' Validacion para discriminar el Embargo cuota alimentaria.
+    If SAR_H_DESCUENTOS.SAR_ID_DESCUENTO = "4" Then        
+        EMB_CUO_ALIM =  SAR_UN_DESCUENTOS * ARG_DESC + EMB_CUO_ALIM     
+    Else        
+        VALOR =  SAR_UN_DESCUENTOS * ARG_DESC + VALOR        
+    EndIf
+    
+    DESCUENTO = EMBARGO + VALOR 
+
+    If SAR_H_DESCUENTOS.SAR_ID_DESCUENTO = "3" Then
+        SAR_RET_JUDICIAL = EMBARGO
+    EndIf
+    
+    If SAR_H_DESCUENTOS.SAR_ID_DESCUENTO = "4" Then
+        SAR_EMB_CUO_ALIM = EMB_CUO_ALIM - vEmbargoAliAnt
+    EndIf
+
+NEXT
+
+SAR_DESCUENTOS_RG3831 = valor
+
+Return(valor)

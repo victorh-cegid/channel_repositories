@@ -1,0 +1,49 @@
+If SCO_DT_ALLOCATION > SAR_FECHA_BAJA and SAR_ES_BAJA <> 1 Then RETURN(0) 'Condicion para que no se pague el concepto en nomina despues de la baja.
+
+
+remun_fija = 0
+prom_remun_variable = 0
+valor = 0
+
+IF (SAR_U_DIAS_FERIADOS > 0 AND SAR_TIPO_SALARIO = "003") OR SAR_TIPO_SALARIO <> "003" THEN
+
+    If SAR_TOT_PRE_FERIADO > 0 Then
+        remun_fija = SAR_TOT_PRE_FERIADO
+    endif
+    
+    IF SAR_TIPO_SALARIO = "001" THEN
+        if SAR_ACM_ULT_PAGO_IMPUT.count() <> 0 Then
+            SAR_ACM_ULT_PAGO_IMPUT.begin()
+		if SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_PROMEDIOS > 0 then
+                prom_remun_variable = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_PROMEDIOS - SAR_ACM_ULT_PAGO_IMPUT.SAR_HORAS_FER_TRAB
+		else 
+                prom_remun_variable = 0
+		endif        
+        endif
+        prom_remun_variable = prom_remun_variable + SAR_TOT_PROMEDIOS - SAR_HORAS_FER_TRAB
+        valor= (remun_fija + prom_remun_variable)/25     'Se paga como adicional
+    ENDIF
+	
+    IF SAR_TIPO_SALARIO = "003" THEN 'salario horario 
+        'su promedio de remun variable es el total promedios menos el importe de feriados trabajados de los 30 dias anteriores al mes actual
+        if SAR_ACM_2QNA_MES_ANT.count() <> 0 Then
+            SAR_ACM_2QNA_MES_ANT.begin()
+		if SAR_ACM_2QNA_MES_ANT.SAR_TOT_PROMEDIOS > 0 then 'el total promedios de la segunda quincena tiene sumado lo de la primera
+                prom_remun_variable = SAR_ACM_2QNA_MES_ANT.SAR_TOT_PROMEDIOS..SysTotalslices(M4_TOTAL_SUM)
+                if SAR_ACM_ULT_MES.count() <> 0 Then
+                    SAR_ACM_ULT_MES.begin()
+                    if SAR_ACM_ULT_MES.SAR_HORAS_FER_TRAB > 0 then
+                        prom_remun_variable = prom_remun_variable - SAR_ACM_ULT_MES.SAR_HORAS_FER_TRAB 'restamos el importe de feriados trabajados el mes anterior
+                    endif
+                endif
+            endif
+        endif
+        valor= ROUND(remun_fija+(prom_remun_variable/SAR_HORAS_MES),2)
+        
+    ENDIF
+
+ENDIF
+
+
+
+Return(valor)

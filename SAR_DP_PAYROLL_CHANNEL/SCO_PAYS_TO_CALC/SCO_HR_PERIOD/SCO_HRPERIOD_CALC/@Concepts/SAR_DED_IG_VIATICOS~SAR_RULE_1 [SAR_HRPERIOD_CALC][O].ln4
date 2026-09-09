@@ -1,0 +1,7 @@
+'-------------------------------------------------------------------------------------------    
+'Gastos de Movilidad Viaticos RG 4003
+'-------------------------------------------------------------------------------------------
+viaticos          = SAR_IG_VIATICOS
+tope_viaticos     = Percentage(SAR_TOPE_PORC_VIATICO,SAR_TOPE_SER_DOM)
+deduc_viaticos    = Min(viaticos,tope_viaticos)
+Return(deduc_viaticos)

@@ -1,0 +1,289 @@
+'Ley de bases 2024 deja de haber sac exento
+If DxYear(SAR_FEC_IMPUT_IG) > 2023 Then Return(0)
+
+'Ante ajuste de sac a?os anteriores no entra en el calculo, se retorna el importe de la paga original:
+ajusteSacAnt = SAR_AJUSTE_SAC2_ANT
+If ajusteSacAnt <> 0 Then
+    'Asigna valor a los conceptos de impuesto
+    SAR_SAC_1_GRAV_MES = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_1_GRAV_MES
+    SAR_SAC_1_EXEN_MES = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_1_EXEN_MES
+    SAR_SAC_2_GRAV_MES = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_2_GRAV_MES
+    SAR_SAC_2_EXEN_MES = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_2_EXEN_MES
+    
+    'OE
+    SAR_SAC_1_GRAV_MES_OE = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_1_GRAV_MES_OE
+    SAR_SAC_1_EXEN_MES_OE = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_1_EXEN_MES_OE
+    SAR_SAC_2_GRAV_MES_OE = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_2_GRAV_MES_OE
+    SAR_SAC_2_EXEN_MES_OE = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_2_EXEN_MES_OE        
+    
+    'Asigna valor a los conceptos de aportes IG:
+    SAR_SAC_IG_JUB = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_IG_JUB
+    SAR_SAC_IG_LEY = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_IG_LEY
+    SAR_SAC_IG_OSOC = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_IG_OSOC
+    SAR_SAC_IG_ADOS = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_IG_ADOS
+    SAR_SAC_IG_SIND_OB = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_IG_SIND_OB
+    SAR_SAC_IG_SIND = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_IG_SIND
+    Return(0)
+EndIf
+
+ind_ajuste_sac = 0
+sac_jun_exen = 0
+sac_jun_exen_oe = 0
+sac_dic_exen = 0
+sac_dic_exen_oe = 0
+sac_jun_grabado = 0
+sac_dic_grabado = 0
+sac_jun_exen_oe = 0
+sac_dic_exen_oe = 0
+sac_jun_grabado_oe = 0
+sac_dic_grabado_oe = 0
+
+promAnual = SAR_IND_SAC_ANUAL
+
+topeExen = SAR_TOPE_DEI
+If DxYear(SAR_FEC_IMPUT_IG)>2023 Then topeExen = SAR_TOPE_SAC
+
+'Porcentajes para calculo de aportes
+porcJub = 0
+porcLey = 0
+If SAR_EDAD >= 18 Then 
+    porcJub = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
+    porcLey = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032 * SAR_PP_AP_INSSJP/100)
+EndIf
+porcObSoc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
+porcAdObSoc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
+porcAdObSoc = porcAdObSoc * SAR_FAM_CARGO_OS
+porcSindObl = SAR_PORC_C_SIND_OBL
+porcSindVol = SAR_PORC_C_SIND_VOL 
+
+'Determina si corresponde calcular el impuesto en SAC. Misma condicion que SAR_ACM_PROR_SAC
+If SAR_ES_BAJA = 1 Or SAR_IND_PAGA_RELIQ = 1 Or SAR_IND_AJUSTE_SAC = 1 Then ind_ajuste_sac = 1
+
+'Ajuste intermedio SAC en reliq. septiembre no se hace aqui ya que no se ha abonado el SAC2.
+If SAR_IND_PAGA_RELIQ = 1 And SCO_DT_ALLOCATION = DxDate(30,9,2023) Then ind_ajuste_sac = 0
+
+'Si no estamos ajustando el sac abonado sigue siendo grabado.
+If ind_ajuste_sac = 0 Then
+    sac_jun_grabado = SAR_SAC_1_ABONADO
+    sac_dic_grabado = SAR_SAC_2_ABONADO
+    sac_total_grabado = sac_jun_grabado + sac_dic_grabado
+
+    'OE, queremos el importe del mes
+    If DxMonth(SAR_FEC_IMPUT_IG) < 7 Then
+        sac_jun_grabado_oe = SAR_JUR_SAC_MES
+    Else
+        sac_dic_grabado_oe = SAR_JUR_SAC_MES
+    EndIf
+
+    sac_total_grabado_oe = sac_jun_grabado_oe + sac_dic_grabado_oe
+
+    'Aportes IG sobre lo grabado, topando contra los de cotizacion para no superar el tope de cotizacion
+    aporte_jub = Min(Percentage(porcJub,sac_total_grabado),SAR_JUBILACION_SAC)
+    aporte_ley = Min(Percentage(porcLey,sac_total_grabado),SAR_LEY_19032_SAC)
+    aporte_ObSoc = Min(Percentage(porcObSoc,sac_total_grabado),SAR_OBRA_SOCIAL_SAC)
+    aporte_AdObSoc = Min(Percentage(porcAdObSoc,sac_total_grabado),SAR_OB_SOC_ADIC_SAC)
+    aporte_SindObl = Min(Percentage(porcSindObl,sac_total_grabado),SAR_C_SINDIC_OBL_SAC)
+    aporte_SindVol = Min(Percentage(porcSindVol,sac_total_grabado),SAR_C_SINDICAL_SAC)    
+    
+    'Asigna a conceptos grabado y exento
+    SAR_SAC_1_GRAV_MES = sac_jun_grabado
+    SAR_SAC_1_EXEN_MES = 0
+    SAR_SAC_2_GRAV_MES = sac_dic_grabado
+    SAR_SAC_2_EXEN_MES = 0
+
+    'oe
+    SAR_SAC_1_GRAV_MES_OE = sac_jun_grabado_oe
+    SAR_SAC_1_EXEN_MES_OE = 0
+    SAR_SAC_2_GRAV_MES_OE = sac_dic_grabado_oe
+    SAR_SAC_2_EXEN_MES_OE = 0    
+    
+    'Asigna a conceptos de aportes IG:
+    SAR_SAC_IG_JUB = aporte_jub
+    SAR_SAC_IG_LEY = aporte_ley
+    SAR_SAC_IG_OSOC = aporte_ObSoc
+    SAR_SAC_IG_ADOS = aporte_AdObSoc
+    SAR_SAC_IG_SIND_OB = aporte_SindObl
+    SAR_SAC_IG_SIND = aporte_SindVol
+
+    Return(0)
+
+'Estamos ajustando, debemos evaluar si el SAC del a?o queda exento o grabado, y repartirlo.
+Else
+    'SAC pagado en el a?o incluida la paga de proceso
+    SacJunAnioIG = SAR_SAC_1_ABONADO + SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_1_ABONADO
+    SacDicAnioIG = SAR_SAC_2_ABONADO + SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_2_ABONADO
+    
+    'oe
+    SacJunAnioIG_oe = SAR_JUR_SAC_1_OE
+    SacDicAnioIG_oe = SAR_JUR_SAC_2_OE
+
+
+    If promAnual = 1 Then
+        retribJun = SAR_PROM_27617_BONOS
+        retribDic = SAR_PROM_27617_BONOS
+    Else
+        retribJun = SAR_PROM_27617_SAC1
+        retribDic = SAR_PROM_27617_SAC2
+    EndIf
+
+
+    
+    'En paga de adelanto de SAC separado de paga normal, toma el promedio de la paga anterior
+    If SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1 Then 
+        If promAnual = 1 Then
+            retribJun = SAR_ACM_PAGA_ANT_IG[0].SAR_PROM_27617_BONOS
+            retribDic = SAR_ACM_PAGA_ANT_IG[0].SAR_PROM_27617_BONOS        
+        Else
+            retribJun = SAR_ACM_PAGA_ANT_IG[0].SAR_PROM_27617_SAC1
+            retribDic = SAR_ACM_PAGA_ANT_IG[0].SAR_PROM_27617_SAC2
+        EndIf
+        
+                
+        'Control para los casos de ajuste (especialmente diferidos), si la paga de diciembre esta calculada
+        'toma el promedio calculado en la misma
+        If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And DxMonth(SCO_DT_ALLOCATION) = 12 Then
+            fec_ini = DxDate(DxDay(SCO_DT_ALLOCATION)+1,12,DxYear(SCO_DT_ALLOCATION))
+            fec_fin = DxDate(31,12,DxYear(SCO_DT_ALLOCATION))            
+            SAR_ACM_DYN_DIF.DESTROYBLOCK()
+            SAR_ACM_DYN_DIF.SCO_DT_PAYMENT = fec_fin
+            SAR_ACM_DYN_DIF.SCO_DT_START = fec_ini
+            SAR_ACM_DYN_DIF.SCO_DT_END = fec_fin
+            SAR_ACM_DYN_DIF.Load_Blk()
+            If promAnual = 1 Then
+                retribDicPost = SAR_ACM_DYN_DIF[0].SAR_PROM_27617_BONOS
+            Else
+                retribDicPost = SAR_ACM_DYN_DIF[0].SAR_PROM_27617_SAC2
+            EndIf
+            If retribDicPost > 0 Then retribDic = retribDicPost
+        EndIf
+
+    EndIf
+   
+    junio = DxDate(30,06,DxYear(SCO_DT_ALLOCATION))
+    diciembre = DxDate(31,12,DxYear(SCO_DT_ALLOCATION))
+    
+    'Recupera de la tabla de deducciones si aplica la exencion de SAC1, de SAC2, o ambas:
+    vValorJun = 0
+    vValorDic = 0
+    
+    '2024 se desvincula SAC de DEI
+    If DxYear(SAR_FEC_IMPUT_IG) > 2023 Then
+        If retribJun <= topeExen Then vTramoJun = 1
+    Else
+        vTramoJun = SAR_DED_ESP_INC.SAR_RETORNA_TRAMO(retribJun,junio,ID_CURRENCY)
+    EndIf
+
+    'DEC. 473/23
+    If retribDic <= topeExen Then vTramoDic = 1
+    
+    If promAnual = 1 Then vTramoJun = vTramoDic
+    
+    If DxYear(SAR_FEC_IMPUT_IG) = 2023 Then
+        If vTramoJun = 1 Then vValorJun = SAR_DED_ESP_INC.SAR_RETORNA_VALOR(retribJun,junio,ID_CURRENCY)
+    Else
+        If vTramoJun = 1 Then vValorJun = topeExen
+    EndIf
+    If vTramoDic = 1 Then vValorDic = topeExen
+    If promAnual = 1 Then vValorJun = vValorDic    
+
+    'Desde junio 2023 la exencion es cada sac es individual, dejando de ser parte de la bolsa de una sola exencion, deja de unificarse vValor y vuelve a usarse el de junio y diciembre por separado: vValor = (vValorJun + vValorDic)/2
+    vValorJun = vValorJun / 2
+    vValorDic = vValorDic / 2
+    
+    'Excepcionalmente en junio 2023 se establece la exencion a rentas de hasta 880000
+    If DxYear(SAR_FEC_IMPUT_IG) = 2023 And retribJun <= 880000 Then
+        vTramoJun = 1
+        vValorJun = 440000
+    EndIf
+    
+    'Asigna valor a los conceptos del reporte de control IG
+    SAR_AUX_PROMEDIO_SAC1 = retribJun
+    SAR_AUX_PROMEDIO_SAC2 = retribDic
+
+    'Exento hasta el tope del tramo 1, grabado el resto.
+    If vValorJun > 0 Then
+        sac_jun_exen_oe = Min (SacJunAnioIG_oe,vValorJun)
+        vValorJun = Max(vValorJun - sac_jun_exen_oe,0)
+        sac_jun_exen = Min (SacJunAnioIG,vValorJun)
+        vValorJun = Max(vValorJun - sac_jun_exen,0)
+    EndIf
+    If vValorDic > 0 Then
+        sac_dic_exen_oe = Min (SacDicAnioIG_oe,vValorDic)
+        vValorDic = Max(vValorDic - sac_dic_exen_oe,0)
+        sac_dic_exen = Min (SacDicAnioIG,vValorDic)
+    EndIf
+
+    'Grabado:
+    sac_jun_grabado = SacJunAnioIG - sac_jun_exen
+    sac_dic_grabado = SacDicAnioIG - sac_dic_exen       
+    
+    'oe
+    sac_jun_grabado_oe = SacJunAnioIG_oe - sac_jun_exen_oe
+    sac_dic_grabado_oe = SacDicAnioIG_oe - sac_dic_exen_oe
+    
+    'Ajusta los importes de sac exento y grabado para el impuesto
+    sac_jun_grav_mes = sac_jun_grabado - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_1_GRAV_MES
+    sac_jun_exen_mes = sac_jun_exen - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_1_EXEN_MES
+    sac_dic_grav_mes = sac_dic_grabado - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_2_GRAV_MES
+    sar_dic_exen_mes = sac_dic_exen - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_2_EXEN_MES
+
+    'oe
+    sac_jun_grav_mes_oe = sac_jun_grabado_oe - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_1_GRAV_MES_OE
+    sac_jun_exen_mes_oe = sac_jun_exen_oe - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_1_EXEN_MES_OE
+    sac_dic_grav_mes_oe = sac_dic_grabado_oe - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_2_GRAV_MES_OE
+    sar_dic_exen_mes_oe = sac_dic_exen_oe - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_2_EXEN_MES_OE
+
+    'Aportes:
+    sac_total_grabado = sac_jun_grabado + sac_dic_grabado
+    aporte_jub_cotiz = SAR_JUBILACION_SAC + SAR_ACM_IG_ANIO_COMPLETO[0].SAR_JUBILACION_SAC - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_ANT_SAC_JUB
+    aporte_ley_cotiz = SAR_LEY_19032_SAC + SAR_ACM_IG_ANIO_COMPLETO[0].SAR_LEY_19032_SAC - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_ANT_SAC_LEY
+    aporte_ObSoc_cotiz = SAR_OBRA_SOCIAL_SAC + SAR_ACM_IG_ANIO_COMPLETO[0].SAR_OBRA_SOCIAL_SAC - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_ANT_SAC_OSOC
+    aporte_AdObSoc_cotiz = SAR_OB_SOC_ADIC_SAC + SAR_ACM_IG_ANIO_COMPLETO[0].SAR_OB_SOC_ADIC_SAC - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_ANT_SAC_ADOS
+    aporte_SindObl_cotiz = SAR_C_SINDIC_OBL_SAC + SAR_ACM_IG_ANIO_COMPLETO[0].SAR_C_SINDIC_OBL_SAC - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_ANT_SAC_SIND_OB
+    aporte_SindVol_cotiz = SAR_C_SINDICAL_SAC + SAR_ACM_IG_ANIO_COMPLETO[0].SAR_C_SINDICAL_SAC - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_ANT_SAC_SIND
+
+    'Considera el tope de aportes favoreciendo a afip
+    sac_total_exento = sac_jun_exen + sac_dic_exen
+
+    aporte_jub_exento = Percentage(porcJub,sac_total_exento)
+    aporte_jub = Max(aporte_jub_cotiz - aporte_jub_exento,0)
+    aporte_ley_exento = Percentage(porcley,sac_total_exento)
+    aporte_ley = Max(aporte_ley_cotiz - aporte_ley_exento,0)
+    aporte_ObSoc_exento = Percentage(porcObSoc,sac_total_exento)
+    aporte_ObSoc = Max(aporte_ObSoc_cotiz - aporte_ObSoc_exento,0)
+    aporte_AdObSoc_exento = Percentage(porcAdObSoc,sac_total_exento)
+    aporte_AdObSoc = Max(aporte_AdObSoc_cotiz - aporte_AdObSoc_exento,0)
+    aporte_SindObl_exento = Percentage(porcSindObl,sac_total_exento)
+    aporte_SindObl = Max(aporte_SindObl_cotiz - aporte_SindObl_exento,0)
+    aporte_SindVol_exento = Percentage(porcSindVol,sac_total_exento)                    
+    aporte_SindVol = Max(aporte_SindVol_cotiz - aporte_SindVol_exento,0)
+
+    'Ajusta los importes de aportes IG
+    aporte_jub_mes = aporte_jub - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_IG_JUB
+    aporte_ley_mes = aporte_ley - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_IG_LEY
+    aporte_ObSoc_mes = aporte_ObSoc - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_IG_OSOC
+    aporte_AdObSoc_mes = aporte_AdObSoc - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_IG_ADOS
+    aporte_SindObl_mes = aporte_SindObl - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_IG_SIND_OB
+    aporte_SindVol_mes = aporte_SindVol - SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_IG_SIND
+
+    'Asigna valor a los conceptos de impuesto
+    SAR_SAC_1_GRAV_MES = sac_jun_grav_mes
+    SAR_SAC_1_EXEN_MES = sac_jun_exen_mes
+    SAR_SAC_2_GRAV_MES = sac_dic_grav_mes
+    SAR_SAC_2_EXEN_MES = sar_dic_exen_mes
+    
+    'OE
+    SAR_SAC_1_GRAV_MES_OE = sac_jun_grav_mes_oe
+    SAR_SAC_1_EXEN_MES_OE = sac_jun_exen_mes_oe
+    SAR_SAC_2_GRAV_MES_OE = sac_dic_grav_mes_oe
+    SAR_SAC_2_EXEN_MES_OE = sar_dic_exen_mes_oe        
+    
+    'Asigna valor a los conceptos de aportes IG:
+    SAR_SAC_IG_JUB = aporte_jub_mes
+    SAR_SAC_IG_LEY = aporte_ley_mes
+    SAR_SAC_IG_OSOC = aporte_ObSoc_mes
+    SAR_SAC_IG_ADOS = aporte_AdObSoc_mes
+    SAR_SAC_IG_SIND_OB = aporte_SindObl_mes
+    SAR_SAC_IG_SIND = aporte_SindVol_mes
+EndIf
+Return(0)

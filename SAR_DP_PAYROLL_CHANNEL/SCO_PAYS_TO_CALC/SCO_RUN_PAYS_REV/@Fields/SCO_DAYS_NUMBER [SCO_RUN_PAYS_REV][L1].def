@@ -1,0 +1,10 @@
+item: SCO_DAYS_NUMBER
+name: Num. dias
+column_name: SCO_DAYS_NUMBER
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 3
+scale: 0
+scope: RECORD
+default_value: null

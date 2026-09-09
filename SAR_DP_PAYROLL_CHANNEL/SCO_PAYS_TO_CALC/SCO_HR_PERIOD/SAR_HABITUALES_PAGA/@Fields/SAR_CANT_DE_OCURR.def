@@ -1,0 +1,12 @@
+item: SAR_CANT_DE_OCURR
+name: Cantidad de ocurrencias
+column_name: SAR_CANT_DE_OCURR
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 2
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

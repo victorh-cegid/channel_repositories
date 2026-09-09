@@ -1,0 +1,23 @@
+'---------------------------------------------------
+'             Honorarios Medicos
+'    (Res.Gral. AFIP 1261/2002 ANEXO III j)
+'---------------------------------------------------
+'Se utiliza el mismo subtotal que para el calculo de las cuota medico asistenciales
+'Inciso M del art. 53 del decreto 290/00. 
+
+topehm = 0
+submedhon = SAR_BASE_IMP_SUBDONAC
+
+If (SAR_IND_PAGA_RELIQ = 1 Or SAR_IND_DIC_DED_ANU = 1) Or (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017")  Then
+    'Calculamos la deduccion por  honorarios medicos
+    'si es una liquidacion anual o final segun RG 756/2000 de la AFIP
+    hono   = SAR_HONORAR_MEDICOS * (SAR_P_TOPE_HONORAR_MED/100)             'Art. 7 inciso j de la RG 4139 DGI, segun RG 756 AFIP
+
+    'Solo 2023: ante la situacion de 2 periodos fiscales, se estan dando casos de error por superar el tope, se incluye truncate para que no lo supere
+    If DxYear(SAR_FEC_IMPUT_IG) = 2023 Then hono = Truncate(hono,2)
+
+    topehm = Min(hono,submedhon * 0.05)     'tope honorarios medicos 
+    topehm = Max(topehm,0)
+EndIf
+
+Return(topehm)

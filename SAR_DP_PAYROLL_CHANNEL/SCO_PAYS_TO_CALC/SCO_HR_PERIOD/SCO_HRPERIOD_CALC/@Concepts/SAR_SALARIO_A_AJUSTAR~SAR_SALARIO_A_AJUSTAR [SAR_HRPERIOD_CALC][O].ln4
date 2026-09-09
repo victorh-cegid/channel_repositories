@@ -1,0 +1,17 @@
+IF SCO_ID_TYPE_ADJUSTMENT <> "1" AND SCO_ID_TYPE_ADJUSTMENT <> "2" THEN 
+    Return(0)
+ENDIF
+
+IF SAR_TIPO_SALARIO = "001" THEN
+       base = SAR_P_SUELDO
+ELSE
+        IF SAR_DIAS_NORM_SUELD = 0 THEN
+            base = 0
+        ELSE
+            base = SAR_P_SUELDO * SAR_DIAS_NORM_SUELD
+        ENDIF
+ENDIF
+
+base = MAX(base,0)
+
+Return(base)

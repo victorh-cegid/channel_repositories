@@ -1,0 +1,22 @@
+if SAR_PROV_SAC_ACUM = 0 then return(0)  
+
+'No debe tomar el valor en Pagas Extra.
+If (SAR_TP_IMPUT = "2") Then
+    Return(0)    
+EndIf
+
+sac=SAR_PROV_SAC_ACUM 
+CONTR_OS= sac * SAR_P_PAT_L_23660/100 
+
+CONTR_DIF = sac * SAR_PORC_CONT_T_DIF/100  'decreto 633/2918
+
+'Detraccion Ley 27430
+reduc = SAR_REDUC_IMPO_SAC * SAR_UNIDADES_PROV_SAC
+base= sac - reduc
+'Modificacion realizada HF060 para que no le reste la detraccion al FAL
+porc = SAR_PORC_PAT_JUBIL + SAR_P_PAT_L_19032 + SAR_PORC_F_EMPLEO + SAR_P_PAT_CASFEC_PI +SAR_PORC_PAT_FAL
+c_JUB = BASE * porc / 100 
+
+valor_total = round(C_JUB + CONTR_OS + CONTR_DIF,2) 
+ 
+return(valor_total)

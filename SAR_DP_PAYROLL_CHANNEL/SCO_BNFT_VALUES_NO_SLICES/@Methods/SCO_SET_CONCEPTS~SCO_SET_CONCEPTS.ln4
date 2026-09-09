@@ -1,0 +1,24 @@
+'Este metodo se encarga de crear un filtro en RAM con los registros correspondientes a cada combinacion de SCO_ID_TI y SCO_ID_ITEM 
+'diferente. Para cada grupo de registros, ejecuta el metodo SCO_BNFT_VALUES_SLICES.SCO_SET_CONCEPTS, que es el encargado de asignar 
+'a cada concepto los valores tramados y sumados correspondientes
+
+iSliceMode = GetSliceMode()
+SetSliceMode(1)
+
+Begin()
+While IsEOF() = M4_FALSE
+
+    sIdTI = SCO_ID_TI
+    sIdItem = SCO_ID_ITEM
+    sFilter= "If SCO_ID_TI = " + CHR(34) + sIdTI + CHR(34)+ " and SCO_ID_ITEM = " + CHR(34) + sIdItem + CHR(34)+ " then return M4_TRUE else return M4_FALSE"
+    AddFilter(sFilter)
+    Begin()
+
+    'Para los registros que cumplen el filtro del concepto, se crean los valores tramados y se asignan al concepto 
+    SCO_BNFT_VALUES_SLICES.SCO_SET_CONCEPTS_SLICES()
+
+    CleanFilter()
+    Begin()
+Wend
+
+SetSliceMode(iSliceMode)

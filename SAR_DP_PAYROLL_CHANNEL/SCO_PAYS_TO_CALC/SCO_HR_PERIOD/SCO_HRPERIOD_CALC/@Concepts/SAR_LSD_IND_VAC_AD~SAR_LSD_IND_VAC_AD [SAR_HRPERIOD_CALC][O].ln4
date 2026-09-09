@@ -1,0 +1,7 @@
+a = SAR_LSD_FECHA
+indicador = SAR_LSD_IND_VAC_AD
+
+'No permite adelanto de vacaciones en retro con modalidad por pago
+If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And SAR_LSD_IND_PAGO = 1 Then indicador = 0
+
+Return(indicador)

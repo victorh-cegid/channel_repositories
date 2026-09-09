@@ -1,0 +1,46 @@
+'With this method, we have some units (without slices) that we will use in the calcul of final values.
+
+'Variables
+nTotTheoHours = 0
+nTotTheoDays = 0
+nTotTheoSat = 0
+nTotTheoSun = 0
+nTotCalHours = 0
+nTotCalDays = 0
+nTotCalSat = 0
+nTotCalSun = 0
+
+nExecution = 3 'We execute both, theoretical time and calendars
+
+
+DtStart = SCO_HR_PERIOD.SCO_DT_START_CALC
+DtEnd = SCO_HR_PERIOD.SCO_DT_END_CALC
+
+
+
+'We execute the level2 call in order to get all the data refered to the theoretical time.
+'We will have the number of hours and days worked, in theory, and the number of holidays, days and hours, which conflicts with the theoretical time
+
+Output = SCO_THEORETICAL_TIME!SCO_TT_HR_THEOR_TIME.SCO_CALC_THEOR_TIME(SCO_ID_HR, SCO_OR_HR_PERIOD,NullValue(),DtStart,DtEnd,nExecution,nTotTheoHours,nTotCalHours,nTotTheoDays,nTotCalDays,nTotTheoSat,nTotCalSat,nTotTheoSun,nTotCalSun)
+
+If Output= M4_ERROR Then
+	return(M4_ERROR)
+Endif
+
+SCO_NUM_HOURS_THEO = nTotTheoHours
+SCO_NUM_HOURS_CAL = nTotCalHours
+SCO_NUM_DAYS_THEO = nTotTheoDays
+SCO_NUM_DAYS_CAL = nTotCalDays
+
+
+'Now we asign the value of the concept that we will use to prorate items from the YTD node.
+
+SCO_UNIT = 1
+
+'These properties and the concepts that reads frrom them aren't created, you have to create them if you need them
+SCO_NUM_SAT_THEO = nTotTheoSat
+SCO_NUM_SUN_THEO = nTotTheoSun
+SCO_NUM_SAT_CAL = nTotCalSat
+SCO_NUM_SUN_CAL = nTotCalSun
+
+Return(0)

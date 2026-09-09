@@ -1,0 +1,12 @@
+item: SCO_PERMANENT
+name: Permanente
+column_name: SCO_PERMANENT
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 1
+scale: 0
+scope: RECORD
+default_value: "0"
+internal_type: 1
+item_aux: null

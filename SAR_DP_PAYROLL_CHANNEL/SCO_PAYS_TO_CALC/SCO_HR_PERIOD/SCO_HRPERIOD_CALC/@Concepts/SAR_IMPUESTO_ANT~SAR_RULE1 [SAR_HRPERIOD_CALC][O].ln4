@@ -1,0 +1,20 @@
+SAR_SICORE.BEGIN()
+
+
+'Este concepto es utilizado para calcular el valor del impuesto que debe informarse en el 
+'campo del SICORE importe de la retencion si la retencion es a favor del contribuyente
+'Si el valor del impuesto calculado en la paga actual es >= 0 el valor sera el del impuesto
+'(concepto #5010+#5310) sino sera el del campo IMPUESTO_ANT de la ultima paga.
+
+imp = (SAR_IMPUESTO+SAR_IG_ANIO_ANT)
+fecha = SAR_SICORE.SAR_FECHA_PAGO_IG
+
+IF DxYear(fecha) <> DxYear(SAR_FEC_PAGO_IG) THEN
+   RETURN (imp)
+ENDIF
+
+IF imp < 0 THEN  
+imp= SAR_SICORE.SAR_IMPUESTO_ANT
+ENDIF
+
+RETURN(imp)

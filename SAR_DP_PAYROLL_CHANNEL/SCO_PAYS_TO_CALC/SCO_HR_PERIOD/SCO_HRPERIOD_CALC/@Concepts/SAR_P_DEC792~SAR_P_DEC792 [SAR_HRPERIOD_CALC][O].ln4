@@ -1,0 +1,12 @@
+'Se minora el precio dec792 por el % de aporte de jubilacion, teniendo en cuenta el tope para jubilacion
+a = SAR_IMPORTE_LICENCIAS
+
+If SAR_TIPO_SALARIO = "003" Then 'tipo de salario horario
+    reduc_decreto = Percentage(SAR_PORC_JUBILACION,SAR_P_DEC792_NRED)
+Else
+    tope_jub_dia = SAR_TOPE_JUBIL/SAR_DIAS_NORM_COTIZ
+    reduc_decreto = Percentage(SAR_PORC_JUBILACION,Min(SAR_P_DEC792_NRED,tope_jub_dia))
+EndIf
+valor = SAR_P_DEC792_NRED - reduc_decreto
+
+Return(valor)

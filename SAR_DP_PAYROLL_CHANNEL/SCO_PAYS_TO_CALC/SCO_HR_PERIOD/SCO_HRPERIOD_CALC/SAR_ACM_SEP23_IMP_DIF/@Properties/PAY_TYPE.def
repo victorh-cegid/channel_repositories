@@ -1,0 +1,9 @@
+item: PAY_TYPE
+name: Tipo de paga
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 50
+scale: 0
+scope: NODE
+default_value: "99"

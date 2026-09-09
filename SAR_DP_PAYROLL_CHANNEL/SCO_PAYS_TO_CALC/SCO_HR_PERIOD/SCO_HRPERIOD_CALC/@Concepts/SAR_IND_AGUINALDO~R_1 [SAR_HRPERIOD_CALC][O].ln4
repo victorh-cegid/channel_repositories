@@ -1,0 +1,18 @@
+/* Verificamos si existe una paga extra de sac declarada */
+If DxMonth(SCO_DT_ALLOCATION) = 6 Then 
+    vOrden = 1
+ElseIf DxMonth(SCO_DT_ALLOCATION) = 12 Then
+    vOrden = 2
+Else
+    Return(0)
+EndIf
+
+vPos = SAR_PAGAS_EXTRAS.FINDREGISTER("SAR_ID_CONVENIO", SAR_ID_CONVENIO,EQUAL,"SCO_ID_PAY_FREQUENCY",SCO_PAY_FREQ_ALLOC,EQUAL,"SAR_ORDEN",vOrden,EQUAL,"SAR_MES",SAR_PAYS_TO_CALC.SAR_MES_PROCESO,EQUAL,"SAR_DIA",SAR_PAYS_TO_CALC.SAR_DIA_PROCESO,EQUAL,0)
+
+If vPos <> -1 Then
+    vInd = 1
+    Return(vInd)
+Else
+    vInd = 0
+    Return(vInd)
+EndIf

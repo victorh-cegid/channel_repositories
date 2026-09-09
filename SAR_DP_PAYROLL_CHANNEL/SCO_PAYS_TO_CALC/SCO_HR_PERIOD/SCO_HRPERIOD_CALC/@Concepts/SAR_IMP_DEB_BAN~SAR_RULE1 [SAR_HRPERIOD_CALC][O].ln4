@@ -1,0 +1,39 @@
+'Se expone en el campo 7 del registro 6 del F1357
+importe = 0
+importeTopado = 0
+
+'Paga especial de reliq septiembre, no se levantan pagos a cta.
+indReliq = SAR_IND_PAGA_RELIQ
+If indReliq = 1 And SCO_DT_ALLOCATION = DxDate(30,9,2023) Then indReliq = 0
+
+If (indReliq = 1 Or SAR_IND_DIC_DED_ANU = 1) Or (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" And SAR_IG_DICIEMBRE = 1) Then
+
+    debito_bancario = SAR_DEBITO_BANCARIO
+    perc_ret_adu = SAR_PERC_RET_ADUANERAS
+    pag_cuent_ext = SAR_PAG_CUENT_EXT
+    inciso_a = SAR_27541_A
+    inciso_b = SAR_27541_B
+    inciso_c = SAR_27541_C        
+    inciso_d = SAR_27541_D
+    inciso_e = SAR_27541_E
+    deb_prop = SAR_DEB_PROP
+    canc_efect = SAR_CANC_EFECTIVO
+    
+    importe = debito_bancario + perc_ret_adu + pag_cuent_ext + inciso_a + inciso_b + inciso_c + inciso_d + inciso_e + deb_prop + canc_efect
+    importeTopado = importe
+
+    'En 2023 se topea considerando el impuesto total del periodo fiscal anterior
+    If DxYear(SAR_FEC_IMPUT_IG) = 2023 And DxMonth(SCO_DT_ALLOCATION)>9 Then
+        impuestoTotSep = SAR_ACM_SEP23_IMP_DIF[0].SAR_IMP23_IMP_TOTAL
+        impuestoAct = SAR_IMPUESTO_TOTAL
+        impuestoTotal = impuestoTotSep + impuestoAct
+        If importe > impuestoTotal Then importeTopado = impuestoTotal
+    Else
+        'Control de topes y asignacion topado en desglose por orden de exposicion en F1357
+        If importe > SAR_IMPUESTO_TOTAL Then importeTopado = SAR_IMPUESTO_TOTAL    
+    EndIf
+
+    'Para exposicion en reportes: Diferencia entre pagos a cuenta informado por el empleado y pagos a cuenta que han ido al impuesto
+    SAR_DIF_PAGOS_CUENTA = importe - importeTopado
+EndIf
+Return(importeTopado)

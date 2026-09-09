@@ -1,0 +1,36 @@
+/*This method do a loop in SCO_HR_ROLE and execute everything that is common to all the currencies for each role*/
+
+Begin()
+If IsEOF()=1 then
+
+	SetLog(-1,1,101,17,SCO_ID_HR,SCO_OR_HR_PERIOD,SCO_DT_ALLOCATION,SCO_PAYS_TO_CALC.SCO_NM_PAY_FREQUENCY)
+	Return(-1)
+Else
+	SCO_APPLYVAL2_I!SCO_VT_HR_ROLE.DESTROYBLOCK()
+	slice=SCO_PAYS_TO_CALC.SCO_SLICE_MODE  
+
+	Do
+            FI=SCO_DT_START_CALC_ROLE
+            FF=SCO_DT_END_CALC_ROLE
+		SetStartDate(FI)
+		SetEndDate(FF)
+		SCO_DT_FILTER_BASE()
+
+'Para roles cerrados en retroactividad, no necesitamos inicializar el aplicavalor 
+            If SCO_IS_CLOSED_RETRO = 0 then 
+        		SCO_APPLYVAL2_I!SCO_VT_HR_ROLE.SCO_SETAPPLYVALUE_I(SCO_ID_HR,SCO_OR_HR_ROLE,SCO_OR_HR_PERIOD,SCO_DT_START,SCO_DT_END)
+        		SCO_APPLYVAL2_I!SCO_APPLYVAL2.SETDATES(GetStartDate(),GetEndDate(),SCO_DT_FILTER_BASE)
+        		SCO_APPLYVAL2_I!SCO_APPLYVAL2.APPLY()
+        		SCO_HRROLE_CALC.COPYREGISTER("SCO_APPLYVAL2_I","SCO_APPLYVAL2",-1,SCOPE_BLOCK+TYPE_PROPERTY,SCOPE_BLOCK+TYPE_CONCEPT)
+            Endif
+
+		GONEXT()
+	UNTIL IsEOF()=1
+Endif
+
+FI=SCO_HR_PERIOD.SCO_DT_START_CALC
+FF=SCO_HR_PERIOD.SCO_DT_END_CALC
+SetStartDate(FI)
+SetEndDate(FF)
+
+Return(0)

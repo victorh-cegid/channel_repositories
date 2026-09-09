@@ -1,0 +1,5 @@
+'Genera dependencias
+aux = SAR_IMPORTE_LICENCIAS
+
+nTotHorExtr = SAR_TOT_HS_EXTRAS
+Return(nTotHorExtr)

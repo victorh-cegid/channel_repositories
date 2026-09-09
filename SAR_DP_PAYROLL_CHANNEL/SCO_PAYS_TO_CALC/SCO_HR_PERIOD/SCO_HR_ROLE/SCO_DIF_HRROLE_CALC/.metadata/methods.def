@@ -1,0 +1,3 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+ExecuteGroup | BLOCK | NUMBER | 6 |  | 0 | Ejecutar grupo
+LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque

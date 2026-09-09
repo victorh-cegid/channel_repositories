@@ -1,0 +1,11 @@
+item: SCO_ID_PAY_FREQUENCY
+name: ID Frecuencia pago
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 3
+scale: 0
+scope: BLOCK
+default_value: null
+internal_type: 1
+item_aux: null

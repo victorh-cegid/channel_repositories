@@ -1,0 +1,7 @@
+//Esto significa que estoy trabajando con "Gestionar pagas con estado de bloqueo"
+If SCO_PAYS_TO_CALC.SCO_MNG_LOCKED_PAYS = "1" Then
+    SYSPARAM = ToString(SCO_PAYS_TO_CALC.SCO_DT_PAYMENT) + "|" + SCO_PAYS_TO_CALC.SCO_PAY_FREQ_PAYM
+    SYSSENTENCE = "FROM &SCO_PAYS_RECALC A WHERE A.SCO_DT_PAYMENT=?(4,4,0) AND A.SCO_PAY_FREQ_PAYM = ?(2,3,0)"
+EndIf
+
+Return(M4_SUCCESS)

@@ -1,0 +1,65 @@
+'nodos de acumulado antes de alterar:
+
+acmAprev = SAR_AC_SAC_REV[0].SAR_LEY_19032_SAC_MES
+acmBprev = SAR_ACM_ACT_CONTRIB[0].SAR_REMUN_IMPO
+acmCprev = SAR_ACM_ACT_CONTRIB[0].SAR_REMUN_IMPO
+acmDprev = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_IG_JUB
+acmEprev = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_REM_IMP
+acmFprev = SAR_LSD_COTIZ[0].SAR_REMUN_IMPO
+
+
+
+
+'1? Comprobacion de registros read STD con ordinal de periodo
+ult_reg_inicial = SCO_AC_HR_PERIOD_READ_1.Count()
+
+'2? Me guardo fechas de inicio y fin con la que se cargo la READ
+inicio = SCO_AC_HR_PERIOD_READ_1.SCO_DT_START
+fin = SCO_AC_HR_PERIOD_READ_1.SCO_DT_END
+
+'3? Destruyo la read
+SCO_AC_HR_PERIOD_READ_1.DESTROY()
+
+'4? Asigno de nuevo fechas inicio y fin de la read y valor a la propiedad para que no filtre por ordinal
+SCO_AC_HR_PERIOD_READ_1.SAR_NO_APLICA_ORDINAL = 1
+SCO_AC_HR_PERIOD_READ_1.SCO_DT_START = inicio
+SCO_AC_HR_PERIOD_READ_1.SCO_DT_END = fin
+
+'5? Recargo la read
+SCO_AC_HR_PERIOD_READ_1.Load_Blk()
+
+'6? Ordeno como me interes
+'Esta linea es para forzar que la read ordene por dt_alloc ya que se queda con el orden
+'del ultimo nodo de acumulado cargado, lo cual puede ser aleatorio
+SAR_ACM_INDEMNIZ_VARIABLES.Load_Blk()
+
+'7? Compruebo que me ha traido registros de todos los periodos
+ult_reg_sin_ordinal = SCO_AC_HR_PERIOD_READ_1.Count()
+
+'-----------------------------------
+'-----------------------------------
+'AQUI HACEMOS NUESTRAS MOVIDAS que requieran trabajar con acumulados de otros periodos
+'-----------------------------------
+'-----------------------------------
+
+'8? Volvemos a dejar la read como estaba y recomprobamos los registros
+SCO_AC_HR_PERIOD_READ_1.DESTROY()
+SCO_AC_HR_PERIOD_READ_1.SAR_NO_APLICA_ORDINAL = 0
+SCO_AC_HR_PERIOD_READ_1.SCO_DT_START = inicio
+SCO_AC_HR_PERIOD_READ_1.SCO_DT_END = fin
+SAR_ACM_INDEMNIZ_VARIABLES.Load_Blk()
+ult_reg_final = SCO_AC_HR_PERIOD_READ_1.Count()
+
+
+'nodos de acumulado despues de alterar y revertir --> Deben dar igual:
+acmApost = SAR_AC_SAC_REV[0].SAR_LEY_19032_SAC_MES
+acmBpost = SAR_ACM_ACT_CONTRIB[0].SAR_REMUN_IMPO
+acmCpost = SAR_ACM_ACT_CONTRIB[0].SAR_REMUN_IMPO
+acmDpost = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_IG_JUB
+acmEpost = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_REM_IMP
+acmFpost = SAR_LSD_COTIZ[0].SAR_REMUN_IMPO
+
+
+
+
+a = 1

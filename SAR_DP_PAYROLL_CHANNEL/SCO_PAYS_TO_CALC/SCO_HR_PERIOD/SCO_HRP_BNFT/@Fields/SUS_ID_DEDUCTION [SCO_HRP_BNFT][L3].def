@@ -1,0 +1,12 @@
+item: SUS_ID_DEDUCTION
+name: ID Deduccion
+column_name: SUS_ID_DEDUCTION
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 12
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

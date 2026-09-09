@@ -1,0 +1,170 @@
+'Variables
+DtAllocation=SCO_DT_ALLOCATION
+DtPayment=SCO_DT_PAYMENT
+NmFrequency=SCO_PAYS_TO_CALC.SCO_NM_PAY_FREQUENCY
+
+//Variable que se inicializa para utilizarla en la comprobacion de datos cuando la moneda tiene
+//comportamiento 'proceso'.
+BCorrectYtd = 1
+
+SCO_HRROLE_CALC.AddRegister()
+SCO_AUX_AC_HRROLE.AddRegister()
+
+SCO_HRROLE_CALC.ID_CURRENCY=ID_CURRENCY
+SCO_HRROLE_CALC.SCO_IND_MAIN_CURR=ind_main
+SCO_HRROLE_CALC.SCO_BEHAV_CURR=behaviour
+SCO_HRROLE_CALC.SCO_DT_EXCHANGE=DtPayment
+SCO_HRROLE_CALC.EX_TYPE=EX_TYPE
+
+'These lines are needed when we are working without slices
+'SCO_AUX_AC_HRROLE.SCO_DT_START_SLICE=SCO_PAYS_TO_CALC.SCO_DT_START_ALLOC
+'SCO_AUX_AC_HRROLE.SCO_DT_END_SLICE=SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC
+
+'Para roles cerrados en retroactividad, no necesitamos el aplicavalor ni las TIs de acumulado
+If SCO_IS_CLOSED_RETRO = 0 then 
+
+    node="SCO_HRROLE_CALC"
+    SWP_NODES_AC_READ.SCO_CALC_MIN_MAX_DATE(node)
+    
+    //Antes de empezar a calcular conceptos, vamos a comprobar en caso de que el comportamiento de 
+    //la moneda sea 'proceso' que los datos del acumulado son correctos para el calculo. En caso de
+    //que se este seguro de que los datos estan bien, se puede comentar esta parte para mejorar el 
+    //rendimiento. Se ejecuta despues del calculo de fechas de lectura del acumulado para reproducir
+    //el mismo entorno.
+    
+    If behaviour <> "01" Then
+        //Tomo las fechas que van a servir de filtro para los nodos de lectura del acumulado
+        DtMin = GetValue(SWP_NODES_AC_READ.ID_NODE_AC_READ,"SCO_DT_START", -1)
+        DtMax = GetValue(SWP_NODES_AC_READ.ID_NODE_AC_READ,"SCO_DT_END", -1)
+        
+        DtPrevAlloc = SCO_AC_ROLE_MAX_DT_ALLOC.SCO_DT_PREV_ALLOC
+        DtPrevPaym = SCO_AC_ROLE_MAX_DT_PAY.SCO_DT_PREV_PAYM
+    
+        'Llamar al Meta4Object de comprobacion
+        BCorrectYtd = SCO_COMPARE_YTD_CURR!SCO_PARAM.SCO_CHECK_DATA (SCO_ID_HR,SCO_OR_HR_PERIOD,SCO_OR_HR_ROLE,ID_CURRENCY, DtMin, DtMax, DtAllocation, DtPayment, SCO_PAY_FREQ_ALLOC,DtPrevAlloc,DtPrevPaym)
+        If BCorrectYtd = 0 Then
+            //No se puede calcular la nomina del periodo %1:n del empleado %0:s en la moneda %2:s 
+            //con comportamiento 'proceso' para la paga %5:s de pago %3:d  e imputacion %4:d, porque
+            //en el acumulado no estan todos los registros necesarios en esta moneda.
+            //Para utilizar este comportamiento de moneda (proceso) debe haber calculado las nominas
+            // anteriores en la moneda de calculo actual.
+            SetLog (-1,1,101,51,SCO_ID_HR,SCO_OR_HR_PERIOD,ID_CURRENCY,DtPayment,DtAllocation,NmFrequency)
+            Return(-1)
+        EndIf
+    EndIf
+    
+    
+    cur_hr_role= SCO_HR_ROLE.GetCurrent()
+    SCO_APPLYVAL2_I!SCO_VT_HR_ROLE.MoveTo(cur_hr_role)
+    
+    SCO_APPLYVAL2_I!SCO_APPLYVAL2.SETDATES(GetStartDate(),GetEndDate(),SCO_DT_FILTER_BASE)
+    Output=SCO_HRROLE_CALC.TRANSFERAPPLYVALUE("SCO_APPLYVAL2_I","SCO_APPLYVAL2", "DMD1", id_currency,DtPayment,ex_type)
+    If Output=M4_ERROR Then
+    	SetLog(-1,1,101,18,SCO_ID_HR,SCO_OR_HR_ROLE,DtAllocation,NmFrequency)
+    	Return(-1)
+    EndIf
+
+EndIf
+
+
+'Execute every groups that depends of currency
+
+If SCO_PAYS_TO_CALC.SCO_REVISION=1 then
+	SCO_AC_HR_ROLE_REV.SCO_COUNT()
+	SCO_AC_HR_ROLE_REV.Begin()
+
+	//Para que todas las asignaciones en el nodo de diferencias sean en el intervalo 
+	//maximo de fechas entre el calculo y la revision. No se hace antes porque en el
+	//Count del nodo de revision necesitamos las fechas de calculo ya que se leen
+	//datos del nodo de calculo.
+
+	dStartRetro = SCO_DT_START_CALC_ROLE_RETRO
+	dEndRetro = SCO_DT_END_CALC_ROLE_RETRO
+	SetStartDate(dStartRetro)
+	SetEndDate(dEndRetro)
+     
+	SCO_DIF_HRROLE_CALC.AddRegister()
+	SCO_DIF_HRROLE_CALC.SCO_ID_HR=SCO_ID_HR
+	SCO_DIF_HRROLE_CALC.SCO_OR_HR_PERIOD=SCO_OR_HR_PERIOD
+	SCO_DIF_HRROLE_CALC.SCO_OR_HR_ROLE=SCO_OR_HR_ROLE
+	SCO_DIF_HRROLE_CALC.ID_CURRENCY=ID_CURRENCY
+	SCO_DIF_HRROLE_CALC.SCO_DT_EXCHANGE=Dtpayment
+	SCO_DIF_HRROLE_CALC.SCO_IND_MAIN_CURR=ind_main
+	SCO_DIF_HRROLE_CALC.EX_TYPE=EX_TYPE
+      SCO_DIF_HRROLE_CALC.ID_ORGANIZATION = ID_ORGANIZATION
+      
+      //Volvemos a setear las fechas de calculo del rol
+      dStartRole=SCO_DT_START_CALC_ROLE
+	dEndRole=SCO_DT_END_CALC_ROLE
+	SetStartDate(dStartRole)
+	SetEndDate(dEndRole)
+endif
+
+'Para roles cerrados en retroactividad, no necesitamos ejecutar el calculo normal, queremos un registro con valores 0
+If SCO_IS_CLOSED_RETRO = 0 then 
+    
+    If ind_main = 1 Then
+    	SCO_EXE_LEVEL_1()
+    	If SCO_HRROLE_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
+    		Return(-1)
+    	EndIf
+    EndIf
+    
+    SCO_EXE_LEVEL_2()
+    If SCO_HRROLE_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
+    	Return(-1)
+    EndIf
+
+EndIf
+
+
+If SCO_PAYS_TO_CALC.SCO_REVISION=1 then
+
+	//Para que todas las ejecuciones en el nodo de diferencias sean en el intervalo 
+	//maximo de fechas entre el calculo y la revision
+	dStartRetro = SCO_DT_START_CALC_ROLE_RETRO
+	dEndRetro = SCO_DT_END_CALC_ROLE_RETRO
+	SetStartDate(dStartRetro)
+	SetEndDate(dEndRetro)
+
+	SCO_DIF_HRROLE_CALC.ExecuteGroup("1")
+	SCO_DIF_HRROLE_CALC.ExecuteGroup("2")
+
+      //Asignacion de tramos a IDs en caso de retroactividad de una baja. Debe ejecutarse sin tramos
+	SetSliceMode(M4_FALSE)
+	SCO_SLICES_TERM_RETRO_ROLE()
+	SetSliceMode(SCO_PAYS_TO_CALC.SCO_SLICE_MODE)
+
+	SCO_AUX_AC_HRROLE.CopyRegister("","SCO_DIF_HRROLE_CALC",-1,SCOPE_REGISTER+SCOPE_BLOCK,SCOPE_BLOCK+SCOPE_REGISTER+TYPE_FIELD+TYPE_PROPERTY) 
+
+	//Volvemos a setear las fechas de calculo del rol
+	FI=SCO_DT_START_CALC_ROLE
+	FF=SCO_DT_END_CALC_ROLE
+	SetStartDate(FI)
+	SetEndDate(FF)
+
+Else
+	SCO_AUX_AC_HRROLE.CopyRegister("","SCO_HRROLE_CALC",-1,SCOPE_REGISTER+SCOPE_BLOCK,SCOPE_BLOCK+SCOPE_REGISTER+TYPE_FIELD+TYPE_PROPERTY)
+
+Endif
+
+If SCO_PAYS_TO_CALC.SCO_REVISION = 1  Then
+	//Solo en caso de retroactividad volvemos a setear las fechas maximas para 
+	//que el flatten encuentre todos los registros
+	dStartRole = SCO_DT_START_CALC_ROLE_RETRO
+	dEndRole = SCO_DT_END_CALC_ROLE_RETRO
+	SetStartDate(dStartRole)
+	SetEndDate(dEndRole)
+
+EndIf
+
+SCO_AUX_AC_HRROLE.Flatten() 
+
+FI=SCO_HR_PERIOD.SCO_DT_START_CALC
+FF=SCO_HR_PERIOD.SCO_DT_END_CALC
+SetStartDate(FI)
+SetEndDate(FF)
+
+SCO_HRPERIOD_CALC.ExecuteGroup("TOT")
+
+Return(0)

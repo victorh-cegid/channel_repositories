@@ -1,0 +1,39 @@
+'cuando se llama a este metodo, ya se esta posicionado en el resgistro.
+'la idea es convertirlo y despues redondearlo a lo que se quiera.
+
+    x = curExchangeRecord(SCO_PROCESS_CURR,0) 
+
+'con esto se ha cambiado la moneda de forma automatica en los items de tipo moneda del registro actual
+'ahora tengo que recorrer todos los items del nodo y ver cuales son moneda y redondearlos despues
+
+nodo_actual=GetThisNodeId()
+
+
+numero_items=GetNodeNumberOfItems(nodo_actual,SCOPE_ALL+TYPE_ALL)
+
+    If numero_items=-1 then
+
+        return (-1)
+    
+    Else
+
+    for i=0 to numero_items-1
+        
+        if ((GetNodeItemM4Type(nodo_actual,i,SCOPE_ALL+TYPE_ALL)=8)) THEN
+                    
+            indice_item=GetNodeItemIndex(nodo_actual,i,SCOPE_ALL+TYPE_ALL)
+            
+            id_item=GetNodeItemId(nodo_actual,indice_item,SCOPE_ALL+TYPE_ALL)
+
+            valor_item=GetValue(nodo_actual,id_item,-1)
+            
+            
+            valor_item=round(valor_item,ARG_NUM_DEC)
+            
+            'es decir--------->valor=round(valor, redondeo)
+            
+            SetValue(nodo_actual,ID_ITEM,-1,valor_item)
+                        
+        endif
+    next
+endif

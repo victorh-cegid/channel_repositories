@@ -1,0 +1,12 @@
+IF SAR_TIPO_SALARIO = "001" THEN
+    IF SAR_DIAS_NORM_SUELD = 0 THEN
+        pre = 0
+    ELSE
+        pre = SAR_TOT_P_COMP_EA / SAR_DIAS_NORM_SUELD 
+    ENDIF
+    
+ELSE 
+    pre = SAR_TOT_P_COMP_EA
+ENDIF
+valor = pre * -1
+Return(valor)

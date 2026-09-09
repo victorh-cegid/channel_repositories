@@ -1,0 +1,530 @@
+'Se condiciona para que no se calculalen las Licencias en paga extra de Aguinaldo
+If ((SAR_TP_IMPUT = "2") AND SAR_IND_AGUINALDO = 1) Then Return(0)
+
+'Se condiciona para que esta variable no se calcula en la paga extra de vacaciones
+If (SAR_TP_IMPUT = "77") Then Return(0)
+
+'Este concepto calcula el importe y precio de las licencias diarias y horarias
+'
+'Obtengo la fecha de inicio y fin de cada tramo
+
+aux             = SAR_CARGA_AUSENTISM
+INICIO_TRAMO    = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysStartDate
+FIN_TRAMO       = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysEndDate
+fec_ini_paga    = INICIO_TRAMO
+fec_fin_paga    = FIN_TRAMO
+pr_ant          = 0
+prom            = 0
+dt_start_p      = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC 'fecha inicio de la paga
+fec_alta        = SAR_FECHA_ALTA 'fecha de alta del empleado
+MesPaga         = DxMonth(dt_start_p)
+AnioPaga        = DxYear(dt_start_p)
+MesAlta         = DxMonth(fec_alta)
+AnioAlta        = DxYear(fec_alta)
+
+'Precios relacionados con las licencias
+'
+PRECIO_DIAS_ENF     = 0
+PRECIO_DIAS_MAT     = 0
+PRECIO_DIAS_LCONV   = 0
+PRECIO_DIAS_LSGS    = 0
+PRECIO_DIAS_HUELGA  = 0
+PRECIO_DIAS_LCAS    = 0
+PRECIO_DIAS_LNAC    = 0
+PRECIO_DIAS_LDEF    = 0
+PRECIO_DIAS_LEX     = 0
+PRECIO_DIAS_DSAN    = 0
+PRECIO_HS_AUSENCIA  = 0
+PRECIO_HS_50        = 0
+PRECIO_HS_100       = 0
+'Bug(0310670) - No eliminar el codigo
+'PRECIO_HS_150 = 0
+
+PRECIO_DIAS_EXCED       = 0
+PRECIO_DIAS_SUS_DISCI   = 0
+PRECIO_DIAS_AUS_INJUST  = 0
+PRECIO_LIC_S_GOC_SUELD  = 0
+
+PRECIO_DIAS_RE_ACC = 0
+PRECIO_DIAS_RE_ENF = 0
+PRECIO_DIAS_RE_SIN = 0
+
+PRECIO_PL_NOC_50    = 0
+PRECIO_PL_NOC_100   = 0
+PRECIO_FER_TRAB     = 0
+
+PRECIO_DEC792 = 0
+
+'
+'Verificamos si el empleado posee ausentismos a nivel de Periodo y a nivel de Role
+'Si posee a nivel de Rol, contamos las Hs de Ausencia y Extras
+'
+PRECIO          = 0
+UNIDAD          = 0
+REG_AUSENTISMOS = SAR_REAL_TIME_PERIOD.COUNT()
+REG_HS_AUSENCIA = 0
+
+SAR_HR_ROLE.BEGIN()
+
+WHILE SAR_HR_ROLE.ISEOF() = FALSE
+
+    IF SAR_REAL_TIME_PER_ROLE.COUNT() > 0 THEN
+    
+        REG_HS_AUSENCIA = REG_HS_AUSENCIA + 1
+        SAR_REAL_TIME_PER_ROLE.BEGIN()
+        
+        WHILE SAR_REAL_TIME_PER_ROLE.ISEOF() = FALSE
+            fec_ini_abs = SAR_REAL_TIME_PER_ROLE.SCO_DT_START
+            fec_fin_abs = SAR_REAL_TIME_PER_ROLE.SCO_DT_END
+            
+            'Si la fecha de inicio del ausentismo esta comprendida entre el inicio y 
+            'el fin del tramo calculo el precio a la fecha de fin de la incidencia
+            IF (INICIO_TRAMO <= fec_ini_abs AND fec_ini_abs <= FIN_TRAMO) THEN
+                IF fec_fin_abs > fec_fin_paga THEN
+                    fec_fin_abs = fec_fin_paga
+                ENDIF
+            
+                fec_abs = fec_fin_abs
+                'Calculo el importe para el dia de fin de la incidencia
+                idabs = FORMAT(SAR_REAL_TIME_PER_ROLE.SCO_ID_INCIDENCE,0)
+                
+                'Hs de ausencia
+                IF idabs = "20" THEN
+                    PRECIO_HS_AUSENCIA = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4463")
+                ENDIF
+            
+                'Hs Extras
+                IF idabs = "33" THEN
+                    PRECIO_HS_50 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4433") * 1.5
+                ELSEIF idabs = "34" THEN
+                     PRECIO_HS_100 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4423") * 2 
+                'Bug(0310670) - No eliminar el codigo
+                'ELSEIF idabs = "35" THEN
+                '    PRECIO_HS_150 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4437") * 2.5
+                'Fin Bug(0310670)
+                ELSEIF idabs = "44" THEN
+                    PRECIO_PL_NOC_50 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4257") * 1.5
+                ELSEIF idabs = "45" THEN
+                    PRECIO_PL_NOC_100 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4263") * 2
+                ELSEIF idabs = "54" THEN
+                    PRECIO_FER_TRAB = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4473") * 2                             
+                ENDIF
+              ENDIF
+            
+            SAR_REAL_TIME_PER_ROLE.GONEXT()
+        WEND
+    ENDIF
+    
+    SAR_HR_ROLE.GONEXT()
+WEND
+
+IF REG_AUSENTISMOS = 0 THEN
+    IF REG_HS_AUSENCIA = 0 THEN
+        Return(0)
+    ENDIF
+ENDIF
+
+'
+'Ahora contabilizamos las ausencias diarias que se cargan a nivel de period
+'
+primerreg = 0
+ultimoreg = SAR_REAL_TIME_PERIOD.COUNT() - 1
+fec_ini_paga = SAR_REAL_TIME_PERIOD.SAR_DT_ALLOC_START
+fec_fin_paga = SAR_REAL_TIME_PERIOD.SAR_DT_ALLOC_END
+
+FOR  I = primerreg  TO  ultimoreg
+ 
+        SAR_REAL_TIME_PERIOD.MOVETO(I)
+        motivoabs = FORMAT(SAR_REAL_TIME_PERIOD.SCO_ID_INCIDENCE,0)
+        fec_ini_abs = SAR_REAL_TIME_PERIOD.SCO_DT_START
+        fec_fin_abs = SAR_REAL_TIME_PERIOD.SCO_DT_END
+
+        'Si la fecha de inicio del ausentismo esta comprendida en el tramo o
+        'la fecha de fin del ausentismo esta comprendida en el tramo obtenemos
+        'los precios de las licencias 
+
+        IF (INICIO_TRAMO <= fec_ini_abs AND fec_ini_abs <= FIN_TRAMO) OR (INICIO_TRAMO <= fec_fin_abs AND fec_ini_abs <= FIN_TRAMO) THEN
+            
+            'Si la fecha de inicio del ausentismo es menor a la fecha de inicio del tramo la reemplazamos
+            IF fec_ini_abs < INICIO_TRAMO THEN
+                fec_ini_abs = INICIO_TRAMO
+            ENDIF    
+           
+            IF motivoabs = "1" THEN
+                '
+                'Calculo el precio de la enfermedad para esos dias
+                '
+                PRECIO_DIAS_ENF = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4110")
+            ELSEIF motivoabs = "23" THEN
+                '
+                'Calculo del precio de la compensacion dec 792
+                '
+                PRECIO_DEC792 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4110")
+            ELSEIF motivoabs = "2" THEN
+                '
+                'Calculo el precio de la suspension disciplinaria para esos dias
+                '
+                PRECIO_DIAS_SUS_DISCI = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4180")
+  
+            ELSEIF motivoabs = "3" THEN
+                '
+                'Calculo el precio de la maternidad para esos dias
+                '
+                PRECIO_DIAS_MAT = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"NONE")
+                   
+            ELSEIF motivoabs = "4" THEN
+                '
+                'Calculo el precio de licencia por convenio para esos dias
+                '
+                IF SAR_TIPO_SALARIO = "003" THEN
+                    IF MesPaga = MesAlta and AnioPaga = AnioAlta THEN 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                        pr_ant = SAR_TOT_P_COMP_EA
+                    ELSE   
+                        SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
+                        IF SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 THEN
+                            pr_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_P_COMP_EA
+                        ENDIF
+                        prom = Max(SAR_PRO_VAR_ULT_6,SAR_PRO_VAR_ULT_12)
+                    ENDIF    
+                    PRECIO_DIAS_LCONV = Round(pr_ant + (prom/SAR_HORAS_MES),2)
+                ELSE
+                    PRECIO_DIAS_LCONV = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4060")
+                ENDIF
+                
+            ELSEIF motivoabs = "5" THEN
+                '
+                'Calculo el precio de licencia sin goce de sueldo para esos dias
+                '
+                PRECIO_LIC_S_GOC_SUELD = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4171")
+
+            ELSEIF motivoabs = "6" THEN
+                '
+                'Calculo el precio de la excedencia para esos dias
+                '
+                PRECIO_DIAS_EXCED = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4160")
+        
+            ELSEIF motivoabs = "7" THEN
+                '
+                'Calculo el precio de la ausencia injustificada para esos dias
+                '
+                PRECIO_DIAS_AUS_INJUST = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4170")
+                
+            ELSEIF motivoabs = "8" THEN
+                '
+                'Calculo el precio de huelga para esos dias
+                '
+                PRECIO_DIAS_HUELGA = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4723")
+           
+            ELSEIF motivoabs = "10" THEN
+                '
+                'Calculo el precio de la licencia por casamiento para esos dias
+                '
+                IF SAR_TIPO_SALARIO = "003" THEN
+                    IF MesPaga = MesAlta and AnioPaga = AnioAlta THEN 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                        pr_ant = SAR_TOT_P_COMP_EA
+                    ELSE   
+                        SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
+                        IF SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 THEN
+                            pr_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_P_COMP_EA
+                        ENDIF
+                        prom = Max(SAR_PRO_VAR_ULT_6,SAR_PRO_VAR_ULT_12)
+                    ENDIF    
+                    PRECIO_DIAS_LCAS = Round(pr_ant + (prom/SAR_HORAS_MES),2)
+                ELSE                
+                    PRECIO_DIAS_LCAS = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4070")
+                ENDIF
+                
+            ELSEIF motivoabs = "11" THEN
+                '
+                'Calculo el precio de la licencia por nacimiemto para esos dias
+                '
+                IF SAR_TIPO_SALARIO = "003" THEN
+                    IF MesPaga = MesAlta and AnioPaga = AnioAlta THEN 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                        pr_ant = SAR_TOT_P_COMP_EA
+                    ELSE   
+                        SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
+                        IF SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 THEN
+                            pr_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_P_COMP_EA
+                        ENDIF
+                        prom = Max(SAR_PRO_VAR_ULT_6,SAR_PRO_VAR_ULT_12)
+                    ENDIF    
+                    PRECIO_DIAS_LNAC = Round(pr_ant + (prom/SAR_HORAS_MES),2)
+                ELSE                
+                    PRECIO_DIAS_LNAC = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4080")
+                ENDIF
+                                
+            ELSEIF motivoabs = "12" THEN
+                '
+                'Calculo el importe de la licencia por defuncion para esos dias
+                '
+                IF SAR_TIPO_SALARIO = "003" THEN
+                    IF MesPaga = MesAlta and AnioPaga = AnioAlta THEN 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                        pr_ant = SAR_TOT_P_COMP_EA
+                    ELSE   
+                        SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
+                        IF SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 THEN
+                            pr_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_P_COMP_EA
+                        ENDIF
+                        prom = Max(SAR_PRO_VAR_ULT_6,SAR_PRO_VAR_ULT_12)
+                    ENDIF    
+                    PRECIO_DIAS_LDEF = Round(pr_ant + (prom/SAR_HORAS_MES),2)
+                ELSE                
+                    PRECIO_DIAS_LDEF = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4090")
+                ENDIF
+                               
+            ELSEIF motivoabs = "13" THEN
+                '
+                'Calculo el precio de la licencia por examen para esos dias
+                '
+                IF SAR_TIPO_SALARIO = "003" THEN
+                    IF MesPaga = MesAlta and AnioPaga = AnioAlta THEN 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                        pr_ant = SAR_TOT_P_COMP_EA
+                    ELSE   
+                        SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
+                        IF SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 THEN
+                            pr_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_P_COMP_EA
+                        ENDIF
+                        prom = Max(SAR_PRO_VAR_ULT_6,SAR_PRO_VAR_ULT_12)
+                    ENDIF    
+                    PRECIO_DIAS_LEX = Round(pr_ant + (prom/SAR_HORAS_MES),2)
+                ELSE                
+                    PRECIO_DIAS_LEX = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4100")
+                ENDIF
+                                
+            ELSEIF motivoabs = "17" THEN
+                '
+                'Calculo el precio para hemodonacion 
+                '
+                PRECIO_DIAS_DSAN = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4108")
+                
+            ELSEIF motivoabs = "30" THEN
+                '
+                'Calculo el precio para la Reserva de Puesto por Enfermedad
+                '
+                PRECIO_DIAS_RE_ENF = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4193")
+                    
+            ELSEIF motivoabs = "31" THEN
+                '
+                'Calculo el importe para la Reserva de Puesto por Accidente
+                '
+                PRECIO_DIAS_RE_ACC = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4190")
+                
+            ELSEIF motivoabs = "32" THEN
+                '
+                'Calculo el importe para la Reserva de Puesto por Actividad Sindical
+                '
+                PRECIO_DIAS_RE_SIN = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4195")
+                    
+            ENDIF
+        ENDIF           
+NEXT
+
+'
+'Asigno valor a los conceptos de tipo Precio e Importe
+'
+
+'
+'Donacion sangre y Enfermedad 
+'
+importe_aux = 0
+IF SAR_DIA_DONAR_SANG > 0 THEN
+    SAR_PRE_LIC_HEM = ROUND(PRECIO_DIAS_DSAN,SAR_NUM_DEC)
+    SAR_DONAC_SANGRE = ROUND(PRECIO_DIAS_DSAN,SAR_NUM_DEC) * SAR_DIA_DONAR_SANG
+ENDIF
+IF SAR_DIAS_ENFERMEDAD > 0 THEN
+    SAR_PRE_ENFER = Round(PRECIO_DIAS_ENF,SAR_NUM_DEC)
+    SAR_ENFERMEDAD = Round(PRECIO_DIAS_ENF,SAR_NUM_DEC) * SAR_DIAS_ENFERMEDAD
+ENDIF
+
+'Compensacion Dec 792
+IF SAR_DIAS_DEC792 > 0 THEN
+    'Si el precio de la paga anterior es mayor, lo arrastramos a esta paga
+    imp_dec_792_act = PRECIO_DEC792
+    imp_dec_792_ant = SAR_ACM_DEV_MES_ANT[0].SAR_P_DEC792_NRED
+    If imp_dec_792_ant > Round(imp_dec_792_act,0) Then
+        imp_dec_792_act = imp_dec_792_ant
+    Endif
+    SAR_P_DEC792_NRED = imp_dec_792_act
+    SAR_IMP_DEC792_NRED = Round(imp_dec_792_act * SAR_DIAS_DEC792 ,SAR_NUM_DEC)
+ENDIF
+
+'Excedencia
+IF SAR_DIAS_EXCEDENCIA > 0 AND SAR_TP_IMPUT <> "88" THEN 'No se debe calcular en la paga Anticipo de vacaciones
+    SAR_PRE_EXCEDENCIA = Round(PRECIO_DIAS_EXCED,SAR_NUM_DEC) 
+    importe_aux = PRECIO_DIAS_EXCED * SAR_DIAS_EXCEDENCIA * (-1)
+    IF SAR_TIPO_SALARIO = "003" AND SAR_CANT_HS_TRABAJADAS > 0 THEN 'Si es tipo salario horario y tiene horas efectivas trabajadas
+        SAR_EXCEDENCIA = 0
+    ELSE    
+        SAR_EXCEDENCIA= Round(importe_aux,SAR_NUM_DEC) 
+    ENDIF
+ENDIF
+
+'Ausencia Injustificada
+IF SAR_DIAS_AUSENCIA > 0 THEN
+    SAR_PRE_AUS_INJUST = Round(PRECIO_DIAS_AUS_INJUST,SAR_NUM_DEC)
+    importe_aux = PRECIO_DIAS_AUS_INJUST * SAR_DIAS_AUSENCIA * (-1)
+    IF SAR_TIPO_SALARIO = "003" AND SAR_CANT_HS_TRABAJADAS > 0 THEN 'Si es tipo salario horario y tiene horas efectivas trabajadas
+        SAR_AUS_INJUST = 0
+    ELSE
+        SAR_AUS_INJUST = Round(importe_aux,SAR_NUM_DEC) 
+    ENDIF           
+ENDIF
+
+'Huelga
+IF SAR_DIAS_HUELGA > 0 THEN
+    SAR_P_DIA_HUELGA = Round(PRECIO_DIAS_HUELGA,SAR_NUM_DEC)
+    importe_aux = PRECIO_DIAS_HUELGA * SAR_DIAS_HUELGA * (-1)
+    IF SAR_TIPO_SALARIO = "003" AND SAR_CANT_HS_TRABAJADAS > 0 THEN 'Si es tipo salario horario y tiene horas efectivas trabajadas
+        SAR_DEDUC_HUELGA = 0
+    ELSE
+        SAR_DEDUC_HUELGA = Round(importe_aux,SAR_NUM_DEC)
+    ENDIF           
+ENDIF
+
+'Licencia sin goce de sueldo
+IF SAR_LIC_S_GOC_SUELD > 0 THEN
+    SAR_P_LIC_S_GOC_SUELD = Round(PRECIO_LIC_S_GOC_SUELD,SAR_NUM_DEC)
+    importe_aux = PRECIO_LIC_S_GOC_SUELD * SAR_LIC_S_GOC_SUELD * (-1)
+    IF SAR_TIPO_SALARIO = "003" AND SAR_CANT_HS_TRABAJADAS > 0 THEN 'Si es tipo salario horario y tiene horas efectivas trabajadas
+        SAR_LIC_S_GOC_SUE = 0
+    ELSE
+        SAR_LIC_S_GOC_SUE = Round(importe_aux,SAR_NUM_DEC)
+    ENDIF           
+ENDIF
+
+'Suspencion Disciplinaria
+IF SAR_DIAS_SUS_DISCI > 0 THEN
+    SAR_PRE_SUS_DISCI = Round(PRECIO_DIAS_SUS_DISCI,SAR_NUM_DEC)
+    importe_aux = PRECIO_DIAS_SUS_DISCI * SAR_DIAS_SUS_DISCI * (-1)
+    IF SAR_TIPO_SALARIO = "003" AND SAR_CANT_HS_TRABAJADAS > 0 THEN 'Si es tipo salario horario y tiene horas efectivas trabajadas
+        SAR_SUS_DISCI = 0
+    ELSE
+        SAR_SUS_DISCI = Round(importe_aux,SAR_NUM_DEC) 
+    ENDIF
+ENDIF
+
+
+'Reserva de Puesto por Accidente
+IF SAR_R_PTO_ACC > 0 THEN
+    SAR_PRE_R_PTO_ACC = Round(PRECIO_DIAS_RE_ACC,SAR_NUM_DEC)
+    importe_aux = PRECIO_DIAS_RE_ACC * SAR_R_PTO_ACC * (-1)
+    IF SAR_TIPO_SALARIO = "003" AND SAR_CANT_HS_TRABAJADAS > 0 THEN 'Si es tipo salario horario y tiene horas efectivas trabajadas
+        SAR_RES_PTO_ACC = 0
+    ELSE
+        SAR_RES_PTO_ACC = Round(importe_aux,SAR_NUM_DEC)
+    ENDIF
+ENDIF
+
+'Reserva de Puesto por Enfermedad
+IF SAR_R_PTO_ENF > 0 THEN
+    SAR_PRE_R_PTO_ENF = Round(PRECIO_DIAS_RE_ENF,SAR_NUM_DEC)
+    importe_aux = PRECIO_DIAS_RE_ENF * SAR_R_PTO_ENF * (-1)
+    IF SAR_TIPO_SALARIO = "003" AND SAR_CANT_HS_TRABAJADAS > 0 THEN 'Si es tipo salario horario y tiene horas efectivas trabajadas
+        SAR_RES_PTO_ENF = 0
+    ELSE
+        SAR_RES_PTO_ENF = Round(importe_aux,SAR_NUM_DEC)
+    ENDIF
+ENDIF
+
+'Reserva de Puesto por Act. Sindical
+IF SAR_R_PTO_SIN > 0 THEN
+    SAR_PRE_R_PTO_SIN = Round(PRECIO_DIAS_RE_SIN,SAR_NUM_DEC)
+    importe_aux = PRECIO_DIAS_RE_SIN * SAR_R_PTO_SIN * (-1)
+    IF SAR_TIPO_SALARIO = "003" AND SAR_CANT_HS_TRABAJADAS > 0 THEN 'Si es tipo salario horario y tiene horas efectivas trabajadas
+        SAR_RES_PTO_SIN = 0
+    ELSE
+        SAR_RES_PTO_SIN = Round(importe_aux,SAR_NUM_DEC)
+    ENDIF
+ENDIF
+
+'
+'Lic. Gremial, Casamiento, Nacimiento, Defuncion o Examen
+'
+IF SAR_DIAS_LIC_CONV > 0 THEN
+    SAR_PRE_LICENCIAS = ROUND(PRECIO_DIAS_LCONV,SAR_NUM_DEC) 
+    SAR_LIC_GREMIAL = ROUND(PRECIO_DIAS_LCONV,SAR_NUM_DEC) * SAR_DIAS_LIC_CONV
+ENDIF
+IF SAR_DIAS_CASAMIENTO > 0 THEN
+    SAR_PRE_LICENCIAS_CAS = Round(PRECIO_DIAS_LCAS,SAR_NUM_DEC)
+    SAR_CASAMIENTO =  Round(PRECIO_DIAS_LCAS,SAR_NUM_DEC) * SAR_DIAS_CASAMIENTO
+ENDIF
+IF SAR_DIAS_NACIMIENTO > 0 THEN
+    SAR_PRE_LICENCIAS_NAC = ROUND(PRECIO_DIAS_LNAC,SAR_NUM_DEC)
+    SAR_NACIMIENTO =  ROUND(PRECIO_DIAS_LNAC,SAR_NUM_DEC) * SAR_DIAS_NACIMIENTO
+ENDIF
+IF SAR_DIAS_DEFUNCION > 0 THEN
+    SAR_PRE_LICENCIAS_DEF = ROUND(PRECIO_DIAS_LDEF,SAR_NUM_DEC) 
+    SAR_DEFUNCION = ROUND(PRECIO_DIAS_LDEF,SAR_NUM_DEC) * SAR_DIAS_DEFUNCION
+ENDIF
+IF SAR_DIAS_EXAMEN > 0 THEN
+    SAR_PRE_LICENCIAS_EX = ROUND(PRECIO_DIAS_LEX,SAR_NUM_DEC)
+    SAR_EXAMEN = ROUND(PRECIO_DIAS_LEX,SAR_NUM_DEC) * SAR_DIAS_EXAMEN
+ENDIF
+
+'
+'Hs de ausencia y Hs Extras
+'
+IF SAR_UNIDAD_HS_AUSENCIA > 0 THEN
+    SAR_PRECIO_HS_AUSENCIA = Round(PRECIO_HS_AUSENCIA,SAR_NUM_DEC)
+    'Es una ausencia, debe restar al total. 
+    importe_aux = PRECIO_HS_AUSENCIA * (-1)
+    IF SAR_TIPO_SALARIO = "003" AND SAR_CANT_HS_TRABAJADAS > 0 THEN 'Si es tipo salario horario y tiene horas efectivas trabajadas
+        SAR_HS_AUSENCIA = 0
+    ELSE    
+        SAR_HS_AUSENCIA = Round(importe_aux,SAR_NUM_DEC) * SAR_UNIDAD_HS_AUSENCIA
+    ENDIF 
+ENDIF
+IF SAR_UN_HORAS_50 > 0 THEN
+    precio_50 = Round(PRECIO_HS_50,SAR_NUM_DEC)
+    SAR_PR_HORAS_50 = precio_50
+ENDIF
+IF SAR_U_PL_NOCTUR_50 > 0 THEN
+    precio_50_noc = Round((PRECIO_PL_NOC_50 + (PRECIO_PL_NOC_50 * (SAR_MIN_PL_NOCTUR/60))), SAR_NUM_DEC)
+    SAR_PR_PL_NOCTUR_50 = precio_50_noc
+ENDIF
+IF SAR_UN_HORAS_100 > 0 THEN
+   precio_100 = Round(PRECIO_HS_100,SAR_NUM_DEC)
+   SAR_PR_HORAS_100 = precio_100
+ENDIF
+IF SAR_UN_PL_NOCTUR_100 > 0 THEN
+    precio_100_noc = Round((PRECIO_PL_NOC_100 + (PRECIO_PL_NOC_100 * (SAR_MIN_PL_NOCTUR/60))), SAR_NUM_DEC)
+    SAR_PR_PL_NOCTUR_100 = precio_100_noc
+ENDIF
+'Bug(0310670) - No eliminar el codigo
+'IF SAR_UN_HORAS_150 > 0 THEN
+'    SAR_PR_HORAS_150 = Round(PRECIO_HS_150, SAR_NUM_DEC)
+'    SAR_HORAS_150 = Round(SAR_PR_HORAS_150,SAR_NUM_DEC) * SAR_UN_HORAS_150
+'ENDIF
+'Fin Bug(0310670)
+IF SAR_UN_FER_TRAB > 0 THEN
+    SAR_PR_FER_TRAB = Round(PRECIO_FER_TRAB, SAR_NUM_DEC)
+    SAR_HORAS_FER_TRAB = SAR_PR_FER_TRAB * SAR_UN_FER_TRAB
+ENDIF
+
+'
+'Si el tipo de paga es 88 o 99 asigno 0 a los importes
+'
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "77" THEN
+    SAR_ENFERMEDAD = 0
+    SAR_LIC_GREMIAL = 0
+    SAR_DEDUC_HUELGA = 0
+    SAR_CASAMIENTO = 0
+    SAR_NACIMIENTO = 0
+    SAR_DEFUNCION = 0
+    SAR_EXAMEN = 0
+    SAR_DONAC_SANGRE = 0
+    SAR_HS_AUSENCIA = 0
+    SAR_HORAS_50 = 0
+ 'Bug(0310670) - No eliminar el codigo
+'   SAR_HORAS_150 = 0
+    SAR_SUS_DISCI = 0
+    SAR_RES_PTO_ACC = 0
+    SAR_RES_PTO_ENF = 0
+    SAR_RES_PTO_SIN = 0
+    SAR_PLUS_NOCTUR_50 = 0
+    SAR_HORAS_FER_TRAB = 0
+    SAR_AUS_INJUST = 0
+    SAR_LIC_S_GOC_SUE = 0  
+
+ENDIF
+Return(0)

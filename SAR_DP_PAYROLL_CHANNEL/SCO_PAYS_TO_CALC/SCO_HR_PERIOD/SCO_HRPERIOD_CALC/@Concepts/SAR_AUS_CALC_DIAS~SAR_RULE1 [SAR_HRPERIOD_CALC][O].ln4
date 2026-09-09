@@ -1,0 +1,115 @@
+'Esta regla es para empleados mensuales.
+'Permite calcular los dias que corresponden a un ausentismo que se calcule de forma similar a otro existente. 
+'Recibe 2 parametros: argIncCliente es el ID del ausentismo propio del cliente / argIncClonar el el ID del ausentismo cuyo comportamiento queremos replicar
+'Devuelve los dias del ausentismo. Evita sobreescrituras de SAR_CARGA_AUSENTISM y SAR_CALC_AUS_POR_TRAMO. 
+'Si tiene sobreescrituras en SAR_CARGA_AUSENTISM para cambiar el calculo STD, previsiblemente el mismo cambio aplicara en esta regla.
+
+argIncCliente = ARG_INC_CLIENTE
+argIncClonar = ARG_INC_CLONAR
+ARG_DIAS_INC = 0
+
+If SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "77" Or SAR_TP_IMPUT = "88" Or (SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 0) Then Return(0)
+
+'Obtengo la fecha de inicio y fin de cada tramo
+inicioTramo = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysStartDate
+finTramo 	 = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysEndDate
+
+'Cantidades de dias de licencias
+dias_enf 		= 0 'dias como enfermedad
+dias_susp 		= 0 'dias como suspension
+
+'Contabilizamos las ausencias diarias que se cargan a nivel de period
+'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de la incidencia
+sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
+SAR_REAL_TIME_PERIOD.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", argIncCliente)
+
+primerreg = 0
+ultimoreg = SAR_REAL_TIME_PERIOD.COUNT() - 1
+
+'Asigno las fechas de inicio y fin de tramo
+fec_ini_paga = inicioTramo
+fec_fin_paga = finTramo
+
+For i = primerreg To ultimoreg 
+    motivoabs = SAR_REAL_TIME_PERIOD[i].SCO_ID_INCIDENCE
+    fec_ini_abs = SAR_REAL_TIME_PERIOD[i].SCO_DT_START
+    fec_fin_abs = SAR_REAL_TIME_PERIOD[i].SCO_DT_END
+    excedente = 0
+	
+    If DxMonth(finTramo) = 2 Then
+	   If fec_fin_abs >= finTramo And DxDay(finTramo) = 28 Then
+	       excedente = excedente + 2
+	   ElseIf fec_fin_abs >= finTramo And DxDay(finTramo) = 29 Then
+	       excedente = excedente + 1
+	   EndIf
+    EndIf
+
+    'Contabilizo la cantidad de dias y si el tipo de salario es Horario, traspaso las unidades a horas
+    If motivoabs = argIncCliente And (argIncClonar = "1" Or argIncClonar = "23" Or argIncClonar = "5" Or argIncClonar = "30" Or argIncClonar = "31" Or argIncClonar = "32") Then
+        dias_enf = dias_enf + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente 
+        'Agregado por exceso de dias ---------------------------------- 
+        If fec_fin_abs >= finTramo And DxDay(finTramo) > 30 Then   '  |
+            dias_enf = dias_enf -1                                 '  |
+        EndIf                                                      '  |
+    ElseIf motivoabs = argIncCliente And (argIncClonar = "2" Or argIncClonar = "4" Or argIncClonar = "7" Or argIncClonar = "8" Or argIncClonar = "10" Or argIncClonar = "11" Or argIncClonar = "12" Or argIncClonar = "13" Or argIncClonar = "17") Then
+        dias_susp = dias_susp + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente 
+    EndIf           
+Next
+
+'Se elimina el filtro RAM aplicado al nodo
+SAR_REAL_TIME_PERIOD.REMOVEFILTER()
+
+tipo_paga       = SAR_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM
+fecFinTramo = finTramo
+
+'Condiciones para meses de 31 dias y febrero
+If DxDay(finTramo) > 30 Then fecFinTramo = DxDate(30,DxMonth(finTramo),DxYear(finTramo))
+If DxMonth(finTramo) = 2 And (DxDay(finTramo) = 28 Or DxDay(finTramo) = 29) Then fecFinTramo = DxDate(30,DxMonth(finTramo),DxYear(finTramo))
+
+'Calculo los dias del tramo
+dias_tramo = fecFinTramo - inicioTramo + 1
+
+'Calculo los dias del tramo real
+dias_tramo_real = finTramo - inicioTramo + 1
+
+'Juntamos todos los dias, aqui dentro siempre estamos calculando una unica incidencia cada vez
+dias_susp = dias_susp + dias_enf
+
+If dias_susp > 0 And argIncClonar <> "4" Then 'Todas las incidencias excepto la 4 no pueden pasar de 30 dias
+    If  dias_susp = dias_tramo_real And tipo_paga = "1" Then
+        dias_susp = Max(dias_susp, dias_tramo)        'para los mensuales en febrero
+    EndIf
+    maxdias_susp = dias_tramo       
+    dias_susp = Min(dias_susp, maxdias_susp)
+    dias_susp = Max(dias_susp, 0)
+EndIf
+
+'Incorporamos las incidencias de rol, en estandar solo se toman las unidades del id ausentismo 54, ampliar segun necesidades de cada cliente:
+horas_fer_trab = 0
+hrRole = SAR_HR_ROLE.Count() - 1
+For j = 0 To hrRole
+    SAR_HR_ROLE.MoveTo(j)
+
+    'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de horas de feriado trabajado
+    sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
+    SAR_REAL_TIME_PER_ROLE.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", argIncCliente)
+
+    contIncRol = SAR_REAL_TIME_PER_ROLE.COUNT() -1
+    For k = 0 To contIncRol
+        If inicioTramo <= SAR_REAL_TIME_PER_ROLE[k].SCO_DT_START And SAR_REAL_TIME_PER_ROLE[k].SCO_DT_START <=  finTramo THEN
+            fec_abs = SAR_REAL_TIME_PER_ROLE[k].SCO_DT_END
+            idabs = SAR_REAL_TIME_PER_ROLE[k].SCO_ID_INCIDENCE
+            If idabs = argIncCliente And argIncClonar = "54" Then
+            'Calculamos las unidades de las horas de feriado trabajado
+                horas_fer_trab = horas_fer_trab + SAR_REAL_TIME_PER_ROLE[k].SCO_UNITS
+            EndIf
+        EndIf
+    Next
+    'Se elimina el filtro RAM aplicado al nodo
+    SAR_REAL_TIME_PER_ROLE.REMOVEFILTER()
+Next
+'Fin incidencias del rol
+
+ARG_DIAS_INC = dias_susp + horas_fer_trab
+
+Return(0)

@@ -1,0 +1,12 @@
+/*
+el concepto toma valor por tabla de valor, se debe indicar el numero de mes que se va a 
+considerar para revisar el saldo del a?o anterior del Impuesto a las ganancias.
+
+Ej. Se quiere revisar el saldo hasta el mes de Mayo(inclusive), se debe colocar "6" 
+*/
+
+'If ISNULL(SAR_MES_HASTA_SALDO_IG) = M4_TRUE THEN 'si el valor del concepto es nulo, se pone como defecto hasta mes de Abril
+'    vMesHastaSaldoIG = 5
+'Endif
+
+Return(SAR_MES_HASTA_SALDO_IG)

@@ -1,0 +1,2 @@
+fechaPayIG = SAR_FEC_PAGO_IG
+Return (DxYear(fechaPayIG))

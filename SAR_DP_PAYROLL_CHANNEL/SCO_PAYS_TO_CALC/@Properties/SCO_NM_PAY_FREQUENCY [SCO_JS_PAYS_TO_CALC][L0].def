@@ -1,0 +1,9 @@
+item: SCO_NM_PAY_FREQUENCY
+name: Nombre frecuencia
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 62
+scale: 0
+scope: RECORD
+default_value: null

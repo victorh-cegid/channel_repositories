@@ -1,0 +1,38 @@
+numreg = Count() - 1
+
+If numreg < 0 Then Return(0)
+
+current = GetCurrent()
+k = 0
+xerror = -1
+
+dtalloc=GETVALUE(SWP_NODES_AC_READ.ID_NODE_DATES,"SCO_DT_ALLOCATION",-1)
+
+aux = DxYear(dtalloc)
+aux2=DxMonth(dtalloc)
+
+DtMin = NumbersToDate(aux,aux2)
+DtMax = NumbersToDate(1900,01)
+
+While k <= numreg
+	MoveTo(k)
+	xerror = SCO_CALC_DATES()
+
+	If xerror = 0 Then 
+		If SCO_DT_START <= DtMin Then DtMin = SCO_DT_START
+		If SCO_DT_END >= DtMax Then DtMax = SCO_DT_END
+	ElseIf xerror = 1 Then 
+		SCO_EXPREV = xerror
+	ElseIf xerror = 2 Then 
+            SCO_DYN_ORIGIN = 1
+	EndIf
+
+	k = k + 1
+Wend
+
+SCO_DT_MIN = DtMin
+SCO_DT_MAX = DtMax
+
+MoveTo(current)
+
+Return(0)

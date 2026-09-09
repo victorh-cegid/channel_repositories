@@ -1,0 +1,4 @@
+'Para generar dependencias
+a = SAR_BASE_IMPUESTO
+importe=SAR_AP_OBRA_SCO_4CATEG
+Return Round(importe,SAR_NUM_DEC)

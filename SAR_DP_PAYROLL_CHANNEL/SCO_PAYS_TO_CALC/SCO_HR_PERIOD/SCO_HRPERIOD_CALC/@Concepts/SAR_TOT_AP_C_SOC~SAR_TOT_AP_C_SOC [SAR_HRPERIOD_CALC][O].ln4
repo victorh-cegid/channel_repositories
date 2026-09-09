@@ -1,0 +1,7 @@
+'---------------------------------------------------
+'     Aportes capital social o fondo de riesgo
+'               Art.79 Ley N? 2446
+'---------------------------------------------------
+importe = SAR_TOT_AP_C_SOC
+importe = importe + SAR_AP_CAP_SOC_FDO_R
+Return(importe)

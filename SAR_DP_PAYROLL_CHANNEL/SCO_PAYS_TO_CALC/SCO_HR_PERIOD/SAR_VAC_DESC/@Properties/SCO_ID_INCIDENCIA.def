@@ -1,0 +1,11 @@
+item: SCO_ID_INCIDENCIA
+name: SCO_ID_INCIDENCIA
+item_type: PROPERTY
+type: STRING
+id_m4_type: 1
+prec: 2
+scale: 0
+scope: BLOCK
+default_value: "9"
+internal_type: 1
+item_aux: null

@@ -1,0 +1,9 @@
+'El motivo de este concepto es poder contemplar carga tardia.
+'Su valor es el importe de bono OE que corresponderia a la paga considerando que si en una paga previa del mismo mes IG
+'ya se considero el valor del mes de complemento, este concepto valdra 0. De forma que la suma de SAR_IMP_BONOS_OE_PAGA
+'de todas las pagas de imputacion IG de un mes, deben coincidir con el importe del concepto SAR_IMP_BONOS_OE_MES
+
+valorMes = SAR_IMP_BONOS_OE_MES
+valorPagasPrevias = SAR_ACM_MESACT_IMPIG[0].SAR_IMP_BONOS_OE_PAGA
+valorFinal = valorMes - valorPagasPrevias
+Return Round(valorFinal,SAR_NUM_DEC)

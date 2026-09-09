@@ -1,0 +1,131 @@
+'Este concepto es el encargado de calcular el beneficio del empleado en regimen cedular que pasa a 4ta por la ley de bases.
+If SAR_LBASE_IND_CALC_BENEF = 0 Then Return(0)
+
+'dependencias:
+a = SAR_IMPUESTO_TOTAL
+
+ajustesSacRetro = 0
+ajustesSacRetroConAP = 0
+
+'***************************************************************************************************************
+'Si se quiere descartar ajustes de SAC retroactivos posteriores a Junio dejar estas lineas, sino comentarlas.
+'***************************************************************************************************************
+
+If SAR_LBASE_IND_DEVENGADO = 0 Then
+    sacAbonadoJunioOrig = 0
+    sacAbonadoJunioCompleto = 0
+    difSac = 0
+    
+    difSacOrig = 0
+    apoOrig = 0
+    mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
+    mes_fin_ig = DxDate(31,12,DxYear(SAR_FEC_IMPUT_IG))
+    ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
+    For acum = 0 To ult_reg - 1
+        If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION <= SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <= SCO_DT_ALLOCATION Then
+            sacAbonadoJunioOrig = sacAbonadoJunioOrig + SCO_AC_HR_PERIOD_READ_1[acum].SAR_SAC_ABONADO
+        EndIf
+        If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION <= SCO_DT_ALLOCATION Then
+            sacAbonadoJunioCompleto = sacAbonadoJunioCompleto + SCO_AC_HR_PERIOD_READ_1[acum].SAR_SAC_ABONADO
+        EndIf
+    Next
+    
+    If SAR_SAC_ABONADO <> 0 Then
+        sacOrig = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_ABONADO
+        sacNuevo = SAR_SAC_ABONADO
+        difSac = sacNuevo - sacOrig
+    EndIf
+    
+    sacAbonadoJunioCompleto = sacAbonadoJunioCompleto + difSac
+    
+    ajustesSacRetro = sacAbonadoJunioCompleto - sacAbonadoJunioOrig
+    
+    'Porcentajes para calculo de aportes
+    porcJub = 0
+    porcLey = 0
+    If SAR_EDAD >= 18 Then 
+        porcJub = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
+        porcLey = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032 * SAR_PP_AP_INSSJP/100)
+    EndIf
+    porcObSoc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
+    porcAdObSoc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
+    porcAdObSoc = porcAdObSoc * SAR_FAM_CARGO_OS
+    porcSindObl = SAR_PORC_C_SIND_OBL
+    porcSindVol = SAR_PORC_C_SIND_VOL 
+    
+    apoPorcTope = porcJub + porcLey + porcObSoc + porcAdObSoc
+    
+    If sacOrig > SAR_TOPE_COTIZ/2 Then apoPorcTope = 0
+    aportesAjustados = Percentage(apoPorcTope + porcSindObl + porcSindVol,ajustesSacRetro)
+    ajustesSacRetroConAP = ajustesSacRetro - aportesAjustados
+EndIf
+'Fin Si se quiere descartar ajustes de SAC retroactivos
+
+
+'**********************************************************************************************
+'1? Se toma el impuesto total que existe en el acumulado, como esto es para 1 solo uso en junio se usa la read:
+'**********************************************************************************************
+
+impuestoTotalCedu = 0
+mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
+mes_fin_ig = DxDate(31,12,DxYear(SAR_FEC_IMPUT_IG))
+ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
+For acum = 0 To ult_reg - 1
+    'Solo la ultima paga normal con allocation igual al que se procesa donde el indicador SAR_LBASE_IND_CALC_BENEF se ha activado (es automatico)
+    If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION = SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT And DxMonth(SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_PAGO_IG) = DxMonth(SAR_FEC_IMPUT_IG) Then
+        impuestoTotalCedu = SCO_AC_HR_PERIOD_READ_1[acum].SAR_IMPUESTO_TOTAL
+    EndIf
+Next
+
+'**********************************************************************************************
+'2? Cambiamos el sentido del indicador (de cedular a 4ta) para que recupere tablas de impuesto de 4ta
+'**********************************************************************************************
+indCeduOrig = SAR_CEDU_IND_IMPUESTO
+If indCeduOrig = 1 Then SetValuePriority(1,"SCO_HRPERIOD_CALC","SAR_CEDU_IND_IMPUESTO",-1,0)
+
+'**********************************************************************************************
+'3? Calcula como si hubiera sido 4ta los equivalentes a SAR_CANT_FIJA_IMP / SAR_DESDE_IMP / SAR_PORC_IMP / SAR_IMPUESTO_TOTAL
+'**********************************************************************************************
+base = SAR_LBASE_BASE_4TA - ajustesSacRetroConAP
+
+fecImp = SAR_FEC_IMPUT_IG
+cantFijaImp = SAR_IMPUESTO.SAR_RETORNA_CUOTA_FIJA(base,fecImp,ID_CURRENCY)
+desdeImp = SAR_IMPUESTO.SAR_RETORNA_VALOR(base,fecImp,ID_CURRENCY)
+porcImp = SAR_IMPUESTO.SAR_RETORNA_PORCENTAJE(base,fecImp,ID_CURRENCY)
+impuestoTotalCta = cantFijaImp + porcImp * (base - desdeImp )/100
+
+'Deja el indicador cedular como estaba:
+SetValuePriority(1,"SCO_HRPERIOD_CALC","SAR_CEDU_IND_IMPUESTO",-1,indCeduOrig)
+
+beneficio = impuestoTotalCta - impuestoTotalCedu
+
+If beneficio > 0 Then
+    SAR_LBASE_BENEFICIO = Round(beneficio,SAR_NUM_DEC)
+Else
+    SAR_LBASE_BEN_NEG = Round(beneficio,SAR_NUM_DEC)
+    SAR_LBASE_BEN_NEG_SALDO = Round(beneficio,SAR_NUM_DEC)
+EndIf
+
+'**********************************************************************************************
+'4? NO RETROACTIVIDAD: La norma indica que no se debe recalcular el beneficio hasta reliquidacion
+'**********************************************************************************************
+indFuerzaRecalc = SAR_LBASE_IND_FUERZA_RECALC
+
+If indFuerzaRecalc = 0 Then
+    indCalcBenefPasado = SCO_AC_HR_PERIOD_REV_1.SAR_LBASE_IND_CALC_BENEF
+    baja = 0
+    'Comprobamos la baja de la fecha de pago en lugar de alloc:
+    If SCO_HR_PERIOD.SCO_DT_PAY_START <= SCO_HR_PERIOD.STD_DT_END AND SCO_HR_PERIOD.STD_DT_END <= SCO_HR_PERIOD.SCO_DT_PAY_END Then baja = 1
+    'Control de la baja en el impuesto, en caso de baja en la paga normal si debe calcular beneficio
+    esBaja = 0
+    If baja = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
+    
+    If indCalcBenefPasado <> 0 And SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM <> "99" And esBaja = 0 Then
+        impuestoTotalCta = SCO_AC_HR_PERIOD_REV_1.SAR_LBASE_IMPUESTO_TOTAL
+        SAR_LBASE_BENEFICIO = SCO_AC_HR_PERIOD_REV_1.SAR_LBASE_BENEFICIO
+        SAR_LBASE_BEN_NEG = SCO_AC_HR_PERIOD_REV_1.SAR_LBASE_BEN_NEG
+        SAR_LBASE_BEN_NEG_SALDO = SCO_AC_HR_PERIOD_REV_1.SAR_LBASE_BEN_NEG_SALDO
+    EndIf
+EndIf
+
+Return Round(impuestoTotalCta,SAR_NUM_DEC)

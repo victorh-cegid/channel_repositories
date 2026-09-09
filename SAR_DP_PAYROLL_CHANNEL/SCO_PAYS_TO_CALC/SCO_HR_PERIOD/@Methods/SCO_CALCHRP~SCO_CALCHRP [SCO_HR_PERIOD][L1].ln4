@@ -1,0 +1,283 @@
+'Variables
+DtAllocation = SCO_DT_ALLOCATION
+DtPayment    = SCO_DT_PAYMENT
+NmFrequency  = SCO_PAYS_TO_CALC.SCO_NM_PAY_FREQUENCY
+
+//Variable que se inicializa para utilizarla en la conprobacion de datos cuando la moneda tiene
+//comportamiento 'proceso'.
+BCorrectYtd = 1
+
+SCO_HRPERIOD_CALC.AddRegister()
+
+SCO_AUX_AC_HRPERIOD.AddRegister()         
+
+SCO_HRPERIOD_CALC.ID_CURRENCY=ID_CURRENCY  
+SCO_HRPERIOD_CALC.SCO_IND_MAIN_CURR=ind_main 
+SCO_HRPERIOD_CALC.SCO_BEHAV_CURR=behaviour  
+SCO_HRPERIOD_CALC.SCO_DT_EXCHANGE=DtPayment
+SCO_HRPERIOD_CALC.EX_TYPE=EX_TYPE
+
+node="SCO_HRPERIOD_CALC"
+SWP_NODES_AC_READ.SCO_CALC_MIN_MAX_DATE(node)
+
+//Antes de empezar a calcular conceptos, vamos a comprobar en caso de que el comportamiento de 
+//la moneda sea 'proceso' que los datos del acumulado son correctos para el calculo. En caso de
+//que se este seguro de que los datos estan bien, se puede comentar esta parte para mejorar el 
+//rendimiento. Se ejecuta despues del calculo de fechas de lectura del acumulado para reproducir
+//el mismo entorno.
+
+If behaviour <> "01" Then
+
+    //Tomo las fechas que van a servir de filtro para los nodos de lectura del acumulado
+    DtMin = GetValue(SWP_NODES_AC_READ.ID_NODE_AC_READ,"SCO_DT_START", -1)
+    DtMax = GetValue(SWP_NODES_AC_READ.ID_NODE_AC_READ,"SCO_DT_END", -1)
+
+    DtPrevAlloc = SCO_AC_MAX_DT_ALLOC.SCO_DT_PREV_ALLOC
+    DtPrevPaym = SCO_AC_MAX_DT_PAY.SCO_DT_PREV_PAYM
+
+    'Llamar al Meta4Object de comprobacion
+    BCorrectYtd = SCO_COMPARE_YTD_CURR!SCO_PARAM.SCO_CHECK_DATA (STD_ID_HR,STD_OR_HR_PERIOD,NullValue(),ID_CURRENCY, DtMin, DtMax, DtAllocation, DtPayment, SCO_PAY_FREQ_ALLOC,DtPrevAlloc,DtPrevPaym)
+    If BCorrectYtd = 0 Then
+        //No se puede calcular la nomina del periodo %1:n del empleado %0:s en la moneda %2:s 
+        //con comportamiento 'proceso' para la paga %5:s de pago %3:d  e imputacion %4:d, porque
+        //en el acumulado no estan todos los registros necesarios en esta moneda.
+        //Para utilizar este comportamiento de moneda (proceso) debe haber calculado las nominas
+        // anteriores en la moneda de calculo actual.
+        SetLog (-1,1,101,51,STD_ID_HR,STD_OR_HR_PERIOD,ID_CURRENCY,DtPayment,DtAllocation,NmFrequency)
+        SCO_ERROR = 1
+        Return(-1)
+    EndIf
+EndIf
+
+If SCO_RETRO_TERM <> STD_ID_HR then    'Para baja retroactiva no necesitamos el aplicavalor
+    Output=SCO_HRPERIOD_CALC.TRANSFERAPPLYVALUE("SCO_APPLYVAL_PERIOD","SCO_INTERMEDIATE_NODE_PERIOD","DMD1",id_currency,DtPayment,ex_type)
+    If Output=M4_ERROR Then
+        SetLog(-1,1,101,16,STD_ID_HR,STD_OR_HR_PERIOD,DtAllocation,NmFrequency)
+        SCO_ERROR=1
+        Return(-1)
+    EndIf
+EndIf
+
+'This lines are needed is we are working without slices
+'SCO_AUX_AC_HRPERIOD.SCO_DT_START_SLICE=SCO_PAYS_TO_CALC.SCO_DT_START_ALLOC      
+'SCO_AUX_AC_HRPERIOD.SCO_DT_END_SLICE=SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC
+
+'The call to the new EXE_GROUP 0
+SCO_EXE_LEVEL_0()
+
+//We have to set the way to work with slices and number of decimals:
+// With currencies we set the decimals of the currency.
+// With numbers we set the decimals of the item (this is the default value)
+
+
+Code="Return("+GetChannelId()+"!GETPROPERTY("+CHR(DOUBLE_QUOTE)+"ROUND_CURRENCY"+CHR(DOUBLE_QUOTE)+"))"
+IsRoundCurrency = clcExecuteLN4JIT (Code)
+Code="Return("+GetChannelId()+"!GETPROPERTY("+CHR(DOUBLE_QUOTE)+"ROUND_NUMBER"+CHR(DOUBLE_QUOTE)+"))"
+IsRoundNumber = clcExecuteLN4JIT (Code)
+
+//These are the values that we have in the application parameters (LOGON/SCH_SESSION), so we don't need to set them.
+//We indicate that we want the currencies rounded when we read with slices.
+'Code="Return("+GetChannelId()+"!SETPROPERTY("+CHR(DOUBLE_QUOTE)+"ROUND_CURRENCY"+CHR(DOUBLE_QUOTE)+",1))"
+'clcExecuteLN4JIT (Code)
+//We indicate that we want the numbers rounded when we read with slices.
+'Code="Return("+GetChannelId()+"!SETPROPERTY("+CHR(DOUBLE_QUOTE)+"ROUND_NUMBER"+CHR(DOUBLE_QUOTE)+",1))"
+'clcExecuteLN4JIT (Code)
+
+//Now we set the decimals to work with when we read with slices.
+//we set the values of the decimals of the currency.
+Code="Return("+GetChannelId()+"!SETPROPERTY("+CHR(DOUBLE_QUOTE)+"CURRENCY_PRECISION"+CHR(DOUBLE_QUOTE)+",SCO_HRPERIOD_CALC.SCO_CURR_DECIMALS))"
+clcExecuteLN4JIT (Code)
+
+//We don't set the decimals for number because we want the default behaviour (number of decimals of the item, -1)
+'Code="Return("+GetChannelId()+"!SETPROPERTY("+CHR(DOUBLE_QUOTE)+"NUMBER_PRECISION"+CHR(DOUBLE_QUOTE)+",9))"
+'clcExecuteLN4JIT (Code)
+
+IF SCO_PAYS_TO_CALC.SCO_REVISION=1 then
+	SCO_AC_HR_PERIOD_REV.SCO_COUNT()
+	SCO_AC_HR_PERIOD_REV.Begin()
+
+	//Para que todas las ejecuciones en el nodo de diferencias sean en el intervalo 
+	//maximo de fechas entre el calculo y la revision. No se hace antes porque en el
+	//Count del nodo de revision necesitamos las fechas de calculo ya que se leen 
+	//datos del nodo de calculo.
+
+	dStartRetro = SCO_DT_START_CALC_RETRO
+	dEndRetro = SCO_DT_END_CALC_RETRO
+	SetStartDate(dStartRetro)
+	SetEndDate(dEndRetro)
+
+	SCO_DIF_HRPERIOD_CALC.AddRegister()
+	SCO_DIF_HRPERIOD_CALC.SCO_ID_HR=STD_ID_HR
+	SCO_DIF_HRPERIOD_CALC.SCO_OR_HR_PERIOD=STD_OR_HR_PERIOD
+	SCO_DIF_HRPERIOD_CALC.ID_CURRENCY=ID_CURRENCY
+	SCO_DIF_HRPERIOD_CALC.SCO_DT_EXCHANGE=DtPayment
+	SCO_DIF_HRPERIOD_CALC.SCO_IND_MAIN_CURR=ind_main
+	SCO_DIF_HRPERIOD_CALC.EX_TYPE=EX_TYPE
+      SCO_DIF_HRPERIOD_CALC.ID_ORGANIZATION = ID_ORGANIZATION
+      
+      //Volvemos a setear las fechas de calculo del empleado
+      dStartPeriod=SCO_DT_START_CALC
+	dEndPeriod=SCO_DT_END_CALC
+	SetStartDate(dStartPeriod)
+	SetEndDate(dEndPeriod)
+
+ENDIF
+
+If SCO_RETRO_TERM <> STD_ID_HR then    'Para baja retroactiva no ejecutamos el calculo normal, solo la parte de retro
+
+    'This is to ensure that the concepts that not depends on the currency are executed only once.
+    If ind_main = 1 Then
+    	SCO_EXE_LEVEL_1()
+    
+    	//Los errores que se dan a nivel de un grupo de ejecucion no podemos controlarlos.
+    	//No podemos asignar la propiedad SCO_HR_PERIOD.SCO_ERROR porque al ser 'elemento de nodo' nos
+    	//obligaria a poner todos los conceptos como 'elementos de nodo'. Asi que nos creamos una propiedad
+    	//en el nodo de calculo para controlar los errores de los conceptos.
+    
+    	//Utilizamos la totalizacion en tramos porque si los conceptos que han asignado la propiedad
+    	//SCO_ERROR estan tramados, tambien lo esta la propiedad. Como en cada uno de los tramos solo
+    	//puede haber un 0 o un 1, se toma el maximo.
+    
+    	//La generacion del error (el texto) es responsabilidad del concepto que lo produce.
+    	If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
+    		SCO_ERROR = 1
+    		Return(-1)
+    	EndIf
+    EndIf
+    
+    SCO_EXE_LEVEL_2()
+    //Si se ha producido un error en el calculo del grupo, ya no seguimos calculando. La generacion
+    //del error (el texto) es responsabilidad del concepto que lo produce.
+    If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
+    	SCO_ERROR = 1
+    	Return(-1)
+    EndIf
+
+EndIf
+
+SCO_HR_ROLE.Begin()
+
+Do
+      FI=SCO_HR_ROLE.SCO_DT_START_CALC_ROLE  
+      FF=SCO_HR_ROLE.SCO_DT_END_CALC_ROLE  
+	SetStartDate(FI)
+	SetEndDate(FF)
+	Output=SCO_HR_ROLE.SCO_CALCROLE(id_currency,ind_main,behaviour,Ex_type)
+	If Output=M4_ERROR Then
+		SCO_ERROR=1
+		Return(-1)
+	EndIf
+
+	SCO_HR_ROLE.GONEXT()
+Until SCO_HR_ROLE.IsEOF()=1
+
+FI=SCO_DT_START_CALC
+FF=SCO_DT_END_CALC
+SetStartDate(FI)
+SetEndDate(FF)
+
+SCO_HR_ROLE.Begin()
+SCO_HRROLE_CALC.End()
+
+If SCO_RETRO_TERM <> STD_ID_HR then    'Para baja retroactiva no ejecutamos el calculo normal, solo la parte de retro
+
+    SCO_EXE_LEVEL_3()
+    //Si se ha producido un error en el calculo del grupo, ya no seguimos calculando. La generacion
+    //del error (el texto) es responsabilidad del concepto que lo produce.
+    If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
+    	SCO_ERROR = 1
+    	Return(-1)
+    EndIf
+    
+    SCO_EXE_LEVEL_4()
+    
+    //Si se ha producido un error en el calculo del grupo, ya no seguimos calculando. La generacion
+    //del error (el texto) es responsabilidad del concepto que lo produce.
+    If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
+    	SCO_ERROR = 1
+    	Return(-1)
+    EndIf
+    
+    SCO_HRPERIOD_CALC.SCO_NET_TO_GROSS_TRIAL()
+    
+    //Si se ha producido un error en el calculo del grupo, ya no seguimos calculando. La generacion
+    //del error (el texto) es responsabilidad del concepto que lo produce.
+    If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
+    	SCO_ERROR = 1
+    	Return(-1)
+    EndIf
+    
+    'We don't execute this because we don't have concepts in this group.
+    'If we execute an executegroup without concepts this produces a warning.     
+    'SCO_EXE_LEVEL_5()
+    '//Si se ha producido un error en el calculo del grupo, ya no seguimos calculando. La generacion
+    '//del error (el texto) es responsabilidad del concepto que lo produce. Si tuvieramos que ejecutar
+    '//este grupo, habria que descomentar tambien el error.
+    'If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
+    '	SCO_ERROR = 1
+    '	Return(-1)
+    'EndIf
+
+EndIf
+
+If SCO_PAYS_TO_CALC.SCO_REVISION=1 then
+
+	//Para que todas las ejecuciones en el nodo de diferencias sean en el intervalo 
+	//maximo de fechas entre el calculo y la revision
+	dStartRetro = SCO_DT_START_CALC_RETRO
+	dEndRetro = SCO_DT_END_CALC_RETRO
+	SetStartDate(dStartRetro)
+	SetEndDate(dEndRetro)
+
+	SCO_AC_HR_PERIOD_REV.BEGIN()
+	SCO_DIF_HRPERIOD_CALC.ExecuteGroup("1")
+	SCO_DIF_HRPERIOD_CALC.ExecuteGroup("2")     
+
+      //Carga del nodo de acumulado de donde se recuperaran los valores para la retroactividad de una baja
+      SCO_IDS_RETRO.Begin()
+      //Asignacion de tramos a IDs en caso de retroactividad de una baja. Debe ejecutarse sin tramos
+	SetSliceMode(M4_FALSE)
+	SCO_SLICES_TERM_RETRO()
+	SetSliceMode(SCO_PAYS_TO_CALC.SCO_SLICE_MODE)
+
+	SCO_AUX_AC_HRPERIOD.CopyRegister("","SCO_DIF_HRPERIOD_CALC",-1,SCOPE_REGISTER+SCOPE_BLOCK+TYPE_PROPERTY+TYPE_CONCEPT,SCOPE_REGISTER+TYPE_PROPERTY+TYPE_FIELD)
+
+      //Volvemos a setear las fechas de calculo del empleado
+      dStartPeriod=SCO_DT_START_CALC
+	dEndPeriod=SCO_DT_END_CALC
+	SetStartDate(dStartPeriod)
+	SetEndDate(dEndPeriod)
+
+Else
+	SCO_AUX_AC_HRPERIOD.CopyRegister("","SCO_HRPERIOD_CALC",-1,SCOPE_REGISTER+SCOPE_BLOCK+TYPE_PROPERTY+TYPE_CONCEPT,SCOPE_REGISTER+TYPE_PROPERTY+TYPE_FIELD)
+Endif
+
+'Execution group for payment process
+OUTPUT=SCO_EXE_LEVEL_6()
+If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
+	SCO_ERROR = 1
+	Return(-1)
+EndIf
+
+If SCO_PAYS_TO_CALC.SCO_REVISION = 1  Then
+	//Solo en caso de retroactividad volvemos a setear las fechas maximas para 
+	//que el flatten encuentre todos los registros.
+	dStartRetro = SCO_DT_START_CALC_RETRO
+	dEndRetro = SCO_DT_END_CALC_RETRO
+	SetStartDate(dStartRetro)
+	SetEndDate(dEndRetro)
+EndIf
+
+SCO_AUX_AC_HRPERIOD.Flatten()
+
+//We reset the default values when we read with slices.
+Code="Return("+GetChannelId()+"!SETPROPERTY("+CHR(DOUBLE_QUOTE)+"ROUND_CURRENCY"+CHR(DOUBLE_QUOTE)+"," + ToString(IsRoundCurrency) + "))"
+clcExecuteLN4JIT (Code)
+Code="Return("+GetChannelId()+"!SETPROPERTY("+CHR(DOUBLE_QUOTE)+"ROUND_NUMBER"+CHR(DOUBLE_QUOTE)+"," +  ToString(IsRoundNumber) + "))"
+clcExecuteLN4JIT (Code)
+Code="Return("+GetChannelId()+"!SETPROPERTY("+CHR(DOUBLE_QUOTE)+"CURRENCY_PRECISION"+CHR(DOUBLE_QUOTE)+",-1))"
+clcExecuteLN4JIT (Code)
+Code="Return("+GetChannelId()+"!SETPROPERTY("+CHR(DOUBLE_QUOTE)+"NUMBER_PRECISION"+CHR(DOUBLE_QUOTE)+",-1))"
+clcExecuteLN4JIT (Code)
+
+Return(0)

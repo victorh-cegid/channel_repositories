@@ -1,0 +1,7 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+COPYREGISTER | RECORD | NUMBER | 6 | 1 | 0 | COPYREGISTER
+DESTROYBLOCK | BLOCK | NUMBER | 6 | 1 | 0 | Destruir bloque
+DESTROYREGISTER | RECORD | NUMBER | 6 | 1 | 0 | DESTROYREGISTER
+SCO_CREATE_RECORD | BLOCK | NUMBER | 6 | 1 | 0 | Crea registro
+SCO_SET_CONCEPTS | BLOCK | NUMBER | 6 | 1 | 0 | Asigna conceptos
+SCO_SET_CONCEPTS_SLICES | BLOCK | NUMBER | 6 | 1 | 0 | Asigna conceptos con tramos

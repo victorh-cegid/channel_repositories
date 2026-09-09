@@ -1,0 +1,18 @@
+IF #SAR_TP_IMPUT = "88" OR #SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+base = #SAR_REMUN_IMPO_OS + #SAR_BASE_COTIZ_ART_OS
+porc = #SAR_PORC_OBR_SOCIAL -(#SAR_PORC_OBR_SOCIAL * #SAR_PP_AP_OB_SOC / 100)
+
+valor = base* porc / 100
+
+IF ISNULL(valor) = TRUE THEN
+    valor = 0
+ENDIF
+
+anssal = round(valor * #SAR_PORC_ANSSAL / 100,2)
+#SAR_ANSSAL = anssal
+valor = Round(valor - anssal,2)
+
+RETURN(valor)

@@ -1,0 +1,12 @@
+item: SCO_ID_WORK_LOCATION
+name: ID Lugar trabajo
+column_name: SCO_ID_WORK_LOCATION
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 8
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

@@ -1,0 +1,15 @@
+'
+'De acuerdo al articulo 3? el decreto 491/04 desde el 01/10/05 no hay topes para 
+'el calculo de la base imponible de las contribuciones.
+'
+aux=SAR_ACCIDENTE
+base=SAR_PRESTACION_ART
+If SAR_COEF_JORNADA_PER <> 0 Then base = base / SAR_COEF_JORNADA_PER
+
+diasart = SAR_DIAS_ART
+'Comparamos el minimo imponible solo si la base es > 0
+If(base > 0)Then
+   base = Max((SAR_CANT_B_MIN_AP_Y_CNT_OS * SAR_TOPE_B_MIN_IMPO) / SAR_DIAS_NORM_COTIZ * diasart, base)
+EndIf
+
+RETURN(base)

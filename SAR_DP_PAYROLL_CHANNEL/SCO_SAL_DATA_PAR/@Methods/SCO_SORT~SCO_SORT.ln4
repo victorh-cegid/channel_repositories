@@ -1,0 +1,2 @@
+'Se ordena descendente por SCO_ID_NODE para que el primer registro no tenga valor nulo
+SORT()

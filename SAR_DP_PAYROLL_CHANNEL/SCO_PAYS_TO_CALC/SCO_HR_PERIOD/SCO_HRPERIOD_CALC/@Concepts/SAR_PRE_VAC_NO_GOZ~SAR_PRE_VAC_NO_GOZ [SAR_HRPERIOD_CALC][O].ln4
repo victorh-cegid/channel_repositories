@@ -1,0 +1,39 @@
+IF SAR_TP_IMPUT = "77" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN 
+    RETURN(0)
+ENDIF
+
+IF SAR_ES_BAJA <> 1 THEN 
+   RETURN(0)
+ENDIF
+
+'Por modificacion del empleado
+IF SAR_ES_BAJA <> 1 Or SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" THEN 
+    Return(0)
+ENDIF
+
+valor           = 0
+promedios_6_m   = SAR_PRO_VAR_ULT_6
+promedios_12_m  = SAR_PRO_VAR_ULT_12
+promedios       = Max(promedios_6_m, promedios_12_m)
+
+IF SAR_TIPO_SALARIO = "003" THEN
+    promedios = Round(promedios /SAR_HORAS_MES, 2)
+ENDIF
+
+IF SAR_TIPO_SALARIO = "001" THEN
+    SALARIO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA + promedios
+    SALARIO = SALARIO / 25
+ELSEIF SAR_TIPO_SALARIO = "002" THEN
+    SALARIO = (SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA * 30) + promedios
+    SALARIO = SALARIO / 25
+ELSEIF SAR_TIPO_SALARIO = "003" THEN
+    SALARIO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA + promedios
+ENDIF
+
+valor = Round(SALARIO, 2)
+
+IF ISNULL(valor) = TRUE THEN
+    valor = 0
+ENDIF
+
+Return(valor)

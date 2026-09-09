@@ -1,0 +1,176 @@
+// La sintaxis que queda es:
+// "desc ID_ORG1@@exe_mode$$soc;paga1;#paga2;#||desc ID_ORG@@exe_mode$$soc;paga1;#paga2;#..."
+
+dlm_item = ";"
+// Se utiliza el separador ## en vez de # porque en los filtros con fechas se utiliza
+// este caracter y puede provocar fallos.
+dlm_reg = "##"      // Separador de pagas de la misma sociedad
+dlm_desc = "@@"     // Separador del nombre de la sociedad
+dlm_exe = "$$"      // marca de tipo de calculo (normal, retroactivo ...)
+dlm_soc = "||"      // marca de fin de datos de una sociedad
+
+// String para almacenar los parametros
+str = ""
+
+// Numero de parametros
+numparams = Count()
+
+If numparams = 0 Then
+    SetLog(-1,1,101,20)
+    Return("-1")
+EndIf
+
+// Bucle de lectura de los parametros
+// Los conceptos no son incluidos porque se calculan despues
+// Properties, excluidas SCO_ERROR, SCO_SAVEYTD, 
+'SCO_STEP_BY_STEP,SCO_ACTUAL_PAY,SCO_DT_FILTER,SCO_DT_REV,SCO_DT_REV_PAY
+
+desc_lbl = GetErrorString(1,101,100)
+Begin()
+While IsEOF() <> M4_TRUE 
+    old_org = ID_ORGANIZATION
+    If(IsNull(ID_ORGANIZATION) = M4_FALSE) Then
+        str = str + desc_lbl + " " + ID_ORGANIZATION
+    EndIf
+    str = str + dlm_desc    
+    If(IsNull(SCO_JS_HT_PAYS.SCO_EXE_MODE) = M4_FALSE) Then
+        var = SCO_JS_HT_PAYS.SCO_EXE_MODE
+        str = str + ToString(Format(var,0))
+    EndIf
+    str = str + dlm_exe   
+    If(IsNull(ID_ORGANIZATION) = M4_FALSE) Then
+        str = str + ID_ORGANIZATION
+    EndIf
+
+    str = str + DLM_ITEM
+
+    If (IsNull(SCO_JS_HT_PAYS.SCO_GEN_PAYMENTS) = M4_FALSE) Then
+        var = SCO_JS_HT_PAYS.SCO_GEN_PAYMENTS
+        str = str + ToString(Format(var,0))
+    EndIf
+    str = str + DLM_ITEM
+
+    If (IsNull(SCO_JS_HR_PERIOD.SYSSENTENCE_ERROR) = M4_FALSE) Then
+        str = str + SCO_JS_HR_PERIOD.SYSSENTENCE_ERROR
+    EndIf
+    str = str + DLM_ITEM
+    Do
+        If(IsNull(SCO_DAYS_NUM_PAYM) = M4_FALSE) Then
+            var = SCO_DAYS_NUM_PAYM
+            str = str + ToString(Format(var,0))
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_DAYS_NUM_ALLOC) = M4_FALSE) Then
+            var = SCO_DAYS_NUM_ALLOC
+            	str = str + ToString(Format(var,0))
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_DT_ALLOCATION) = M4_FALSE) Then
+            str = str + ToString(SCO_DT_ALLOCATION)
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_DT_END_ALLOC) = M4_FALSE) Then
+            str = str + ToString(SCO_DT_END_ALLOC)
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_DT_END_PAYM) = M4_FALSE) Then
+            str = str + ToString(SCO_DT_END_PAYM)
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_DT_PAYMENT) = M4_FALSE) Then
+            str = str + ToString(SCO_DT_PAYMENT)
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_DT_START_ALLOC) = M4_FALSE) Then
+            str = str + ToString(SCO_DT_START_ALLOC)
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_DT_START_PAYM) = M4_FALSE) Then
+            str = str + ToString(SCO_DT_START_PAYM)
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_DT_TRANSFER) = M4_FALSE) Then
+            str = str + ToString(SCO_DT_TRANSFER)
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_PAY_FREQ_ALLOC) = M4_FALSE) Then
+            str = str + SCO_PAY_FREQ_ALLOC
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_PAY_FREQ_PAYM) = M4_FALSE) Then
+            str = str + SCO_PAY_FREQ_PAYM
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_PAY_TYPE_ALLOC) = M4_FALSE) Then
+            str = str + SCO_PAY_TYPE_ALLOC
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_PAY_TYPE_PAYM) = M4_FALSE) Then
+            str = str + SCO_PAY_TYPE_PAYM
+        EndIf
+        str = str + dlm_item
+        If (IsNull(SCO_NM_PAY_FREQUENCY) = M4_FALSE) Then
+            str = str + SCO_NM_PAY_FREQUENCY
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_NUM_HR_PERIOD) = M4_FALSE) Then
+            var = SCO_NUM_HR_PERIOD
+            str = str + ToString(Format(var,0))   
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_AUTO_REV) = M4_FALSE) Then
+            var = SCO_AUTO_REV
+            str = str + ToString(Format(var,0))
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_DT_CLOSE_PROC) = M4_FALSE) Then
+            str = str + ToString(SCO_DT_CLOSE_PROC)
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_JS_HR_PERIOD.Dyn_Filter) = M4_FALSE) Then
+            str = str + SCO_JS_HR_PERIOD.Dyn_Filter
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_JS_HR_PERIOD.SCO_ID_FILTER) = M4_FALSE) Then
+            str = str + SCO_JS_HR_PERIOD.SCO_ID_FILTER
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_JS_HR_PERIOD.SCO_FILTER_SQL) = M4_FALSE) Then
+            str = str + SCO_JS_HR_PERIOD.SCO_FILTER_SQL
+        EndIf
+        str = str + dlm_item
+        If(IsNull(SCO_JS_HR_PERIOD.SCO_NM_FILTER) = M4_FALSE) Then
+            str = str + SCO_JS_HR_PERIOD.SCO_NM_FILTER
+        EndIf
+        str = str + dlm_item
+        ind_sdi = ""
+        // Las propiedades SCO_P_COUNTRY y SME_IND_CLC_SDI toman valor solo en caso de calculo de SDI en Mexico
+        sCountry = GetValue("SCO_JS_HT_PAYS","SCO_P_COUNTRY",-1)
+        If (IsNull(sCountry) = M4_FALSE And sCountry = "MX") Then ' Estandar Mejicana
+            ind_sdi = GetValue("SCO_JS_HT_PAYS","SME_IND_CLC_SDI",-1)
+        Else
+            sCountry = ""
+        EndIf
+        If(IsNull(sCountry) = M4_FALSE) Then ' Estandar Mejicana
+            str = str + sCountry
+        EndIf
+        str = str + dlm_item
+        If(IsNull(ind_sdi) = M4_FALSE) Then ' Estandar Mejicana
+            var = ind_sdi
+            str = str + ToString(Format(var,0))
+        EndIf
+        str = str + dlm_item
+
+// Siguiente
+        str = str + dlm_reg
+        GONEXT()
+        If IsEOF() <> M4_TRUE Then
+            new_org = ID_ORGANIZATION
+        EndIf
+    Until new_org <> old_org Or IsEOF() = M4_TRUE
+    If IsEOF() = M4_FALSE Then
+        str = str + dlm_soc
+    EndIf
+WEnd
+
+Return(str)

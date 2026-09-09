@@ -1,0 +1,1 @@
+Return(Round(#SAR_AS_REM_26341_ST,#SCO_CURR_DECIMALS))

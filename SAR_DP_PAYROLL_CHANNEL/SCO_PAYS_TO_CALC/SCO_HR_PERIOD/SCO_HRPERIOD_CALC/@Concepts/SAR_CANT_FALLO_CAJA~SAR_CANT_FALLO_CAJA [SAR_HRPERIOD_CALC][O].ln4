@@ -1,0 +1,11 @@
+conteo = 0
+'conceptos ESTANDAR pagados en el a?o fiscal incluida la paga de proceso
+totalSTDAnioIG = SAR_TOT_FCAJA_27617 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_FCAJA_27617
+
+If DxYear(SAR_FEC_IMPUT_IG) = 2023 And DxMonth(SCO_DT_ALLOCATION) > 9 Then
+    totalSTDAnioIG = SAR_TOT_FCAJA_27617 + SAR_ACM_IG_ANIO_COMPLETO[0].SAR_TOT_FCAJA_27617
+EndIf
+
+If totalSTDAnioIG <> 0 Then conteo = conteo + 1
+
+Return(conteo)

@@ -1,0 +1,26 @@
+valor = (SAR_REMUN_IMPO_CNT - SAR_NO_CONTRIB_SIPA) * SAR_PORC_PAT_JUBIL / 100
+
+'Dec 792 proporcionamos la detraccion segun los dias trabajados
+If SAR_DIAS_DEC792 > 0 Then
+
+    dias_efectivos = SAR_TIEMPO_EFVO_TR
+    dias_descontar = SAR_DIAS_MATERN + SAR_LIC_ONCO_DIAS + SAR_UN_VACACIONES + SAR_DIAS_ART + SAR_DIAS_DEC792
+    dias_detraccion = Max(dias_efectivos - dias_descontar,0)
+    dias_cotiz = SAR_DIAS_NORM_COTIZ
+    
+    imp_detrac_aplicable = 0
+    If dias_cotiz <> 0 Then
+        imp_detrac_aplicable = Round(SAR_REDUC_IMPO * dias_detraccion/dias_cotiz, SAR_NUM_DEC)
+    EndIf
+            
+    'recalculamos la base sobre la que aplicar la contribucion con la detraccion que puede aplicarse
+    base = (SAR_TOT_DEV_COTIZ - imp_detrac_aplicable) - SAR_NO_CONTRIB_SIPA
+    valor = base * SAR_PORC_PAT_JUBIL / 100
+    
+endif
+
+'Dec 792 compensacion exenta de contribucion jubilacion
+valor = valor - Percentage(SAR_PORC_PAT_JUBIL,SAR_IMP_DEC792_NRED)
+valor = Max(valor,0)
+
+RETURN(valor)

@@ -1,0 +1,74 @@
+'------------------------------------------------------------------------------------------------
+'Description: Metodo que ejecuta en una sola transaccion los metodos  APPLY_FILTER y LIST
+'  para la ejecucion desde cliente.
+'------------------------------------------------------------------------------------------------
+
+    M4DQ = CHR(DOUBLE_QUOTE)
+
+    nodeId = TR_NODEID
+    listMethod  = LIST_METHOD
+
+    //1. Clean tr data node
+    CALL("DestroyBlock()", nodeId, "EXECUTELN4JIT")
+
+    //1. Call APPLY_FILTER
+    APPLY_FILTER(OPERATOR)
+    
+    //2. Call LIST_METHOD
+    
+    //Arguments from LIST METHOD
+    listMethodArguments = 0
+    hasVarArg = ""
+    numberRef = ""
+    GetNodeItemArgumentNumber(listMethodArguments, hasVarArg, numberRef, nodeId, listMethod)
+    
+    //Current method arguments (variable)
+    iArguments = GetArgumentNumber()
+    
+    //Argument number minus OPERATOR, TR_NODEID AND LIST_METHOD arguments
+    agumentsForSearch = iArguments - 3
+    
+
+    'number of arguments with value null
+    nullArguments = 0
+    If listMethodArguments > agumentsForSearch Then
+        nullArguments = listMethodArguments - agumentsForSearch 
+    EndIf
+            
+    sCode = "Call("        
+    stringArguments = ""
+    
+    //ARG_SEC_TI and filter arguments
+    For i = 4 to iArguments 
+        
+        ArgID = 0
+        ArgM4Type = 0
+        IsRefArg = 0
+        Prec = 0
+        GetNodeItemArgument(ArgID, ArgM4Type, Prec, IsRefArg, (i - 4) , nodeId, listMethod )
+       
+        argumentValue = GetArgument (i)
+        
+        If (IsNull(argumentValue)= TRUE or argumentValue = "") Then
+            sCode = sCode + M4DQ + M4DQ + ","
+        Else        
+            If ArgM4Type= M4_VARIANT_TYPE_NUMBER Then // Numbers
+                sCode = sCode + ToString(argumentValue ) + ","
+            ElseIf ArgM4Type= M4_VARIANT_TYPE_DATE Then // TS
+                sCode = sCode + "{" + ToString(argumentValue) + "}" + ","            
+            Else //M4_VARIANT_TYPE_STRING
+                sCode = sCode + M4DQ + ToString(argumentValue) + M4DQ + ","
+            EndIf
+        EndIf
+
+    Next 
+    
+    //Empty arguments
+    For i = 1 to nullArguments 
+        sCode = sCode + "NullValue(),"
+    Next 
+    
+    sCode = sCode +  M4DQ + nodeId + M4DQ + ", " + M4DQ + listMethod + M4DQ + " )"
+    
+    //messagebox("", scode)
+    clcExecuteLn4JIT(sCode)

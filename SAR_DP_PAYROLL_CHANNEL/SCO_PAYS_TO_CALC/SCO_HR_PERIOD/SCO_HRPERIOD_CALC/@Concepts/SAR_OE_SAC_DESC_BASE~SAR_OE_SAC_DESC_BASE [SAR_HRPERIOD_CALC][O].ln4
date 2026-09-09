@@ -1,0 +1,29 @@
+'Base para descontar de los aportes OE la parte del SAC, ya que esta se incorporara unicamente lo que se determine gravado en el calculo y ajuste de las 12avas.
+'Este concepto aplica el tope de cotizacion al SAC informado por el empleado, aplicando a lo informado hasta junio el tope del 1er SAC, y desde julio el tope del 2do SAC.
+
+'dependencias
+a = SAR_DEBITO_BANCARIO
+
+baseSac = SAR_JUR_SAC
+baseSacJun = SAR_JUR_SAC_1_OE
+baseSacDic = SAR_JUR_SAC_2_OE
+
+'Nos aseguramos que el importe de los SAC1+SAC2 calculados coinciden con el SAC informado antes de aplicar topes
+If baseSac = baseSacJun + baseSacDic Then
+    'Aplica tope al SAC1
+    topeSacJun = SAR_ACM_MAX_1ER_SEMES[0].SAR_TOPE_COTIZ
+    If DxMonth(SCO_DT_ALLOCATION)<7 Then topeSacJun = Max(topeSacJun,SAR_TOPE_COTIZ)
+    topeSacJun = topeSacJun/2
+    If topeSacJun > 0 Then baseSacJun = Min(topeSacJun,baseSacJun)
+
+    'Aplica tope al SAC2
+    topeSacDic = SAR_ACM_MAX_2DO_SEMES[0].SAR_TOPE_COTIZ
+    If DxMonth(SCO_DT_ALLOCATION)>6 Then topeSacDic = Max(topeSacDic,SAR_TOPE_COTIZ)
+    topeSacDic = topeSacDic/2
+    If topeSacDic > 0 Then baseSacDic = Min(topeSacDic,baseSacDic)
+    
+    'La base completa con topes individuales aplicados    
+    baseSac = baseSacJun + baseSacDic
+EndIf
+
+Return Round(baseSac,SAR_NUM_DEC)

@@ -1,0 +1,8 @@
+'Con este metodo determinamos si la nomina se esta calculando despues de la baja del periodo  
+'Pero no consideramos a los periods con baja retroactiva que tengan que compensar la nomina
+If STD_DT_END < SCO_DT_PAY_START and SCO_RETRO_TERM <> STD_ID_HR Then
+    pal=1
+Else
+    pal=0
+Endif
+Return(pal)

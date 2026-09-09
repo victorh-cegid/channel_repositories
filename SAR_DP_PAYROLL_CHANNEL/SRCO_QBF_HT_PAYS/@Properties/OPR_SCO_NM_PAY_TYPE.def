@@ -1,0 +1,11 @@
+item: OPR_SCO_NM_PAY_TYPE
+name: Tipo paga
+item_type: PROPERTY
+type: NUMBER
+id_m4_type: 6
+prec: 1
+scale: 0
+scope: BLOCK
+default_value: null
+internal_type: 70
+item_aux: SCO_NM_PAY_TYPE

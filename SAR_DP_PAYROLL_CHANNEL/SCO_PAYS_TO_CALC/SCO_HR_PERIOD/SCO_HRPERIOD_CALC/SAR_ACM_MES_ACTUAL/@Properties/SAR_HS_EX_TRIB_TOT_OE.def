@@ -1,0 +1,11 @@
+item: SAR_HS_EX_TRIB_TOT_OE
+name: Importe horas extra gravadas total otros empleador
+item_type: PROPERTY
+type: CURRENCY
+id_m4_type: 8
+prec: 18
+scale: 6
+scope: RECORD
+default_value: "0"
+internal_type: 15
+item_aux: ID_CURRENCY

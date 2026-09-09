@@ -1,0 +1,90 @@
+'No se ejecuta en las pagas extras, salvo si en las Pagas Extras de Aguinaldo
+If SAR_TP_IMPUT = "2" AND SAR_IND_AGUINALDO = 0 Then Return(0)
+IF SAR_TP_IMPUT = "99" THEN Return(0)
+
+'Obtengo la fecha de inicio y fin de cada tramo
+INICIO_TRAMO       = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysStartDate
+FIN_TRAMO          = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysEndDate
+dias_exced         = 0 
+fec_fin_abs_exced  = ToDate("1800-01-01")
+
+'Ahora contabilizamos las ausencias diarias que se cargan a nivel de period
+primerreg = 0
+ultimoreg = SAR_REAL_TIME_PERIOD.COUNT() - 1
+
+'Asigno las fechas de inicio y fin de tramo
+fec_ini_paga = INICIO_TRAMO
+fec_fin_paga = FIN_TRAMO
+
+FOR  I = primerreg  TO  ultimoreg 
+    SAR_REAL_TIME_PERIOD.MOVETO(I)
+    motivoabs = FORMAT(SAR_REAL_TIME_PERIOD.SCO_ID_INCIDENCE, 0)
+    fec_ini_abs = SAR_REAL_TIME_PERIOD.SCO_DT_START
+    fec_fin_abs = SAR_REAL_TIME_PERIOD.SCO_DT_END
+    excedente = 0
+	
+    If DxMonth(FIN_TRAMO) = 2 THEN
+	   IF fec_fin_abs >= FIN_TRAMO And DxDay(FIN_TRAMO) = 28 THEN
+	       excedente = excedente + 2
+	   ELSEIF fec_fin_abs >= FIN_TRAMO And DxDay(FIN_TRAMO) = 29 THEN
+	       excedente = excedente + 1
+	   Endif
+    Endif
+    
+    
+    IF motivoabs = "6" THEN
+        dias_exced = dias_exced + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente
+        fecha_ini_exced = fec_ini_abs
+        fecha_fin_exced = fec_fin_abs
+        
+        if fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then
+            dias_exced = dias_exced - 1
+        endif
+    ENDIF           
+NEXT
+
+tipo_paga       = SAR_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM
+FECHA_FIN_TRAMO = FIN_TRAMO
+
+IF DXDAY(FIN_TRAMO) > 30 THEN
+    DIA = "30"
+    MES = DXMONTH(FIN_TRAMO)
+    
+    IF MES < 10 THEN
+        MES = "0" + TOSTRING(MES,0)
+    ELSE
+        MES = TOSTRING(MES,0)
+    ENDIF
+    
+    ANIO = TOSTRING(DXYEAR(FIN_TRAMO), 0)
+    STR_FECHA = ANIO + "-" + MES + "-" + DIA
+    FECHA_FIN_TRAMO = TODATE(STR_FECHA)
+    
+    If dias_exced <> 30 and DxDay(fec_ini_abs) = 31 Then
+        dias_exced = dias_exced + 1
+    Endif
+ENDIF
+
+IF DXMONTH(FIN_TRAMO) = 2 THEN
+    IF DXDAY(FIN_TRAMO) = 28 THEN
+        FECHA_FIN_TRAMO = FECHA_FIN_TRAMO + 2
+        dias_exced = dias_exced + 2
+    ELSEIF DXDAY(FIN_TRAMO) = 29 THEN
+        FECHA_FIN_TRAMO = FECHA_FIN_TRAMO + 1
+        dias_exced = dias_exced + 1
+    ENDIF
+ENDIF
+
+'Calculo los dias del tramo
+dias_tramo = (FECHA_FIN_TRAMO - INICIO_TRAMO) + 1
+
+'Calculo los dias del tramo real
+dias_tramo_real = FIN_TRAMO - INICIO_TRAMO + 1
+
+IF dias_exced > 0 THEN
+    maxdias_exced   = dias_tramo       
+    dias_exced      = Min(dias_exced, maxdias_exced)
+    dias_exced      = Max(dias_exced, 0)
+ENDIF
+
+Return(dias_exced)

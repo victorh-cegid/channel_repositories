@@ -1,0 +1,5 @@
+base = SAR_BASE_IMPUESTO
+If base < 0 Then base = 0
+aux = SAR_IMPUESTO.SAR_RETORNA_PORCENTAJE(base,SAR_FEC_PAGO_IG,ID_CURRENCY)
+
+Return(aux)

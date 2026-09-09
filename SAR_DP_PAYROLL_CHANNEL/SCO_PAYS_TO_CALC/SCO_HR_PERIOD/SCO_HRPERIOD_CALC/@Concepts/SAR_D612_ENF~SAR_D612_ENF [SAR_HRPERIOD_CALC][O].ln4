@@ -1,0 +1,17 @@
+'Dependencias
+aux = SAR_TOT_DEV_COTIZ + SAR_PRESTACION_ART
+If SAR_D612_IND = 0 Then Return(0)
+ 
+difIncidencias = 0
+fijoLicencias = SAR_TOT_P_COMP_EA
+fijoJornal = fijoLicencias
+fijoUnidad = fijoLicencias/SAR_DIAS_NORM_SUELD
+If SAR_TIPO_SALARIO = "003" Then fijoUnidad = fijoJornal
+ 
+totImportesInciden = SAR_D612_IMP_ENF
+totDiasInciden = SAR_D612_DIAS_ENF 
+totImportesIncSind = fijoUnidad * totDiasInciden
+ 
+If totImportesInciden > totImportesIncSind Then difIncidencias = totImportesInciden - totImportesIncSind
+ 
+Return Round(difIncidencias,SAR_NUM_DEC)

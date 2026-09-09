@@ -1,0 +1,9 @@
+item: SAR_HORAS_FER_TRAB
+name: Horas feriado trabajado
+item_type: PROPERTY
+type: CURRENCY
+id_m4_type: 8
+prec: 18
+scale: 6
+scope: RECORD
+default_value: "0"

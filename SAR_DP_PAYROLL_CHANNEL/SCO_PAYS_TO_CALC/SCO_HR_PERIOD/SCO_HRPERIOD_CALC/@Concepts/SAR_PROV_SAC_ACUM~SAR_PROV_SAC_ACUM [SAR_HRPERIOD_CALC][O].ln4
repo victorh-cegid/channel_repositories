@@ -1,0 +1,21 @@
+If SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "2" Or (SAR_TP_IMPUT = "3" And SAR_ES_BAJA = 0) Then Return(0)
+mesImput = DxMonth(SCO_DT_ALLOCATION)
+mesIni = 1
+If mesImput > 6 Then mesIni = 7
+importeMaxSac = 0
+For mesProceso = mesIni To mesImput
+    fechaIniProc = DxDate("01",mesProceso,DxYear(SCO_DT_ALLOCATION))
+    fechaFinProc = DxDate(DaysOfMonth(fechaIniProc),mesProceso,DxYear(fechaIniProc))
+    'Limitamos hasta fecha de imputacion anterior a la actual, para no considerar acumulado actual, este se tomara directamente del calculo
+    fechaFinProc = Min(fechaFinProc,SCO_DT_ALLOCATION - 1)
+    SAR_ACM_PROV_SAC.DESTROY()
+    SAR_ACM_PROV_SAC.SCO_DT_START = fechaIniProc
+    SAR_ACM_PROV_SAC.SCO_DT_END = fechaFinProc
+    SAR_ACM_PROV_SAC.LOAD_BLK()
+    importeSac = SAR_ACM_PROV_SAC[0].SAR_TOTAL_P_SAC
+    'Consideramos el mes de calculo
+    If mesProceso = mesImput Then importeSac = importeSac + SAR_TOTAL_P_SAC
+    importeMaxSac = Max(importeMaxSac,importeSac)
+Next
+importeMaxSac =  (importeMaxSac * 180 / 360) * SAR_UNIDADES_PROV_SAC
+Return Round(importeMaxSac,2)

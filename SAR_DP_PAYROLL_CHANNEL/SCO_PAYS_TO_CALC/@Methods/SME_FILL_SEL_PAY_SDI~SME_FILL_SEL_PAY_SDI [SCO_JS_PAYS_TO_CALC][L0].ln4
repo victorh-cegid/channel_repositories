@@ -1,0 +1,158 @@
+If SCO_JS_HT_PAYS.SME_IND_CLC_SDI = 0 Then Return(0)       ' Calculo de nomina
+DestroyBlock()
+
+SetStartDate(M4_MINUS_INF)
+SetEndDate(M4_PLUS_INF)
+
+SCO_JS_HT_PAYS.Begin()
+If SCO_JS_HT_PAYS.IsEOF() = 1 Then
+    SetLog(-1,1,101,3)
+    Return(-1)
+Else
+    SCO_JS_HR_PERIOD.SYSSENTENCE_ERROR = NullValue()
+
+    Do
+        If SCO_JS_HT_PAYS.SCO_SEL_PAY = 1 Then
+            'Datos de la paga
+            f_inicio_paga = SCO_JS_HT_PAYS.SCO_DT_START
+            f_fin_paga = SCO_JS_HT_PAYS.SCO_DT_END
+            id_frec_paga = SCO_JS_HT_PAYS.SCO_ID_PAY_FREQUENCY
+            id_tipo_paga = SCO_JS_HT_PAYS.SCO_ID_PAY_TYPE
+            f_transf_paga = SCO_JS_HT_PAYS.SCO_DT_XMIT_DAY
+            f_corte_paga = SCO_JS_HT_PAYS.SCO_DT_CUTOFF
+            n_frec_paga = SCO_JS_HT_PAYS.SCO_NM_PAY_FREQUENCY
+            id_sociedad = SCO_JS_HT_PAYS.ID_ORGANIZATION
+
+            'Recorre las fechas con movimientos SDI sin procesar entre las fechas de inicio y fin de la paga
+            'Elimina el bloque activo
+            Call ("SME_H_REG_MOV_SDI_FECHAS", "DestroyBlock")
+
+            'Asigna valor a las propiedades SME_FECHA_MIN y SME_FECHA_MAX
+            SetValue("SME_H_REG_MOV_SDI_FECHAS","SME_FECHA_MIN",-1,f_inicio_paga)
+            SetValue("SME_H_REG_MOV_SDI_FECHAS","SME_FECHA_MAX",-1,f_fin_paga)
+
+            'Carga de datos del bloque
+            Call ("SME_H_REG_MOV_SDI_FECHAS", "Load_Blk")
+            
+            'Situa el puntero en el primer registro
+            Call ("SME_H_REG_MOV_SDI_FECHAS", "Begin")
+
+            'Cuenta el numero de registros
+            cadena = ("Return(SME_H_REG_MOV_SDI_FECHAS.Count())")
+            aux = clcExecuteLN4JIT(cadena)
+            ultimo_reg = aux - 1
+
+            'Recorre los registros
+            For contador = 0 TO ultimo_reg
+                'Recupera la fecha efectiva con movimientos SDI sin procesar
+                f_imput_mov = GetValue ("SME_H_REG_MOV_SDI_FECHAS", "SCO_DT_EFEC", contador)
+
+                'Inserta la fecha con movimientos SDI sin procesar anterior
+                AddRegister()
+                SCO_DT_PAYMENT = f_imput_mov
+                SCO_DT_ALLOCATION = f_imput_mov
+                SCO_PAY_FREQ_ALLOC = id_frec_paga
+                SCO_PAY_TYPE_ALLOC = id_tipo_paga
+                SCO_PAY_FREQ_PAYM = id_frec_paga
+                SCO_PAY_TYPE_PAYM = id_tipo_paga
+                SCO_DT_START_ALLOC = f_imput_mov
+                SCO_DT_END_ALLOC = f_imput_mov
+                SCO_DT_START_PAYM = f_imput_mov
+                SCO_DT_END_PAYM = f_imput_mov
+                SCO_DAYS_NUM_ALLOC = 1
+                SCO_DAYS_NUM_PAYM = 1
+                SCO_DT_TRANSFER = f_transf_paga
+                SCO_DT_CLOSE_PROC = f_corte_paga
+                SCO_NM_PAY_FREQUENCY = n_frec_paga
+                ID_ORGANIZATION = id_sociedad
+
+                SCO_JS_PAYS_FILTERS.SCO_SELECT_FILTER()
+            Next
+
+            f_ejecucion = Today()
+
+            'Si la fecha de ejecucion esta comprendida entre las fechas de inicio y fin de la paga
+            If f_inicio_paga <= f_ejecucion And f_ejecucion <= f_fin_paga Then
+                x = FindRegister("SCO_DT_ALLOCATION",f_ejecucion,M4_EQUAL)
+
+                If x = -1 Then
+                    'Inserta la fecha de ejecucion
+                    AddRegister()
+                    SCO_DT_PAYMENT = f_ejecucion
+                    SCO_DT_ALLOCATION = f_ejecucion
+                    SCO_PAY_FREQ_ALLOC = id_frec_paga
+                    SCO_PAY_TYPE_ALLOC = id_tipo_paga
+                    SCO_PAY_FREQ_PAYM = id_frec_paga
+                    SCO_PAY_TYPE_PAYM = id_tipo_paga
+                    SCO_DT_START_ALLOC = f_ejecucion
+                    SCO_DT_END_ALLOC = f_ejecucion
+                    SCO_DT_START_PAYM = f_ejecucion
+                    SCO_DT_END_PAYM = f_ejecucion
+                    SCO_DAYS_NUM_ALLOC = 1
+                    SCO_DAYS_NUM_PAYM = 1
+                    SCO_DT_TRANSFER = f_transf_paga
+                    SCO_DT_CLOSE_PROC = f_corte_paga
+                    SCO_NM_PAY_FREQUENCY = n_frec_paga
+                    ID_ORGANIZATION = id_sociedad
+
+                    SCO_JS_PAYS_FILTERS.SCO_SELECT_FILTER()
+                EndIf
+            EndIf
+
+            'Recorre las fechas de fin de bimestre para variables entre las fechas de inicio y fin de la paga
+            'Elimina el bloque activo
+            Call ("SME_PER_VAR_IMSS_FECHAS", "DestroyBlock")
+
+            'Asigna valor a las propiedades SME_FECHA_MIN y SME_FECHA_MAX
+            SetValue("SME_PER_VAR_IMSS_FECHAS","SME_FECHA_MIN",-1,f_inicio_paga)
+            SetValue("SME_PER_VAR_IMSS_FECHAS","SME_FECHA_MAX",-1,f_fin_paga)
+
+            'Carga de datos del bloque
+            Call ("SME_PER_VAR_IMSS_FECHAS", "Load_Blk")
+
+            'Situa el puntero en el primer registro
+            Call ("SME_PER_VAR_IMSS_FECHAS", "Begin")
+
+            'Cuenta el numero de registros
+            cadena = ("Return(SME_PER_VAR_IMSS_FECHAS.Count())")
+            aux = clcExecuteLN4JIT(cadena)
+            ultimo_reg = aux - 1
+
+            'Recorre los registros
+            For contador = 0 TO ultimo_reg
+                'Recupera la fecha fin de bimestre
+                f_imput_var = GetValue ("SME_PER_VAR_IMSS_FECHAS", "SME_DT_FIN_PERIOD", contador)
+
+                x = FindRegister("SCO_DT_ALLOCATION",f_imput_var,M4_EQUAL)
+                If x = -1 Then
+                    'Inserta la fecha fin de bimestre para variables
+                    AddRegister()
+                    SCO_DT_PAYMENT = f_imput_var
+                    SCO_DT_ALLOCATION = f_imput_var
+                    SCO_PAY_FREQ_ALLOC = id_frec_paga
+                    SCO_PAY_TYPE_ALLOC = id_tipo_paga
+                    SCO_PAY_FREQ_PAYM = id_frec_paga
+                    SCO_PAY_TYPE_PAYM = id_tipo_paga
+                    SCO_DT_START_ALLOC = f_imput_var
+                    SCO_DT_END_ALLOC = f_imput_var
+                    SCO_DT_START_PAYM = f_imput_var
+                    SCO_DT_END_PAYM = f_imput_var
+                    SCO_DAYS_NUM_ALLOC = 1
+                    SCO_DAYS_NUM_PAYM = 1
+                    SCO_DT_TRANSFER = f_transf_paga
+                    SCO_DT_CLOSE_PROC = f_corte_paga
+                    SCO_NM_PAY_FREQUENCY = n_frec_paga
+                    ID_ORGANIZATION = id_sociedad
+
+                    SCO_JS_PAYS_FILTERS.SCO_SELECT_FILTER()
+                EndIf
+            Next
+        EndIf
+
+        SCO_JS_HT_PAYS.GONEXT()
+    Until SCO_JS_HT_PAYS.IsEOF() = 1
+EndIf
+
+X = Sort(1) 
+
+Return(0)

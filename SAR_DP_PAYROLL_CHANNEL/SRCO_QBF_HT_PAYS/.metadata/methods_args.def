@@ -1,0 +1,8 @@
+# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
+ADD_TABLE | ID_OBJECT | IN | STRING | 1 | 30 | 0 | 0
+ADD_TABLE | ALIAS | IN | STRING | 1 | 30 | 0 | 1
+APPLY_FILTER_LIST | TR_NODEID | IN | STRING | 2 | 30 | 0 | 0
+APPLY_FILTER_LIST | LIST_METHOD | IN | STRING | 2 | 30 | 0 | 1
+APPLY_FILTER_LIST | OPERATOR | IN | NUMBER | 6 | 1 | 0 | 2
+APPLY_FILTER_LOAD | TR_NODEID | IN | STRING | 2 | 30 | 0 | 0
+APPLY_FILTER_LOAD | SEARCH_VALUE | IN | STRING | 3 | -1 | 0 | 1

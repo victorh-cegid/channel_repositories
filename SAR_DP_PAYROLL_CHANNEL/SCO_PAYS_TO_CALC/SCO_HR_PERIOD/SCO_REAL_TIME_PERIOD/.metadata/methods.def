@@ -1,0 +1,4 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+ADDFILTER | NODE | NUMBER | 6 | 18 | 0 | ADDFILTER
+GONEXT | RECORD | NUMBER | 6 | 18 | 0 | Siguiente
+REMOVEFILTER | NODE | NUMBER | 6 | 18 | 0 | REMOVEFILTER

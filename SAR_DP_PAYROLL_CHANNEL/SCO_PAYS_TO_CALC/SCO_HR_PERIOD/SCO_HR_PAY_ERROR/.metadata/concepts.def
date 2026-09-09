@@ -1,0 +1,3 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+SCO_SET_SCO_ERROR_PERIOD | BLOCK | NUMBER | 6 | 1 | 0 | Compactacion de SCO_ERROR
+SCO_SQL_ERRORS | NODE | STRING | 3 | -1 | 0 | SQL para borrar errores del empleado

@@ -1,0 +1,9 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+SAR_CALCULA_PRECIO_FECHA | NODE | NUMBER | 6 | 18 | 0 | SAR_CALCULA_PRECIO_FECHA
+SAR_CALCULA_PROM_6_MESES | NODE | NUMBER | 6 | 18 | 0 | SAR_CALCULA_PROM_6_MESES
+SCO_DT_END_CALC_ROLE | RECORD | DATE | 4 | 10 | 0 | Fecha de fin para el calculo del rol
+SCO_DT_END_CALC_ROLE_RETRO | RECORD | DATE | 4 | 10 | 0 | Fecha de fin para el calculo del rol retroactivo
+SCO_DT_FILTER_BASE | RECORD | DATE | 4 | 10 | 0 | Fecha base para filtro
+SCO_DT_START_CALC_ROLE | RECORD | DATE | 4 | 10 | 0 | Fecha de inicio para el calculo del rol
+SCO_DT_START_CALC_ROLE_RETRO | RECORD | DATE | 4 | 10 | 0 | Fecha de inicio para el calculo del rol retroactiv
+SCO_FILTER_DATES_PAL | BLOCK | STRING | 3 | -1 | 0 | Filtro para los nominas despues de la baja

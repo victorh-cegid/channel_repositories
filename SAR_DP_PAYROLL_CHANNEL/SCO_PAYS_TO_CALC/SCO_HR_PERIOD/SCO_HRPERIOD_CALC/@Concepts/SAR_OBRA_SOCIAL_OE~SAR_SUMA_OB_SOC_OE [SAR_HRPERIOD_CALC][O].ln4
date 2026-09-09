@@ -1,0 +1,3 @@
+valor = SAR_OBRA_SOCIAL_OE
+valor = valor + SAR_OBRA_SOCIAL_SAC_OE + SAR_ACM_IG_ANIO_IMPUT[0].SAR_OBRA_SOCIAL_SAC_OE
+Return(valor)

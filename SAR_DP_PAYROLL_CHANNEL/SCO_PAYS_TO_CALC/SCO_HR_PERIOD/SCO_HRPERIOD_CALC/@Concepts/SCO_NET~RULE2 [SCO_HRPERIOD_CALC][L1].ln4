@@ -1,0 +1,3 @@
+Ret = Round(SCO_NET,SCO_CURR_DECIMALS)
+
+Return(Ret)

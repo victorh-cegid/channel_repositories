@@ -1,0 +1,25 @@
+'Total de dias que no devengan paga de aguinaldo (solo para empleados con tipo de salario horario)
+
+d_dto_1q = 0
+p_ext = 0
+mes_liq = DxMOnth(SAR_HR_PERIOD.SCO_DT_ALLOC_END)
+
+SAR_ACM_DIAS_DTO_AGUIN.BEGIN()
+anterior = SAR_ACM_DIAS_DTO_AGUIN.SAR_DIAS_DTO_AGUIN + SAR_ACM_DIAS_DTO_AGUIN.SAR_D_ACCIDENTE_H + SAR_ACM_DIAS_DTO_AGUIN.SAR_D_ACC_ART_H
+actual = SAR_DIAS_DTO_AGUIN + SAR_D_ACCIDENTE_H + SAR_D_ACC_ART_H
+valor = anterior + actual
+
+If SAR_TP_IMPUT = "2" then
+    p_ext = 1
+Endif
+
+'Incidencias que afecten el calculo semestral de las unidades
+'de descuento de sac, producidas en la 1?quincena de Junio o Diciembre.
+If p_ext = 1 or (SAR_TP_IMPUT = "4" and ((mes_liq = 6 or mes_liq = 12) and p_ext = 0)) then
+    SAR_ACM_PAG_QUIN_1RA.BEGIN()
+    d_dto_1q = SAR_ACM_PAG_QUIN_1RA.SAR_TOT_D_DTO_AGUIN
+    valor = d_dto_1q + actual
+Endif
+
+
+Return(valor)

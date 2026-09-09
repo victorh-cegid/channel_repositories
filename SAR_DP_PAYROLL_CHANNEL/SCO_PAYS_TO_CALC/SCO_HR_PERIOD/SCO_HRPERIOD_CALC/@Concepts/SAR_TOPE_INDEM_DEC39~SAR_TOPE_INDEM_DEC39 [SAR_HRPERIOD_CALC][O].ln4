@@ -1,0 +1,4 @@
+'Tope para la doble indemnizacion dec 39/21, vigente para bajas a partir del 23/01/2021
+tope = SAR_TOPE_INDEM_DEC39
+If SAR_FECHA_BAJA < DxDate(23,1,2021) Then tope = 0
+Return tope

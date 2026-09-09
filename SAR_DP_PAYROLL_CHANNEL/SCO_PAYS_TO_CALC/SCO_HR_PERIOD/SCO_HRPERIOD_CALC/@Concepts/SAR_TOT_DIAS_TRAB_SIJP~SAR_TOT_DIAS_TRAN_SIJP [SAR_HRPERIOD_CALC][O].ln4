@@ -1,0 +1,8 @@
+'Solo toma`a valor para empleados con frecuencia mensual.
+
+valor = SAR_TOT_DIAS_TRAB_SIJP
+
+IF SCO_PAY_FREQ_ALLOC <> "004" THEN Return(0)
+
+
+Return (valor)

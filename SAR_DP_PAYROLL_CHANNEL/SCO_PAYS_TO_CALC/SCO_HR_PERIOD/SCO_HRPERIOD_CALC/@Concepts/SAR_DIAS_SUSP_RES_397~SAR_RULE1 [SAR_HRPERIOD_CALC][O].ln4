@@ -1,0 +1,104 @@
+' No se ejecuta en las pagas extras, salvo si en las Pagas Extras de Aguinaldo
+If (SAR_TP_IMPUT = "2") AND SAR_IND_AGUINALDO = 0 Then Return(0)
+
+IF SAR_TP_IMPUT = "99" THEN 
+    Return(0)
+ENDIF
+
+id_Incidencia = "22" 'Suspension Laboral Res. 397/2020 MTEySS c/Aportes OS
+horas = 0 		   'Inicializacion de las horas totales de Licencia sin goce de sueldo
+horas_teor_abs = 0   'Inicializacion de las horas teoricas de cada registro de Licencia sin goce de sueldo
+dias_abs_tot = 0     'dias totales del ausentismo 
+
+'Tramos
+INICIO_TRAMO = SAR_TOT_P_COMP_EA_AUX..SysStartDate
+FIN_TRAMO = SAR_TOT_P_COMP_EA_AUX..SysEndDate
+
+'Cargamos el nodo de incidencias del periodo, en caso de que no este ya cargado.
+IF SAR_REAL_TIME_PERIOD.COUNT()= 0 THEN
+    SAR_REAL_TIME_PERIOD.LOAD_BLK()
+ENDIF
+
+'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de Licencia sin goce de sueldo
+sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
+SAR_REAL_TIME_PERIOD.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", id_Incidencia)
+
+'Si hay registros de Licencia sin goce de sueldo los recorremos para obtener las horas
+SAR_REAL_TIME_PERIOD.BEGIN()
+WHILE SAR_REAL_TIME_PERIOD.ISEOF() = FALSE
+        	
+    fec_ini_abs = SAR_REAL_TIME_PERIOD.SCO_DT_START 	' fecha de inicio del ausentismo
+    fec_fin_abs = SAR_REAL_TIME_PERIOD.SCO_DT_END	' fecha de fin del ausentismo
+    t_unid = SAR_REAL_TIME_PERIOD.SCO_ID_TIME_UNIT 	' tipo de unidades del ausentismo, Horas o Dias
+    unid = SAR_REAL_TIME_PERIOD.SCO_UNITS 		' numero de unidades del ausentismo
+
+    excedente = 0
+	
+    If DxMonth(FIN_TRAMO) = 2 THEN
+	   IF fec_fin_abs >= FIN_TRAMO And DxDay(FIN_TRAMO) = 28 THEN
+	       excedente = excedente + 2
+	   ELSEIF fec_fin_abs >= FIN_TRAMO And DxDay(FIN_TRAMO) = 29 THEN
+	       excedente = excedente + 1
+	   Endif
+    Endif
+        
+    IF commontime(INICIO_TRAMO,FIN_TRAMO,fec_ini_abs,fec_fin_abs) > 0 THEN		
+        IF fec_fin_abs > FIN_TRAMO then
+            fec_fin_abs = FIN_TRAMO
+        ENDIF
+        IF fec_ini_abs < INICIO_TRAMO then
+            fec_ini_abs = INICIO_TRAMO
+        ENDIF
+        
+        dias_abs_tot = dias_abs_tot + CommonTime(INICIO_TRAMO,FIN_TRAMO, fec_ini_abs, fec_fin_abs) + excedente	
+    ENDIF    
+    SAR_REAL_TIME_PERIOD.GONEXT()
+WEND
+
+'Se elimina el filtro RAM aplicado al nodo
+SAR_REAL_TIME_PERIOD.REMOVEFILTER()
+
+tipo_paga       = SAR_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM
+FECHA_FIN_TRAMO = FIN_TRAMO
+
+IF DXDAY(FIN_TRAMO) > 30 THEN
+    DIA = "30"
+    MES = DXMONTH(FIN_TRAMO)
+	
+    IF MES < 10 THEN
+        MES = "0" + TOSTRING(MES,0)
+    ELSE
+        MES = TOSTRING(MES,0)
+    ENDIF
+	
+    ANIO = TOSTRING(DXYEAR(FIN_TRAMO),0)
+    STR_FECHA = ANIO + "-" + MES + "-" + DIA
+    FECHA_FIN_TRAMO = TODATE(STR_FECHA)
+ENDIF
+
+IF DXMONTH(FIN_TRAMO) = 2 THEN
+    IF DXDAY(FIN_TRAMO) = 28 THEN
+        FECHA_FIN_TRAMO = FECHA_FIN_TRAMO + 2
+    ELSEIF DXDAY(FIN_TRAMO) = 29 THEN
+        FECHA_FIN_TRAMO = FECHA_FIN_TRAMO + 1
+    ENDIF
+ENDIF
+
+'Calculo los dias del tramo
+dias_tramo = (FECHA_FIN_TRAMO - INICIO_TRAMO) + 1
+
+'Calculo los dias del tramo real
+dias_tramo_real = FIN_TRAMO - INICIO_TRAMO + 1
+
+IF dias_abs_tot > 0 THEN
+    IF dias_abs_tot = dias_tramo_real AND SAR_TIPO_SALARIO = "001" THEN
+        dias_abs_tot = Max(dias_abs_tot, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+	
+    maxdias_lex = dias_tramo       
+    dias_abs_tot 	= Min(dias_abs_tot, maxdias_lex)
+    dias_abs_tot 	= Max(dias_abs_tot, 0)
+ENDIF
+
+'Return las horas de Licencia sin goce de sueldo
+Return(dias_abs_tot)

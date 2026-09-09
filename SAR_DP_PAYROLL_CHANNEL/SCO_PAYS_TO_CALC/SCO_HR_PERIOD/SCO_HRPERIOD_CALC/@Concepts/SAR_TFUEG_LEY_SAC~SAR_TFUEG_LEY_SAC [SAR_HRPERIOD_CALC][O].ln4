@@ -1,0 +1,5 @@
+'Tierra de fuego, este concepto se utiliza para saber en el ajuste de las 12avas si el sac se pago en dicha modalidad
+'Retorna el valor del aporte de sac si se encontraba en tierra de fuejo, para descontarlo.
+importe = 0
+If SAR_TFUEG_IND = 1 Then importe = SAR_LEY_19032_SAC
+Return(importe)

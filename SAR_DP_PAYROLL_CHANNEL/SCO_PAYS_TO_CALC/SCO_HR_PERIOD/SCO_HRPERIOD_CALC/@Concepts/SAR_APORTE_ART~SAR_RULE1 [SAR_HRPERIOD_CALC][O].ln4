@@ -1,0 +1,6 @@
+'Toma valor de incidencias o empresa
+
+' Se condiciona para que solo se calcule en paga normal
+If (SAR_TP_IMPUT <> "1") Then Return(0)
+
+return(SAR_APORTE_ART)

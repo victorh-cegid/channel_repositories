@@ -1,0 +1,13 @@
+sAux = PVT_GET_FROM
+sObject = ID_OBJECT
+sAlias = ALIAS
+'Si no han pasado alias cogemos la tabla
+If length(sAlias) = 0 or IsNull(Alias)=true then
+    sAlias = sObject
+EndIf
+
+'buscamos la tabla en el From
+If StrIn(sAux, " " + sObject + " " ) = M4_ERROR Then
+    'No existe la devolvemos
+    Return( ", " + sObject + " " + sAlias)
+Endif

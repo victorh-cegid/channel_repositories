@@ -1,0 +1,9 @@
+'Es un concepto indicador para anular el calculo del prorrateo en impuesto del aporte sindical.
+'Si este indicador tiene valor 1 no se va a calcular prorrateo de aporte sindical.
+'Si vale 0 continuara calculandose como hasta ahora.
+'En producto estandar este concepto va a devolver por defecto el mismo valor que tenga el nuevo #4510 (SAR_D612_IND) desde el 01/07/2026.
+'El motivo de la existencia de este indicador es permitir separar el comportamiento de un concepto prorrateado del caso general.
+indGral = SAR_D612_IND
+indProrr = SAR_D612_IND_PRORR
+If indProrr = -1 Then indProrr = indGral
+Return(indProrr)

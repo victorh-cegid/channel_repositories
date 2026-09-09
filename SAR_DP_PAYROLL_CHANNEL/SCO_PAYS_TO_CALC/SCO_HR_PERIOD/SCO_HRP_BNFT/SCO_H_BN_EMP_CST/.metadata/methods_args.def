@@ -1,0 +1,5 @@
+# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
+COPYREGISTER | M4OBJECT | IN | STRING | 2 | 30 | 0 | 0
+COPYREGISTER | NODE | IN | STRING | 2 | 30 | 0 | 1
+curExchangeRecord | DEST | IN | STRING | 2 | 10 |  | 1
+curExchangeRecord | NEW | IN | STRING | 2 | 10 |  | 2

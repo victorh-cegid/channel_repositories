@@ -1,0 +1,2 @@
+fec_tope = DxDate("01","09","2019")
+Return(fec_tope)

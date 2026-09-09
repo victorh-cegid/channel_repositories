@@ -1,0 +1,12 @@
+a = SAR_HORAS_100
+b = SAR_PL_NOCTUR_100
+c = SAR_HORAS_50
+d = SAR_PLUS_NOCTUR_50
+e = SAR_TOT_HS_EXTRAS
+
+val = SAR_TOT_HS_EX_IG
+
+'Ley de bases, desde IG 2024 no hay horas exentas:
+If DxYear(SAR_FEC_IMPUT_IG)>2023 Then val = SAR_TOT_HS_EXTRAS
+
+Return(val)

@@ -1,0 +1,41 @@
+If SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" Then
+    Return(0)
+EndIf
+
+If (SAR_TP_IMPUT = "2") AND SAR_IND_AGUINALDO = 1 Then Return(0)
+
+valor = 0
+vPrSacJunio_v3613 = 0 
+vPrSacJunio_v3633 = 0
+
+/*** Se recupera el valor del SAC Abonado del Mes ***/
+IF (SCO_DT_PAYMENT <> SCO_DT_ALLOCATION) AND (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017")THEN    
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()
+
+    If SCO_AC_HR_PERIOD_READ_1.Count() > 0 Then            
+        vFechaIni = DxDate("01",DxMonth(SCO_DT_ALLOCATION),DxYear(SCO_DT_ALLOCATION))
+        vfechaFin = SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC
+    
+        For a = 0 To SCO_AC_HR_PERIOD_READ_1.Count() - 1
+            SCO_AC_HR_PERIOD_READ_1.MoveTo(a) 
+            If SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= vFechaIni And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= vFechaFin And (SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_PAYM <> "88" And SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_PAYM <> "99") Then            
+                vPrSacJunio_v3613 = vPrSacJunio_v3613 + SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_1
+                vPrSacJunio_v3633 = vPrSacJunio_v3633 + SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_AJ_1
+            EndIf
+        Next
+    EndIf
+    
+Else
+    SAR_SAC_AJUSTE_CONTRIB.Begin() 
+    vPrSacJunio_v3613  = SAR_SAC_AJUSTE_CONTRIB.SAR_PAGA_EXTRA_1
+Endif
+
+If (vPrSacJunio_v3613 <> 0) and (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") Then 
+    valor = (SAR_U_EGRESO_PAGA_1 * SAR_P_PAGA_EX) - vPrSacJunio_v3613 - vPrSacJunio_v3633
+Else
+    valor = SAR_U_EGRESO_PAGA_1 * SAR_P_PAGA_EX
+Endif
+
+valor = Round(valor, 2)
+
+Return(valor)

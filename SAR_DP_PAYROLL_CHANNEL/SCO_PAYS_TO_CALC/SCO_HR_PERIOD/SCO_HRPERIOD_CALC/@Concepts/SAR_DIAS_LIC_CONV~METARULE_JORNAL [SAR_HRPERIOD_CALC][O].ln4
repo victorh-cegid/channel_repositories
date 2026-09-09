@@ -1,0 +1,9 @@
+IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+    x = SAR_DIAS_LIC_CONV()..DIAS_LIC_CONV_JORNAL
+ELSE
+    x = SAR_DIAS_LIC_CONV()..DIAS_LIC_CONV
+ENDIF
+if( SCO_PAYS_TO_CALC.SCO_REVISION = 1 ) then
+	x = SAR_DIAS_LIC_CONV()..SAR_DIAS_LIC_CONV_REV
+endif
+return( x )

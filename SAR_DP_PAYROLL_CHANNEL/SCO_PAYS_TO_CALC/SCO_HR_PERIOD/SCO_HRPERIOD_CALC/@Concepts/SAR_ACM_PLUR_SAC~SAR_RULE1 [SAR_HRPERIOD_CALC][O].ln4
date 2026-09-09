@@ -1,0 +1,19 @@
+dif_plur_sac = 0
+valoracum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_B_PLUR_SAC_MES + SAR_ACM_IG_ANIO_IMPUT[0].SAR_DIF_PROR_SAC
+valormes = SAR_B_PLUR_SAC_MES
+
+importe = valoracum + valormes
+
+sum_tot_plur_sac = SAR_JUR_SAC
+
+If SAR_ES_BAJA = 1 Or SAR_IND_PAGA_RELIQ = 1 Or SAR_IND_AJU_SAC_OE = 1 Then
+    dif_plur_sac = sum_tot_plur_sac - importe
+    If abs(dif_plur_sac) <= SAR_TOLERANCIA_DEC   Then
+        dif_plur_sac = 0
+        importe = sum_tot_plur_sac
+    Endif
+EndIf    
+
+SAR_DIF_PROR_SAC = dif_plur_sac
+
+Return(importe)

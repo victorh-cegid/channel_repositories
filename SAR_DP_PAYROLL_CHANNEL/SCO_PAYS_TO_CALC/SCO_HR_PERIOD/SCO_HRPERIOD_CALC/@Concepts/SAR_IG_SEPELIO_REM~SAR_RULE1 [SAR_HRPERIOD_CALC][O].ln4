@@ -1,0 +1,12 @@
+'---------------------------------------------------
+    '                Gastos de Sepelio
+    '    (Res.Gral. AFIP 1261/2002 ANEXO III e)
+    '---------------------------------------------------
+importeacum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_M_SEG_SEP
+importemes = 0
+If SAR_TP_IMPUT <> "99" Then importemes = SAR_TOT_M_SEG_SEP
+importe_oe = SAR_SEPEL_ANT_EMP
+importe_tot = importeacum + importemes + importe_oe
+sepjur = SAR_JUR_SEPELIO
+importe_tot = Min(importe_tot + sepjur,SAR_TOPE_GAST_SEP)  'aplico tope gastos sepelio
+Return(importe_tot)

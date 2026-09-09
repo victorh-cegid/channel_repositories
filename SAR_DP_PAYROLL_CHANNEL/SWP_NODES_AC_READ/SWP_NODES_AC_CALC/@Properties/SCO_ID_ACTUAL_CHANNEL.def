@@ -1,0 +1,11 @@
+item: SCO_ID_ACTUAL_CHANNEL
+name: ID Meta4Object en ejecucion
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 30
+scale: 0
+scope: NODE
+default_value: null
+internal_type: 1
+item_aux: null

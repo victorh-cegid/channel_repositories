@@ -1,0 +1,2 @@
+valor = DxYear(TEST_FECHA_LSD)
+Return(valor)

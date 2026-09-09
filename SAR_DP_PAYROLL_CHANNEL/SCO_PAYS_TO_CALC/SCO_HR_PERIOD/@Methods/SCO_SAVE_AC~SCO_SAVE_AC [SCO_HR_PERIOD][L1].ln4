@@ -1,0 +1,97 @@
+IF SCO_PAYS_TO_CALC.SCO_SAVEYTD=1 Then
+
+	SetSliceMode(0)
+
+	BeginTransaction()
+
+	//Se borran siempre los datos anteriores al calculo actual. Tanto si ha dado error como si no.
+	//Los datos buenos son los ultimos calculados
+	SCO_SQL_PERIOD(0,1)
+	SCO_SQL_ROLE(0,1)
+	SCO_SQL_APP_PERIOD(0,1)
+	SCO_SQL_APP_ROLE(0,1)
+
+	SCO_PAYROLL_PAYMENT_DATA.SCO_SAVE()
+
+      //No se graba el historial salarial ni para bajas retroactivas ni para PALs
+	If SCO_RETRO_TERM <> STD_ID_HR and SCO_IS_PAL <> 1 then
+        	SCO_H_SAL_DATA.SCO_SAVE()
+	Endif
+        
+	num_reg=SCO_AUX_AC_HRPERIOD.Count()
+	for I=0 to num_reg-1 
+		SCO_AUX_AC_HRPERIOD.Moveto(I)
+
+		//Se va a grabar si la paga es normal (no si es una retroactividad) aunque todos los conceptos tengan valor 0.
+		//De otra manera no se sabria si no se ha calculado o si da 0.
+            
+            //Aunque la nomina, debido al metodo de control, no se vaya a grabar en el acumulado, la nomina se ha calculado con el cambio que provoco
+            //el recalculo y hay que dejarlo reflejado.
+            If SCO_ERROR<>1 Then
+                num_pays=SCO_PAYS_TO_RECALC.Count()
+                For nPayRecalc = 0 to num_pays-1
+                    SCO_PAYS_TO_RECALC.Moveto(nPayRecalc)
+                    SCO_PAYS_TO_RECALC.SCO_FLAG=1
+                Next
+                SCO_PAYS_TO_RECALC.Update_Blk()
+            EndIf
+            
+            Control = SCO_SAVE_CONTROL()
+		if Control = 1 THEN
+			If SCO_ERROR<>1 Then
+				//Como el calculo ha ido bien, borra los errores del empleado para esta paga.
+				SCO_HR_PAY_ERROR.SCO_SQL_ERRORS(0,1)
+
+                        
+'				num_pays=SCO_PAYS_TO_RECALC.Count()
+'
+'				if num_pays>0 then 
+'					SCO_PAYS_TO_RECALC.begin()
+'					SCO_PAYS_TO_RECALC.SCO_FLAG=1
+'					SCO_PAYS_TO_RECALC.Update_Blk()
+'				endif
+				SCO_AUX_AC_HRPERIOD.INSERT_BLK()
+				SCO_AUX_AC_HRROLE.INSERT_BLK()
+                        SCO_SAVE_TABLES()        ' Metodo de control de grabacion de tablas no incluidas en corporativo. 
+                        If SCO_RETRO_TERM <> STD_ID_HR then
+        				SCO_LN_QUOTAS_PAYROLL.Update_Blk()              ' Prestamos
+                              ' comentamos para pruebas masivas SCO_APPLYVAL_PERIOD!SCO_INTERMEDIATE_NODE_PERIOD.INSERT_BLK()
+        				num_roles=SCO_APPLYVAL2_I!SCO_VT_HR_ROLE.COUNT()
+        				FOR I=0 TO num_roles-1
+        					X=SCO_APPLYVAL2_I!SCO_VT_HR_ROLE.MOVETO(I)
+        					' comentamos para pruebas masivas SCO_APPLYVAL2_I!SCO_APPLYVAL2.INSERT_BLK()
+        				NEXT
+                        Endif
+
+                    	If SCO_RETRO_TERM = STD_ID_HR then 'Marcamos la baja retroactiva como pagada
+                                SCO_SQL_RETRO_TERMINATION = "UPDATE SCO_RETRO_TERMINATION A SET A.SCO_DT_PAYMENT = @SCO_DT_PAYMENT, A.SCO_PAY_FREQ_PAYM = @SCO_PAY_FREQ_PAYM WHERE A.SCO_ID_HR=@STD_ID_HR AND A.SCO_OR_HR_PERIOD = @STD_OR_HR_PERIOD AND A.SCO_DT_ALLOCATION=@SCO_DT_ALLOCATION AND A.SCO_PAY_FREQ_ALLOC=@SCO_PAY_FREQ_ALLOC AND A.ID_ORGANIZATION = @ID_ORGANIZATION"
+                                SCO_SQL_RETRO_TERMINATION(0,1)
+                    	Endif
+
+                        'For closed roles 
+                        If IsNull(SCO_SQL_CLOSED_ROLES)=M4_FALSE and SCO_SQL_CLOSED_ROLES <> "" then SCO_SQL_CLOSED_ROLES(0,1)
+
+				EndTransaction(TRUE)
+
+				SetSliceMode(SCO_PAYS_TO_CALC.SCO_SLICE_MODE)
+
+				'If we get to this point is because the transaction has gone OK
+				'so, we have to modify the property item SCO_CALC_EMPLOYEE of the 
+				'TI SCO_PAYS_TO_CALC in order to know that at least one employee
+				'has been calculated
+
+				RETURN(1)
+
+			EndIf
+
+		ENDIF
+
+	next
+	EndTransaction(TRUE)
+
+	SetSliceMode(SCO_PAYS_TO_CALC.SCO_SLICE_MODE)
+
+
+Endif
+
+Return(0)

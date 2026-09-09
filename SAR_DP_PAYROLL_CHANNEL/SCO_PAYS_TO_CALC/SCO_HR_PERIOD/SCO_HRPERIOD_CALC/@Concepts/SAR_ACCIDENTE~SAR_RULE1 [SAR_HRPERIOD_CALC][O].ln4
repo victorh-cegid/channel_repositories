@@ -1,0 +1,336 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "77" THEN   
+    SAR_PRESTACION_ART = 0
+    RETURN(0)
+ENDIF
+
+'No debe tomar el valor en Paga Extra de Aguinaldo
+If (SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1) Then Return(0)
+
+totdemp     = 0
+totdart     = 0
+precio      = 0
+precio_v    = 0
+precio_n    = 0
+precio_act  = 0
+demp        = 0
+dart        = 0
+dart_1      = 0
+dart_o      = 0
+impart      = 0
+impemp      = 0
+impsac      = 0
+impsac_aux  = 0
+graba_acum  = SAR_PAYS_TO_CALC.SCO_SAVEYTD
+fec_nula    = PLUS_INF
+
+primerreg   = 0
+ultimoreg   = SAR_ACCID_ACT.COUNT() - 1
+
+FOR I = primerreg TO ultimoreg
+    SAR_ACCID_ACT.MOVETO(I)
+    fec_ini = SAR_ACCID_ACT.SAR_DT_START
+    fec_fin = SAR_ACCID_ACT.SAR_DT_END
+    ordact  = SAR_ACCID_ACT.SAR_ID_ORDINAL
+    fec_acc = SAR_ACCID_ACT.SCO_DT_ACC
+    
+    '************************************************************************
+    'Se realizan validaciones para Armar los precios de Accidente y de ART.
+    '************************************************************************
+    
+    'Se condiciona para que en caso que el Accidente sea posterior al cambio del 06/11 el Precio del Accidente se calcule como 
+    'la Licencia Por Enfermedad segun se indica en el Decreto 1694/2009.
+    '-------------------------------------------------------------------------------------------------------------------------------------.
+    aux         = DxDate(06,11,2009)
+    mes_ini_acc = commontime(fec_ini,fec_ini,SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC,SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC)
+    
+    IF fec_acc < aux  and mes_ini_acc = 11 THEN Return(0)
+    
+    IF fec_acc >= aux THEN
+        fec_calc_acc = SAR_HR_PERIOD.SCO_DT_ALLOC_START 'fecha para el calculo del precio del accidente
+        
+        if SAR_ES_ALTA = 1 then
+            fec_alta        = SAR_FECHA_ALTA 'fecha de alta del empleado
+            fec_calc_acc    = fec_alta
+        endif      
+        
+        IF SCO_DT_PAYMENT <> SCO_DT_ALLOCATION THEN
+            PRECIO_DIAS_ACC = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_calc_acc, "#4120")
+            precio_n        = ROUND(PRECIO_DIAS_ACC, SAR_NUM_DEC)
+        ELSE
+            INICIO_TRAMO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysStartDate
+            FIN_TRAMO   = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysEndDate
+            fec_ini_abs = fec_ini
+            
+            IF fec_ini_abs < INICIO_TRAMO THEN
+                fec_ini_abs = INICIO_TRAMO
+            ENDIF
+            
+            PRECIO_DIAS_ACC = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_calc_acc, "#4120")
+            precio_n = ROUND(PRECIO_DIAS_ACC, SAR_NUM_DEC)
+        ENDIF
+        
+        '---------------------------------------------------------------------------------
+        'Resolucion 983/2010 - Verifica si el precio del accidente, no es menor al actual
+        '---------------------------------------------------------------------------------
+        IF IsNull (SAR_ACCID_ACT.SAR_PRECIO_DIARIO)=M4_FALSE Then
+            PR_DIAS_ACC_INI = SAR_ACCID_ACT.SAR_PRECIO_DIARIO
+        ELSE
+            PR_DIAS_ACC_INI = 0
+        ENDIF
+        
+        ini_pag         = DxDate(01, Dxmonth(fec_ini), DxYear(fec_ini))
+        Param1          = ini_pag
+        Param2          = fec_ini
+        PROMEDIO_INI    = 0 
+        
+        SCO_AC_HR_PERIOD_READ_1.BEGIN()
+        num_reg = SCO_AC_HR_PERIOD_READ_1.Count()
+        
+        IF num_reg > 0 THEN
+            FOR K = 0 TO num_reg - 1
+                SCO_AC_HR_PERIOD_READ_1.moveto(K)
+                
+                If SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= Param1 And ((Param2 <= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_BASE) AND ((Dxmonth(fec_ini) = DxMonth(SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_BASE))and (DxYear(fec_ini) = DxYear(SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_BASE)))) Then
+                    PROMEDIO_INI = SCO_AC_HR_PERIOD_READ_1.SAR_PRO_VAR_ULT_6
+                ENDIF   
+            NEXT       
+        ENDIF
+        
+        'D612 tomamos el promedio con el que inicio el accidente  
+        promIniReal = PROMEDIO_INI
+
+        PROMEDIO_INI    = Max(SAR_PRO_VAR_ULT_6,PROMEDIO_INI)
+        
+        'D612 tomamos el promedio con el que inicio el accidente
+        If mes_ini_acc <> 0 Then promIniReal = PROMEDIO_INI
+        
+        precio_act      = (SAR_TOT_P_COMP_EA + PROMEDIO_INI)/ SAR_DIAS_NORM_SUELD
+        precio_act      = precio_act + Round((precio_act/12),2)
+        precio_n        = Max(precio_n,precio_act,PR_DIAS_ACC_INI)
+        
+        mes_ini_acc     = commontime(fec_ini,fec_ini,SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC,SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC)
+        
+        'Se Actualiza en la tabla M4SAR_X_ACCIDENTE el precio del Accidente solo en el mes de inicio del mismo.
+        IF graba_acum = 1 AND  mes_ini_acc <> 0 THEN  
+            SAR_ACCID_ACT.SAR_PRECIO_DIARIO = precio_n
+            SAR_ACCID_ACT.SAR_EX_TYPE       = EX_TYPE 
+            SAR_ACCID_ACT.SAR_ID_CURRENCY   = ID_CURRENCY
+            'D612 tomamos el promedio con el que inicio el accidente  
+            promIniReal = PROMEDIO_INI
+        ENDIF
+    
+    ELSE    'En caso que el Accidente sea anterior al cambio del 06/11 el mismo debe seguir calculandose de la manera antigua.
+        
+        IF ((SAR_ACCID_ACT.SAR_PRECIO_DIARIO = 0 OR ISNULL(SAR_ACCID_ACT.SAR_PRECIO_DIARIO) = TRUE)) OR SAR_OTROS_ACCID.COUNT() = 0 THEN
+            
+            precio_v = ROUND(SAR_PR_DIA_ACCID..SysTotalslices(M4_TOTAL_SUM),SAR_NUM_DEC)
+            
+            IF graba_acum = 1  THEN
+                SAR_ACCID_ACT.SAR_PRECIO_DIARIO = precio_v
+                SAR_ACCID_ACT.SAR_EX_TYPE = EX_TYPE 
+                SAR_ACCID_ACT.SAR_ID_CURRENCY = ID_CURRENCY
+                
+                IF (SAR_ES_ALTA = 1 And SAR_HR_PERIOD.STD_ID_HRP_START_REASON <> "005") THEN            
+                    valor_mes1  = SAR_P_SUELDO + SAR_P_COMPL_DEVENG
+                    mes1        = SCO_PAYS_TO_CALC.SCO_DT_ALLOCATION
+                ELSE    'Calculo la fecha de inicio de los 12 meses anteriores y la inicio del mes actual
+                    FECHA_BASE      = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC
+                    FECHA_DIA_ANT   = FECHA_BASE - 1
+                    MES_ACTUAL      = DXMONTH(FECHA_BASE)
+                    MES_ANT_12      = DxMonth(DateAdd(FECHA_BASE, -12, M4_MONTH))
+                    
+                    IF MES_ANT_12 < 10 THEN
+                        MES_ANT_12 = "0" + TOSTRING(MES_ANT_12,0)
+                    ELSE
+                        MES_ANT_12 = TOSTRING(MES_ANT_12,0)
+                    ENDIF
+                    
+                    IF MES_ACTUAL < 10 THEN
+                        MES_ACTUAL = "0" + TOSTRING(MES_ACTUAL,0)
+                    ELSE
+                        MES_ACTUAL = TOSTRING(MES_ACTUAL,0)
+                    ENDIF
+                    
+                    FECHA_ACT = TOSTRING(DxYear(FECHA_BASE),0) + "-" + MES_ACTUAL + "-01"
+                    FECHA_INICIO = ToDate(FECHA_ACT)
+                    FECHA_12_ANT = TOSTRING(DxYear(DateAdd(FECHA_BASE,-12,M4_MONTH)),0) + "-" + MES_ANT_12 + "-01"
+                    FECHA_ANT_12 = ToDate(FECHA_12_ANT)
+                    FECHA_ANT_11 = DateAdd(FECHA_ANT_12,1,M4_MONTH)
+                    FECHA_ANT_10 = DateAdd(FECHA_ANT_12,2,M4_MONTH)
+                    FECHA_ANT_9 = DateAdd(FECHA_ANT_12,3,M4_MONTH)
+                    FECHA_ANT_8 = DateAdd(FECHA_ANT_12,4,M4_MONTH)
+                    FECHA_ANT_7 = DateAdd(FECHA_ANT_12,5,M4_MONTH)
+                    FECHA_ANT_6 = DateAdd(FECHA_ANT_12,6,M4_MONTH)
+                    FECHA_ANT_5 = DateAdd(FECHA_ANT_12,7,M4_MONTH)
+                    FECHA_ANT_4 = DateAdd(FECHA_ANT_12,8,M4_MONTH)
+                    FECHA_ANT_3 = DateAdd(FECHA_ANT_12,9,M4_MONTH)
+                    FECHA_ANT_2 = DateAdd(FECHA_ANT_12,10,M4_MONTH)
+                    FECHA_ANT_1 = DateAdd(FECHA_ANT_12,11,M4_MONTH)
+                    
+                    'Inicializo variables para los meses
+                    valor_mes1 = 0
+                    valor_mes2 = 0
+                    valor_mes3 = 0
+                    valor_mes4 = 0
+                    valor_mes5 = 0
+                    valor_mes6 = 0
+                    valor_mes7 = 0
+                    valor_mes8 = 0
+                    valor_mes9 = 0
+                    valor_mes10 = 0
+                    valor_mes11 = 0
+                    valor_mes12 = 0
+                    
+                    mes1 = fec_nula
+                    mes2 = fec_nula
+                    mes3 = fec_nula
+                    mes4 = fec_nula
+                    mes5 = fec_nula
+                    mes6 = fec_nula
+                    mes7 = fec_nula
+                    mes8 = fec_nula
+                    mes9 = fec_nula
+                    mes10 = fec_nula
+                    mes11 = fec_nula
+                    mes12 = fec_nula
+                    
+                    'Recorro el acumulado del empleado y contabilizo los valores de cada mes anterior
+                    
+                    SCO_AC_HR_PERIOD_READ_1.BEGIN()
+                    ULTIMO_REG_AC = SCO_AC_HR_PERIOD_READ_1.COUNT() - 1
+                    
+                    FOR J = 0 TO ULTIMO_REG_AC
+                        SCO_AC_HR_PERIOD_READ_1.MOVETO(J)
+                        
+                        IF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_1 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_INICIO,-1,M4_DAY) THEN
+                            valor_mes12 = valor_mes12 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes12 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION 
+                        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_2 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_1,-1,M4_DAY) THEN
+                            valor_mes11 = valor_mes11 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes11 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION 
+                        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_3 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_2,-1,M4_DAY) THEN
+                            valor_mes10 = valor_mes10 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes10 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION 
+                        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_4 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_3,-1,M4_DAY) THEN
+                            valor_mes9 = valor_mes9 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes9 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION 
+                        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_5 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_4,-1,M4_DAY) THEN
+                            valor_mes8 = valor_mes8 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes8 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION 
+                        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_6 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_5,-1,M4_DAY) THEN
+                            valor_mes7 = valor_mes7 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes7 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION 
+                        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_7 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_6,-1,M4_DAY) THEN
+                            valor_mes6 = valor_mes6 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes6 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION                                   
+                        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_8 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_7,-1,M4_DAY) THEN
+                            valor_mes5 = valor_mes5 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes5 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION 
+                        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_9 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_8,-1,M4_DAY) THEN
+                            valor_mes4 = valor_mes4 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes4 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION 
+                        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_10 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_9,-1,M4_DAY) THEN
+                            valor_mes3 = valor_mes3 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes3 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION 
+                        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_11 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_10,-1,M4_DAY) THEN
+                            valor_mes2 = valor_mes2 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes2 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION
+                        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_12 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_10,-1,M4_DAY) THEN
+                            valor_mes1 = valor_mes1 + SCO_AC_HR_PERIOD_READ_1.SAR_TOT_DEV_ACC
+                            mes1 = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION                      
+                        ENDIF
+                    NEXT	    'Fin carga Variables
+                ENDIF         'Si v80 = 1            
+                
+                '********************** Inicio grabacion en SAR_PRE_ACC_ART ******************************
+                IF SAR_PRE_ACC_ART.COUNT()<> 0 THEN
+                    SAR_PRE_ACC_ART.BEGIN()
+                    SAR_PRE_ACC_ART.Deleteregister()
+                ENDIF
+                
+                SAR_PRE_ACC_ART.Addregister()  
+                SAR_PRE_ACC_ART.SAR_REM_MES_1 = valor_mes1
+                SAR_PRE_ACC_ART.SAR_REM_MES_2 = valor_mes2
+                SAR_PRE_ACC_ART.SAR_REM_MES_3 = valor_mes3
+                SAR_PRE_ACC_ART.SAR_REM_MES_4 = valor_mes4
+                SAR_PRE_ACC_ART.SAR_REM_MES_5 = valor_mes5
+                SAR_PRE_ACC_ART.SAR_REM_MES_6 = valor_mes6
+                SAR_PRE_ACC_ART.SAR_REM_MES_7 = valor_mes7
+                SAR_PRE_ACC_ART.SAR_REM_MES_8 = valor_mes8
+                SAR_PRE_ACC_ART.SAR_REM_MES_9 = valor_mes9
+                SAR_PRE_ACC_ART.SAR_REM_MES_10 = valor_mes10
+                SAR_PRE_ACC_ART.SAR_REM_MES_11 = valor_mes11
+                SAR_PRE_ACC_ART.SAR_REM_MES_12 = valor_mes12
+                SAR_PRE_ACC_ART.SAR_MES_1 = mes1
+                SAR_PRE_ACC_ART.SAR_MES_2 = mes2
+                SAR_PRE_ACC_ART.SAR_MES_3 = mes3
+                SAR_PRE_ACC_ART.SAR_MES_4 = mes4
+                SAR_PRE_ACC_ART.SAR_MES_5 = mes5
+                SAR_PRE_ACC_ART.SAR_MES_6 = mes6
+                SAR_PRE_ACC_ART.SAR_MES_7 = mes7
+                SAR_PRE_ACC_ART.SAR_MES_8 = mes8
+                SAR_PRE_ACC_ART.SAR_MES_9 = mes9
+                SAR_PRE_ACC_ART.SAR_MES_10 = mes10
+                SAR_PRE_ACC_ART.SAR_MES_11 = mes11
+                SAR_PRE_ACC_ART.SAR_MES_12 = mes12
+                SAR_PRE_ACC_ART.SAR_TOT_DIAS = SAR_DIAS_PR_ACC
+                SAR_PRE_ACC_ART.EX_TYPE = EX_TYPE 
+                SAR_PRE_ACC_ART.ID_CURRENCY = ID_CURRENCY
+            ENDIF
+        ELSE
+            precio_v = SAR_ACCID_ACT.SAR_PRECIO_DIARIO
+        ENDIF 
+    ENDIF
+    
+    SAR_PR_DIA_ACCID = ROUND(precio_n,SAR_NUM_DEC)
+    
+    '************************************************************************
+    'Fin de validaciones para Armar los precios de Accidente y de ART.
+    '************************************************************************   
+NEXT
+
+demp = SAR_DIAS_ACCIDENTE
+dart = SAR_DIAS_ART
+
+impemp = impemp + (demp * precio_n)
+impart = (dart * precio_v) + (dart * precio_n)
+
+SAR_PRE_ACCIDENTE = round(precio_n, SAR_NUM_DEC)
+SAR_PRESTACION_ART = round(impart, SAR_NUM_DEC)
+
+'********************************************************************************************************
+'D612 inicio: para aportes de sindicato hay que sacar del importe de ART y accidente la parte variable
+'********************************************************************************************************
+If SAR_D612_IND = 1 Then
+    promSind = SAR_PRO_VAR_ULT_6
+    
+    'Si llegamos aqui con un precio igual al precio inicial, significa que el promedio a descontar es el original
+    If Round(precio_n,SAR_NUM_DEC) = Round(PR_DIAS_ACC_INI,SAR_NUM_DEC) Then promSind = promIniReal
+    
+    If SAR_TIPO_SALARIO = "001" Then
+        promSind = promSind / SAR_DIAS_NORM_SUELD
+    Else
+        promSind = promSind / SAR_HORAS_MES
+    EndIf    
+    
+    'Aqui considera el importe incrementado de las 12ava que debe detraer para sindicato...
+    doceavaArt = impart / 13
+    doceavaAcc = impemp / 13
+    
+    '...agrega a lo anterior el importe de promedio que falta por detraer
+    artDescuento = Round (doceavaArt + (promSind * dart), SAR_NUM_DEC)
+    accDescuento = Round (doceavaAcc + (promSind * demp), SAR_NUM_DEC)
+    
+    'Control para asegurar que no quede negativo
+    If impart - artDescuento <= 0 Then artDescuento = 0
+    If impemp - accDescuento <= 0 Then accDescuento = 0
+    
+    SAR_D612_ART = artDescuento
+    SAR_D612_ACC = accDescuento
+EndIf
+'********************************************************************************************************
+'D612 fin
+'********************************************************************************************************
+
+impemp = round(impemp,SAR_NUM_DEC)
+Return(impemp)

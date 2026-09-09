@@ -1,0 +1,5 @@
+'Creada el 11/11/2011 Fernando Miguel Siri
+'Retorna el importe de la asignacion estimulo para el pasante = Unidades del pasante X Precio asignacion estimulo.
+
+importe = SAR_UNIDADES_PASANTE * SAR_P_ASIG_ESTIM / 30
+return(importe)

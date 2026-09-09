@@ -1,0 +1,12 @@
+item: TEST_FECHA_LSD
+name: TEST_FECHA_LSD
+column_name: TEST_FECHA_LSD
+item_type: FIELD
+type: DATE
+id_m4_type: 4
+prec: 0
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

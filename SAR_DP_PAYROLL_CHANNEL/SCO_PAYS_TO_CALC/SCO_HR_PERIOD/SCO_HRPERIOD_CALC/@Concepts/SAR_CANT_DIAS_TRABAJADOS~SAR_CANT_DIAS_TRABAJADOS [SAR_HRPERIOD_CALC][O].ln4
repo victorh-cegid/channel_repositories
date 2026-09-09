@@ -1,0 +1,2 @@
+'Se ingresa por Valores period o Incidencia
+return(SAR_CANT_DIAS_TRABAJADOS)

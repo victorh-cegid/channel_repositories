@@ -1,0 +1,3 @@
+'Este metodo es analogo al metodo SCO_SLICES_TERM_RETRO del nodo SCO_HR_PERIOD. Se podra utilizar para asignar valor a 
+'tramos nulos a IDs en retroactividades de empleados de baja. Como en el nodo del rol en global no hay conceptos que 
+'necesiten esta gestion, se deja el metodo para que pueda ser implementado en herencia.

@@ -1,0 +1,2 @@
+'Toma valor en el #4423
+Return(Round(SAR_HS_FINDE_EXEN,SCO_CURR_DECIMALS))

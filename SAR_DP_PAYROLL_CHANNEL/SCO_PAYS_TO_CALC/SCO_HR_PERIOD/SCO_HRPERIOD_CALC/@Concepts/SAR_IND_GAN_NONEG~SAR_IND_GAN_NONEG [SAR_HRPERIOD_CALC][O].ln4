@@ -1,0 +1,8 @@
+'Toma valor por tabla de valor. Si no esta informado valdra 0 por defecto excepto en paga normal de reliquidacion
+'a partir de 2022 se activa por defecto.
+indicador = SAR_IND_GAN_NONEG
+anioIg = SAR_ANIO_PAY_IG
+If anioIg > 2021 Then indicador = 1
+If SAR_TP_IMPUT = "88" Then indicador = 0
+If SAR_IND_PAGA_RELIQ = 1 Then indicador = 1
+Return(indicador)

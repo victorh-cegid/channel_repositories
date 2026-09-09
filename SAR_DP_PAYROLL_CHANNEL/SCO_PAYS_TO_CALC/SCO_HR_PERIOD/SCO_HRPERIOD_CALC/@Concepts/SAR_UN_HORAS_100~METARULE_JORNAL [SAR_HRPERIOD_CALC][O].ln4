@@ -1,0 +1,7 @@
+x = SAR_UN_HORAS_100()..SAR_RULE1
+
+if( SCO_PAYS_TO_CALC.SCO_REVISION = 1 ) then
+    x = SAR_UN_HORAS_100()..SAR_UN_HORAS_100_REV
+endif
+
+return( x )

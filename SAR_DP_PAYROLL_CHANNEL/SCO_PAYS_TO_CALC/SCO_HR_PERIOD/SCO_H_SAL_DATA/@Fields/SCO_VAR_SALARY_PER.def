@@ -1,0 +1,12 @@
+item: SCO_VAR_SALARY_PER
+name: Aumento salario bruto variable
+column_name: SCO_VAR_SALARY_PER
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 11
+scale: 2
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

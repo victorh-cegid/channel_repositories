@@ -1,0 +1,6 @@
+begin()
+while iseof() = m4_false
+    deleteregister()
+    gonext()
+    
+wend

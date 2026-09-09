@@ -1,0 +1,4 @@
+'
+' Toma el valor de Obra social
+'
+return(#SAR_PORC_SEPELIO)

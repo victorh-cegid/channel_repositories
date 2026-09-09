@@ -1,0 +1,9 @@
+item: SCO_DT_START_PAYM
+name: Fecha inicio pago
+item_type: PROPERTY
+type: DATE
+id_m4_type: 4
+prec: 10
+scale: 0
+scope: BLOCK
+default_value: null

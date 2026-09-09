@@ -1,0 +1,13 @@
+IF SAR_TP_IMPUT = "77" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+aux = SAR_A_CARGO_HIJOS
+
+IF (SAR_IND_ADH_SUAF = 0) and (SAR_IND_RG_344_ST = 0) THEN 
+    Return(0)
+ENDIF
+
+valor = SAR_NUM_HIJOS_INC * SAR_PR_AS_HIJO_INC
+
+Return(valor)

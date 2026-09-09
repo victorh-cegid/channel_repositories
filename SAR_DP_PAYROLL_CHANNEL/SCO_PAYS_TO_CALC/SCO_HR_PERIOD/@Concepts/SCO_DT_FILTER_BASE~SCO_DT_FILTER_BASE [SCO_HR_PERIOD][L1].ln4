@@ -1,0 +1,11 @@
+If ( STD_DT_START>= SCO_PAYS_TO_CALC.SCO_DT_ALLOCATION ) then
+	Base=STD_DT_START
+Else
+	if (STD_DT_END<=SCO_PAYS_TO_CALC.SCO_DT_ALLOCATION and SCO_IS_PAL = 0 and SCO_RETRO_TERM <> STD_ID_HR)  then
+		Base=STD_DT_END
+	Else
+		Base=SCO_DT_ALLOCATION
+	endif
+Endif
+
+Return(Base)

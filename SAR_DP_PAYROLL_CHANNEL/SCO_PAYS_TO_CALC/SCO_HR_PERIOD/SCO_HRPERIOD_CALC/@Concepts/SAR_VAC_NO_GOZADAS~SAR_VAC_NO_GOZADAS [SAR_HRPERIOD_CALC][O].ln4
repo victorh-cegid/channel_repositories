@@ -1,0 +1,12 @@
+If (SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "77" Or SAR_TP_IMPUT = "2") Then
+    Return(0)
+EndIf
+
+
+If SAR_ES_BAJA <> 1 Or SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" Then 'Por modificacion del empleado
+    Return(0)
+EndIf
+
+valor = SAR_PRE_VAC_NO_GOZ * SAR_DIAS_VAC_NO_GOZ
+
+Return(valor)

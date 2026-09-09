@@ -1,0 +1,25 @@
+'Devuelve la fecha de IG atendiendo a la fecha de pago, en caso de baja e indicador a diciembre activo 
+'se establece fecha de IG Diciembre en una fecha anterior a la paga de reliquidacion: 29/12/a?o pago IG
+valor = NullValue()
+If IsNull(SCO_ID_LEG_ENT) = M4_True Then 'El empleado no tiene asignada la empresa
+    SetLog(-1,80,4,202,SCO_ID_HR)
+    SAR_FEC_SICORE_IG = valor
+    Return(valor)
+EndIf
+
+SAR_FECHAS_PAGA_IG.DESTROY()
+SAR_FECHAS_PAGA_IG.SAR_EMPRESA = SCO_ID_LEG_ENT
+SAR_FECHAS_PAGA_IG.SAR_FECHA_CARGA = SCO_DT_PAYMENT
+SAR_FECHAS_PAGA_IG.SAR_FREQ_PAYM = SCO_PAY_FREQ_PAYM
+SAR_FECHAS_PAGA_IG.Load_Blk()
+
+If SAR_FECHAS_PAGA_IG.Count()<=0 Then 'Falta definir la fecha de pago
+    SetLog(-1,80,4,203,SCO_ID_LEG_ENT)
+EndIf
+
+valor = SAR_FECHAS_PAGA_IG.SAR_FECHA_PAGO
+SAR_FEC_SICORE_IG = valor
+
+'El impuesto a las ganancias se va a calcular a diciembre del a?o de pago. Segun RG 1035 Art. 2 Pto 10.
+If SAR_ES_BAJA = 1 And SAR_IG_DICIEMBRE = 1 Then valor = DxDate("31","12",DxYear(valor))
+Return(valor)

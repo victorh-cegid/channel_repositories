@@ -1,0 +1,9 @@
+importe = 0
+importe = SAR_ACM_IG_ANIO_IMPUT[0].SAR_BONO_EXEN_MES + SAR_BONO_EXEN_MES
+
+'Condicion especial para segundo periodo fiscal del 2023
+If DxYear(SAR_FEC_IMPUT_IG) = 2023 And SCO_DT_ALLOCATION > DxDate(1,10,2023) Then
+    importe = SAR_ACM_IG_DESDE_OCT23[0].SAR_BONO_EXEN_MES + SAR_BONO_EXEN_MES
+EndIf
+
+Return Round(importe,SAR_NUM_DEC)

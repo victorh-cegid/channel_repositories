@@ -1,0 +1,15 @@
+valor_act = SAR_ACM_IG_ANIO_ACT[0].SAR_IG_ANIO_ANT
+
+If valor_act <> 0 Or SAR_TP_IMPUT = "77" Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Or (SAR_TP_IMPUT = "3"  AND SAR_ES_BAJA = 0 ) Or SAR_TP_IMPUT = "2" Then Return(0)
+
+'Control de baja
+esBaja = 0
+If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
+If (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT And esBaja = 0) Then Return(SCO_AC_HR_PERIOD_REV_1.SAR_IG_ANIO_ANT)
+
+valor = SAR_ACM_IG_ANIO_ANT[0].SAR_IG_FINAL
+
+'Esta condicion es para que si se informa un mes de presentacion de liq. anual, se considera la liq. anual en la primera paga de alloc del mes que se ha informado.
+If SCO_DT_ALLOCATION = SCO_DT_PAYMENT And SAR_4TA_MES_PRESENTACION > 0 And SAR_4TA_MES_PRESENTACION < 12 And esBaja = 0 And DxMonth(SCO_DT_ALLOCATION) <> SAR_4TA_MES_PRESENTACION Then valor = 0
+
+Return(valor)

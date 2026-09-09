@@ -1,0 +1,15 @@
+IF SAR_TP_IMPUT = "2" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "77" THEN
+    Return(0)
+ENDIF
+
+IF SAR_IND_ADH_SUAF = 1 THEN 
+    Return(0)
+ENDIF
+
+IF SAR_MESES_ANTIG < 3 THEN 
+    Return(0)
+ENDIF
+
+valor = SAR_DIAS_MATERN * SAR_PRE_MATERN
+
+Return(valor)

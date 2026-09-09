@@ -1,0 +1,6 @@
+'Se considera tope de convenio informado por tabla de valor, el indicador vizzoti 
+'y el indicador directivo, para calcular el tope de la indemnizacion
+topeIndemniz = SAR_TOPE_INDEMNIZ
+topeVizzoti = Percentage(SAR_PORC_VIZZOTI,SAR_BASE_INDEMNIZ)
+If SAR_IND_VIZZOTI = 1 Or SAR_IND_INDEM_LEY27430 = 1 Then topeIndemniz = Max(topeIndemniz,topeVizzoti)
+Return Round(topeIndemniz,2)

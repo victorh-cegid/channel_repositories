@@ -1,0 +1,20 @@
+valormes = SAR_MOV_VIA_TRIB
+valoracum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_MOV_VIA_TRIB
+
+'Solo 2023 correccion de ajustes DEI imputados con origen octubre o posterior a pagas anteriores a octubre
+If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 And DxYear(SCO_DT_ALLOCATION) = 2023 And DxMonth(SAR_FEC_PAGO_IG) = 12 And DxMonth(SCO_DT_ALLOCATION) > 9 Then
+    ajusteSobra = 0
+    mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
+    ult_dia_mes = DaysOfMonth (DxDate(1,DxMonth(SAR_FEC_IMPUT_IG)-1,DxYear(SAR_FEC_IMPUT_IG)))
+    mes_fin_ig = DxDate(ult_dia_mes,DxMonth(SAR_FEC_IMPUT_IG)-1,DxYear(SAR_FEC_IMPUT_IG))
+    ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
+    For acum = 0 To ult_reg - 1
+        If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT<>"88" And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT<>"99" And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION <> SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION < DxDate(1,10,2023) And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT >= DxDate(1,10,2023) And SCO_AC_HR_PERIOD_READ_1[acum].SAR_IND_D473_IMP_PER_ANT = 0 Then
+            ajusteSobra = ajusteSobra + SCO_AC_HR_PERIOD_READ_1[acum].SAR_MOV_VIA_TRIB
+        EndIf
+    Next
+    valoracum = valoracum - ajusteSobra
+EndIf
+'Fin solo 2023
+
+Return(valormes+valoracum)

@@ -1,0 +1,14 @@
+'La siguiente formula se utiliza para indicar los tipos de paga para los cuales no debe realizarse el control 
+'de la frecuencia asociada al empleado al momento de ejecutar la paga. 
+'En la formula el control no se realiza para la paga de tipo 88 (Anticipo Vacaciones) y
+'tipo 99 (Reliquidacion de Ganancias).
+
+AUX = 0
+'if SCO_PAYS_TO_CALC.SCO_PAY_TYPE_ALLOC <> "88" AND SCO_PAYS_TO_CALC.SCO_PAY_TYPE_ALLOC <> "99" THEN
+' Caso 227750
+if  SCO_PAYS_TO_CALC.SCO_PAY_TYPE_ALLOC <> "99" THEN
+     If (SCO_H_HR_PAY_FREQ.SCO_ID_PAY_FREQUENCY<>SCO_PAY_FREQ_ALLOC) Then
+         AUX=1
+     endif
+endif
+Return(AUX)

@@ -1,0 +1,10 @@
+# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
+SAR_IDS_GENERAL | ARG_ID_ITEM_DIF | IN | STRING | 2 | 30 | 0 | 0
+SAR_IDS_GENERAL | ARG_ID_ITEM_AC | IN | STRING | 2 | 30 | 0 | 1
+SAR_OBTENER_CAMBIO_ZONA | SAR_ARG_MES_PREVIO | OUT | NUMBER | 6 | 18 | 0 | 0
+SAR_OBTENER_CAMBIO_ZONA | SAR_ARG_FECHA_DESDE | IN | DATE | 4 | 10 | 0 | 1
+SAR_OBTENER_LUGAR_ZONA | SAR_PAR_FECHA | IN | DATE | 4 | 10 | 0 | 0
+SCO_CALCROLE | ID_CURRENCY | IN | STRING | 2 | 4 | 0 | 1
+SCO_CALCROLE | IND_MAIN | IN | NUMBER | 6 | 2 | 0 | 2
+SCO_CALCROLE | BEHAVIOUR | IN | STRING | 2 | 10 | 0 | 3
+SCO_CALCROLE | EX_TYPE | IN | STRING | 2 | 10 | 0 | 4

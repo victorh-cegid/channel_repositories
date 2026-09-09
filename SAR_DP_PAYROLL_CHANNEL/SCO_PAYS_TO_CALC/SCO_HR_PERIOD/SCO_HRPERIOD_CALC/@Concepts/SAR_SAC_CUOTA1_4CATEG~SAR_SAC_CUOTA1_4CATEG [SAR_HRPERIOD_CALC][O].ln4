@@ -1,0 +1,3 @@
+'Para generar dependencias
+a = SAR_BASE_IMPUESTO
+Return(SAR_SAC_CUOTA1_4CATEG)

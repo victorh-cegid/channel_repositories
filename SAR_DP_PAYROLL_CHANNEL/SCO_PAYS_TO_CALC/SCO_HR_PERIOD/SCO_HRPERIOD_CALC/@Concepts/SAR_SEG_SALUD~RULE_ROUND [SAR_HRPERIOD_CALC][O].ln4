@@ -1,0 +1,1 @@
+Return(Round(SAR_SEG_SALUD,SCO_CURR_DECIMALS))

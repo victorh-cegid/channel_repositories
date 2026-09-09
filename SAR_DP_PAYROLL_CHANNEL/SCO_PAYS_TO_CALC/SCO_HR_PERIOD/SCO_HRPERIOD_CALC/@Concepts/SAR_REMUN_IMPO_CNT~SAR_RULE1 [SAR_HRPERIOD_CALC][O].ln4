@@ -1,0 +1,34 @@
+'De acuerdo al articulo 3? el decreto 491/04 desde el 01/10/05 no hay topes para 
+'el calculo de la base imponible de las contribuciones.
+
+real = SAR_TOT_DEV_COTIZ
+
+'Ley 27430
+reduc_impo = 0
+If SAR_DIAS_NORM_SUELD > 0 Then
+        reduc_impo = SAR_REDUC_IMPO
+        dias_base = SAR_TIEMPO_EFVO_TR - SAR_DIAS_VACACIONES - SAR_DIAS_MATERN - SAR_LIC_ONCO_DIAS - SAR_DIAS_ART
+        If SAR_CANT_HS_TRABAJADAS > 0 Then
+            'Empleados con horas quincena informadas, se multiplica precio dia reduccion por dias efectivos de la base
+            coef_reduc = dias_base
+        Else
+            coef_reduc = dias_base/SAR_DIAS_NORM_SUELD
+        EndIf
+        coef_reduc = Max(coef_reduc,0)
+        reduc_impo = reduc_impo * coef_reduc
+EndIf
+real = real - reduc_impo
+'Fin Ley 27430
+
+base = Max(real,0)
+
+'Se determina que en caso de retroactividad con el indicador SAR_LSD_IND_PAGO = 1 no se va a calcular detraccion, este concepto va a devolver el importe de la diferencia de su base, sin calcular detraccion por esa parte.
+If SCO_DT_PAYMENT<>SCO_DT_ALLOCATION And SAR_LSD_IND_PAGO = 1 Then
+    devengosNorm = SAR_TOT_DEV_COTIZ
+    devengosOrigNorm = SCO_AC_HR_PERIOD_REV_1.SAR_TOT_DEV_COTIZ
+    devengosNormDif = devengosNorm - devengosOrigNorm
+    RemImpoOrig = SCO_AC_HR_PERIOD_REV_1.SAR_REMUN_IMPO_CNT
+    base = RemImpoOrig + devengosNormDif
+EndIf
+
+Return(base)

@@ -1,0 +1,18 @@
+'Ley de bases 2024: Esto es un concepto puente para que entre en el impuesto gravado.
+importe = 0
+If DxYear(SAR_FEC_IMPUT_IG)>2023 Then importe = SAR_IMP_GUARDERIA
+
+'Esta parte es para recuperar en 2024 retroactivas a a?os anteriores, si los hubiera, y que entren en el impuesto
+importe_guard_dic = 0
+If DxYear(SAR_FEC_IMPUT_IG) = 2024 Then
+    ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
+    For acum = 0 To ult_reg - 1
+        If DxYear(SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_PAGO_IG) = 2024 And DxYear(SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG) = 2023 And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT = SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <> SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION Then
+            importe_guard_dic = importe_guard_dic + SCO_AC_HR_PERIOD_READ_1[acum].SAR_IMP_GUARDERIA
+        EndIf
+    Next
+EndIf
+
+importe = importe + importe_guard_dic
+
+Return(importe)

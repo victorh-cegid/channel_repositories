@@ -1,0 +1,19 @@
+'
+'Supongo que en el mismo mes no coincide un final de vacaciones con un comienzo de las mismas
+'
+
+'IF #3550 = 0  AND  #450 <> 0 THEN 
+    'Return(SAR_ACM_VAC_MES_ANT.PROM_6_ULT_MES) 
+'ENDIF
+valor = 0
+IF SAR_UN_VACACIONES <> 0 THEN 
+    IF SCO_PAY_FREQ_ALLOC = "004" THEN
+        SAR_ACM_6_MESES_EXTR.BEGIN()
+        IF SAR_ACM_6_MESES_EXTR.COUNT() > 0 THEN
+            valor = SAR_ACM_6_MESES_EXTR.SAR_TOT_PROMEDIOS
+        ENDIF
+    ELSE
+        valor = SAR_HR_ROLE.SAR_CALCULA_PROM_6_MESES()
+    ENDIF    
+    Return(valor)
+ENDIF

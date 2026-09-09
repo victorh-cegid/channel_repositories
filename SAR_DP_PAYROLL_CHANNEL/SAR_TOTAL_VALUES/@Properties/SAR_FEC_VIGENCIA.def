@@ -1,0 +1,11 @@
+item: SAR_FEC_VIGENCIA
+name: SAR_FEC_VIGENCIA
+item_type: PROPERTY
+type: DATETIME
+id_m4_type: 5
+prec: 19
+scale: 0
+scope: BLOCK
+default_value: null
+internal_type: 1
+item_aux: null

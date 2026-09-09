@@ -1,0 +1,4 @@
+'Tope proporcional en caso de altas/bajas
+valor = SAR_TOPE_COTIZ
+valor = valor/30 * SAR_LSD_DIAS_MES
+Return Round(valor,SAR_NUM_DEC)

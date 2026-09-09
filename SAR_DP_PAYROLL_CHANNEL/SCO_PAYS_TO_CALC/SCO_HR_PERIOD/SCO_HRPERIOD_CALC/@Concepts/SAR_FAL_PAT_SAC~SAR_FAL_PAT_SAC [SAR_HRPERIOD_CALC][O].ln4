@@ -1,0 +1,3 @@
+base = SAR_SAC_IMPO_CNT
+valor= Percentage(SAR_PORC_PAT_FAL,base)
+Return(valor)

@@ -1,0 +1,12 @@
+item: SAR_MES_6
+name: Mes 6
+column_name: SAR_MES_6
+item_type: FIELD
+type: DATE
+id_m4_type: 4
+prec: 0
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

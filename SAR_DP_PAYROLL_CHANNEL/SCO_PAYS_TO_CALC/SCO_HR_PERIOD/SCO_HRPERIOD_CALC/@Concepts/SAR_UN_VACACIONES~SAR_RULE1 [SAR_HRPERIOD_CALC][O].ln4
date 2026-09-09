@@ -1,0 +1,44 @@
+'Excluimos del calculo los tipos de paga: Extra(2)-Aguinaldo, Reliquidacion impuesto (99).
+If (SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1) Or SAR_TP_IMPUT = "99" Then Return(0)
+
+'Anticipo de vacaciones: Se excluye si esta activo el indicador de paga especial de vacaciones o si no esta activado el indicador de anticipo
+If SAR_TP_IMPUT = "88" And (SAR_IND_PAGA_ESP_VAC = 1 Or SAR_IND_ANT_VAC = 0) Then Return(0)
+
+'Evaluamos si se ha activado el indicador de Paga Especial Licencia por Vacaciones. En este tipo de paga se liquidan las vacaciones y no se descuentan.
+'Indicador: ? Valor = 0 => Paga normal        ? Valor = 1 => Paga especial de vacaciones.
+If (SAR_IND_PAGA_ESP_VAC = 1 And SAR_TP_IMPUT <> "77") Or (SAR_IND_PAGA_ESP_VAC = 0 And SAR_TP_IMPUT = "77") Then Return(0)
+
+'Tenemos que tener en cuenta la posibilidad de que exista un tramado en el calculo de nomina. Realizamos todos los calculos en el primer tramo.
+num_tramos = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysSliceNumber
+
+If num_tramos > 1 Then
+    ini_prim_tramo = GetStartDate()         'Fecha de incio del primer tramo del calculo
+
+    fecha_ini_tram = GetRunningStartDate()  'Fecha de incio del tramo en ejecucion
+
+'Solo continuamos con el calculo si nos encontramos en el primer tramo.
+    If ini_prim_tramo <> fecha_ini_tram Then Return(0)
+EndIf
+
+'Comprobamos si existe algun periodo vacacional que comience en el mes de calculo y deba ser abonado. 
+num_reg_vac = SAR_VACACIONES.Count()
+
+'Si no existe ningun periodo vacacional que comience en el mes no obtengo unidades de Licencia por vacaciones.
+If num_reg_vac = 0 Then Return(0)
+
+dias_lic_vac = 0                                        'Dias Licencia por Vacaciones
+
+'Calculo de los dias a pagar de los periodos vacacionales procesados, que comienzan en el mes de calculo.
+primerreg = 0
+ultimoreg = SAR_VACACIONES.Count() - 1
+
+For i = primerreg To ultimoreg 
+    SAR_VACACIONES.MoveTo(i)
+
+    fec_ini_vac = SAR_VACACIONES.SCO_DT_START
+    fec_fin_vac = SAR_VACACIONES.SCO_DT_END
+
+    dias_lic_vac = dias_lic_vac + (DateDiff(fec_ini_vac,fec_fin_vac,M4_DAY) + 1)
+Next
+
+Return(dias_lic_vac)

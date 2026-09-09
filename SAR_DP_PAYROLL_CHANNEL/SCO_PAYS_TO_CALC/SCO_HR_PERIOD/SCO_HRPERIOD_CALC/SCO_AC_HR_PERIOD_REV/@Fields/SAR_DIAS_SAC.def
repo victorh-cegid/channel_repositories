@@ -1,0 +1,12 @@
+item: SAR_DIAS_SAC
+name: Dias de SAC
+column_name: SAR_DIAS_SAC
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 9
+scale: 4
+scope: RECORD
+default_value: "0"
+internal_type: 1
+item_aux: null

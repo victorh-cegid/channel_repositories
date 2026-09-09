@@ -1,0 +1,28 @@
+'Obtiene el valor segun fecha de paga e imputacion.
+ARG_VALOR = 0
+If(Count() > 0)Then
+  Registros = Count() - 1
+  Begin()
+  For R = 0 To Registros
+     MoveTo(R)
+     If(ARG_FECHA_PAGA <> ARG_FECHA_ALLOC) Then
+       If(SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And SCO_PAY_TYPE_PAYM = "2") Then
+         If(ARG_CONCEPTO = "SAR_BASE_IMPUESTO") Then
+           ARG_VALOR = SAR_BASE_IMPUESTO
+         EndIf  
+         If(ARG_CONCEPTO = "SAR_IMPUESTO_TOTAL") Then
+           ARG_VALOR = SAR_IMPUESTO_TOTAL
+         EndIf  
+       EndIf  
+     ElseIf(ARG_FECHA_PAGA = ARG_FECHA_ALLOC) Then
+       If(SCO_DT_PAYMENT = SCO_DT_ALLOCATION And SCO_PAY_TYPE_PAYM = "1") Then
+         If(ARG_CONCEPTO = "SAR_BASE_IMPUESTO") Then
+           ARG_VALOR = SAR_BASE_IMPUESTO
+         EndIf  
+         If(ARG_CONCEPTO = "SAR_IMPUESTO_TOTAL") Then
+           ARG_VALOR = SAR_IMPUESTO_TOTAL
+         EndIf  
+       EndIf  
+     EndIf
+  Next
+EndIf

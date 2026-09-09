@@ -1,0 +1,12 @@
+item: SCO_PAY_FREQ_CLOSED_ROLES
+name: Frecuencia pago roles cerrados
+column_name: SCO_PAY_FREQ_CLOSED_ROLES
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 3
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

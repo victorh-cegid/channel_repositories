@@ -1,0 +1,12 @@
+item: SSP_FEC_ANTIGUEDAD
+name: Fecha de Antiguedad
+column_name: SSP_FEC_ANTIGUEDAD
+item_type: FIELD
+type: DATETIME
+id_m4_type: 5
+prec: 0
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

@@ -1,0 +1,3 @@
+valor = SAR_RSU_VALOR_1
+If SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Then Return(0)
+Return(valor)

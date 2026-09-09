@@ -1,0 +1,6 @@
+'Es un concepto indicador para aplicar el decreto.
+'Si este indicador tiene valor 1 se aplica el decreto.
+'Si vale 0 no aplica el decreto y aportes y contribuciones se calcularan igual que antes del decreto.
+indicador = SAR_D612_IND
+If indicador = -1 Then indicador = 0
+Return(indicador)

@@ -1,0 +1,10 @@
+item: SCO_ID_ORIGIN_TYPE
+name: ID Tipo origen
+column_name: SCO_ID_ORIGIN_TYPE
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 9
+scale: 0
+scope: RECORD
+default_value: "0"

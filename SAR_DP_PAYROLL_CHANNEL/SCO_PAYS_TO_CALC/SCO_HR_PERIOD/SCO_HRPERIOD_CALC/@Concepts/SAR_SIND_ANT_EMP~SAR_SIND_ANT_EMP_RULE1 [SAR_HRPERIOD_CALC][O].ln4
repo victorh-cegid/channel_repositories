@@ -1,0 +1,3 @@
+'Toma su valor a traves del metodo SAR_RET_VALOR_COMPL
+
+return(SAR_SIND_ANT_EMP)

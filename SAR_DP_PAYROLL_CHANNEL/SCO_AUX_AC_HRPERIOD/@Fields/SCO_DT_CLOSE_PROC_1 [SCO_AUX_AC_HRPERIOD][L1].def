@@ -1,0 +1,12 @@
+item: SCO_DT_CLOSE_PROC_1
+name: Fecha cierre proceso
+column_name: SCO_DT_CLOSE_PROC
+item_type: FIELD
+type: DATE
+id_m4_type: 4
+prec: 0
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

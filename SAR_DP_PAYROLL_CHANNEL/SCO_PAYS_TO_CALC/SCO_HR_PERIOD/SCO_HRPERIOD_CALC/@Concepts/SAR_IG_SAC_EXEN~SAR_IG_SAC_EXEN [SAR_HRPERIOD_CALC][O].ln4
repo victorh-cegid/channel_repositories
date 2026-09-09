@@ -1,0 +1,142 @@
+'Antes de realizar cualquier calculo se verifica que la empresa haga la retencion correspondiente a ganancias
+If(SAR_IND_NO_RET_GAN = 1)Then 
+    Return(0)
+endIf  
+
+'No se calcula en paga de Anticipo de Vacaciones
+If SAR_TP_IMPUT = "88" Then Return(0) 
+
+'No se ejecuta en meses anteriores a Septiembre
+If SAR_FEC_PAGO_IG < DxDate (01,09,2016) Then Return(0)
+
+'Solo se ejecuta si el Indicador de exencion IG y el Indicador de exencion IG Empresa estan activos 
+If (SAR_IND_EXEN_IG <> 1) or (SAR_IND_EXEN_IG = 1 and SAR_IND_EXEN_IG_EMPRE <> 1) Then Return(0)
+
+'Inicializacion de variables
+sac_exen = 0	'SAC exento
+jub_exen = 0	'Jubilacion exenta
+ley_exen = 0	'Ley 19032 Exenta
+ob_exen = 0		'Obra Social y Adic. Exenta
+sind_exen = 0	'Sindicato exento
+
+'En caso de primera quincena y el empleado no es baja o paga extra 
+IF (SAR_TP_IMPUT = "3" AND SAR_ES_BAJA = 0) OR SAR_TP_IMPUT = "2" THEN 
+	benef_ant = 0
+	If SAR_TIPO_SALARIO <> "003" then
+            SAR_ACM_DEV_MES_ANT.begin()  
+        	if SAR_ACM_DEV_MES_ANT.count() <> 0 Then	'recuperamos los valores de la paga normal anterior
+        		benef_ant = SAR_ACM_DEV_MES_ANT.SAR_BENEF_SAC_IG + SAR_ACM_DEV_MES_ANT.SAR_BENEF_SAC_IG_P_TOPE	
+        		sac_exen = SAR_ACM_DEV_MES_ANT.SAR_IG_SAC_EXEN
+        		jub_exen = SAR_ACM_DEV_MES_ANT.SAR_IG_JUB_EXEN
+        		ley_exen = SAR_ACM_DEV_MES_ANT.SAR_IG_LEY_EXEN
+        		ob_exen = SAR_ACM_DEV_MES_ANT.SAR_IG_OB_EXEN
+        		sind_exen = SAR_ACM_DEV_MES_ANT.SAR_IG_SIND_EXEN
+        	endif
+      Else
+            SAR_ACM_2QNA_MES_ANT.begin()  
+        	if SAR_ACM_2QNA_MES_ANT.count() <> 0 Then	'recuperamos los valores de la 2da. quincena anterior
+        		benef_ant = SAR_ACM_2QNA_MES_ANT.SAR_BENEF_SAC_IG + SAR_ACM_2QNA_MES_ANT.SAR_BENEF_SAC_IG_P_TOPE	
+        		sac_exen = SAR_ACM_2QNA_MES_ANT.SAR_IG_SAC_EXEN
+        		jub_exen = SAR_ACM_2QNA_MES_ANT.SAR_IG_JUB_EXEN
+        		ley_exen = SAR_ACM_2QNA_MES_ANT.SAR_IG_LEY_EXEN
+        		ob_exen = SAR_ACM_2QNA_MES_ANT.SAR_IG_OB_EXEN
+        		sind_exen = SAR_ACM_2QNA_MES_ANT.SAR_IG_SIND_EXEN
+        	endif
+      EndIf  
+	if benef_ant = 0 AND sac_exen = 0  then 'No ha percibido beneficio todavia asi que no se calculan valores para la exencion
+		Return(0)
+	else 'Se considera exento lo que hay en la ultima paga normal anterior
+		SAR_IG_JUB_EXEN= jub_exen
+		SAR_IG_LEY_EXEN= ley_exen
+		SAR_IG_OB_EXEN= ob_exen
+		SAR_IG_SIND_EXEN= sind_exen
+		Return(sac_exen)
+	endif	
+ENDIF
+
+'Se recorren los registros del acumulado desde enero hasta junio
+SCO_AC_HR_PERIOD_READ_1.BEGIN()
+ultimo_reg = SCO_AC_HR_PERIOD_READ_1.COUNT()
+i = ultimo_reg - 1 
+
+While i >= 0 
+	SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
+	IF SAR_FEC_INI_IG <= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG AND SAR_FEC_PAGO_IG >= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG THEN
+	
+		fec_pago_ig= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG  
+		mes_ig= DxMonth(fec_pago_ig)
+			
+		fec_imput = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION
+		mes_imput= DxMonth(fec_imput)
+		anio_imput= DxYear(fec_imput)
+		
+		'Solo debemos analizar las remuneraciones devengadas hasta Junio 2016 inclusive
+		If mes_imput <= 6 and anio_imput = 2016 Then
+			
+			se_prorratea= SCO_AC_HR_PERIOD_READ_1.SAR_TOT_PROR_SAC	'c5007 importe prorrateado de SAC
+			
+			cant_cuotas_prorrateo= 1
+			cant_cuotas_aplicadas= 1
+			
+			'En bajas o paga de reliquidacion tomamos el total de SAC del primer semestre para la exencion, no calculamos cuotas
+			If SAR_ES_BAJA = 1 or SAR_TP_IMPUT = "99" Then
+				se_prorratea = 0
+			EndIf	
+				
+			If se_prorratea <> 0 Then
+				Es_Paga_Diferida = 0
+				If (DxMonth(SCO_DT_PAYMENT)<>DxMonth(SAR_FEC_PAGO_IG))Then
+				    Es_Paga_Diferida = 1
+				EndIf
+				IF Es_Paga_Diferida = 1 THEN
+				    cant_cuotas_prorrateo = 12 - mes_ig
+				    cant_cuotas_aplicadas = SAR_MES_PAGO_IG - mes_ig
+				    IF mes_imput = 6 AND mes_imput < mes_ig THEN 'se esta procesando una paga con ajuste de SAC, imputada en Junio
+				        cant_cuotas_prorrateo = 12 - mes_imput
+				        cant_cuotas_aplicadas = SAR_MES_PAGO_IG - mes_imput
+				    ENDIF
+				ELSE 
+				    cant_cuotas_prorrateo = 12 - mes_ig + 1
+				    cant_cuotas_aplicadas = SAR_MES_PAGO_IG - mes_ig + 1
+				ENDIF
+			EndIf
+				
+			'SAC: calculamos valor cuota y cantidad de cuotas aplicadas
+			valor_cuota= SCO_AC_HR_PERIOD_READ_1.SAR_SAC_ABONADO / cant_cuotas_prorrateo
+			valor_cuota= valor_cuota * cant_cuotas_aplicadas
+			sac_exen= sac_exen + valor_cuota               
+			 
+			'Jubilacion: calculamos valor cuota y cantidad de cuotas aplicadas
+			valor_cuota= SCO_AC_HR_PERIOD_READ_1.SAR_JUBILACION_SAC / cant_cuotas_prorrateo
+			valor_cuota= valor_cuota * cant_cuotas_aplicadas
+			jub_exen= jub_exen + valor_cuota
+			
+			'Ley: calculamos valor cuota y cantidad de cuotas aplicadas
+			valor_cuota= SCO_AC_HR_PERIOD_READ_1.SAR_LEY_19032_SAC / cant_cuotas_prorrateo
+			valor_cuota= valor_cuota * cant_cuotas_aplicadas
+			ley_exen= ley_exen + valor_cuota
+			
+			
+			'Obra Social y Ad. Obra Social: calculamos valor cuota y cantidad de cuotas aplicadas
+			valor_cuota= (SCO_AC_HR_PERIOD_READ_1.SAR_OBRA_SOCIAL_SAC + SCO_AC_HR_PERIOD_READ_1.SAR_OB_SOC_ADIC_SAC) / cant_cuotas_prorrateo
+			valor_cuota= valor_cuota * cant_cuotas_aplicadas
+			ob_exen= ob_exen + valor_cuota      
+			
+			
+			'Sindicato: calculamos valor cuota y cantidad de cuotas aplicadas
+			valor_cuota= (SCO_AC_HR_PERIOD_READ_1.SAR_C_SINDICAL_SAC + SCO_AC_HR_PERIOD_READ_1.SAR_C_SINDIC_OBL_SAC) / cant_cuotas_prorrateo
+			valor_cuota= valor_cuota * cant_cuotas_aplicadas
+			sind_exen= sind_exen + valor_cuota    
+			
+		EndIf
+	ENDIF
+
+i = i - 1
+Wend	 
+ 
+SAR_IG_JUB_EXEN= jub_exen
+SAR_IG_LEY_EXEN= ley_exen
+SAR_IG_OB_EXEN= ob_exen
+SAR_IG_SIND_EXEN= sind_exen
+
+Return(sac_exen)

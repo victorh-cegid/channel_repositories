@@ -1,0 +1,5 @@
+# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
+SAR_RET_VALOR_CONCEPTO | ARG_EMPRESA | IN | STRING | 2 | 9 | 0 | 0
+SAR_RET_VALOR_CONCEPTO | ARG_CONCEPTO | IN | STRING | 2 | 30 | 0 | 1
+SAR_RET_VALOR_CONCEPTO | ARG_FECHA_IG | IN | DATE | 4 | 10 | 0 | 2
+SAR_RET_VALOR_CONCEPTO | ARG_IND_IG | IN | NUMBER | 6 | 1 | 0 | 3

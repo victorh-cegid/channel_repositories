@@ -1,0 +1,3 @@
+valor = SAR_HR_PERIOD.STD_ID_HRP_END_REASON
+
+RETURN(valor)

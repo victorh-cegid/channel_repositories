@@ -1,0 +1,2 @@
+importe = SAR_SALARIO_MINIMO * 15
+Return Round(importe,SAR_NUM_DEC)

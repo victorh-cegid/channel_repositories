@@ -1,0 +1,11 @@
+' Valor por incidencias
+'Se condiciona para que en caso de Paga Extra de Aguinaldo no se calculen las comisiones.
+If(SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1) Then Return(0)
+
+If SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "77" Then
+    Return(0)
+EndIf
+
+valor = SAR_IMP_SIMILAR_NAT
+
+Return(valor)

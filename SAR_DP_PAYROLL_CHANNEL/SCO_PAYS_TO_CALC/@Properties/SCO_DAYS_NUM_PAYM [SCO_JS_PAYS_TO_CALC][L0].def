@@ -1,0 +1,9 @@
+item: SCO_DAYS_NUM_PAYM
+name: Num. dias pago
+item_type: PROPERTY
+type: NUMBER
+id_m4_type: 6
+prec: null
+scale: 0
+scope: RECORD
+default_value: null

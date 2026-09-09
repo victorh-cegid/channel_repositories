@@ -1,0 +1,3 @@
+a = SAR_BASE_IMPUESTO
+valor = SAR_4TA_PREST_JUD
+Return(valor)

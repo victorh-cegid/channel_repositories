@@ -1,0 +1,11 @@
+item: SCO_GEN_PAYMENTS
+name: Generar ordenes de pago
+item_type: PROPERTY
+type: NUMBER
+id_m4_type: 6
+prec: 1
+scale: 0
+scope: NODE
+default_value: "1"
+internal_type: 1
+item_aux: null

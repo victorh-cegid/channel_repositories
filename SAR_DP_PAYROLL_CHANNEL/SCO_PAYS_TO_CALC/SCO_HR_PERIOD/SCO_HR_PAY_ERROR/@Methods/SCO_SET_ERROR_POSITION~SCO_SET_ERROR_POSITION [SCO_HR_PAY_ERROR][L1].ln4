@@ -1,0 +1,27 @@
+'****************************************************************************************** 
+' Method:       SCO_SET_ERROR_POSITION
+' Date:         19/03/2003
+' Version:      1.0
+' Description:  Este metodo encuentra el texto del ultimo error generado y la posicion en 
+'		que empezara a insertar los nuevos errores.
+'
+' Variable arguments: no. 
+'******************************************************************************************
+
+
+Type = 0
+Module = 0
+SubModule = 0
+Code = 0
+Param = ""
+sSeparator = "@@"
+nNumErrors = GetLogSize()
+
+SCO_ERROR_POSITION = nNumErrors + 1
+
+If nNumErrors = 0 Then
+    SCO_ERROR_TEXT = NullValue()
+Else
+    GetLog (nNumErrors, Type, Module, SubModule, Code, Param)
+    SCO_ERROR_TEXT = ToString(Type) + sSeparator + ToString(Module) + sSeparator + ToString(SubModule) + sSeparator + ToString(Code) + sSeparator + Param + sSeparator
+EndIf

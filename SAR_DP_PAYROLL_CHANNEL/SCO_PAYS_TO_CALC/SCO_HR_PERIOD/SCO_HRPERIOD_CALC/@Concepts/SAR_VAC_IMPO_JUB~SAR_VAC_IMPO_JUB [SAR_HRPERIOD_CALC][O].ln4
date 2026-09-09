@@ -1,0 +1,3 @@
+'Es igual que el de ley
+importe = SAR_VAC_IMPO
+Return(importe)

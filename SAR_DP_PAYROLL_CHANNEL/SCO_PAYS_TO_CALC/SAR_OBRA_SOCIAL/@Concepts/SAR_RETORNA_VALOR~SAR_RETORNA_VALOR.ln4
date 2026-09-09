@@ -1,0 +1,8 @@
+POS = FINDREGISTER("SAR_ID_OBRA_SOCIAL",ARG_OBRA_SOCIAL,EQUAL,0)
+IF POS <> -1 THEN
+    MOVETO(POS)
+    valor = SAR_ID_TIPO_OS
+ELSE
+    valor = 0
+ENDIF
+Return(valor)

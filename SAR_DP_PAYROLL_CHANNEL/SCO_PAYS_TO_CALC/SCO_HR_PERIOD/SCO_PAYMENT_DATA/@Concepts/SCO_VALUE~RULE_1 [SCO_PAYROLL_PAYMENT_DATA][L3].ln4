@@ -1,0 +1,10 @@
+'If this rule is overwritten, a node structure alias pointing to the current Calculation node structure must be added.
+
+nmValue=0
+
+SCO_PAY_FORMULA.Begin()
+varIdTi=SCO_PAY_FORMULA.ID_TI
+varIdItem=SCO_PAY_FORMULA.ID_ITEM
+Call(varIdTi,varIdItem)
+nmValue=GetValue(varIdTi,varIdItem,-1)
+Return(nmValue)

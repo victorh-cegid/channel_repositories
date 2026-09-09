@@ -1,0 +1,6 @@
+'Tierra de fuego tiene exento este concepto
+importe = SAR_B_SAC_MES_RG3976
+
+If SAR_TFUEG_IND = 1 Then importe = 0
+
+Return(importe)

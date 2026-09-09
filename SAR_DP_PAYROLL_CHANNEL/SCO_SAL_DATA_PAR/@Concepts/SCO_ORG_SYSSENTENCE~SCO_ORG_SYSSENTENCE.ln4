@@ -1,0 +1,3 @@
+org = SCO_PAYS_TO_CALC.ID_ORGANIZATION
+sentence = "FROM &SCO_SAL_DATA_PAR A WHERE A.ID_ORGANIZATION = '" + org + "'"
+return(sentence)

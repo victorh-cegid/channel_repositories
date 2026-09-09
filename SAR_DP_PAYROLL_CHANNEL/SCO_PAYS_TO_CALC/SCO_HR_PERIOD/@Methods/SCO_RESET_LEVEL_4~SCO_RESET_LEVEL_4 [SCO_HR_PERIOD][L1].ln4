@@ -1,0 +1,7 @@
+//Executing this, we reset the priority of all the concepts in the group of execution.
+//This is necessary because this groups could be executed more than once and we can have problems
+// with the priority of the concepts.
+
+SCO_HRPERIOD_CALC.ResetExecuteGroup("4")
+
+Return(0)

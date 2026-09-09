@@ -1,0 +1,7 @@
+'-------------------------------------------------------------------------------------------    
+'Alquileres de Inmuebles RG 4003
+'-------------------------------------------------------------------------------------------
+alquiler          = SAR_IG_ALQUILER
+tope_alquiler     = SAR_TOPE_SER_DOM
+deduc_alquiler    = Min(alquiler,tope_alquiler)
+Return(deduc_alquiler)

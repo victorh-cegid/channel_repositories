@@ -1,0 +1,13 @@
+'Payment concepts
+SetSliceMode(M4_FALSE)
+output =SCO_HRPERIOD_CALC.ExecuteGroup("6")
+
+'Salary Data History. Not calculated for retro terminations and PALs.
+If SCO_RETRO_TERM <> STD_ID_HR and SCO_IS_PAL <> 1 then
+    SetSliceMode(M4_TRUE)
+    output =SCO_HRPERIOD_CALC.ExecuteGroup("61")
+Endif
+    
+SetSliceMode(SCO_PAYS_TO_CALC.SCO_SLICE_MODE)
+
+Return(0)

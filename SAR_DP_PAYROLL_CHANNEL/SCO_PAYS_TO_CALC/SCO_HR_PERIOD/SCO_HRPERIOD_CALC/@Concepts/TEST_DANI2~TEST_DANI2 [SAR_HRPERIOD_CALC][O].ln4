@@ -1,0 +1,12 @@
+variable = 1
+valor = 0
+
+If variable = 0 Then
+    valor = 100
+EndIf
+
+If variable = 1 Then
+    valor = 200
+EndIf
+
+Return Round(valor,SAR_NUM_DEC)

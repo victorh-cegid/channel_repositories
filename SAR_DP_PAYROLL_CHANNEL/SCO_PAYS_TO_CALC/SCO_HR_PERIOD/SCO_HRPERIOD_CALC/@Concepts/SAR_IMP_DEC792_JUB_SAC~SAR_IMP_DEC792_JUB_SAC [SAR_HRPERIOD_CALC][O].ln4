@@ -1,0 +1,6 @@
+'Retorna el importe de aporte jubilacion en caso de encontrarse todo el mes afectado por el Dec. 792
+apo_jub_sac = SAR_JUBILACION_SAC
+inc = SAR_INC_MES_COMPLETO("23")
+importe = 0
+If SAR_IND_SAC_792 = 1 And inc = 1 Then importe = apo_jub_sac
+Return(importe)

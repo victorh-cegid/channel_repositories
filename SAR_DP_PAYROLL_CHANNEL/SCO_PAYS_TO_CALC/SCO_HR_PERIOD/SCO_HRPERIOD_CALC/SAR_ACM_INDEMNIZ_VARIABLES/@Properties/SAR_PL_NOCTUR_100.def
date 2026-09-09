@@ -1,0 +1,9 @@
+item: SAR_PL_NOCTUR_100
+name: Horas extras nocturnas al 100%
+item_type: PROPERTY
+type: CURRENCY
+id_m4_type: 8
+prec: 18
+scale: 6
+scope: RECORD
+default_value: "0"

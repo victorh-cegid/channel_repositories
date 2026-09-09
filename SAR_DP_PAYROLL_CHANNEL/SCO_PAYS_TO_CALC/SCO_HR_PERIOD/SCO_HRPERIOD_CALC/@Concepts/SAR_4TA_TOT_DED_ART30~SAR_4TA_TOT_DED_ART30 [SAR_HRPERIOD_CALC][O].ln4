@@ -1,0 +1,4 @@
+'dependencias
+a = SAR_BASE_IMPUESTO
+valor = SAR_4TA_TOT_DED_ART30
+Return Round(valor,SAR_NUM_DEC)

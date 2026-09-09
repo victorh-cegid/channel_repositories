@@ -1,0 +1,3 @@
+Ret = Round(SCO_NET_TO_PAY_EMP,SCO_CURR_DECIMALS)
+
+Return(Ret)

@@ -1,0 +1,12 @@
+item: ID_M4_TYPE
+name: Tipo datos variables
+column_name: ID_M4_TYPE
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 4
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 21
+item_aux: SCO_ID_CURRENCY

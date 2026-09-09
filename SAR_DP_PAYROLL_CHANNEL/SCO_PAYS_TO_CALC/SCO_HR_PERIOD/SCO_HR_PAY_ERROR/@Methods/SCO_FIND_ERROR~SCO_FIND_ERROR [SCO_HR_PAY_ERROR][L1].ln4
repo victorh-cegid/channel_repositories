@@ -1,0 +1,56 @@
+'****************************************************************************************** 
+' Method:       SCO_FIND_ERROR
+' Date:         01/03/2003
+' Version:      1.0
+' Description:  Este metodo busca si se ha producido un error durante el calculo, bien sea
+'               controlado funcionalmente o no, y si se produce, lo indica asignando
+'               la propiedad de error.
+'******************************************************************************************
+
+//Inicializacion de variables
+Type = 0
+Module = 0
+SubModule = 0
+Code = 0
+Param = ""
+sSeparator = "@@"
+bFound = false
+
+nNumErrors = GetLogSize()
+sError = ""
+nError = SCO_ERROR_POSITION - 1
+
+//Seguimos buscando por si hubiera un error no controlado.
+If  SCO_ERROR_POSITION > 1 Then
+    //Como tenemos la posicion relativa, buscamos la posicion absoluta
+    Do
+        GetLog (nError, Type, Module, SubModule, Code, Param)
+        sError = ToString(Type) + sSeparator + ToString(Module) + sSeparator + ToString(SubModule) + sSeparator + ToString(Code) + sSeparator + Param + sSeparator
+        If SCO_ERROR_TEXT = sError Then
+            bFound = true
+        Else
+            nError = nError - 1
+        EndIf
+    Until bFound = true OR nError = 0
+    
+SetSliceMode(0)
+    SCO_ERROR_POSITION = nError + 1
+SetSliceMode(SCO_PAYS_TO_CALC.SCO_SLICE_MODE)
+    
+EndIf
+
+//Si el error esta controlado, la variable de error debe estar a 1.
+
+SCO_SET_SCO_ERROR_PERIOD()
+If SCO_HR_PERIOD.SCO_ERROR  = 1 Then Return (1)
+
+For IDError = SCO_ERROR_POSITION to nNumErrors
+	//Coge el error de la pila
+	GetLog (IDError, Type, Module, SubModule, Code, Param)
+	If Type = M4_ERROR Then 
+        SCO_HR_PERIOD.SCO_ERROR = 1
+        SCO_SET_SCO_ERROR_PERIOD()
+        Return(1)
+	EndIf
+Next
+Return(0)

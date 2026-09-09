@@ -1,0 +1,9 @@
+item: SCO_NUM_REG
+name: Num. registros
+item_type: PROPERTY
+type: NUMBER
+id_m4_type: 6
+prec: 4
+scale: 0
+scope: BLOCK
+default_value: null

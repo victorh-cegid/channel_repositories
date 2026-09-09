@@ -1,0 +1,4 @@
+dStartRetro = ARG_SCO_DT_START_RETRO
+dStartCalc = SCO_DT_START_CALC_ROLE
+
+Return(min(dStartCalc,dStartRetro))

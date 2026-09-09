@@ -1,0 +1,76 @@
+'Variables
+bExistError = FALSE
+DtAllocation = SCO_DT_ALLOCATION
+NmFrequency  = SCO_PAYS_TO_CALC.SCO_NM_PAY_FREQUENCY
+
+
+IsNotEof=Begin()
+If IsNotEof=TRUE then
+
+
+	//Miro el numero de errores que tengo antes de empezar el calculo.
+	SCO_HR_PAY_ERROR.SCO_SET_ERROR_POSITION()
+	
+	//Antes de calcular se comprueba que no tiene errores anteriores que impedirian continuar el calculo.
+	If SCO_HR_PAY_ERROR.Count()<>0 Then
+
+            //No se va a calcular el periodo %0:n del empleado %1:s en la nomina %2:s de pago %3:d
+            //e imputacion %4:d porque hay errores en nominas anteriores. 
+            //Debe solucionar esas nominas erroneas antes de ejecutar esta nomina.
+            
+		SetLog (-1,1,101,46,STD_OR_HR_PERIOD,STD_ID_HR,NmFrequency,SCO_DT_PAYMENT,DtAllocation)
+            SCO_HR_PERIOD.SCO_ERROR = 1
+		bExistError = TRUE
+
+	EndIf
+
+	if bExistError<>TRUE AND SCO_PAYS_TO_CALC.SCO_AUTO_REV=1 then
+
+		Output=SCO_CALCREV_PERIOD()
+
+		If Output=M4_ERROR Then
+			SetLog(-1,1,101,6,STD_ID_HR,STD_OR_HR_PERIOD,DtAllocation,NmFrequency)
+			Output=SCO_PAYS_TO_CALC.SCO_PAYINIT()
+			If Output=M4_ERROR Then
+				SCO_PAYS_TO_CALC.SCO_ERROR=1
+				SCO_PAYS_TO_CALC.SCO_NUM_PAYS_ERROR = SCO_PAYS_TO_CALC.SCO_NUM_PAYS_ERROR + 1
+				SetLog(-1,1,101,2,DtAllocation,NmFrequency)
+				Return(-1)
+			EndIf
+    
+		ElseIf Output=1 Then
+			Output=SCO_PAYS_TO_CALC.SCO_PAYINIT()
+			If Output=M4_ERROR Then
+				SCO_PAYS_TO_CALC.SCO_ERROR=1
+				SCO_PAYS_TO_CALC.SCO_NUM_PAYS_ERROR = SCO_PAYS_TO_CALC.SCO_NUM_PAYS_ERROR + 1
+				SetLog(-1,1,101,2,DtAllocation,NmFrequency)
+				Return(-1)
+			EndIf
+		Endif
+
+	endif
+
+	If bExistError<>TRUE AND Output<>M4_ERROR Then
+		'OutputCalc=SCO_CALCHRP_CURRENCY()
+            OutputCalc=SCO_CONTROL_ERRORS()
+	EndIf
+        
+        OutputError = SCO_HR_PAY_ERROR.SCO_MANAGE_ERRORS(OutputCalc,Output)
+
+
+      If OutputError = M4_ERROR Then
+        Return(M4_ERROR)
+      EndIf
+Else
+	Output=SCO_CALC_NEXT()
+
+	//Este error no se gestiona porque ya se controla dentro del metodo SCO_CALC_NEXT.
+	//Se hace dentro del metodo porque el SCO_CALC_NEXT se ejecuta de manera independiente
+	//y tiene su propia gestion de errores. Solo se retorna un -1 para que se vea que ha dado error.
+	If Output = M4_ERROR Then
+		Return(-1)
+	EndIf
+
+Endif
+
+Return(0)

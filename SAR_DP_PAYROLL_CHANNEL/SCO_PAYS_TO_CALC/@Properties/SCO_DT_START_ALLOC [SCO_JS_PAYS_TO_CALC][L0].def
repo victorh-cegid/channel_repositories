@@ -1,0 +1,9 @@
+item: SCO_DT_START_ALLOC
+name: Fecha inicio imputacion
+item_type: PROPERTY
+type: DATE
+id_m4_type: 4
+prec: 10
+scale: 0
+scope: RECORD
+default_value: null

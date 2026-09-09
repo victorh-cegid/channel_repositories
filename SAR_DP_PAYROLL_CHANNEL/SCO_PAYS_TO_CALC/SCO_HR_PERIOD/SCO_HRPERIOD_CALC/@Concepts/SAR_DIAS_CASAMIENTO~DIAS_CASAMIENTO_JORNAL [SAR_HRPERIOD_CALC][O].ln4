@@ -1,0 +1,58 @@
+' No se ejecuta en las pagas extras, salvo si en las Pagas Extras de Aguinaldo
+If (SAR_TP_IMPUT = "2") AND SAR_IND_AGUINALDO = 0 Then Return(0)
+
+IF SAR_TP_IMPUT = "99" THEN 
+    Return(0)
+ENDIF
+
+id_Incidencia = "10" 'Licencia por Casamiento
+horas = 0 		   'Inicializamos las horas de Licencia por Casamiento
+horas_teor_abs = 0   'Inicializacion de las horas teoricas de cada registro de Licencia por Casamiento
+
+'Tramos
+INICIO_TRAMO = SAR_TOT_P_COMP_EA_AUX..SysStartDate
+FIN_TRAMO = SAR_TOT_P_COMP_EA_AUX..SysEndDate
+
+'Cargamos el nodo de incidencias del periodo (ausentismos), en caso de que no este ya cargado.
+IF SAR_REAL_TIME_PERIOD.COUNT()= 0 THEN
+    SAR_REAL_TIME_PERIOD.LOAD_BLK()
+ENDIF
+
+'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de Licencia por Casamiento
+sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
+SAR_REAL_TIME_PERIOD.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", id_Incidencia)
+
+'Si hay registros de Licencia por Casamiento los recorremos para obtener las horas
+SAR_REAL_TIME_PERIOD.BEGIN()
+WHILE SAR_REAL_TIME_PERIOD.ISEOF() = FALSE
+        	
+    fec_ini_abs = SAR_REAL_TIME_PERIOD.SCO_DT_START 	' fecha de inicio del ausentismo
+    fec_fin_abs = SAR_REAL_TIME_PERIOD.SCO_DT_END	' fecha de fin del ausentismo
+    t_unid = SAR_REAL_TIME_PERIOD.SCO_ID_TIME_UNIT 	' tipo de unidades del ausentismo, Horas o Dias
+    unid = SAR_REAL_TIME_PERIOD.SCO_UNITS 		' numero de unidades del ausentismo
+    
+    IF commontime(INICIO_TRAMO,FIN_TRAMO,fec_ini_abs,fec_fin_abs) > 0 THEN		
+        IF fec_fin_abs > FIN_TRAMO then
+            fec_fin_abs = FIN_TRAMO
+        ENDIF
+        IF fec_ini_abs < INICIO_TRAMO then
+            fec_ini_abs = INICIO_TRAMO
+        ENDIF
+      
+        IF SCO_NUM_HOURS_THEO > 0 THEN 'tiene asignado un modelo teorico
+            horas_teor_abs = SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs) 'las horas se calculan en funcion del tiempo teorico
+		IF t_unid = "05" THEN 'Horas
+		  horas = horas + Min(unid, horas_teor_abs) 'si las horas informadas superan el numero de horas de tiempo teorico de la jornada, nos quedamos con las teoricas. 
+		ELSE 'Dias
+		  horas = horas + horas_teor_abs
+		ENDIF
+        ENDIF	
+    ENDIF    
+    SAR_REAL_TIME_PERIOD.GONEXT()
+WEND
+
+'Se elimina el filtro RAM aplicado al nodo
+SAR_REAL_TIME_PERIOD.REMOVEFILTER()
+
+'Return las horas de Licencia por Casamiento
+Return(horas)

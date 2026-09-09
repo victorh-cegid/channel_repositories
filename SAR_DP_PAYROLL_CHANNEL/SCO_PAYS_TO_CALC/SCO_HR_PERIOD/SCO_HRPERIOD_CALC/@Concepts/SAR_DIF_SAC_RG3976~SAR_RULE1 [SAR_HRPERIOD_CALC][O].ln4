@@ -1,0 +1,3 @@
+'Para generar dependencias
+a = SAR_ACM_PROR_SAC
+Return(Round(SAR_DIF_SAC_RG3976,SCO_CURR_DECIMALS))

@@ -1,0 +1,12 @@
+'Execute all the role concepts not depending on currency
+
+'In this group we execute the theoretical time and we assign the correct dates for prorates
+SCO_HRROLE_CALC.ExecuteGroup("1")
+
+'Now we execute all the items that needs the theoretical time but without slices
+SCO_HRROLE_CALC.ExecuteGroup("11")
+
+'In this group we produces the slices in the units with the dependences
+SCO_HRROLE_CALC.ExecuteGroup("12")
+
+Return(0)

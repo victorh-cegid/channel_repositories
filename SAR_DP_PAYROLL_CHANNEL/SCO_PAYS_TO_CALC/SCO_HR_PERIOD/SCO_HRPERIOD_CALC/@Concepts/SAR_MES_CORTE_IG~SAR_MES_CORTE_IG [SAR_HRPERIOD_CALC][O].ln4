@@ -1,0 +1,2 @@
+'Se usa en nodo SAR_ACM_PAGA_ANT_IG, de tal forma que hasta septiembre 2023 funcione como siempre, pero desde octubre 2023 filtre por el mes fiscal
+Return(SAR_MES_IMPUT_IG)

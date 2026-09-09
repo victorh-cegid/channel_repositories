@@ -1,0 +1,29 @@
+aux = SAR_BASE_ANT_EMP
+ban = 0
+tope = SAR_TOPE_INT_HIP
+int_hip = SAR_JUR_INT_HIP
+
+IF int_hip > 0 THEN
+     'se proporciona el valor del tope a mensual, dado que en el concepto #639 esta registrado el valor anual
+     '------------------------------------------
+        mes = DxMonth(SAR_FEC_IMPUT_IG)
+        esBaja = 0
+        If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
+        If esBaja = 1 Then mes = DxMonth(SAR_FEC_PAGO_IG)
+        
+        'Desde octubre 2023 se reinicia el impuesto
+        If DxYear(SAR_FEC_IMPUT_IG) = 2023 And mes > 9 Then 
+            resta_meses = 9
+            'Diferido octubre (ig noviembre) queremos que aplique un tope, no dos
+            If DxMonth(SAR_FEC_IMPUT_IG)>DxMonth(SCO_DT_ALLOCATION) Then
+                resta_meses = 10
+            EndIf
+            mes = mes - resta_meses
+        EndIf
+        
+        tope = tope / 12 * mes
+    '------------------------------------------
+    ban = Min(tope,int_hip)
+ENDIF
+
+RETURN(ban)

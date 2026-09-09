@@ -1,0 +1,5 @@
+'
+''Toma valor por tabla de valor
+'
+valor = SAR_IND_AJUSTE_SAC
+Return(valor)

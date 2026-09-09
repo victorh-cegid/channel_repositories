@@ -1,0 +1,21 @@
+importe_sac = SAR_PAGA_EXTRA_2
+
+If SCO_DT_PAYMENT = SCO_DT_ALLOCATION Then return (importe_sac)
+
+importe_sac_orig = SCO_AC_HR_PERIOD_REV_1.SAR_PAGA_EXTRA_2
+
+'Retroactividad desde paga de reliquidacion con ajuste de sac a?o anterior existente, no se modifica el importe de sac de la propia empresa
+'porque se ha ajustado en periodo fiscal posterior
+If (SAR_IND_PAGA_RELIQ = 1 Or SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99") And SCO_AC_HR_PERIOD_REV_1.SAR_AJUSTE_SAC2_ANT <> 0 Then
+    SAR_AJUSTE_SAC2_ANT = SCO_AC_HR_PERIOD_REV_1.SAR_AJUSTE_SAC2_ANT
+    Return(importe_sac_orig)
+EndIf
+
+'Retroactividad en el mismo a?o fiscal mantiene calculo habitual:
+If SAR_ANIO_PAY_IG = SAR_ANIO_IMPUT_IG Or importe_sac = 0 Then return (importe_sac)
+
+'SAC imputado a a?os IG anteriores. El importe ajustado se lleva a otro concepto (SAR_AJUSTE_SAC2_ANT) ya que fiscalmente deja de ser SAC
+'y pasa a ser remuneracion gravada de a?os anteriores para el periodo fiscal actual.
+sac_anio_ant = importe_sac - importe_sac_orig
+SAR_AJUSTE_SAC2_ANT = sac_anio_ant
+Return(importe_sac_orig)

@@ -1,0 +1,2 @@
+valor = TODATE("2000-11-06")
+Return(valor)

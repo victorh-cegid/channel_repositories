@@ -1,0 +1,15 @@
+'****************************************************************************************** 
+' Method:       SCO_SET_SCO_ERROR_PERIOD
+' Date:         01/03/2003
+' Version:      1.0
+' Description:  Este metodo elimina los tramos de la propiedad SCO_ERROR del nodo SCO_HR_PERIOD.
+'******************************************************************************************
+
+FI=SCO_PAYS_TO_CALC.SCO_DT_START_ALLOC
+FF=SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC
+if FI <> GetRunningStartDate() or FF <> GetRunningEndDate() then
+    iError = SCO_HR_PERIOD.SCO_ERROR
+    SetStartDate(FI)
+    SetEndDate(FF)
+    SCO_HR_PERIOD.SCO_ERROR = iError
+endif

@@ -1,0 +1,11 @@
+item: SAR_SAC_IMPO
+name: SAR_SAC_IMPO
+item_type: PROPERTY
+type: CURRENCY
+id_m4_type: 8
+prec: 18
+scale: 6
+scope: RECORD
+default_value: "0"
+internal_type: 1
+item_aux: null

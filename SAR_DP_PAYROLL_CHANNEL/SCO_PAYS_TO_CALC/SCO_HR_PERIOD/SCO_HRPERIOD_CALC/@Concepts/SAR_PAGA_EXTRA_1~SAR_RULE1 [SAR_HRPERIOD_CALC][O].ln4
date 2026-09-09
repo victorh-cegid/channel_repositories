@@ -1,0 +1,16 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+IF (SAR_ES_BAJA = 0) Or (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017") THEN
+    'Nomina despues de baja 
+    if SAR_FECHA_BAJA < SCO_DT_ALLOCATION Then
+        paga = 0
+    else
+        paga = SAR_U_PAGA_EX_1 * SAR_P_PAGA_EX
+    endif
+ELSE 
+    paga = 0
+ENDIF
+
+RETURN(paga)

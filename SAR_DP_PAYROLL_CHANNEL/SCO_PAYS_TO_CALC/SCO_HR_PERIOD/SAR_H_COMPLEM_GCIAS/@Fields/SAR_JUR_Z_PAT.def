@@ -1,0 +1,12 @@
+item: SAR_JUR_Z_PAT
+name: Declar. Jurada en zona Patag.
+column_name: SAR_JUR_Z_PAT
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 1
+scale: 0
+scope: RECORD
+default_value: "0"
+internal_type: 1
+item_aux: null

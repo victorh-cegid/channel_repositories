@@ -1,0 +1,31 @@
+'Variables
+nTotTheoHours = 0
+nTotTheoDays = 0
+nTotTheoSat = 0
+nTotTheoSun = 0
+nTotCalHours = 0
+nTotCalDays = 0
+nTotCalSat = 0
+nTotCalSun = 0
+
+'Constant
+nExecution = 3 'We execute both, theoretical time and calendars
+
+DtStart = ARG_FECHA_INICIO
+DtEnd = ARG_FECHA_FIN
+
+
+'We execute the level2 call in order to get all the data refered to the theoretical time.
+'We will have the number of hours and days worked, in theory, and the number of holidays, days and hours, which conflicts with the theoretical time
+
+Output = SCO_THEORETICAL_TIME!SCO_TT_HR_THEOR_TIME.SCO_CALC_THEOR_TIME(SCO_ID_HR, SCO_OR_HR_PERIOD,SCO_OR_HR_ROLE,DtStart,DtEnd,nExecution,nTotTheoHours,nTotCalHours,nTotTheoDays,nTotCalDays,nTotTheoSat,nTotCalSat,nTotTheoSun,nTotCalSun)
+
+If Output= M4_ERROR Then
+	return(M4_ERROR)
+Endif
+
+'Now we asign the value of the concept that we will use to prorate items from the YTD node.
+
+SCO_UNIT_ROLE = 1
+
+Return(nTotTheoHours)

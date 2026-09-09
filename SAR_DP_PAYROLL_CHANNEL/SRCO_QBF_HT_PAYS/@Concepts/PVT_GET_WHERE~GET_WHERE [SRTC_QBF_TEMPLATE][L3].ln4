@@ -1,0 +1,3 @@
+sWhere = " WHERE "
+
+Return (sWhere)

@@ -1,0 +1,3 @@
+'Para generar dependencias
+a = SAR_SIMILAR_NAT_EXEN_MES
+Return(SAR_SIMILAR_NAT_GRAV_MES)

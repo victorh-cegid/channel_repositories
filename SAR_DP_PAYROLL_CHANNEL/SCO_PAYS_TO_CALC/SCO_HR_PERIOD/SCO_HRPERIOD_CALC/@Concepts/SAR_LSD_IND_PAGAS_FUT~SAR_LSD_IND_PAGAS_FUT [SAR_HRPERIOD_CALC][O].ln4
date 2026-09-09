@@ -1,0 +1,6 @@
+'Si se encuentra activado con valor 1, ante un mismo mes de cotizacion la aplicacion considera los acumulados de las pagas de imputacion posteriores a la paga que se procesa para determinar los topes imponibles.
+'Por defecto en la aplicacion estandar este indicador vale 0 excepto en pagas retroactivas calculadas en modalidad LSD por pago (SAR_LSD_IND_PAGO = 1), en este caso el indicador toma automaticamente el valor 1.
+'Se puede informar este concepto por tabla de valor si el cliente tiene un criterio diferente al comportamiento estandar por defecto.
+indicador = 0
+If SAR_LSD_IND_PAGO = 1 Then indicador = 1
+Return(indicador)

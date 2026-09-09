@@ -1,0 +1,16 @@
+IF SAR_ES_BAJA <> 1  THEN RETURN(0)
+ 'Calcula el num. de a?os en alta en la empresa a la fecha de proceso
+
+fecantig = SAR_FEC_INDEM
+
+fechafin = SAR_FECHA_BAJA
+
+numanos=DateDiff(fecantig,fechafin,M4_YEAR)
+m=DateDiff(fecantig,fechafin,M4_MONTH)
+mes= Max(m- numanos*12,0)
+
+IF mes>2 THEN
+    numanos=numanos+1
+ENDIF
+
+RETURN(numanos)

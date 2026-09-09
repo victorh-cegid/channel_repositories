@@ -1,0 +1,4 @@
+'Se informa por tabla de valor
+valor = SAR_DESC_DEC_332
+If SAR_TP_IMPUT = "77" Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Then Return(0)
+Return Round (valor,SAR_NUM_DEC)

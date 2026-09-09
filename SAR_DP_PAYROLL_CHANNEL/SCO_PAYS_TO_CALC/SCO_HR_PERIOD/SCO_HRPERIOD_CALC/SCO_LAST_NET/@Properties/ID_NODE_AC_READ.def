@@ -1,0 +1,9 @@
+item: ID_NODE_AC_READ
+name: ID Nodo lectura del AC
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 50
+scale: 0
+scope: NODE
+default_value: "SCO_AC_HR_PERIOD_READ"

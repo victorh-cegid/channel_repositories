@@ -1,0 +1,2 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+SAR_IS_NEW | RECORD | NUMBER | 6 | 1 | 0 | SAR_IS_NEW

@@ -1,0 +1,2 @@
+valor = DxYear(SCO_DT_ALLOCATION)
+RETURN(valor)

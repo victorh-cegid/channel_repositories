@@ -1,0 +1,10 @@
+item: SCO_ID_PAY_STATUS
+name: ID Estado paga
+column_name: SCO_ID_PAY_STATUS
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 2
+scale: 0
+scope: RECORD
+default_value: null

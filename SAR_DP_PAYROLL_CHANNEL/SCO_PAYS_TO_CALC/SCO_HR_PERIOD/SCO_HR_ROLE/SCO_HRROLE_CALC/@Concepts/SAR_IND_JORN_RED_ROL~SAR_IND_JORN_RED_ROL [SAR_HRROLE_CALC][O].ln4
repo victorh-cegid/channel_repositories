@@ -1,0 +1,5 @@
+'Toma valor por Valores del Role
+
+'1 Indicara que posee Jornada Reducida
+'0 Indicara que no posee Jornada Reducida
+return(@SAR_IND_JORN_RED_ROL)

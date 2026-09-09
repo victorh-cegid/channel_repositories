@@ -1,0 +1,60 @@
+nmNet=0
+
+If SAR_PAYS_TO_CALC.SCO_REVISION=1 Then
+
+	nmNet=SCO_DIF_HRPERIOD_CALC_1.SAR_LIQUIDO..SysTotalSlices(TOTAL_SUM)
+	If nmNet<0 Then
+		SetLog(1,1,101,23,nmNet,SCO_ID_HR, SCO_OR_HR_PERIOD)
+	EndIf
+
+	Return(nmNet)
+Else
+
+	nmPaymentData= SAR_PAYROLL_PAYMENT_DATA.Count()
+
+	If nmPaymentData>0 Then
+		nmTotValue=0
+		nmValue=0
+		I=0
+		SAR_PAYROLL_PAYMENT_DATA.Begin()
+		While I< nmPaymentData and nmValue>=0
+			SAR_PAYROLL_PAYMENT_DATA.MoveTo(I)
+			If SAR_PAYROLL_PAYMENT_DATA.SCO_EMP_CHECK="0" AND SAR_PAYROLL_PAYMENT_DATA.SCO_DT_START <= SAR_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA AND SAR_PAYROLL_PAYMENT_DATA.SCO_DT_END >= SAR_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA Then
+                  //Si el dato pago esta fuera de fechas, se anula su orden de pago
+                        
+				SAR_PAYROLL_PAYMENT_DATA.SCO_VALUE()
+				nmValue=SAR_PAYROLL_PAYMENT_DATA.SCO_VALUE
+				If nmValue>0 Then
+	           	        nmTotValue=nmTotValue+nmValue
+				EndIf
+			EndIf
+			I=I+1
+		Wend
+		If nmValue>=0 Then
+                  'if there is something to pay to the beneficiaries other than the main one
+			vnet=SAR_LIQUIDO..SysTotalSlices(TOTAL_SUM)
+                  nmNet=vnet-nmTotValue
+			If nmNet>=0 Then
+				Return(nmNet)
+                     
+			Else
+				Setlog(1,1,101,22,SAR_PAYROLL_PAYMENT_DATA.SCO_ID_HR,SAR_PAYROLL_PAYMENT_DATA.SCO_OR_HR_PERIOD,nmNet)
+				Return(nmNet)
+                 
+			EndIf
+		Else
+                'nothing to pay to the beneficiaries other than the main one
+			nmNet=-1
+                  
+			SetLog(1,1,101,25,SAR_PAYROLL_PAYMENT_DATA.SCO_ID_HR,SAR_PAYROLL_PAYMENT_DATA.SCO_OR_HR_PERIOD,nmValue)
+			Return(nmNet)
+		EndIf
+	ELSE
+            'there are no payment datas
+        
+		SetLog(-1,1,101,26,SCO_ID_HR, SCO_OR_HR_PERIOD)
+            SCO_ERROR = 1
+            RETURN(-1)
+	EndIf
+ 
+EndIf

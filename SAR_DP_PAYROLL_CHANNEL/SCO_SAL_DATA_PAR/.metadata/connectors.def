@@ -1,0 +1,7 @@
+# parent_node | parent_ti | connection_type
+SCO_SAL_DATA_PAR | SCO_SAL_DATA_PAR | FREE
+
+# child_node | connection_type
+SCO_SAL_DATA_PAR | FREE
+
+# ti | item | parent_node | parent_ti | parent_item | precedence

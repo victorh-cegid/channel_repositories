@@ -1,0 +1,12 @@
+item: SAR_DIA
+name: Dia de pago de la extra
+column_name: SAR_DIA
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 2
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

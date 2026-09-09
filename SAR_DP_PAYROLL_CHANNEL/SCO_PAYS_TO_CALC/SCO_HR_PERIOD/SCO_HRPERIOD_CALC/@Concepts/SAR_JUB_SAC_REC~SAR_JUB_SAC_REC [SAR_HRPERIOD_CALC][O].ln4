@@ -1,0 +1,4 @@
+'Devuelve el aporte de jubilacion para el recibo (en caso de decreto 792 todo el mes se expone en otro concepto)
+apo_jub_sac = SAR_JUBILACION_SAC
+If SAR_IMP_DEC792_JUB_SAC <> 0 Then Return(0)
+Return(apo_jub_sac)

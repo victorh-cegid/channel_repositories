@@ -1,0 +1,3 @@
+valor = #SAR_INDEM_INTEG / 12
+
+return(valor)

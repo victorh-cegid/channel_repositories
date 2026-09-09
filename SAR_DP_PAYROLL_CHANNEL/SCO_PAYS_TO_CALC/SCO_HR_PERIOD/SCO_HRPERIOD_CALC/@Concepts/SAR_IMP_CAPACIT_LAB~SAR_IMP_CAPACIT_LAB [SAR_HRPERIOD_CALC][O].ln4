@@ -1,0 +1,4 @@
+'Se limita para paga normal, primera y segunda quincena.
+If SAR_TP_IMPUT <> "1" And SAR_TP_IMPUT <> "3" And SAR_TP_IMPUT <> "4" Then Return(0)
+valor = SAR_IMP_CAPACIT_LAB
+Return Round(valor,SAR_NUM_DEC)

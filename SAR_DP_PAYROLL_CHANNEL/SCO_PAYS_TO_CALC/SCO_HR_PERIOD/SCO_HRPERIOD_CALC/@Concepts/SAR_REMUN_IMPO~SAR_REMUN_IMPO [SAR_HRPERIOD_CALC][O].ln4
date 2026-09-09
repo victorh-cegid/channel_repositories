@@ -1,0 +1,69 @@
+'Calcula todas las remuneraciones imponibles de jubilacion y LEY. El calculo se realiza en forma mensual por mes de LSD.
+baseRem = 0 : baseRemArt = 0 : baseRemVac = 0 : RemImpoOrig = 0 : RemImpoOrigArt = 0 : RemImpoOrigVac = 0
+topeMax = SAR_LSD_TOPE_COTIZ_PROP
+
+'Los devengos cotizables de la paga de proceso, separados normales/art/vacaciones para realizar posteriormente el reparto
+devengosNorm = SAR_TOT_DEV_COTIZ 
+devengosArt = SAR_PRESTACION_ART 
+devengosVac = SAR_LSD_VAC_PLUS
+devengosTot = devengosNorm + devengosArt + devengosVac
+
+'En caso de retroactividad, se considera como devengos cotizables de la paga de proceso el importe de la diferencia
+If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then
+    devengosOrigNorm = SCO_AC_HR_PERIOD_REV_1.SAR_TOT_DEV_COTIZ    
+    devengosOrigArt = SCO_AC_HR_PERIOD_REV_1.SAR_PRESTACION_ART
+    devengosOrigVac = SCO_AC_HR_PERIOD_REV_1.SAR_LSD_VAC_PLUS
+    RemImpoOrig = SCO_AC_HR_PERIOD_REV_1.SAR_REMUN_IMPO
+    RemImpoOrigArt = SCO_AC_HR_PERIOD_REV_1.SAR_BASE_COTIZ_ART
+    RemImpoOrigVac = SCO_AC_HR_PERIOD_REV_1.SAR_VAC_IMPO_PLUS
+    devengosNorm = devengosNorm - devengosOrigNorm
+    devengosArt = devengosArt - devengosOrigArt
+    devengosVac = devengosVac - devengosOrigVac
+    devengosTot = devengosNorm + devengosArt + devengosVac
+EndIf
+
+'Se a?aden al calculo los devengos cotizables de pagas ANTERIORES del mismo mes de LSD, 
+'para tener el importe completo sobre el que realizar topes
+devengosNormPrev = SAR_LSD_COTIZ[0].SAR_TOT_DEV_COTIZ 
+devengosArtPrev = SAR_LSD_COTIZ[0].SAR_PRESTACION_ART 
+devengosVacPrev = SAR_LSD_COTIZ[0].SAR_LSD_VAC_PLUS
+devengosTotPrev = devengosNormPrev + devengosArtPrev + devengosVacPrev
+
+devengosNormLSD = devengosNorm + devengosNormPrev
+devengosArtLSD = devengosArt + devengosArtPrev
+devengosVacLSD = devengosVac + devengosVacPrev
+
+'En devengosTotMesLSD tenemos todos los devengos sobre los que aplicar topes
+devengosTotMesLSD = devengosTot + devengosTotPrev
+
+baseTopada = Min(topeMax,devengosTotMesLSD)
+
+'Reparto de imponibles entre remuneracion/art y vacacciones
+If devengosTotMesLSD <> 0 Then
+    baseRem = (devengosNormLSD*baseTopada)/devengosTotMesLSD
+    baseRemArt = (devengosArtLSD*baseTopada)/devengosTotMesLSD
+    baseRemVac = (devengosVacLSD*baseTopada)/devengosTotMesLSD
+EndIf
+
+'Considera los imponibles ya aplicada en el mismo mes LSD para ajustar en la paga de proceso (variables "xxxPrev")
+'y si estamos en una paga retroactiva considera el importe original para que quede grabada la diferencia (variables "xxxOrig")
+baseRemPrev = SAR_LSD_COTIZ[0].SAR_REMUN_IMPO
+baseRemArtPrev = SAR_LSD_COTIZ[0].SAR_BASE_COTIZ_ART
+baseRemVacPrev = SAR_LSD_COTIZ[0].SAR_VAC_IMPO_PLUS
+baseRem = baseRem - baseRemPrev + RemImpoOrig
+baseRemArt = baseRemArt - baseRemArtPrev + RemImpoOrigArt
+baseRemVac = baseRemVac - baseRemVacPrev + RemImpoOrigVac
+
+'Se mira el indicador de desglose vacaciones, si no esta activado las vacaciones se integran en los imponibles normales
+If SAR_LSD_IND_DESGLOSE_VAC = 0 Then
+    baseRem = baseRem + baseRemVac
+    baseRemVac = 0
+EndIf
+
+'Asigna a los conceptos tanto de jubilacion como de ley
+SAR_REM_IMPO_JUB = Round(baseRem,SAR_NUM_DEC)
+SAR_BASE_COTIZ_ART = Round(baseRemArt,SAR_NUM_DEC)
+SAR_BASE_ART_JUB = Round(baseRemArt,SAR_NUM_DEC)
+SAR_VAC_IMPO_PLUS = Round(baseRemVac,SAR_NUM_DEC)
+
+Return Round(baseRem,SAR_NUM_DEC)

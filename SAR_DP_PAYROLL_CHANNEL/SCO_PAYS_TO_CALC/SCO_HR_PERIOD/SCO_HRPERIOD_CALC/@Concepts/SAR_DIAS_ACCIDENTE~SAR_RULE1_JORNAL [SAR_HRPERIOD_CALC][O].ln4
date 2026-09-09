@@ -1,0 +1,137 @@
+tope= SAR_TOPE_ACC_EMP 'el 510 se asigna por tabla de valor
+
+IF (tope = 0) or (SAR_IND_ACCIDENTE = 0) THEN
+    Return(0)
+ENDIF
+
+'inicializacion de variables
+quedan = tope   'dias de empresa que quedan
+totdemp = 0     'total dias de empresa	
+totdart = 0     'total dias ART
+totdart_ag = 0
+demp = 0        'dias de empresa
+dart = 0        'dias ART
+dart_ag = 0
+hemp = 0        'horas empresa
+hart = 0        'horas ART
+tothemp = 0     'total horas empresa
+tothart = 0     'total horas ART
+ordant = 0	    'ordinal accidente anterior
+graba_acum = SAR_PAYS_TO_CALC.SCO_SAVEYTD
+aux = DxDate(06,11,2009)
+
+
+IF graba_acum = 1 THEN 
+    '************************* Inicio Delete en M4SAR_ACM_REC_ART *****************************
+    If SAR_ACM_REC_ART.COUNT() > 0 THEN 
+        primerreg = 0
+        ultimoreg = SAR_ACM_REC_ART.COUNT() - 1
+            FOR  M = primerreg TO ultimoreg          'DESDEM
+                SAR_ACM_REC_ART.MOVETO(M)
+                SAR_ACM_REC_ART.Deleteregister()
+            NEXT
+    Endif
+    '************************* Fin Delete en M4SAR_ACM_REC_ART ********************************   
+ENDIF         
+
+
+SAR_ACCID_ACT.BEGIN()
+WHILE SAR_ACCID_ACT.ISEOF() = FALSE
+
+    fec_acc = SAR_ACCID_ACT.SCO_DT_ACC    
+    fec_ini = SAR_ACCID_ACT.SAR_DT_START
+    fec_fin = SAR_ACCID_ACT.SAR_DT_END
+    ordact = SAR_ACCID_ACT.SAR_ID_ORDINAL 'ordinal accidente actual
+    fec_ini_pag = SAR_ACCID_ACT.SAR_DT_ALLOC_START
+    fec_fin_pag = SAR_ACCID_ACT.SAR_DT_ALLOC_END
+
+    IF ordact <> ordant THEN
+        dias_rec_ant = 0
+        total_dias_rec_ant = 0
+	  Ini_calc_horas = Max(fec_ini, fec_ini_pag)	      'Fecha de inicio para el calculo de horas en la paga 
+        Fin_calc_horas = Min(fec_fin, fec_fin_pag)	      'Fecha de fin para el calculo de horas en la paga
+        dias_acc_pag = Fin_calc_horas - Ini_calc_horas + 1	'dias del accidente en la paga
+        dias_acc_ant = COMMONTIME(fec_ini,fec_fin, fec_ini,(SAR_ACCID_ACT.SAR_DT_ALLOC_START - 1))	'dias del accidente anteriores que vienen arrastrados
+    
+        SAR_ACCID_ANT.BEGIN()
+        WHILE SAR_ACCID_ANT.ISEOF() = FALSE
+            rec_ini = SAR_ACCID_ANT.SAR_DT_START
+            rec_fin = SAR_ACCID_ANT.SAR_DT_END
+            IF ordact = SAR_ACCID_ANT.SAR_ID_ORDINAL THEN	'procesamos los registros cuyo ordinal de accidente es el actual
+                dias_rec_ant = rec_fin - rec_ini + 1        'dias que dura la recaida    
+                total_dias_rec_ant = total_dias_rec_ant + dias_rec_ant
+            ENDIF
+        SAR_ACCID_ANT.GONEXT()
+        WEND
+
+        total_dias_rec_ant = total_dias_rec_ant + dias_acc_ant      'total dias antes de la paga que se calcula
+        quedan = quedan - total_dias_rec_ant
+    ENDIF
+
+    IF quedan > 0 THEN                 'todavia quedan dias para la empresa
+        IF quedan < dias_acc_pag THEN
+            demp = demp + quedan
+		fin_demp = Ini_calc_horas + quedan - 1
+		hemp = hemp + SAR_CALC_HORAS_TEORICAS(Ini_calc_horas, fin_demp)
+            dart = dart + (dias_acc_pag - quedan)
+		hart = hart + SAR_CALC_HORAS_TEORICAS(fin_demp + 1, Fin_calc_horas)
+		
+            IF fec_acc < aux THEN         				
+                dart_ag = dart_ag + (dias_acc_pag - quedan)				
+                quedan=0                
+            endif
+            quedan=0
+        ELSE
+            demp = demp + dias_acc_pag
+		hemp = hemp + SAR_CALC_HORAS_TEORICAS(Ini_calc_horas, Fin_calc_horas)
+            quedan = quedan - dias_acc_pag
+        ENDIF				
+    ELSE
+        dart = dart + dias_acc_pag
+	  hart = hart + SAR_CALC_HORAS_TEORICAS(Ini_calc_horas, Fin_calc_horas)
+        quedan = 0
+        
+        IF fec_acc < aux THEN 
+            dart_ag = dart_ag + dias_acc_pag
+            quedan=0            
+       ENDIF
+    ENDIF
+
+    totdemp = totdemp + demp
+    totdart = totdart + dart
+    tothemp = tothemp + hemp
+    tothart = tothart + hart
+    IF fec_acc < aux THEN     
+        totdart_ag = totdart_ag + dart_ag
+    ENDIF
+    
+    IF graba_acum = 1 THEN 
+     
+      '************************* Inicio Insert en M4_ACM_REC_ART *****************************
+        SAR_ACM_REC_ART.ADDREGISTER()
+        SAR_ACM_REC_ART.SAR_ID_ORDINAL = ordact
+        SAR_ACM_REC_ART.SAR_DT_START = fec_ini
+        SAR_ACM_REC_ART.SAR_DIAS_EMP = demp
+        SAR_ACM_REC_ART.SAR_DIAS_ART = dart
+        
+        '************************* Fin Insert en M4_ACM_REC_ART *****************************
+    ENDIF    
+
+    ordant=ordact
+    demp=0
+    dart=0
+
+SAR_ACCID_ACT.GONEXT()
+WEND
+
+
+SAR_DIAS_ART = tothart
+'Asignacion de los dias a los concepto de dias
+SAR_D_ACC_ART_H = totdart
+SAR_D_ACCIDENTE_H = totdemp
+
+
+SAR_DIAS_ART_DTO_SAC = totdart_ag
+
+
+Return(tothemp)

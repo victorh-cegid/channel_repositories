@@ -1,0 +1,21 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "77" THEN
+    Return(0)
+ENDIF
+
+IF SAR_P_COMPL_DEVENG = 0 OR SAR_DIAS_NORM_SUELD = 0 THEN 
+    Return(0)
+ENDIF
+IF SAR_TIPO_SALARIO = "001" THEN
+    IF SAR_DIAS_NORM_SUELD = 0 THEN
+        valor = 0
+    ELSE
+        IF SAR_DIAS_NORM_SUELD = 0 THEN
+            valor = 0
+        ELSE
+            valor = (SAR_U_CONC_FIJOS * SAR_P_COMPL_DEVENG) / SAR_DIAS_NORM_SUELD
+        ENDIF
+    ENDIF
+ELSE
+    valor = (SAR_U_CONC_FIJOS * SAR_P_COMPL_DEVENG)
+ENDIF
+Return(valor)

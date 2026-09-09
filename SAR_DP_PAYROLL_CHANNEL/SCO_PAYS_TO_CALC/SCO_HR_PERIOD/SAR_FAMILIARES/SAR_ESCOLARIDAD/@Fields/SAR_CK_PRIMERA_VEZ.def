@@ -1,0 +1,12 @@
+item: SAR_CK_PRIMERA_VEZ
+name: 1era asig. ayuda escolar
+column_name: SAR_CK_PRIMERA_VEZ
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 1
+scale: 0
+scope: RECORD
+default_value: "0"
+internal_type: 1
+item_aux: null

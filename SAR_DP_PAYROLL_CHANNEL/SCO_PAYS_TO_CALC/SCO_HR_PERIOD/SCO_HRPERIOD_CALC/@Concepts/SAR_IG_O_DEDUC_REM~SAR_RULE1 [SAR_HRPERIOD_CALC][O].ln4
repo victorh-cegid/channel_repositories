@@ -1,0 +1,7 @@
+importeacum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_M_O_DED
+importemes = SAR_TOT_M_O_DED
+importe_oe = SAR_JUR_OTRAS_DED + SAR_OTR_DED_ANT_EMP
+
+importe_tot = importeacum + importemes + importe_oe
+
+Return (importe_tot)

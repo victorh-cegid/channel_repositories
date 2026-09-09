@@ -1,0 +1,7 @@
+If DxYear(SAR_FEC_IMPUT_IG) <> 2024 Or SAR_LBASE_IND_CALC_BENEF = 1 Then Return(0)
+importe = SAR_ACM_IG_ANIO_IMPUT[0].SAR_LBASE_BENEFICIO
+
+'Se considera el importe informado de otros empleadores:
+importe = importe + SAR_LBASE_BENEF_OE + SAR_ACM_IG_ANIO_IMPUT[0].SAR_LBASE_BENEF_OE
+
+Return Round(importe,SAR_NUM_DEC)

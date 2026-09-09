@@ -1,0 +1,994 @@
+'Cuando SAR_IND_AJUSTE_DEI = 1 en retroactividad no se tendra en cuenta los importes que cambien (salvo OE) para formar parte de la base del impuesto y la DEI.
+'Dichos importes no considerados en retroactividad se guardan en el concepto SAR_AJIG_XXX para considerarlos en la paga normal siguiente.
+
+'Este concepto realiza dicho calculo recibiendo varios parametros:
+
+'ARG_CNCPTO_IMP: El concepto que suma a la base del impuesto, normalmente desde el que se llama a este concepto.
+'ARG_CNCPTO_DIF: El concepto donde se graba la diferencia que no se va a incluir en la base del impuesto retro sino en la normal.
+'ARG_CNCPTO_EXC1: Poner "0" si no aplica. Concepto 1 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC2: Poner "0" si no aplica. Concepto 2 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC3: Poner "0" si no aplica. Concepto 3 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC4: Poner "0" si no aplica. Concepto 4 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC5: Poner "0" si no aplica. Concepto 5 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC6: Poner "0" si no aplica. Concepto 6 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC7: Poner "0" si no aplica. Concepto 7 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC8: Poner "0" si no aplica. Concepto 8 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC9: Poner "0" si no aplica. Concepto 9 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC10: Poner "0" si no aplica. Concepto 10 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC11: Poner "0" si no aplica. Concepto 11 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC12: Poner "0" si no aplica. Concepto 12 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC13: Poner "0" si no aplica. Concepto 13 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC14: Poner "0" si no aplica. Concepto 14 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC15: Poner "0" si no aplica. Concepto 15 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC16: Poner "0" si no aplica. Concepto 16 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+
+'Ampliacion
+'ARG_CNCPTO_EXC17: Poner "0" si no aplica. Concepto 17 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC18: Poner "0" si no aplica. Concepto 18 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC19: Poner "0" si no aplica. Concepto 19 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC20: Poner "0" si no aplica. Concepto 20 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC21: Poner "0" si no aplica. Concepto 21 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC22: Poner "0" si no aplica. Concepto 22 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC23: Poner "0" si no aplica. Concepto 23 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC24: Poner "0" si no aplica. Concepto 24 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC25: Poner "0" si no aplica. Concepto 25 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC26: Poner "0" si no aplica. Concepto 26 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC27: Poner "0" si no aplica. Concepto 27 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC28: Poner "0" si no aplica. Concepto 28 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC29: Poner "0" si no aplica. Concepto 29 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC30: Poner "0" si no aplica. Concepto 30 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC31: Poner "0" si no aplica. Concepto 31 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC32: Poner "0" si no aplica. Concepto 32 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC33: Poner "0" si no aplica. Concepto 33 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC34: Poner "0" si no aplica. Concepto 34 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC35: Poner "0" si no aplica. Concepto 35 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC36: Poner "0" si no aplica. Concepto 36 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC37: Poner "0" si no aplica. Concepto 37 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC38: Poner "0" si no aplica. Concepto 38 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC39: Poner "0" si no aplica. Concepto 39 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'ARG_CNCPTO_EXC40: Poner "0" si no aplica. Concepto 40 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
+'fin ampliacion
+
+'Retorna el valor que debe tener ARG_CNCPTO_IMP tanto en normal como en retroactividad
+
+conceptoImp = ARG_CNCPTO_IMP
+conceptoDif = ARG_CNCPTO_DIF
+conceptoExcA = ARG_CNCPTO_EXC1 : conceptoExcB = ARG_CNCPTO_EXC2 : conceptoExcC = ARG_CNCPTO_EXC3 : conceptoExcD = ARG_CNCPTO_EXC4 : conceptoExcE = ARG_CNCPTO_EXC5 : conceptoExcF = ARG_CNCPTO_EXC6 : conceptoExcG = ARG_CNCPTO_EXC7 : conceptoExcH = ARG_CNCPTO_EXC8
+conceptoExcI = ARG_CNCPTO_EXC9 : conceptoExcJ = ARG_CNCPTO_EXC10 : conceptoExcK = ARG_CNCPTO_EXC11 : conceptoExcL = ARG_CNCPTO_EXC12 : conceptoExcM = ARG_CNCPTO_EXC13 : conceptoExcN = ARG_CNCPTO_EXC14 : conceptoExcO = ARG_CNCPTO_EXC15 : conceptoExcP = ARG_CNCPTO_EXC16
+
+'Ampliacion
+conceptoExcQ  = ARG_CNCPTO_EXC17 : conceptoExcR  = ARG_CNCPTO_EXC18 : conceptoExcS  = ARG_CNCPTO_EXC19 : conceptoExcT  = ARG_CNCPTO_EXC20 : conceptoExcU  = ARG_CNCPTO_EXC21 : conceptoExcV  = ARG_CNCPTO_EXC22 : conceptoExcW  = ARG_CNCPTO_EXC23 : conceptoExcX  = ARG_CNCPTO_EXC24
+conceptoExcY  = ARG_CNCPTO_EXC25 : conceptoExcZ  = ARG_CNCPTO_EXC26 : conceptoExcAa = ARG_CNCPTO_EXC27 : conceptoExcAb = ARG_CNCPTO_EXC28 : conceptoExcAc = ARG_CNCPTO_EXC29 : conceptoExcAd = ARG_CNCPTO_EXC30 : conceptoExcAe = ARG_CNCPTO_EXC31 : conceptoExcAf = ARG_CNCPTO_EXC32
+conceptoExcAg = ARG_CNCPTO_EXC33 : conceptoExcAh = ARG_CNCPTO_EXC34 : conceptoExcAi = ARG_CNCPTO_EXC35 : conceptoExcAj = ARG_CNCPTO_EXC36 : conceptoExcAk = ARG_CNCPTO_EXC37 : conceptoExcAl = ARG_CNCPTO_EXC38 : conceptoExcAm = ARG_CNCPTO_EXC39 : conceptoExcAn = ARG_CNCPTO_EXC40
+'fin ampliacion
+
+impOeA = 0 : impOeB = 0 : impOeC = 0 : impOeD = 0 : impOeE = 0 : impOeF = 0 : impOeG = 0 : impOeH = 0
+impOeI = 0 : impOeJ = 0 : impOeK = 0 : impOeL = 0 : impOeM = 0 : impOeN = 0 : impOeO = 0 : impOeP = 0
+difOeA = 0 : difOeB = 0 : difOeC = 0 : difOeD = 0 : difOeE = 0 : difOeF = 0 : difOeG = 0 : difOeH = 0
+difOeI = 0 : difOeJ = 0 : difOeK = 0 : difOeL = 0 : difOeM = 0 : difOeN = 0 : difOeO = 0 : difOeP = 0
+
+'Ampliacion
+impOeQ  = 0 : impOeR  = 0 : impOeS  = 0 : impOeT  = 0 : impOeU  = 0 : impOeV  = 0 : impOeW  = 0 : impOeX  = 0
+impOeY  = 0 : impOeZ  = 0 : impOeAa = 0 : impOeAb = 0 : impOeAc = 0 : impOeAd = 0 : impOeAe = 0 : impOeAf = 0
+impOeAg = 0 : impOeAh = 0 : impOeAi = 0 : impOeAj = 0 : impOeAk = 0 : impOeAl = 0 : impOeAm = 0 : impOeAn = 0
+difOeQ  = 0 : difOeR  = 0 : difOeS  = 0 : difOeT  = 0 : difOeU  = 0 : difOeV  = 0 : difOeW  = 0 : difOeX  = 0
+difOeY  = 0 : difOeZ  = 0 : difOeAa = 0 : difOeAb = 0 : difOeAc = 0 : difOeAd = 0 : difOeAe = 0 : difOeAf = 0
+difOeAg = 0 : difOeAh = 0 : difOeAi = 0 : difOeAj = 0 : difOeAk = 0 : difOeAl = 0 : difOeAm = 0 : difOeAn = 0
+'fin ampliacion
+
+importeOrig = 0 : impOeOrigA = 0 : impOeOrigB = 0 : impOeOrigC = 0 : impOeOrigD = 0 : impOeOrigE = 0 : impOeOrigF = 0 : impOeOrigG = 0 : impOeOrigH = 0
+impOeOrigI = 0 : impOeOrigJ = 0 : impOeOrigK = 0 : impOeOrigL = 0 : impOeOrigM = 0 : impOeOrigN = 0 : impOeOrigO = 0 : impOeOrigP = 0
+
+'Ampliacion
+impOeOrigQ  = 0 : impOeOrigR  = 0 : impOeOrigS  = 0 : impOeOrigT  = 0 : impOeOrigU  = 0 : impOeOrigV  = 0 : impOeOrigW  = 0 : impOeOrigX  = 0
+impOeOrigY  = 0 : impOeOrigZ  = 0 : impOeOrigAa = 0 : impOeOrigAb = 0 : impOeOrigAc = 0 : impOeOrigAd = 0 : impOeOrigAe = 0 : impOeOrigAf = 0
+impOeOrigAg = 0 : impOeOrigAh = 0 : impOeOrigAi = 0 : impOeOrigAj = 0 : impOeOrigAk = 0 : impOeOrigAl = 0 : impOeOrigAm = 0 : impOeOrigAn = 0
+'fin ampliacion
+
+valorImp = 0
+difOeTot = 0
+
+importeDifEspOct = 0
+
+valorImp = GetValue("SCO_HRPERIOD_CALC",conceptoImp,-1)
+
+'Paga especial de reliquidacion septiembre, nos aseguramos que en esta paga retroactiva se imputen las diferencias a la paga de reliquidacion y no a la normal.
+If SAR_IND_PAGA_RELIQ = 1 And SCO_DT_ALLOCATION = DxDate(30,9,2023) Then
+    IMPORTE = valorImp
+    Return(0)
+EndIf
+
+indAjusteDEI = SAR_IND_AJUSTE_DEI
+
+'2024 deja de existir DEI, ya no es necesario mover los importes del impuesto:
+If DxYear(SAR_FEC_IMPUT_IG) > 2023 Then indAjusteDEI = 0
+
+'2024 tras ley de bases es necesario reactivar este comportamiento hasta junio para calcular el beneficio de ex-cedulares o 4ta anterior y que no tome remuneraciones retroactivas
+If DxYear(SAR_FEC_IMPUT_IG) = 2024 And SCO_DT_ALLOCATION <= DxDate(30,6,2024) And SAR_LBASE_IND_DEVENGADO = 0 Then indAjusteDEI = 1
+
+esBaja = 0
+If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
+
+'En retroactividad no se generan diferencias en base de impuesto salvo OE
+If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And indAjusteDEI = 1 And esBaja = 0 Then
+    'Reconstruimos los importes de pagas que ya han tenido ajustes previamente sin este criterio. Tomar como importe orig solo la propia paga y retros con origen la propia paga
+    ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
+    For acum = 0 To ult_reg - 1
+        If SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT = SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acum].SCO_PAY_FREQ_PAYM = SCO_PAY_FREQ_ALLOC And SCO_AC_HR_PERIOD_READ_1[acum].SCO_PAY_TYPE_PAYM = SAR_TP_IMPUT Then
+            importeOrig = importeOrig + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoImp,acum)
+            If conceptoExcA <> "0" Then impOeOrigA = impOeOrigA + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcA,acum)
+            If conceptoExcB <> "0" Then impOeOrigB = impOeOrigB + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcB,acum)
+            If conceptoExcC <> "0" Then impOeOrigC = impOeOrigC + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcC,acum)                               
+            If conceptoExcD <> "0" Then impOeOrigD = impOeOrigD + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcD,acum)                               
+            If conceptoExcE <> "0" Then impOeOrigE = impOeOrigE + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcE,acum)                               
+            If conceptoExcF <> "0" Then impOeOrigF = impOeOrigF + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcF,acum)                               
+            If conceptoExcG <> "0" Then impOeOrigG = impOeOrigG + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcG,acum)                               
+            If conceptoExcH <> "0" Then impOeOrigH = impOeOrigH + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcH,acum)
+            If conceptoExcI <> "0" Then impOeOrigI = impOeOrigI + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcI,acum)
+            If conceptoExcJ <> "0" Then impOeOrigJ = impOeOrigJ + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcJ,acum)
+            If conceptoExcK <> "0" Then impOeOrigK = impOeOrigK + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcK,acum)                               
+            If conceptoExcL <> "0" Then impOeOrigL = impOeOrigL + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcL,acum)                               
+            If conceptoExcM <> "0" Then impOeOrigM = impOeOrigM + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcM,acum)                               
+            If conceptoExcN <> "0" Then impOeOrigN = impOeOrigN + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcN,acum)                               
+            If conceptoExcO <> "0" Then impOeOrigO = impOeOrigO + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcO,acum)                               
+            If conceptoExcP <> "0" Then impOeOrigP = impOeOrigP + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcP,acum) 
+
+'Ampliacion
+            If conceptoExcQ <> "0" Then impOeOrigQ = impOeOrigQ + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcQ,acum) 
+            If conceptoExcR <> "0" Then impOeOrigR = impOeOrigR + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcR,acum) 
+            If conceptoExcS <> "0" Then impOeOrigS = impOeOrigS + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcS,acum) 
+            If conceptoExcT <> "0" Then impOeOrigT = impOeOrigT + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcT,acum) 
+            If conceptoExcU <> "0" Then impOeOrigU = impOeOrigU + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcU,acum) 
+            If conceptoExcV <> "0" Then impOeOrigV = impOeOrigV + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcV,acum) 
+            If conceptoExcW <> "0" Then impOeOrigW = impOeOrigW + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcW,acum) 
+            If conceptoExcX <> "0" Then impOeOrigX = impOeOrigX + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcX,acum) 
+            If conceptoExcY <> "0" Then impOeOrigY = impOeOrigY + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcY,acum) 
+            If conceptoExcZ <> "0" Then impOeOrigZ = impOeOrigZ + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcZ,acum) 
+            If conceptoExcAa <> "0" Then impOeOrigAa = impOeOrigAa + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAa,acum) 
+            If conceptoExcAb <> "0" Then impOeOrigAb = impOeOrigAb + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAb,acum) 
+            If conceptoExcAc <> "0" Then impOeOrigAc = impOeOrigAc + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAc,acum) 
+            If conceptoExcAd <> "0" Then impOeOrigAd = impOeOrigAd + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAd,acum) 
+            If conceptoExcAe <> "0" Then impOeOrigAe = impOeOrigAe + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAe,acum) 
+            If conceptoExcAf <> "0" Then impOeOrigAf = impOeOrigAf + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAf,acum) 
+            If conceptoExcAg <> "0" Then impOeOrigAg = impOeOrigAg + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAg,acum) 
+            If conceptoExcAh <> "0" Then impOeOrigAh = impOeOrigAh + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAh,acum) 
+            If conceptoExcAi <> "0" Then impOeOrigAi = impOeOrigAi + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAi,acum) 
+            If conceptoExcAj <> "0" Then impOeOrigAj = impOeOrigAj + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAj,acum) 
+            If conceptoExcAk <> "0" Then impOeOrigAk = impOeOrigAk + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAk,acum) 
+            If conceptoExcAl <> "0" Then impOeOrigAl = impOeOrigAl + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAl,acum) 
+            If conceptoExcAm <> "0" Then impOeOrigAm = impOeOrigAm + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAm,acum) 
+            If conceptoExcAn <> "0" Then impOeOrigAn = impOeOrigAn + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAn,acum) 
+'fin ampliacion
+
+        EndIf
+        
+        'Situacion especial Octubre: retro imputada a Septiembre para ajustear D473 y ademas se pago algo adicional.
+        'en retro desde reliq a Octubre vamos a incorporar los importes que se generaron en Octubre imputado a septiembre
+
+        If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 And DxYear(SCO_DT_ALLOCATION) = 2023 And DxMonth(SCO_DT_ALLOCATION) = 10 And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT = SCO_DT_ALLOCATION And DxMonth(SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION) = 9 And SCO_AC_HR_PERIOD_READ_1[acum].SAR_IND_D473_IMP_PER_ANT = 1 Then
+            'Consideramos AJIG de la retro
+            importeDifEspOct = importeDifEspOct + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoDif,acum)
+        EndIf
+                
+        'Fin Situacion especial Octubre
+        
+    Next
+
+    'Control de conceptos OE: que si deben formar parte de la base en retroactividad
+    If conceptoExcA <> "0" Then
+        impOeA = GetValue("SCO_HRPERIOD_CALC",conceptoExcA,-1)
+        difOeA = impOeA - impOeOrigA
+
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcA And suma = 0 Then signo = -1
+        Next
+        difOeA = difOeA * signo
+
+    EndIf
+    If conceptoExcB <> "0" Then
+        impOeB = GetValue("SCO_HRPERIOD_CALC",conceptoExcB,-1)
+        difOeB = impOeB - impOeOrigB
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcB And suma = 0 Then signo = -1
+        Next
+        difOeB = difOeB * signo
+        
+    EndIf
+    If conceptoExcC <> "0" Then
+        impOeC = GetValue("SCO_HRPERIOD_CALC",conceptoExcC,-1)
+        difOeC = impOeC - impOeOrigC
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcC And suma = 0 Then signo = -1
+        Next
+        difOeC = difOeC * signo            
+        
+    EndIf
+    If conceptoExcD <> "0" Then
+        impOeD = GetValue("SCO_HRPERIOD_CALC",conceptoExcD,-1)
+        difOeD = impOeD - impOeOrigD
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcD And suma = 0 Then signo = -1
+        Next
+        difOeD = difOeD * signo             
+        
+    EndIf
+    If conceptoExcE <> "0" Then
+        impOeE = GetValue("SCO_HRPERIOD_CALC",conceptoExcE,-1)
+        difOeE = impOeE - impOeOrigE
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcE And suma = 0 Then signo = -1
+        Next
+        difOeE = difOeE * signo             
+        
+    EndIf
+    If conceptoExcF <> "0" Then
+        impOeF = GetValue("SCO_HRPERIOD_CALC",conceptoExcF,-1)
+        difOeF = impOeF - impOeOrigF
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcF And suma = 0 Then signo = -1
+        Next
+        difOeF = difOeF * signo             
+        
+    EndIf                        
+    If conceptoExcG <> "0" Then
+        impOeG = GetValue("SCO_HRPERIOD_CALC",conceptoExcG,-1)
+        difOeG = impOeG - impOeOrigG
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcG And suma = 0 Then signo = -1
+        Next
+        difOeG = difOeG * signo             
+        
+    EndIf    
+    If conceptoExcH <> "0" Then
+        impOeH = GetValue("SCO_HRPERIOD_CALC",conceptoExcH,-1)
+        difOeH = impOeH - impOeOrigH
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcH And suma = 0 Then signo = -1
+        Next
+        difOeH = difOeH * signo             
+        
+    EndIf      
+
+    If conceptoExcI <> "0" Then
+        impOeI = GetValue("SCO_HRPERIOD_CALC",conceptoExcI,-1)
+        difOeI = impOeI - impOeOrigI
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcI And suma = 0 Then signo = -1
+        Next
+        difOeI = difOeI * signo             
+        
+    EndIf 
+	
+    If conceptoExcJ <> "0" Then
+        impOeJ = GetValue("SCO_HRPERIOD_CALC",conceptoExcJ,-1)
+        difOeJ = impOeJ - impOeOrigJ
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcJ And suma = 0 Then signo = -1
+        Next
+        difOeJ = difOeJ * signo             
+        
+    EndIf 	
+
+    If conceptoExcK <> "0" Then
+        impOeK = GetValue("SCO_HRPERIOD_CALC",conceptoExcK,-1)
+        difOeK = impOeK - impOeOrigK
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcK And suma = 0 Then signo = -1
+        Next
+        difOeK = difOeK * signo             
+        
+    EndIf 	
+	
+    If conceptoExcL <> "0" Then
+        impOeL = GetValue("SCO_HRPERIOD_CALC",conceptoExcL,-1)
+        difOeL = impOeL - impOeOrigL
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcL And suma = 0 Then signo = -1
+        Next
+        difOeL = difOeL * signo             
+        
+    EndIf 		
+	
+    If conceptoExcM <> "0" Then
+        impOeM = GetValue("SCO_HRPERIOD_CALC",conceptoExcM,-1)
+        difOeM = impOeM - impOeOrigM
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcM And suma = 0 Then signo = -1
+        Next
+        difOeM = difOeM * signo             
+        
+    EndIf 		
+
+    If conceptoExcN <> "0" Then
+        impOeN = GetValue("SCO_HRPERIOD_CALC",conceptoExcN,-1)
+        difOeN = impOeN - impOeOrigN
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcN And suma = 0 Then signo = -1
+        Next
+        difOeN = difOeN * signo             
+        
+    EndIf 		
+
+    If conceptoExcO <> "0" Then
+        impOeO = GetValue("SCO_HRPERIOD_CALC",conceptoExcO,-1)
+        difOeO = impOeO - impOeOrigO
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcO And suma = 0 Then signo = -1
+        Next
+        difOeO = difOeO * signo             
+        
+    EndIf 		
+
+    If conceptoExcP <> "0" Then
+        impOeP = GetValue("SCO_HRPERIOD_CALC",conceptoExcP,-1)
+        difOeP = impOeP - impOeOrigP
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcP And suma = 0 Then signo = -1
+        Next
+        difOeP = difOeP * signo             
+        
+    EndIf 			
+
+'Ampliacion
+    If conceptoExcQ <> "0" Then
+        impOeQ = GetValue("SCO_HRPERIOD_CALC",conceptoExcQ,-1)
+        difOeQ = impOeQ - impOeOrigQ
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcQ And suma = 0 Then signo = -1
+        Next
+        difOeQ = difOeQ * signo             
+        
+    EndIf 
+
+    If conceptoExcR <> "0" Then
+        impOeR = GetValue("SCO_HRPERIOD_CALC",conceptoExcR,-1)
+        difOeR = impOeR - impOeOrigR
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcR And suma = 0 Then signo = -1
+        Next
+        difOeR = difOeR * signo             
+        
+    EndIf 
+
+    If conceptoExcS <> "0" Then
+        impOeS = GetValue("SCO_HRPERIOD_CALC",conceptoExcS,-1)
+        difOeS = impOeS - impOeOrigS
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcS And suma = 0 Then signo = -1
+        Next
+        difOeS = difOeS * signo             
+        
+    EndIf 
+
+    If conceptoExcT <> "0" Then
+        impOeT = GetValue("SCO_HRPERIOD_CALC",conceptoExcT,-1)
+        difOeT = impOeT - impOeOrigT
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcT And suma = 0 Then signo = -1
+        Next
+        difOeT = difOeT * signo             
+        
+    EndIf 
+
+    If conceptoExcU <> "0" Then
+        impOeU = GetValue("SCO_HRPERIOD_CALC",conceptoExcU,-1)
+        difOeU = impOeU - impOeOrigU
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcU And suma = 0 Then signo = -1
+        Next
+        difOeU = difOeU * signo             
+        
+    EndIf 
+
+    If conceptoExcV <> "0" Then
+        impOeV = GetValue("SCO_HRPERIOD_CALC",conceptoExcV,-1)
+        difOeV = impOeV - impOeOrigV
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcV And suma = 0 Then signo = -1
+        Next
+        difOeV = difOeV * signo             
+        
+    EndIf 
+
+    If conceptoExcW <> "0" Then
+        impOeW = GetValue("SCO_HRPERIOD_CALC",conceptoExcW,-1)
+        difOeW = impOeW - impOeOrigW
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcW And suma = 0 Then signo = -1
+        Next
+        difOeW = difOeW * signo             
+        
+    EndIf 
+
+    If conceptoExcX <> "0" Then
+        impOeX = GetValue("SCO_HRPERIOD_CALC",conceptoExcX,-1)
+        difOeX = impOeX - impOeOrigX
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcX And suma = 0 Then signo = -1
+        Next
+        difOeX = difOeX * signo             
+        
+    EndIf 
+
+    If conceptoExcY <> "0" Then
+        impOeY = GetValue("SCO_HRPERIOD_CALC",conceptoExcY,-1)
+        difOeY = impOeY - impOeOrigY
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcY And suma = 0 Then signo = -1
+        Next
+        difOeY = difOeY * signo             
+        
+    EndIf 
+
+    If conceptoExcZ <> "0" Then
+        impOeZ = GetValue("SCO_HRPERIOD_CALC",conceptoExcZ,-1)
+        difOeZ = impOeZ - impOeOrigZ
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcZ And suma = 0 Then signo = -1
+        Next
+        difOeZ = difOeZ * signo             
+        
+    EndIf 
+
+    If conceptoExcAa <> "0" Then
+        impOeAa = GetValue("SCO_HRPERIOD_CALC",conceptoExcAa,-1)
+        difOeAa = impOeAa - impOeOrigAa
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAa And suma = 0 Then signo = -1
+        Next
+        difOeAa = difOeAa * signo             
+        
+    EndIf 
+
+    If conceptoExcAb <> "0" Then
+        impOeAb = GetValue("SCO_HRPERIOD_CALC",conceptoExcAb,-1)
+        difOeAb = impOeAb - impOeOrigAb
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAb And suma = 0 Then signo = -1
+        Next
+        difOeAb = difOeAb * signo             
+        
+    EndIf 
+
+    If conceptoExcAc <> "0" Then
+        impOeAc = GetValue("SCO_HRPERIOD_CALC",conceptoExcAc,-1)
+        difOeAc = impOeAc - impOeOrigAc
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAc And suma = 0 Then signo = -1
+        Next
+        difOeAc = difOeAc * signo             
+        
+    EndIf 
+
+    If conceptoExcAd <> "0" Then
+        impOeAd = GetValue("SCO_HRPERIOD_CALC",conceptoExcAd,-1)
+        difOeAd = impOeAd - impOeOrigAd
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAd And suma = 0 Then signo = -1
+        Next
+        difOeAd = difOeAd * signo             
+        
+    EndIf 
+
+    If conceptoExcAe <> "0" Then
+        impOeAe = GetValue("SCO_HRPERIOD_CALC",conceptoExcAe,-1)
+        difOeAe = impOeAe - impOeOrigAe
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAe And suma = 0 Then signo = -1
+        Next
+        difOeAe = difOeAe * signo             
+        
+    EndIf 
+
+    If conceptoExcAf <> "0" Then
+        impOeAf = GetValue("SCO_HRPERIOD_CALC",conceptoExcAf,-1)
+        difOeAf = impOeAf - impOeOrigAf
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAf And suma = 0 Then signo = -1
+        Next
+        difOeAf = difOeAf * signo             
+        
+    EndIf 
+
+    If conceptoExcAg <> "0" Then
+        impOeAg = GetValue("SCO_HRPERIOD_CALC",conceptoExcAg,-1)
+        difOeAg = impOeAg - impOeOrigAg
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAg And suma = 0 Then signo = -1
+        Next
+        difOeAg = difOeAg * signo             
+        
+    EndIf 
+
+    If conceptoExcAh <> "0" Then
+        impOeAh = GetValue("SCO_HRPERIOD_CALC",conceptoExcAh,-1)
+        difOeAh = impOeAh - impOeOrigAh
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAh And suma = 0 Then signo = -1
+        Next
+        difOeAh = difOeAh * signo             
+        
+    EndIf 
+
+    If conceptoExcAi <> "0" Then
+        impOeAi = GetValue("SCO_HRPERIOD_CALC",conceptoExcAi,-1)
+        difOeAi = impOeAi - impOeOrigAi
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAi And suma = 0 Then signo = -1
+        Next
+        difOeAi = difOeAi * signo             
+        
+    EndIf 
+
+    If conceptoExcAj <> "0" Then
+        impOeAj = GetValue("SCO_HRPERIOD_CALC",conceptoExcAj,-1)
+        difOeAj = impOeAj - impOeOrigAj
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAj And suma = 0 Then signo = -1
+        Next
+        difOeAj = difOeAj * signo             
+        
+    EndIf 
+
+    If conceptoExcAk <> "0" Then
+        impOeAk = GetValue("SCO_HRPERIOD_CALC",conceptoExcAk,-1)
+        difOeAk = impOeAk - impOeOrigAk
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAk And suma = 0 Then signo = -1
+        Next
+        difOeAk = difOeAk * signo             
+        
+    EndIf 
+
+    If conceptoExcAl <> "0" Then
+        impOeAl = GetValue("SCO_HRPERIOD_CALC",conceptoExcAl,-1)
+        difOeAl = impOeAl - impOeOrigAl
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAl And suma = 0 Then signo = -1
+        Next
+        difOeAl = difOeAl * signo             
+        
+    EndIf 
+
+    If conceptoExcAm <> "0" Then
+        impOeAm = GetValue("SCO_HRPERIOD_CALC",conceptoExcAm,-1)
+        difOeAm = impOeAm - impOeOrigAm
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAm And suma = 0 Then signo = -1
+        Next
+        difOeAm = difOeAm * signo             
+        
+    EndIf 
+
+    If conceptoExcAn <> "0" Then
+        impOeAn = GetValue("SCO_HRPERIOD_CALC",conceptoExcAn,-1)
+        difOeAn = impOeAn - impOeOrigAn
+        
+        'Si va restando al total cambiamos el signo
+        signo = 1
+        SAR_TOTAL_VALUES.DESTROYBLOCK()
+        SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+        SAR_TOTAL_VALUES.SAR_ID_TOTAL = conceptoImp
+        SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+        SAR_TOTAL_VALUES.Load_Blk()
+        For i=0 To SAR_TOTAL_VALUES.Count()-1
+            id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+            suma = SAR_TOTAL_VALUES[i].IS_SUM
+            If id_concepto = conceptoExcAn And suma = 0 Then signo = -1
+        Next
+        difOeAn = difOeAn * signo             
+        
+    EndIf 
+'Fin ampliacion
+
+    difOeTot = difOeA + difOeB + difOeC + difOeD + difOeE + difOeF + difOeG + difOeH + difOeI + difOeJ + difOeK + difOeL + difOeM + difOeN + difOeO + difOeP
+
+'Ampliacion
+    difOeTot = difOeTot + difOeQ + difOeR + difOeS + difOeT + difOeU + difOeV + difOeW + difOeX + difOeY + difOeZ + difOeAa + difOeAb + difOeAc + difOeAd + difOeAe + difOeAf + difOeAg + difOeAh + difOeAi + difOeAj + difOeAk + difOeAl + difOeAm + difOeAn
+'Fin ampliacion
+
+    'Fin control de conceptos OE
+
+    difImpIg = valorImp - importeOrig - difOeTot
+    valorImp = importeOrig + difOeTot + importeDifEspOct
+    SetValue("SCO_HRPERIOD_CALC",conceptoDif,-1,difImpIg)
+'En paga normal se recupera el importe no incorporado en retroactiva
+Else
+    ImpPendienteIG = GetValue("SAR_ACM_IG_ANIO_IMPUT",conceptoDif,-1)
+    valorImp = valorImp + ImpPendienteIG
+    'Se resetea el saldo pendiente
+    SetValue("SCO_HRPERIOD_CALC",conceptoDif,-1,ImpPendienteIG * -1)    
+EndIf
+
+IMPORTE = valorImp
+
+Return(0)

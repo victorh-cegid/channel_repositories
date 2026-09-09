@@ -1,0 +1,10 @@
+item: SAR_HS_AUSENCIA
+name: Horas de ausencia
+column_name: SAR_HS_AUSENCIA
+item_type: FIELD
+type: CURRENCY
+id_m4_type: 8
+prec: 18
+scale: 6
+scope: RECORD
+default_value: null

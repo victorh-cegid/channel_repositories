@@ -1,0 +1,10 @@
+valor = 0
+mes = DxMonth(SAR_FECHA_BASE)
+mes_baja = DxMonth(SAR_FECHA_BAJA)
+ind_baja = SAR_ES_BAJA
+
+If mes = 6 or (ind_baja = 1 and (mes_baja >= 1 and mes_baja <= 6)) then
+    valor = SAR_PR_AGUINALDO * SAR_PORC_PE_1 / 100
+Endif
+
+Return(valor)

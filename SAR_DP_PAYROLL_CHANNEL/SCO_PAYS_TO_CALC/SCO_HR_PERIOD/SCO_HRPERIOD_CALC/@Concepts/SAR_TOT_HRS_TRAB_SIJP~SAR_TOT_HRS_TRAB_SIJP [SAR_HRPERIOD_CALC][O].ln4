@@ -1,0 +1,12 @@
+'Solo toma valor en el caso que el empleado tenga regimen:
+
+'Frecuencia: 003 - Quincenal
+'Tipo de salario : 003 - Horario
+
+
+valor = SAR_TOT_HRS_TRAB_SIJP
+
+IF SAR_TIPO_SALARIO <> "003" THEN RETURN(0)
+
+
+RETURN(valor)

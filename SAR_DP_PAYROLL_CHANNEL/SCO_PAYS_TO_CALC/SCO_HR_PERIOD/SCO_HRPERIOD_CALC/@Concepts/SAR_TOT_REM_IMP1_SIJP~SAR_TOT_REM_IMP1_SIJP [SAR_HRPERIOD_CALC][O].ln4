@@ -1,0 +1,4 @@
+'dependencias
+a = SAR_SAC_IMPO
+importe = SAR_TOT_REM_IMP1_SIJP
+Return (importe)

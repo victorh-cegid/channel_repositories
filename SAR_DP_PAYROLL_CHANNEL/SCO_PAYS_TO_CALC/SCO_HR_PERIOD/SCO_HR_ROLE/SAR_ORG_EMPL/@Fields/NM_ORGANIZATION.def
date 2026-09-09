@@ -1,0 +1,12 @@
+item: NM_ORGANIZATION
+name: Nombre sociedad
+column_name: NM_ORGANIZATION
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 62
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 8
+item_aux: null

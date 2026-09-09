@@ -1,0 +1,8 @@
+'Dias que no devengan paga de aguinaldo (solo empleados con tipo de salario horario)
+
+valor = SAR_DIAS_HUELGA_H + SAR_D_LIC_S_GOC_SUE_H + SAR_D_R_PTO_ACC_H + SAR_D_R_PTO_ENF_H + SAR_D_R_PTO_SIN_H + SAR_D_EXCEDENCIA_H + SAR_D_SUSP_DISCI_H + SAR_D_MATERN_H + SAR_LIC_ONCO_DIAS + SAR_D_AUSENCIA_H
+valor= valor + SAR_DIAS_SUSP_ART_223BIS_H + SAR_DIAS_SUSP_RES_397_H
+'Decreto 792/2020
+valor = valor + SAR_DIAS_DEC792
+
+Return(valor)

@@ -1,0 +1,9 @@
+item: SCO_PROCESS_CURR
+name: Moneda proceso
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 3
+scale: 0
+scope: BLOCK
+default_value: null

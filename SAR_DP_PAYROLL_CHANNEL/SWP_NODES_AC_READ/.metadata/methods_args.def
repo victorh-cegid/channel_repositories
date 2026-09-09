@@ -1,0 +1,5 @@
+# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
+SCO_CALC_MIN_MAX_DATE | ID_NODE | IN | STRING | 2 | 30 | 0 | 1
+SCO_DYN_CALC_MIN_MAX_DATE | ID_NODE | IN | STRING | 2 | 30 | 0 | 1
+SCO_DYN_CALC_MIN_MAX_DATE | MIN_DT_START | OUT | DATE | 4 | 10 | 0 | 2
+SCO_DYN_CALC_MIN_MAX_DATE | MAX_DT_END | OUT | DATE | 4 | 10 | 0 | 3

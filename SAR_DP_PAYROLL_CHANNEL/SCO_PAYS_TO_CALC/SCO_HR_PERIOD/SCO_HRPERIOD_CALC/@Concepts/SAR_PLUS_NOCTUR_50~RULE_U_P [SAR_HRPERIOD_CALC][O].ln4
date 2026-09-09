@@ -1,0 +1,26 @@
+If SAR_TP_IMPUT = "77" or SAR_TP_IMPUT = "88" or SAR_TP_IMPUT = "99" Then Return(0)
+
+a = SAR_IMPORTE_LICENCIAS
+uds = SAR_U_PL_NOCTUR_50
+precio = SAR_PR_PL_NOCTUR_50
+
+precio_trib = precio / 1.5 'Calculamos el precio base que sera tributable
+precio_plus = precio - precio_trib 'Precio plus, que estara exento.
+
+importe = Round(uds * precio,SCO_CURR_DECIMALS)
+
+'asignacion importes tributables y exentos
+unid_sem = SAR_UN_HS_SEM_50_NOC
+unid_finde = SAR_UN_HS_FINDE_50_NOC
+unid_trib = (unid_sem + unid_finde)
+
+importe_trib = Round(unid_trib * precio_trib,SCO_CURR_DECIMALS)
+SAR_HS_FINDE_TRIB_50_NOC = importe_trib
+
+importe_exen = Round(unid_finde * precio_plus,SCO_CURR_DECIMALS)
+SAR_HS_FINDE_EXEN_50_NOC = importe_exen
+
+importe_plus_trib= Round(unid_sem * precio_plus,SCO_CURR_DECIMALS)
+SAR_PLUS_HS_TRIB_50_NOC = importe_plus_trib
+
+Return(importe)

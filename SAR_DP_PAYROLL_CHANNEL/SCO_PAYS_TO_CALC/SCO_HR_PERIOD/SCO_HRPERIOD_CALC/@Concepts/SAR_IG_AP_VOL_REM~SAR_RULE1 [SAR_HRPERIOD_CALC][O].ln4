@@ -1,0 +1,4 @@
+importeacum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_AP_VOLUNT
+importemes = SAR_TOT_AP_VOLUNT
+importe_tot = importeacum + importemes
+Return(importe_tot)

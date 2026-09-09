@@ -1,0 +1,24 @@
+importe = SAR_REDUC_IMPO
+'Para SAC el coeficiente se calculara por el semestre
+SAR_REDUC_IMPO_SAC = importe
+coef = SAR_COEF_JORNADA_PER
+coefJornales = 1
+
+'Parte proporcional para jornales
+If SAR_TIPO_SALARIO = "003" Then 
+    coefJornales = 0
+    horasPaga = 0
+    horasTotales = SAR_HORAS_MES
+    'Si en la paga hay horas informadas, hace precio diario, en cualquier otra situacion, se usara el modelo de semana.
+    If SAR_CANT_HS_TRABAJADAS > 0 THEN
+        precio_hora = importe / horasTotales
+        Return(precio_hora)
+    ElseIf SCO_NUM_HOURS_THEO > 0 THEN
+        horasPaga = SAR_CALC_HORAS_TEORICAS (SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC,SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC)
+    EndIf
+    If horasTotales > 0 Then coefJornales = horasPaga / horasTotales
+EndIf
+'Fin parte proporcional jornales
+
+importe = importe * coef * coefJornales
+Return(importe)

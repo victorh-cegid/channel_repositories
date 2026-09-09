@@ -1,0 +1,20 @@
+IF SAR_TP_IMPUT = "77" or SAR_TP_IMPUT = "88" or SAR_TP_IMPUT = "99" or SAR_TP_IMPUT = "2" THEN
+    Return(0)
+ENDIF
+
+IF SAR_P_SUELDO = 0 OR SAR_DIAS_NORM_SUELD = 0 THEN 
+    Return(0)
+ENDIF
+
+IF SAR_TIPO_SALARIO = "001" THEN
+    IF SAR_DIAS_NORM_SUELD = 0 THEN
+        valor = 0
+    ELSE
+        valor = (SAR_U_CONC_FIJOS * SAR_P_SUELDO) / SAR_DIAS_NORM_SUELD
+    ENDIF
+ELSE
+    valor = (SAR_U_CONC_FIJOS * SAR_P_SUELDO)
+ENDIF
+
+
+Return(valor)

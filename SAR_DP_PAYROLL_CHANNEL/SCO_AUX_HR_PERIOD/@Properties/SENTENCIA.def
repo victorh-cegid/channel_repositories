@@ -1,0 +1,12 @@
+item: SENTENCIA
+name: SENTENCIA
+item_type: PROPERTY
+type: STRING
+id_m4_type: 3
+prec: -1
+scale: 0
+scope: BLOCK
+default_value: null
+internal_type: 20
+item_aux: null
+api_sql_params: true

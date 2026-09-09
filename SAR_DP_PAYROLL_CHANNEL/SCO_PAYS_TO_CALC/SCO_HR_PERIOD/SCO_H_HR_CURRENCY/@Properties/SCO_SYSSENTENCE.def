@@ -1,0 +1,12 @@
+item: SCO_SYSSENTENCE
+name: Filtro para baja retroactiva
+item_type: PROPERTY
+type: STRING
+id_m4_type: 3
+prec: -1
+scale: 0
+scope: BLOCK
+default_value: null
+internal_type: 20
+item_aux: SCO_SYSS_PARAM
+api_sql_params: true

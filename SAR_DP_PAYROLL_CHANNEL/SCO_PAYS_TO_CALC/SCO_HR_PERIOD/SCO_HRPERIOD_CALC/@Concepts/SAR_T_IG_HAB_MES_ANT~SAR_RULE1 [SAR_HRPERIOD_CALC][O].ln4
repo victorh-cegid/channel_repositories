@@ -1,0 +1,3 @@
+valor = SAR_ACM_PAGA_ANT_IG_REV[0].SAR_IG_TOT_C_IM
+
+Return (valor)

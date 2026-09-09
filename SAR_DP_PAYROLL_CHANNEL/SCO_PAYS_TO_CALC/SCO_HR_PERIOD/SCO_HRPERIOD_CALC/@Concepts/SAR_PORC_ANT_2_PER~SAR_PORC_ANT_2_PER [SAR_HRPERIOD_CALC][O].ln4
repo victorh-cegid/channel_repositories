@@ -1,0 +1,4 @@
+'
+'Toma el valor de convenio
+'
+return(#SAR_PORC_ANT_2_PER)

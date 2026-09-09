@@ -1,0 +1,7 @@
+'Este concepto retorna por defecto la fecha de imputacion (SCO_DT_ALLOCATION) excepto cuando SAR_LSD_IND_PAGAS_FUT valga 1, en tal caso retornara 01/01/4000.
+'Se utiliza en el nodo de acumulado SAR_LSD_COTIZ para considerar (cuando tiene el valor 01/01/4000) o no (cuando tiene el valor de SCO_DT_ALLOCATION) pagas del mismo mes de cotizacion pero de imputacion posterior a la paga que se esta procesando.
+
+fecha = SCO_DT_ALLOCATION
+If SAR_LSD_IND_PAGAS_FUT = 1 Then fecha = DxDate(1,1,4000)
+
+Return(fecha)

@@ -1,0 +1,11 @@
+'En SP042 se deja de utilizar este concepto, se han creado conceptos nuevos para
+'incluir desde tabla de valor los importes de descuento exentos desglosados por tipo de descuento legal:
+'
+'	6444 - SAR_AJ_JUB_HS_EXEN - Ajuste Jubilacion S/Hs extras exentas 
+'	6445 - SAR_AJ_L19032_HS_EXEN - Ajuste Ley 19032 S/Hs extras exentas 
+'	6446 - SAR_AJ_OBR_HS_EXEN - Ajuste Ley Obra Social S/Hs extras exentas 
+'	6447 - SAR_AJ_AD_OBR_HS_EXEN - Ajuste Ley Obra Social Adicional S/Hs extras exentas 
+'	6448 - SAR_AJ_C_SIND_OB_HS_EXEN- Ajuste Cuota Sindical Obligatoria S/Hs extras exentas 
+'	6449 - SAR_AJ_C_SIND_VOL_HS_EXEN- Ajuste Cuota Sindical voluntaria S/Hs extras exentas 
+
+Return(SAR_AJ_DESC_LEY_HS_EXEN)

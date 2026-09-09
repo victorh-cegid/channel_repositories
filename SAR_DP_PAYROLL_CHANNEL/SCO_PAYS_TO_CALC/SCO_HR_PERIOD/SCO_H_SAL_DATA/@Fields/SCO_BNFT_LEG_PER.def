@@ -1,0 +1,12 @@
+item: SCO_BNFT_LEG_PER
+name: Porcentaje beneficios empresa 
+column_name: SCO_BNFT_LEG_PER
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 11
+scale: 2
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

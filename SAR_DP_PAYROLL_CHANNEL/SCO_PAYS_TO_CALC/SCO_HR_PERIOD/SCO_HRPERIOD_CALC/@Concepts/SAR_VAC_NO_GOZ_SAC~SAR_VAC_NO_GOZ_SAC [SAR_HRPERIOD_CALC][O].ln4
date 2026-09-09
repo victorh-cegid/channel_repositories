@@ -1,0 +1,2 @@
+valor = (SAR_VAC_NO_GOZADAS/12)
+return(valor)

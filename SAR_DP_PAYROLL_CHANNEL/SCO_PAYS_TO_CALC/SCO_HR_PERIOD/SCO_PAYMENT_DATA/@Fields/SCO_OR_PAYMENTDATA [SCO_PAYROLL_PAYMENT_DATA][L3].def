@@ -1,0 +1,10 @@
+item: SCO_OR_PAYMENTDATA
+name: Num. secuencia datos pago
+column_name: SCO_OR_PAYMENTDATA
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 6
+scale: 0
+scope: RECORD
+default_value: null

@@ -1,0 +1,5 @@
+# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
+SAR_RETORNA_VALOR | ARG_DEPENDENCIA | IN | STRING | 2 | 1 | 0 | 1
+SAR_RETORNA_VALOR | ARG_ZONA_SUB | IN | STRING | 2 | 4 | 0 | 2
+SAR_RETORNA_VALOR | ARG_REMUN_FAM | IN | CURRENCY | 8 | 18 | 0 | 3
+SAR_RETORNA_VALOR | ARG_ID_CURRENCY | IN | STRING | 2 | 3 | 0 | 4

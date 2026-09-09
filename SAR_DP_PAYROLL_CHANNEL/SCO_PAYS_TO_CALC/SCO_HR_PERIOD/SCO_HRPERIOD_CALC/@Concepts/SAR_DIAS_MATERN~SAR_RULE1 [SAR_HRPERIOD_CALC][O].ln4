@@ -1,0 +1,180 @@
+' No se ejecuta en las pagas extras/anticipo vacaciones/paga vacaciones
+//If SAR_TP_IMPUT = "2" Or SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "77" Then Return(0)
+
+' No se ejecuta en las pagas extras no de aguinaldo/anticipo vacaciones/paga vacaciones
+If (SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 0) Or SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "77" Then Return(0)
+
+'Obtengo la fecha de inicio y fin de cada tramo
+INICIO_TRAMO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysStartDate
+FIN_TRAMO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysEndDate
+
+'Cantidades de dias de licencias
+dias_mat = 0        'dias maternidad
+fec_fin_abs_matern = ToDate("1800-01-01")
+
+'Ahora contabilizamos las ausencias diarias que se cargan a nivel de period
+primerreg = 0
+ultimoreg = SAR_REAL_TIME_PERIOD.COUNT() - 1
+
+'Asigno las fechas de inicio y fin de tramo
+fec_ini_paga = INICIO_TRAMO
+fec_fin_paga = FIN_TRAMO
+
+FOR  I = primerreg  TO  ultimoreg 
+    SAR_REAL_TIME_PERIOD.MOVETO(I)
+    motivoabs = FORMAT(SAR_REAL_TIME_PERIOD.SCO_ID_INCIDENCE,0)
+    fec_ini_abs = SAR_REAL_TIME_PERIOD.SCO_DT_START
+    fec_fin_abs = SAR_REAL_TIME_PERIOD.SCO_DT_END
+
+    excedente = 0
+	
+    If DxMonth(FIN_TRAMO) = 2 THEN
+	   IF fec_fin_abs >= FIN_TRAMO And DxDay(FIN_TRAMO) = 28 THEN
+	       excedente = excedente + 2
+	   ELSEIF fec_fin_abs >= FIN_TRAMO And DxDay(FIN_TRAMO) = 29 THEN
+	       excedente = excedente + 1
+	   Endif
+    Endif
+    
+    'Contabilizo la cantidad de dias y si el tipo de salario es Horario, traspaso las unidades a horas
+  
+    IF SAR_TIPO_SALARIO <> "003" THEN    
+        IF motivoabs = "3" THEN
+            dias_mat = dias_mat + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) + excedente
+            if fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then
+                dias_mat = dias_mat - 1
+            endif
+        ENDIF           
+    ELSE 'tipo salario horario
+        IF SCO_NUM_HOURS_THEO > 0 THEN
+            IF fec_fin_abs > fec_fin_paga then
+               fec_fin_abs = fec_fin_paga
+            ENDIF
+            IF fec_ini_abs < fec_ini_paga then
+               fec_ini_abs = fec_ini_paga
+            ENDIF
+        ENDIF
+
+        IF motivoabs = "3" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_mat = dias_mat + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_mat = dias_mat + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ENDIF
+    ENDIF
+  
+NEXT
+ 
+tipo_paga = SAR_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM
+FECHA_FIN_TRAMO = FIN_TRAMO
+
+IF SAR_TIPO_SALARIO = "001" THEN
+    IF DXDAY(FIN_TRAMO) > 30 THEN
+        DIA = "30"
+        MES = DXMONTH(FIN_TRAMO)
+        IF MES < 10 THEN
+            MES = "0" + TOSTRING(MES,0)
+        ELSE
+            MES = TOSTRING(MES,0)
+        ENDIF
+        
+        ANIO = TOSTRING(DXYEAR(FIN_TRAMO),0)
+        STR_FECHA = ANIO + "-" + MES + "-" + DIA
+        FECHA_FIN_TRAMO = TODATE(STR_FECHA)
+    ENDIF
+    
+    IF DXMONTH(FIN_TRAMO) = 2 THEN
+        IF DXDAY(FIN_TRAMO) = 28 THEN
+            FECHA_FIN_TRAMO = FECHA_FIN_TRAMO + 2
+        ELSEIF DXDAY(FIN_TRAMO) = 29 THEN
+            FECHA_FIN_TRAMO = FECHA_FIN_TRAMO + 1
+        ENDIF
+    ENDIF
+ENDIF
+
+'Calculo los dias del tramo
+dias_tramo = (FECHA_FIN_TRAMO - INICIO_TRAMO) + 1
+
+'Calculo los dias del tramo real
+dias_tramo_real = FIN_TRAMO - INICIO_TRAMO + 1
+
+IF dias_mat > 0 THEN
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_mat = dias_tramo
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_mat = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_mat = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_mat = dias_tramo_real
+        ENDIF
+    ENDIF
+  
+    'Verifico el tope de los dias de Maternidad
+    tope_dias = 90
+    FECHA_BASE = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC
+    FECHA_DIA_ANT = FECHA_BASE - 1
+    MES_ACTUAL = DXMONTH(FECHA_BASE)
+    MES_ANT_12 = DxMonth(DateAdd(FECHA_BASE,-3,M4_MONTH))
+    
+    IF MES_ANT_12 < 10 THEN
+        MES_ANT_12 = "0" + TOSTRING(MES_ANT_12, 0)
+    ELSE
+        MES_ANT_12 = TOSTRING(MES_ANT_12, 0)
+    ENDIF
+    
+    IF MES_ACTUAL < 10 THEN
+        MES_ACTUAL = "0" + TOSTRING(MES_ACTUAL, 0)
+    ELSE
+        MES_ACTUAL = TOSTRING(MES_ACTUAL, 0)
+    ENDIF
+    
+    FECHA_ACT    = TOSTRING(DxYear(FECHA_BASE),0) + "-" + MES_ACTUAL + "-01"
+    FECHA_INICIO = ToDate(FECHA_ACT)
+    FECHA_12_ANT = TOSTRING(DxYear(DateAdd(FECHA_BASE,-3,M4_MONTH)),0) + "-" + MES_ANT_12 + "-01"
+    FECHA_ANT_12 = ToDate(FECHA_12_ANT)
+    FECHA_ANT_11 = DateAdd(FECHA_ANT_12,1,M4_MONTH)
+    FECHA_ANT_10 = DateAdd(FECHA_ANT_12,2,M4_MONTH)
+    FECHA_ANT_9  = DateAdd(FECHA_ANT_12,3,M4_MONTH)
+        
+    'Inicializo variables para los meses
+    valor_mes10 = 0
+    valor_mes11 = 0
+    valor_mes12 = 0
+    
+    'Recorro el acumulado del empleado y contabilizo los valores de cada mes anterior
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()
+    ULTIMO_REG_AC = SCO_AC_HR_PERIOD_READ_1.COUNT() - 1
+
+    FOR J = 0 TO ULTIMO_REG_AC
+        SCO_AC_HR_PERIOD_READ_1.MOVETO(J)
+        
+        TipoPaga = SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_ALLOC
+        
+        IF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_12 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_INICIO,-1,M4_DAY) And TipoPaga <> "2" THEN
+            valor_mes12 = valor_mes12 + SCO_AC_HR_PERIOD_READ_1.SAR_DIAS_MATERN
+        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_11 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_10,-1,M4_DAY) And TipoPaga <> "2" THEN
+            valor_mes11 = valor_mes11 + SCO_AC_HR_PERIOD_READ_1.SAR_DIAS_MATERN
+        ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_10 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_9,-1,M4_DAY) And TipoPaga <> "2" THEN
+            valor_mes10 = valor_mes10 + SCO_AC_HR_PERIOD_READ_1.SAR_DIAS_MATERN
+        ENDIF
+    NEXT      
+   
+    dias_mat_ac = valor_mes12 + valor_mes11 + valor_mes10 + dias_mat
+    meses_antig = Months(SAR_HR_PERIOD.STD_DT_START, SCO_DT_ALLOCATION)
+
+    IF dias_mat_ac >= tope_dias THEN
+        dias_mat_ac = tope_dias - dias_mat_ac
+    Else
+        dias_mat_ac = 0    
+    ENDIF   
+
+    dias_mat = dias_mat + dias_mat_ac    
+    dias_mat = Min(dias_mat, maxdias_mat)
+    dias_mat = Max(dias_mat, 0)
+ENDIF
+Return (dias_mat)

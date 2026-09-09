@@ -1,0 +1,6 @@
+'Execute the period concepts to calculate the decimals for the currency
+
+SCO_HRPERIOD_CALC.ExecuteGroup("0")
+
+
+Return(0)

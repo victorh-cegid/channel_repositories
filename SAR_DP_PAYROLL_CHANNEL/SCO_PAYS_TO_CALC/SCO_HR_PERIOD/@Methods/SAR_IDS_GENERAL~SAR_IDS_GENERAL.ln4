@@ -1,0 +1,24 @@
+//argumentos y ctes
+dFecFinCalc = SCO_DT_END_CALC 
+dFecFinRetro = SCO_DT_END_CALC_RETRO
+sNodeDif = "SCO_DIF_HRPERIOD_CALC"
+sTiDif = "SCO_DIF_HRPERIOD_CALC_1"
+sNodeAc = "SAR_IDS_RETRO"
+sIdItemDif = ARG_ID_ITEM_DIF
+sIdItemAc = ARG_ID_ITEM_AC
+
+
+
+nNumTramos = ChannelAttribGetValue("",sNodeDif,sIdItemDif, "SysSliceNumber" )
+For i = 0 to (nNumTramos-1)
+    code = "Return("+ sTiDif+ "." +sIdItemDif+ "[" +Format(ToString(i),0)+ "]..SysStartDate )"
+    dFecIniTramo = clcExecuteLN4JIT(code)
+
+    If dFecIniTramo > dFecFinCalc Then 'tramo donde el empleado no existe
+        vValor = GetValue(sNodeAc,sIdItemAc,-1)
+        SetValuePriority(0,sNodeDif,sIdItemDif,-1,i,vValor)
+
+    EndIf
+Next
+
+Return(1)

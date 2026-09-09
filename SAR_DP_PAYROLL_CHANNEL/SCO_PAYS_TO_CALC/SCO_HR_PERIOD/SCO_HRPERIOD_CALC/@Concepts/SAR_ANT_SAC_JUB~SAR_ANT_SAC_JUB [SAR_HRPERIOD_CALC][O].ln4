@@ -1,0 +1,15 @@
+'Aportes de SAC a?os anteriores entran directamente a impuesto, no forman parte de la 12ava
+sac_anio_ant = SAR_AJUSTE_SAC2_ANT
+If sac_anio_ant = 0 Then Return(0)
+
+'Si se ha ajustado en periodo fiscal posterior la paga 99 no debe alterarlo
+If (SAR_IND_PAGA_RELIQ = 1 Or SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99") And SCO_AC_HR_PERIOD_REV_1.SAR_AJUSTE_SAC2_ANT <> 0 Then
+    orig = SCO_AC_HR_PERIOD_REV_1.SAR_ANT_SAC_JUB
+    Return(orig)
+EndIf
+
+aporte_original = SCO_AC_HR_PERIOD_REV_1.SAR_JUBILACION_SAC
+aporte_actual = SAR_JUBILACION_SAC
+aporte_final = aporte_actual - aporte_original
+
+Return Round(aporte_final,SAR_NUM_DEC)

@@ -1,0 +1,88 @@
+'This method lanch the retroactivity when a change in a rule takes place
+
+actual_pay=SCO_ACTUAL_PAY
+
+SCO_DT_FILTER_TI.Begin()
+
+if isnull(SCO_DT_FILTER_TI.SCO_DT_FILTER)=1 then
+	return(0)
+endif
+
+SCO_DT_FILTER=SCO_DT_FILTER_TI.SCO_DT_FILTER
+
+SCO_PAYS_REV.Begin()
+
+if ISNULL(SCO_PAYS_REV.SCO_DT_REV)=1  then
+	return(0)
+endif
+
+SCO_DT_REV=SCO_PAYS_REV.SCO_DT_REV
+SCO_DT_REV_PAY=SCO_PAYS_REV.SCO_DT_REV
+
+Num_pays=SCO_RUN_PAYS_REV.Count()
+
+If num_pays>0 then
+
+	'These are the payment datas for the revision pay. They came from the normal pay
+
+	dt_pay=SCO_DT_PAYMENT
+	pay_freq_paym=SCO_PAY_FREQ_PAYM
+	pay_type_paym=SCO_PAY_TYPE_PAYM
+	start_paym=SCO_DT_START_PAYM
+	end_paym=SCO_DT_END_PAYM
+	days_num_paym=SCO_DAYS_NUM_PAYM
+	dt_transfer=SCO_DT_TRANSFER
+	dt_close=SCO_DT_CLOSE_PROC
+	
+	
+	For I=0 to num_pays-1 
+		moveto(actual_pay)
+		SCO_RUN_PAYS_REV.Moveto(I)
+
+		'These are the allocation datas. They came from the pays to Review.
+
+		dt_alloc = SCO_RUN_PAYS_REV.SCO_DT_ALLOCATION
+		pay_freq_alloc = SCO_RUN_PAYS_REV.SCO_ID_PAY_FREQ_ALL
+		pay_type_alloc = SCO_RUN_PAYS_REV.SCO_ID_PAY_TYPE
+		start_alloc =SCO_RUN_PAYS_REV.SCO_DT_START
+		end_alloc = SCO_RUN_PAYS_REV.SCO_DT_END
+		days_num_alloc =SCO_RUN_PAYS_REV.SCO_DAYS_NUMBER
+
+
+		AddRegister()
+		FI=start_alloc
+		FF=end_ALLOC
+		SetStartDate(FI)
+		SetEndDate(FF)
+		SetRunDate(dt_alloc)
+
+		'We Insert a new record in SCO_PAYS_TO_CALC for the revision pay
+		SCO_DT_PAYMENT = dt_pay
+		SCO_PAY_FREQ_PAYM = pay_freq_paym
+		SCO_PAY_TYPE_PAYM =pay_type_paym
+		SCO_DT_START_PAYM = start_paym
+		SCO_DT_END_PAYM = end_paym
+		SCO_DAYS_NUM_PAYM = days_num_paym
+		SCO_DT_TRANSFER =dt_transfer
+		SCO_DT_CLOSE_PROC=dt_close
+
+
+		SCO_DT_ALLOCATION = dt_alloc
+		SCO_PAY_FREQ_ALLOC = pay_freq_alloc
+		SCO_PAY_TYPE_ALLOC = pay_type_alloc
+		SCO_DT_START_ALLOC =start_alloc
+		SCO_DT_END_ALLOC = end_alloc
+		SCO_DAYS_NUM_ALLOC= days_num_alloc
+	     
+		Output=SCO_CALCPAY()
+		If Output=M4_ERROR Then
+			Moveto(actual_pay)
+			SCO_ERROR = 1
+			SetLog(-1,1,101,1,SCO_DT_PAYMENT,SCO_NM_PAY_FREQUENCY)
+			Return(-1)
+		EndIf
+	Next
+Endif
+Moveto(actual_pay)
+
+Return(0)

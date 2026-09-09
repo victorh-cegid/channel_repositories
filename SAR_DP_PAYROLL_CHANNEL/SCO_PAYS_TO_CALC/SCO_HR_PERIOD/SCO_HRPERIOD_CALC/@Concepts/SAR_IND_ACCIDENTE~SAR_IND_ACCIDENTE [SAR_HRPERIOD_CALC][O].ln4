@@ -1,0 +1,6 @@
+IF SAR_ACCID_ACT.COUNT() > 0 THEN 
+    valor = 1
+ELSE
+    valor = 0
+ENDIF
+Return(valor)

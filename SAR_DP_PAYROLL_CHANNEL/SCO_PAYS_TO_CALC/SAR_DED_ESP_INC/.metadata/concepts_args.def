@@ -1,0 +1,10 @@
+# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
+SAR_RETORNA_TRAMO | ARG_BASE | IN | CURRENCY | 8 | 18 | 6 | 1
+SAR_RETORNA_TRAMO | ARG_DESDE | IN | DATE | 4 | 10 | 0 | 2
+SAR_RETORNA_TRAMO | ARG_ID_CURRENCY | IN | STRING | 2 | 3 | 0 | 3
+SAR_RETORNA_VALOR | ARG_BASE | IN | CURRENCY | 8 | 18 | 6 | 1
+SAR_RETORNA_VALOR | ARG_DESDE | IN | DATE | 4 | 10 | 0 | 2
+SAR_RETORNA_VALOR | ARG_ID_CURRENCY | IN | STRING | 2 | 3 | 0 | 3
+SAR_RETORNA_VAL_TRAM | ARG_BASE | IN | NUMBER | 6 | 1 | 0 | 1
+SAR_RETORNA_VAL_TRAM | ARG_DESDE | IN | DATE | 4 | 10 | 0 | 2
+SAR_RETORNA_VAL_TRAM | ARG_ID_CURRENCY | IN | STRING | 2 | 3 | 0 | 3

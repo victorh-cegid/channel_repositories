@@ -1,0 +1,16 @@
+''You must assign the maximum interval of dates for reading the dynamic cumulative nodes
+'
+'If ID_NODE = "SCO_HRPERIOD_CALC" then
+'    'For now you only have the CCO_FIRST_YEAR node, which reads data from the first year of the hire period 
+'    'AllocYear = 0 : AllocMonth = 0 : AllocDay = 0
+'    'x = DateToNumbers(SCO_HR_PERIOD.STD_DT_START,AllocYear,AllocMonth,AllocDay)
+'    FECHA_INICIO = TOSTRING(DXYEAR(SAR_PAYS_TO_CALC.SCO_DT_ALLOCATION),0) + "-01-01"
+'    FECHA_FIN = TOSTRING(DXYEAR(SAR_PAYS_TO_CALC.SCO_DT_ALLOCATION),0) + "-12-31"
+'    MIN_DT_START = FECHA_INICIO
+'    MAX_DT_END  = FECHA_FIN
+'Else
+'    MIN_DT_START = MINUS_INF
+'    MAX_DT_END = PLUS_INF
+'Endif
+'
+'

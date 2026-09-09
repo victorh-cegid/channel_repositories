@@ -1,0 +1,12 @@
+DtAllocEnd = SCO_HR_PERIOD.SCO_DT_ALLOC_END
+
+'The period has  a mensual salary type
+If (SCO_ID_SALARY_TYPE = "1" and SCO_HR_PERIOD.STD_DT_END >= SCO_HR_PERIOD.SCO_DT_ALLOC_END AND SCO_HR_PERIOD.STD_DT_START <= SCO_HR_PERIOD.SCO_DT_ALLOC_START) Then
+	DtProrate = DxDate (30, DxMonth (DtAllocEnd), DxYear(DtAllocEnd))
+
+Else 'It is a daily salary type
+	DtProrate = SCO_DT_SLICE
+
+EndIf
+
+Return(DtProrate)

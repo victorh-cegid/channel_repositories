@@ -1,0 +1,4 @@
+'
+''Toma valor por Incidencias y por valores periodo
+'
+RETURN(#SAR_IND_ANT_VAC)

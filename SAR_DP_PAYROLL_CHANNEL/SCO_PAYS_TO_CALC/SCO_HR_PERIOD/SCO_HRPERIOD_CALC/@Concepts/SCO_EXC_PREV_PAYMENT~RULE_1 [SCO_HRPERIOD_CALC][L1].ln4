@@ -1,0 +1,18 @@
+nmExcessPayment=0
+nmExcessNet=0
+
+'Calculate the last net  
+
+nmNeto=SCO_LAST_NET[0].SCO_NET
+
+If nmNeto<0 Then
+	'only in the case that we have to pay something to the employee from the last pay
+	' I substracted it from the deductions
+	nmExcessNet=-nmNeto
+EndIf
+'Calculate the last payment balance
+SCO_HR_PERIOD.SCO_LAST_DT_PAYMENT=SCO_LAST_DT_PAY
+nmExcessPayment=SCO_LAST_PAYMENT.SCO_TOT()-SCO_LAST_PAYMENT_ORDER.SCO_TOT()
+           
+RET=nmExcessNet+nmExcessPayment
+Return(RET)

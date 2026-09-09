@@ -1,0 +1,12 @@
+item: SCO_OR_CONDITION
+name: Num. condicion
+column_name: SCO_OR_CONDITION
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 9
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

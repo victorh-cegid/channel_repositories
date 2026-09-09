@@ -1,0 +1,198 @@
+'Calcula y da valor a los conceptos implicados en el prorrateo de importes para impuesto a las ganancias.
+paga_pror = SAR_IND_PAGA_CALC_PROR
+If paga_pror = 0 Then Return(0)
+aplica_pror = SAR_IND_APLICA_PRORRATEO
+meses_ig = 12 - (DxMonth(SAR_FEC_IMPUT_IG)-1)
+If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then meses_ig = 1
+
+tot_pror_mes_ig = 0 : cuota_prorrat_mes = 0 : base_prorrat = 0 : base_rem_pror = 0 : base_rem_pror_os = 0 : base_rem_pror_sind = 0
+cuot_pror_ju_mes = 0 : cuot_pror_ley_mes = 0 : cuot_pror_os_mes = 0 : cuot_pror_ad_os_mes = 0 : cuot_pror_sind_mes = 0
+jub_no_hab = 0 : ley_no_hab = 0 : os_no_hab = 0 : ad_os_no_hab = 0 : sind_no_hab = 0
+pror_con_ap_paga = 0 : pror_sin_ap_paga = 0 : tot_pror_paga = 0
+
+pror_con_ap_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_TOT_PROR_CON_AP_IG
+pror_con_ap_paga = SAR_TOT_PROR_CON_AP_IG
+pror_sin_ap_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_TOT_PROR_SIN_AP_IG
+pror_sin_ap_paga = SAR_TOT_PROR_SIN_AP_IG
+
+tot_pror_paga = pror_con_ap_paga + pror_sin_ap_paga
+
+tot_pror_mes_ig = tot_pror_paga + pror_con_ap_PrevMismoMesIG + pror_sin_ap_PrevMismoMesIG
+
+If aplica_pror = 1 Then
+    
+    'Porcentajes para calculo de aportes
+    porcJub = 0
+    porcLey = 0
+    If SAR_EDAD >= 18 Then 
+        porcJub = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
+        porcLey = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032 * SAR_PP_AP_INSSJP/100)
+    EndIf
+    porcObSoc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
+    porcAdObSoc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
+    porcAdObSoc = porcAdObSoc * SAR_FAM_CARGO_OS
+    porcSindObl = SAR_PORC_C_SIND_OBL
+    porcSindVol = SAR_PORC_C_SIND_VOL 
+    
+    '*************************************************
+    ' Inicio importes de prorrateo pagados en el mes *
+    '*************************************************
+    
+    base_prorrat_teo_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_BASE_PRORRAT_TEO
+    base_rem_pror_teo_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_BASE_REM_PRORR_TEO
+    base_rem_pror_os_teo_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_BASE_REM_PROR_OS_TEO
+    base_rem_pror_sind_teo_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_BASE_REM_PROR_SIND_TEO  
+
+    base_prorrat_teo_paga = SAR_BASE_PRORRAT_TEO
+    base_rem_pror_teo_paga = SAR_BASE_REM_PRORR_TEO
+    base_rem_pror_os_teo_paga = SAR_BASE_REM_PROR_OS_TEO
+    base_rem_pror_sind_teo_paga = SAR_BASE_REM_PROR_SIND_TEO    
+    
+    base_prorrat_teo = base_prorrat_teo_paga + base_prorrat_teo_PrevMismoMesIG
+    base_rem_pror_teo = base_rem_pror_teo_paga + base_rem_pror_teo_PrevMismoMesIG
+    base_rem_pror_os_teo = base_rem_pror_os_teo_paga + base_rem_pror_os_teo_PrevMismoMesIG
+    base_rem_pror_sind_teo = base_rem_pror_sind_teo_paga + base_rem_pror_sind_teo_PrevMismoMesIG     
+    
+    tot_a_prorrat = tot_pror_mes_ig
+    cuota_prorrat_mes = Round(tot_a_prorrat / meses_ig ,SAR_NUM_DEC)
+    
+    base_prorrat = base_prorrat_teo
+    base_rem_pror = base_rem_pror_teo
+    base_rem_pror_os = base_rem_pror_os_teo
+    base_rem_pror_sind = base_rem_pror_sind_teo
+    
+    jub_no_hab = Round(percentage(porcJub,base_prorrat),SAR_NUM_DEC)
+    ley_no_hab = Round(percentage(porcLey,base_rem_pror),SAR_NUM_DEC)
+    os_no_hab = Round(percentage(porcObSoc,base_rem_pror_os),SAR_NUM_DEC)
+    ad_os_no_hab = Round(percentage(porcAdObSoc,base_rem_pror_os),SAR_NUM_DEC)
+    sind_no_hab = Round(percentage(porcSindObl+porcSindVol,base_rem_pror_sind),SAR_NUM_DEC)
+    
+    cuot_pror_ju_mes = Round(jub_no_hab / meses_ig,SAR_NUM_DEC)
+    cuot_pror_ley_mes = Round(ley_no_hab / meses_ig,SAR_NUM_DEC)
+    cuot_pror_os_mes = Round(os_no_hab / meses_ig,SAR_NUM_DEC)
+    cuot_pror_ad_os_mes = Round(ad_os_no_hab / meses_ig,SAR_NUM_DEC)
+    cuot_pror_sind_mes = Round(sind_no_hab / meses_ig,SAR_NUM_DEC)
+
+    '**********************************************
+    ' Fin importes de prorrateo pagados en el mes *
+    '**********************************************
+
+    'Si hay prorrateo en el mes, se anula entrada directa a impuesto en pagas previas del mismo mes IG
+    pror_directo_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_PROR_LEY_27617_T1
+    SAR_IG_PROR_LEY_27617_T1 = 0 - pror_directo_PrevMismoMesIG
+
+Else
+    pror_directo_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_PROR_LEY_27617_T1
+    SAR_IG_PROR_LEY_27617_T1 = tot_pror_mes_ig - pror_directo_PrevMismoMesIG
+    tot_pror_mes_ig = 0
+EndIf
+
+'****************************************************************
+' Inicio importes de prorrateos arrastrados de meses anteriores *
+'****************************************************************
+
+prorrEfectAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_TOT_PROR_EFECT
+cuotProrrEfectAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CUOT_PRORRA
+prorrEfectAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_TOT_PROR_EFECT - prorrEfectAnt_PrevMismoMesIG
+cuotProrrEfectAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_IG_CUOT_PRORRA - cuotProrrEfectAnt_PrevMismoMesIG
+newProrrEfectAnt = Round((prorrEfectAnt - cuotProrrEfectAnt) / meses_ig,SAR_NUM_DEC)
+saldo_prorra = (tot_pror_mes_ig + prorrEfectAnt) - (cuota_prorrat_mes + newProrrEfectAnt + cuotProrrEfectAnt)
+
+jubAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_JUB_NO_HAB
+cuotJubAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CUOT_PROR_JU
+jubAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_IG_JUB_NO_HAB - jubAnt_PrevMismoMesIG
+cuotJubAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_IG_CUOT_PROR_JU - cuotJubAnt_PrevMismoMesIG
+newJubAnt = Round((jubAnt - cuotJubAnt) / meses_ig,SAR_NUM_DEC)
+saldo_jub = (jub_no_hab + jubAnt) - (cuot_pror_ju_mes + newJubAnt + cuotJubAnt)
+
+leyAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_19032_NO_HAB
+cuotLeyAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CUO_PROR_LEY
+leyAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_IG_19032_NO_HAB - leyAnt_PrevMismoMesIG
+cuotLeyAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_IG_CUO_PROR_LEY - cuotLeyAnt_PrevMismoMesIG
+newLeyAnt = Round((leyAnt - cuotLeyAnt) / meses_ig,SAR_NUM_DEC)
+saldo_ley = (ley_no_hab + leyAnt) - (cuot_pror_ley_mes + newLeyAnt + cuotLeyAnt)
+
+osAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_O_SOC_NO_HAB
+cuotOsAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CUOT_PROR_OB
+osAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_IG_O_SOC_NO_HAB - osAnt_PrevMismoMesIG
+cuotOsAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_IG_CUOT_PROR_OB - cuotOsAnt_PrevMismoMesIG
+newOsAnt = Round((osAnt - cuotOsAnt) / meses_ig,SAR_NUM_DEC)
+saldo_os = (os_no_hab + osAnt) - (cuot_pror_os_mes + newOsAnt + cuotOsAnt)
+
+adOsAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_AD_OS_NO_HAB
+cuotAdOsAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CUO_PR_AD_OB
+adOsAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_IG_AD_OS_NO_HAB - adOsAnt_PrevMismoMesIG
+cuotAdOsAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_IG_CUO_PR_AD_OB - cuotAdOsAnt_PrevMismoMesIG
+newAdOsAnt = Round((AdOsAnt - cuotAdOsAnt) / meses_ig,SAR_NUM_DEC)
+saldo_AdOs = (ad_os_no_hab + adOsAnt) - (cuot_pror_ad_os_mes + newAdOsAnt + cuotAdOsAnt)
+
+sindAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_SIND_NH_ST
+cuotsindAnt_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CP_SIND_ST
+sindAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_IG_SIND_NH_ST - sindAnt_PrevMismoMesIG
+cuotsindAnt = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_IG_CP_SIND_ST - cuotsindAnt_PrevMismoMesIG
+newSindAnt = Round((sindAnt - cuotSindAnt) / meses_ig,SAR_NUM_DEC)
+saldo_sind = (sind_no_hab + sindAnt) - (cuot_pror_sind_mes + newSindAnt + cuotSindAnt)
+
+'*************************************************************
+' Fin importes de prorrateos arrastrados de meses anteriores *
+'*************************************************************
+
+'Asignacion de valores a los conceptos
+tot_pror_efect_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_TOT_PROR_EFECT
+SAR_TOT_PROR_EFECT = tot_pror_mes_ig - tot_pror_efect_PrevMismoMesIG
+
+ig_cuot_prorra_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CUOT_PRORRA
+SAR_IG_CUOT_PRORRA = (cuota_prorrat_mes + newProrrEfectAnt) - ig_cuot_prorra_PrevMismoMesIG
+
+ig_saldo_prorra_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_SALDO_PRORRA
+SAR_IG_SALDO_PRORRA = saldo_prorra - ig_saldo_prorra_PrevMismoMesIG
+
+base_prorrat_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_BASE_PRORRAT
+SAR_BASE_PRORRAT = base_prorrat - base_prorrat_PrevMismoMesIG
+
+base_rem_prorr_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_BASE_REM_PRORR
+SAR_BASE_REM_PRORR = base_rem_pror - base_rem_prorr_PrevMismoMesIG
+
+base_rem_pror_os_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_BASE_REM_PROR_OS
+SAR_BASE_REM_PROR_OS = base_rem_pror_os - base_rem_pror_os_PrevMismoMesIG
+
+base_rem_pror_sind_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_BASE_REM_PROR_SIND
+SAR_BASE_REM_PROR_SIND = base_rem_pror_sind - base_rem_pror_sind_PrevMismoMesIG
+
+ig_jub_no_hab_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_JUB_NO_HAB
+SAR_IG_JUB_NO_HAB = jub_no_hab - ig_jub_no_hab_PrevMismoMesIG
+
+ig_ley_no_hab_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_19032_NO_HAB
+SAR_IG_19032_NO_HAB = ley_no_hab - ig_ley_no_hab_PrevMismoMesIG
+
+ig_o_soc_no_hab_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_O_SOC_NO_HAB
+SAR_IG_O_SOC_NO_HAB = os_no_hab - ig_o_soc_no_hab_PrevMismoMesIG
+
+ig_ad_os_no_hab_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_AD_OS_NO_HAB
+SAR_IG_AD_OS_NO_HAB = ad_os_no_hab - ig_ad_os_no_hab_PrevMismoMesIG
+
+ig_sind_no_hab_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_SIND_NH_ST
+SAR_IG_SIND_NH_ST = sind_no_hab - ig_sind_no_hab_PrevMismoMesIG
+
+ig_cuot_pror_ju_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CUOT_PROR_JU
+SAR_IG_CUOT_PROR_JU = (cuot_pror_ju_mes + newJubAnt) - ig_cuot_pror_ju_PrevMismoMesIG
+
+ig_cuo_pror_ley_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CUO_PROR_LEY
+SAR_IG_CUO_PROR_LEY = (cuot_pror_ley_mes + newLeyAnt) - ig_cuo_pror_ley_PrevMismoMesIG
+
+ig_cuot_pror_ob_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CUOT_PROR_OB
+SAR_IG_CUOT_PROR_OB = (cuot_pror_os_mes + newOsAnt) - ig_cuot_pror_ob_PrevMismoMesIG
+
+ig_cuo_pr_ad_ob_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CUO_PR_AD_OB
+SAR_IG_CUO_PR_AD_OB = (cuot_pror_ad_os_mes + newAdOsAnt) - ig_cuo_pr_ad_ob_PrevMismoMesIG
+
+ig_ig_cp_sind_PrevMismoMesIG = SAR_ACM_MESACT_IMPIG[0].SAR_IG_CP_SIND_ST
+SAR_IG_CP_SIND_ST = (cuot_pror_sind_mes + newSindAnt) - ig_ig_cp_sind_PrevMismoMesIG
+
+SAR_IG_SALD_PROR_JU = saldo_jub
+SAR_IG_SAL_PROR_LEY = saldo_ley
+SAR_IG_SALD_PROR_OB = saldo_os
+SAR_IG_SAL_PR_AD_OB = saldo_AdOs
+SAR_IG_SP_SIND_ST = saldo_sind
+
+Return(0)

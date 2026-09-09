@@ -1,0 +1,11 @@
+' Calcula el num. de a?os en alta en la empresa a la fecha de proceso
+
+fecantig = SAR_FEC_INDEM
+
+IF SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" THEN
+    fechafin = SAR_HR_PERIOD.STD_DT_END
+ELSE
+    fechafin = SAR_HR_PERIOD.SCO_DT_ALLOC_END
+ENDIF
+numanos = DATEDIFF(fecantig,fechafin,M4_YEAR)
+Return(numanos)

@@ -1,0 +1,18 @@
+'..............................................................
+' Description 
+'   This method will be called instead of APPLY_FILTER when the QBF
+'   is using and extern filter (USE_EXTERN_FILTER = M4_TRUE). 
+'   Use the property EXTERN_FILTER_HANDLE to access to it.
+'..............................................................
+' Parameters  : 
+'..............................................................
+' Return      : see APPLY_FILTER
+'..............................................................
+'Example:
+'sExternFilterAlias = "M4OExternFilter"
+'InsertChannel(EXTERN_FILTER_HANDLE,sExternFilterAlias )
+'ChannelCall(sExternFilterAlias ....)
+'..............................................................
+
+    
+return  M4_SUCCESS

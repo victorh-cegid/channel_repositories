@@ -1,0 +1,53 @@
+curr=getcurrent()
+
+current=findRegister("ID_NODE_CALC",id_node,1)
+moveto(current)
+
+AuxDtMaxAlloc = GETVALUE(ID_NODE_DATES,"SCO_DT_ALLOCATION",-1)
+AuxDtMaxPym = GETVALUE(ID_NODE_DATES,"SCO_DT_PAYMENT",-1)
+
+j = 0
+  
+DtMin = SWP_NODES_AC_CALC.SCO_DT_MIN
+DtMax = SWP_NODES_AC_CALC.SCO_DT_MAX
+
+If SWP_NODES_AC_CALC.SCO_EXPREV = 1 Then
+	PrevPayAlloc = Call(ID_NODE_PREV_ALLOC,"SCO_DT_PREV_ALLOC")
+	PrevPayPym = Call(ID_NODE_PREV_PAYM,"SCO_DT_PREV_PAYM")
+	Numregcalc = SWP_NODES_AC_CALC.Count()-1
+	If Numregcalc >= 0 Then
+		While j <= Numregcalc
+			SWP_NODES_AC_CALC.MoveTo(j)
+			SelPays = SWP_NODES_AC_CALC.SEL_PAYS
+			If SelPays = 2 Then
+				SearchType = SWP_NODES_AC_CALC.SEARCH_TYPE
+				If SearchType = 1 Then
+ 					AuxDtMin = PrevPayAlloc
+	  				AuxDtMax = PrevPayAlloc
+				Else
+					AuxDtMin = PrevPayPym
+					AuxDtMax = PrevPayPym
+				EndIf
+
+				If AuxDtMin <= DtMin Then DtMin = AuxDtMin
+				If AuxDtMax >= DtMax Then DtMax = AuxDtMax
+			EndIf
+			J = j+1
+		Wend
+	EndIf
+EndIf
+
+If SWP_NODES_AC_CALC.SCO_DYN_ORIGIN = 1 Then    'Gestion de nodos de acumulado de origen dinamico
+    dtMinDyn= M4_MINUS_INF
+    dtMaxDyn = M4_PLUS_INF
+    SCO_DYN_CALC_MIN_MAX_DATE(id_node,dtMinDyn,dtMaxDyn)
+    If (dtMinDyn < DtMin and dtMinDyn > M4_MINUS_INF) then DtMin = dtMinDyn 
+    If (dtMaxDyn > DtMax and dtMaxDyn < M4_PLUS_INF) then DtMax = dtMaxDyn 
+Endif
+
+SetSliceMode(M4_FALSE)
+SetValue(ID_NODE_AC_READ,"SCO_DT_START",-1,DtMin)
+SetValue(ID_NODE_AC_READ,"SCO_DT_END",-1,DtMax)
+SetSliceMode(SCO_PAYS_TO_CALC.SCO_SLICE_MODE)
+
+Return(0)

@@ -1,0 +1,146 @@
+IF (SAR_TP_IMPUT = "99") Then 
+    Return(0)
+ENDIF
+
+'No debe tomar el valor en Pagas Extra ni en Retroactividad.
+If (SAR_TP_IMPUT = "2") Then
+    Return(0)    
+EndIf
+    
+descuento = SAR_TOT_D_DTO_AGUIN
+'
+'la paga extra 1 siempre es la de Junio 
+'
+'Obtenemos la frecuencia de pago de la paga
+'
+if dxmonth(SCO_DT_ALLOCATION) < 7   then
+   orden = 1 
+else
+   orden = 2
+endif 
+
+If SAR_PAGAS_EXTRAS.count() <= 0 Then
+  SAR_PAGAS_EXTRAS.SAR_DT_ALLOCATION = SCO_DT_ALLOCATION
+  SAR_PAGAS_EXTRAS.load_blk()
+EndIf  
+
+POS = SAR_PAGAS_EXTRAS.FINDREGISTER("SAR_ID_CONVENIO", SAR_ID_CONVENIO,EQUAL,"SCO_ID_PAY_FREQUENCY",SCO_PAY_FREQ_ALLOC,EQUAL,"SAR_ORDEN",orden,EQUAL,0)
+IF POS <> -1 THEN
+    SAR_PAGAS_EXTRAS.MOVETO(POS)
+    mespagext = SAR_PAGAS_EXTRAS.SAR_MES
+    diapagext = SAR_PAGAS_EXTRAS.SAR_DIA
+    dia_ini_dev = SAR_PAGAS_EXTRAS.SAR_DIA_INI_DEV
+    mes_ini_dev = SAR_PAGAS_EXTRAS.SAR_MES_INI_DEV
+    a_atras_idv = SAR_PAGAS_EXTRAS.SAR_A_ATRAS_IDV
+    dia_fin_dev = SAR_PAGAS_EXTRAS.SAR_DIA_FIN_DEV
+    mes_fin_dev = SAR_PAGAS_EXTRAS.SAR_MES_FIN_DEV
+    a_atras_fdv = SAR_PAGAS_EXTRAS.SAR_A_ATRAS_FDV
+            
+    ANIO = SAR_PAYS_TO_CALC.SAR_ANIO_PROCESO - a_atras_idv
+    IF mes_ini_dev < 10 THEN
+        mes_ini_dev = "0" + TOSTRING(mes_ini_dev,0)
+    ELSE
+        mes_ini_dev = TOSTRING(mes_ini_dev,0)
+    ENDIF
+
+    IF dia_ini_dev < 10 THEN
+        dia_ini_dev = "0" + TOSTRING(dia_ini_dev,0)
+    ELSE
+        dia_ini_dev = TOSTRING(dia_ini_dev,0)
+    ENDIF
+    fec_ini_per = DxDate(dia_ini_dev,mes_ini_dev,ANIO)
+
+    ANIO2 = SAR_PAYS_TO_CALC.SAR_ANIO_PROCESO - a_atras_fdv
+    IF mes_fin_dev < 10 THEN
+        mes_fin_dev = "0" + TOSTRING(mes_fin_dev,0)
+    ELSE
+        mes_fin_dev = TOSTRING(mes_fin_dev,0)
+    ENDIF
+ 
+    IF dia_fin_dev < 10 THEN
+        dia_fin_dev = "0" + TOSTRING(dia_fin_dev,0)
+    ELSE
+        dia_fin_dev = TOSTRING(dia_fin_dev,0)
+    ENDIF
+    fec_fin_per = DxDate(dia_fin_dev,mes_fin_dev,ANIO)
+     
+    fec_baja = SAR_FECHA_BAJA
+    'Por modificacion del empleado
+    '--------------------------------------------------------------------------
+    If(SAR_HR_PERIOD.STD_ID_HRP_START_REASON = "005")Then
+        meses_activo_con_nueva_alta = Months(SCO_DT_PAYMENT, SAR_FECHA_ALTA)
+        If(meses_activo_con_nueva_alta < 6)Then
+           fec_ext = SAR_FECHA_ALTA_PER_ANT 'del periodo anterior  
+           
+        EndIf   
+    Else   
+        fec_ext = SAR_FECHA_ALTA
+    EndIf
+    '--------------------------------------------------------------------------
+    fec_fin = SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC
+    
+    suma = 0
+    IF DXMONTH(fec_fin) = 2 THEN
+       IF DXDAY(fec_fin) = 28 THEN
+            suma = 2
+       ELSEIF DXDAY(fec_fin) = 29 THEN
+            suma = 1
+       ENDIF
+    ENDIF
+    
+    coef = 1
+    IF SAR_TIPO_SALARIO = "001" OR SAR_TIPO_SALARIO = "003" THEN
+        fec_ini_per = DxDate30(dia_ini_dev,mes_ini_dev,ANIO)
+        fec_fin_per = DxDate30(dia_fin_dev,mes_fin_dev,ANIO)
+        fec_ext     = DxDate30(Dxday(fec_ext),DxMonth(fec_ext),Dxyear(fec_ext))
+        fec_fin = DxDate30(Dxday(fec_fin),DxMonth(fec_fin),Dxyear(fec_fin)) + suma 
+        
+        If(SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017")Then
+            dia_baja = DXDAY(SAR_FECHA_BAJA)
+            If(dia_baja < 10)Then
+              dia_baja = "0" + ToString(dia_baja, 0)
+            else  
+              dia_baja = ToString(dia_baja, 0)
+            EndIf    
+            mes_baja = DXMONTH(SAR_FECHA_BAJA)
+            If(mes_baja < 10)Then
+              mes_baja = "0" + ToString(mes_baja, 0)
+            else  
+              mes_baja = ToString(mes_baja, 0)
+            EndIf    
+            anio_baja = ToString(DXYEAR(SAR_FECHA_BAJA), 0)
+            fec_baja = DxDate30(dia_baja,mes_baja,anio_baja)
+            diasparapaga = CommonTime(fec_ini_per, fec_fin_per, fec_ext, fec_baja) 
+        Else
+            diasparapaga = CommonTime(fec_ini_per, fec_fin_per, fec_ext, fec_fin) 
+        EndIf     
+        
+        diasperiodo  = fec_fin_per - fec_ini_per + 1
+        
+        If descuento > 0 then
+            diasparapaga = diasparapaga - descuento
+        Endif
+        
+        IF diasperiodo = 0 THEN
+            uni = 0
+        ELSE   
+            uni = (diasparapaga / diasperiodo) * coef
+        ENDIF
+    ELSE
+        uni = 1
+    ENDIF
+
+ELSE
+    uni = 0
+    '
+    'No existe la paga extra creada para el convenio del empleado %0:s. 
+    'Esto sucedio en la ejecucion del concepto #980. 
+    '
+    SetLog(-1,80,4,206,SCO_ID_HR)
+
+ENDIF
+
+
+    
+    
+Return(uni)

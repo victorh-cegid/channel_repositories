@@ -1,0 +1,29 @@
+sIDConcept = CONCEPT
+sIDNode   = GetThisNodeID()
+nAmt = 0
+
+SCO_BACK_PAY_PERIOD.Begin()
+nPosition = SCO_BACK_PAY_PERIOD.Findregister("ID_TI",sIDNode,EQUAL,"ID_ITEM",sIDConcept,EQUAL)
+If nPosition = -1 Then
+	Return(nAmt)
+Else
+	SCO_BACK_PAY_PERIOD.Moveto(nPosition)
+	Do
+		If sIDNode = SCO_BACK_PAY_PERIOD.ID_TI Then
+			If sIDConcept = SCO_BACK_PAY_PERIOD.ID_ITEM Then
+				If SCO_BACK_PAY_PERIOD.ID_CURRENCY = ID_CURRENCY Then 
+					nAmt = nAmt + SCO_BACK_PAY_PERIOD.SCO_DIF_VALUE
+				Else
+					nConver = EXCHANGE_RATES!CURRENCY.curGetExchange(SCO_BACK_PAY_PERIOD.ID_CURRENCY, ID_CURRENCY,SCO_BACK_PAY_PERIOD.SCO_DT_EXCHANGE, SCO_BACK_PAY_PERIOD.EX_TYPE,SCO_BACK_PAY_PERIOD.SCO_DIF_VALUE)
+					nAmt = nAmt + nConver
+				EndIf
+			ElseIf sIDConcept < SCO_BACK_PAY_PERIOD.ID_ITEM Then
+				Return(nAmt)
+			EndIf
+		ElseIf sIDNode < SCO_BACK_PAY_PERIOD.ID_TI Then
+			Return (nAmt)
+		EndIf
+		SCO_BACK_PAY_PERIOD.GONEXT()
+	Until SCO_BACK_PAY_PERIOD.IsEOF() = TRUE
+EndIf
+Return(nAmt)

@@ -1,0 +1,1 @@
+Return(Round(SAR_OBRA_SOCIAL,SAR_NUM_DEC))

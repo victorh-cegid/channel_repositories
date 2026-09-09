@@ -1,0 +1,7 @@
+Impuesto = SAR_IMPUESTO
+'Si no es impuesto cedular, debe valer 0
+IF SAR_CEDU_IND_IMPUESTO <> 1 THEN
+    Impuesto = 0
+ENDIF
+
+Return Round (Impuesto,SAR_NUM_DEC)

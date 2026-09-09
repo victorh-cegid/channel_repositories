@@ -1,0 +1,12 @@
+item: SUS_SMOKER
+name: Fumador   (S/N)
+column_name: SUS_SMOKER
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 1
+scale: 0
+scope: RECORD
+default_value: "N"
+internal_type: 1
+item_aux: null

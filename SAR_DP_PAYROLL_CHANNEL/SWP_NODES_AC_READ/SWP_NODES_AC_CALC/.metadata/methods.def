@@ -1,0 +1,3 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+SCO_CALC_ALL_DATES | BLOCK | NUMBER | 6 | 1 | 0 | Calcular todas las fechas
+SCO_CALC_DATES | RECORD | NUMBER | 6 | 1 | 0 | Calcular fecha

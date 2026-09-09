@@ -1,0 +1,7 @@
+'
+'Solo para los que tengan el indicador activo
+'
+IF SAR_IND_IDIOMA = 0 THEN 
+    Return(0)
+ENDIF
+Return(SAR_PR_IDIOMAS_PREV)

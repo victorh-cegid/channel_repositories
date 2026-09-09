@@ -1,0 +1,4 @@
+aux = ToString(DxYear(SAR_FEC_PAGO_IG),0) + "/" + "12" + "/" + "31"
+fecha = TODATE(aux)
+
+RETURN(fecha)

@@ -1,0 +1,11 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+porc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC*SAR_PP_AP_OB_SOC/100)
+precio = SAR_SAC_IMPO_OS * porc / 100
+valor = precio * SAR_FAM_CARGO_OS
+IF ISNULL(valor) = TRUE THEN
+    valor = 0
+ENDIF
+Return(valor)

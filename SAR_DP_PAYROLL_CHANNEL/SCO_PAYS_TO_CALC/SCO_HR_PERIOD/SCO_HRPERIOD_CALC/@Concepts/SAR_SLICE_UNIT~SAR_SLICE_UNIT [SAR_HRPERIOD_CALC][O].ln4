@@ -1,0 +1,6 @@
+'Here we add dependencies on the concepts that produces slices.
+
+var1 = SAR_P_SUELDO
+VAR2 = SAR_PREVIO_TITULO
+VAR3 = SAR_PR_IDIOMAS_PREV
+Return(SAR_SLICE_UNIT..SysSliceNumber)

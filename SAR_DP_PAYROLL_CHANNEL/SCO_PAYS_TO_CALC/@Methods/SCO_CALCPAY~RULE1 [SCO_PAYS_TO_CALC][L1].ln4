@@ -1,0 +1,79 @@
+Output=SCO_PAYINIT()
+If Output=M4_ERROR Then
+	SetLog(-1,1,101,2,SCO_DT_ALLOCATION,SCO_NM_PAY_FREQUENCY)
+	SCO_ERROR=1 
+	SCO_NUM_PAYS_ERROR = SCO_NUM_PAYS_ERROR + 1
+	Return(-1)
+EndIf
+
+//Empieza el calculo de cada uno de los empleados
+current = SCO_HR_PERIOD.GetCurrent()
+SCO_HR_PERIOD.Begin()
+
+While SCO_HR_PERIOD.IsEOF()<>1
+	//Nos guardamos en que posicion del error estamos.
+
+	SCO_HR_PAY_ERROR.SCO_SET_ERROR_POSITION()
+
+	//variable que indica si ha habido errores en pagas anteriores para el empleado
+	bExistError = FALSE
+
+	//Antes de calcular se comprueba que no tiene errores anteriores que impedirian continuar el calculo.
+	If SCO_HR_PAY_ERROR.Count()<>0 Then
+
+            //No se va a calcular el periodo %0:n del empleado %1:s en la nomina %2:s de pago %3:d
+            //e imputacion %4:d porque hay errores en nominas anteriores. 
+            //Debe solucionar esas nominas erroneas antes de ejecutar esta nomina.
+            
+		SetLog (-1,1,101,46,SCO_HR_PERIOD.STD_OR_HR_PERIOD,SCO_HR_PERIOD.STD_ID_HR,SCO_NM_PAY_FREQUENCY,SCO_DT_PAYMENT,SCO_DT_ALLOCATION)
+            SCO_HR_PERIOD.SCO_ERROR = 1
+		bExistError = TRUE
+
+	EndIf
+
+	If bExistError<>TRUE AND (SCO_AUTO_REV=1 AND SCO_DT_ALLOCATION = SCO_DT_PAYMENT) then
+		Output=SCO_HR_PERIOD.SCO_CALCREV_PERIOD()
+
+		If Output=M4_ERROR Then
+			SetLog(-1,1,101,6,SCO_HR_PERIOD.STD_ID_HR,SCO_HR_PERIOD.STD_OR_HR_PERIOD,SCO_DT_PAYMENT,SCO_NM_PAY_FREQUENCY)
+			'We have calculated some revision pay for that period, we have to execute Payinit again
+			Output=SCO_PAYINIT()
+			If output=M4_ERROR Then
+				SetLog(-1,1,101,2,SCO_DT_ALLOCATION,SCO_NM_PAY_FREQUENCY)
+				SCO_ERROR=1
+				SCO_NUM_PAYS_ERROR = SCO_NUM_PAYS_ERROR + 1
+				Return(-1)
+			EndIf
+		ElseIf Output=1 Then
+			'We have calculated some revision pay for that period, we have to execute Payinit again
+			Output=SCO_PAYINIT()
+			If output=M4_ERROR Then
+				SetLog(-1,1,101,2,SCO_DT_ALLOCATION,SCO_NM_PAY_FREQUENCY)
+				SCO_ERROR=1
+				SCO_NUM_PAYS_ERROR = SCO_NUM_PAYS_ERROR + 1
+				Return(-1)
+			EndIf
+		Endif
+	Endif
+	If bExistError<>TRUE AND Output<>M4_ERROR Then
+
+		//Si no ha dado problemas la ejecucion de la retroactividad automatica, calculo la
+		//paga actual.
+		'OutputCalc = SCO_HR_PERIOD.SCO_CALCHRP_CURRENCY()
+            OutputCalc = SCO_HR_PERIOD.SCO_CONTROL_ERRORS()
+	EndIf
+
+	OutputError = SCO_HR_PAY_ERROR.SCO_MANAGE_ERRORS(Output,OutputCalc)
+
+	SCO_HR_PERIOD.GONEXT()
+Wend
+SCO_HR_PERIOD.MoveTo(current)
+Output=SCO_PAY_END()
+If output=M4_ERROR Then
+	SetLog(-1,1,101,7,SCO_DT_ALLOCATION,SCO_NM_PAY_FREQUENCY)
+	SCO_ERROR=1
+	SCO_NUM_PAYS_ERROR = SCO_NUM_PAYS_ERROR + 1
+	Return(-1)
+EndIf
+
+RETURN(0)

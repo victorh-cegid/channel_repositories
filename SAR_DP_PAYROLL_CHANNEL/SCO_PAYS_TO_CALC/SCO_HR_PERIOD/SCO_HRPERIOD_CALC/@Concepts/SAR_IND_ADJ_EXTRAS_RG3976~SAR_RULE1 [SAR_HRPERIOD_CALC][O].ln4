@@ -1,0 +1,7 @@
+valor = SAR_IND_ADJ_EXTRAS_RG3976 'Toma valor por tabla de valor.
+
+If SCO_DT_ALLOCATION <> SCO_DT_PAYMENT Then
+    Return(valor)
+else 'no debe utilizar este indicador para algo distinto de una retro de ajuste de horas extras
+    Return(0)
+EndIf

@@ -1,0 +1,11 @@
+'Si este indicador se encuentra activo y el empleado todo el mes en dec 792 se anulan contribuciones jubilacion.
+indicador = SAR_IND_SAC_792
+inc = SAR_INC_MES_COMPLETO("23")
+If indicador = 1 And inc = 1 Then
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_AP_F_NAC_EM_SAC",-1,0)
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_SAC_PAT_CASFEC",-1,0)
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_JUBIL_PAT_SAC",-1,0)
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_CONTR_REG_DIF_SAC",-1,0)
+EndIf
+
+Return(indicador)

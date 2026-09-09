@@ -1,0 +1,6 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+CALC_VALUES | BLOCK | NUMBER | 6 | 4 | 0 | Calcular valores
+DESTROY | BLOCK | NUMBER | 6 | 18 | 0 | DESTROY
+LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque
+SAR_CALC_VALUES | BLOCK | NUMBER | 6 | 4 | 0 | SAR_CALC_VALUES
+SAR_LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | SAR_LOAD_BLK

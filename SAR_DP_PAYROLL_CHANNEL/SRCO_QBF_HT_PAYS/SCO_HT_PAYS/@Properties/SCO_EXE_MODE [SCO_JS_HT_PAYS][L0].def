@@ -1,0 +1,9 @@
+item: SCO_EXE_MODE
+name: Modo ejecucion
+item_type: PROPERTY
+type: NUMBER
+id_m4_type: 6
+prec: 1
+scale: 0
+scope: NODE
+default_value: "0.00000000"

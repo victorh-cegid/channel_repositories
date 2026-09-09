@@ -1,0 +1,8 @@
+# parent_node | parent_ti | connection_type
+SCO_HRPERIOD_CALC | SCO_HRPERIOD_CALC | RECORD_BLOCK
+SCO_AC_MAX_DT_PAY | SCO_AC_MAX_DT_PAY | FREE
+
+# child_node | connection_type
+SCO_AC_MAX_DT_PAY | FREE
+
+# ti | item | parent_node | parent_ti | parent_item | precedence

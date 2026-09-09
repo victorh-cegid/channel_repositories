@@ -1,0 +1,5 @@
+'
+'Para anular el descuento del mes de calculo
+'Aplicavalor 1 --> anula y 0 o null --> no anula
+'
+return(#SAR_ANULAR_DESCUENTO)

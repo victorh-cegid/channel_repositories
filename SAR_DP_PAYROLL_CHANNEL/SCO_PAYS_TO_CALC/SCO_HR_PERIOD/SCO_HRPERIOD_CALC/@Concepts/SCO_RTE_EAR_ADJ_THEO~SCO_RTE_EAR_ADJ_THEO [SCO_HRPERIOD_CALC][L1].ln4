@@ -1,0 +1,9 @@
+'This concept calculates a rate to adjust to Gross or to Net
+if ((SCO_ID_TYPE_ADJUSTMENT = "1")  OR  ( SCO_ID_TYPE_ADJUSTMENT = "2")) then 
+    aux = SCO_AGREED_GROSS - SCO_TOT_EARNINGS_TO_ADJUST      
+    If aux < 0 And SCO_ID_TYPE_ADJUSTMENT = "1" Then aux = 0        'The concept can't be negative in SCO_ID_TYPE_ADJUSTMENT = "1"
+else
+	aux=0
+endif
+
+return(aux)

@@ -1,0 +1,3 @@
+'Este concepto debe cambiarse para leer de complementos por devengado
+valor = SAR_TOT_REMUN_27617_OE
+Return(valor)

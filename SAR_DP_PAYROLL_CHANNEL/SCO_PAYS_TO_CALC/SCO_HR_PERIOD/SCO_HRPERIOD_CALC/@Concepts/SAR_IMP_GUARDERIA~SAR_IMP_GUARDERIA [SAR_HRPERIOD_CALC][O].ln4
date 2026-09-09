@@ -1,0 +1,83 @@
+'Se limita para paga normal, primera y segunda quincena.
+If SAR_TP_IMPUT <> "1" And SAR_TP_IMPUT <> "3" And SAR_TP_IMPUT <> "4" Then Return(0)
+valor = SAR_IMP_GUARDERIA
+
+'Si tiene valor es que se ha informado el importe, lo retornamos
+If valor <> 0 Then return (valor)
+
+aplicaTope = SAR_IND_TOPE_GUARDERIA
+diasNormSueld = SAR_DIAS_NORM_SUELD
+diasHorasEfectivas = SAR_TIEMPO_EFVO_TR 
+
+'Segunda quincena toma las horas mensualizadas
+If SAR_TP_IMPUT = "4" Then diasHorasEfectivas = diasHorasEfectivas + SAR_ACM_ACT_CONTRIB[0].SAR_TIEMPO_EFVO_TR
+
+'Segunda quincena considera toma importe del gasto mensualizado
+gastoPagaAnt = SAR_ACM_ACT_CONTRIB[0].SAR_IMP_GUARDERIA
+fecIni = DxDate(1,DxMonth(SCO_DT_ALLOCATION),DxYear(SCO_DT_ALLOCATION))
+fecFin = DxDate(DaysOfMonth(SCO_DT_ALLOCATION),DxMonth(SCO_DT_ALLOCATION),DxYear(SCO_DT_ALLOCATION))
+
+'Primera quincena no levanta gastos de la segunda quincena
+If SAR_TP_IMPUT = "3" Then fecFin = SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC
+
+'Cargamos los gastos agrupados por hijo
+SAR_GASTOS_GUARDERIA.DESTROYBLOCK()
+SAR_GASTOS_GUARDERIA.SAR_ID_HR = SCO_ID_HR
+SAR_GASTOS_GUARDERIA.SAR_FEC_INI = fecIni
+SAR_GASTOS_GUARDERIA.SAR_FEC_FIN = fecFin
+SAR_GASTOS_GUARDERIA.Load_Blk()
+numHijos = SAR_GASTOS_GUARDERIA.Count()
+
+For i = 0 To numHijos -1
+    idHijo = SAR_GASTOS_GUARDERIA[i].STD_ID_FAMILY_PERSON
+    fecNacHijo = SAR_GASTOS_GUARDERIA[i].STD_DT_BIRTH
+    gastGuardHijo = ToDouble(SAR_GASTOS_GUARDERIA[i].SAR_IMPORTE)
+
+    'Evalua si el hijo tiene entre 45 dias (agrega 44 a la fec. nac.) y 3 a?os en el mes de proceso
+    corresponde = 0
+    iniHijoCorresponde = DateAdd(fecNacHijo,44,M4_DAY)
+    finHijoCorresponde = AddYears(fecNacHijo,4)
+    finHijoCorresponde = DateAdd(finHijoCorresponde,-1,M4_DAY)
+    fecIniMes = DxDate(1,DxMonth(SCO_DT_ALLOCATION),DxYear(SCO_DT_ALLOCATION))
+    fecFinMes = DxDate(DaysOfMonth(SCO_DT_ALLOCATION),DxMonth(SCO_DT_ALLOCATION),DxYear(SCO_DT_ALLOCATION))
+    If finHijoCorresponde>=fecIniMes And iniHijoCorresponde<=fecFinMes Then corresponde = 1
+    
+    If corresponde = 1 Then
+        'Proporcionalidad por jornada y tiempo trabajado, aplica tanto al tope como al importe informado
+        prop = 1
+        If SAR_TP_IMPUT = "1" Then
+            prop = diasHorasEfectivas / diasNormSueld
+        ElseIf SAR_TP_IMPUT = "3" Or SAR_TP_IMPUT = "4" Then
+            prop = diasHorasEfectivas / SAR_HORAS_MES
+        EndIf
+        prop = prop * SAR_COEF_JORNADA_PER
+
+        'La proporcion no debe superar el importe informado
+        prop = Min(prop,1)
+        gastGuardHijo = gastGuardHijo * prop
+
+        'Si no aplica tope se toma directamente el valor informado
+        If aplicaTope = 0 Then 
+            valor = valor + gastGuardHijo
+        Else
+            tope = SAR_TOPE_GUARDERIA
+            If SAR_IND_ZONA_PAT = 1 Then tope = SAR_TOPE_GUARDERIA_ZP
+            tope = Percentage(SAR_PORC_TOPE_GUARDERIA,tope) * prop
+            
+            'Si el importe de gasto del hijo es inferior al tope se toma el gasto informado
+            If gastGuardHijo < tope Then
+                valor = valor + gastGuardHijo
+
+            'Si es igual o superior toma el tope
+            Else
+                valor = valor + tope
+            EndIf 
+        EndIf
+    EndIf
+Next
+
+'Segunda quincena considera pagado en primera quincena, mira si valor <> 0 por si en 1ra quincena hubiera ido forzado y en segunda no
+'sino en caso de forzado en 1ra pero no en segunda, se lo restaria.
+If SAR_TP_IMPUT = "4" and valor <> 0 Then valor = valor - gastoPagaAnt
+
+Return Round(valor,SAR_NUM_DEC)

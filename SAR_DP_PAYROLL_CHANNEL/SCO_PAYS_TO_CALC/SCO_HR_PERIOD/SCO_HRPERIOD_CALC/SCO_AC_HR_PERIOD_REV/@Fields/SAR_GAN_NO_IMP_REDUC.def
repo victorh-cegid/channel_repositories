@@ -1,0 +1,12 @@
+item: SAR_GAN_NO_IMP_REDUC
+name: Ganancia no imponible zonas Art 1 Ley 23272
+column_name: SAR_GAN_NO_IMP_REDUC
+item_type: FIELD
+type: CURRENCY
+id_m4_type: 8
+prec: 18
+scale: 6
+scope: RECORD
+default_value: "0"
+internal_type: 15
+item_aux: ID_CURRENCY

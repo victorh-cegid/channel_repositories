@@ -1,0 +1,4 @@
+if #SAR_INDEM_PREAVISO = 0 Then return(0)
+valor = #SAR_INDEM_PREAVISO / 12
+
+return(valor)

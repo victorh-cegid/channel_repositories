@@ -1,0 +1,3 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+SCO_DT_PREV_PAYM | BLOCK | DATE | 4 | 10 | 0 | Fecha pago anterior
+SCO_SYSSENTENCE_LIMITED_DATE | BLOCK | STRING | 3 | -1 | 0 | Sentencia con limite de fechas

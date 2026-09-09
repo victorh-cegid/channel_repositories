@@ -1,0 +1,25 @@
+'Desde el periodo fiscal 2022 devuelve siempre 2 en retro
+anioIg = SAR_ANIO_PAY_IG
+If anioIg > 2021 And SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then Return(2)
+
+'Este indicador con valor 1 recalcula el impuesto en retroactivodad por devengado.
+'con valor 2 es para usar como ajuste previo a liquidacion anual. Recalcula la base del impuesto pero no el impuesto, y levanta deducciones propias de la paga de reliquidacion
+'Este indicador vale 2 en cualquier retroactiva realizada desde una paga 99
+If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then Return(2)
+
+'Si viene informado con valor 1 en retroactividad, permite el calculo del impuesto en forma retroactiva por imputacion IG
+valor = SAR_IND_IMPUESTO_RETRO
+
+'Situacion especial: Ajuste SAC diciembre retroactivo en devengado diciembre con diferente a?o fiscal: Solo 2021 
+'Se activa el indicador y el SAC queda imputado al a?o fiscal de imputacion IG
+ind_aguinaldo = SAR_IND_AGUINALDO() 'Necesario ejecutar porque esta definido en grupo 3 y estamos en grupo 1
+If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And SAR_TP_IMPUT = "2" And ind_aguinaldo = 1 And DxYear(SCO_DT_PAYMENT) = DxYear(SCO_DT_ALLOCATION) And DxYear(SAR_FEC_IMPUT_IG) <> DxYear(SAR_FEC_PAGO_IG) And DxMonth(SCO_DT_PAYMENT) = 12 And DxMonth(SCO_DT_ALLOCATION) = 12 And DxYear(SCO_DT_ALLOCATION) = 2021 Then
+    SAR_FEC_PAGO_IG = SAR_FEC_IMPUT_IG
+    SAR_FEC_SICORE_IG = SAR_FEC_IMPUT_IG
+    Return(1)
+EndIf
+'Fin Situacion especial: Ajuste SAC
+
+If SCO_DT_PAYMENT = SCO_DT_ALLOCATION Or DxYear(SAR_FEC_IMPUT_IG)<>DxYear(SAR_FEC_PAGO_IG) Then Return(0)
+
+Return(valor)

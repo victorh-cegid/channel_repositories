@@ -1,0 +1,34 @@
+' Calcula el num. de a?os en alta en la empresa a la fecha de proceso
+
+IF ISNULL(SAR_HR_PERIOD.SSP_FEC_ANTIGUEDAD) = FALSE THEN
+    M1 = SAR_HR_PERIOD.SSP_FEC_ANTIGUEDAD -1
+ELSEIf SAR_HR_PERIOD.STD_ID_HRP_START_REASON <> "005" THEN
+    M1 = SAR_FECHA_ALTA - 1
+Else 
+    M1 = SAR_FECHA_ALTA_PER_ANT - 1
+ENDIF   
+
+IF SAR_ES_BAJA = 1  And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" THEN
+    M2 = SAR_FECHA_BAJA
+    M5 = (M2 - M1)
+
+    IF M5 < 183 THEN
+        Return(0)
+    ENDIF
+ELSE
+    FECHA = TOSTRING(SAR_PAYS_TO_CALC.SAR_ANIO_PROCESO, 0) + "/12/31"
+    M2  = TODATE(FECHA)
+ENDIF
+
+M3      = DXYEAR(M2)
+FECHA   = TOSTRING(M3, 0) + "/12/31"
+M4      = TODATE(FECHA)
+numanos = DATEDIFF(M1, M4, M4_YEAR)
+
+'Comentamos esta condicion ya que la variable M4 ya se ha llevado a fin de a?o
+'por tanto en esta condicion se cumplira siempre en diciembre y sumara un a?o sin corresponder
+'IF DXMONTH(M1) >= DXMONTH(M4) THEN
+'    numanos = numanos + 1
+'ENDIF
+
+Return(numanos)

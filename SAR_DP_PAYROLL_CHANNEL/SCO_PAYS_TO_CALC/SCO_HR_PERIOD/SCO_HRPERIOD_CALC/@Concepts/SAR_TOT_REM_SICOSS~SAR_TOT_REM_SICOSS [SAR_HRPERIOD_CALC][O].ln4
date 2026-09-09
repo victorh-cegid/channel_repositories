@@ -1,0 +1,8 @@
+// No toma valor para las pagas no remunerativas.
+// En el estandar es la paga 88 - Anticipo de vacaciones
+
+valor = SAR_TOT_REM_SICOSS
+
+If SAR_TP_IMPUT = "88" Then Return(0)
+
+Return (valor)

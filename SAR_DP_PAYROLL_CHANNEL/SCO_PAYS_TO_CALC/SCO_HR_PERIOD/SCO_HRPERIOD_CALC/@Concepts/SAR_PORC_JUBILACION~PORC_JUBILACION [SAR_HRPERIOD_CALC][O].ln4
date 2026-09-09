@@ -1,0 +1,2 @@
+' Toma el valor de Sociedad
+return(#SAR_PORC_JUBILACION)

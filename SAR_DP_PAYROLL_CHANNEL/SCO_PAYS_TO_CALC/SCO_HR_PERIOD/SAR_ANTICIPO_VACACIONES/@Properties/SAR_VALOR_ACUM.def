@@ -1,0 +1,11 @@
+item: SAR_VALOR_ACUM
+name: Valor acumulado
+item_type: PROPERTY
+type: VARIANT
+id_m4_type: 7
+prec: 255
+scale: 0
+scope: NODE
+default_value: "0"
+internal_type: 1
+item_aux: null

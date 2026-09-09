@@ -1,0 +1,1 @@
+Return(Round(SAR_COMP_ANTIGUEDAD,SAR_NUM_DEC))

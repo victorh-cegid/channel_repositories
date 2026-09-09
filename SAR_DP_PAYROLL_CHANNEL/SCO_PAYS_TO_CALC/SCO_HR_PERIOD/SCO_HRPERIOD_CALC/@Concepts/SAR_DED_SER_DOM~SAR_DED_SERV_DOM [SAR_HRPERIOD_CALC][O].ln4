@@ -1,0 +1,7 @@
+'-------------------------------------------------------------------------------------------    
+'Servicio Domestico RG 1978 AFIP
+'-------------------------------------------------------------------------------------------
+serv          = SAR_SERV_DOMEST
+tope_serv     = SAR_TOPE_SER_DOM
+tope_servicio = Min(serv,tope_serv)
+Return(tope_servicio)

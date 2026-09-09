@@ -1,0 +1,10 @@
+item: SCO_DT_PAYMENT
+name: Fecha de pago solo para nomina
+column_name: SCO_DT_PAYMENT
+item_type: FIELD
+type: DATE
+id_m4_type: 4
+prec: 10
+scale: 0
+scope: NODE
+default_value: null

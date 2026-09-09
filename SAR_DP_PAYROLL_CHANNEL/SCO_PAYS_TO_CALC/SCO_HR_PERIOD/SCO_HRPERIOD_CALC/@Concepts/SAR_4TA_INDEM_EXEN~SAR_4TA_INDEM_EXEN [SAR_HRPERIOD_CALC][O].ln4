@@ -1,0 +1,4 @@
+a = SAR_BASE_IMPUESTO
+importe = SAR_TOT_INDEM_EXEN_MES
+importe = importe + SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_INDEM_EXEN_MES
+Return Round(importe,SAR_NUM_DEC)

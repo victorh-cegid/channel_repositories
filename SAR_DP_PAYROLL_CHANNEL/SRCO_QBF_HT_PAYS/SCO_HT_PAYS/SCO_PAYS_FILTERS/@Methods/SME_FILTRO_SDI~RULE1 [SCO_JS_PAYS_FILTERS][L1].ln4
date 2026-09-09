@@ -1,0 +1,20 @@
+// Filtro para el calculo del SDI de la nomina Mejicana
+// Se monta en este M4O porque debe tenerse en cuenta tambien cuando se planifique el calculo del SDI
+// La tabla SCO_H_REG_MOV_SDI contiene a todos los empleados a los que se les deba calcular el SDI
+While IsEOF() <> 1
+    If SCO_SEL_FILTER = 1 Then
+        SCO_JS_HR_PERIOD.SCO_ID_FILTER = SCO_ID_PAYFTR + " + SDI"
+        SCO_JS_HR_PERIOD.SCO_FILTER_SQL = SCO_FTR_SQL        
+        SCO_JS_HR_PERIOD.SCO_NM_FILTER = SCO_NM_FTR + " + Calculo del SDI"
+        Return(1)
+    EndIf
+    GoNext()
+Wend
+
+Begin()
+SCO_SEL_FILTER = 0
+SCO_JS_HR_PERIOD.SCO_ID_FILTER = "SDI"
+SCO_JS_HR_PERIOD.SCO_FILTER_SQL = ""
+SCO_JS_HR_PERIOD.SCO_NM_FILTER = "Calculo del SDI"
+
+Return(1)

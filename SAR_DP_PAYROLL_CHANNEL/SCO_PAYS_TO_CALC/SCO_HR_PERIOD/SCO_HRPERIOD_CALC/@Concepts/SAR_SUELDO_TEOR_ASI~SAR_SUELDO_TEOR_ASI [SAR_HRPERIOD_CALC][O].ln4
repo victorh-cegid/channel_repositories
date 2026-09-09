@@ -1,0 +1,8 @@
+'
+' Toma el valor Individual
+'
+'Se agrega el calculo del Coeficiente por Jornada Reducida(#675)
+
+coef = SAR_HRROLE_CALC.SAR_COEF_JORNADA
+
+Return(SAR_SUELDO_TEOR_ASI * coef)

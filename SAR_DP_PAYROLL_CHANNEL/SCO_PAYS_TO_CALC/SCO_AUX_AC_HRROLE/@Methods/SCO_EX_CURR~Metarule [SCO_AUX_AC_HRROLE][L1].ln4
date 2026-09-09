@@ -1,0 +1,8 @@
+'Variables
+Currency = SCO_H_GL_LE_CURRENCY.ID_CURRENCY
+
+If ID_CURRENCY <> Currency Then
+	curExchangeRecord(Currency,0)
+EndIf
+
+Return(0)

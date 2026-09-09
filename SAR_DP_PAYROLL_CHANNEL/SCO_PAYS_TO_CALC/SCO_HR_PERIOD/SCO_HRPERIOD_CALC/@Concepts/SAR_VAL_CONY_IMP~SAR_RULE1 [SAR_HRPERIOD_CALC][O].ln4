@@ -1,0 +1,14 @@
+ind = SAR_IND_DED_IG_2010
+
+'El valor informado por tabla de valor para este concepto es mensual, por lo que solo debemos obtenerlo teniendo en cuenta si el empleado trabaja en un 
+'centro de trabajo que pertenece a una zona desfavorecida o no
+IndZonaDesfavor = SAR_HR_ROLE.SAR_OBTENER_LUGAR_ZONA(SCO_DT_PAYMENT)
+IndZonaDesfavor = ToInt(IndZonaDesfavor)
+
+If IndZonaDesfavor = 0 Then
+    importe = SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_CONY_IMP",SAR_FEC_PAGO_IG,ind)
+Else
+    importe = SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_CONY_IMP_REDUC",SAR_FEC_PAGO_IG,ind)
+EndIf
+
+Return(importe)

@@ -1,0 +1,53 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "77" THEN
+    Return(0)
+ENDIF
+'si es baja y si el motivo de baja es:
+'
+'4  (Incapacidad articulo 212 ley 20744 segundo parrafo)
+'5  (Incapacidad articulo 212 ley 20744 cuarto parrafo)
+'9  (Despido sin causa sin otorgar preaviso)
+'11 (Incapacidad articulo 212 ley 20744 tercer parrafo)
+'13 (Delegado gremial)
+'14 (Fuerza mayor o Disminucion del Trabajo)
+'15 (Embarazo)
+'16 (Matrimonio)
+
+
+
+IF DXDAY(SCO_HR_PERIOD.STD_DT_END) = DAYSOFMONTH(SCO_HR_PERIOD.STD_DT_END) THEN 
+    Return(0)
+ENDIF
+ 
+'02/12/2012 Fernando Miguel Siri
+' Agregado para detectar el tipo de contrato del empleado, para no abonar este concepto en caso que se trate
+' de un ID = PN o PD
+meses = 0
+If SAR_H_CONTRATOS.SAR_ID_TIME_UNIT_PRU = "02" And IsNull(SAR_H_CONTRATOS.SAR_UNITS_PRU) = M4_False Then meses = SAR_H_CONTRATOS.SAR_UNITS_PRU
+
+If(SAR_ID_CONTRATO = "PN" Or SAR_ID_CONTRATO = "PD") Or meses <> 0 Then
+   Return(0)
+EndIf   
+
+MOTIVO_BAJA = SCO_HR_PERIOD.STD_ID_HRP_END_REASON
+
+IF (SAR_ES_BAJA <> 1) OR ( MOTIVO_BAJA <> "4" AND MOTIVO_BAJA <> "5" AND MOTIVO_BAJA <> "9" AND MOTIVO_BAJA <> "11" AND MOTIVO_BAJA <> "13" AND MOTIVO_BAJA <> "14" AND MOTIVO_BAJA <> "15" AND MOTIVO_BAJA <> "16" ) THEN
+    Return(0)
+ENDIF
+
+if SAR_TOT_INDEMNIZ = 0 Then
+    valor = 0
+else
+    dias_restantes = 30 - dxday(SAR_FECHA_BAJA)
+    prom_ult_6_meses = SAR_PRO_VAR_ULT_6
+    if SAR_HRPERIOD_CALC.SAR_TIPO_SALARIO = "003" THEN
+         valor = dias_restantes * (((SAR_TOT_INDEMNIZ * 200) + prom_ult_6_meses)/30)
+    else
+        valor = dias_restantes * ((SAR_TOT_INDEMNIZ + prom_ult_6_meses)/30)
+    endif
+endif
+
+IF valor <= 0 THEN 
+    Return(0) 'en este caso el dia de baja coincide con el dia 30 o el dia 31
+ENDIF
+
+Return(valor)

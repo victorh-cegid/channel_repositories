@@ -1,0 +1,8 @@
+//Este metodo sirve para ajustar informacion de la paga y que necesitemos modificar para alguna funcionalidad en concreto
+
+//Cuando estamos trabajando con la funcionalidad de "bloqueo de nomina", tenemos que reajustar la fecha de corte de la paga.
+If SCO_MNG_LOCKED_PAYS = "1" Then
+    If SCO_DT_CLOSE_PROC = PLUS_INF Then SCO_DT_CLOSE_PROC = TodayGMT()
+EndIf
+
+Return(M4_SUCCESS)

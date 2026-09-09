@@ -1,0 +1,40 @@
+IF SAR_TIPO_SALARIO = "001" THEN            'tipo salario mensual
+    IF SCO_H_HR_PAY_FREQ.SCO_ID_PAY_FREQUENCY = "004" THEN      'frequencia de pago mensual
+        valor = 30
+    ELSEIF SCO_H_HR_PAY_FREQ.SCO_ID_PAY_FREQUENCY = "003" THEN  'frequencia de pago quincenal
+        valor = 15
+    ELSEIF SCO_H_HR_PAY_FREQ.SCO_ID_PAY_FREQUENCY = "002" THEN  'frequencia de pago catorcenal
+        valor = 14
+    ELSEIF SCO_H_HR_PAY_FREQ.SCO_ID_PAY_FREQUENCY = "001" THEN  'frequencia de pago semanal
+        valor = 7
+    ELSEIF SCO_H_HR_PAY_FREQ.SCO_ID_PAY_FREQUENCY = "010" THEN  'frequencia de pago diaria
+        valor = 1
+    ENDIF
+ELSEIF SAR_TIPO_SALARIO = "002" THEN    'tipo salario diario
+    IF SAR_CANT_DIAS_TRABAJADOS = 0 THEN
+        valor = (SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC - SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC) + 1
+    ELSE
+        valor = SAR_CANT_DIAS_TRABAJADOS
+    ENDIF
+ELSEIF SAR_TIPO_SALARIO = "003" THEN    'tipo salario horario
+    IF SCO_NUM_HOURS_THEO > 0 THEN
+        inicio = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC
+        fin = SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC
+        valor = SAR_CALC_HORAS_TEORICAS(inicio,fin)
+    ELSE
+        IF SAR_CANT_HS_TRABAJADAS = 0 OR ISNULL(SAR_CANT_HS_TRABAJADAS) = TRUE THEN
+            IF SAR_FECHA_BAJA <= SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC THEN 
+                valor = 0
+            else
+                '
+                'El empleado %1:s. , que posee tipo de salario horario, no tiene asignado tiempo teorico ni horas de trabajo. Esto sucedio en la ejecucion del concepto #401. 
+                '
+                SetLog(M4_WARNINGLOG,80,4,201,SCO_ID_HR)
+            endif
+        ELSE
+            valor = SAR_CANT_HS_TRABAJADAS
+        ENDIF
+    ENDIF
+ENDIF
+SAR_HR_ROLE.SAR_P_DIAS_PAGA = valor
+Return(valor)

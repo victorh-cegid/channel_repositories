@@ -1,0 +1,8 @@
+# parent_node | parent_ti | connection_type
+SCO_LEGAL_ENTITY | SCO_LEGAL_ENTITY | RECORD_BLOCK
+SCO_H_LE_CURRENCY | SCO_H_LE_CURRENCY | FREE
+
+# child_node | connection_type
+SCO_H_LE_CURRENCY | FREE
+
+# ti | item | parent_node | parent_ti | parent_item | precedence

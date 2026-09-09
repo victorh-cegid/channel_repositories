@@ -1,0 +1,5 @@
+Decimals = SCO_HRPERIOD_CALC.SCO_CURR_DECIMALS
+
+Ret = Round(SCO_TOT_EARNINGS,Decimals)
+
+Return(Ret)

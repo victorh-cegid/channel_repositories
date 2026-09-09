@@ -1,0 +1,19 @@
+'
+'Le cargamos el valor correspondiente a la fecha de filtro que se usa en la NS.
+'
+
+IF SCO_DT_END >= SCO_DT_ALLOC_START AND SCO_DT_END <= SCO_DT_ALLOC_END THEN
+
+    SAR_FECHA_FILTRO = SCO_DT_END
+
+ELSE
+'    IF SCO_DT_START >= SCO_DT_ALLOC_START AND SCO_DT_START <= SCO_DT_ALLOC_END THEN
+
+'        SAR_FECHA_FILTRO = SCO_DT_START
+
+'    ELSE
+
+        SAR_FECHA_FILTRO = SCO_DT_ALLOC_END
+
+'    ENDIF
+ENDIF

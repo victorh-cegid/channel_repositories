@@ -1,0 +1,15 @@
+importe_oe = SAR_BASE_ANT_EMP
+importe_oe = importe_oe + SAR_BRUTO_OE
+importe_oe = importe_oe + SAR_JUR_EXEN_NO_ALC
+importe_oe = importe_oe + SAR_HS_EX_EXEN_OE
+importe_oe = importe_oe + SAR_NO_HAB_OE_ACUM
+importe_oe = importe_oe + SAR_MOV_VIA_TRIB_OE
+importe_oe = importe_oe + SAR_MAT_DIC_TRIB_OE
+importe_oe = importe_oe + SAR_MOV_VIA_EXEN_OE
+importe_oe = importe_oe + SAR_MAT_DIC_EXEN_OE
+importe_oe = importe_oe + SAR_PER_ANT_GRAV_OE
+importe_oe = importe_oe + SAR_PER_ANT_NO_GRAV_OE
+importe_oe = importe_oe + SAR_NO_HAB_EXEN_OE
+importe_oe = importe_oe + SAR_HS_EX_TRIB_TOT_OE
+
+Return(importe_oe)

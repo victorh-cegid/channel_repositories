@@ -1,0 +1,2 @@
+' Toma el valor de Convenio
+return(#SAR_PP_SEG_ESTRELLA)

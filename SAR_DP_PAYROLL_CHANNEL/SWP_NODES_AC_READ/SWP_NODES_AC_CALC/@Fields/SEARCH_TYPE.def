@@ -1,0 +1,10 @@
+item: SEARCH_TYPE
+name: Orientacion
+column_name: SEARCH_TYPE
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 4
+scale: 0
+scope: RECORD
+default_value: null
