@@ -1,0 +1,12 @@
+item: SCO_COMMENT
+name: Comentario
+column_name: SCO_COMMENT
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 254
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

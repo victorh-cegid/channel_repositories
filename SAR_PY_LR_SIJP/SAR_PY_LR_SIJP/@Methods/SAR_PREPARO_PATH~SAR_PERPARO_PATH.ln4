@@ -1,0 +1,74 @@
+/*********************************************************************************
+   ID: SAR_PREPARO_PATH
+   Nombre: Preparo Path y Nombre del archivo para la generacion del SiCOSS
+   Fecha: 23/03/2018
+   Autor: emmanueln
+   Descripcion: Este metodo tiene la funcion obtener la ruta parametrizada y el
+                nombre del archivo que se van a utilizar para la generacion del
+                archivo del SICOSS tanto para la ejecucion directa como para la
+                ejecucion por planificacion
+********************************************************************************/
+/*Seteamos las fechas del periodo seleccionado en la presentacion para colocarlo como parte del nombre del archivo*/
+vDia1 = ToString (DxDay(SAR_P_DT_INICIO),0)
+vMes1 = ToString (DxMonth(SAR_P_DT_INICIO),0)
+vAnio1 = ToString (DxYear(SAR_P_DT_INICIO),0)
+vDia2 = ToString (DxDay(SAR_P_DT_FIN),0)
+vMes2 = ToString (DxMonth(SAR_P_DT_FIN),0)
+vAnio2 = ToString (DxYear(SAR_P_DT_FIN),0)
+
+/*** en caso que el dia y el mes esten formados por una sola unidad, le agregamos un 0 (cero) delante ****/
+IF Length(vDia1) = 1 THEN
+    vDia1 = "0" + vDia1
+ENDIF
+IF Length(vMes1) = 1 THEN
+    vMes1 = "0" + vMes1
+ENDIF
+IF Length(vDia2) = 1 THEN
+    vDia2 = "0" + vDia2
+ENDIF
+IF Length(vMes1) = 1 THEN
+    vMes2 = "0" + vMes2
+ENDIF
+
+vFecha = vAnio1 + vMes1 + vDia1 + "_a_" + vAnio2 + vMes2 + vDia2 /*Formato de la fecha AAAAMMDD*/
+
+/**** Se utiliza la ruta parametrizada desde "Configuracion de procesos LATAM" ****/
+if SAR_CONFI_PROCESS_SIJP.COUNT() = 0 THEN SAR_CONFI_PROCESS_SIJP.LOAD_BLK()
+SAR_CONFI_PROCESS_SIJP.SLA_CARGAR_CONFIGURACION("SAR_PY_LR_SIJP")
+vName_File = SAR_CONFI_PROCESS_SIJP.SLA_GET_VALOR("SAR_PARAM_NAME")
+vPath_Planifica = SAR_CONFI_PROCESS_SIJP.SLA_GET_VALOR("SAR_PARAM_PATH")
+vFechaPlanifica = SAR_CONFI_PROCESS_SIJP.SLA_GET_VALOR("SAR_PARAM_DATA_NAME") 
+
+/*** En caso de que no se parametrice el path, se utiliza por default el valor de Parametros Avanzados ***/
+IF ISNULL(vPath_Planifica) = M4_TRUE THEN
+    vPath_Planifica = GetRegistryValue (".\TOOLS\REPORTS", "WorkDir")
+    IF MID(vPath_Planifica, LENGTH(vPath_Planifica) -1, 1) = "\" THEN
+        vPath_Planifica = vPath_Planifica + "\"
+    ENDIF
+ENDIF
+
+/**** Inicio seteo nombre y la ruta del archivo que se va a utilizar ****/
+IF MID(SAR_P_PATH, LENGTH(SAR_P_PATH) -1, 1) = "\" THEN
+    vNombrePath    = SAR_P_PATH
+ELSE
+    vNombrePath    = SAR_P_PATH + "\"
+ENDIF
+
+IF ISNULL(vName_File) = M4_TRUE THEN
+    SAR_P_PATH_LOG = vNombrePath + "SICOSS_" + vFecha + "_log.txt"
+    SAR_P_PATH = vNombrePath + "SICOSS_" + vFecha +".txt"
+ELSE
+'    IF SAR_P_PATH = vPath_Planifica THEN
+        IF vFechaPlanifica = "S" or vFechaPlanifica = "s" then
+            SAR_P_PATH_LOG = vNombrePath + vName_File + "_" + vFecha  + "_log.txt"
+            SAR_P_PATH     = vNombrePath + vName_File + "_" + vFecha  + ".txt"
+        ELSE
+            SAR_P_PATH_LOG = vNombrePath + vName_File + "_log.txt"
+            SAR_P_PATH     = vNombrePath + vName_File + ".txt"            
+        ENDIF
+'    ELSE    
+'        SAR_P_PATH_LOG = vNombrePath + vName_File + "_" + vFecha + "_log.txt"
+'        SAR_P_PATH     = vNombrePath + vName_File + "_" + vFecha + ".txt"
+'    ENDIF
+ENDIF
+/**** Fin seteo nombre y la ruta del archivo que se va a utilizar ****/

@@ -1,0 +1,5 @@
+# item | scope | return_type | id_m4_type | prec | scale | name
+GONEXT | NODE | NUMBER | 6 | 24 | 6 | GONEXT
+SAR_CARGO_NODOS_AGENCIA | NODE | STRING | 2 | 1 | 0 | Cargo Nodos Emp Agencia
+SAR_M_ARMAR_DATOS | NODE | NUMBER | 6 | 18 | 0 | Arma datos Emp Eventuales
+SAR_M_GEN_SIT_REVISTA_AGENCIA | RECORD | NUMBER | 6 | 18 | 0 | SAR_M_GEN_SIT_REVISTA_AGENCIA

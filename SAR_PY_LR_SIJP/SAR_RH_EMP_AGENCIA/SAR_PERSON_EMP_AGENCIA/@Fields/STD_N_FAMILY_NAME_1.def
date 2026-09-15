@@ -1,0 +1,12 @@
+item: STD_N_FAMILY_NAME_1
+name: 1er apellido
+column_name: STD_N_FAMILY_NAME_1
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 50
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

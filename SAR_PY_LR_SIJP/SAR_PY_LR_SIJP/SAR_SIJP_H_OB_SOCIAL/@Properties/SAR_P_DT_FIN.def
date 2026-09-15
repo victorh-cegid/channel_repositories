@@ -1,0 +1,11 @@
+item: SAR_P_DT_FIN
+name: Fecha fin
+item_type: PROPERTY
+type: DATE
+id_m4_type: 4
+prec: 10
+scale: 0
+scope: NODE
+default_value: null
+internal_type: 1
+item_aux: null

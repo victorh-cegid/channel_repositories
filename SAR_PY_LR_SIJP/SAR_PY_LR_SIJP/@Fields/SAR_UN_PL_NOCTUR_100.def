@@ -1,0 +1,12 @@
+item: SAR_UN_PL_NOCTUR_100
+name: Unid. horas extras nocturnas al 100%
+column_name: SAR_UN_PL_NOCTUR_100
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 9
+scale: 4
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

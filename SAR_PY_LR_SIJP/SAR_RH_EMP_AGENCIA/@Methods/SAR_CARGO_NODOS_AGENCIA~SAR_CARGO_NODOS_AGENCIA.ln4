@@ -1,0 +1,35 @@
+/****************************************************************************************
+        ID: SAR_CARGO_NODOS_AGENCIA
+        Nombre: Cargo Nodos Emp Agencia
+        Fecha: 26/03/2018
+        Autor: emmanueln
+        Descripcion:  Metodo encargado de la carga de los nodos a utilizar en la generacion
+                    de datos de empleados de agencia
+*****************************************************************************************/
+
+/*Datos de la Persona*/
+IF SAR_PERSON_EMP_AGENCIA.ISEOF()= M4_TRUE THEN SAR_PERSON_EMP_AGENCIA.LOAD_BLK()
+SAR_PERSON_EMP_AGENCIA.BEGIN()
+
+
+/*Datos de la empresa*/
+IF SAR_LEG_ENT_EMP_AGENCIA.ISEOF()= M4_TRUE THEN SAR_LEG_ENT_EMP_AGENCIA.LOAD_BLK()
+SAR_LEG_ENT_EMP_AGENCIA.BEGIN()
+
+
+/*Lugar de trabajo y Zona DGI*/
+IF SAR_H_WLOC_EMP_AGENCIA.ISEOF()= M4_TRUE Then SAR_H_WLOC_EMP_AGENCIA.LOAD_BLK()
+SAR_H_WLOC_EMP_AGENCIA.BEGIN()
+
+If SAR_H_WLOC_EMP_AGENCIA.iseof()= M4_FALSE Then
+    IF SAR_ZONA_DGI_EMP_AGENCIA.iseof()= M4_TRUE Then SAR_ZONA_DGI_EMP_AGENCIA.LOAD_BLK()
+    SAR_ZONA_DGI_EMP_AGENCIA.BEGIN()
+ENDIF
+
+
+/*Historico de actividad*/
+IF SAR_H_ACTIVIDAD_AGENCIA.ISEOF()= M4_TRUE THEN SAR_H_ACTIVIDAD_AGENCIA.LOAD_BLK()
+
+
+/*Tipo de empleado*/
+IF SAR_H_EMP_TYPE_AGENCIA.ISEOF()= M4_TRUE THEN SAR_H_EMP_TYPE_AGENCIA.LOAD_BLK()

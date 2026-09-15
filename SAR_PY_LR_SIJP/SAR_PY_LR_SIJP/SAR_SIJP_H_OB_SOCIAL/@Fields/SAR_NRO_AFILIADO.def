@@ -1,0 +1,12 @@
+item: SAR_NRO_AFILIADO
+name: Num. de afiliado
+column_name: SAR_NRO_AFILIADO
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 15
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

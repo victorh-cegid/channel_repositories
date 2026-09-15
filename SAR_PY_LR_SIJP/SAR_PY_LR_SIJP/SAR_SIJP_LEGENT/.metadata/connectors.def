@@ -1,0 +1,7 @@
+# parent_node | parent_ti | connection_type
+SAR_PY_LR_SIJP | SAR_PY_LR_SIJP | RECORD_BLOCK
+
+# child_node | connection_type
+
+# ti | item | parent_node | parent_ti | parent_item | precedence
+SAR_SIJP_LEGENT | STD_ID_LEG_ENT | SAR_PY_LR_SIJP | SAR_PY_LR_SIJP | SAR_ID_EMPRESA | AFTER_PARENT

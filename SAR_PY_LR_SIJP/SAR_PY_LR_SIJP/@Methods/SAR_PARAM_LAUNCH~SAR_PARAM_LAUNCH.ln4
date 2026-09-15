@@ -1,0 +1,11 @@
+'Se le da valor desde los argumentos a las propiedades
+
+SAR_P_ID_EMPRESA = ARG_SAR_P_ID_EMPRESA
+SAR_P_DT_INICIO = todate(ARG_SAR_P_DT_INICIO)
+SAR_P_DT_FIN = todate(ARG_SAR_P_DT_FIN)
+'SAR_P_PATH = ARG_SXMLFILE + "sicoss_planificado"
+SAR_P_PATH = ARG_SXMLFILE /*+ ARG_ZIP_FILE*/
+SAR_P_DYN_FILTER = ARG_DYN_FILTER
+
+SAR_M_ARMAR_DATOS ()
+SAR_LINEA_TXT_2.SAR_M_GENERA_TXT()

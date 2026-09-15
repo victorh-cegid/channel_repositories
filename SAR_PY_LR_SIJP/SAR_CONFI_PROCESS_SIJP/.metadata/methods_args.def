@@ -1,0 +1,4 @@
+# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
+SLA_CARGAR_CONFIGURACION | KEY_ARG | IN | STRING | 2 | 100 | 0 | 0
+SLA_GET_DETALLE | PARA_ARG | IN | STRING | 2 | 100 | 0 | 0
+SLA_GET_VALOR | PARA_ARG | IN | STRING | 2 | 100 | 0 | 0

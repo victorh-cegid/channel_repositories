@@ -1,0 +1,12 @@
+item: SAR_ID_SIT_REVISTA
+name: ID Motivo Baja Afip
+column_name: SAR_ID_SIT_REVISTA
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 4
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null

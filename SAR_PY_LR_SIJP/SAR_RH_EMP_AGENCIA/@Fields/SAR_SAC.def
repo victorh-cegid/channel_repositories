@@ -1,0 +1,12 @@
+item: SAR_SAC
+name: Valor SAC
+column_name: SAR_SAC
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 11
+scale: 2
+scope: RECORD
+default_value: "0"
+internal_type: 1
+item_aux: null

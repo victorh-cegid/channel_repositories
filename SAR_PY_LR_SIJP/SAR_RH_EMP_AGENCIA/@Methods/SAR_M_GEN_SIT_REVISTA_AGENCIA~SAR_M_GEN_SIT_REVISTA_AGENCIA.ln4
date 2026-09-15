@@ -1,0 +1,70 @@
+'Este metodo carga el nodo SRAR_SIT_REVISTA con todas las situaciones de revista existentes entre las fechas inicio y fin pasados como parametro
+'y las vuelca en las propiedades correspondientes a las 3 situaciones de revista que se deben mostrar en el fichero.
+
+sit_rev_prev = "  "
+SRAR_SIT_REVISTA.SRAR_SIT_REV_1 = "  "
+SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_1 = "00"
+SRAR_SIT_REVISTA.SRAR_SIT_REV_2 = "  "
+SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_2 = "00" 
+SRAR_SIT_REVISTA.SRAR_SIT_REV_3 = "  "
+SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_3 = "00" 
+
+SRAR_SIT_REVISTA.DESTROYBLOCK()
+SRAR_SIT_REVISTA.SRAR_ID_HR = STD_ID_HR
+SRAR_SIT_REVISTA.SRAR_OR_HR_PERIOD = STD_OR_HR_PERIOD
+SRAR_SIT_REVISTA.SRAR_FEC_INI = SAR_P_DT_INICIO
+SRAR_SIT_REVISTA.SRAR_FEC_FIN = SAR_P_DT_FIN
+SRAR_SIT_REVISTA.Load_Blk()
+
+numReg = SRAR_SIT_REVISTA.Count()
+
+vDiasLic = 0
+
+For i=0 To numReg - 1
+    sit_rev = ToString(SRAR_SIT_REVISTA[i].SAR_ID_SIT_REVISTA,0)
+    If Length(sit_rev) < 2 Then sit_rev = "0" + sit_rev
+    sit_rev_dia = ToString(DxDay(Max(SAR_P_DT_INICIO,SRAR_SIT_REVISTA[i].SCO_DT_START)),0)
+    If Length(sit_rev_dia) < 2 Then sit_rev_dia = "0" + sit_rev_dia
+    If sit_rev = "09" or sit_rev = "48" Then        // Solo si existe situacion de revista 9 o 48 en el historico
+        vDiasLic = vDiasLic + CommonTime (SRAR_SIT_REVISTA[i].SCO_DT_START, SRAR_SIT_REVISTA[i].SCO_DT_END, SRAR_SIT_REVISTA.SRAR_FEC_INI, SRAR_SIT_REVISTA.SRAR_FEC_FIN )
+    EndIf
+    If sit_rev_prev <> sit_rev Then
+        sit_rev_prev = sit_rev
+        If SRAR_SIT_REVISTA.SRAR_SIT_REV_1 = "  " Then
+            SRAR_SIT_REVISTA.SRAR_SIT_REV_1 = sit_rev
+            SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_1 = sit_rev_dia
+        ElseIf SRAR_SIT_REVISTA.SRAR_SIT_REV_2 = "  " Then
+            SRAR_SIT_REVISTA.SRAR_SIT_REV_2 = sit_rev
+            SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_2 = sit_rev_dia        
+        ElseIf SRAR_SIT_REVISTA.SRAR_SIT_REV_3 = "  " Then
+            /**** Ley 20744 art.223bis / Res.397 MTEySS ***/
+            IF (SRAR_SIT_REVISTA.SRAR_SIT_REV_1 = "09" OR SRAR_SIT_REVISTA.SRAR_SIT_REV_1 = "48") THEN
+                sit_rev = "49"
+            ELSEIF (SRAR_SIT_REVISTA.SRAR_SIT_REV_2 = "09" OR SRAR_SIT_REVISTA.SRAR_SIT_REV_2 = "48") THEN 
+                sit_rev = "49"
+            ELSEIF sit_rev = "09" OR sit_rev = "48" THEN
+                sit_rev = "49"
+            ENDIF
+            /****/
+            
+            SRAR_SIT_REVISTA.SRAR_SIT_REV_3 = sit_rev
+            SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_3 = sit_rev_dia
+            i = numReg       
+        EndIf       
+    EndIf
+Next
+
+If SRAR_SIT_REVISTA.SRAR_SIT_REV_2= "  " Then SRAR_SIT_REVISTA.SRAR_SIT_REV_2 = SRAR_SIT_REVISTA.SRAR_SIT_REV_1
+If SRAR_SIT_REVISTA.SRAR_SIT_REV_3= "  " Then 
+    SAR_PERIOD_EMP_AGENCIA.Load_blk()
+    PeriodoIni = Max(SAR_PERIOD_EMP_AGENCIA.STD_DT_START, SAR_P_DT_INICIO)
+    PeriodoFin = Min(SAR_PERIOD_EMP_AGENCIA.STD_DT_END, SAR_P_DT_FIN)
+    vDiasPer = (DxDay(PeriodoFin) - DxDay(PeriodoIni)) + 1
+    IF vDiasLic <> vDiasPer And vDiasLic <> 0 Then
+        SRAR_SIT_REVISTA.SRAR_SIT_REV_3 = "49"
+        SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_3 = ToString(DaysOfMonth (SAR_P_DT_INICIO),0)
+    ELSE
+        SRAR_SIT_REVISTA.SRAR_SIT_REV_3 = SRAR_SIT_REVISTA.SRAR_SIT_REV_2
+    ENDIF
+endif
+Return(0)

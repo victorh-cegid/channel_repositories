@@ -1,0 +1,823 @@
+'**********************************************************************************************'
+' este metodo se encarga de armar los datos para el archivo de salida para la SIJP
+'**********************************************************************************************'
+If iseof()= M4_TRUE Then
+    Begin()    
+EndIf
+
+vProc        = 0
+vProcEvent   = 0
+vFechaInicio = SAR_P_DT_INICIO
+vFechaFin    = SAR_P_DT_FIN
+vFechaSicoss = 0
+vArchivo     = 0
+/*** ejecuto el metodo que se encarga de generar el path y el nombre de los archivos ***/
+SAR_PREPARO_PATH()
+
+IF iseof()= M4_FALSE  THEN
+    vArchivo = 1
+    'Se genera Archivo log en el cual se detallan los empleados que poseen en alguno de los campos
+    '5-codigo de situacion, 6-codigo de condicion, 7-codigo de actividad datos incorrectos, los cuales no pueden 
+    'ser cargados en el aplicativo SIJP  
+    'limpiamos el archivo de log 
+    
+    While ISEOF()= FALSE
+    
+        sCadena       = ""
+        st_cadena_log = ""
+        st_empl       = "ID RH / Num. periodo: " + ToString(SCO_ID_HR) + " / " + ToString(SCO_OR_HR_PERIOD)
+        
+        'Control de fecha de baja para el filtrado de los nodos
+        If SAR_FECHA_BAJA <> M4_PLUS_INF AND SAR_FECHA_BAJA < SAR_P_DT_INICIO  Then
+            SAR_P_DT_FIN    = SAR_FECHA_BAJA
+            SAR_P_DT_INICIO = SAR_FECHA_BAJA
+            'Carga del indicador del seguro de vida
+            SAR_IND_SEG_VIDA.SAR_P_DT_FIN    = SAR_FECHA_BAJA
+            SAR_IND_SEG_VIDA.SAR_P_DT_INICIO = SAR_FECHA_BAJA            
+        Else
+            SAR_P_DT_INICIO = vFechaInicio
+            SAR_P_DT_FIN    = vFechaFin 
+            'Carga del indicador del seguro de vida          
+            SAR_IND_SEG_VIDA.SAR_P_DT_INICIO = vFechaInicio
+            SAR_IND_SEG_VIDA.SAR_P_DT_FIN    = vFechaFin             
+        Endif        
+
+        /***  CArgo los nodos que se utilizaran para la generacion del archivo del SiCOSS   ***/
+        SAR_CARGO_NODOS_SIJP()
+
+    '1-CUIL, long 11
+        IF ISNULL(SAR_SIJP_PERSON.SAR_CUIL) = M4_FALSE THEN
+            vCuil = SAR_SIJP_PERSON.SAR_CUIL
+        ELSEIF ISNULL(SAR_SIJP_PERSON.STD_SS_NUMBER) = M4_FALSE THEN
+            vCuil = SAR_SIJP_PERSON.STD_SS_NUMBER
+        ELSE
+            vCuil = "00000000000"
+        ENDIF
+        
+        'quito los - o . que puedan tener el cuil
+        vCuil = replace(vCuil,"-","") 'en caso de que haya "-" (guiones) se los elimina de la cadena para que el formato del layout sea correcto
+        vCuil = replace(vCuil,".","") 'en caso de que haya "." (puntos) se lo borra para que quede el numero limpio
+    
+        IF Length(vCuil) > 11 THEN
+            vCuil = mid(vCuil,0,11)
+        ELSEIF Length(vCuil) < 11 THEN 'en caso de que el DNI sea menor a 8 caracteres, lo completo con 0 (ceros)
+            'vCuil = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,vCuil,"0",11 - Length(vCuil))
+            CuilA = ""
+            CuilB = ""
+            CuilC = ""
+            CuilD = ""
+            CuilA = mid(vCuil,0,2)
+            CuilB = mid(vCuil,2,length(vCuil)-3)
+            CuilC = mid(vCuil,length(vCuil)-1,1)				
+            CuilD = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,CuilB,"0",8 - Length(CuilB))            
+            
+            vCuil= CuilA + CuilD + CuilC
+        ENDIF
+        
+    '2-Ap y nombre, long 30
+        ApyNombre = ""
+        ApyNombre = SAR_SIJP_PERSON.SSP_PRIMER_APELLIDO + ", " + SAR_SIJP_PERSON.STD_N_FIRST_NAME
+        
+        IF Length(ApyNombre) <= 30 THEN
+            ApyNombre= SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(1,ApyNombre," ",30 - Length(ApyNombre) )
+        ELSE
+            ApyNombre = mid(ApyNombre, 0,30)
+        ENDIF
+        
+    '3-conyuge, long 1
+        Conyuge = 0
+        Conyuge = SAR_A_CARGO_ESPOSA
+        
+        IF Conyuge = NULLVALUE() or Conyuge = 0 THEN
+            Conyuge = "F"
+        ELSE
+            Conyuge = "T"
+        ENDIF
+        
+    '4-cant de hijos, long 2
+        CantHijos = ""
+        CantHijos = FORMAT(SAR_A_C_HIJOS_OB,0)
+        
+        IF Length(CantHijos) < 2 THEN
+            CantHijos= "0" + CantHijos
+        ENDIF
+        
+    '5-codigo de situacion, long 2 
+        CodSituacion       = ""
+        CodCondicion       = ""
+        CodModContratacion = ""
+        CodSiniestrado     = ""
+        
+        IF SAR_SIJP_H_EMP_TYPE.iseof()= false THEN
+            CodSituacion       = SAR_SIJP_H_EMP_TYPE.SAR_ID_SIT_REVISTA
+            CodCondicion       = SAR_SIJP_H_EMP_TYPE.SAR_ID_COD_COND
+            CodModContratacion = SAR_SIJP_H_EMP_TYPE.SAR_ID_MOD_CONTRAT
+            CodSiniestrado     = SAR_SIJP_H_EMP_TYPE.SAR_ID_COD_SINIES
+        ENDIF
+        
+        CodSit_Fam = CodSituacion
+        
+        IF (CodSituacion  = "NAP")THEN
+            st_cadena_log = st_cadena_log + " - El Codigo de situacion revista en el Hist. de Tipo de Empleado no corresponde." + CHR(M4_CR)
+        ENDIF
+        
+        IF Length(CodSituacion ) < 2 THEN
+            CodSituacion  = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,CodSituacion ,"0",2 - Length(CodSituacion) )
+        ENDIF
+        
+        IF Length(CodSituacion) > 2 THEN
+            CodSituacion = Round(CodSituacion,2)
+        EndIf
+        
+    '6-codigo de condicion, long 2
+        IF (CodCondicion = "NAP")THEN
+            st_cadena_log = st_cadena_log + " - El Codigo de condicion en el Hist. de Tipo de Empleado no corresponde." + CHR(M4_CR)
+        ENDIF
+        
+        IF Length(CodCondicion) < 2 THEN
+            CodCondicion  = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,CodCondicion ,"0",2 - Length(CodCondicion) )
+        ENDIF
+        
+        IF Length(CodCondicion) > 2 THEN
+            CodCondicion = Round(CodCondicion,2)
+        EndIf
+        
+    '7-codigo de actividad, long 3 
+        CodActividad = ""
+        If SAR_SIJP_H_ACTIVIDAD.Count() > 0 Then
+            CodActividad = SAR_SIJP_H_ACTIVIDAD.SAR_ID_ACTIVIDAD
+        EndIf
+        
+        IF (CodActividad = "NAP")THEN
+            st_cadena_log = st_cadena_log + " - El Codigo de actividad en el Mant. del Rol no corresponde." + CHR(M4_CR)
+        ENDIF
+        
+        IF Length(CodActividad ) < 3 THEN
+            CodActividad = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,CodActividad ,"0",3 - Length(CodActividad ) )
+        ENDIF
+        
+        IF Length(CodActividad ) > 3 THEN
+            CodActividad  = Round(CodActividad ,3)
+        EndIf
+        
+    '8-codigo de zona, long 2
+        Codzona = ""
+        If SAR_SIJP_H_WLOC.iseof()= M4_FALSE Then 'por css 2621019, con carga parcial no se usa el count
+            CodZona = SAR_SIJP_H_WLOC.SAR_ID_ZONA_DGI
+        else
+            CodZona = "00"    
+        ENDIF
+        
+        IF Length(CodZona ) < 2 THEN
+            CodZona = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,CodZona ,"0",2 - Length(CodZona ) )
+        ELSE
+            CodZona = MID(CodZona,0,2)
+        ENDIF
+        
+    '9-porcentaje aporte adicional SS, long 5
+        PorcAdicional = "0.00"
+        
+        IF Length(PorcAdicional ) < 5 THEN
+            PorcAdicional = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,PorcAdicional ,"0",5 - Length(PorcAdicional ) )
+        ENDIF
+        
+    '10-codigo modalidad de contratacion, long 3
+        IF Length(CodModContratacion ) < 3 THEN
+            CodModContratacion = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,CodModContratacion ,"0",3 - Length(CodModContratacion ) )
+        ENDIF
+        
+    '11-codigo obra social, long 6 
+        CodObSocial = ""
+        If SAR_SIJP_H_OB_SOCIAL.Count() > 0 Then
+            SAR_SIJP_H_OB_SOCIAL.end()
+            CodObSocial = SAR_SIJP_H_OB_SOCIAL.SAR_ID_OBRA_SOCIAL
+        EndIf
+        
+        If CodObSocial = NULLVALUE() Then
+            CodObSocial  = "0"
+        EndIf
+        
+        If Length(CodObSocial ) < 6 Then
+            CodObSocial = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,CodObSocial ,"0",6 - Length(CodObSocial) )  
+        else
+            CodObSocial = mid(CodObSocial,0,6)            
+        EndIf
+        
+    '12-cantidad de adherentes, long 2
+        CantAdhrentes = ""
+        CantAdhrentes = format(SAR_FAM_CARGO_OS,0)
+        
+        IF CantAdhrentes=NULLVALUE() THEN
+            CantAdhrentes = "0"
+        ENDIF
+        
+        IF Length(CantAdhrentes) < 2 THEN
+            CantAdhrentes = "0" + CantAdhrentes
+        ENDIF
+        
+    '13-remuneracion total, long 11
+        'Decreto 792/2020
+        vDif_Dec_792 = SAR_IMP_DEC792_NRED - SAR_IMP_DEC792
+    
+        RemunTotal = "" 
+        RemunTotal = format(SAR_TOT_REM_SICOSS + vDif_Dec_792,2)
+        
+        IF RemunTotal = NULLVALUE() THEN
+            RemunTotal = "0.00"
+        ENDIF
+        
+        IF Length(RemunTotal ) < 12 THEN
+            RemunTotal = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunTotal ,"0",12 - Length(RemunTotal ) )
+        ENDIF
+        
+    '14-remuneracion imponible 1,
+        RemunImpo1 = ""
+        RemunImpo1 = format(SAR_TOT_REM_IMP1_SIJP,2)
+        RemunImpo2 = ""
+        RemunImpo2 = format(SAR_TOT_REM_IMP2_SIJP,2)
+        RemunImpo1_aux = RemunImpo2
+        
+        IF RemunImpo1 = NULLVALUE() THEN
+            RemunImpo1 = "0.00"
+        ENDIF
+        
+        IF Length(RemunImpo1 ) < 12 THEN
+            RemunImpo1 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo1 ,"0",12 - Length(RemunImpo1 ) )
+        ENDIF
+        
+    '15-asignaciones familiares pagadas, long 9, solo toma valor para Sit. Revista 5 u 11
+        AsigFamiliares = "0.00"
+        AsigFamiliares = format(SAR_TOT_ASIG_FAM,2)
+        
+        IF (AsigFamiliares = NULLVALUE()) OR (CodSit_Fam <> "5" and CodSit_Fam <> "11") THEN
+            AsigFamiliares = "0.00"
+        ENDIF
+        
+        IF Length(AsigFamiliares) < 9 THEN
+            AsigFamiliares = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,AsigFamiliares,"0",9 - Length(AsigFamiliares) )
+        ENDIF
+        
+    '16-importe aporte voluntario, long 9
+        ImpAporteVol = ""
+        ImpAporteVol = format(SAR_APOR_VOLUNT,2)
+        
+        IF ImpAporteVol = NULLVALUE() THEN
+            ImpAporteVol = "0.00"
+        ENDIF
+        
+        IF Length(ImpAporteVol) < 9 THEN
+            ImpAporteVol = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,ImpAporteVol,"0",9 - Length(ImpAporteVol) )
+        ENDIF 
+        
+    '17-importe adicional OS, long 9    
+        ImpAdicObSoc = ""
+        vRemunImpo1 = Format(SAR_TOT_IMP1_SIJP_AUX_1,2)
+        ObraSoc1 = round((ToDouble(vRemunImpo1) * 3)/100,2)
+        
+        RemunImpo_Aux = SAR_TOT_IMP2_SIJP_AUX_2
+        
+        ObraSoc2 = round((ToDouble(RemunImpo_Aux) * 6)/100,2)
+        ObraSoc = ObraSoc1 + ObraSoc2 
+        AporteAdOSocial = round(((ToDouble(vRemunImpo1) * 15)/1000) * ToDouble(CantAdhrentes),2)
+        
+        ImpAdicObSoc = SAR_TOT_IMP_ADIC_O_SOC - ObraSoc - AporteAdOSocial
+        
+        if ImpAdicObSoc <= 0 then
+            ImpAdicObSoc = "0.00"
+        else 
+            ImpAdicObSoc = format(ImpAdicObSoc,2)
+        endif           
+        
+        IF Length(ImpAdicObSoc) < 9 THEN
+            ImpAdicObSoc = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,ImpAdicObSoc,"0",9 - Length(ImpAdicObSoc) )
+        ENDIF
+        
+    '18-importe excedentes aportes SS, long 9
+        ImpExcSS = (SAR_FINAN_APO_JUB_DIF + SAR_FINAN_APO_JUB_SAC_DIF + SAR_FINAN_APO_JUB_VAC_DIF)
+        
+        IF ImpExcSS > 0 OR ImpExcSS = NULLVALUE() THEN
+            ImpExcSS = "0.00"
+        ELSE
+            ImpExcSS = Format( ABS(ImpExcSS),2)
+        ENDIF
+        
+        ImpExcSS = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,ImpExcSS,"0",9 - Length(ImpExcSS) )
+        
+    '19-importe excedentes aportes OS, long 9
+        ImpExcOS = "0.00" 
+        ImpExcOS = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,ImpExcOS,"0",9 - Length(ImpExcOS) )
+        
+    '20-provincia localidad, long 50
+        PciaLocalidad = ""
+        IF SAR_SIJP_ZONA_DGI.ISEOF()= M4_FALSE Then
+            PciaLocalidad = SAR_SIJP_ZONA_DGI.SAR_NM_ZONA_DGI
+        ENDIF         
+        
+        IF Length(PciaLocalidad ) < 50 THEN
+            PciaLocalidad = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(1,PciaLocalidad ," ",50 - Length(PciaLocalidad ) )
+        ELSE
+            PciaLocalidad = MID(PciaLocalidad,0,50)
+        ENDIF
+        
+    '21-remuneracion imponible 2, long 10
+        RemunImpo2 = SAR_TOT_REM_IMP2_SIJP - SAR_NO_CONTRIB_SIPA
+        RemunImpo2 = format(RemunImpo2,2)
+
+        IF RemunImpo2 = NULLVALUE() THEN
+            RemunImpo2 = "0.00"
+        ENDIF
+        
+        IF Length(RemunImpo2 ) < 12 THEN
+            RemunImpo2 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo2,"0",12 - Length(RemunImpo2) )
+        ENDIF
+        
+    '22-remuneracion imponible 3, long 10 
+        RemunImpo3 = SAR_TOT_REM_IMP2_SIJP - SAR_NO_CONTRIB_SIPA
+        RemunImpo3 = format(RemunImpo3,2)
+        
+        IF RemunImpo3 = NULLVALUE() THEN
+            RemunImpo3= "0.00"
+        ENDIF
+        
+        IF Length(RemunImpo3) < 12 THEN
+            RemunImpo3 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo3,"0",12 - Length(RemunImpo3) )
+        ENDIF
+        
+    '23-remuneracion imponible 4, long 10     
+        RemunImpo4 = ""
+        RemunImpo4 = FORMAT(SAR_TOT_IMP1_SIJP_AUX_1,2)
+        
+        IF RemunImpo4 = NULLVALUE() THEN
+            RemunImpo4= "0.00"
+        ENDIF
+        
+        IF Length(RemunImpo4 ) < 12 THEN
+            RemunImpo4 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo4,"0",12 - Length(RemunImpo4) )
+        ENDIF
+        
+    '24-codigo de siniestrado, long 2
+        IF CodSiniestrado = NULLVALUE() OR CodSiniestrado = "NAP" THEN
+            CodSiniestrado = "0"
+        ENDIF
+        
+        IF Length(CodSiniestrado ) < 2 THEN
+            CodSiniestrado = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,CodSiniestrado ,"0",2 - Length(CodSiniestrado ) )
+        ENDIF
+        
+    '25-corresponde reduccion, long 1
+        Reduccion = ""
+        Reduccion = mid(SAR_SIJP_LEGENT.SFR_REG_LEGENT,0,1)
+        
+        IF Reduccion = 1 THEN
+            Reduccion = "T"
+        ELSE
+            Reduccion = "F"
+        ENDIF
+        
+    '26-capital de recomposicion de LRT, long 9
+        CapRecomp = ""
+        CapRecomp = format(SAR_CAP_RECOMP,2)
+        
+        IF CapRecomp = NULLVALUE() THEN
+            CapRecomp = "0.00"
+        ENDIF
+        
+        IF Length(CapRecomp) < 9 THEN
+            CapRecomp = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,CapRecomp,"0",9 - Length(CapRecomp) )
+        ENDIF
+        
+    '27-tipo empresa, long 1
+        TipoEmpresa  = ""
+        TipoEmpresa = mid(SAR_SIJP_LEGENT.SFR_ID_ACTIV_SECTOR,0,1)
+        
+        IF TipoEmpresa = NULLVALUE() THEN
+            TipoEmpresa = "0"
+        ENDIF
+        
+    '28-aporte adicional de OS, long 9
+        AporAdObSocial = ""
+        AporAdObSocial = format(SAR_TOT_AP_OBRA_SOC_SIJP,2)
+        
+        IF AporAdObSocial = NULLVALUE() THEN
+            AporAdObSocial = "0.00"
+        ENDIF
+        
+        IF Length(AporAdObSocial) < 9 THEN
+            AporAdObSocial = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,AporAdObSocial ,"0",9 - Length(AporAdObSocial) )
+        ENDIF
+        
+    '29-regimen, long 1
+        Regimen  = ""
+        Regimen = mid(SAR_REPARTO,0,1)
+        
+        IF Regimen = NULLVALUE() THEN
+            Regimen = "0"
+        ENDIF
+        
+        nAnio = 0
+        nMes  = 0
+        nDia  = 0
+        sDia  = ""
+    
+        ' Metodo encargado de recuperar los datos de Situacion de Revista. Posiciones 30, 31, 32, 33, 34, 35 
+        SAR_M_GEN_SIT_REVISTA()
+        sitrev_primera = SRAR_SIT_REVISTA.SRAR_SIT_REV_1
+        sitrev_segunda = SRAR_SIT_REVISTA.SRAR_SIT_REV_2
+        sitrev_tercera = SRAR_SIT_REVISTA.SRAR_SIT_REV_3
+        Diasitrev_primera = SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_1
+        Diasitrev_segunda = SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_2
+        Diasitrev_tercera = SRAR_SIT_REVISTA.SRAR_DIA_SIT_REV_3                
+        If CodSituacion <> sitrev_tercera Then CodSituacion=SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,sitrev_tercera,"0",2 - Length(sitrev_tercera))
+        
+    '36-sueldo + adicionales, long 10 
+        'Se agregan los conceptos v3533 y v1273 como indica la RG 2421 AFIP. 
+        Sueldo_Adic = NULLVALUE()
+        Sueldo_Adic = SAR_TOT_SUE_ADI_SICOSS - SAR_IMP_DEC_14
+        Sueldo_Adic = format(Sueldo_Adic,2)
+        
+        Valor_aux = Sueldo_Adic
+        
+        IF Sueldo_Adic = NULLVALUE() THEN
+            Sueldo_Adic = "0.00"
+        ENDIF
+        
+        IF Length(Sueldo_Adic) < 12 THEN
+            Sueldo_Adic = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,Sueldo_Adic,"0",12 - Length(Sueldo_Adic) )
+        ENDIF
+        
+        ' version v26, por si sobrepasa los topes
+        Sueldo_impo = format(SAR_TOT_SUELDO_IMP_SIJP,2)
+        Supera_tope = 0
+        
+        ' da negativo, solo los adicionales superan el tope
+        if todouble(Valor_aux) < 0  then      
+            Valor_aux = Sueldo_impo
+        endif
+        
+        'Se agregan los conceptos v3533 y v1273 como indica la RG 2421 AFIP. 
+        Valor_aux = format(SAR_TOT_VALOR_AUX_SIJP,2)
+        
+        Adicionales = ""
+        Adicionales =  format(Valor_aux,2)
+        
+        IF Adicionales = NULLVALUE() THEN
+            Adicionales = "0.00"
+        ENDIF
+        
+        IF Length(Adicionales ) < 12 THEN
+            Adicionales = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,Adicionales ,"0",12 - Length(Adicionales ) )
+        ENDIF
+        
+    '38-horas extras, long 10 SAR_TOT_HS_EXTRAS
+        Valor_aux = format(SAR_TOT_HS_EXTRAS,2) 
+        HsExtras = ""
+        HsExtras = Valor_aux
+        
+        IF HsExtras  = NULLVALUE() THEN
+            HsExtras = "0.00"
+        ENDIF
+        
+        IF Length(HsExtras) < 12 THEN
+            HsExtras = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,HsExtras,"0",12 - Length(HsExtras) )
+        ENDIF
+        
+    '47- Premios     long 10 
+        Valor_aux = format(SAR_TOT_PREMIOS_SIJP,2)
+        Premios = ""
+        Premios = format(Valor_aux,2)
+        Premios = format(Premios ,2)
+        
+        IF Premios = NULLVALUE() THEN
+            Premios = "0.00"
+        ENDIF
+        
+        IF Length(Premios ) < 12 THEN
+            Premios = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,Premios ,"0",12 - Length(Premios ) )
+        ENDIF
+        
+    '39-zona desfavorable, long 10
+        Valor_aux = format(SAR_TOTAL_DESFA,2)
+        ZonaDesfavorable = ""
+        ZonaDesfavorable = format(Valor_aux,2)
+        
+        IF ZonaDesfavorable = NULLVALUE() THEN
+            ZonaDesfavorable = "0.00"
+        ENDIF
+        
+        IF Length(ZonaDesfavorable) < 12 THEN
+            ZonaDesfavorable = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,ZonaDesfavorable,"0",12 - Length(ZonaDesfavorable) )
+        ENDIF
+        
+        Valor_aux = 0 'el sueldo alcanza el tope eliminado
+        
+    '37-SAC, long 10 
+        Sac = ""
+        Sac = format(Max(SAR_SAC_ABONADO,0),2)
+        
+        IF Sac  = NULLVALUE() THEN
+            Sac  = "0.00"
+        ENDIF
+        
+        IF Length(Sac ) < 12 THEN
+            Sac  = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,Sac ,"0",12 - Length(Sac) )
+        ENDIF
+        
+    '40-vacaciones, long 10 
+        Vacaciones = ""
+        Vacaciones = format(Max(SAR_VACACIONES + SAR_AJ_VACACIONES,0),2)
+        
+        IF Vacaciones = NULLVALUE() THEN
+            Vacaciones = "0.00"
+        ENDIF
+        
+        IF Length(Vacaciones) < 12 THEN
+            Vacaciones = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,Vacaciones,"0",12 - Length(Vacaciones) )
+        ENDIF
+        
+    '41-cantidad dias trabajados, long 9
+        ' calculo de dias por donacion de sangre
+        IF SAR_PRE_ENFER= NULLVALUE() or SAR_PRE_ENFER=  0 THEN
+            CantDiasDonacSangre = 0
+        ELSE
+            CantDiasDonacSangre = (SAR_DONAC_SANGRE/SAR_PRE_ENFER)
+        ENDIF
+        
+        CantDiasTrab = 0
+        CantDiasTrab = SAR_TOT_DIAS_TRAB_SIJP + CantDiasDonacSangre
+        
+        ' por version 33
+        HsTrab = format(SAR_TOT_HRS_TRAB_SIJP,0)
+        CantDiasTrab = format(CantDiasTrab,0)
+        
+        IF CantDiasTrab = NULLVALUE() THEN
+            CantDiasTrab = "0.00"
+        ENDIF
+        
+        'Se agrega este control, para condicionar que no se dupliquen los dias trabajados cuando exista mas de una paga.
+        IF Toint(CantDiasTrab) > 30 THEN 
+            CantDiasTrab = "30.00"
+        ENDIF
+        'Fin de control agregado
+        
+        IF Length(CantDiasTrab ) < 9 THEN
+            CantDiasTrab = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,CantDiasTrab ,"0",9 - Length(CantDiasTrab ) )
+        ENDIF
+        
+    '42-remuneracion imponible 5, long 10 
+        RemunImpo5 = ""
+        RemunImpo5 = format(SAR_TOT_REM_IMP5_SIJP,2)
+        
+        If isnull(RemunImpo5) = true Then RemunImpo5 = "0.00"
+        
+        IF Length(RemunImpo5 ) < 12 THEN
+            RemunImpo5 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo5 ,"0",12 - Length(RemunImpo5 ) )
+        ENDIF
+        
+    '43-trabajador convencionado, long 1
+        Convencionado = ""
+        Convencionado = mid(SAR_SIJP_CONVENIO.SAR_CK_CONV,0,1)
+        
+        IF Convencionado = "S" THEN
+            Convencionado = "1"
+        ELSE
+            Convencionado = "0"
+        ENDIF
+        
+    '44- Remuneracion imponible 6    long 10  
+        RemunImpo6 = "0.00"
+        
+        IF Length(RemunImpo6 ) < 12 THEN
+            RemunImpo6 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo6 ,"0",12 - Length(RemunImpo6 ) )
+        ENDIF
+        
+    '45- Tipo de Operacion    long 1
+        TipoOperacion = "0"
+        
+    '48- Remun Decreto 788/05      
+        RemDec788 = ""
+        RemDec788 = format( SAR_TOT_REM_DEC_SIJP,2)
+        
+        If isnull(RemDec788) = true Then RemDec788 = "0.00"
+        
+        IF Length(RemDec788 ) < 12 THEN
+            RemDec788 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemDec788 ,"0",12 - Length(RemDec788 ) )
+        ENDIF
+        
+    '49- Remuneracion imponible 7   
+        RemunImpo7 = "0.00"
+        
+        IF Length(RemunImpo7 ) < 12 THEN
+            RemunImpo7 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo7 ,"0",12 - Length(RemunImpo7 ) )
+        ENDIF
+        
+    '50- Cantidad de horas extras   long 3
+        CantHsExtras = "000"
+        if TOINT(HsExtras) > 0 then
+            CantHsExtras = format(SAR_TOT_HORAS_EXT_SIJP,0)
+        
+            IF CantHsExtras <> NULLVALUE() THEN
+                IF Length(CantHsExtras ) < 3 THEN
+                    CantHsExtras = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,CantHsExtras ,"0",3 - Length(CantHsExtras ) )
+                ENDIF
+            ENDIF   
+        endif
+
+    '51- Conceptos no remunerativos   Long 10 
+        ConceptoNorem = ""
+        ConceptoNorem = format(SAR_OTROS_CONC_NR_SICOSS,2)
+        
+        IF ConceptoNorem = NULLVALUE() THEN
+            ConceptoNorem = "0.00"
+        ENDIF
+        
+        IF Length(ConceptoNorem ) < 12 THEN
+            ConceptoNorem = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,ConceptoNorem ,"0",12 - Length(ConceptoNorem) )
+        ENDIF
+        
+    '52- Maternidad / Oncopediatria        Long 10 
+        Maternidad = ""
+        Maternidad= format(SAR_MATER_SUAF+SAR_LIC_ONCO_IMP,2)
+        
+        IF Maternidad= NULLVALUE() THEN
+            Maternidad= "0.00"
+        ENDIF
+        
+        IF Length(Maternidad) < 12 THEN
+            Maternidad= SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,Maternidad,"0",12 - Length(Maternidad) )
+        ENDIF
+        
+    '53- Rectificacion de remuneracion         Long 9
+        RectRemuneracion = ""
+        RectRemuneracion = format(SAR_RECTIF_REM,2)
+        
+        IF RectRemuneracion = NULLVALUE() THEN
+            RectRemuneracion = "0.00"
+        ENDIF
+        
+        IF Length(RectRemuneracion ) < 9 THEN
+            RectRemuneracion = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RectRemuneracion ,"0",9 - Length(RectRemuneracion ) )
+        ENDIF
+        
+    '54- Remuneracion imponible 9       long 10
+        RemunImpo9 = ""
+        RemunImpo9 = format(SAR_REMUN_IMPO_ART,2)
+        
+        IF RemunImpo9 = NULLVALUE() THEN
+            RemunImpo9 = "0.00"
+        ENDIF
+        
+        IF Length(RemunImpo9 ) < 12 THEN
+            RemunImpo9 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo9 ,"0",12 - Length(RemunImpo9 ) )
+        ENDIF
+        
+    '55- Contribucion tarea diferencial     long 9
+        ContrTareaDif = 0
+        ContrTareaDif = format(SAR_PORC_CONT_T_DIF,2)
+        
+        IF ContrTareaDif = NULLVALUE() THEN
+            ContrTareaDif = "0.00"
+        ENDIF
+        
+        IF Length(ContrTareaDif ) < 9 THEN
+            ContrTareaDif = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,ContrTareaDif ,"0",9 - Length(ContrTareaDif ) )
+        ENDIF
+        
+    '56- Horas trabajadas       long 3
+        IF Length(HsTrab) <> 3 THEN
+            HsTrab = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,HsTrab ,"0",3 - Length(HsTrab ) )
+        ENDIF
+        
+    '57- Seguro de vida obligatorio  long 1
+        FEC = ToDate("2011-01-01")
+        
+        IF (SAR_P_DT_INICIO >= ToDate("2011-01-01")) Then
+            If SAR_IND_SEG_VIDA.Count() > 0 Then
+                If SAR_IND_SEG_VIDA.SAR_IND_SEG_VIDA > 0 Then
+                    SegVida = "T"
+                Else
+                    SegVida = "F"
+                EndIf
+            Else
+                If SAR_IND_SEG_VIDA > 0 Then
+                    SegVida = "T"
+                Else
+                    SegVida = "F"
+                EndIf
+            Endif
+        Else
+            SegVida = ""
+        EndIf
+
+    '58 - Total Detraccion Ley 27430    long 12
+        vTotDetrac = format(SAR_TOT_REDUC_IMPO,2)
+   
+        IF vTotDetrac = NULLVALUE() THEN
+            vTotDetrac = "0.00"
+        ENDIF
+        
+        IF Length(vTotDetrac) < 12 THEN
+            vTotDetrac = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,vTotDetrac ,"0",12 - Length(vTotDetrac))
+        ENDIF
+
+/****   SICOSS_Version 42 Release 0     ****/
+'59 Incremento Salarial     long 12
+        vIncremSalarial = NULLVALUE()
+        vIncremSalarial = format(SAR_IMP_DEC_14 + SAR_ASIG_DEC_438,2)
+        IF vIncremSalarial = NULLVALUE() THEN
+            vIncremSalarial = "0.00"
+        ENDIF
+        IF Length(vIncremSalarial) < 12 THEN
+            vIncremSalarial = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,vIncremSalarial,"0",12 - Length(vIncremSalarial))
+        ENDIF
+'60 Remuneriacion imponible 11      long 12
+        RemunImpo11 = NULLVALUE()
+        RemunImpo11 = format(SAR_NO_CONTRIB_SIPA,2)
+        IF RemunImpo11 = NULLVALUE() THEN
+            RemunImpo11 = "0.00"
+        ENDIF
+        IF Length(RemunImpo11) < 12 THEN
+            RemunImpo11 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo11,"0",12 - Length(RemunImpo11))
+        ENDIF
+        
+// Ajuste de Remuneraciones imponibles en los casos de suspension NO mes completo (sitrev_tercera = "49")
+// y valores no cero en los conceptos de prestacion mes completo
+        Art223Completo = SAR_ART_233_COMPLET
+        Res397Completo = SAR_RES_397_COMPLET
+        
+        If (sitrev_tercera = "49" or sitrev_tercera = "09") And (Art223Completo <> 0 Or Res397Completo <> 0) Then
+      
+            SuspComple = Art223Completo + Res397Completo
+            
+            RemunImpo1 = Format(Max(0, ToDouble(RemunImpo1) - SuspComple    ), 2)
+            RemunImpo2 = Format(Max(0, ToDouble(RemunImpo2) - SuspComple    ), 2)
+            RemunImpo3 = Format(Max(0, ToDouble(RemunImpo3) - SuspComple    ), 2)
+            RemunImpo4 = Format(Max(0, ToDouble(RemunImpo4) - Art223Completo), 2)       // Res 397 tiene Aportes OS
+            RemunImpo5 = Format(Max(0, ToDouble(RemunImpo5) - SuspComple    ), 2)
+            
+            If Length(RemunImpo1) < 12 Then RemunImpo1 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo1,"0",12 - Length(RemunImpo1))
+            If Length(RemunImpo2) < 12 Then RemunImpo2 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo2,"0",12 - Length(RemunImpo2))
+            If Length(RemunImpo3) < 12 Then RemunImpo3 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo3,"0",12 - Length(RemunImpo3))
+            If Length(RemunImpo4) < 12 Then RemunImpo4 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo4,"0",12 - Length(RemunImpo4))
+            If Length(RemunImpo5) < 12 Then RemunImpo5 = SAR_STRING_MANAGER!SAR_STR_MNG.SAR_STR_REPLICATE(0,RemunImpo5,"0",12 - Length(RemunImpo5))
+        EndIf
+
+        sCadena = sCadena + vCuil + ApyNombre + Conyuge + CantHijos + CodSituacion + CodCondicion + CodActividad + Codzona
+        sCadena = sCadena + PorcAdicional + CodModContratacion + CodObSocial + CantAdhrentes + RemunTotal + RemunImpo1
+        sCadena = sCadena + AsigFamiliares + ImpAporteVol + ImpAdicObSoc + ImpExcSS + ImpExcOS + PciaLocalidad + RemunImpo2
+        sCadena = sCadena + RemunImpo3 + RemunImpo4 + CodSiniestrado + Reduccion + CapRecomp + TipoEmpresa + AporAdObSocial
+        sCadena = sCadena + Regimen + sitrev_primera + Diasitrev_primera + sitrev_segunda + Diasitrev_segunda + sitrev_tercera + Diasitrev_tercera + Sueldo_Adic
+        sCadena = sCadena + Sac + HsExtras + ZonaDesfavorable + Vacaciones + CantDiasTrab + RemunImpo5 + Convencionado + RemunImpo6 
+        sCadena = sCadena + TipoOperacion + Adicionales + Premios + RemDec788 + RemunImpo7 + CantHsExtras + ConceptoNorem + Maternidad + RectRemuneracion 
+'        sCadena = sCadena + RemunImpo9 + ContrTareaDif + HsTrab + SegVida + vTotDetrac
+        sCadena = sCadena + RemunImpo9 + ContrTareaDif + HsTrab + SegVida + vTotDetrac + vIncremSalarial + RemunImpo11
+        
+        sCadena= replace(sCadena,".",",")//segun compatibilidad con carga WEB, se reemplazan los puntos por coma.
+        
+        SAR_LINEA_TXT_2.addregister()
+        SAR_LINEA_TXT_2.SAR_P_LINEA =  sCadena
+        SAR_LINEA_TXT_2.SAR_P_LOG_EMP =  st_empl
+        SAR_LINEA_TXT_2.SAR_P_LOG_LINEA =  st_cadena_log
+        
+        GONEXT()
+    WEND
+    vProc = 1
+    'fin busqueda empleados normales
+Endif
+
+/**** Se inicia el metodo para empleados eventuales ****/
+SAR_RH_EMP_AGENCIA.SAR_P_DT_INICIO  = SAR_P_DT_INICIO
+SAR_RH_EMP_AGENCIA.SAR_P_DT_FIN     = SAR_P_DT_FIN
+SAR_RH_EMP_AGENCIA.SAR_P_ID_EMPRESA = SAR_P_ID_EMPRESA
+/**** preparo el valor del filtro dinamico para la carga del nodo de Empleados Eventuales ****/
+vfiltro = SAR_P_DYN_FILTER
+vfiltro = replace(vfiltro,"SAR_AC_HR_PERIOD","SAR_AC_HR_EMP_AGEN_ART")
+vfiltro = replace(vfiltro,"SCO_ID_HR","STD_ID_HR")
+SAR_RH_EMP_AGENCIA.SAR_P_DYN_FILTER = vfiltro
+SAR_RH_EMP_AGENCIA.LOAD_BLK()
+
+/**** inicio de busqueda y escritura para empleados eventuales de Agencia ****/
+IF SAR_RH_EMP_AGENCIA.COUNT ()  > 0 THEN
+    vPos = 0
+    SAR_RH_EMP_AGENCIA.moveto(vPos)
+    WHILE vPos < SAR_RH_EMP_AGENCIA.count()
+        SAR_RH_EMP_AGENCIA.BEGIN()
+        SAR_RH_EMP_AGENCIA.moveto(vPos)
+        vFechaSicoss = SAR_RH_EMP_AGENCIA.SAR_FECHA_SICOSS
+        IF vFechaInicio <= vFechaSicoss AND vFechaFin >= vFechaSicoss THEN           
+            SAR_H_EMP_TYPE_AGENCIA.SAR_P_DT_INICIO = vFechaInicio
+            SAR_H_EMP_TYPE_AGENCIA.SAR_P_DT_FIN    = vFechaFin                                                  
+            SAR_RH_EMP_AGENCIA.SAR_M_ARMAR_DATOS()
+            vProcEvent = 1
+        ENDIF
+        vPos = vPos + 1
+    WEND
+ELSE
+    vProcEvent = 0
+ENDIf
+
+/****   vProc = 1 es si entro en el if de empleados normales o empleados eventuales o ambos, 
+        sino vproc = 0 da el mensaje de que no existen datos para el periodo           ****/
+IF vProc = 0  AND vProcEvent = 0 THEN
+    setlog(1,80,80,80,"No existen datos para el periodo ingresado")
+    return(0)
+ENDIF
