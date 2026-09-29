@@ -1,7 +1,7 @@
-# parent_node | parent_ti | connection_type
+# parent_node | parent_ti | connection_type | origin
 
-# child_node | connection_type
-SAR_REG_05_STD_PERIOD | RECORD_BLOCK
-SAR_GEN_REG_5_AC_EMP_AGEN_ART | RECORD_BLOCK
+# child_node | connection_type | origin
+SAR_REG_05_STD_PERIOD | RECORD_BLOCK | OWN
+SAR_GEN_REG_5_AC_EMP_AGEN_ART | RECORD_BLOCK | OWN
 
-# ti | item | parent_node | parent_ti | parent_item | precedence
+# ti | item | parent_node | parent_ti | parent_item | precedence | origin
