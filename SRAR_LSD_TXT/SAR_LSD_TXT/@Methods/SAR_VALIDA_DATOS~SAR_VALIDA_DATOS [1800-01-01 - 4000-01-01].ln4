@@ -1,3 +1,4 @@
+'PRUEBA AGENTE LN4
 'verifica que todos los datos obligatorios de la presentacion no sean null
 
 IF ISNULL(SAR_P_LEG_ENT) = M4_TRUE OR ISNULL(SAR_P_FEC_PAGO) = M4_TRUE OR ISNULL(SAR_P_PATH) = M4_TRUE THEN
