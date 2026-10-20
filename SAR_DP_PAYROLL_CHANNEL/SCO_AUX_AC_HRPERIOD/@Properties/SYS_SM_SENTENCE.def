@@ -9,4 +9,5 @@ scope: NODE
 default_value: null
 internal_type: 20
 item_aux: SYS_SM_PARAMS
+id_cstype: null
 api_sql_params: true

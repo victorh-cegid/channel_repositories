@@ -1,0 +1,12 @@
+item: SCO_DT_ST_ALLOC_BNFT
+name: Fecha inicio imputacion
+item_type: PROPERTY
+type: DATE
+id_m4_type: 4
+prec: 10
+scale: 0
+scope: BLOCK
+default_value: null
+internal_type: 1
+item_aux: null
+id_cstype: null

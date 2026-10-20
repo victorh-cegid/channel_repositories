@@ -1,0 +1,11 @@
+'Cuando SAR_IND_AJUSTE_DEI = 1 en retroactividad no se tendra en cuenta los importes que cambien (salvo OE).
+'Dichos importes no considerados en retroactividad se guardan en el concepto SAR_AJIG_XXX para considerarlos en la paga normal siguiente.
+importe = 0
+
+'Ley de bases, incluimos horas extra
+If DxYear(SAR_FEC_IMPUT_IG)<2024 Then
+    SAR_CALCULA_AJIG_27617("SAR_TOT_M_O_SOC","SAR_AJIG_OSOC","SAR_OB_SOC_ADIC_SAC_OE","SAR_BONO_IG_ADOS","SAR_BONO_IG_OSOC","SAR_FCAJA_IG_ADOS","SAR_FCAJA_IG_OSOC","SAR_SIMILAR_NAT_IG_OSOC","SAR_SIMILAR_NAT_IG_ADOS","SAR_OBRA_SOCIAL_SAC_MES","SAR_OB_SOC_ADIC_SAC_MES","SAR_IG_CUOT_PROR_OB","SAR_IG_CUO_PR_AD_OB","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",importe)
+Else
+    SAR_CALCULA_AJIG_27617("SAR_TOT_M_O_SOC","SAR_AJIG_OSOC","SAR_OB_SOC_ADIC_SAC_OE","SAR_BONO_IG_ADOS","SAR_BONO_IG_OSOC","SAR_FCAJA_IG_ADOS","SAR_FCAJA_IG_OSOC","SAR_SIMILAR_NAT_IG_OSOC","SAR_SIMILAR_NAT_IG_ADOS","SAR_OBRA_SOCIAL_SAC_MES","SAR_OB_SOC_ADIC_SAC_MES","SAR_IG_CUOT_PROR_OB","SAR_IG_CUO_PR_AD_OB","SAR_OBR_HS_FINDE_EXEN","SAR_AD_OBR_HS_FINDE_EXEN","SAR_AJ_OBR_HS_EXEN","SAR_AJ_AD_OBR_HS_EXEN","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",importe)
+EndIf
+Return(importe)

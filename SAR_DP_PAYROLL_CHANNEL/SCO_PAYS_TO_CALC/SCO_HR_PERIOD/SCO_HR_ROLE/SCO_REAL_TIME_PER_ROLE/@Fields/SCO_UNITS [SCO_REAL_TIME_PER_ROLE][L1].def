@@ -1,0 +1,13 @@
+item: SCO_UNITS
+name: Unidades
+column_name: SCO_UNITS
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 16
+scale: 2
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null
+id_cstype: null

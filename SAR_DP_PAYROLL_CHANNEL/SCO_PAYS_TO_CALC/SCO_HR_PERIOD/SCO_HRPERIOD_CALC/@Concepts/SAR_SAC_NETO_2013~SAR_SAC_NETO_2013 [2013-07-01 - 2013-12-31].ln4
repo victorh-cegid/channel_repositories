@@ -1,0 +1,91 @@
+// Con bajas anteriores al 26/07/2013 Retorna 0:
+
+vMarca = 0
+   
+If (SAR_ES_BAJA = 1 And  SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") Then 
+    If(SAR_FECHA_BAJA < ToDate("2013-07-26")) Then        
+        Return(0)      
+    EndIf    
+EndIf
+
+'No se calcula en la retroactividad
+If(SCO_DT_ALLOCATION <> SCO_DT_PAYMENT)Then
+   Return(0)
+EndIf   
+
+
+'If SCO_DT_ALLOCATION >= DxDate("01","09","2013")Then
+'   Return(0)
+'EndIf   
+
+
+
+'Obtencion del mes de pago del aguinaldo:
+FECHA_INF =  ToDate(TOSTRING(DxYear(SCO_DT_ALLOCATION),0) + "-06" + "-01")
+FECHA_SUP =  ToDate(TOSTRING(DxYear(SCO_DT_ALLOCATION),0) + "-06" + "-30")
+'Inicializacion de las variables para acumulado de conceptos calculados de SAC:
+
+
+VAR_SAR_PAGA_EXTRA_1     = 0
+VAR_SAR_JUBILACION_SAC   = 0
+VAR_SAR_LEY_19032_SAC    = 0
+VAR_SAR_OBRA_SOCIAL_SAC  = 0
+VAR_SAR_ADIC_OB_SOCIAL   = 0
+VAR_SAR_C_SINDIC_OBL_SAC = 0
+VAR_SAR_C_SINDICAL_SAC   = 0
+
+'Bug 0264759 -
+vInicio     = DxDate("01","01","2013")
+vFin        = DxDate("01","07","2013")
+vNo_Retener = 0
+vValor      = 0
+
+SCO_AC_HR_PERIOD_READ_1.BEGIN()
+ULTIMO_REG_AC = SCO_AC_HR_PERIOD_READ_1.COUNT() - 1
+
+
+FOR I = 0 TO ULTIMO_REG_AC
+    SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
+    IF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_INF AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= FECHA_SUP THEN
+        VAR_SAR_PAGA_EXTRA_1     = VAR_SAR_PAGA_EXTRA_1     + SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_1..sysTotalSlices(M4_TOTAL_SUM)
+        VAR_SAR_JUBILACION_SAC   = VAR_SAR_JUBILACION_SAC   + SCO_AC_HR_PERIOD_READ_1.SAR_JUBILACION_SAC..sysTotalSlices(M4_TOTAL_SUM)
+        VAR_SAR_LEY_19032_SAC    = VAR_SAR_LEY_19032_SAC    + SCO_AC_HR_PERIOD_READ_1.SAR_LEY_19032_SAC..sysTotalSlices(M4_TOTAL_SUM)
+        VAR_SAR_OBRA_SOCIAL_SAC  = VAR_SAR_OBRA_SOCIAL_SAC  + SCO_AC_HR_PERIOD_READ_1.SAR_OBRA_SOCIAL_SAC..sysTotalSlices(M4_TOTAL_SUM)
+        VAR_SAR_ADIC_OB_SOCIAL   = VAR_SAR_ADIC_OB_SOCIAL   + SCO_AC_HR_PERIOD_READ_1.SAR_ADIC_OB_SOCIAL..sysTotalSlices(M4_TOTAL_SUM)
+        VAR_SAR_C_SINDIC_OBL_SAC = VAR_SAR_C_SINDIC_OBL_SAC + SCO_AC_HR_PERIOD_READ_1.SAR_C_SINDIC_OBL_SAC..sysTotalSlices(M4_TOTAL_SUM)
+        VAR_SAR_C_SINDICAL_SAC   = VAR_SAR_C_SINDICAL_SAC   + SCO_AC_HR_PERIOD_READ_1.SAR_C_SINDICAL_SAC..sysTotalSlices(M4_TOTAL_SUM)
+    ENDIF
+
+    
+    'Bug 0264759 - No se tendra en cuenta los sueldos superiores a $25000 de enero a junio
+    vPayment = SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT
+    If (vPayment >= vInicio And vPayment < vFin) And vNo_Retener = 0 Then
+        vValor = SCO_AC_HR_PERIOD_READ_1.SAR_SAC_NETO..sysTotalSlices(M4_TOTAL_SUM) 
+        vValor = vValor + SCO_AC_HR_PERIOD_READ_1.SAR_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM) 
+        vValor = vValor + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM)
+        vValor = vValor + SCO_AC_HR_PERIOD_READ_1.SAR_SAC_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM)
+
+        If vValor > 25000 Then
+            vNo_Retener = 1
+        EndIf
+    EndIf                
+NEXT        
+
+SAC_NETO = 0
+
+SAC_NETO = VAR_SAR_PAGA_EXTRA_1 - (VAR_SAR_JUBILACION_SAC + VAR_SAR_LEY_19032_SAC + VAR_SAR_OBRA_SOCIAL_SAC + VAR_SAR_ADIC_OB_SOCIAL + VAR_SAR_C_SINDIC_OBL_SAC + VAR_SAR_C_SINDICAL_SAC )
+
+
+SAC_NETO = SAC_NETO + SAR_SAC_NETO_OE 'Sumamos el SAC Neto correspondiente a otros empleadores.
+
+
+'Bug 0264759. - no se debe abonar segun sueldo superior a 25000
+If vNo_Retener = 1  Then
+    SAC_NETO = 0
+EndIf
+
+Return(SAC_NETO)
+
+/*
+VAR_SAR_PAGA_EXTRA_1  - (VAR_SAR_JUBILACION + VAR_SAR_LEY_19032_SAC + VAR_SAR_OBRA_SOCIAL_SAC + VAR_SAR_ADIC_OB_SOCIAL + VAR_SAR_C_SINDIC_OBL_SAC + VAR_SAR_C_SINDICAL_SAC )  
+*/

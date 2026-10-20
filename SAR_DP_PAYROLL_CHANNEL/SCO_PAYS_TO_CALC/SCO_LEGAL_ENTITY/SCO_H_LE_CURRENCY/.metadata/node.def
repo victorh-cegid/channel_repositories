@@ -3,3 +3,4 @@ NAME: Moneda de empresa
 ID_TI: SCO_H_LE_CURRENCY
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

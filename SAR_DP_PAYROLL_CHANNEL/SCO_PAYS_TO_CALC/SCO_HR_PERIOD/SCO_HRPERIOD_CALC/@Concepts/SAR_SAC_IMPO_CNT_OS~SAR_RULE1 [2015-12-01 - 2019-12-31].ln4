@@ -1,0 +1,34 @@
+'De acuerdo al articulo 3? el decreto 491/04 desde el 01/10/05 no hay topes para 
+'el calculo de la base imponible de las contribuciones.
+
+IF SAR_ES_BAJA = 1 THEN
+    Sac         = SAR_EGRESO_PAGA_1 + SAR_EGRESO_PAGA_2
+    Tope_Minimo = (SAR_CANT_B_MIN_AP_Y_CNT_OS * SAR_TOPE_B_MIN_IMPO)*(SAR_U_EGRESO_PAGA_1+SAR_U_EGRESO_PAGA_2)/2
+Else    
+    Sac         = SAR_PAGA_EXTRA_1 + SAR_PAGA_EXTRA_2 + SAR_PAGA_EXTRA_AJ_1 + SAR_PAGA_EXTRA_AJ_2
+    Tope_minimo = (SAR_CANT_B_MIN_AP_Y_CNT_OS * SAR_TOPE_B_MIN_IMPO)*(SAR_U_PAGA_EX_1 + SAR_U_PAGA_EX_2 + SAR_U_PAGA_AJ_EX_1 + SAR_U_PAGA_AJ_EX_2)/2
+ENDIF
+
+/*Se calcula la base de acuerdo a los topes maximo y minimo*/
+Base_Total = 0
+Base       = 0
+
+SAR_SAC_AJUSTE_CONTRIB.Begin()
+If(SAR_SAC_AJUSTE_CONTRIB.Count() > 0)Then
+   Base_Total       = SAR_SAC_AJUSTE_CONTRIB.SAR_SAC_IMPO_CNT_OS 'Contiene la suma de las bases anteriormente aplicadas.
+   Sac_Total_Previo = SAR_SAC_AJUSTE_CONTRIB.SAR_SAC_ABONADO 'Contiene la suma de los SACs anteriormente liquidados.
+EndIf   
+
+Sac_Del_Mes = Sac_Total_Previo + Sac 'Contiene el total actual del SAC con paga actual incluida.
+
+If(Sac_Del_Mes < Tope_Minimo)Then         'Si No llegamos al tope minimo.....
+   If(Base_Total = Tope_Minimo)Then       '   Si Existe una base con valor del minimo.....
+     Base        = 0                      '     La base sera 0. No se realiza descuento de O.S.
+   Else                                   '   Si No.....
+     Base = Tope_Minimo                   '     La base sera el valor del minimo.      
+   EndIf                                  '
+Else                                      'Si No.... 
+  Base = Sac_Del_Mes - Base_Total         '   La base sera la diferencia entre  el SAC del mes y el total de la base.  
+EndIf
+
+RETURN(Base)

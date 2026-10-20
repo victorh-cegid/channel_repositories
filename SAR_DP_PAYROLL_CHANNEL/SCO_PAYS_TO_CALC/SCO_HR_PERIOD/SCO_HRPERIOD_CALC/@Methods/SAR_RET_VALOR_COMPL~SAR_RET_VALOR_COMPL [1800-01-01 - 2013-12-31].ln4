@@ -1,0 +1,989 @@
+entidad = 0
+imp_jub_01 = 0
+imp_ley_01 = 0
+imp_o_soc_01 = 0
+imp_ret_01 = 0
+imp_bruto_01 = 0
+imp_c_sind_01 = 0
+imp_o_deducc_01 = 0
+imp_seg_v_01 = 0
+imp_seg_sep_01 = 0
+imp_tot_02 = 0
+imp_tot_03 = 0
+imp_tot_05 = 0
+imp_tot_06 = 0
+imp_tot_07 = 0
+imp_tot_08 = 0
+imp_tot_09 = 0
+imp_tot_11 = 0
+imp_tot_12 = 0
+imp_tot_13 = 0
+imp_tot_15 = 0
+
+sume_15  = 0
+sume_11  = 0
+
+acu_cmasis_remun = 0
+acu_donremun_remun = 0
+acu_honor_med = 0
+acu_imp_d_in_hip = 0
+acu_debito_bancario = 0
+acu_serv_domest = 0
+acu_ap_cap_soc_fdo_r = 0
+acu_pago_cuent_ext = 0
+
+imp_02 = 0
+imp_03 = 0
+imp_05 = 0
+imp_06 = 0
+imp_07 = 0
+imp_09 = 0
+imp_11 = 0
+imp_12 = 0
+imp_13 = 0
+imp_15 = 0
+frec_02 = "0"
+frec_03 = "0"
+frec_05 = "0"
+frec_06 = "0"
+frec_07 = "0"
+frec_08 = "0"
+frec_09 = "0"
+frec_11 = "0"
+frec_12 = "0"
+frec_13 = "0"
+frec_11 = "0"
+
+dif_meses_01 = 0
+dif_meses_02 = 0
+dif_meses_03 = 0
+dif_meses_04 = 0
+dif_meses_05 = 0
+dif_meses_06 = 0
+dif_meses_07 = 0
+dif_meses_08 = 0
+dif_meses_09 = 0
+dif_meses_10 = 0
+dif_meses_11 = 0
+dif_meses_12 = 0
+dif_meses_13 = 0
+dif_meses_14 = 0
+dif_meses_15 = 0
+
+
+'variables para otros empleadores
+jubilacion_oe = 0
+ley_19032_oe = 0
+obra_social_oe = 0
+cuota_sindical_oe = 0
+bruto_oe = 0
+
+
+'-------------------
+'dif_meses_no_trabajados es una variable que contiene los meses desde la fecha de baja hasta Diciembre
+'Se usa para el caso de obtener el monto de deducciones mensuales de un empleado desde la fecha de baja
+'hasta Diciembre
+ dif_meses_no_trabajados = 0  
+ If(SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" )Then
+    If(DXYEAR(SAR_FECHA_BAJA) = DXYEAR(SAR_FEC_PAGO_IG))Then
+      dif_meses_no_trabajados = 12 - DXMONTH(SAR_FECHA_BAJA)  
+    EndIf   
+ EndIf   
+'-------------------
+  
+mes_paga_efecti = SAR_MES_PAGO_IG
+If (SAR_TP_IMPUT = "99") Then
+    'Se obtiene el valor del concepto necesario para tener el rango de la remuneracion por decreto 1242 / 2013.
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()
+    ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()- 1
+    FOR j = 0 TO ULTIMO_REG 
+        SCO_AC_HR_PERIOD_READ_1.MOVETO(j)
+        IF (DxMonth(SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG) = mes_paga_efecti) THEN        
+            RANGO_REM_IG_2013 = SCO_AC_HR_PERIOD_READ_1.SAR_RANGO_REM_IG_2013
+        Endif
+    Next
+
+    fec_1=SAR_FEC_PAGO_IG
+    fec_2=SAR_FEC_FIN_IG_DEC        
+    if (SAR_IG_DEC142_AUX = 0) and (RANGO_REM_IG_2013 = 1)Then 
+        fec_1 = fec_2
+    endif 
+EndIf  
+
+Load_blk()
+
+SAR_H_COMPLEM_GCIAS.BEGIN() 
+
+If SAR_H_COMPLEM_GCIAS.count() > 0 Then
+        ULTIMO_REG = SAR_H_COMPLEM_GCIAS.COUNT()- 1
+        FOR I = 0 TO ULTIMO_REG 
+            SAR_H_COMPLEM_GCIAS.MOVETO(I)
+            If IsNull(SAR_H_COMPLEM_GCIAS.SAR_ID_ENTIDAD)= M4_FALSE then
+                 entidad = SAR_H_COMPLEM_GCIAS.SAR_ID_ENTIDAD
+            endif
+           
+            'Si es necesario se realiza la conversion de monedas:
+            vRecordCurrency = SAR_H_COMPLEM_GCIAS.SAR_ID_CURRENCY
+            vPayrollCurrency = SAR_HRPERIOD_CALC.ID_CURRENCY
+            
+		if vRecordCurrency <> vPayrollCurrency then
+			SAR_H_COMPLEM_GCIAS.CUREXCHANGERECORD(vPayrollCurrency ,m4_false)
+		EndIf
+
+            
+            IF DxYear(SAR_H_COMPLEM_GCIAS.SAR_DT_START) = Dxyear(SAR_FEC_PAGO_IG) THEN
+        
+'--------------------------------------------------------------------------------------------------------------------
+'                             Entidades con valores mensuales 
+'--------------------------------------------------------------------------------------------------------------------
+
+                IF (SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA = "1" AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti /*Or SAR_TP_IMPUT = "99"*/)) THEN
+
+                    If entidad = "01" then '--Anteriores Empresas--
+                      IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti)  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti) And (SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "1"))THEN
+
+                            If(SAR_TP_IMPUT = "99")Then
+                                'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada.
+                                'Para los empleados de Rango 1
+                                '---------------------------------------------------------------------------------------------------------------
+                                If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then                            
+                                    if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then
+                                        dif_meses_01 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                        dif_meses_01 = Max(dif_meses_01, 0)
+                                    else
+                                        dif_meses_01 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    endif
+                                Else
+                                    dif_meses_01 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                EndIf
+                                '---------------------------------------------------------------------------------------------------------------
+                                
+                                if SAR_H_COMPLEM_GCIAS.SAR_JUBILACION <> 0 Then
+                                    imp_jub_01 = imp_jub_01 + SAR_H_COMPLEM_GCIAS.SAR_JUBILACION * dif_meses_01
+                                endif
+                              
+                                if SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 <> 0 Then
+                                    imp_ley_01 = imp_ley_01 + SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 * dif_meses_01
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL <> 0 Then
+                                    imp_o_soc_01 = imp_o_soc_01 + SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL * dif_meses_01
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_RETENCION <> 0 Then
+                                    imp_ret_01 = imp_ret_01 + SAR_H_COMPLEM_GCIAS.SAR_RETENCION * dif_meses_01
+                                endif
+    
+                                if SAR_H_COMPLEM_GCIAS.SAR_BRUTO <> 0 Then
+                                    imp_bruto_01 = imp_bruto_01 + SAR_H_COMPLEM_GCIAS.SAR_BRUTO * dif_meses_01
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL <> 0 Then
+                                    imp_c_sind_01 = imp_c_sind_01 + SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL * dif_meses_01
+                                endif
+                        
+                                if SAR_H_COMPLEM_GCIAS.SAR_OTRAS_DEDUC <> 0 Then
+                                    imp_o_deducc_01 = imp_o_deducc_01 + SAR_H_COMPLEM_GCIAS.SAR_OTRAS_DEDUC * dif_meses_01
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_SEGURO_VIDA <> 0 Then
+                                    imp_seg_v_01 = imp_seg_v_01 + SAR_H_COMPLEM_GCIAS.SAR_SEGURO_VIDA * dif_meses_01
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_SEGURO_SEPELIO <> 0 Then
+                                    imp_seg_sep_01 = imp_seg_sep_01 + SAR_H_COMPLEM_GCIAS.SAR_SEGURO_SEPELIO * dif_meses_01
+                                endif                            
+                            Else
+                                if SAR_H_COMPLEM_GCIAS.SAR_JUBILACION <> 0 Then
+                                    imp_jub_01 = imp_jub_01 + SAR_H_COMPLEM_GCIAS.SAR_JUBILACION
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 <> 0 Then
+                                    imp_ley_01 = imp_ley_01 + SAR_H_COMPLEM_GCIAS.SAR_LEY_19032
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL <> 0 Then
+                                    imp_o_soc_01 = imp_o_soc_01 + SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_RETENCION <> 0 Then
+                                    imp_ret_01 = imp_ret_01 + SAR_H_COMPLEM_GCIAS.SAR_RETENCION
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_BRUTO <> 0 Then
+                                    imp_bruto_01 = imp_bruto_01 + SAR_H_COMPLEM_GCIAS.SAR_BRUTO
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL <> 0 Then
+                                    imp_c_sind_01 = imp_c_sind_01 + SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL
+                                endif
+                        
+                                if SAR_H_COMPLEM_GCIAS.SAR_OTRAS_DEDUC <> 0 Then
+                                    imp_o_deducc_01 = imp_o_deducc_01 + SAR_H_COMPLEM_GCIAS.SAR_OTRAS_DEDUC
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_SEGURO_VIDA <> 0 Then
+                                    imp_seg_v_01 = imp_seg_v_01 + SAR_H_COMPLEM_GCIAS.SAR_SEGURO_VIDA
+                                endif
+        
+                                if SAR_H_COMPLEM_GCIAS.SAR_SEGURO_SEPELIO <> 0 Then
+                                    imp_seg_sep_01 = imp_seg_sep_01 + SAR_H_COMPLEM_GCIAS.SAR_SEGURO_SEPELIO
+                                endif
+                            EndIf
+                      EndIf
+                      
+                    elseif entidad = "02" then '--Cuota medico asistencial--                    
+                        IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti)) ) THEN
+                           
+                            If(SAR_TP_IMPUT = "99")Then
+                                'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada.
+                                'Para los empleados de Rango 1
+                                '---------------------------------------------------------------------------------------------------------------
+                                If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then                            
+                                    if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then  
+                                        dif_meses_02 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                        dif_meses_02 = Max(dif_meses_02, 0)
+                                    Else
+                                        dif_meses_02 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    EndIf                                        
+                                else
+                                    dif_meses_02 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                endif
+                                imp_tot_02 = imp_tot_02 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_02
+                                '---------------------------------------------------------------------------------------------------------------                                                                   
+                            Else
+                                imp_tot_02 = imp_tot_02 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                            EndIf                                                        
+                        EndIf
+                        frec_02 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                        
+                    elseif entidad = "03" then '--Seguro de vida particular --
+        
+                        IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti)) ) THEN
+                            If(SAR_TP_IMPUT = "99")Then
+                                'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada.
+                                'Para los empleados de Rango 1
+                                '---------------------------------------------------------------------------------------------------------------
+                                If(RANGO_REM_IG_2013= 1 and fec_1 <> SAR_FEC_PAGO_IG)Then
+                                    if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then
+                                        dif_meses_03 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                        dif_meses_03 = Max(dif_meses_03,0)
+                                    else
+                                        dif_meses_03 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    endif
+                                Else
+                                    dif_meses_03 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                EndIf
+                                imp_tot_03 = imp_tot_03 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_03  
+                                '---------------------------------------------------------------------------------------------------------------                                                             
+                            Else
+                                imp_tot_03 = imp_tot_03 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                            EndIf
+                        endif
+                        frec_03 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                        
+                    elseif entidad = "05" then '--Gastos de sepelio --
+        
+                        IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti)) ) THEN
+                            If(SAR_TP_IMPUT = "99")Then
+                                'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada.
+                                'Para los empleados de Rango 1
+                                '---------------------------------------------------------------------------------------------------------------
+                                If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then
+                                    if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then
+                                        dif_meses_05 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                        dif_meses_05 = Max(dif_meses_05, 0)
+                                    else
+                                        dif_meses_05 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    endif        
+                                Else
+                                    dif_meses_05 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                EndIf
+                                imp_tot_05 = imp_tot_05 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_05
+                                '---------------------------------------------------------------------------------------------------------------                                                               
+                            Else
+                                imp_tot_05 = imp_tot_05 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                            EndIf
+                        endif
+                        frec_05 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                    elseif entidad = "06" then '--Donaciones--
+        
+                        IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti)) ) THEN
+                            If(SAR_TP_IMPUT = "99")Then
+                                'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada. 
+                                'Para los empleados de Rango 1
+                                '---------------------------------------------------------------------------------------------------------------
+                                If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then
+                                    if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then
+                                        dif_meses_06 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                        dif_meses_06 = Max(dif_meses_06, 0)
+                                    else
+                                        dif_meses_06 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    endif
+                                Else
+                                    dif_meses_06 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                EndIf
+                                imp_tot_06 = imp_tot_06 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_06   
+                                '---------------------------------------------------------------------------------------------------------------                                                            
+                            Else
+                                imp_tot_06 = imp_tot_06 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                            EndIf
+                        endif
+                        frec_06 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+       
+                    elseif entidad = "07" then '--Honorarios Medicos--
+                                                  
+                        IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti) AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti)  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti) THEN
+                           If(SAR_TP_IMPUT = "99")Then
+                               'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada. 
+                                'Para los empleados de Rango 1
+                                '---------------------------------------------------------------------------------------------------------------
+                                If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then
+                                    if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then
+                                        dif_meses_07 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                        dif_meses_07 = Max(dif_meses_07, 0)
+                                    else
+                                        dif_meses_07 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    endif
+                                Else
+                                    dif_meses_07 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                EndIf                               
+                                imp_tot_07 = imp_tot_07 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_07 
+                                '---------------------------------------------------------------------------------------------------------------                                                            
+                            Else
+                                imp_tot_07 = imp_tot_07 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                            EndIf
+                        endif
+                        frec_07 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+
+                    elseif entidad = "08" then '--Otras deducciones-- 
+        
+                        IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti)) ) THEN
+                            If(SAR_TP_IMPUT = "99")Then
+                                'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada. 
+                                'Para los empleados de Rango 1
+                                '---------------------------------------------------------------------------------------------------------------
+                                If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then
+                                    if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then
+                                        dif_meses_08 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                        dif_meses_08 = Max(dif_meses_08, 0)
+                                    else
+                                        dif_meses_08 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    endif                                
+                                Else
+                                    dif_meses_08 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                EndIf
+                                imp_tot_08 = imp_tot_08 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_08
+                                '---------------------------------------------------------------------------------------------------------------                                                                
+                            Else
+                              imp_tot_08 = imp_tot_08 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                            EndIf
+                        endif
+                        frec_08 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                    elseif entidad = "09" then '--Intereses Hipotecarios-- 
+        
+                        IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti)) ) THEN
+                            If(SAR_TP_IMPUT = "99")Then 
+                                'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada. 
+                                'Para los empleados de Rango 1
+                                '---------------------------------------------------------------------------------------------------------------                           
+                                If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then
+                                      if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then
+                                          dif_meses_09 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                          dif_meses_09 = Max(dif_meses_09, 0)
+                                      else
+                                          dif_meses_09 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                      endif
+                                Else
+                                    dif_meses_09 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                EndIf
+                                imp_tot_09 = imp_tot_09 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_09
+                                '---------------------------------------------------------------------------------------------------------------                                                             
+                            Else
+                              imp_tot_09 = imp_tot_09 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                            EndIf
+                        endif
+                        frec_09 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                    elseif entidad = "11" then '--Debitos y creditos bancarios--
+        
+                        IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti)) ) THEN
+                            If(SAR_TP_IMPUT = "99")Then
+                                'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada. 
+                                'Para los empleados de Rango 1
+                                '--------------------------------------------------------------------------------------------------------------- 
+                                If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then
+                                    if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then
+                                        dif_meses_11 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                        dif_meses_11 = Max(dif_meses_11, 0)
+                                    else
+                                        dif_meses_11 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1 
+                                    endif
+                                else
+                                    dif_meses_11 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1                                    
+                                endif 
+                                imp_tot_11 = imp_tot_11 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_11 
+                                '---------------------------------------------------------------------------------------------------------------                                                                
+                            Else
+                                imp_tot_11 = imp_tot_11 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                            endif
+                        endif
+                        frec_11 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                    elseif entidad = "12" then '--Servicio Domestico--
+        
+                        IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti)) ) THEN
+                            If(SAR_TP_IMPUT = "99")Then
+                                'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada. 
+                                'Para los empleados de Rango 1
+                                '---------------------------------------------------------------------------------------------------------------
+                                If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then
+                                    if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then
+                                        dif_meses_12 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                        dif_meses_12 = Max(dif_meses_12, 0)
+                                    else
+                                        dif_meses_12 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    endif
+                                Else
+                                    dif_meses_12 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                EndIf
+                                imp_tot_12 = imp_tot_12 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_12 
+                                '---------------------------------------------------------------------------------------------------------------                                                               
+                            Else
+                                imp_tot_12 = imp_tot_12 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                            endif
+                        endif
+                        frec_12 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA        
+                          
+                    elseif entidad = "13"  then '- Ingresos otros empleadores  --        
+                        IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti)) ) THEN
+                         ' Procesamos cada tipo de importe:
+                          ' Deducciones:
+                            If(SAR_TP_IMPUT = "99")Then
+                                'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada. 
+                                'Para los empleados de Rango 1
+                                '---------------------------------------------------------------------------------------------------------------
+                                If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then
+                                    if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then
+                                        dif_meses_13 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                        dif_meses_13 = Max(dif_meses_13, 0)
+                                    else
+                                        dif_meses_13 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    endif
+                                Else
+                                    dif_meses_13 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                EndIf
+                                '---------------------------------------------------------------------------------------------------------------
+                                  
+                                If(SAR_H_COMPLEM_GCIAS.SAR_JUBILACION > 0) Then
+                                   jubilacion_oe = jubilacion_oe + SAR_H_COMPLEM_GCIAS.SAR_JUBILACION * dif_meses_13
+                                EndIf
+                                If(SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 > 0) Then   
+                                   ley_19032_oe = ley_19032_oe + SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 * dif_meses_13
+                                EndIf   
+                                If(SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL > 0) Then
+                                   obra_social_oe = obra_social_oe + SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL * dif_meses_13
+                                EndIf
+                                If(SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL > 0) Then   
+                                   cuota_sindical_oe = cuota_sindical_oe + SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL * dif_meses_13
+                                EndIf   
+                                ' Haberes
+                                If(SAR_H_COMPLEM_GCIAS.SAR_BRUTO > 0) Then
+                                   bruto_oe = bruto_oe + SAR_H_COMPLEM_GCIAS.SAR_BRUTO * dif_meses_13
+                                EndIf                                
+                            Else
+                              If(SAR_H_COMPLEM_GCIAS.SAR_JUBILACION > 0) Then
+                                 jubilacion_oe = jubilacion_oe + SAR_H_COMPLEM_GCIAS.SAR_JUBILACION
+                              EndIf
+                              If(SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 > 0) Then   
+                                 ley_19032_oe = ley_19032_oe + SAR_H_COMPLEM_GCIAS.SAR_LEY_19032
+                              EndIf   
+                              If(SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL > 0) Then
+                                 obra_social_oe = obra_social_oe + SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL
+                              EndIf
+                              If(SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL > 0) Then   
+                                 cuota_sindical_oe = cuota_sindical_oe + SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL
+                              EndIf   
+                              ' Haberes
+                              If(SAR_H_COMPLEM_GCIAS.SAR_BRUTO > 0) Then
+                                 bruto_oe = bruto_oe + SAR_H_COMPLEM_GCIAS.SAR_BRUTO
+                              EndIf                                
+                            endif
+                          EndIf  
+                            'frec_13 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                            
+                    elseif entidad = "15" then '--Pago a cuenta - Compras en el exterior--
+                         IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti)  Or (SAR_TP_IMPUT = "99") ) THEN
+                           
+                            If(SAR_TP_IMPUT = "99")Then
+                                'Para la paga de Reliquidacion, obtengo la cantidad de meses en las que se tiene que aplicar esa deduccion segun como este registrada. 
+                                'Para los empleados de Rango 1
+                                '---------------------------------------------------------------------------------------------------------------
+                                If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then
+                                    if (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END)>= DxMonth(fec_1)) Then
+                                        dif_meses_15 = DxMonth(fec_1) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                        dif_meses_15 = Max(dif_meses_15,0)
+                                    else
+                                        dif_meses_15 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    endif
+                                else
+                                    dif_meses_15 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1                                
+                                endif                                                                                            
+                                imp_tot_15 = imp_tot_15 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_15
+                                '---------------------------------------------------------------------------------------------------------------
+                            Else
+                              imp_tot_15 = imp_tot_15 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                              
+                            EndIf   
+                                                         
+                         endif
+                         frec_15 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                    endif
+'------------------------------------------------------------------------------------------------------------------------
+'                               Entidades con valores anuales 
+'------------------------------------------------------------------------------------------------------------------------
+    
+                ELSEIF SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA = "2" THEN
+                mes = mes_paga_efecti
+                
+                    if entidad = "02" then '--Cuota medico asistencial--
+                    
+                        if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                            imp_tot_02 = imp_tot_02 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                        endif
+                        frec_02 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                        
+                    elseif entidad = "03" then '--Seguro de vida particular --
+                      
+                        if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                            imp_tot_03 = imp_tot_03 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                           
+                        endif
+                        frec_03 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                        
+                    elseif entidad = "05" then '--Gastos de sepelio --
+        
+                        if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                            imp_tot_05 = imp_tot_05 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                        endif
+                        frec_05 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                    elseif entidad = "06" then '--Donaciones--
+        
+                        if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                            imp_tot_06 = imp_tot_06 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                        endif
+                        frec_06 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                    elseif entidad = "07" then '--Honorarios Medicos--
+        
+                        if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                            imp_tot_07 = imp_tot_07 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                        endif
+                        frec_07 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                        
+                    elseif entidad = "08" then '--Otras deducciones-- 
+        
+                        if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                            imp_tot_08 = imp_tot_08 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                        endif
+                        frec_08 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                    elseif entidad = "09" then '--Intereses Hipotecarios-- 
+        
+                        if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                            imp_tot_09 = imp_tot_09 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                        endif
+                        frec_09 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                    elseif entidad = "11" then '--Debitos y creditos bancarios--
+        
+                        if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                            imp_tot_11 = imp_tot_11 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                        endif
+                        frec_11 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                    elseif entidad = "12"  then '--Servicio Domestico--
+        
+                        if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                            imp_tot_12 = imp_tot_12 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                        endif
+                        frec_12 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                    'elseif entidad = "13" then '--Deduc.Capital Social o Fdo.de riesgo--
+        
+                        'if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                            'imp_tot_13 = imp_tot_13 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
+                            ''imp_tot_13 = imp_tot_13 / 12 * mes
+                        'endif
+                        'frec_13 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+
+                    endif                
+                ENDIF        
+            ENDIF
+        NEXT    
+ENDIF           
+  
+    
+'---Leer el acumulado, para los casos de las entidades con frecuencia mensual.
+       
+mes_1 = AddMonths(SAR_FEC_PAGO_IG,-1)
+mes = DxMonth(mes_1)
+anio = DxYear(SAR_FEC_PAGO_IG)
+
+
+IF SAR_TP_IMPUT = "99" Then
+    param1 =  DxDate(1,12,anio)
+Else
+    param1 = DxDate(1,mes,anio)
+endif
+param2 = SAR_FEC_PAGO_IG
+   
+IF SAR_TP_IMPUT = "99" Then 'Procesa exclusivamente rango 1 y
+  If(RANGO_REM_IG_2013 = 1 and fec_1 <> SAR_FEC_PAGO_IG)Then 'Procesa exclusivamente rango 1 y 
+      mes_paga_efecti = DxMonth(fec_1)
+  EndIf  
+EndIf  
+
+IF imp_tot_02 > 0 AND frec_02 = "2"  THEN
+        imp_tot_02 = imp_tot_02 / 12 * mes_paga_efecti
+ENDIF    
+IF imp_tot_03 > 0 AND frec_03 = "2"  THEN
+        imp_tot_03 = imp_tot_03 / 12 * mes_paga_efecti
+ENDIF
+IF imp_tot_05 > 0 AND frec_05 = "2"  THEN
+        imp_tot_05 = imp_tot_05 / 12 * mes_paga_efecti
+ENDIF
+IF imp_tot_06 > 0 AND frec_06 = "2"  THEN
+        imp_tot_06 = imp_tot_06 / 12 * mes_paga_efecti           
+ENDIF
+IF imp_tot_07 > 0 AND frec_07 = "2"  THEN
+        imp_tot_07 = imp_tot_07 / 12 * mes_paga_efecti          
+ENDIF
+   
+IF imp_tot_08 > 0 AND frec_08 = "2"  THEN
+        imp_tot_08 = imp_tot_08 / 12 * mes_paga_efecti            
+ENDIF
+IF imp_tot_09 > 0 AND frec_09 = "2"  THEN
+        imp_tot_09 = imp_tot_09 / 12 * mes_paga_efecti           
+ENDIF
+IF imp_tot_11 > 0 AND frec_11 = "2"  THEN
+        imp_tot_11 = imp_tot_11 / 12 * mes_paga_efecti           
+ENDIF
+IF imp_tot_12 > 0 AND frec_12 = "2"  THEN
+        imp_tot_12 = imp_tot_12 / 12 * mes_paga_efecti            
+ENDIF
+    
+IF mes_paga_efecti = 1 THEN
+    IF imp_tot_02 > 0 AND frec_02 = "1" THEN
+        imp_02 = imp_tot_02
+    ENDIF    
+    IF imp_tot_03 > 0 AND frec_03 = "1" THEN
+        imp_03 = imp_tot_03
+    ENDIF
+    IF imp_tot_05 > 0 AND frec_05 = "1" THEN
+        imp_05 = imp_tot_05
+    ENDIF
+    IF imp_tot_06 > 0 AND frec_06 = "1" THEN
+        imp_06 = imp_tot_06            
+    ENDIF
+    IF imp_tot_07 > 0 AND frec_07 = "1" THEN
+        imp_07 = imp_tot_07            
+    ENDIF
+    IF imp_tot_09 > 0 AND frec_09 = "1" THEN
+        imp_09 = imp_tot_09            
+    ENDIF
+    IF imp_tot_11 > 0 AND frec_11 = "1" THEN
+        imp_11 = imp_tot_11            
+    ENDIF
+    IF imp_tot_12 > 0 AND frec_12 = "1" THEN
+        imp_12 = imp_tot_12            
+    ENDIF
+    'IF imp_tot_13 > 0 AND frec_13 = "1" THEN
+        'imp_13 = imp_tot_13            
+    'ENDIF
+    IF imp_tot_15 > 0 AND frec_15 = "1" THEN
+        imp_15 = imp_tot_15            
+    ENDIF
+ELSE    
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()
+    ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()- 1
+    FOR j = 0 TO ULTIMO_REG 
+        SCO_AC_HR_PERIOD_READ_1.MOVETO(j)
+        IF (param1 <= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG AND param2 > SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG and SAR_TP_IMPUT <> "99") Or (SAR_IG_DICIEMBRE = 1 and (SAR_FECHA_BAJA <> M4_PLUS_INF) And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") THEN        
+            IF frec_02 = "1" THEN
+                imp_02 = imp_tot_02 + SCO_AC_HR_PERIOD_READ_1.SAR_IG_CMASIS_REMUN
+                acu_cmasis_remun = SCO_AC_HR_PERIOD_READ_1.SAR_IG_CMASIS_REMUN
+            ENDIF    
+            IF frec_03 = "1" THEN
+                imp_03 = imp_tot_03 + SCO_AC_HR_PERIOD_READ_1.SAR_IG_SEGURO_REMUN
+            ENDIF
+            IF frec_05 = "1" THEN
+                imp_05 = imp_tot_05 + SCO_AC_HR_PERIOD_READ_1.SAR_IG_SEPELIO_REM
+            ENDIF
+            IF frec_06 = "1" THEN
+                imp_06 = imp_tot_06 + SCO_AC_HR_PERIOD_READ_1.SAR_IG_DONAC_REMUN
+                acu_donremun_remun = SCO_AC_HR_PERIOD_READ_1.SAR_IG_DONAC_REMUN
+            ENDIF
+            IF frec_07 = "1" THEN
+                imp_07 = imp_tot_07 + SCO_AC_HR_PERIOD_READ_1.SAR_HONORAR_MEDICOS
+                acu_honor_med = SCO_AC_HR_PERIOD_READ_1.SAR_HONORAR_MEDICOS
+            ENDIF
+            IF frec_09 = "1" THEN
+                imp_09 = imp_tot_09 + SCO_AC_HR_PERIOD_READ_1.SAR_IMP_D_IN_HIP
+                acu_imp_d_in_hip = SCO_AC_HR_PERIOD_READ_1.SAR_IMP_D_IN_HIP
+            ENDIF
+            IF frec_11 = "1" THEN
+               If(SCO_AC_HR_PERIOD_READ_1.SCO_PAY_FREQ_ALLOC = "003")Then
+                 If(DXMONTH(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) < DXMONTH(SCO_DT_PAYMENT) And sume_11 = 0)Then
+                         imp_11 = imp_tot_11 + SCO_AC_HR_PERIOD_READ_1.SAR_DEBITO_BANCARIO
+                         acu_pago_cuent_ext = SCO_AC_HR_PERIOD_READ_1.SAR_DEBITO_BANCARIO
+                         sume_11 = 1
+                 ElseIf(DXMONTH(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) = DXMONTH(SCO_DT_PAYMENT) And sume_11 = 0)Then
+                     If(imp_11 = 0)Then
+                         imp_11 = imp_tot_11 
+                         acu_debito_bancario = SCO_AC_HR_PERIOD_READ_1.SAR_DEBITO_BANCARIO
+                         sume_11 = 1
+                     EndIf    
+                 EndIf        
+               Else
+                imp_11 = imp_tot_11 + SCO_AC_HR_PERIOD_READ_1.SAR_DEBITO_BANCARIO
+                acu_debito_bancario = SCO_AC_HR_PERIOD_READ_1.SAR_DEBITO_BANCARIO
+               EndIf 
+            ENDIF
+            IF frec_12 = "1" THEN
+                imp_12 = imp_tot_12 + SCO_AC_HR_PERIOD_READ_1.SAR_SERV_DOMEST
+                acu_serv_domest = SCO_AC_HR_PERIOD_READ_1.SAR_SERV_DOMEST
+            ENDIF
+            'IF frec_13 = "1" THEN
+                'imp_13 = imp_tot_13 + SCO_AC_HR_PERIOD_READ_1.SAR_AP_CAP_SOC_FDO_R
+                'acu_ap_cap_soc_fdo_r = SCO_AC_HR_PERIOD_READ_1.SAR_AP_CAP_SOC_FDO_R
+            'ENDIF
+            IF frec_15 = "1" THEN
+               If(SCO_AC_HR_PERIOD_READ_1.SCO_PAY_FREQ_ALLOC = "003")Then
+                 If(DXMONTH(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) < DXMONTH(SCO_DT_PAYMENT) And sume_15 = 0)Then
+                         imp_15 = imp_tot_15 + SCO_AC_HR_PERIOD_READ_1.SAR_PAG_CUENT_EXT
+                         acu_pago_cuent_ext = SCO_AC_HR_PERIOD_READ_1.SAR_PAG_CUENT_EXT
+                         sume_15 = 1
+                 ElseIf(DXMONTH(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) = DXMONTH(SCO_DT_PAYMENT) And sume_15 = 0)Then
+                     If(imp_15 = 0)Then
+                         imp_15 = imp_tot_15 
+                         acu_pago_cuent_ext = SCO_AC_HR_PERIOD_READ_1.SAR_PAG_CUENT_EXT
+                         sume_15 = 1
+                     EndIf    
+                 EndIf        
+               Else
+                 imp_15 = imp_tot_15 + SCO_AC_HR_PERIOD_READ_1.SAR_PAG_CUENT_EXT
+                 acu_pago_cuent_ext = SCO_AC_HR_PERIOD_READ_1.SAR_PAG_CUENT_EXT
+               EndIf
+            ENDIF
+        ENDIF
+    NEXT
+
+    
+    IF (imp_02 = 0 AND imp_tot_02 > 0) AND frec_02 = "1" THEN
+        imp_02 = imp_tot_02
+    ENDIF
+    IF (imp_03 = 0 AND imp_tot_03 > 0) AND frec_03 = "1" THEN
+        imp_03 = imp_tot_03
+    ENDIF
+    IF (imp_05 = 0 AND imp_tot_05 > 0) AND frec_05 = "1" THEN
+        imp_05 = imp_tot_05
+    ENDIF
+    IF (imp_06 = 0 AND imp_tot_06 > 0) AND frec_06 = "1" THEN
+        imp_06 = imp_tot_06
+    ENDIF
+    IF (imp_07 = 0 AND imp_tot_07 > 0) AND frec_07 = "1" THEN
+        imp_07 = imp_tot_07
+    ENDIF
+    IF (imp_09 = 0 AND imp_tot_09 > 0) AND frec_09 = "1" THEN
+        imp_09 = imp_tot_09
+    ENDIF
+    IF (imp_11 = 0 AND imp_tot_11 > 0) AND frec_11 = "1" THEN
+        imp_11 = imp_tot_11
+    ENDIF
+    IF (imp_12 = 0 AND imp_tot_12 > 0) AND frec_12 = "1" THEN
+        imp_12 = imp_tot_12
+    ENDIF
+    
+
+    IF (imp_15 = 0 AND imp_tot_15 > 0) AND frec_15 = "1" THEN
+        imp_15 = imp_tot_15
+    ENDIF
+ENDIF
+
+     
+'Para el casos de las entidades con frecuencia de carga mensual, se da el valor 
+'correspondiente a los concepto acumulados a ser utilizados en el cpto.v5002
+
+'Proceso especial para entidades mensuales de empleados con baja antes de diciembre
+'----------------------------------------------------------------------------------
+'Cuota medico asistencial
+IF (imp_02 > 0) AND frec_02 = "1" THEN
+        If SAR_IG_DICIEMBRE = 1 and isnull(SAR_FECHA_BAJA) = m4_false And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
+          'Recalculo de baja
+            imp_02 = acu_cmasis_remun  + (imp_tot_02 * dif_meses_no_trabajados)
+        EndIf  
+    SAR_IG_CMASIS_REMUN = imp_02
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_IG_CMASIS_REMUN",-1,imp_02)
+ENDIF
+
+IF (imp_03 > 0) AND frec_03 = "1" THEN    
+    SAR_IG_SEGURO_REMUN = imp_03
+    SetValuePriority(2,"SCO_HRPERIOD_CALC","SAR_IG_SEGURO_REMUN",-1,imp_03)
+ENDIF
+
+IF (imp_05 > 0) AND frec_05 = "1" THEN    
+    SAR_IG_SEPELIO_REM = imp_05
+    SetValuePriority(2,"SCO_HRPERIOD_CALC","SAR_IG_SEPELIO_REM",-1,imp_05)
+ENDIF
+
+IF (imp_06 > 0) AND frec_06 = "1" THEN            
+        If(SAR_IG_DICIEMBRE) = 1 and isnull(SAR_FECHA_BAJA) = m4_false And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
+          'Recalculo de baja
+            imp_06 = acu_donremun_remun  + (imp_tot_06 * dif_meses_no_trabajados)
+        EndIf  
+    SAR_IG_DONAC_REMUN = imp_06
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_IG_DONAC_REMUN",-1,imp_06)
+ENDIF
+
+IF (imp_07 > 0) AND frec_07 = "1" THEN            
+        If(SAR_IG_DICIEMBRE) = 1 and isnull(SAR_FECHA_BAJA) = m4_false And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
+          'Recalculo de baja
+            imp_07 = acu_honor_med  + (imp_tot_07 * dif_meses_no_trabajados)
+        EndIf  
+    SAR_HONORAR_MEDICOS = imp_07
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_HONORAR_MEDICOS",-1,imp_07)
+ENDIF
+
+IF (imp_09 > 0) AND frec_09 = "1" THEN            
+        If(SAR_IG_DICIEMBRE) = 1 and isnull(SAR_FECHA_BAJA) = m4_false And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
+          'Recalculo de baja
+            imp_09 = acu_imp_d_in_hip  + (imp_tot_09 * dif_meses_no_trabajados)
+        EndIf  
+    SAR_IMP_D_IN_HIP = imp_09
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_IMP_D_IN_HIP",-1,imp_09)
+ENDIF
+
+IF imp_11 > 0 AND frec_11 = "1" THEN
+        If(SAR_IG_DICIEMBRE) = 1 and isnull(SAR_FECHA_BAJA) = m4_false And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
+          'Recalculo de baja
+            imp_11 = acu_debito_bancario  + (imp_tot_11 * dif_meses_no_trabajados)
+        EndIf  
+    SAR_DEBITO_BANCARIO = imp_11
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_DEBITO_BANCARIO",-1,imp_11)
+ENDIF
+
+IF imp_12 > 0 AND frec_12 = "1" THEN
+        If(SAR_IG_DICIEMBRE) = 1 and isnull(SAR_FECHA_BAJA) = m4_false And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
+          'Recalculo de baja
+            imp_12 = acu_serv_domest  + (imp_tot_12 * dif_meses_no_trabajados)
+        EndIf  
+    SAR_SERV_DOMEST = imp_12
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_SERV_DOMEST",-1,imp_12)
+ENDIF
+
+IF imp_15 > 0 AND frec_15 = "1" THEN
+        If(SAR_IG_DICIEMBRE) = 1 and isnull(SAR_FECHA_BAJA) = m4_false And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
+          'Recalculo de baja
+            imp_15 = acu_pago_cuent_ext  + (imp_tot_15 * dif_meses_no_trabajados)
+        EndIf  
+    SAR_PAG_CUENT_EXT = imp_15    
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_PAG_CUENT_EXT",-1,imp_15)
+ENDIF
+'total de Jubilacion por otros empleadores
+SAR_JUBILACION_OE    = jubilacion_oe 
+
+'total de Ley 19032 por otros empleadores
+SAR_LEY_19032_OE   = ley_19032_oe 
+
+'total de Obra social por otros empleadores
+SAR_OBRA_SOCIAL_OE   = obra_social_oe 
+
+'total de Cuota sindical por otros empleadores
+SAR_CUOTA_SINDICAL_OE   = cuota_sindical_oe 
+
+'total de Bruto por otros empleadores
+SAR_BRUTO_OE   = bruto_oe 
+
+
+SAR_AD_O_SOC_ANT_EM = 0 ' Bug 178544
+
+SAR_JUB_ANT_EMP = imp_jub_01
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_JUB_ANT_EMP",-1,imp_jub_01)
+
+SAR_L_19032_ANT_EMP = imp_ley_01
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_L_19032_ANT_EMP",-1,imp_ley_01)
+
+SAR_SOC_ANT_EMP = imp_o_soc_01
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_SOC_ANT_EMP",-1,imp_o_soc_01)
+
+SAR_IMP_ANT_EMP = imp_ret_01
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_IMP_ANT_EMP",-1,imp_ret_01)
+
+SAR_BASE_ANT_EMP = imp_bruto_01
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_BASE_ANT_EMP",-1,imp_bruto_01)
+
+SAR_SIND_ANT_EMP = imp_c_sind_01
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_SIND_ANT_EMP",-1,imp_c_sind_01)
+
+SAR_OTR_DED_ANT_EMP = imp_o_deducc_01
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_OTR_DED_ANT_EMP",-1,imp_o_deducc_01)
+
+SAR_SEG_ANT_EMP = imp_seg_v_01
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_SEG_ANT_EMP",-1,imp_seg_v_01)
+
+SAR_SEPEL_ANT_EMP = imp_seg_sep_01
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_SEPEL_ANT_EMP",-1,imp_seg_sep_01)
+
+'--Cuota medico asistencial--
+SAR_JUR_CTA_MED_ASI = imp_tot_02     
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_JUR_CTA_MED_ASI",-1,imp_tot_02)
+
+'--Seguro de vida particular--
+SAR_JUR_SEG_PART = imp_tot_03
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_JUR_SEG_PART",-1,imp_tot_03)
+
+'--Gastos de sepelio--
+SAR_JUR_SEPELIO = imp_tot_05
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_JUR_SEPELIO",-1,imp_tot_05)
+
+'--Donaciones--
+SAR_JUR_DONACIONES = imp_tot_06
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_JUR_DONACIONES",-1,imp_tot_06)
+
+'--Honorarios Medicos--
+IF imp_tot_07 > 0 AND frec_07 <> "1" THEN
+    SAR_HONORAR_MEDICOS = imp_tot_07
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_HONORAR_MEDICOS",-1,imp_tot_07)
+ENDIF
+
+'--Otras deducciones-- 
+SAR_JUR_OTRAS_DED = imp_tot_08
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_JUR_OTRAS_DED",-1,imp_tot_08)
+
+'--Intereses Hipotecarios--
+SAR_JUR_INT_HIP = imp_tot_09
+SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_JUR_INT_HIP",-1,imp_tot_09)
+
+'--Debitos y creditos bancarios--
+IF imp_tot_11 > 0 AND frec_11 <> "1" THEN
+    SAR_DEBITO_BANCARIO = imp_tot_11
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_DEBITO_BANCARIO",-1,imp_tot_11)
+ENDIF
+
+'--Servicio Domestico--
+IF imp_tot_12 > 0 AND frec_12 <> "1" THEN
+    SAR_SERV_DOMEST = imp_tot_12  
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_SERV_DOMEST",-1,imp_tot_12)
+ENDIF
+
+
+'--Pago a cuenta - Compras en el exterior--
+IF imp_tot_15 > 0 AND frec_15 <> "1" THEN
+    SAR_PAG_CUENT_EXT = imp_tot_15
+    SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_PAG_CUENT_EXT",-1,imp_tot_15)
+ENDIF
+
+
+return(0)

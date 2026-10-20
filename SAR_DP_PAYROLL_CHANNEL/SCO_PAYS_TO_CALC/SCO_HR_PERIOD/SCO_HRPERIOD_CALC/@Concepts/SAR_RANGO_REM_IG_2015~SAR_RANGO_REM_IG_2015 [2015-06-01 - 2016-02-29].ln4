@@ -1,0 +1,190 @@
+'----------------------------------------------------------------------------------------------------------
+'Se cierra la regla de calculo a partir del 29/02/2016, debido a la publicacion del Decreto 394/2016 que
+'deja sin efecto los rangos de remuneraciones para determinar los valores correspodientes a aplicar de 
+'deducciones.
+'----------------------------------------------------------------------------------------------------------
+
+'-- Se calcula el rango del empleado segun decreto Resolucion General 3770/2015
+
+'Nuevos Rangos segun Resolucion 3770/2015
+'------------------------------------------------
+'-- Anexo A -- Zona No Desfavorables 
+'----- 20: >15000 y <=18000 Empresa 20
+'----- 21: >18000 y <=21000 Empresa 21
+'----- 22: >21000 y <=22000 Empresa 22
+'----- 23: >22000 y <=23000 Empresa 23
+'----- 24: >23000 y <=24000 Empresa 24
+'----- 25: >24000 y <=25000 Empresa 25
+'----- 0 > 25000 Empresa 001
+
+'-- Anexo B -- Zonas Desfavorables 
+'----- 30: >15000 y <=18000 Empresa 30
+'----- 31: >18000 y <=21000 Empresa 31
+'----- 32: >21000 y <=22000 Empresa 32
+'----- 33: >22000 y <=23000 Empresa 33
+'----- 34: >23000 y <=24000 Empresa 34
+'----- 35: >24000 y <=25000 Empresa 35
+'----- 3 > 25000 Empresa 001
+'------------------------------------------------
+
+'Rangos que continuan vigentes por Resolucion 3525/2015:
+'--------------------------------------------------------
+'----1: <= 15000 Empresa 001
+'----2: >15000 y <= 25000 Empresa 99
+'----0: > 2500 Empresa 001
+'----3: > 15000 Empresa 98
+'--------------------------------------------------------
+
+'Segun lo definido en la Resolucion 3770/2015 resulta lo siguiente:
+'--------------------------------------------------------------------------------------------------------------------------------------------------------
+'Empleados con rango 1: <= 15000 siguen amparados en la resolucion 3525/2013 No se le aplica impuesto Empresa 001 (independientemente del mes del alta)
+'Empleados con rango 2 y fecha de alta anterior a 01-09-2013, deben redefinir su rango teniendo en cuenta la remuneracion definida anteriormente.
+'Empleados con rango 2 y fecha de alta posterior a 01-09-2013 deben redefinir su rango dependiendo de la mejor remuneracion percibida a partir de 01-01-2015
+'Empleados con rango 0 y 3 sin importar la fecha de alta deben redefinir su rango dependiendo de la mejor remuneracion percibida a partir de 01-01-2015
+'--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+'Redefiniciones segun mejor remuneracion percibida a partir del 01-01-2015
+'--------------------------------------------------------------------------
+'---Zonas No Desfavorables
+    'Empleados con rango 1 definido antes de Mayo 2015
+    '----Resultado: <= 15000 Empresa 001    ---Continua en rango 1
+    
+    'Empleados con rango 2 definido antes de Mayo 2015 y alta anterior a Septiembre 2013
+    '----Mejor rem definida anteriormente: >15000 y <= 25000       ---Cambia a los rangos establecidos en el Anexo A.
+
+    
+    'Empleados con rango 2 definido antes de Mayo 2015 y alta Posterior a Septiembre 2013
+    '----Resultado: <= 15000 Empresa 001    ---Cambia a rango 1
+    '----Resultado: >15000 y <= 25000       ---Cambia a los rangos establecidos en el Anexo A.
+    '----Resultado: > 2500 Empresa 99       ---Continua en rango 2
+    
+    'Empleados con rango 0 definido antes de Mayo 2015
+    '----Resultado: <= 15000 Empresa 001    ---Cambia a rango 1
+    '----Resultado: >15000 y <= 25000       ---Cambia a los rangos establecidos en el Anexo A.
+    '----Resultado: > 2500 Empresa 001      ---Continua en rango 0
+
+'---Zonas Desfavorables
+    'Empleados con rango 3 definido antes de Mayo 2015
+    '----Resultado: <= 15000 Empresa 001    ---Cambia a rango 1
+    '----Resultado: >15000 y <= 25000       ---Cambia a los rangos establecidos en el Anexo B.
+    '----Resultado: > 2500 Empresa 98       ---Continua en rango 3
+
+SAR_HR_ROLE.begin()
+SAR_HRROLE_CALC.begin()
+
+
+'Indicador de zona desfavorable
+'IND_DES        = SAR_HRROLE_CALC.SAR_INDIC_REDUC_ZON_DES..sysTotalSlices(M4_TOTAL_SUM)
+'vIndicAnterior = SAR_HRROLE_CALC.SAR_INDIC_REDUC_ZON_DES..sysTotalSlices(M4_TOTAL_SUM)
+
+If(SCO_DT_PAYMENT <> SCO_DT_ALLOCATION)Then
+    IND_DES  = SAR_HR_ROLE.SAR_OBTENER_LUGAR_ZONA(SCO_DT_ALLOCATION)
+Else
+    IND_DES  = SAR_HR_ROLE.SAR_OBTENER_LUGAR_ZONA(SCO_DT_PAYMENT)
+EndIf
+
+IND_DES = ToString(ToDouble(IND_DES), 0)
+vIndicAnterior = IND_DES
+
+cantReg        = SCO_AC_HR_ROLE_READ_1.count()
+
+
+If cantReg > 1 Then
+    SCO_AC_HR_ROLE_READ_1.moveto(cantReg-1)
+    vIndicAnterior = SCO_AC_HR_ROLE_READ_1.SAR_INDIC_REDUC_ZON_DES 'Indicador de zona desfavorable del mes anterior
+    vIndicAnterior = ToString(ToDouble(vIndicAnterior), 0)
+Endif
+
+
+MAX_REM = SAR_MAYOR_REM_IG_2013..SYSTOTALSLICES(TOTAL_LAST)   'Maxima remuneracion
+vMayor_rem = SAR_MAYOR_REM_IG_2013
+If SCO_AC_HR_PERIOD_READ_1.count() > 0 Then
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()
+    vMayor_rem = SCO_AC_HR_PERIOD_READ_1.SAR_MAYOR_REM_IG_2013
+Endif
+
+RANGO_792 = SAR_RANGO_REM_IG_2013  
+RANGO = RANGO_792
+
+If(RANGO_792 = 1)Then
+   RANGO = RANGO_792
+   Return(RANGO)
+
+ElseIf (RANGO_792 = 2) Then
+    'Empleados con rango 2 definido antes de Mayo 2015 y alta anterior a Septiembre 2013
+    '----Mejor rem definida anteriormente: >15000 y <= 25000       ---Cambia a los rangos establecidos en el Anexo A.
+
+    'Empleados con rango 2 definido antes de Mayo 2015 y alta Posterior a Septiembre 2013
+    '----Resultado: <= 15000 Empresa 001    ---Cambia a rango 1
+    '----Resultado: >15000 y <= 25000       ---Cambia a los rangos establecidos en el Anexo A.
+    '----Resultado: > 2500 Empresa 99       ---Continua en rango 2 
+      
+    If(MAX_REM <= 15000 )Then 'Rango 1 
+       RANGO = 1
+    ElseIf(IND_DES <> "1" And MAX_REM > 15000 And MAX_REM <= 18000)Then 'Rango 2 recalculado a 20 
+       RANGO = 20
+    ElseIf(IND_DES <> "1" And MAX_REM > 18000 And MAX_REM <= 21000)Then 'Rango 2 recalculado a 21 
+       RANGO = 21
+    ElseIf(IND_DES <> "1" And MAX_REM > 21000 And MAX_REM <= 22000)Then 'Rango 2 recalculado a 22 
+       RANGO = 22
+    ElseIf(IND_DES <> "1" And MAX_REM > 22000 And MAX_REM <= 23000)Then 'Rango 2 recalculado a 23 
+       RANGO = 23   
+    ElseIf(IND_DES <> "1" And MAX_REM > 23000 And MAX_REM <= 24000)Then 'Rango 2 recalculado a 24 
+       RANGO = 24  
+    ElseIf(IND_DES <> "1" And MAX_REM > 24000 And MAX_REM <= 25000)Then 'Rango 2 recalculado a 25 
+       RANGO = 25     
+    ElseIf(IND_DES <> "1"  And MAX_REM > 25000 ) Then 'Rango 2
+       RANGO = 2
+    Endif
+    
+ElseIf (RANGO_792 = 0) Then   
+    'Empleados con rango 0 definido antes de Mayo 2015
+    '----Resultado: <= 15000 Empresa 001    ---Cambia a rango 1
+    '----Resultado: >15000 y <= 25000       ---Cambia a los rangos establecidos en el Anexo A.
+    '----Resultado: > 2500 Empresa 001      ---Continua en rango 0 
+    
+    If(MAX_REM <= 15000 )Then 'Rango 1 
+       RANGO = 1
+    ElseIf(IND_DES <> "1" And MAX_REM > 15000 And MAX_REM <= 18000)Then 'Rango 2 recalculado a 20 
+       RANGO = 20
+    ElseIf(IND_DES <> "1" And MAX_REM > 18000 And MAX_REM <= 21000)Then 'Rango 2 recalculado a 21 
+       RANGO = 21
+    ElseIf(IND_DES <> "1" And MAX_REM > 21000 And MAX_REM <= 22000)Then 'Rango 2 recalculado a 22 
+       RANGO = 22
+    ElseIf(IND_DES <> "1" And MAX_REM > 22000 And MAX_REM <= 23000)Then 'Rango 2 recalculado a 23 
+       RANGO = 23   
+    ElseIf(IND_DES <> "1" And MAX_REM > 23000 And MAX_REM <= 24000)Then 'Rango 2 recalculado a 24 
+       RANGO = 24  
+    ElseIf(IND_DES <> "1" And MAX_REM > 24000 And MAX_REM <= 25000)Then 'Rango 2 recalculado a 25 
+       RANGO = 25     
+    ElseIf(IND_DES <> "1"  And MAX_REM > 25000 ) Then 'Rango 0
+       RANGO = 0
+    Endif
+
+ElseIf (RANGO_792 = 3) Then   
+    '---Zonas Desfavorables
+    'Empleados con rango 3 definido antes de Mayo 2015
+    '----Resultado: <= 15000 Empresa 001    ---Cambia a rango 1
+    '----Resultado: >15000 y <= 25000       ---Cambia a los rangos establecidos en el Anexo B.
+    '----Resultado: > 2500 Empresa 98       ---Continua en rango 3
+    
+    If(IND_DES = "1" And MAX_REM <= 15000 )Then 'Rango 1 
+       RANGO = 1                                                        
+    ElseIf(IND_DES = "1" And MAX_REM > 15000 And MAX_REM <= 18000)Then 'Rango 3 recalculado a 30 
+       RANGO = 30
+    ElseIf(IND_DES = "1" And MAX_REM > 18000 And MAX_REM <= 21000)Then 'Rango 3 recalculado a 31 
+       RANGO = 31
+    ElseIf(IND_DES = "1" And MAX_REM > 21000 And MAX_REM <= 22000)Then 'Rango 3 recalculado a 32 
+       RANGO = 32
+    ElseIf(IND_DES = "1" And MAX_REM > 22000 And MAX_REM <= 23000)Then 'Rango 3 recalculado a 33 
+       RANGO = 33   
+    ElseIf(IND_DES = "1" And MAX_REM > 23000 And MAX_REM <= 24000)Then 'Rango 3 recalculado a 34 
+       RANGO = 34  
+    ElseIf(IND_DES = "1" And MAX_REM > 24000 And MAX_REM <= 25000)Then 'Rango 3 recalculado a 35 
+       RANGO = 35 
+    ElseIf(IND_DES = "1" And MAX_REM > 25000 )Then 'Rango 3
+       RANGO = 3
+    EndIf
+EndIf
+
+Return(RANGO)

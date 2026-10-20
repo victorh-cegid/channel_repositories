@@ -1,0 +1,14 @@
+'Esta regla es solo para bajas anteriores a junio en periodo fiscal 2023
+esBaja = 0
+If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" And DxYear(SAR_FEC_IMPUT_IG) = 2023 Then esBaja = 1
+If esBaja = 0 Then Return(0)
+
+base = SAR_B_IMP_SIN_HEXT + SAR_JUN23_DIF_SAC
+If base < 0 And SAR_BASE_IMPUESTO + SAR_JUN23_DIF_SAC > 0 Then base = 0
+
+fec_imp = SAR_FEC_PAGO_IG
+If SAR_IND_IMPUESTO_RETRO = 1 Then fec_imp = SAR_FEC_IMPUT_IG
+
+aux = SAR_IMPUESTO.SAR_RETORNA_PORCENTAJE(base,fec_imp,ID_CURRENCY)
+
+RETURN(aux)

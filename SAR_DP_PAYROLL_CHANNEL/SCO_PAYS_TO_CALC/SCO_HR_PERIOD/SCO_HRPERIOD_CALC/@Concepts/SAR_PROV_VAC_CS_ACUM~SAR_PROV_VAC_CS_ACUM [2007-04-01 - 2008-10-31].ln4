@@ -1,0 +1,50 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+if SAR_PROV_VAC_ACUM = 0 then return(0) 
+    
+'CALCULO TOPE PARA os
+tope=(SAR_TOPE_JUBIL/SAR_DIAS_NORM_COTIZ)*(SAR_SALDO_VACACION)
+Vac=SAR_PROV_VAC_ACUM
+base= min(tope,Vac)
+CONTR_OS= BASE * SAR_P_PAT_L_23660/100
+
+base= Vac
+porc = SAR_PORC_PAT_JUBIL + SAR_P_PAT_L_19032 + SAR_PORC_F_EMPLEO + SAR_P_PAT_CASFEC_PI
+CONTR_JUB = BASE * porc / 100
+
+valor_total = Round(CONTR_JUB + CONTR_OS,2)
+
+'Asigno valor al v5883
+'-----------------------------------------------------------
+    val = 0
+    SAR_ACM_PAGO_ULT_ANTERIOR.begin()
+    If SAR_ACM_PAGO_ULT_ANTERIOR.count() > 0 Then
+        val_acum = SAR_ACM_PAGO_ULT_ANTERIOR.SAR_PROV_VAC_CS_ACUM
+        if isnull(val_acum)= true then val_acum = 0
+        val = valor_total - SAR_ACM_PAGO_ULT_ANTERIOR.SAR_PROV_VAC_CS_ACUM
+    Else
+        val = valor_total
+    Endif
+
+    If val < 0 Then    
+        dias_vac_x_mes = Truncate( SAR_DIAS_VACACION / 12, 1)
+        
+        'CALCULO TOPE PARA os
+        tope_1=(SAR_TOPE_JUBIL/SAR_DIAS_NORM_COTIZ)*(dias_vac_x_mes)
+        Vac_1 = SAR_PROV_VAC_MES
+        base_1= min(tope_1,Vac_1)
+        CONTR_OS_1= base_1 * SAR_P_PAT_L_23660/100
+        
+        base_2= Vac_1
+        CONTR_JUB_1 = base_2 * porc / 100
+
+        val = Round(CONTR_JUB_1 + CONTR_OS_1,2)    
+    EndIf
+
+     SAR_PROV_VAC_CS_MES = val   
+'Fin de Asignacion al v5882
+'-----------------------------------------------------------
+
+return(valor_total)

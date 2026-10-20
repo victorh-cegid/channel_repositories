@@ -1,0 +1,13 @@
+item: SUS_PLAN_HC_IND
+name: Indicador de plan de atencion sanitaria
+column_name: SUS_PLAN_HC_IND
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 1
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null
+id_cstype: null

@@ -3,3 +3,4 @@ NAME: Ultimo reg. anterior por pago (acumulado)
 ID_TI: SAR_ACM_PAGO_ULT_ANTERIOR
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

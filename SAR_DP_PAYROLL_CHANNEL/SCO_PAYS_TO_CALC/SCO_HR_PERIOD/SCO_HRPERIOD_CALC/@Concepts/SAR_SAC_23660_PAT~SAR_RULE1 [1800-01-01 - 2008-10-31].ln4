@@ -1,0 +1,2 @@
+valor= #SAR_SAC_IMPO * #SAR_P_PAT_L_23660 / 100
+RETURN(valor)

@@ -1,4 +1,0 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente
-GOPREVIOUS | RECORD | NUMBER | 6 | 4 | 0 | Anterior
-SCO_LOAD_REV | BLOCK | NUMBER | 6 | 1 | 0 | Carga revisiones

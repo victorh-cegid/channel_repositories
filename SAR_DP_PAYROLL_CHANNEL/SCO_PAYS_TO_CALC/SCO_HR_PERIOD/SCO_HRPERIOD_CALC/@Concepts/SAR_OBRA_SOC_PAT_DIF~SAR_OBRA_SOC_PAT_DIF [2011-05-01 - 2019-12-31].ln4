@@ -1,0 +1,11 @@
+'If SAR_COEF_JORNADA_PER = 0 Then
+If SAR_COEF_JORNADA_PER = 1 Then
+    Return (0)
+Endif
+base = SAR_REMUN_IMPO_CNT_OS / SAR_COEF_JORNADA_PER
+
+valor = base * SAR_P_PAT_L_23660 / 100
+
+valor = valor - SAR_VAC_23660_PAT
+
+RETURN(valor)

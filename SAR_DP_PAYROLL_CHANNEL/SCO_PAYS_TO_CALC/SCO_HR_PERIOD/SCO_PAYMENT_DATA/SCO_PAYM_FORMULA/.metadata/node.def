@@ -3,3 +3,4 @@ NAME: Reglas de pago
 ID_TI: SCO_PAY_FORMULA
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

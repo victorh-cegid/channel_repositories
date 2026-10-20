@@ -1,0 +1,24 @@
+IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
+    tope = SAR_TOPE_JUBIL
+ELSE
+    SAR_ACM_ACT_CONTRIB.BEGIN()
+    'resto al tope lo acumuldo en el mes
+    tope = SAR_TOPE_JUBIL - SAR_ACM_ACT_CONTRIB.SAR_BASE_ART_JUB
+ENDIF
+aux = SAR_ACCIDENTE
+diasart = SAR_DIAS_ART
+IF diasart = 0 THEN
+    basetop = 0
+ELSE
+    basetop = tope / SAR_DIAS_NORM_COTIZ * diasart
+ENDIF
+
+real = SAR_PRESTACION_ART
+IF real < basetop THEN
+    base = real 
+ELSE
+    base= basetop
+ENDIF  
+
+
+Return(base)

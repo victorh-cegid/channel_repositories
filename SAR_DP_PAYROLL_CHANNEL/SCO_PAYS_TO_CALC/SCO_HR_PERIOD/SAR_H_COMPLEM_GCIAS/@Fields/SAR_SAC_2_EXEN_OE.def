@@ -10,3 +10,4 @@ scope: RECORD
 default_value: "0"
 internal_type: 15
 item_aux: SAR_ID_CURRENCY
+id_cstype: null

@@ -1,0 +1,166 @@
+'Vigencia por Decreto 2354/2014 (En relacion a la aplicacion de deduccion por SAC en brutos <= $35000)
+    'Calculo la fecha de inicio de los seis meses anteriores y la inicio del mes actual
+    
+    FECHA_BASE    = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC
+    FECHA_DIA_ANT = FECHA_BASE - 1
+    MES_ACTUAL    = DXMONTH(FECHA_BASE) 
+
+    'Armo los topes para los semestres
+    IF MES_ACTUAL < 12 THEN
+        FECHA_TOPE =  TOSTRING(DxYear(FECHA_BASE),0) + "-07" + "-01"
+        FECHA_TOPE = ToDate (FECHA_TOPE)
+    ELSE
+        FECHA_TOPE =  TOSTRING(DxYear(FECHA_BASE),0) + "-12" + "-01"
+        FECHA_TOPE = ToDate (FECHA_TOPE)
+    ENDIF
+    
+    MES_ANT_5 = DxMonth(DateAdd(FECHA_BASE,-5,M4_MONTH))
+    IF MES_ANT_5 < 10 THEN
+        MES_ANT_5 = "0" + TOSTRING(MES_ANT_5,0)
+    ELSE
+        MES_ANT_5 = TOSTRING(MES_ANT_5,0)
+    ENDIF
+    
+    IF MES_ACTUAL < 10 THEN
+        MES_ACTUAL = "0" + TOSTRING(MES_ACTUAL,0)
+    ELSE
+        MES_ACTUAL = TOSTRING(MES_ACTUAL,0)
+    ENDIF
+    
+    FECHA_ACT       = TOSTRING(DxYear(FECHA_BASE),0) + "-" + MES_ACTUAL + "-01"
+    FECHA_INICIO    = ToDate(FECHA_ACT)
+    FECHA_5_ANT     = TOSTRING(DxYear(DateAdd(FECHA_BASE,-5,M4_MONTH)),0) + "-" + MES_ANT_5 + "-01"
+    FECHA_ANT_5     = ToDate(FECHA_5_ANT)
+    FECHA_ANT_4     = DateAdd(FECHA_ANT_5,1,M4_MONTH)
+    FECHA_ANT_3     = DateAdd(FECHA_ANT_5,2,M4_MONTH)
+    FECHA_ANT_2     = DateAdd(FECHA_ANT_5,3,M4_MONTH)
+    FECHA_ANT_1     = DateAdd(FECHA_ANT_5,4,M4_MONTH)
+    FECHA_ANT_RELIQ = DateAdd(FECHA_ANT_5,5,M4_MONTH)
+    
+    
+    'Inicializo valores de cada uno de los meses anteriores
+    'bruto_sin_sac_oe = 0
+    'bruto_sin_sac_oe = v5116 - v5890
+
+    valor_act           = SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) + SAR_BRUTO_OE - SAR_SAC_BRUTO_OE
+    valor_1             = 0
+    valor_2             = 0
+    valor_3             = 0
+    valor_4             = 0
+    valor_5             = 0
+    valor_6             = 0
+    valor_R             = 0
+    valor_1_b           = 0
+    valor_2_b           = 0
+    valor_3_b           = 0
+    valor_4_b           = 0
+    valor_5_b           = 0
+    valor_R_b           = 0
+    valor_sac_neto_R    = 0
+    valor_ig_dec_142aux = 0
+    
+    max = 0
+    '
+    'Recorro el acumulado del empleado y contabilizo los valores de cada mes anterior
+    '
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()
+    ULTIMO_REG_AC = SCO_AC_HR_PERIOD_READ_1.COUNT() - 1
+
+    FOR I = 0 TO ULTIMO_REG_AC
+        SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
+        IF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_INICIO AND FECHA_INICIO >= FECHA_TOPE AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= FECHA_DIA_ANT THEN
+            valor_act = valor_act + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM)
+
+         ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_1 AND FECHA_ANT_1 >= FECHA_TOPE AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_INICIO,-1,M4_DAY) THEN
+            valor_1_b = valor_1_b + SCO_AC_HR_PERIOD_READ_1.SAR_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM) - SCO_AC_HR_PERIOD_READ_1.SAR_SAC_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM)
+            valor_1   = valor_1 + valor_1_b + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) 
+
+         ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_2 AND FECHA_ANT_2 >= FECHA_TOPE AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_1,-1,M4_DAY) THEN
+            valor_2_b = valor_2_b + SCO_AC_HR_PERIOD_READ_1.SAR_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM) - SCO_AC_HR_PERIOD_READ_1.SAR_SAC_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM)
+            valor_2   = valor_2 + valor_2_b + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) 
+
+         ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_3 AND FECHA_ANT_3 >= FECHA_TOPE AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_2,-1,M4_DAY) THEN
+            valor_3_b = valor_3_b + SCO_AC_HR_PERIOD_READ_1.SAR_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM) - SCO_AC_HR_PERIOD_READ_1.SAR_SAC_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM)
+            valor_3   = valor_3 + valor_3_b + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM)
+
+         ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_4 AND FECHA_ANT_4 >= FECHA_TOPE AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_3,-1,M4_DAY) THEN
+            valor_4_b = valor_4_b + SCO_AC_HR_PERIOD_READ_1.SAR_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM) - SCO_AC_HR_PERIOD_READ_1.SAR_SAC_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM)
+            valor_4   = valor_4 + valor_4_b + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM)
+
+         ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_5 AND FECHA_ANT_5 >= FECHA_TOPE AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_4,-1,M4_DAY) THEN
+            valor_5_b = valor_5_b + SCO_AC_HR_PERIOD_READ_1.SAR_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM) - SCO_AC_HR_PERIOD_READ_1.SAR_SAC_BRUTO_OE..sysTotalSlices(M4_TOTAL_SUM)
+            valor_5   = valor_5 + valor_5_b + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM)
+
+         'Para la paga "99"  obtenemos SAR_SAC_NETO
+         ELSEIF SAR_TP_IMPUT = "99" And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_RELIQ AND FECHA_ANT_RELIQ >= FECHA_TOPE  THEN
+            valor_sac_neto_R    = valor_sac_neto_R + SCO_AC_HR_PERIOD_READ_1.SAR_SAC_NETO_2014..sysTotalSlices(M4_TOTAL_SUM)            
+            valor_ig_dec_142aux = valor_ig_dec_142aux + SCO_AC_HR_PERIOD_READ_1.SAR_IG_DEC142_AUX..sysTotalSlices(M4_TOTAL_SUM)            
+         ENDIF
+    NEXT
+
+    
+    /**** Calculo el mayor total de los seis meses anteriores a la fecha de imputacion ****/
+    IF valor_act > max THEN
+        max = valor_act
+    ENDIF
+    IF valor_1 > max THEN
+        max = valor_1
+    ENDIF
+    IF valor_2 > max THEN
+        max = valor_2
+    ENDIF
+    IF valor_3 > max THEN
+        max = valor_3
+    ENDIF
+    IF valor_4 > max THEN
+        max = valor_4
+    ENDIF
+    IF valor_5 > max THEN
+        max = valor_5
+    ENDIF
+    valor = max
+    
+'Calculo normal del  concepto de Deduccion especial + SAC segun se aplique el Decreto 2354/2014.
+
+'Cambio Ganancias Ley 26.731
+'----------------------------
+
+'Las bajas a partir del 28 Diciembre 2011 deben ser procesadas con los valores de las tablas de vigencia del 2011
+'Toma su valor por valores empresa IG. No debe tomar su valor del aplicavalor.
+
+ind = SAR_IND_DED_IG_2010
+AUX = SAR_RANGO_REM_IG_2013
+
+If(SAR_RANGO_REM_IG_2013 = 3)Then
+    Deduccion_Normal = SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_DED_ESPECIAL",SAR_FEC_PAGO_IG,ind)
+ElseIf(SAR_RANGO_REM_IG_2013 = 2)Then
+    Deduccion_Normal = SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("99","SAR_DED_ESPECIAL",SAR_FEC_PAGO_IG,ind)
+Else
+    Deduccion_Normal = SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_DED_ESPECIAL",SAR_FEC_PAGO_IG,ind)
+EndIf
+
+
+If(valor <= 35000)Then
+   If (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT And DxYear(SCO_DT_PAYMENT) <> 2014 ) Then
+      Deduccion = TODOUBLE(Deduccion_Normal) 
+   Else
+      Deduccion = TODOUBLE(Deduccion_Normal) + SAR_SAC_NETO_2014
+   EndIf   
+Else        
+    Deduccion = TODOUBLE(Deduccion_Normal) 
+    SAR_SAC_NETO_2014 = 0
+EndIf
+
+
+'Solo en la paga de reliquidacion del impuesto a las ganancias, sumamos a la deduccion especial
+'el neto obtenido por el Decreto 2354/2014, correspondiente a Diciembre.
+If (SAR_TP_IMPUT = "99") Then
+    If SAR_RANGO_REM_IG_2013 = 1 Then
+        Deduccion = TODOUBLE(Deduccion_Normal) + valor_ig_dec_142aux + valor_sac_neto_R        
+    Else
+        Deduccion = TODOUBLE(Deduccion_Normal) + valor_sac_neto_R
+    EndIf
+EndIf
+
+
+RETURN(Deduccion)

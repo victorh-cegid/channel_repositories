@@ -1,0 +1,23 @@
+/* es el 50% del mejor mes si el tipo de salario es mensual
+   sino es el 1/12 (8.33%) del total abonado en todo el semestre */
+
+suma = SAR_U_PAGA_EX_1 + SAR_U_PAGA_EX_2 + SAR_U_EGRESO_PAGA_1 + SAR_U_EGRESO_PAGA_2 
+
+IF SCO_PAY_FREQ_ALLOC = "004" THEN
+    IF SAR_ACM_6_MESES_SAC.COUNT() > 0 THEN
+        SAR_ACM_6_MESES_SAC.BEGIN()
+        valor = Max(SAR_ACM_6_MESES_SAC.SAR_M_REMUN_INDEM,SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM))
+    ENDIF
+ELSE
+    IF SAR_ACM_6_MESES_SAC.COUNT() > 0 THEN
+        SAR_ACM_6_MESES_SAC.BEGIN()
+        valor = Max(SAR_ACM_6_MESES_SAC.SAR_M_REMUN_INDEM,SAR_M_REMUN_INDEM..sysTotalSlices(M4_TOTAL_SUM))    
+    ENDIF
+ENDIF
+
+IF valor > 0 THEN
+    valor = valor / 2 // 50% de la mejor remuneracion mensual.
+ENDIF
+
+
+Return(valor)

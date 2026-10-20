@@ -3,3 +3,4 @@ NAME: Historico de sindicatos
 ID_TI: SAR_HIST_SINDICATO
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

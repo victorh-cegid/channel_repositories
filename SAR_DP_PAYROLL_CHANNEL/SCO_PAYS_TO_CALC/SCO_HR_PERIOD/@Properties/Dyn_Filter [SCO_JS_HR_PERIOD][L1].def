@@ -1,0 +1,12 @@
+item: Dyn_Filter
+name: Filtro din.
+item_type: PROPERTY
+type: STRING
+id_m4_type: 3
+prec: -1
+scale: 0
+scope: NODE
+default_value: null
+internal_type: 34
+item_aux: null
+id_cstype: 7

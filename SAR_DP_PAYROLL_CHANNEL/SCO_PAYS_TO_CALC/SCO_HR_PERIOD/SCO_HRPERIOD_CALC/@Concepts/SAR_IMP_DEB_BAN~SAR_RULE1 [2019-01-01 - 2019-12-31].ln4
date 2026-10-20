@@ -1,0 +1,34 @@
+'Se expone en el campo 7 del registro 6 del F1357
+importe = 0
+If SAR_TP_IMPUT = "99" Or (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" And SAR_IG_DICIEMBRE = 1) Then
+
+    debito_bancario = SAR_DEBITO_BANCARIO
+    perc_ret_adu = SAR_PERC_RET_ADUANERAS
+    pag_cuent_ext = SAR_PAG_CUENT_EXT
+    
+    importe = debito_bancario + perc_ret_adu + pag_cuent_ext
+
+    'Control de topes y asignacion topado en desglose por orden de exposicion en F1357
+    If importe > SAR_IMPUESTO_TOTAL Then
+        importe = SAR_IMPUESTO_TOTAL
+        tope_a_repartir = SAR_IMPUESTO_TOTAL
+        'Reparte el tope entre el desglose
+        If debito_bancario > 0 Then
+            If debito_bancario > tope_a_repartir Then debito_bancario = tope_a_repartir
+            tope_a_repartir = Max(tope_a_repartir - debito_bancario,0)
+        EndIf
+        If perc_ret_adu > 0 Then
+            If perc_ret_adu > tope_a_repartir Then perc_ret_adu = tope_a_repartir
+            tope_a_repartir = Max(tope_a_repartir - perc_ret_adu,0)
+        EndIf
+        If pag_cuent_ext > 0 Then
+            If pag_cuent_ext > tope_a_repartir Then pag_cuent_ext = tope_a_repartir
+            tope_a_repartir = Max(tope_a_repartir - pag_cuent_ext,0)
+        EndIf    
+        'Reasigna los conceptos
+        SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_DEBITO_BANCARIO",-1,debito_bancario)
+        SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_PERC_RET_ADUANERAS",-1,perc_ret_adu)
+        SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_PAG_CUENT_EXT",-1,pag_cuent_ext)
+    EndIf
+EndIf
+Return(importe)

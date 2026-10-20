@@ -1,0 +1,30 @@
+'Aplicamos el porcentaje para duplicar los valores de indemnizaciones 
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+IF SAR_ES_BAJA=0 THEN 
+    RETURN(0) 
+ENDIF
+
+If(SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017") Then
+    Return(0)
+EndIf
+
+IF SAR_MOT_EGRESO="1" THEN 
+    RETURN(0) 
+ENDIF
+
+valor = 0
+
+IF SAR_FECHA_ALTA < TODATE("2003-01-01") OR SAR_IND_DOB_INDE = 1 THEN 
+
+  porc =  (SAR_PP_DOB_INDEM / 100)
+  valor =  (SAR_INDEM_PREAVISO + SAR_VAC_NO_GOZADAS + SAR_VAC_NO_GOZ_SAC + SAR_INDEM_INTEG ) * porc
+
+ENDIF
+
+IF ISNULL(valor) = TRUE THEN
+    valor = 0
+ENDIF
+Return(valor)

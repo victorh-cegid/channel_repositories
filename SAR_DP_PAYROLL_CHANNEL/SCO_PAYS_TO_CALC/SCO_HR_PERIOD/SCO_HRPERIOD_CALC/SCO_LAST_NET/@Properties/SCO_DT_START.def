@@ -1,9 +1,0 @@
-item: SCO_DT_START
-name: Inicio
-item_type: PROPERTY
-type: DATE
-id_m4_type: 4
-prec: 0
-scale: 0
-scope: NODE
-default_value: null

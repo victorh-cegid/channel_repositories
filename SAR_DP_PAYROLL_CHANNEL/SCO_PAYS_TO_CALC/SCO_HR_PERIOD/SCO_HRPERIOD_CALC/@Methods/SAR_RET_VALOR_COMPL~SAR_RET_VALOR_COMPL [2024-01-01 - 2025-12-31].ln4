@@ -1,0 +1,2171 @@
+If SAR_IND_NO_RET_GAN = 1 Then Return(0)
+
+entidad              = 0
+imp_jub_01           = 0
+imp_ley_01           = 0
+imp_o_soc_01         = 0
+imp_ret_01           = 0
+imp_bruto_01         = 0
+imp_c_sind_01        = 0
+imp_o_deducc_01      = 0
+imp_seg_v_01         = 0
+imp_seg_sep_01       = 0
+imp_tot_02           = 0
+imp_tot_03           = 0
+imp_tot_05           = 0
+imp_tot_06           = 0
+imp_tot_07           = 0
+imp_tot_08           = 0
+imp_tot_09           = 0
+imp_tot_11           = 0
+imp_tot_12           = 0
+imp_tot_13           = 0
+imp_tot_14           = 0
+imp_tot_15           = 0
+imp_tot_16           = 0
+imp_tot_17           = 0
+imp_tot_18           = 0
+imp_tot_19           = 0
+imp_tot_21           = 0
+imp_tot_22           = 0
+imp_tot_23           = 0
+imp_tot_24           = 0
+imp_tot_25           = 0
+imp_tot_30           = 0
+imp_tot_31           = 0
+imp_tot_35           = 0
+imp_tot_27           = 0
+imp_tot_28           = 0
+imp_tot_29           = 0
+imp_tot_60           = 0
+imp_tot_61           = 0
+imp_tot_62           = 0
+imp_tot_20           = 0
+imp_tot_32           = 0
+imp_tot_33           = 0
+imp_tot_34           = 0
+imp_tot_40           = 0
+sume_15              = 0
+sume_11              = 0
+acu_cmasis_remun     = 0
+acu_segvidpar_remun  = 0
+acu_donremun_remun   = 0
+acu_honor_med        = 0
+acu_imp_d_in_hip     = 0
+acu_debito_bancario  = 0
+acu_serv_domest      = 0
+acu_ap_cap_soc_fdo_r = 0
+acu_pago_cuent_ext   = 0
+
+imp_02  = 0
+imp_03  = 0
+imp_05  = 0
+imp_06  = 0
+imp_07  = 0
+imp_09  = 0
+imp_11  = 0
+imp_12  = 0
+imp_13  = 0
+imp_15  = 0
+imp_16  = 0
+imp_17  = 0
+imp_18  = 0
+imp_19  = 0
+imp_21  = 0
+imp_22  = 0
+imp_23  = 0
+imp_24  = 0
+imp_25  = 0
+imp_30  = 0
+imp_31  = 0
+imp_35  = 0
+imp_27  = 0
+imp_28  = 0
+imp_29  = 0
+imp_60  = 0
+imp_61  = 0
+imp_62  = 0
+imp_20  = 0
+imp_32  = 0
+imp_33  = 0
+imp_34  = 0
+imp_40  = 0
+
+frec_02 = "0"
+frec_03 = "0"
+frec_05 = "0"
+frec_06 = "0"
+frec_07 = "0"
+frec_08 = "0"
+frec_09 = "0"
+frec_11 = "0"
+frec_12 = "0"
+frec_13 = "0"
+frec_15 = "0"
+frec_16 = "0"
+frec_17 = "0"
+frec_18 = "0"
+frec_19 = "0"
+frec_21 = "0"
+frec_22 = "0"
+frec_23 = "0"
+frec_24 = "0"
+frec_25 = "0"
+frec_30 = "0"
+frec_31 = "0"
+frec_35 = "0"
+frec_27 = "0"
+frec_28 = "0"
+frec_29 = "0"
+frec_60 = "0"
+frec_61 = "0"
+frec_62 = "0"
+frec_20 = "0"
+frec_32 = "0"
+frec_33 = "0"
+frec_34 = "0"
+frec_40 = "0"
+
+dif_meses_14 =0
+dif_meses_16 =0
+dif_meses_17 =0
+dif_meses_18 =0
+dif_meses_19 =0
+dif_meses_27 =0
+dif_meses_28 =0
+dif_meses_29 =0
+dif_meses_60 =0
+dif_meses_61 =0
+dif_meses_62 =0
+dif_meses_20 =0 
+dif_meses_32 =0
+dif_meses_33 =0
+dif_meses_34 =0
+dif_meses_40 =0
+
+diasPat = 0
+diasNor = 0
+
+'variables para otros empleadores
+jubilacion_oe     = 0
+jubilacion_anses_oe     = 0
+jubilacion_cajas_oe     = 0
+ley_19032_oe      = 0
+obra_social_oe    = 0
+cuota_sindical_oe = 0
+bruto_oe          = 0
+bruto_oe_sac      = 0
+bruto_oe_mes      = 0
+retencion_oe      = 0
+jur_sac_oe_mes    = 0
+vImpoteExentoNoAlcanzado  = 0
+vSAComplementario         = 0
+hs_ex_trib_tot_oe = 0
+hs_ex_exen_oe     = 0
+jur_sac_jun = 0
+jur_sac_dic = 0
+no_hab_oe = 0
+no_hab_oe_mes = 0
+mov_via_trib_oe = 0
+mov_via_trib_oe_mes = 0
+mat_dic_trib_oe = 0
+mat_dic_trib_oe_mes = 0
+mov_via_exen_oe = 0
+mat_dic_exen_oe = 0
+per_ant_grav_oe = 0
+no_hab_exen_oe = 0
+sac_1_exen_oe = 0
+sac_2_exen_oe = 0
+per_ant_no_grav_oe = 0
+remun_piso = 0
+/* SiRADIG version 1.16*/
+bono_prod_oe = 0
+bono_prod_oe_mes = 0
+fallo_caja_oe = 0
+fallo_caja_oe_mes = 0
+similar_nat_oe = 0
+similar_nat_oe_mes = 0
+ley_27549_oe = 0
+art57_ley19101_oe = 0
+gastos_dec27_oe = 0	
+imp_mov_oe = 0
+imp_ana_oe = 0
+id_trans_dist = 0
+id_trans_terr = 0
+asign_fam_oe = 0
+int_pres_emp_oe = 0
+indem_ley_oe = 0
+remun_ley_oe = 0
+remun_cct_oe = 0
+cursos_semin_oe = 0
+indum_equip_oe = 0
+'SiRADIG v1.23
+RemunJudicialOE = 0
+'SiRADIG v1.24
+NoRetMedCautOE = 0
+
+'Reliquidacion en 2023, se leen complementos desde septiembre (octubre diferidos) hasta diciembre
+indReliq = SAR_IND_PAGA_RELIQ
+If indReliq = 1 And DxYear(SAR_FEC_IMPUT_IG) = 2023 Then indReliq = 0
+
+If SAR_ES_BAJA = 1 and SAR_IG_DICIEMBRE = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
+    mes_paga_efecti = 12
+Else
+    mes_paga_efecti = DxMonth(SAR_FEC_IMPUT_IG)
+    If (SAR_IND_PAGA_RELIQ = 1) Then
+        AUX = SAR_RANGO_REM_IG_2013() 'Llamamos a la ejecucion del concepto necesario para obtener el rango de la remuneracion por decreto 1242 / 2013.
+    EndIf  
+EndIf
+
+SAR_H_COMPLEM_GCIAS.BEGIN() 
+
+If SAR_H_COMPLEM_GCIAS.count() > 0 Then
+    ULTIMO_REG = SAR_H_COMPLEM_GCIAS.COUNT()- 1
+    FOR I = 0 TO ULTIMO_REG 
+        SAR_H_COMPLEM_GCIAS.MOVETO(I)
+        If IsNull(SAR_H_COMPLEM_GCIAS.SAR_ID_ENTIDAD)= M4_FALSE then
+             entidad = SAR_H_COMPLEM_GCIAS.SAR_ID_ENTIDAD
+        endif
+        
+        'Si es necesario se realiza la conversion de monedas:
+        vRecordCurrency  = SAR_H_COMPLEM_GCIAS.SAR_ID_CURRENCY
+        vPayrollCurrency = SAR_HRPERIOD_CALC.ID_CURRENCY
+        
+        if vRecordCurrency <> vPayrollCurrency then
+            SAR_H_COMPLEM_GCIAS.CUREXCHANGERECORD(vPayrollCurrency ,m4_false)
+        EndIf
+
+        anio_paga = Dxyear(SAR_FEC_IMPUT_IG)
+
+        IF DxYear(SAR_H_COMPLEM_GCIAS.SAR_DT_START) = anio_paga THEN
+        
+        
+            'Variable imput_act valdra 1 cuando nos encontremos en un registro que corresponda al mes de imputacion que se esta procesando
+            imput_act = 0
+            If SAR_H_COMPLEM_GCIAS.SAR_DT_START <= SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC And SAR_H_COMPLEM_GCIAS.SAR_DT_END >= SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC Then imput_act = 1
+        
+            'Variable imput_ig valdra 1 cuando nos encontremos en un registro que corresponda al mes de imputacion IG que se esta procesando
+            imput_ig = 0
+            inicioImput = DxDate(1,DxMonth(SAR_FEC_IMPUT_IG),DxYear(SAR_FEC_IMPUT_IG))
+            finImput = DxDate(DaysOfMonth(SAR_FEC_IMPUT_IG),DxMonth(SAR_FEC_IMPUT_IG),DxYear(SAR_FEC_IMPUT_IG))
+            If SAR_H_COMPLEM_GCIAS.SAR_DT_START <= inicioImput And SAR_H_COMPLEM_GCIAS.SAR_DT_END >= finImput Then imput_ig = 1
+
+            '--Importe de remuneraciones para piso IG ley 27617: Se toman unicamente las coincidentes con el mes que se procesa
+            If imput_ig = 1 And (entidad = "01" Or entidad = "13") then 
+                If SAR_H_COMPLEM_GCIAS.SAR_BRUTO <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_BRUTO) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_BRUTO
+                Endif
+                If SAR_H_COMPLEM_GCIAS.SAR_IMP_EXE_NO_ALC <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_EXE_NO_ALC) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_IMP_EXE_NO_ALC
+                Endif
+                If SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_EXENT <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_EXENT) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_EXENT
+                Endif                
+                If SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_OE
+                Endif   
+                If SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_TRIB_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_TRIB_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_TRIB_OE
+                Endif   
+                If SAR_H_COMPLEM_GCIAS.SAR_IMP_MOVILIDAD_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_MOVILIDAD_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_IMP_MOVILIDAD_OE
+                Endif 
+                If SAR_H_COMPLEM_GCIAS.SAR_IMP_OTROS_CONCEPT_ANA_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_OTROS_CONCEPT_ANA_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_IMP_OTROS_CONCEPT_ANA_OE
+                Endif 
+                If SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_TRIB_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_TRIB_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_TRIB_OE
+                Endif   
+                If SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_EXEN_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_EXEN_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_EXEN_OE
+                Endif   
+                If SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_EXEN_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_EXEN_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_EXEN_OE
+                Endif   
+                If SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_GRAV_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_GRAV_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_GRAV_OE
+                Endif   
+                If SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_NO_GRAV_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_NO_GRAV_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_NO_GRAV_OE
+                Endif      
+                If SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_EXEN_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_EXEN_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_EXEN_OE
+                Endif  
+                If SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_GRAV <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_GRAV) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_GRAV
+                Endif  
+/* SiRADIG version 1.16*/
+                If SAR_H_COMPLEM_GCIAS.SAR_IMP_BONOS_PROD_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_BONOS_PROD_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_IMP_BONOS_PROD_OE
+                    bono_prod_oe_mes = bono_prod_oe_mes + SAR_H_COMPLEM_GCIAS.SAR_IMP_BONOS_PROD_OE
+                    SAR_IMP_BONOS_OE_MES = bono_prod_oe_mes    'OE - Bono por productividad mes
+                Endif   
+                If SAR_H_COMPLEM_GCIAS.SAR_IMP_FCAJA_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_FCAJA_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_IMP_FCAJA_OE
+                    fallo_caja_oe_mes = fallo_caja_oe_mes + SAR_H_COMPLEM_GCIAS.SAR_IMP_FCAJA_OE
+                    SAR_IMP_FCAJAS_OE_MES = fallo_caja_oe_mes    'OE - fallos de caja OE mes
+                Endif   
+                If SAR_H_COMPLEM_GCIAS.SAR_IMP_SIMILAR_NAT_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_SIMILAR_NAT_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_IMP_SIMILAR_NAT_OE
+                    similar_nat_oe_mes = similar_nat_oe_mes + SAR_H_COMPLEM_GCIAS.SAR_IMP_SIMILAR_NAT_OE
+                    SAR_IMP_SIMILAR_NAT_OE_MES = similar_nat_oe_mes    'OE - fallos de caja OE mes
+                Endif   
+                If SAR_H_COMPLEM_GCIAS.SAR_LEY_27549_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_LEY_27549_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_LEY_27549_OE
+                Endif      
+                If SAR_H_COMPLEM_GCIAS.SAR_SUPL_LEY_19101_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SUPL_LEY_19101_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_SUPL_LEY_19101_OE
+                Endif  
+                If SAR_H_COMPLEM_GCIAS.SAR_GASTOS_DEC27_OE <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_GASTOS_DEC27_OE) = M4_False Then
+                    remun_piso = remun_piso + SAR_H_COMPLEM_GCIAS.SAR_GASTOS_DEC27_OE
+                Endif                
+            EndIf
+
+'--------------------------------------------------------------------------------------------------------------------
+'                             Entidades con valores mensuales 
+'--------------------------------------------------------------------------------------------------------------------
+
+            'Decreto 473/23 reglamentacion AFIP, inicia periodo fiscal en octubre
+            mes_corte = 1
+            iniComp = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START)
+            mesesImp = mes_paga_efecti
+            If DxYear(SAR_FEC_IMPUT_IG) = 2023 And mes_paga_efecti >= 10 Then
+                iniComp = Max(iniComp,10)
+                mes_corte = 10
+                mes_imp_ig = SAR_DIFERIDO_SEPT_2023[0].SAR_MES_IMPUT_IG
+
+                'Situacion especial, diferidos devengado septiembre con impuesto octubre, quedan en paga de septiembre
+                If mes_imp_ig = 10 Then
+                    If mes_paga_efecti = 10 Then 
+                        Return(0)
+                    Else
+                        iniComp = Max(iniComp,11)
+                        mes_corte = 11
+                    EndIf
+                EndIf
+                mesesImp = mes_paga_efecti - mes_corte + 1
+            EndIf
+
+            IF (SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA = "1" AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti /*Or indReliq = 1*/)) THEN
+
+                If entidad = "01" Then      '--Anteriores Empresas--
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If (indReliq = 1) Then
+                            dif_meses_01 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+
+                            if SAR_H_COMPLEM_GCIAS.SAR_JUBILACION <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_JUBILACION) = M4_False Then
+                                  imp_jub_01 = imp_jub_01 + (SAR_H_COMPLEM_GCIAS.SAR_JUBILACION * dif_meses_01)
+                            endif
+                            
+                            if SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_LEY_19032) = M4_False Then
+                                imp_ley_01 = imp_ley_01 + (SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 * dif_meses_01)
+                            endif
+    
+                            if SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL) = M4_False Then
+                                imp_o_soc_01 = imp_o_soc_01 + (SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL * dif_meses_01)
+                            endif
+        
+                            if SAR_H_COMPLEM_GCIAS.SAR_RETENCION <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_RETENCION) = M4_False Then
+                                imp_ret_01 = imp_ret_01 + (SAR_H_COMPLEM_GCIAS.SAR_RETENCION * dif_meses_01)
+                            endif
+    
+                            if SAR_H_COMPLEM_GCIAS.SAR_BRUTO <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_BRUTO) = M4_False Then
+                                imp_bruto_01 = imp_bruto_01 + (SAR_H_COMPLEM_GCIAS.SAR_BRUTO * dif_meses_01)
+                            endif
+    
+                            if SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL) = M4_False Then
+                                imp_c_sind_01 = imp_c_sind_01 + (SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL * dif_meses_01)
+                            endif
+                        
+                            if SAR_H_COMPLEM_GCIAS.SAR_OTRAS_DEDUC <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_OTRAS_DEDUC) = M4_False Then
+                                imp_o_deducc_01 = imp_o_deducc_01 + (SAR_H_COMPLEM_GCIAS.SAR_OTRAS_DEDUC * dif_meses_01)
+                            endif
+    
+                            if SAR_H_COMPLEM_GCIAS.SAR_SEGURO_VIDA <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SEGURO_VIDA) = M4_False Then
+                                imp_seg_v_01 = imp_seg_v_01 + (SAR_H_COMPLEM_GCIAS.SAR_SEGURO_VIDA * dif_meses_01)
+                            endif
+    
+                            if SAR_H_COMPLEM_GCIAS.SAR_SEGURO_SEPELIO <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SEGURO_SEPELIO) = M4_False Then
+                                imp_seg_sep_01 = imp_seg_sep_01 + (SAR_H_COMPLEM_GCIAS.SAR_SEGURO_SEPELIO * dif_meses_01)
+                            endif   
+                           
+
+                            
+
+                                                     
+                        Else
+                            ' Defino la cantidad de meses a procesar
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_01 = mes_paga_efecti - iniComp + 1                                    
+                            Else 'Caso en el que el complemento haya terminado antes debemos quedarnos con el calculo completo a su fin.
+                                dif_meses_01 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1                                    
+                            EndIf 
+                        
+                            
+                            ' SAR_JUBILACION
+                            if SAR_H_COMPLEM_GCIAS.SAR_JUBILACION <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_JUBILACION) = M4_False Then
+                                imp_jub_01 = imp_jub_01 + (SAR_H_COMPLEM_GCIAS.SAR_JUBILACION * dif_meses_01)
+                            endif
+    
+    
+                            'SAR_LEY_19032
+                            If SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_LEY_19032) = M4_False Then
+                                imp_ley_01 = imp_ley_01 + (SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 * dif_meses_01)
+                            endif
+    
+    
+                            'SAR_OBRA_SOCIAL
+                            If SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL) = M4_False Then
+                                imp_o_soc_01 = imp_o_soc_01 + (SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL * dif_meses_01)
+                            endif
+    
+    
+                            'SAR_RETENCION
+                            If SAR_H_COMPLEM_GCIAS.SAR_RETENCION <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_RETENCION) = M4_False Then
+                                imp_ret_01 = imp_ret_01 + (SAR_H_COMPLEM_GCIAS.SAR_RETENCION * dif_meses_01)
+                            endif
+        
+        
+                            'SAR_BRUTO
+                            If SAR_H_COMPLEM_GCIAS.SAR_BRUTO <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_BRUTO) = M4_False Then
+                                imp_bruto_01 = imp_bruto_01 + (SAR_H_COMPLEM_GCIAS.SAR_BRUTO * dif_meses_01)
+                            endif
+                            
+                            
+                            'SAR_CUOTA_SINDICAL
+                            If SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL) = M4_False Then
+                                imp_c_sind_01 = imp_c_sind_01 + (SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL * dif_meses_01)
+                            endif
+                            
+                            
+                            'SAR_OTRAS_DEDUC
+                            If SAR_H_COMPLEM_GCIAS.SAR_OTRAS_DEDUC <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_OTRAS_DEDUC) = M4_False Then
+                                imp_o_deducc_01 = imp_o_deducc_01 + (SAR_H_COMPLEM_GCIAS.SAR_OTRAS_DEDUC * dif_meses_01)                                
+                            endif
+    
+    
+                            'SAR_SEGURO_VIDA
+                            If SAR_H_COMPLEM_GCIAS.SAR_SEGURO_VIDA <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SEGURO_VIDA) = M4_False Then                             
+                                imp_seg_v_01 = imp_seg_v_01 + (SAR_H_COMPLEM_GCIAS.SAR_SEGURO_VIDA * dif_meses_01)
+                            EndIf
+    
+    
+                            'SAR_SEGURO_SEPELIO
+                            If SAR_H_COMPLEM_GCIAS.SAR_SEGURO_SEPELIO <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SEGURO_SEPELIO) = M4_False Then                                                          
+                                imp_seg_sep_01 = imp_seg_sep_01 + (SAR_H_COMPLEM_GCIAS.SAR_SEGURO_SEPELIO * dif_meses_01)                                
+                            EndIf
+
+                            
+
+
+                            
+                            
+                        EndIf
+                    EndIf
+                   
+                ElseIf entidad = "02" then '--Cuota medico asistencial--                                           
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then                           
+                        If(indReliq = 1)Then
+                            dif_meses_02 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_02   = imp_tot_02 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_02)                                                              
+                        Else 
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_02 = mes_paga_efecti - iniComp + 1
+                                imp_tot_02   = imp_tot_02 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_02)     
+                            Else
+                                dif_meses_02 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1   
+                                imp_tot_02   = imp_tot_02 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_02)  
+                           EndIf
+                        EndIf                        
+                    EndIf
+                    
+                    frec_02 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                        
+                ElseIf entidad = "03" then '--Seguro de vida particular --        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If indReliq = 1 Then
+                            dif_meses_03 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_03   = imp_tot_03 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_03)                                                               
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_03 = mes_paga_efecti - iniComp + 1
+                                imp_tot_03   = imp_tot_03 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_03) 
+                            Else
+                                dif_meses_03 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1    
+                                imp_tot_03   = imp_tot_03 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_03) 
+                           EndIf
+                        EndIf
+                    endif
+                    frec_03 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+
+                ElseIf entidad = "05" then '--Gastos de sepelio --        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then                    
+                        If(indReliq = 1)Then
+                            dif_meses_05 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_05   = imp_tot_05 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_05)                                                               
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_05 = mes_paga_efecti - iniComp + 1
+                                imp_tot_05   = imp_tot_05 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_05) 
+                            Else
+                                dif_meses_05 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1        
+                                imp_tot_05   = imp_tot_05 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_05)
+                           EndIf
+                        EndIf
+                    endif
+                    frec_05 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                    
+                ElseIf entidad = "06" then '--Donaciones--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                             dif_meses_06 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                             imp_tot_06 = imp_tot_06 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_06)                                                               
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_06 = mes_paga_efecti - iniComp + 1
+                                imp_tot_06 = imp_tot_06 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_06) 
+
+                            Else
+                                dif_meses_06 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_06   = imp_tot_06 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_06)
+                            EndIf
+                        Endif
+                    EndIf
+                    frec_06 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                                                
+                ElseIf entidad = "07" then '--Honorarios Medicos--                                
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If (indReliq = 1)Then
+                            dif_meses_07 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_07   = imp_tot_07 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_07)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_07 = mes_paga_efecti - iniComp + 1
+                                imp_tot_07   = imp_tot_07 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_07)
+                           Else
+                                dif_meses_07 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_07   = imp_tot_07 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_07)
+                           EndIf
+                        EndIf
+                    EndIf
+                    frec_07 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                                                
+                ElseIf entidad = "08" then '--Otras deducciones--         
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then                    
+                        If (indReliq = 1)Then
+                            dif_meses_08 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_08   = imp_tot_08 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_08)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_08 = mes_paga_efecti - iniComp + 1
+                                imp_tot_08   = imp_tot_08 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_08) 
+                            Else
+                                dif_meses_08 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_08   = imp_tot_08 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_08)
+                            EndIf
+                        EndIf
+                    Endif
+                    frec_08 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                                                
+                ElseIf entidad = "09" then '--Intereses Hipotecarios--         
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                            dif_meses_09 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_09   = imp_tot_09 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_09)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_09 = mes_paga_efecti - iniComp + 1
+                                imp_tot_09   = imp_tot_09 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_09) 
+                            Else
+                                dif_meses_09 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_09   = imp_tot_09 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_09)
+                           EndIf
+                        EndIf
+                    endif
+                    frec_09 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                                                
+                ElseIf entidad = "11" then '--Debitos y creditos bancarios--        
+                    IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti Or (SAR_TP_IMPUT = "99") ) THEN
+                        If(SAR_TP_IMPUT = "99")Then
+                            dif_meses_11 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_11   = imp_tot_11 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_11)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_11 = mes_paga_efecti - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                imp_tot_11   = imp_tot_11 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_11) 
+                            Else
+                                dif_meses_11 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1 
+                                imp_tot_11   = imp_tot_11 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_11)
+                            EndIf
+                        endif
+                    endif                        
+                    frec_11 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                                                
+                ElseIf entidad = "12" then '--Servicio Domestico--        
+                        If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                            If(indReliq = 1)Then
+                                dif_meses_12 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                imp_tot_12   = imp_tot_12 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_12)                                                                
+                            Else
+                                If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                    dif_meses_12 = mes_paga_efecti - iniComp + 1
+                                    imp_tot_12   = imp_tot_12 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_12)
+                                Else
+                                    dif_meses_12 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                    imp_tot_12   = imp_tot_12 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_12)
+                                EndIf
+                            endif
+                        endif
+                        frec_12 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                                                   
+                ElseIf entidad = "13"  then '- Ingresos otros empleadores  --        
+
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        ' Procesamos los cada tipo de importe:
+                        ' Deducciones:
+                        If(indReliq = 1)Then
+                            dif_meses_13 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            
+                            'Meses para primera y segunda paga sac, separados
+                            sac_jun_mes_ini = Max(1,DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START))
+                            sac_jun_mes_fin = Min(6,DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))+1
+                            sac_jun_meses = Max(0,sac_jun_mes_fin - sac_jun_mes_ini)
+                            sac_dic_meses = Max(0,dif_meses_13 - sac_jun_meses)
+                            
+                            
+                            If (SAR_H_COMPLEM_GCIAS.SAR_JUBILACION > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_JUBILACION) = M4_False) Then
+                               jubilacion_oe = jubilacion_oe + (SAR_H_COMPLEM_GCIAS.SAR_JUBILACION * dif_meses_13)
+                            EndIf
+
+                            '2025 siradig 1.22.1 Se guardan separados los importes de ANSES y CAJAS para poder discriminarlos en salidas de reportes legales (sin implicacion en calculo de nomina)
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_ANSES > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_ANSES) = M4_False) Then
+                               jubilacion_anses_oe = jubilacion_anses_oe + (SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_ANSES * dif_meses_13)
+                            EndIf
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_CAJAS > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_CAJAS) = M4_False) Then
+                               jubilacion_cajas_oe = jubilacion_cajas_oe + (SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_CAJAS * dif_meses_13)
+                            EndIf                                                        
+                            
+                            If (SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_LEY_19032) = M4_False ) Then   
+                               ley_19032_oe = ley_19032_oe + (SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 * dif_meses_13)
+                            EndIf 
+                              
+                            If (SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL) = M4_False ) Then
+                               obra_social_oe = obra_social_oe + (SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL * dif_meses_13)
+                            EndIf
+                            
+                            If (SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL) = M4_False ) Then   
+                               cuota_sindical_oe = cuota_sindical_oe + (SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL * dif_meses_13)
+                            EndIf 
+'se agregan los nuevos valores de los campos de "Importe Exento / no Alcanzado" y "Salario Anual Complementario"
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_EXE_NO_ALC > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_EXE_NO_ALC) = M4_False ) Then
+                               vImpoteExentoNoAlcanzado = vImpoteExentoNoAlcanzado + (SAR_H_COMPLEM_GCIAS.SAR_IMP_EXE_NO_ALC * dif_meses_13)
+                            EndIf 
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SAC > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SAC) = M4_False ) Then   
+                               vSAComplementario = vSAComplementario + (SAR_H_COMPLEM_GCIAS.SAR_SAC * dif_meses_13)
+                               jur_sac_jun = jur_sac_jun + (SAR_H_COMPLEM_GCIAS.SAR_SAC * sac_jun_meses)
+                               jur_sac_dic = jur_sac_dic + (SAR_H_COMPLEM_GCIAS.SAR_SAC * sac_dic_meses)
+                            EndIf                             
+                            ' Haberes
+                            If (SAR_H_COMPLEM_GCIAS.SAR_BRUTO > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_BRUTO) = M4_False ) Then
+                               bruto_oe = bruto_oe + (SAR_H_COMPLEM_GCIAS.SAR_BRUTO * dif_meses_13)
+                            EndIf                                
+                            ' Retencion
+                            If (SAR_H_COMPLEM_GCIAS.SAR_RETENCION <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_RETENCION) = M4_False ) Then
+                               retencion_oe = retencion_oe + (SAR_H_COMPLEM_GCIAS.SAR_RETENCION * dif_meses_13)
+                            EndIf
+                            'Horas extra exentas oe
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_EXENT > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_EXENT) = M4_False) Then
+                                hs_ex_exen_oe = hs_ex_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_EXENT * dif_meses_13)
+                            EndIf 
+                            'Retribuciones no habituales OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_OE) = M4_False ) Then
+                                no_hab_oe = no_hab_oe + (SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_OE * dif_meses_13)
+                            EndIf
+                            'Viaticos remuneracion OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_TRIB_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_TRIB_OE) = M4_False ) Then
+                                mov_via_trib_oe = mov_via_trib_oe + (SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_TRIB_OE * dif_meses_13)
+                            EndIf
+                            'Movilidad remuneracion OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_MOVILIDAD_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_MOVILIDAD_OE) = M4_False ) Then
+                                imp_mov_oe = imp_mov_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_MOVILIDAD_OE * dif_meses_13)
+                            EndIf
+                            'Analogos remuneracion OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_OTROS_CONCEPT_ANA_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_OTROS_CONCEPT_ANA_OE) = M4_False ) Then
+                                imp_ana_oe = imp_ana_oe + (SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_TRIB_OE * dif_meses_13)
+                            EndIf                            
+                            'ID Transporte de larga distancia OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_TRANSP_LARGA_DIST_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_TRANSP_LARGA_DIST_OE) = M4_False ) Then
+                                id_trans_dist = 1
+                            EndIf
+                            'ID Transporte terrestre de larga distancia OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_TRANSP_TERR_LARG_DIST_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_TRANSP_TERR_LARG_DIST_OE) = M4_False ) Then
+                                id_trans_terr = 1
+                            EndIf
+                            'Material didactico docente gravada OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_TRIB_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_TRIB_OE) = M4_False ) Then
+                                mat_dic_trib_oe = mat_dic_trib_oe + (SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_TRIB_OE * dif_meses_13)
+                            EndIf
+                            'Movilidad y viaticos remuneracion exenta OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_EXEN_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_EXEN_OE) = M4_False ) Then
+                                mov_via_exen_oe = mov_via_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_EXEN_OE * dif_meses_13)
+                            EndIf
+                            'Material didactico docente exento OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_EXEN_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_EXEN_OE) = M4_False ) Then
+                                mat_dic_exen_oe = mat_dic_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_EXEN_OE * dif_meses_13)
+                            EndIf
+                            'OE - Ajustes Per. Ant. - Remuneraciones Gravadas
+                            If (SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_GRAV_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_GRAV_OE) = M4_False ) Then
+                                per_ant_grav_oe = per_ant_grav_oe + (SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_GRAV_OE * dif_meses_13)
+                            EndIf
+                            'OE - Ajustes Per. Ant. - Remun Exentas/No alcanzadas
+                            If (SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_NO_GRAV_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_NO_GRAV_OE) = M4_False ) Then
+                                per_ant_no_grav_oe = per_ant_no_grav_oe + (SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_NO_GRAV_OE * dif_meses_13)
+                            EndIf
+                            'OE - Retrib. No habituales Exentas / No alcanzadas
+                            If (SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_EXEN_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_EXEN_OE) = M4_False ) Then
+                                no_hab_exen_oe = no_hab_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_EXEN_OE * dif_meses_13)
+                            EndIf
+                            'OE - SAC Primera Cuota Exentas / No alcanzadas
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SAC_1_EXEN_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SAC_1_EXEN_OE) = M4_False ) Then
+                                sac_1_exen_oe = sac_1_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_SAC_1_EXEN_OE * dif_meses_13)
+                            EndIf
+                            'OE - SAC Segunda Cuota Exentas / No alcanzadas
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SAC_2_EXEN_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SAC_2_EXEN_OE) = M4_False ) Then
+                                sac_2_exen_oe = sac_2_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_SAC_2_EXEN_OE * dif_meses_13)
+                            EndIf                                                                                                                
+
+                            'Horas extra tributables oe
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_GRAV > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_GRAV) = M4_False) Then
+                                hs_ex_trib_tot_oe = hs_ex_trib_tot_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_GRAV * dif_meses_13)
+                            EndIf 
+/* SiRADIG version 1.16*/
+                            'OE - Bono por productividad
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_BONOS_PROD_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_BONOS_PROD_OE) = M4_False ) Then
+                                bono_prod_oe = bono_prod_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_BONOS_PROD_OE * dif_meses_13)
+                            EndIf
+                            'OE - Fallos de Caja
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_FCAJA_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_FCAJA_OE) = M4_False ) Then
+                                fallo_caja_oe = fallo_caja_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_FCAJA_OE * dif_meses_13)
+                            EndIf
+                            'OE - Conceptos similar Naturaleza
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_SIMILAR_NAT_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_SIMILAR_NAT_OE) = M4_False ) Then
+                                similar_nat_oe = similar_nat_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_SIMILAR_NAT_OE * dif_meses_13)
+                            EndIf
+                            'OE - Remuneracion exenta Ley 27549
+                            If (SAR_H_COMPLEM_GCIAS.SAR_LEY_27549_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_LEY_27549_OE) = M4_False ) Then
+                                ley_27549_oe = ley_27549_oe + (SAR_H_COMPLEM_GCIAS.SAR_LEY_27549_OE * dif_meses_13)
+                            EndIf
+                            'OE - Supl particular a.57 Ley 19101
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SUPL_LEY_19101_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SUPL_LEY_19101_OE) = M4_False ) Then
+                                art57_ley19101_oe = art57_ley19101_oe + (SAR_H_COMPLEM_GCIAS.SAR_SUPL_LEY_19101_OE * dif_meses_13)
+                            EndIf
+                            'OE - Comp. gastos art.10 Dec.27/21
+                            If (SAR_H_COMPLEM_GCIAS.SAR_GASTOS_DEC27_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_GASTOS_DEC27_OE) = M4_False ) Then
+                                gastos_dec27_oe = gastos_dec27_oe + (SAR_H_COMPLEM_GCIAS.SAR_GASTOS_DEC27_OE * dif_meses_13)
+                            EndIf
+                            'OE - Asignaciones familiares
+                            If (SAR_H_COMPLEM_GCIAS.SAR_ASIGN_FAM > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_ASIGN_FAM) = M4_False ) Then
+                                asign_fam_oe = asign_fam_oe + (SAR_H_COMPLEM_GCIAS.SAR_ASIGN_FAM * dif_meses_13)
+                            EndIf
+                            'OE - Intereses por Prestamos al Empleador
+                            If (SAR_H_COMPLEM_GCIAS.SAR_INT_PRES_EMP > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_INT_PRES_EMP) = M4_False ) Then
+                                int_pres_emp_oe = int_pres_emp_oe + (SAR_H_COMPLEM_GCIAS.SAR_INT_PRES_EMP * dif_meses_13)
+                            EndIf
+                            'OE - Indemnizaciones RG 4003/2017
+                            If (SAR_H_COMPLEM_GCIAS.SAR_INDEM_LEY4003 > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_INDEM_LEY4003) = M4_False ) Then
+                                indem_ley_oe = indem_ley_oe + (SAR_H_COMPLEM_GCIAS.SAR_INDEM_LEY4003 * dif_meses_13)
+                            EndIf
+                            'OE - Remuneraciones Ley 19.640
+                            If (SAR_H_COMPLEM_GCIAS.SAR_REMUN_LEY19640 > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_REMUN_LEY19640) = M4_False ) Then
+                                remun_ley_oe = remun_ley_oe + (SAR_H_COMPLEM_GCIAS.SAR_REMUN_LEY19640 * dif_meses_13)
+                            EndIf
+                            'OE - Remuneraciones bajo el CCT 396/2204
+                            If (SAR_H_COMPLEM_GCIAS.SAR_REMUN_CCT_PETRO > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_REMUN_CCT_PETRO) = M4_False ) Then
+                                remun_cct_oe = remun_cct_oe + (SAR_H_COMPLEM_GCIAS.SAR_REMUN_CCT_PETRO * dif_meses_13)
+                            EndIf
+                            'OE - Cursos y Seminarios RG 4003/2017
+                            If (SAR_H_COMPLEM_GCIAS.SAR_CURSOS_SEMIN > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_CURSOS_SEMIN) = M4_False ) Then
+                                cursos_semin_oe = cursos_semin_oe + (SAR_H_COMPLEM_GCIAS.SAR_CURSOS_SEMIN * dif_meses_13)
+                            EndIf
+                            'OE - Indumentaria y Equipamiento Provistos por el Empl
+                            If (SAR_H_COMPLEM_GCIAS.SAR_INDUM_EQUIP_EMP > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_INDUM_EQUIP_EMP) = M4_False ) Then
+                                indum_equip_oe = indum_equip_oe + (SAR_H_COMPLEM_GCIAS.SAR_INDUM_EQUIP_EMP * dif_meses_13)
+                            EndIf
+'version 1.23                            
+                            'OE - Remuneraciones Judiciales
+                            If (SAR_H_COMPLEM_GCIAS.SAR_REMUN_PODER_JUDIC_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_REMUN_PODER_JUDIC_OE) = M4_False ) Then
+                                RemunJudicialOE = RemunJudicialOE + (SAR_H_COMPLEM_GCIAS.SAR_REMUN_PODER_JUDIC_OE * dif_meses_13)
+                            EndIf
+'version 1.24                            
+                            'OE - No retenido - Medidas cautelares
+                            If (SAR_H_COMPLEM_GCIAS.SAR_NO_RET_MED_CAUT_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_NO_RET_MED_CAUT_OE) = M4_False ) Then
+                                NoRetMedCautOE = NoRetMedCautOE + (SAR_H_COMPLEM_GCIAS.SAR_NO_RET_MED_CAUT_OE * dif_meses_13)
+                            EndIf
+                                                        
+                        Else                        
+                            ' Defino la cantidad de meses a procesar
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_13 = mes_paga_efecti - iniComp + 1
+                                sac_jun_mes_fin = Min(6,mes_paga_efecti)+1                                    
+                            Else
+                                dif_meses_13 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                sac_jun_mes_fin = Min(6,DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))+1                                   
+                            EndIf 
+                            'Meses para primera y segunda paga sac, separados
+                            sac_jun_mes_ini = Max(1,DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START))
+                            sac_jun_meses = Max(0,sac_jun_mes_fin - sac_jun_mes_ini)
+                            sac_dic_meses = Max(0,dif_meses_13 - sac_jun_meses)
+
+                            If (SAR_H_COMPLEM_GCIAS.SAR_JUBILACION > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_JUBILACION) = M4_False ) Then
+                                jubilacion_oe = jubilacion_oe + (SAR_H_COMPLEM_GCIAS.SAR_JUBILACION * dif_meses_13)
+                            EndIf
+
+                            '2025 siradig 1.22.1 Se guardan separados los importes de ANSES y CAJAS para poder discriminarlos en salidas de reportes legales (sin implicacion en calculo de nomina)
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_ANSES > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_ANSES) = M4_False ) Then
+                                jubilacion_anses_oe = jubilacion_anses_oe + (SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_ANSES * dif_meses_13)
+                            EndIf
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_CAJAS > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_CAJAS) = M4_False ) Then
+                                jubilacion_cajas_oe = jubilacion_cajas_oe + (SAR_H_COMPLEM_GCIAS.SAR_SEG_SOC_CAJAS * dif_meses_13)
+                            EndIf
+                            
+                            If (SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_LEY_19032) = M4_False ) Then   
+                                ley_19032_oe = ley_19032_oe + (SAR_H_COMPLEM_GCIAS.SAR_LEY_19032 * dif_meses_13)
+                            EndIf   
+                            
+                            If (SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL) = M4_False ) Then
+                                obra_social_oe = obra_social_oe + (SAR_H_COMPLEM_GCIAS.SAR_OBRA_SOCIAL * dif_meses_13)
+                            EndIf
+                            
+                            If (SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL) = M4_False ) Then   
+                                cuota_sindical_oe = cuota_sindical_oe + (SAR_H_COMPLEM_GCIAS.SAR_CUOTA_SINDICAL * dif_meses_13)
+                            EndIf  
+'se agregan los nuevos valores de los campos de "Importe Exento / no Alcanzado" y "Sueldo Anual Complementario"
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_EXE_NO_ALC > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_EXE_NO_ALC) = M4_False ) Then
+                               vImpoteExentoNoAlcanzado = vImpoteExentoNoAlcanzado + (SAR_H_COMPLEM_GCIAS.SAR_IMP_EXE_NO_ALC * dif_meses_13)
+                            EndIf 
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SAC > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SAC) = M4_False ) Then   
+                               vSAComplementario = vSAComplementario + (SAR_H_COMPLEM_GCIAS.SAR_SAC * dif_meses_13)
+                               jur_sac_jun = jur_sac_jun + (SAR_H_COMPLEM_GCIAS.SAR_SAC * sac_jun_meses)
+                               jur_sac_dic = jur_sac_dic + (SAR_H_COMPLEM_GCIAS.SAR_SAC * sac_dic_meses)
+                               If imput_ig = 1 Then jur_sac_oe_mes = jur_sac_oe_mes + (SAR_H_COMPLEM_GCIAS.SAR_SAC)
+                               EndIf
+                            'Horas extra tributables oe
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_GRAV > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_GRAV) = M4_False) Then
+                                hs_ex_trib_tot_oe = hs_ex_trib_tot_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_GRAV * dif_meses_13)
+                            EndIf  
+                            'Horas extra exentas oe
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_EXENT > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_EXENT) = M4_False) Then
+                                hs_ex_exen_oe = hs_ex_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_HS_EXTRAS_EXENT * dif_meses_13)
+                            EndIf                             
+                            ' Haberes
+                            If (SAR_H_COMPLEM_GCIAS.SAR_BRUTO > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_BRUTO) = M4_False) Then
+                                bruto_oe = bruto_oe + (SAR_H_COMPLEM_GCIAS.SAR_BRUTO * dif_meses_13)
+				        If imput_ig = 1 Then bruto_oe_sac = bruto_oe_sac + (SAR_H_COMPLEM_GCIAS.SAR_BRUTO)
+                            EndIf    
+                            ' Retencion
+                            If (SAR_H_COMPLEM_GCIAS.SAR_RETENCION <> 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_RETENCION) = M4_False ) Then
+                               retencion_oe = retencion_oe + (SAR_H_COMPLEM_GCIAS.SAR_RETENCION * dif_meses_13)
+                            EndIf                                
+                            'Retribuciones no habituales OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_OE) = M4_False ) Then
+                                no_hab_oe = no_hab_oe + (SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_OE * dif_meses_13)
+                            EndIf
+                            'Viaticos remuneracion OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_TRIB_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_TRIB_OE) = M4_False ) Then
+                                mov_via_trib_oe = mov_via_trib_oe + (SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_TRIB_OE * dif_meses_13)
+                            EndIf
+                            'Movilidad remuneracion OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_MOVILIDAD_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_MOVILIDAD_OE) = M4_False ) Then
+                                imp_mov_oe = imp_mov_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_MOVILIDAD_OE * dif_meses_13)
+                            EndIf
+                            'Analogos remuneracion OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_OTROS_CONCEPT_ANA_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_OTROS_CONCEPT_ANA_OE) = M4_False ) Then
+                                imp_ana_oe = imp_ana_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_OTROS_CONCEPT_ANA_OE * dif_meses_13)
+                            EndIf                            
+                            'ID Transporte de larga distancia OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_TRANSP_LARGA_DIST_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_TRANSP_LARGA_DIST_OE) = M4_False ) Then
+                                id_trans_dist = 1
+                            EndIf
+                            'ID Transporte terrestre de larga distancia OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_TRANSP_TERR_LARG_DIST_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_TRANSP_TERR_LARG_DIST_OE) = M4_False ) Then
+                                id_trans_terr = 1
+                            EndIf                                                        
+                            'Material didactico docente gravada OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_TRIB_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_TRIB_OE) = M4_False ) Then
+                                mat_dic_trib_oe = mat_dic_trib_oe + (SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_TRIB_OE * dif_meses_13)
+                            EndIf
+                            'Movilidad y viaticos remuneracion exenta OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_EXEN_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_EXEN_OE) = M4_False ) Then
+                                mov_via_exen_oe = mov_via_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_MOV_VIA_EXEN_OE * dif_meses_13)
+                            EndIf
+                            'Material didactico docente exento OE
+                            If (SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_EXEN_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_EXEN_OE) = M4_False ) Then
+                                mat_dic_exen_oe = mat_dic_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_MAT_DIC_EXEN_OE * dif_meses_13)
+                            EndIf
+                            'OE - Ajustes Per. Ant. - Remuneraciones Gravadas
+                            If (SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_GRAV_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_GRAV_OE) = M4_False ) Then
+                                per_ant_grav_oe = per_ant_grav_oe + (SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_GRAV_OE * dif_meses_13)
+                            EndIf
+                            'OE - Ajustes Per. Ant. - Remun Exentas/No alcanzadas
+                            If (SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_NO_GRAV_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_NO_GRAV_OE) = M4_False ) Then
+                                per_ant_no_grav_oe = per_ant_no_grav_oe + (SAR_H_COMPLEM_GCIAS.SAR_PER_ANT_NO_GRAV_OE * dif_meses_13)
+                            EndIf
+                            'OE - Retrib. No habituales Exentas / No alcanzadas
+                            If (SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_EXEN_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_EXEN_OE) = M4_False ) Then
+                                no_hab_exen_oe = no_hab_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_NO_HAB_EXEN_OE * dif_meses_13)
+                            EndIf
+                            'OE - SAC Primera Cuota Exentas / No alcanzadas
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SAC_1_EXEN_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SAC_1_EXEN_OE) = M4_False ) Then
+                                sac_1_exen_oe = sac_1_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_SAC_1_EXEN_OE * dif_meses_13)
+                            EndIf
+                            'OE - SAC Segunda Cuota Exentas / No alcanzadas
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SAC_2_EXEN_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SAC_2_EXEN_OE) = M4_False ) Then
+                                sac_2_exen_oe = sac_2_exen_oe + (SAR_H_COMPLEM_GCIAS.SAR_SAC_2_EXEN_OE * dif_meses_13)
+                            EndIf
+/* SiRADIG version 1.16*/
+                            'OE - Bono por productividad
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_BONOS_PROD_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_BONOS_PROD_OE) = M4_False ) Then
+                                bono_prod_oe = bono_prod_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_BONOS_PROD_OE * dif_meses_13)
+                            EndIf
+                            'OE - Fallos de Caja
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_FCAJA_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_FCAJA_OE) = M4_False ) Then
+                                fallo_caja_oe = fallo_caja_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_FCAJA_OE * dif_meses_13)
+                            EndIf
+                            'OE - Conceptos similar Naturaleza
+                            If (SAR_H_COMPLEM_GCIAS.SAR_IMP_SIMILAR_NAT_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_IMP_SIMILAR_NAT_OE) = M4_False ) Then
+                                similar_nat_oe = similar_nat_oe + (SAR_H_COMPLEM_GCIAS.SAR_IMP_SIMILAR_NAT_OE * dif_meses_13)
+                            EndIf
+                            'OE - Remuneracion exenta Ley 27549
+                            If (SAR_H_COMPLEM_GCIAS.SAR_LEY_27549_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_LEY_27549_OE) = M4_False ) Then
+                                ley_27549_oe = ley_27549_oe + (SAR_H_COMPLEM_GCIAS.SAR_LEY_27549_OE * dif_meses_13)
+                            EndIf
+                            'OE - Supl particular a.57 Ley 19101
+                            If (SAR_H_COMPLEM_GCIAS.SAR_SUPL_LEY_19101_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_SUPL_LEY_19101_OE) = M4_False ) Then
+                                art57_ley19101_oe = art57_ley19101_oe + (SAR_H_COMPLEM_GCIAS.SAR_SUPL_LEY_19101_OE * dif_meses_13)
+                            EndIf
+                            'OE - Comp. gastos art.10 Dec.27/21
+                            If (SAR_H_COMPLEM_GCIAS.SAR_GASTOS_DEC27_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_GASTOS_DEC27_OE) = M4_False ) Then
+                                gastos_dec27_oe = gastos_dec27_oe + (SAR_H_COMPLEM_GCIAS.SAR_GASTOS_DEC27_OE * dif_meses_13)
+                            EndIf
+
+                            'OE - Asignaciones familiares
+                            If (SAR_H_COMPLEM_GCIAS.SAR_ASIGN_FAM > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_ASIGN_FAM) = M4_False ) Then
+                                asign_fam_oe = asign_fam_oe + (SAR_H_COMPLEM_GCIAS.SAR_ASIGN_FAM * dif_meses_13)
+                            EndIf
+                            'OE - Intereses por Prestamos al Empleador
+                            If (SAR_H_COMPLEM_GCIAS.SAR_INT_PRES_EMP > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_INT_PRES_EMP) = M4_False ) Then
+                                int_pres_emp_oe = int_pres_emp_oe + (SAR_H_COMPLEM_GCIAS.SAR_INT_PRES_EMP * dif_meses_13)
+                            EndIf
+                            'OE - Indemnizaciones RG 4003/2017
+                            If (SAR_H_COMPLEM_GCIAS.SAR_INDEM_LEY4003 > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_INDEM_LEY4003) = M4_False ) Then
+                                indem_ley_oe = indem_ley_oe + (SAR_H_COMPLEM_GCIAS.SAR_INDEM_LEY4003 * dif_meses_13)
+                            EndIf
+                            'OE - Remuneraciones Ley 19.640
+                            If (SAR_H_COMPLEM_GCIAS.SAR_REMUN_LEY19640 > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_REMUN_LEY19640) = M4_False ) Then
+                                remun_ley_oe = remun_ley_oe + (SAR_H_COMPLEM_GCIAS.SAR_REMUN_LEY19640 * dif_meses_13)
+                            EndIf
+                            'OE - Remuneraciones bajo el CCT 396/2204
+                            If (SAR_H_COMPLEM_GCIAS.SAR_REMUN_CCT_PETRO > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_REMUN_CCT_PETRO) = M4_False ) Then
+                                remun_cct_oe = remun_cct_oe + (SAR_H_COMPLEM_GCIAS.SAR_REMUN_CCT_PETRO * dif_meses_13)
+                            EndIf
+                            'OE - Cursos y Seminarios RG 4003/2017
+                            If (SAR_H_COMPLEM_GCIAS.SAR_CURSOS_SEMIN > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_CURSOS_SEMIN) = M4_False ) Then
+                                cursos_semin_oe = cursos_semin_oe + (SAR_H_COMPLEM_GCIAS.SAR_CURSOS_SEMIN * dif_meses_13)
+                            EndIf
+                            'OE - Indumentaria y Equipamiento Provistos por el Empl
+                            If (SAR_H_COMPLEM_GCIAS.SAR_INDUM_EQUIP_EMP > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_INDUM_EQUIP_EMP) = M4_False ) Then
+                                indum_equip_oe = indum_equip_oe + (SAR_H_COMPLEM_GCIAS.SAR_INDUM_EQUIP_EMP * dif_meses_13)
+                            EndIf
+'version 1.23                            
+                            'OE - Remuneraciones Judiciales
+                            If (SAR_H_COMPLEM_GCIAS.SAR_REMUN_PODER_JUDIC_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_REMUN_PODER_JUDIC_OE) = M4_False ) Then
+                                RemunJudicialOE = RemunJudicialOE + (SAR_H_COMPLEM_GCIAS.SAR_REMUN_PODER_JUDIC_OE * dif_meses_13)
+                            EndIf
+'version 1.24                            
+                            'OE - No retenido - Medidas cautelares
+                            If (SAR_H_COMPLEM_GCIAS.SAR_NO_RET_MED_CAUT_OE > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_NO_RET_MED_CAUT_OE) = M4_False ) Then
+                                NoRetMedCautOE = NoRetMedCautOE + (SAR_H_COMPLEM_GCIAS.SAR_NO_RET_MED_CAUT_OE * dif_meses_13)
+                            EndIf
+                            
+                        Endif
+                    EndIf  
+
+                    elseif entidad = "14" then '--ganancias reciprocas--                    
+                        If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then                          
+                            If(indReliq = 1)Then
+                                    dif_meses_14 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    imp_tot_14 = imp_tot_14 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_14                                                               
+                            Else 
+                               If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                 dif_meses_14 = mes_paga_efecti - iniComp + 1
+                                 imp_tot_14 = imp_tot_14 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_14)
+                               Else
+                                 dif_meses_14 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1   
+                                 imp_tot_14 = imp_tot_14 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_14   
+                               EndIf
+                            EndIf ' paga 99
+                         EndIf' comienza antes del mes a liquidar
+                'fin entidad 14
+                Elseif entidad = "15" then '--Pago a cuenta - Compras en el exterior--        
+                    IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti Or (SAR_TP_IMPUT = "99") ) THEN
+                        If(SAR_TP_IMPUT = "99")Then
+                            dif_meses_15 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_15   = imp_tot_15 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_15)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_15 = mes_paga_efecti - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                imp_tot_15   = imp_tot_15 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_15) 
+                            Else
+                                dif_meses_15 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1 
+                                imp_tot_15   = imp_tot_15 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_15)
+                            EndIf                             
+                        EndIf                                
+                    endif
+                    frec_15 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                elseif entidad = "16" then '--vehiculos corredores y viajantes de comercio--                    
+                        If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then                          
+                            If(indReliq = 1)Then
+                                    dif_meses_16 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    imp_tot_16 = imp_tot_16 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_16                                                               
+                            Else 
+                               If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                 dif_meses_16 = mes_paga_efecti - iniComp + 1
+                                 imp_tot_16 = imp_tot_16 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_16
+                               Else
+                                 dif_meses_16 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1   
+                                 imp_tot_16 = imp_tot_16 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_16   
+                               EndIf
+                            EndIf ' paga 99
+                         EndIf' comienza antes del mes a liquidar
+                'fin entidad 16       
+                elseif entidad = "17" then '--movilidad corredores y viajantes de comercio--                    
+                        If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then                                                
+                            If(indReliq = 1)Then
+                                    dif_meses_17 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    imp_tot_17 = imp_tot_17 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_17                                                               
+                            Else 
+                               If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                 dif_meses_17 = mes_paga_efecti - iniComp + 1
+                                 imp_tot_17 = imp_tot_17 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_17
+                               Else
+                                 dif_meses_17 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1   
+                                 imp_tot_17 = imp_tot_17 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_17   
+                               EndIf
+                            EndIf ' paga 99
+                         EndIf' comienza antes del mes a liquidar
+                'fin entidad 17      
+                elseif entidad = "18" then '--movilidad corredores y viajantes de comercio--                    
+                        If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then                                                 
+                            If(indReliq = 1)Then
+                                    dif_meses_18 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    imp_tot_18 = imp_tot_18 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_18                                                               
+                            Else 
+                               If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                 dif_meses_18 = mes_paga_efecti - iniComp + 1
+                                 imp_tot_18 = imp_tot_18 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_18
+                               Else
+                                 dif_meses_18 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1   
+                                 imp_tot_18 = imp_tot_18 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_18   
+                               EndIf
+                            EndIf ' paga 99
+                         EndIf' comienza antes del mes a liquidar
+                'fin entidad 18      
+                elseif entidad = "19" then '--movilidad corredores y viajantes de comercio--                    
+                        If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then                        
+                            If(indReliq = 1)Then
+                                    dif_meses_19 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                    imp_tot_19 = imp_tot_19 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_19
+                            Else 
+                               If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                 dif_meses_19 = mes_paga_efecti - iniComp + 1
+                                 imp_tot_19 = imp_tot_19 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_19
+                               Else
+                                 dif_meses_19 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1   
+                                 imp_tot_19 = imp_tot_19 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_19
+                               EndIf
+                            EndIf ' paga 99
+                         EndIf' comienza antes del mes a liquidar
+                'fin entidad 19 
+                
+                ElseIf entidad = "21" then '--Deduc. Adquisicion de indumentaria--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                            dif_meses_21 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_21   = imp_tot_21 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_21)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_21 = mes_paga_efecti - iniComp + 1
+                                imp_tot_21   = imp_tot_21 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_21)
+                            Else
+                                dif_meses_21 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_21   = imp_tot_21 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_21)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_21 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 21                 
+                
+                ElseIf entidad = "22" then '--Alquileres de Inmuebles--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then                    
+                        If(indReliq = 1)Then
+                            dif_meses_22 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_22   = imp_tot_22 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_22)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_22 = mes_paga_efecti - iniComp + 1
+                                imp_tot_22   = imp_tot_22 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_22)
+                            Else
+                                dif_meses_22 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_22   = imp_tot_22 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_22)
+                            EndIf
+                        endif
+                    endif
+                    frec_22 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 22
+
+                ElseIf entidad = "23" then '--Primas ahorro seguros mixtos--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                            dif_meses_23 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_23   = imp_tot_23 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_23)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_23 = mes_paga_efecti - iniComp + 1
+                                imp_tot_23   = imp_tot_23 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_23)
+                            Else
+                                dif_meses_23 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_23   = imp_tot_23 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_23)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_23 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 23  
+
+                ElseIf entidad = "24" then '--Aportes a planes de seguro de retiro--                                           
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                            dif_meses_24 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_24   = imp_tot_24 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_24)                                                              
+                        Else 
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_24 = mes_paga_efecti - iniComp + 1
+                                imp_tot_24   = imp_tot_24 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_24)     
+                            Else
+                                dif_meses_24 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1   
+                                imp_tot_24   = imp_tot_24 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL  * dif_meses_24)  
+                           EndIf
+                        EndIf                        
+                    EndIf
+		        frec_24 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 24
+                
+                ElseIf entidad = "25" then '--Cuota partes de fondos comunes de inver--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                            dif_meses_25 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_25   = imp_tot_25 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_25)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_25 = mes_paga_efecti - iniComp + 1
+                                imp_tot_25   = imp_tot_25 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_25)
+                            Else
+                                dif_meses_25 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_25   = imp_tot_25 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_25)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_25 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 25    
+
+                ElseIf entidad = "30" then '--Ap. Cajas complem de prev--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                            dif_meses_30 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_30   = imp_tot_30 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_30)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_30 = mes_paga_efecti - iniComp + 1
+                                imp_tot_30   = imp_tot_30 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_30)
+                            Else
+                                dif_meses_30 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_30   = imp_tot_30 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_30)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_30 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 30                                 
+
+                ElseIf entidad = "31" then '--Deduc. - Fondos Compensadores de Prevision--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                            dif_meses_31 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_31   = imp_tot_31 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_31)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_31 = mes_paga_efecti - iniComp + 1
+                                imp_tot_31   = imp_tot_31 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_31)
+                            Else
+                                dif_meses_31 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_31   = imp_tot_31 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_31)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_31 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 31   
+                
+                ElseIf entidad = "35" then '--Percepciones/Retenciones aduaneras--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti Or (SAR_TP_IMPUT = "99") ) Then
+                        If(SAR_TP_IMPUT = "99")Then
+                            dif_meses_35 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_35   = imp_tot_35 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_35)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_35 = mes_paga_efecti - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                imp_tot_35   = imp_tot_35 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_35)
+                            Else
+                                dif_meses_35 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1 
+                                imp_tot_35   = imp_tot_35 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_35)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_35 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 35                   
+                                    
+                Elseif entidad = "ZP" then '--movilidad corredores y viajantes de comercio--                    
+                    If ((DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1) And SAR_H_COMPLEM_GCIAS.SAR_DT_START < SCO_HR_PERIOD.STD_DT_START Then                         
+                        fecIniZP = SAR_H_COMPLEM_GCIAS.SAR_DT_START
+                        fecFinZP = min(SCO_HR_PERIOD.STD_DT_START-1,SAR_H_COMPLEM_GCIAS.SAR_DT_END)
+                        If SAR_H_COMPLEM_GCIAS.SAR_JUR_Z_PAT = 1 Then diasPat = diasPat + DateDiff(fecIniZP,fecFinZP+1,M4_DAY)
+                        If SAR_H_COMPLEM_GCIAS.SAR_JUR_Z_PAT = 0 Then diasNor = diasNor + DateDiff(fecIniZP,fecFinZP+1,M4_DAY)
+                    EndIf' comienza antes del mes a liquidar
+                'fin entidad ZP                   
+               
+                ElseIf entidad = "27" then '--Pagos a cuenta - LEY 27.541 Art. 35 a--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti Or (SAR_TP_IMPUT = "99") ) Then
+                        If(SAR_TP_IMPUT = "99")Then
+                            dif_meses_27 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_27   = imp_tot_27 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_27)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_27 = mes_paga_efecti - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                imp_tot_27   = imp_tot_27 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_27)
+                            Else
+                                dif_meses_27 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1 
+                                imp_tot_27   = imp_tot_27 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_27)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_27 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 27      
+                
+                ElseIf entidad = "28" then '--Pagos a cuenta - LEY 27.541 Art. 35 b--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti Or (SAR_TP_IMPUT = "99") ) Then
+                        If(SAR_TP_IMPUT = "99")Then
+                            dif_meses_28 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_28   = imp_tot_28 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_28)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_28 = mes_paga_efecti - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                imp_tot_28   = imp_tot_28 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_28)
+                            Else
+                                dif_meses_28 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1 
+                                imp_tot_28   = imp_tot_28 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_28)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_28 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 28     
+
+
+                ElseIf entidad = "29" then '--Pagos a cuenta - LEY 27.541 Art. 35 c--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti Or (SAR_TP_IMPUT = "99") ) Then
+                        If(SAR_TP_IMPUT = "99")Then
+                            dif_meses_29 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_29   = imp_tot_29 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_29)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_29 = mes_paga_efecti - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                imp_tot_29   = imp_tot_29 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_29)
+                            Else
+                                dif_meses_29 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1 
+                                imp_tot_29   = imp_tot_29 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_29)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_29 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 29     
+
+
+                ElseIf entidad = "60" then '--Pagos a cuenta - LEY 27.541 Art. 35 d--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti Or (SAR_TP_IMPUT = "99") ) Then
+                        If(SAR_TP_IMPUT = "99")Then
+                            dif_meses_60 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_60   = imp_tot_60 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_60)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_60 = mes_paga_efecti - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                imp_tot_60   = imp_tot_60 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_60)
+                            Else
+                                dif_meses_60 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1 
+                                imp_tot_60   = imp_tot_60 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_60)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_60 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 60     				
+				
+
+                ElseIf entidad = "61" then '--Pagos a cuenta - LEY 27.541 Art. 35 e--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti Or (SAR_TP_IMPUT = "99") ) Then
+                        If(SAR_TP_IMPUT = "99")Then
+                            dif_meses_61 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_61   = imp_tot_61 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_61)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_61 = mes_paga_efecti - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                imp_tot_61   = imp_tot_61 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_61)
+                            Else
+                                dif_meses_61 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1 
+                                imp_tot_61   = imp_tot_61 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_61)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_61 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 61     				
+				
+				
+                ElseIf entidad = "62" then '--Pagos a cuenta - Impuesto sobre creditos--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti Or (SAR_TP_IMPUT = "99") ) Then
+                        If(SAR_TP_IMPUT = "99")Then
+                            dif_meses_62 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_62   = imp_tot_62 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_62)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_62 = mes_paga_efecti - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                imp_tot_62   = imp_tot_62 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_62)
+                            Else
+                                dif_meses_62 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1 
+                                imp_tot_62   = imp_tot_62 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_62)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_62 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 62     				
+				
+                ElseIf entidad = "20" then '--Resolucion General (AFIP) 3819/2015'--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti Or (SAR_TP_IMPUT = "99") ) Then
+                        If(SAR_TP_IMPUT = "99")Then
+                            dif_meses_20 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_20   = imp_tot_20 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_20)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_20 = mes_paga_efecti - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                                imp_tot_20   = imp_tot_20 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_20)
+                            Else
+                                dif_meses_20 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1 
+                                imp_tot_20   = imp_tot_20 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_20)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_20 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 20                  
+                
+                ElseIf entidad = "32" then '--Gastos educativos--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                            dif_meses_32 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_32   = imp_tot_32 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_32)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_32 = mes_paga_efecti - iniComp + 1
+                                imp_tot_32   = imp_tot_32 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_32)
+                            Else
+                                dif_meses_32 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_32   = imp_tot_32 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_32)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_32 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 32                   
+
+                ElseIf entidad = "33" then '--Alquiler de Inmuebles destinados a casa habitacion (Inquilinos)--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                            dif_meses_33 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_33   = imp_tot_33 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_33)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_33 = mes_paga_efecti - iniComp + 1
+                                imp_tot_33   = imp_tot_33 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_33)
+                            Else
+                                dif_meses_33 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_33   = imp_tot_33 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_33)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_33 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 33  
+                
+                ElseIf entidad = "34" then '--Alquiler de Inmuebles destinados a casa habitacion (Propietarios)--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                            dif_meses_34 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_34   = imp_tot_34 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_34)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_34 = mes_paga_efecti - iniComp + 1
+                                imp_tot_34   = imp_tot_34 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_34)
+                            Else
+                                dif_meses_34 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_34   = imp_tot_34 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_34)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_34 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 34                  
+'version 1.23
+                ElseIf entidad = "40" then '--Autorretenciones - RG 5683/2025--        
+                    If (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti And DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_corte) Or indReliq = 1 Then
+                        If(indReliq = 1)Then
+                            dif_meses_40 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
+                            imp_tot_40   = imp_tot_40 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_40)                                                                
+                        Else
+                            If (mes_paga_efecti <= DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END))Then
+                                dif_meses_40 = mes_paga_efecti - iniComp + 1
+                                imp_tot_40   = imp_tot_40 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_40)
+                            Else
+                                dif_meses_40 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - iniComp + 1 
+                                imp_tot_40   = imp_tot_40 + (SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL * dif_meses_40)
+                            EndIf
+                        Endif
+                    Endif
+                    frec_40 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                'fin entidad 40 
+                
+                
+                
+                EndIf
+'------------------------------------------------------------------------------------------------------------------------
+'                               Entidades con valores anuales 
+'------------------------------------------------------------------------------------------------------------------------    
+            ELSEIF SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA = "2" THEN
+                mes = mes_paga_efecti
+    
+                if entidad = "02" then '--Cuota medico asistencial--
+                
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_02 = imp_tot_02 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_02 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                    
+                elseif entidad = "03" then '--Seguro de vida particular --
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_03 = imp_tot_03 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_03 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+
+                elseif entidad = "05" then '--Gastos de sepelio --
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_05 = imp_tot_05 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_05 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+    
+                elseif entidad = "06" then '--Donaciones--
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_06 = imp_tot_06 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_06 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                elseif entidad = "07" then '--Honorarios Medicos--
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_07 = imp_tot_07 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                          
+                    endif
+                    frec_07 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                    
+                elseif entidad = "08" then '--Otras deducciones-- 
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_08 = imp_tot_08 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                           
+                    endif
+                    frec_08 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                elseif entidad = "09" then '--Intereses Hipotecarios-- 
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_09 = imp_tot_09 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_09 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+    
+                elseif entidad = "11" then '--Debitos y creditos bancarios--
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_11 = imp_tot_11 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                           
+                    endif
+                    frec_11 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+        
+                elseif entidad = "12"  then '--Servicio Domestico--
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_12 = imp_tot_12 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_12 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+    
+                elseif entidad = "16"  then '--vehiculos corredores y viajantes de comercio--
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_16 = imp_tot_16 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_16 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                elseif entidad = "17"  then '--movilidad corredores y viajantes de comercio--
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_17 = imp_tot_17 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_17 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                elseif entidad = "18"  then '--Declar. Jurada Aportes a Cajas Prev. Profesionales--
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_18 = imp_tot_18 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_18 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                elseif entidad = "19"  then '--IG de Descuentos obligatorios establecidos por ley nacional, provincial o municipal--
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_19 = imp_tot_19 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_19 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                    
+                elseif entidad = "22"  then '--Alquileres de Inmuebles--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_22 = imp_tot_22 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_22 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+
+                elseif entidad = "23"  then '--Primas ahorro seguros mixtos
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_23 = imp_tot_23 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_23 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+
+                elseif entidad = "24" then '--Aportes a planes de seguro de retiro--
+    
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_24 = imp_tot_24 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_24 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
+                    
+                elseif entidad = "25"  then '--Cuota partes de fondos comunes de inver--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_25 = imp_tot_25 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_25 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA                    
+
+                elseif entidad = "30"  then '--Ap. Cajas complem de prev--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_30 = imp_tot_30 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_30 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA 
+                    
+                elseif entidad = "31"  then '--Deduc. - Fondos Compensadores de Prevision--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_31 = imp_tot_31 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_31 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA 
+                    
+                elseif entidad = "35"  then '--Percepciones/Retenciones aduaneras--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_35 = imp_tot_35 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_35 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA                                         
+                
+                elseif entidad = "27"  then '--Pagos a cuenta - LEY 27.541 Art. 35 a--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_27 = imp_tot_27 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_27 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA                  
+                
+                elseif entidad = "28"  then '--Pagos a cuenta - LEY 27.541 Art. 35 b--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_28 = imp_tot_28 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_28 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA    
+
+                elseif entidad = "29"  then '--Pagos a cuenta - LEY 27.541 Art. 35 c--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_29 = imp_tot_29 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_29 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA    
+
+                elseif entidad = "60"  then '--Pagos a cuenta - LEY 27.541 Art. 35 d--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_60 = imp_tot_60 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_60 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA    					
+					
+                elseif entidad = "61"  then '--Pagos a cuenta - LEY 27.541 Art. 35 e--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_61 = imp_tot_61 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_61 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA    						
+					
+                elseif entidad = "62"  then '--Pagos a cuenta - Impuesto sobre creditos--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_62 = imp_tot_62 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_62 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA  					
+
+                elseif entidad = "20"  then '--Resolucion General (AFIP) 3819/2015--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_20 = imp_tot_20 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_20 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA       
+                    
+                elseif entidad = "32"  then '--Gastos educativos--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_32 = imp_tot_32 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_32 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA                                
+
+                elseif entidad = "33"  then '--Alquiler de Inmuebles destinados a casa habitacion (Inquilinos)--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_33 = imp_tot_33 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_33 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA    
+                    
+                elseif entidad = "34"  then '--Alquiler de Inmuebles destinados a casa habitacion (Propietarios)--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_34 = imp_tot_34 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_34 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA                        
+'version 1.23
+                elseif entidad = "40"  then '--Autorretenciones - RG 5683/2025--
+                    if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
+                        imp_tot_40 = imp_tot_40 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                            
+                    endif
+                    frec_40 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA 
+                
+                endif                
+            ENDIF        
+        ENDIF
+    NEXT    
+ENDIF           
+
+'Desde octubre 2022 hay un corte
+mes_paga_efecti = mesesImp
+
+IF imp_tot_02 > 0 AND frec_02 = "2"  THEN
+    imp_tot_02 = imp_tot_02 / 12 * mes_paga_efecti
+ENDIF    
+
+IF imp_tot_03 > 0 AND frec_03 = "2"  THEN
+    imp_tot_03 = imp_tot_03 / 12 * mes_paga_efecti
+ENDIF
+
+IF imp_tot_05 > 0 AND frec_05 = "2"  THEN
+    imp_tot_05 = imp_tot_05 / 12 * mes_paga_efecti      
+ENDIF
+
+IF imp_tot_06 > 0 AND frec_06 = "2"  THEN
+    imp_tot_06 = imp_tot_06 / 12 * mes_paga_efecti           
+ENDIF
+
+IF imp_tot_07 > 0 AND frec_07 = "2"  THEN
+    imp_tot_07 = imp_tot_07 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_08 > 0 AND frec_08 = "2"  THEN
+    imp_tot_08 = imp_tot_08 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_09 > 0 AND frec_09 = "2"  THEN
+    imp_tot_09 = imp_tot_09 / 12 * mes_paga_efecti           
+ENDIF
+
+IF imp_tot_11 > 0 AND frec_11 = "2"  THEN
+    imp_tot_11 = imp_tot_11 / 12 * mes_paga_efecti           
+ENDIF
+
+IF imp_tot_12 > 0 AND frec_12 = "2"  THEN
+    imp_tot_12 = imp_tot_12 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_16 > 0 AND frec_16 = "2"  THEN
+    imp_tot_16 = imp_tot_16 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_17 > 0 AND frec_17 = "2"  THEN
+    imp_tot_17 = imp_tot_17 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_18 > 0 AND frec_18 = "2"  THEN
+    imp_tot_18 = imp_tot_18 / 12 * mes_paga_efecti            
+ENDIF
+     
+IF imp_tot_19 > 0 AND frec_19 = "2"  THEN
+    imp_tot_19 = imp_tot_19 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_21 > 0 AND frec_21 = "2"  THEN
+    imp_tot_21 = imp_tot_21 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_22 > 0 AND frec_22 = "2"  THEN
+    imp_tot_22 = imp_tot_22 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_23 > 0 AND frec_23 = "2"  THEN
+    imp_tot_23 = imp_tot_23 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_24 > 0 AND frec_24 = "2"  THEN
+    imp_tot_24 = imp_tot_24 / 12 * mes_paga_efecti
+ENDIF
+
+IF imp_tot_25 > 0 AND frec_25 = "2"  THEN
+    imp_tot_25 = imp_tot_25 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_30 > 0 AND frec_30 = "2"  THEN
+    imp_tot_30 = imp_tot_30 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_31 > 0 AND frec_31 = "2"  THEN
+    imp_tot_31 = imp_tot_31 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_35 > 0 AND frec_35 = "2"  THEN
+    imp_tot_35 = imp_tot_35 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_27 > 0 AND frec_27 = "2"  THEN
+    imp_tot_27 = imp_tot_27 / 12 * mes_paga_efecti            
+ENDIF				
+
+IF imp_tot_28 > 0 AND frec_28 = "2"  THEN
+    imp_tot_28 = imp_tot_28 / 12 * mes_paga_efecti            
+ENDIF		
+
+IF imp_tot_29 > 0 AND frec_29 = "2"  THEN
+    imp_tot_29 = imp_tot_29 / 12 * mes_paga_efecti            
+ENDIF	
+
+IF imp_tot_60 > 0 AND frec_60 = "2"  THEN
+    imp_tot_60 = imp_tot_60 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_61 > 0 AND frec_61 = "2"  THEN
+    imp_tot_61 = imp_tot_61 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_62 > 0 AND frec_62 = "2"  THEN
+    imp_tot_62 = imp_tot_62 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_20 > 0 AND frec_20 = "2"  THEN
+    imp_tot_20 = imp_tot_20 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_32 > 0 AND frec_32 = "2"  THEN
+    imp_tot_32 = imp_tot_32 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_33 > 0 AND frec_33 = "2"  THEN
+    imp_tot_33 = imp_tot_33 / 12 * mes_paga_efecti            
+ENDIF
+
+IF imp_tot_34 > 0 AND frec_34 = "2"  THEN
+    imp_tot_34 = imp_tot_34 / 12 * mes_paga_efecti            
+ENDIF
+'version 1.23
+IF imp_tot_40 > 0 AND frec_40 = "2"  THEN
+    imp_tot_40 = imp_tot_40 / 12 * mes_paga_efecti            
+ENDIF
+
+'Para los casos de las entidades con frecuencia de carga mensual, se da el valor 
+'correspondiente a los conceptos acumulados a ser utilizados en el cpto.v5002
+
+'total de Ley 19032 por otros empleadores
+If IsNull(ley_19032_oe) = M4_False Then
+    SAR_LEY_19032_OE = ley_19032_oe 
+Else
+    SAR_LEY_19032_OE = 0
+EndIf
+
+'total de Obra social por otros empleadores
+If IsNull(obra_social_oe) = M4_False Then
+    SAR_OBRA_SOCIAL_OE = obra_social_oe 
+Else
+    SAR_OBRA_SOCIAL_OE = 0
+EndIf
+
+'total de Cuota sindical por otros empleadores
+If IsNull(cuota_sindical_oe) = M4_False Then
+    SAR_CUOTA_SINDICAL_OE = cuota_sindical_oe 
+Else
+    SAR_CUOTA_SINDICAL_OE = 0
+EndIf
+
+'total de Bruto por otros empleadores
+If IsNull(bruto_oe) = M4_False Then
+    SAR_BRUTO_OE = bruto_oe
+Else
+    SAR_BRUTO_OE = 0
+EndIf
+
+'total de Bruto por otros empleadores sac
+If IsNull(bruto_oe_sac) = M4_False Then
+    SAR_BRUTO_OE_SAC = bruto_oe_sac
+Else
+    SAR_BRUTO_OE_SAC = 0
+EndIf
+
+'Importe mensual sac OE
+If IsNull(jur_sac_oe_mes) = M4_False Then
+    SAR_JUR_SAC_MES = jur_sac_oe_mes
+Else
+    SAR_JUR_SAC_MES = 0
+EndIf
+
+'total de Retencion por otros empleadores
+If IsNull(retencion_oe) = M4_False Then
+    SAR_IMP_OTROS_EMP = retencion_oe 
+Else
+    SAR_IMP_OTROS_EMP = 0
+EndIf
+
+'se agregan los nuevos valores de los campos de "Importe Exento / no Alcanzado" y "Salario Anual Complementario"
+
+'Importe Exento/No alcanzado: otros empleadores
+If IsNull(vImpoteExentoNoAlcanzado) = M4_False Then
+    SAR_JUR_EXEN_NO_ALC = vImpoteExentoNoAlcanzado 
+Else
+    SAR_JUR_EXEN_NO_ALC = 0
+EndIf
+
+'Salario Anual Complementario: otros empleadores
+If IsNull(vSAComplementario) = M4_False Then
+    SAR_JUR_SAC = vSAComplementario 
+Else
+    SAR_JUR_SAC = 0
+EndIf
+
+'SAC primera cuota: otros empleadores
+If IsNull(jur_sac_jun) = M4_False Then
+    SAR_JUR_SAC_1_OE = jur_sac_jun 
+Else
+    SAR_JUR_SAC_1_OE = 0
+EndIf
+
+'SAC segunda cuota: otros empleadores
+If IsNull(jur_sac_dic) = M4_False Then
+    SAR_JUR_SAC_2_OE = jur_sac_dic 
+Else
+    SAR_JUR_SAC_2_OE = 0
+EndIf
+
+'Horas extra tributables total OE
+If IsNull(hs_ex_trib_tot_oe) = M4_False Then
+    SAR_HS_EX_TRIB_TOT_OE = hs_ex_trib_tot_oe
+Else
+    SAR_HS_EX_TRIB_TOT_OE = 0
+EndIf
+
+'Horas extra exentas OE
+If IsNull(hs_ex_exen_oe) = M4_False Then
+    'ley de bases, dejan de existir horas extra exentas
+    If DxYear (SAR_FEC_IMPUT_IG) > 2023 Then hs_ex_exen_oe = 0
+    
+    SAR_HS_EX_EXEN_OE = hs_ex_exen_oe
+Else
+    SAR_HS_EX_EXEN_OE = 0
+EndIf
+
+If IsNull(no_hab_oe) = M4_False And SAR_IND_NO_RET_GAN = 0 Then SAR_NO_HAB_OE_ACUM = no_hab_oe 'Retribuciones no habituales OE
+If IsNull(mov_via_trib_oe) = M4_False  And SAR_IND_NO_RET_GAN = 0 Then SAR_MOV_VIA_TRIB_OE = mov_via_trib_oe 'Movilidad y viaticos remuneracion gravada OE
+If IsNull(mat_dic_trib_oe) = M4_False  And SAR_IND_NO_RET_GAN = 0 Then SAR_MAT_DIC_TRIB_OE = mat_dic_trib_oe 'Material didactico docente gravada OE
+If IsNull(mov_via_exen_oe) = M4_False Then SAR_MOV_VIA_EXEN_OE = mov_via_exen_oe 'Movilidad y viaticos remuneracion exenta OE
+If IsNull(mat_dic_exen_oe) = M4_False Then SAR_MAT_DIC_EXEN_OE = mat_dic_exen_oe 'Material didactico docente exento OE
+If IsNull(per_ant_grav_oe) = M4_False Then SAR_PER_ANT_GRAV_OE = per_ant_grav_oe 'OE - Ajustes Per. Ant. - Remuneraciones Gravadas
+If IsNull(per_ant_no_grav_oe) = M4_False Then SAR_PER_ANT_NO_GRAV_OE = per_ant_no_grav_oe 'OE - Ajustes Per. Ant. - Remun Exentas/No alcanzadas
+If IsNull(no_hab_exen_oe) = M4_False Then SAR_NO_HAB_EXEN_OE = no_hab_exen_oe 'OE - Retrib. No habituales Exentas / No alcanzadas
+If IsNull(sac_1_exen_oe) = M4_False Then SAR_SAC_1_EXEN_OE = sac_1_exen_oe 'OE - SAC Primera Cuota Exentas / No alcanzadas
+If IsNull(sac_2_exen_oe) = M4_False Then SAR_SAC_2_EXEN_OE = sac_2_exen_oe 'OE - SAC Segunda Cuota Exentas / No alcanzadas
+/* SiRADIG version 1.16*/
+If IsNull(bono_prod_oe)      = M4_False Then SAR_IMP_BONOS_PROD_OE = bono_prod_oe       'OE - Bono por productividad
+If IsNull(fallo_caja_oe)     = M4_False Then SAR_IMP_FCAJA_OE = fallo_caja_oe           'OE - Fallos de Caja
+If IsNull(similar_nat_oe)    = M4_False Then SAR_IMP_SIMILAR_NAT_OE = similar_nat_oe    'OE - Conceptos similar Naturaleza
+If IsNull(ley_27549_oe)      = M4_False Then SAR_LEY_27549_OE = ley_27549_oe            'OE - Remuneracion exenta Ley 27549
+If IsNull(art57_ley19101_oe) = M4_False Then SAR_SUPL_LEY_19101_OE = art57_ley19101_oe  'OE - Supl particular a.57 Ley 19101
+If IsNull(gastos_dec27_oe)   = M4_False Then SAR_GASTOS_DEC27_OE = gastos_dec27_oe      'OE - Comp. gastos art.10 Dec.27/21
+If IsNull(imp_mov_oe)   = M4_False Then SAR_MOVILIDAD_TRIB_OE = imp_mov_oe      'OE - Movilidad
+If IsNull(imp_ana_oe)   = M4_False Then SAR_COMP_ANA_TRIB_OE = imp_ana_oe      'OE - Analogos
+If IsNull(id_trans_dist)   = M4_False Then SAR_ID_LARGA_DIST_OE = id_trans_dist      'OE - id transporte larga distancia
+If IsNull(id_trans_terr)   = M4_False Then SAR_ID_TERR_LARG_DIST_OE = id_trans_terr      'OE - id transporte terrestre
+
+
+
+'Entidad ZP, asignacion directa para permitir sobreescribir por valores del periodo
+SAR_D_ALTA_Z_PAT = diasPat
+SAR_D_ALTA_Z_NO_PAT = diasNor
+
+If IsNull(imp_jub_01) = M4_False Then
+    SAR_JUB_ANT_EMP = imp_jub_01
+Else
+    SAR_JUB_ANT_EMP = 0
+EndIf
+
+If IsNull(imp_ley_01) = M4_False Then
+    SAR_L_19032_ANT_EMP = imp_ley_01
+Else
+    SAR_L_19032_ANT_EMP = 0
+EndIf
+
+If IsNull(imp_o_soc_01) = M4_False Then
+    SAR_SOC_ANT_EMP = imp_o_soc_01
+Else
+    SAR_SOC_ANT_EMP = 0
+EndIf
+
+If IsNull(imp_ret_01) = M4_False Then
+    SAR_IMP_ANT_EMP = imp_ret_01
+Else
+    SAR_IMP_ANT_EMP = 0
+EndIf
+
+If IsNull(imp_bruto_01) = M4_False Then
+    SAR_BASE_ANT_EMP = imp_bruto_01
+Else
+    SAR_BASE_ANT_EMP = 0
+EndIf
+
+If IsNull(imp_c_sind_01) = M4_False Then
+    SAR_SIND_ANT_EMP = imp_c_sind_01
+Else
+    SAR_SIND_ANT_EMP = 0 
+EndIf
+
+If IsNull(imp_o_deducc_01) = M4_False Then
+    SAR_OTR_DED_ANT_EMP = imp_o_deducc_01
+Else
+    SAR_OTR_DED_ANT_EMP = 0
+EndIf
+
+If IsNull(imp_seg_v_01) = M4_False Then
+    SAR_SEG_ANT_EMP = imp_seg_v_01
+Else
+    SAR_SEG_ANT_EMP = 0
+EndIf
+
+If IsNull(imp_seg_sep_01) = M4_False Then
+    SAR_SEPEL_ANT_EMP = imp_seg_sep_01
+Else
+    SAR_SEPEL_ANT_EMP = 0
+EndIf
+
+'--Cuota medico asistencial--
+If IsNull(imp_tot_02) = M4_False Then
+    SAR_JUR_CTA_MED_ASI = imp_tot_02
+Else
+    SAR_JUR_CTA_MED_ASI = 0
+EndIf
+
+'--Seguro de vida particular--
+If IsNull(imp_tot_03) = M4_False Then
+    SAR_JUR_SEG_PART = imp_tot_03
+Else
+    SAR_JUR_SEG_PART = 0
+EndIf
+
+'--Gastos de sepelio--
+If IsNull(imp_tot_05) = M4_False Then
+    SAR_JUR_SEPELIO = imp_tot_05
+Else
+    SAR_JUR_SEPELIO = 0 
+EndIf
+
+'--Donaciones--
+If IsNull(imp_tot_06) = M4_False Then
+    SAR_JUR_DONACIONES = imp_tot_06
+Else
+    SAR_JUR_DONACIONES = 0
+EndIf
+
+'--Honorarios Medicos--
+If IsNull(imp_tot_07) = M4_False Then
+    SAR_HONORAR_MEDICOS = imp_tot_07
+Else
+    SAR_HONORAR_MEDICOS = 0 
+EndIf
+
+'--Otras deducciones-- 
+If IsNull(imp_tot_08) = M4_False Then
+    SAR_JUR_OTRAS_DED = imp_tot_08
+Else
+    SAR_JUR_OTRAS_DED = 0 
+EndIf
+
+'--Intereses Hipotecarios--
+If IsNull(imp_tot_09) = M4_False Then
+    SAR_JUR_INT_HIP = imp_tot_09
+Else
+    SAR_JUR_INT_HIP = 0
+EndIf
+
+'--Debitos y creditos bancarios--
+If IsNull(imp_tot_11) = M4_False Then
+    IF imp_tot_11 > 0 THEN
+        SAR_DEBITO_BANCARIO = imp_tot_11
+    ENDIF
+Else
+    SAR_DEBITO_BANCARIO = 0
+EndIf
+
+
+
+'--Servicio Domestico--
+If IsNull(imp_tot_12) = M4_False Then
+    IF imp_tot_12 > 0 THEN
+        SAR_SERV_DOMEST = imp_tot_12
+    ENDIF
+Else
+    SAR_SERV_DOMEST = 0
+EndIf
+
+
+'Garantias Reciprocas
+If IsNull(imp_tot_14) = M4_False Then
+   IF imp_tot_14 > 0 Then
+     SAR_JUR_GTIA_RECIP = imp_tot_14
+   EndIf
+Else
+    SAR_JUR_GTIA_RECIP = 0
+EndIf    
+
+'--Pago a cuenta - Compras en el exterior--
+If IsNull(imp_tot_15) = M4_False Then
+    IF imp_tot_15 > 0 THEN
+        SAR_PAG_CUENT_EXT = imp_tot_15
+    ENDIF
+Else
+    SAR_PAG_CUENT_EXT = 0
+EndIf
+
+'Vehiculos corredores y viajantes de comercio
+If IsNull(imp_tot_16) = M4_False Then
+   IF imp_tot_16 > 0 Then
+     SAR_JUR_VEHIC_COR = imp_tot_16
+   EndIf
+Else
+    SAR_JUR_VEHIC_COR = 0
+EndIf    
+
+'Movilidad corredores y viajantes de comercio - Entidad 17
+If IsNull(imp_tot_17) = M4_False Then
+   IF imp_tot_17 > 0 Then
+   
+        'CASO CSS 3639222 Dejan de estar vigentes el resto de deducciones
+        If SAR_IND_VIAJANTE = 1 Then  SAR_JUR_MOV_COR = imp_tot_17 'El empleado es viajante de comercio, se asignara el valor el concepto 4917
+        
+  
+        'ElseIf SAR_IND_VIAJANTE = 0 Then 'El empleado no es viajante de comercio, se asignara el valor al concepto 4950 - RG4003
+        '    SAR_IG_VIATICOS = imp_tot_17
+        'ElseIf SAR_IND_VIAJANTE = 2 Then 'Deduccion transporte larga distancia
+        '    SAR_DED_TRANS = imp_tot_17
+        'ElseIf SAR_IND_VIAJANTE = 3 Then 'Deduccion transporte carga larga distancia
+        '    SAR_DED_CARGA = imp_tot_17
+        'EndIf
+   EndIf
+Else
+    SAR_JUR_MOV_COR = 0
+    SAR_IG_VIATICOS = 0
+EndIf    
+
+'IG de Descuentos obligatorios establecidos por ley nacional, provincial o municipal - Entidad 18
+If IsNull(imp_tot_18) = M4_False Then
+   IF imp_tot_18 > 0 Then
+     SAR_JUR_D_LEY_NAC_PROV = imp_tot_18
+   EndIf
+Else
+    SAR_JUR_D_LEY_NAC_PROV = 0
+EndIf    
+
+'Declar. Jurada Aportes a Cajas Prev. Profesionales - Entidad 19
+If IsNull(imp_tot_19) = M4_False Then
+   IF imp_tot_19 > 0 Then
+     SAR_JUR_CAJA_PREV_PROF = imp_tot_19
+   EndIf
+Else
+    SAR_JUR_CAJA_PREV_PROF = 0
+EndIf   
+
+'--Alquileres de Inmuebles--
+If IsNull(imp_tot_22) = M4_False Then
+    IF imp_tot_22 > 0 THEN
+        SAR_IG_ALQUILER = imp_tot_22
+    ENDIF
+Else
+    SAR_IG_ALQUILER = 0
+EndIf
+
+'--Deduccion adicional alquiler inquilino--
+If IsNull(imp_tot_33) = M4_False Then
+    IF imp_tot_33 > 0 THEN
+        SAR_DED_ADI_ALQ_INQ = imp_tot_33
+    ENDIF
+Else
+    SAR_DED_ADI_ALQ_INQ = 0
+EndIf
+
+'--Deduccion alquiler propietario--
+If IsNull(imp_tot_34) = M4_False Then
+    IF imp_tot_34 > 0 THEN
+        SAR_DED_ADI_ALQ_PROP = imp_tot_34
+    ENDIF
+Else
+    SAR_DED_ADI_ALQ_PROP = 0
+EndIf
+
+'Total bruto oe mes
+bruto_oe_mes = remun_piso + jur_sac_oe_mes
+
+'2025 siradig 1.22.1 Se agrega a jubilacion OE los nuevos jubilacion ANSES y jubilacion Cajas, manteniendo el calculo de nomina
+jubilacion_oe = jubilacion_oe + jubilacion_anses_oe + jubilacion_cajas_oe
+If IsNull(jubilacion_oe) = M4_False Then SAR_JUBILACION_OE = jubilacion_oe '--total de Jubilacion por otros empleadores--
+
+If IsNull(imp_tot_21) = M4_False And SAR_IND_NO_RET_GAN = 0 Then SAR_DED_INDUM = imp_tot_21 '--Deduc. Adquisicion de indumentaria--
+If IsNull(imp_tot_23) = M4_False Then SAR_DED_RIESGO = imp_tot_23 '--Primas ahorro seguros mixtos--
+If IsNull(imp_tot_24) = M4_False Then SAR_IG_RETIRO_REMUN = imp_tot_24'--Aportes a planes de seguro de retiro--
+If IsNull(imp_tot_25) = M4_False Then SAR_DED_FONDOS = imp_tot_25 '--Cuota partes de fondos comunes de inver--
+If IsNull(imp_tot_30) = M4_False Then SAR_FOND_COMP_PREV = imp_tot_30 '--Ap. Cajas complem de prev--
+If IsNull(imp_tot_31) = M4_False Then SAR_DED_FONDOS_PREV = imp_tot_31 '--Deduc. - Fondos Compensadores de Prevision--
+If IsNull(imp_tot_35) = M4_False Then SAR_PERC_RET_ADUANERAS = imp_tot_35 '--Percepciones/Retenciones aduaneras--
+If IsNull(imp_tot_27) = M4_False Then SAR_27541_A = imp_tot_27 '--Pagos a cuenta - LEY 27.541 Art. 35 a--
+If IsNull(imp_tot_28) = M4_False Then SAR_27541_B = imp_tot_28 '--Pagos a cuenta - LEY 27.541 Art. 35 b--
+If IsNull(imp_tot_29) = M4_False Then SAR_27541_C = imp_tot_29 '--Pagos a cuenta - LEY 27.541 Art. 35 c--
+If IsNull(imp_tot_60) = M4_False Then SAR_27541_D = imp_tot_60 '--Pagos a cuenta - LEY 27.541 Art. 35 d--
+If IsNull(imp_tot_61) = M4_False Then SAR_27541_E = imp_tot_61 '--Pagos a cuenta - LEY 27.541 Art. 35 e--
+If IsNull(imp_tot_62) = M4_False Then SAR_DEB_PROP = imp_tot_62 '--Pagos a cuenta - Impuesto sobre creditos--
+If IsNull(imp_tot_20) = M4_False Then SAR_CANC_EFECTIVO = imp_tot_20 '--Resolucion General (AFIP) 3819/2015--
+If IsNull(imp_tot_32) = M4_False Then SAR_DED_EDUC = imp_tot_32 '--Gastos educativos--
+If IsNull(remun_piso) = M4_False Then SAR_TOT_REMUN_27617_OE = remun_piso '--Importe de remuneraciones para piso IG ley 27617--
+If IsNull(bruto_oe_mes) = M4_False Then SAR_BRUTO_OE_MES = bruto_oe_mes '--Importe bruto oe mes--
+If IsNull(jubilacion_anses_oe) = M4_False Then SAR_JUB_ANSES_OE = jubilacion_anses_oe '--Jubilaciones ANSES OE--
+If IsNull(jubilacion_cajas_oe) = M4_False Then SAR_JUB_CAJA_OE = jubilacion_cajas_oe '--Jubilaciones CAJAS OE--
+If IsNull(asign_fam_oe) = M4_False Then SAR_ASIGN_FAM_OE = asign_fam_oe '--Asignaciones familiares--
+If IsNull(int_pres_emp_oe) = M4_False Then SAR_INT_PRES_EMP_OE = int_pres_emp_oe '--Intereses por Prestamos al Empleador--
+If IsNull(indem_ley_oe) = M4_False Then SAR_INDEM_LEY4003_OE = indem_ley_oe '--Indemnizaciones RG 4003/2017--
+If IsNull(remun_ley_oe) = M4_False Then SAR_REMUN_LEY19640_OE = remun_ley_oe '--Remuneraciones Ley 19.640--
+If IsNull(remun_cct_oe) = M4_False Then SAR_REMUN_CCT_PETRO_OE = remun_cct_oe '--Remuneraciones bajo el CCT 396/2204--
+If IsNull(cursos_semin_oe) = M4_False Then SAR_CURSOS_SEMIN_OE = cursos_semin_oe '--Cursos y Seminarios RG 4003/2017--
+If IsNull(indum_equip_oe) = M4_False Then SAR_INDUM_EQUIP_EMP = indum_equip_oe '--Indumentaria y Equipamiento Provistos por el Empl--
+'version 1.23
+If IsNull(RemunJudicialOE) = M4_False Then SAR_REMUN_PODER_JUDIC_OE = round(RemunJudicialOE,2) '--Remuneraciones Judiciales OE--
+If IsNull(imp_tot_40) = M4_False Then SAR_IMPUESTO_AUTORET = round(imp_tot_40,2) '--Autorretenciones - RG 5683/2025 (Entidad 40)--
+'version 1.24
+If IsNull(NoRetMedCautOE) = M4_False Then SAR_NO_RET_MED_CAUT_OE = round(NoRetMedCautOE,2) '--No retenido - Medidas cautelares OE--
+
+return(0)

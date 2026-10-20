@@ -10,3 +10,4 @@ scope: RECORD
 default_value: null
 internal_type: 15
 item_aux: SCO_ID_CURRENCY_2
+id_cstype: null

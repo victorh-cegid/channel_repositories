@@ -1,0 +1,111 @@
+If SAR_TP_IMPUT = "99" Then Return(0)
+
+'No se ejecuta en la primera quincena
+IF (SAR_TP_IMPUT = "3"  AND SAR_ES_BAJA = 0) THEN RETURN (0)
+
+' Cambio Legal SP042 - Impuesto a las Ganancias.
+' Se elimina el calculo de la cuota prorrateada en Pagas Extras
+If (SAR_TP_IMPUT = "2") Then Return(0)
+
+
+SAR_PAGA_ACTUAL_IMPUT.BEGIN()
+
+mes=SAR_MES_PAGO_IG
+
+dif=0
+saldo=0
+cuota_ant=0
+base=0
+cuota=0
+meses_quedan=0
+
+IF mes <> 1 THEN
+   SAR_ACM_ULT_MES.BEGIN()
+   saldo = SAR_ACM_ULT_MES.SAR_IG_SALDO_SAC 
+   cuota_ant = SAR_ACM_ULT_MES.SAR_IG_CUOT_SAC 
+ENDIF
+
+
+IF saldo < cuota_ant THEN
+   cuota_ant=saldo
+ENDIF
+
+IF (SAR_ES_BAJA=1 ) Then
+    If(SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" ) Then
+      dia_baja = DXDAY(SAR_FECHA_BAJA) 
+      mes_baja = DXMONTH(SAR_FECHA_BAJA) 
+      If mes_baja = 2 Then  
+         If (dia_baja < 28 And DaysOfMonth(2) = 28) Then  
+           Return(0)
+         EndIf  
+         Else  
+         If (dia_baja < 29 And DaysOfMonth(2) = 29) Then  
+           Return(0)
+         EndIf  
+      EndIf
+      If mes_baja = 1 Or mes_baja = 3 Or mes_baja = 5 Or mes_baja = 7 Or mes_baja = 8 Or mes_baja = 10 Or mes_baja = 12 Then  
+         If dia_baja < 31 Then  
+           Return(0)
+         EndIf  
+      EndIf
+      If mes_baja = 4 Or mes_baja = 6 Or mes_baja = 9 Or mes_baja = 11  Then  
+         If dia_baja < 30 Then  
+           Return(0)
+         EndIf  
+      EndIf
+   EndIf
+EndIf
+
+
+'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+IF ((SAR_ES_BAJA=1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") OR mes=12 ) THEN 
+     RETURN(SAR_TOT_PROR_SAC+saldo)
+ENDIF
+
+IF SCO_DT_ALLOCATION <> SCO_DT_PAYMENT THEN
+   dif=SAR_TOT_PROR_SAC-SAR_PAGA_ACTUAL_IMPUT.SAR_TOT_PROR_SAC
+   IF dif >= 0 THEN
+      aux=SAR_PAGA_ACTUAL_IMPUT.SAR_IG_CUOT_SAC
+      SAR_IG_SAC_AD=dif
+      RETURN(aux)
+   ELSE   
+     base=SAR_TOT_PROR_SAC
+   ENDIF
+ELSE
+    SAR_INCRE_PRORRATEOS.BEGIN()
+    base=SAR_TOT_PROR_SAC+SAR_INCRE_PRORRATEOS.SAR_IG_SAC_AD
+    
+ENDIF
+
+
+IF base > 0 THEN
+    IF mes < 6 THEN
+        Return(base)
+    ENDIF
+ENDIF
+
+meses_quedan=12-mes+1
+
+
+IF meses_quedan > 0 THEN
+    IF meses_quedan = 0 THEN
+        cuota=0
+    ELSE
+        cuota=base/meses_quedan
+    ENDIF
+ELSE
+    cuota=base
+ENDIF
+
+
+IF ISNULL(cuota) = TRUE THEN
+    cuota = 0
+ENDIF
+IF saldo=0 THEN
+   RETURN(cuota)
+ELSE
+    IF ISNULL(cuota_ant) = TRUE THEN
+        cuota_ant = 0
+    ENDIF 
+   RETURN(cuota+cuota_ant)
+ENDIF

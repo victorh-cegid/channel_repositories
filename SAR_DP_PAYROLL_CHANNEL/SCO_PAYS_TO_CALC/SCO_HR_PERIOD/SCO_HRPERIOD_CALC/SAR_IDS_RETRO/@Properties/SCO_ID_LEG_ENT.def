@@ -7,3 +7,4 @@ prec: 9
 scale: 0
 scope: RECORD
 default_value: "0"
+id_cstype: 2

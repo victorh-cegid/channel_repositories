@@ -1,0 +1,108 @@
+'Calculo la fecha de inicio de los seis meses anteriores y la inicio del mes actual
+
+    FECHA_BASE    = SAR_PAYS_TO_CALC.SCO_DT_PAYMENT
+    MES_ACTUAL    = DXMONTH(FECHA_BASE)
+
+    MES_JUL = MES_ACTUAL 
+    ACU_SAR_SAC_NETO_2013 = 0
+    
+    'Armo los topes para los semestres
+    IF MES_ACTUAL <= 6 THEN
+        FECHA_TOPE =  TOSTRING(DxYear(FECHA_BASE),0) + "-01" + "-01"
+        FECHA_TOPE = ToDate (FECHA_TOPE)
+    ELSE
+        FECHA_TOPE =  TOSTRING(DxYear(FECHA_BASE),0) + "-07" + "-01"
+        FECHA_TOPE = ToDate (FECHA_TOPE)
+    ENDIF
+    
+    MES_ANT_5 = DxMonth(DateAdd(FECHA_BASE,-5,M4_MONTH))
+    IF MES_ANT_5 < 10 THEN
+        MES_ANT_5 = "0" + TOSTRING(MES_ANT_5,0)
+    ELSE
+        MES_ANT_5 = TOSTRING(MES_ANT_5,0)
+    ENDIF
+    IF MES_ACTUAL < 10 THEN
+        MES_ACTUAL = "0" + TOSTRING(MES_ACTUAL,0)
+    ELSE
+        MES_ACTUAL = TOSTRING(MES_ACTUAL,0)
+    ENDIF
+    FECHA_ACT       = TOSTRING(DxYear(FECHA_BASE),0) + "-" + MES_ACTUAL + "-01"
+    FECHA_INICIO    = ToDate(FECHA_ACT)
+    FECHA_5_ANT     = TOSTRING(DxYear(DateAdd(FECHA_BASE,-5,M4_MONTH)),0) + "-" + MES_ANT_5 + "-01"
+    FECHA_ANT_5     = ToDate(FECHA_5_ANT)
+    FECHA_ANT_4     = DateAdd(FECHA_ANT_5,1,M4_MONTH)
+    FECHA_ANT_3     = DateAdd(FECHA_ANT_5,2,M4_MONTH)
+    FECHA_ANT_2     = DateAdd(FECHA_ANT_5,3,M4_MONTH)
+    FECHA_ANT_1     = DateAdd(FECHA_ANT_5,4,M4_MONTH)
+    FECHA_ANT_RELIQ = DateAdd(FECHA_ANT_5,5,M4_MONTH)
+
+valor_sac_neto = SAR_SAC_NETO_2013
+
+'Calculo normal del  concepto de Deduccion especial + SAC segun se aplique el decreto 2191 2012.
+
+'Cambio Ganancias Ley 26.731
+'----------------------------
+
+'Las bajas a partir del 28 Diciembre 2011 deben ser procesadas con los valores de las tablas de vigencia del 2011
+'Toma su valor por valores empresa IG. No debe tomar su valor del aplicavalor.
+
+
+ind = SAR_IND_DED_IG_2010
+
+'Calculo de la deduccion especial segun informacion recopilada del concepto v792 por Decreto 1242/2013.
+'v792 Es el rango obtenido en el que el empleado se ubica segun su Maxima remuneracion y la zona desfavorable 
+'Y sus valores posibles para este concepto son:
+'2: Empleado que tiene entre 15000$ de rem max y zona no desfavorable.
+'3: Empleado que tiene entre 15000$ de rem max y zona desfavorable.
+
+AUX = SAR_RANGO_REM_IG_2013
+
+    If(SAR_RANGO_REM_IG_2013 = 3)Then
+        Deduccion_Normal = SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_DED_ESPECIAL",SAR_FEC_PAGO_IG,ind)
+    ElseIf(SAR_RANGO_REM_IG_2013 = 2)Then
+        Deduccion_Normal = SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("99","SAR_DED_ESPECIAL",SAR_FEC_PAGO_IG,ind)
+    ElseIf(SAR_RANGO_REM_IG_2013 = 1 And SAR_TP_IMPUT = "99")Then 
+        fec_1=SAR_FEC_PAGO_IG
+        fec_2=SAR_FEC_FIN_IG_DEC        
+        if SAR_IG_DEC142_AUX = 0 and SAR_TP_IMPUT = "99" Then 
+            fec_1 = fec_2
+        endif                            
+        Deduccion_Normal = SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_DED_ESPECIAL",fec_1,ind)
+    Else
+        Deduccion_Normal = SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_DED_ESPECIAL",SAR_FEC_PAGO_IG,ind)
+    EndIf
+
+
+    If (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT And DxYear(SCO_DT_PAYMENT) <> 2012 ) Then
+        Deduccion = TODOUBLE(Deduccion_Normal) 
+    ElseIf MES_JUL = 7 Or (MES_JUL >= 8 And SAR_FECHA_ALTA >= TODATE("2013-08-01")) Then     
+        Deduccion = TODOUBLE(Deduccion_Normal) + TODOUBLE(SAR_SAC_NETO_2013)
+    Else          
+        If DxMonth(SCO_DT_ALLOCATION) = 10 And DxYear(SCO_DT_ALLOCATION) = 2013 Then 
+            vACU_SAR_SAC_NETO_2013 = 0
+                
+            For i = 0 To SCO_AC_HR_PERIOD_READ_1.Count()-1
+                SCO_AC_HR_PERIOD_READ_1.MoveTo(i)
+                If SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_1 AND FECHA_ANT_1 >= FECHA_TOPE AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_INICIO,-1,M4_DAY) THEN                    
+                    If SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_PAYM <> "2" Then                    
+                        vACU_SAR_SAC_NETO_2013 = vACU_SAR_SAC_NETO_2013 + SCO_AC_HR_PERIOD_READ_1.SAR_SAC_NETO_2013
+                    EndIf
+                EndIf
+            Next
+                
+            Deduccion = TODOUBLE(Deduccion_Normal) + valor_sac_neto 'vACU_SAR_SAC_NETO_2013
+            
+        Else
+            Deduccion = TODOUBLE(Deduccion_Normal) + valor_sac_neto 'ACU_SAR_SAC_NETO_2013
+        EndIf      
+    EndIf   
+    
+
+
+'Solo en la paga de reliquidacion del impuesto a las ganancias, sumamos a la deduccion especial
+'el neto obtenido por el decreto 2191/2012, correspondiente a Diciembre.
+If(SAR_TP_IMPUT = "99")Then
+   Deduccion = TODOUBLE(Deduccion_Normal) + valor_sac_neto
+EndIf  
+
+RETURN(Deduccion)

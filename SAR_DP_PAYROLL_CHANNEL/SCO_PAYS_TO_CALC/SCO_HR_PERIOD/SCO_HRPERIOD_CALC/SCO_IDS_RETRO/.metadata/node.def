@@ -3,3 +3,4 @@ NAME: Valores de IDs para la retroactividad de una baja
 ID_TI: SCO_IDS_RETRO
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

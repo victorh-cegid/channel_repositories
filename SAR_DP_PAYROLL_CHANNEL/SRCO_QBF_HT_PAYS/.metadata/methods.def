@@ -1,8 +1,8 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-ADD_TABLE | BLOCK | STRING | 2 | 255 | 0 | ADD_TABLE
-APPLY_EXTERN_FILTER | NODE | NUMBER | 6 | 1 | 0 | Aplicar filtro externo
-APPLY_FILTER | NODE | NUMBER | 6 | 1 | 0 | Aplicar filtro
-APPLY_FILTER_LIST | NODE | NUMBER | 6 | 1 | 0 | APPLY_FILTER_LIST
-APPLY_FILTER_LOAD | NODE | NUMBER | 6 | 1 | 0 | APPLY_FILTER_LOAD
-FILTER_API_LEVEL | NODE | NUMBER | 6 | 1 | 0 | FILTER_API_LEVEL
-SET_DEFAULT_VALUES | NODE | NUMBER | 6 | 1 | 0 | Asignar valores por defecto
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+ADD_TABLE | BLOCK | STRING | 2 | 255 | 0 | ADD_TABLE | 3
+APPLY_EXTERN_FILTER | NODE | NUMBER | 6 | 1 | 0 | Aplicar filtro externo | 3
+APPLY_FILTER | NODE | NUMBER | 6 | 1 | 0 | Aplicar filtro | 3
+APPLY_FILTER_LIST | NODE | NUMBER | 6 | 1 | 0 | APPLY_FILTER_LIST | 3
+APPLY_FILTER_LOAD | NODE | NUMBER | 6 | 1 | 0 | APPLY_FILTER_LOAD | 3
+FILTER_API_LEVEL | NODE | NUMBER | 6 | 1 | 0 | FILTER_API_LEVEL | 3
+SET_DEFAULT_VALUES | NODE | NUMBER | 6 | 1 | 0 | Asignar valores por defecto | 3

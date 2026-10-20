@@ -1,0 +1,12 @@
+item: SCO_NM_PAY_FREQUENCY
+name: Frecuencia pago
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 62
+scale: 0
+scope: BLOCK
+default_value: null
+internal_type: 1
+item_aux: null
+id_cstype: null

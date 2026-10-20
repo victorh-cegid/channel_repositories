@@ -1,0 +1,13 @@
+item: SCO_FILTER_SQL
+name: SQL filtro
+item_type: PROPERTY
+type: STRING
+id_m4_type: 3
+prec: -1
+scale: 0
+scope: BLOCK
+default_value: null
+internal_type: 20
+item_aux: null
+id_cstype: 7
+api_sql_params: true

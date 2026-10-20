@@ -1,2 +1,2 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-GONEXT | BLOCK | STRING | 0 | 0 | 0 | GONEXT
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+GONEXT | BLOCK | STRING | 0 | 0 | 0 | GONEXT | 

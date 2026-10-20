@@ -3,3 +3,4 @@ NAME: Ausencias del empleado para indemnizacion
 ID_TI: SAR_ACM_AUS_EMPLE
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

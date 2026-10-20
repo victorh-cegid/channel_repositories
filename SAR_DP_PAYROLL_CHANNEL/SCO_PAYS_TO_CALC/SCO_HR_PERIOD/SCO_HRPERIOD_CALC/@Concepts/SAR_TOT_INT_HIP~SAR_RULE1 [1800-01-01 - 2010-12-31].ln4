@@ -1,0 +1,9 @@
+aux = #SAR_BASE_ANT_EMP
+
+IF #SAR_MES_PAGO_IG = 0 THEN
+    ban = 0
+ELSE
+    ban = Min(#SAR_TOPE_INT_HIP, #SAR_JUR_INT_HIP / 12 * #SAR_MES_PAGO_IG)
+ENDIF
+
+RETURN(ban)

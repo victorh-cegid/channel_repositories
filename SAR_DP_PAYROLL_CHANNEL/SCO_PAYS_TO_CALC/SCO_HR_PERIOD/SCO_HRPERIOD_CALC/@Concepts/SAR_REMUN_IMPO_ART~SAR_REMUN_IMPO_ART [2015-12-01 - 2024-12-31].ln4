@@ -1,0 +1,126 @@
+REM_IMP_9 = 0
+base_Cot_art = 0
+rem_impo = 0
+sac_impo = 0
+vac_impo = 0
+tope1 = 0
+tope2 = 0
+tope3 = 0
+tope4 = 0
+base1 = 0
+base2 = 0
+base3 = 0
+base4 = 0
+
+'Preparo la remuneracion imponible
+'----------------------------------------------------------------------.
+real1 = SAR_TOT_DEV_COTIZ 
+
+If(SAR_ASIGNACION_ESTIMULO > 0)Then 
+   real1 = real1 + SAR_ASIGNACION_ESTIMULO 'Sumamos la asignacion estimulo para pasantes
+EndIf
+
+IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Calculo sin tope
+    base1 = Max(real1,0)
+ELSE
+    IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
+        tope1 = (SAR_TOPE_ART_VAR * SAR_VALOR_AMPO) - SAR_BASE_COTIZ_ART
+        tope1 = tope1 / SAR_DIAS_NORM_COTIZ * (SAR_DIAS_NORM_COTIZ - SAR_DIAS_VACACIONES) 
+    ELSE
+        SAR_ACM_ACT_CONTRIB.BEGIN()
+        'Resto al tope lo acumulado en el mes
+        vac_periodo1 = SAR_ACM_ACT_CONTRIB.SAR_DIAS_VACACIONES + SAR_DIAS_VACACIONES
+        tope1 = ((SAR_TOPE_ART_VAR * SAR_VALOR_AMPO) - SAR_BASE_COTIZ_ART) / SAR_DIAS_NORM_COTIZ *(SAR_DIAS_NORM_COTIZ - vac_periodo1)
+        tope1 = tope1 -  SAR_ACM_ACT_CONTRIB.SAR_REMUN_IMPO - SAR_ACM_ACT_CONTRIB.SAR_BASE_COTIZ_ART 
+    ENDIF
+    base1 = Max(real1,0)
+    base1 = Min(tope1,base1)
+ENDIF
+rem_impo = base1
+'----------------------------------------------------------------------.
+
+'Preparo el SAC imponible
+'----------------------------------------------------------------------.
+sac = SAR_TOT_SAC_COTIZ
+
+IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Calculo sin tope
+    base2 = sac
+ELSE
+    tope2 = ((SAR_TOPE_ART_VAR * SAR_VALOR_AMPO)*(SAR_U_PAGA_EX_1 + SAR_U_PAGA_EX_2 + SAR_U_PAGA_AJ_EX_1 + SAR_U_PAGA_AJ_EX_2)*180)/360
+    
+    IF (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") THEN
+        tope2 = ((SAR_TOPE_ART_VAR * SAR_VALOR_AMPO)*(SAR_U_EGRESO_PAGA_1+SAR_U_EGRESO_PAGA_2)*180)/360
+    ENDIF
+        
+    base2 = Min(tope2,sac)
+ENDIF
+sac_impo = base2
+'----------------------------------------------------------------------.
+
+'Preparo el VAC imponible
+'----------------------------------------------------------------------.
+IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Calculo sin tope
+    aux = SAR_IMPORTE_LICENCIAS    
+    vac = SAR_VACACIONES
+    base3 = SAR_VACACIONES
+ELSE
+    IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
+        tope3 = (SAR_TOPE_ART_VAR * SAR_VALOR_AMPO) 
+    ELSE
+        SAR_ACM_ACT_CONTRIB.BEGIN()
+        'Resto al tope lo acumulado en el mes
+        tope3 = (SAR_TOPE_ART_VAR * SAR_VALOR_AMPO) - SAR_ACM_ACT_CONTRIB.SAR_VAC_IMPO 
+    ENDIF
+    IF SAR_DIAS_NORM_COTIZ = 0 THEN
+        base3 = 0
+    ELSE
+        base3 = tope3/SAR_DIAS_NORM_COTIZ
+    ENDIF
+
+    tope3 = base3 * SAR_UN_VACACIONES
+    aux = SAR_IMPORTE_LICENCIAS    
+    vac = SAR_VACACIONES
+    base3 = Min(tope3,vac)
+
+ENDIF
+vac_impo = base3
+'----------------------------------------------------------------------.
+
+'Preparo la base de Cotizacion ART
+'----------------------------------------------------------------------.
+IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Calculo sin tope
+    aux = SAR_DIAS_ACCIDENTE
+    diasart = SAR_DIAS_ART
+    base4 = SAR_PRESTACION_ART
+ELSE
+    IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
+        tope4 = (SAR_TOPE_ART_VAR * SAR_VALOR_AMPO) 
+    ELSE
+        SAR_ACM_ACT_CONTRIB.BEGIN()
+        'resto al tope lo acumuldo en el mes
+        tope4 = (SAR_TOPE_ART_VAR * SAR_VALOR_AMPO) - SAR_ACM_ACT_CONTRIB.SAR_BASE_COTIZ_ART  
+    ENDIF
+    aux = SAR_DIAS_ACCIDENTE
+    diasart = SAR_DIAS_ART
+    IF diasart = 0 THEN
+        basetop = 0
+    ELSE
+        basetop = tope4 / SAR_DIAS_NORM_COTIZ * diasart
+    ENDIF
+    
+    real4 = SAR_PRESTACION_ART
+    IF real4 < basetop THEN
+        base4 = real4 
+    ELSE
+        base4= basetop
+    ENDIF  
+ENDIF
+base_Cot_art = base4
+'----------------------------------------------------------------------.
+REM_IMP_9 = base_Cot_art + rem_impo + sac_impo + vac_impo
+
+IF (SAR_IND_REM9_SIN_TOPE = 1 OR SAR_IND_REM9_SIN_TOPE = 2) THEN 'Calculo sin tope+No Remunerativos O con tope+No Remunerativos
+    REM_IMP_9 = REM_IMP_9 + SAR_TOT_NO_REMUN
+ENDIF
+
+RETURN(REM_IMP_9)

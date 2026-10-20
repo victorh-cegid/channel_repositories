@@ -1,0 +1,2 @@
+' toma el valor de valores sociedad
+return (#SAR_PP_DOB_INDEM)

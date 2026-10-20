@@ -3,3 +3,4 @@ NAME: Pagas para calcular
 ID_TI: SAR_PAYS_TO_CALC
 IS_ROOT: true
 IS_FREE: false
+ID_CSTYPE: 7

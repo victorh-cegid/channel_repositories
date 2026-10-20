@@ -1,0 +1,12 @@
+item: ID_ORGANIZATION
+name: ID. Sociedad
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 4
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null
+id_cstype: 7

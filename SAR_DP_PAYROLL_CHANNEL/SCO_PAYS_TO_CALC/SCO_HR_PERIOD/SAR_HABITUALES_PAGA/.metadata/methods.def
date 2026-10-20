@@ -1,2 +1,2 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-DESTROYBLOCK | NODE | NUMBER | 6 | 18 | 0 | Destruir los registros
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+DESTROYBLOCK | NODE | NUMBER | 6 | 18 | 0 | Destruir los registros | 3

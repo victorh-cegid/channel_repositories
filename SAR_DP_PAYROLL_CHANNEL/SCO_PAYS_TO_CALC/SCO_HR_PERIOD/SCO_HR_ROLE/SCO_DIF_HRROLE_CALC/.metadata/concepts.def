@@ -1,15 +1,15 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SAR_ID_ACTIVIDAD | RECORD | STRING | 2 | 4 | 0 | Id Actividad
-SAR_ID_CENTRO_TRAB | RECORD | STRING | 2 | 8 | 0 | Centro de trabajo del empleado
-SAR_INDIC_REDUC_ZON_DES | RECORD | NUMBER | 6 | 1 | 0 | Indicativo Reduccion por zona Art 1 Ley 23272
-SAR_P_SAL_BASE | RECORD | CURRENCY | 8 | 18 | 6 | Precio sueldo Rol
-SCO_DT_PRORATE_ROLE | RECORD | DATE | 4 | 0 | 0 | Fecha a considerar en prorateos
-SCO_DT_SLICE_ROLE | RECORD | DATE | 4 | 0 | 0 | Fecha del tramo
-SCO_ID_JOB_CODE | RECORD | STRING | 2 | 8 | 0 | Puesto del empleado
-SCO_ID_WORK_CENTER | RECORD | STRING | 2 | 8 | 0 | ID Lugar trabajo
-SCO_ID_WORK_UNIT | RECORD | STRING | 2 | 8 | 0 | ID Unidad org.
-SCO_NUM_DAYS_CAL_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Numero de dias festivos
-SCO_NUM_DAYS_THEO_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Numero de dias de tiempo teorico
-SCO_NUM_PRESEN_DAYS_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Numero de dias de presencia
-SCO_PAY_RATE | RECORD | CURRENCY | 8 | 18 | 6 | Retribucion personal
-SSP_ID_CENT_COSTO | RECORD | STRING | 2 | 15 | 0 | Centro de costo
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+SAR_ID_ACTIVIDAD | RECORD | STRING | 2 | 4 | 0 | Id Actividad | 
+SAR_ID_CENTRO_TRAB | RECORD | STRING | 2 | 8 | 0 | Centro de trabajo del empleado | 
+SAR_INDIC_REDUC_ZON_DES | RECORD | NUMBER | 6 | 1 | 0 | Indicativo Reduccion por zona Art 1 Ley 23272 | 
+SAR_P_SAL_BASE | RECORD | CURRENCY | 8 | 18 | 6 | Precio sueldo Rol | 
+SCO_DT_PRORATE_ROLE | RECORD | DATE | 4 | 0 | 0 | Fecha a considerar en prorateos | 
+SCO_DT_SLICE_ROLE | RECORD | DATE | 4 | 0 | 0 | Fecha del tramo | 
+SCO_ID_JOB_CODE | RECORD | STRING | 2 | 8 | 0 | Puesto del empleado | 
+SCO_ID_WORK_CENTER | RECORD | STRING | 2 | 8 | 0 | ID Lugar trabajo | 
+SCO_ID_WORK_UNIT | RECORD | STRING | 2 | 8 | 0 | ID Unidad org. | 
+SCO_NUM_DAYS_CAL_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Numero de dias festivos | 
+SCO_NUM_DAYS_THEO_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Numero de dias de tiempo teorico | 
+SCO_NUM_PRESEN_DAYS_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Numero de dias de presencia | 
+SCO_PAY_RATE | RECORD | CURRENCY | 8 | 18 | 6 | Retribucion personal | 
+SSP_ID_CENT_COSTO | RECORD | STRING | 2 | 15 | 0 | Centro de costo | 

@@ -1,0 +1,15 @@
+'Este concepto prorratea el importe del SAC tomandolo del total 3700-SAR_TOT_SAC_RG3976 para llevarlo en forma de provision al impuesto de Ganancias.
+
+'No se calcula en reliquidacion ni en paga de Anticipo de Vacaciones.
+'Si el empleado es baja no se calcula porque se sumara al impuesto el SAC realmente percibido
+If SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "88" OR SAR_ES_BAJA = 1 Or SAR_IND_AJUSTE_SAC = 1 Then
+    Return(0) 
+EndIf
+
+haberes_paga = SAR_TOT_SAC_RG3976 'Total haberes de la paga actual.
+sac_mensual = haberes_paga / 12
+
+'Control retroactividad a?os anteriores: No genera diferencias en el acumulado, son para el siguiente a?o fiscal.
+If DxYear(SAR_FEC_PAGO_IG)>DxYear(SAR_FEC_IMPUT_IG) Then sac_mensual = SAR_AC_SAC_REV[0].SAR_B_SAC_MES_RG3976
+
+Return(sac_mensual)

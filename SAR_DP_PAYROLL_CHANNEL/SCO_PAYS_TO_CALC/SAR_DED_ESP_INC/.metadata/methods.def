@@ -1,2 +1,2 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-DESTROY | BLOCK | NUMBER | 6 | 18 | 0 | DESTROY
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+DESTROY | BLOCK | NUMBER | 6 | 18 | 0 | DESTROY | 3

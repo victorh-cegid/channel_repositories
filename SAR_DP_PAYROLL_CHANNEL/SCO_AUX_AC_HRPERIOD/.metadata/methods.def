@@ -1,21 +1,21 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-ADDFILTER | NODE | NUMBER | 6 | 1 | 0 | ADDFILTER
-CUREXCHANGERECORDROUNDED | RECORD | NUMBER | 6 | 1 | 0 | CUREXCHANGERECORDROUNDED
-CopyRegister | RECORD | NUMBER | 6 | 1 | 0 | Copiar registro
-DestroyBlock | BLOCK | NUMBER | 6 | 1 | 0 | Eliminar bloque
-ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor
-ExecuteGroup | BLOCK | NUMBER | 6 | 1 | 0 | Ejecutar grupo
-Flatten | RECORD | NUMBER | 6 | 1 | 0 | Flatten
-GONEXT | RECORD | NUMBER | 6 | 18 | 0 | Siguiente
-GOPREVIOUS | RECORD | NUMBER | 6 | 18 | 0 | Anterior
-JOINSLICES | NODE | NUMBER | 6 | 1 | 0 | JOINSLICES
-LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque
-REMOVEFILTER | NODE | NUMBER | 6 | 18 | 0 | REMOVEFILTER
-SAR_AFTER_LOAD | BLOCK | STRING | 0 | 1 | 0 | SAR_AFTER_LOAD
-SCO_CALL_SORT | NODE | NUMBER | 6 | 18 | 0 | Ordena los registros del nodo
-SCO_EX_CURR | RECORD | NUMBER | 6 | 1 | 0 | Cambiar moneda
-SCO_GL_SELECT | BLOCK | NUMBER | 6 | 1 | 0 | Asignar sentencia de carga
-SRCO_RP_CUR_EXCHANGE | RECORD | NUMBER | 6 | 18 | 0 | Cambio de moneda
-SRCO_RP_PREPARE_LOAD | BLOCK | NUMBER | 6 | 1 | 0 | Preparar carga
-UNFLATTEN | BLOCK | NUMBER | 6 | 4 | 0 | UNFLATTEN
-curExchangeRecord | NODE | NUMBER | 6 | 1 | 0 | Cambio moneda del registro
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+ADDFILTER | NODE | NUMBER | 6 | 1 | 0 | ADDFILTER | 3
+CUREXCHANGERECORDROUNDED | RECORD | NUMBER | 6 | 1 | 0 | CUREXCHANGERECORDROUNDED | 3
+CopyRegister | RECORD | NUMBER | 6 | 1 | 0 | Copiar registro | 
+DestroyBlock | BLOCK | NUMBER | 6 | 1 | 0 | Eliminar bloque | 
+ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor | 7
+ExecuteGroup | BLOCK | NUMBER | 6 | 1 | 0 | Ejecutar grupo | 
+Flatten | RECORD | NUMBER | 6 | 1 | 0 | Flatten | 
+GONEXT | RECORD | NUMBER | 6 | 18 | 0 | Siguiente | 
+GOPREVIOUS | RECORD | NUMBER | 6 | 18 | 0 | Anterior | 
+JOINSLICES | NODE | NUMBER | 6 | 1 | 0 | JOINSLICES | 3
+LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque | 
+REMOVEFILTER | NODE | NUMBER | 6 | 18 | 0 | REMOVEFILTER | 3
+SAR_AFTER_LOAD | BLOCK | STRING | 0 | 1 | 0 | SAR_AFTER_LOAD | 
+SCO_CALL_SORT | NODE | NUMBER | 6 | 18 | 0 | Ordena los registros del nodo | 
+SCO_EX_CURR | RECORD | NUMBER | 6 | 1 | 0 | Cambiar moneda | 2
+SCO_GL_SELECT | BLOCK | NUMBER | 6 | 1 | 0 | Asignar sentencia de carga | 2
+SRCO_RP_CUR_EXCHANGE | RECORD | NUMBER | 6 | 18 | 0 | Cambio de moneda | 3
+SRCO_RP_PREPARE_LOAD | BLOCK | NUMBER | 6 | 1 | 0 | Preparar carga | 3
+UNFLATTEN | BLOCK | NUMBER | 6 | 4 | 0 | UNFLATTEN | 
+curExchangeRecord | NODE | NUMBER | 6 | 1 | 0 | Cambio moneda del registro | 

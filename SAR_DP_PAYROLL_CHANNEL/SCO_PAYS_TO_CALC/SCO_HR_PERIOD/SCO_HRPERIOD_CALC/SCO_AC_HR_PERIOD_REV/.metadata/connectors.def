@@ -1,8 +1,8 @@
-# parent_node | parent_ti | connection_type
-SCO_HRPERIOD_CALC | SCO_HRPERIOD_CALC | RECORD_BLOCK
-SCO_AC_HR_PERIOD_REV | SCO_AC_HR_PERIOD_REV | FREE
+# parent_node | parent_ti | connection_type | origin
+SCO_HRPERIOD_CALC | SCO_HRPERIOD_CALC | RECORD_BLOCK | INHERITED from SCO_DP_PAYROLL_CHANNEL
+SCO_AC_HR_PERIOD_REV | SCO_AC_HR_PERIOD_REV | FREE | INHERITED from SCO_DP_PAYROLL_CHANNEL
 
-# child_node | connection_type
-SCO_AC_HR_PERIOD_REV | FREE
+# child_node | connection_type | origin
+SCO_AC_HR_PERIOD_REV | FREE | INHERITED from SCO_DP_PAYROLL_CHANNEL
 
-# ti | item | parent_node | parent_ti | parent_item | precedence
+# ti | item | parent_node | parent_ti | parent_item | precedence | id_cstype | origin

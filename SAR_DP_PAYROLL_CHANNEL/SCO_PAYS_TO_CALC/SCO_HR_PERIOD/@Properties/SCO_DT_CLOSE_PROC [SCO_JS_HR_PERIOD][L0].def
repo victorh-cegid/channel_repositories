@@ -1,9 +1,0 @@
-item: SCO_DT_CLOSE_PROC
-name: Fecha cierre proceso
-item_type: PROPERTY
-type: DATE
-id_m4_type: 4
-prec: 10
-scale: 0
-scope: BLOCK
-default_value: null

@@ -1,0 +1,13 @@
+item: SAR_INDIC_REDUC_ZON_DES
+name: Indicativo Reduccion por zona Art 1 Ley 23272
+column_name: SAR_INDIC_REDUC_ZON_DES
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 1
+scale: 0
+scope: RECORD
+default_value: "0"
+internal_type: 1
+item_aux: null
+id_cstype: null

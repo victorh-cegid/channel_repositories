@@ -3,3 +3,4 @@ NAME: Empleados con error
 ID_TI: SCO_ERROR_EMPLOYEE
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 7

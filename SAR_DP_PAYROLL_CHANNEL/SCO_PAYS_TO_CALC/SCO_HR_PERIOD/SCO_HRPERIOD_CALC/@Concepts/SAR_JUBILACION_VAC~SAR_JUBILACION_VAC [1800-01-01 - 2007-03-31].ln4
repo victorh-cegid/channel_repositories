@@ -1,0 +1,14 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+edad = SAR_EDAD
+valor = 0
+IF edad >= 18 THEN
+    porc = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION*SAR_PP_AP_JUBILA/100)
+    valor = SAR_VAC_IMPO * porc / 100
+ENDIF
+IF ISNULL(valor) = TRUE THEN
+    valor = 0
+ENDIF
+Return(valor)

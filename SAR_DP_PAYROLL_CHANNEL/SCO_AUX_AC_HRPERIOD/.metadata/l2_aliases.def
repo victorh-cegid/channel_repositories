@@ -1,0 +1,6 @@
+# ti_alias: declaration
+# alias | id_ti | id_t3_used | origin
+EXCHANGE_RATES | SCO_AUX_AC_HRPERIOD | EXCHANGE_RATES | INHERITED from SCO_AUX_AC_HRPERIOD
+
+# alias_resolution: resolution
+# alias | id_t3_used | instance | id_open_mode_tp | id_shared_policy | cs_access | id_org_type | id_organization | id_approle_used | origin

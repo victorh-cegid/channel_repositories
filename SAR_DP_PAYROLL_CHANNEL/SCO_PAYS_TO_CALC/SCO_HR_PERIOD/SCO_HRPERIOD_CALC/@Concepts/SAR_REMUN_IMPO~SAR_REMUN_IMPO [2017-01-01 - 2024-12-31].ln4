@@ -1,0 +1,57 @@
+'Se filtra la paga extra de vacaciones
+If SAR_TP_IMPUT = "77" Then Return(0)
+
+'Se filtra la paga extra de sac
+IF SAR_TP_IMPUT = "2" THEN RETURN(0)
+
+IF SAR_BASE_COTIZ_ART > SAR_TOPE_COTIZ THEN
+    tope = 0
+ELSE
+    tope = SAR_TOPE_COTIZ - SAR_BASE_COTIZ_ART
+ENDIF
+
+IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
+    tope = tope / SAR_DIAS_NORM_COTIZ * (SAR_DIAS_NORM_COTIZ - SAR_DIAS_VACACIONES)
+ELSE
+    SAR_ACM_ACT_CONTRIB.BEGIN()
+    SAR_REMUN_BASE_SAL_FAM.BEGIN()
+    'Resto al tope lo acumulado en el mes
+    vac_periodo = SAR_ACM_ACT_CONTRIB.SAR_DIAS_VACACIONES + SAR_DIAS_VACACIONES
+    tope = tope / SAR_DIAS_NORM_COTIZ *(SAR_DIAS_NORM_COTIZ - vac_periodo)
+    tope = tope - SAR_REMUN_BASE_SAL_FAM.SAR_REMUN_IMPO
+ENDIF
+
+real= SAR_TOT_DEV_COTIZ
+base = Max(real,0)
+base = Min(tope,base)
+
+'Horas Extras RG3976
+edad = SAR_EDAD
+base_extras_trib = SAR_TOT_HS_EX_IG 
+base_extras_exen = SAR_TOT_HS_EX_EX_IG
+valor_trib = 0
+valor_exen = 0
+If edad >= 18 THEN
+    porc = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032 * SAR_PP_AP_INSSJP/100)
+    'Si estamos en tope SIPA, hacemos la proporcion para hallar la parte del descuento que corresponde
+    If base = tope and real <> 0 Then
+        desc_tot_ley = base * (porc/100)
+        porc_prop_trib = base_extras_trib/real
+        porc_prop_exen = base_extras_exen/real
+        valor_trib = desc_tot_ley * porc_prop_trib
+        valor_exen = desc_tot_ley * porc_prop_exen
+        If SCO_PAY_FREQ_ALLOC = "003" Then
+            valor_trib = 0
+            valor_exen = 0            
+        EndIf
+    Else
+        valor_trib = base_extras_trib * porc / 100
+        valor_exen = base_extras_exen * porc / 100
+    EndIf
+EndIf
+'asignamos los valores de los descuentos tributable y exento.
+SAR_L19032_HS_FINDE_TRIB = valor_trib
+SAR_L19032_HS_FINDE_EXEN = valor_exen
+'Fin horas extras RG3976
+
+Return(base)

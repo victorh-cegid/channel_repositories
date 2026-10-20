@@ -9,4 +9,5 @@ scope: BLOCK
 default_value: null
 internal_type: 33
 item_aux: null
+id_cstype: 2
 api_sql_extension: true

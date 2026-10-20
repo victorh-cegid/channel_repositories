@@ -3,3 +3,4 @@ NAME: Cuotas del prestamo
 ID_TI: SAR_LN_QUOTAS_PAYROLL
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

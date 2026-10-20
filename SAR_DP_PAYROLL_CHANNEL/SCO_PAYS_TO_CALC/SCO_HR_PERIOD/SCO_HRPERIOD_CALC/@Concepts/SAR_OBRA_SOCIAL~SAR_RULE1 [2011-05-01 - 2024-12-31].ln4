@@ -1,0 +1,45 @@
+valor = 0
+
+If SAR_TP_IMPUT = "77" Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Then
+    Return(0)
+EndIf
+
+base = SAR_REMUN_IMPO_OS + SAR_BASE_COTIZ_ART_OS
+porc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
+
+
+' Pregunto si es la paga de la 2da. Quincena
+If SCO_PAY_FREQ_ALLOC <> "004" Then 
+    vQuinc = DxDay(SCO_DT_PAYMENT)
+ 
+    If vQuinc > 15 Then
+        vBaseQuincAnt = SAR_ACM_ACT_CONTRIB.SAR_TOT_DEV_COTIZ
+        vBaseQuincAnt = vBaseQuincAnt + SAR_ACM_ACT_CONTRIB.SAR_PREST_SUSP_RES_397
+        
+        ' Si toma valor Rem Impo O.S. realizo el calculo
+        IF SAR_REMUN_IMPO_OS > 0 Then                    
+            If vBaseQuincAnt > 0 Then
+                base = base + vBaseQuincAnt
+            EndIf
+            
+            ' Busco el valor de la contribucon de la 1Quincena
+            vOS = SAR_ACM_ACT_CONTRIB.SAR_OBRA_SOCIAL   
+
+            If IsNull(vOS) = M4_False Then
+                valor = ( base * porc / 100 ) - vOS
+            Else
+                valor = ( base * porc / 100 )
+            EndIf
+        EndIf
+    Else
+        ' Base para la 1ra Paga Quincenal
+        valor = base * porc / 100
+    EndIf
+
+Else
+    ' Base para paga Mensuales
+    valor = base * porc / 100
+EndIf
+
+
+Return(valor)

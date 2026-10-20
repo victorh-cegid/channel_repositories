@@ -1,0 +1,482 @@
+'Recorro el acumulado para obtener el 792 del mes anterior al que estoy liquidando.
+    '----------------------------------------------------------------------------------------------
+    ANIO_ACT = DXYEAR(SAR_FEC_PAGO_IG)
+    MES_ACT  = DXMONTH(SAR_FEC_PAGO_IG)
+    
+    if SAR_ES_BAJA = 1 Then
+        ANIO_ACT = DXYEAR(SCO_DT_PAYMENT)
+        MES_ACT  = DXMONTH(SCO_DT_PAYMENT)
+    endif
+    
+    If(MES_ACT = 1)Then
+        MES_ANT = 12   
+        ANIO_ANT = ANIO_ACT - 1
+    Else   
+        MES_ANT = MES_ACT - 1 
+        ANIO_ANT = ANIO_ACT  
+    EndIf
+    
+    DIAS_MES_ANT     = DaysOfMonth(MES_ANT)
+    DIAS_MES_ANT_STR = ToString(DIAS_MES_ANT, 0)
+    
+    If(MES_ANT < 10)Then
+        MES_ANT_STR = "0" + ToString(MES_ANT, 0)
+    Else
+        MES_ANT_STR = ToString(MES_ANT, 0)
+    EndIf
+    
+    ANIO_ANT_STR  = Tostring(ANIO_ANT, 0)
+    
+    F_MES_ANT_INI = ToDate(ANIO_ANT_STR + "-" + MES_ANT_STR + "-" + "01")
+    F_MES_ANT_FIN = ToDate(ANIO_ANT_STR + "-" + MES_ANT_STR + "-" + DIAS_MES_ANT_STR)  
+    
+    Mejor_Remu_Acu_Abril = 0
+    Mejor_Remu_Acu_Mayo  = 0
+    Rango_Abril          = 0 
+    Rango_Mayo           = 0 
+
+    mes_mejor_rem = DxMonth(SCO_DT_PAYMENT)
+    
+    'Iniciamos la lectura del acumulado:
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()                 'Iniciamos el acumulado
+    CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el numero de registros
+    
+    V792_ant  = 0
+    If(CantReg >= 0) Then
+      ContReg = 0                                     'Lleva el numero leido de registros 
+      mejor_rem_acu = 0
+
+      While (ContReg <= CantReg)
+         SCO_AC_HR_PERIOD_READ_1.MoveTo(ContReg)
+         If(SCO_AC_HR_PERIOD_READ_1.SAR_FEC_PAGO_IG >= F_MES_ANT_INI And SCO_AC_HR_PERIOD_READ_1.SAR_FEC_PAGO_IG <= F_MES_ANT_FIN And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION = SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT AND SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_ALLOC = "1") Then
+             V792_ant  = SCO_AC_HR_PERIOD_READ_1.SAR_RANGO_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM)              
+         EndIf
+         'Tomamos la remuneracion de abril del 2015 por si debe usarse luego:
+         If(DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) = 4 And DxYear(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) = 2015)Then
+             Mejor_Remu_Acu_Abril = SCO_AC_HR_PERIOD_READ_1.SAR_MAYOR_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM)
+             Rango_Abril          = SCO_AC_HR_PERIOD_READ_1.SAR_RANGO_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM) 
+         EndIf
+          
+         If(DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) = 5 And DxYear(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) = 2015)Then
+             Mejor_Remu_Acu_Mayo = SCO_AC_HR_PERIOD_READ_1.SAR_MAYOR_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM)
+             Rango_Mayo          = SCO_AC_HR_PERIOD_READ_1.SAR_RANGO_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM) 
+         EndIf
+         
+         'Se obtiene el mes de la mejor remuneracion especialmente para cuando no se recalcula la mejor remuneracion en forma dinamica.
+         If(DxYear(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) = DxYear(SCO_DT_PAYMENT))Then
+             Mejor_Remu_Acu_Actual = SCO_AC_HR_PERIOD_READ_1.SAR_MAYOR_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM)
+             If(Mejor_Remu_Acu_Actual >= mejor_rem_acu)Then
+                 mejor_rem_acu = Mejor_Remu_Acu_Actual
+                 mes_mejor_rem = DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT)
+             EndIf
+         EndIf
+         ContReg = ContReg + 1
+      Wend    
+    EndIf
+    '-------------------------------------------------------------------------------
+recalc = 0
+If (V792_ant = 3) or(V792_ant = 0) Then
+   recalc = 1
+EndIf
+'--------------------------------------------------------------------------------------------------------------
+' Por Resolucion 3770
+'       Para altas entre Septiembre 2013 y Mayo 2015, con Rango 2 y
+'       Para rango 3 y 0 sin importar el alta
+'       se debe recalcular la mejor Remuneracion teniendo en cuenta lo percibido de Enero a Abril de 2015.
+'--------------------------------------------------------------------------------------------------------------  
+
+'Se detecta si se cambio la zona en el mes.
+'Si el cambio fue de desfavorable a comun la mejor remuneracion debe ser la obtenida en abril de 2015.
+'Luego con esta remuneracion se obtendran los rangos correspondientes en los conceptos 792 y 793.
+mes_del_cambio = 0
+
+Mes_De_Mayo = DxDate(DxDaysOfMonth(5, 2015), 5, 2015)
+Mes_Actual  = DxDate(DxDaysOfMonth(DxMonth(SCO_DT_PAYMENT), DxYear(SCO_DT_PAYMENT)), DxMonth(SCO_DT_PAYMENT), DxYear(SCO_DT_PAYMENT))
+
+Zona_Mayo   = SAR_HR_ROLE.SAR_OBTENER_LUGAR_ZONA(Mes_De_Mayo)
+Zona_Mayo   = ToString(ToDouble(Zona_Mayo), 0)
+Zona_Actual = SAR_HR_ROLE.SAR_OBTENER_LUGAR_ZONA(Mes_Actual)
+Zona_Actual = ToString(ToDouble(Zona_Actual), 0)
+
+Recalc_Zona = 0
+Datos_A_Abril = 0 
+If(SAR_FECHA_ALTA < DxDate(1, 9, 2013) And (Rango_Abril <> 1) And SAR_TP_IMPUT <> "99")Then
+  Datos_A_Abril = 1 
+  If(Rango_Abril = 2 Or Rango_Abril = 3)Then
+       If(Zona_Mayo = "1")Then
+            If(Zona_Actual = "0")Then
+              MaxV = Mejor_Remu_Acu_Abril        
+            Else
+              Recalc_Zona = 1
+            EndIf      
+       Else
+            MaxV = Mejor_Remu_Acu_Abril        
+       EndIf
+  Else     
+      If(Mejor_Remu_Acu_Mayo > 15000)Then
+         Recalc_Zona = 1    
+      Else   
+         MaxV = Mejor_Remu_Acu_Mayo  
+      EndIf         
+  EndIf     
+EndIf
+
+If  (((SAR_FECHA_ALTA >= ToDate("2013-09-01"))and (SAR_FECHA_ALTA < SCO_DT_ALLOCATION) and  (V792_ant = 2)) or  ((recalc = 1 And Datos_A_Abril = 0) Or Recalc_Zona = 1)) and (SCO_DT_PAYMENT = SCO_DT_ALLOCATION ) And (SAR_IND_RECALC_MEJOR_REM = 1) and (SAR_TP_IMPUT <> "99" and Rango_Mayo <> 1)Then         
+    
+    ' Se recalculan los conceptos no habituales de Enero a Abril de 2015 y se evalua la mejor remuneracion.
+    '------------------------------------------------------------------------------------------------------
+    
+    ContConcep  = 0     
+    TotNoHabitPaga = 0
+    Max_Rem = 0
+    Max_Rem_Ant = 0   
+    
+    SAC_1   = 0
+    SAC_2   = 0
+    EGRE_1  = 0    
+    EGRE_2  = 0    
+    GREM    = 0
+    Val_Mes = 0   
+    Val_Mes_Paga = 0
+    Mes_Ini = 1     
+    Mes_Fin = DxMonth(SCO_DT_ALLOCATION)
+
+    Mes_De_Paga = DxMonth(SCO_DT_PAYMENT)
+    Mes_Fin_Habit = ToString(Mes_De_Paga, 0)
+    If(DxMonth(SCO_DT_PAYMENT) < 10)Then
+        Mes_Fin_Habit = "0" + Mes_Fin_Habit
+    EndIf             
+
+    Anio_De_Paga = DxYear(SCO_DT_PAYMENT)
+    Anio         = DxYear(SCO_DT_ALLOCATION)
+
+    Mes_Busq_Habit = ToDate(ToString(Anio, 0)+ "/" + Mes_Fin_Habit + "/01")
+    
+    If(Anio_de_Paga = 2015)Then
+       Mes_Del_Proceso = ToDate("2015/06/01")'En 2015 se busca desde Junio. 
+    Else   
+       Mes_Del_Proceso = ToDate(ToString(Anio_De_Paga, 0) + "/01/01")'Del 2016 en adelante se busca desde el principio del a?o.
+    EndIf
+    
+    Mes_De_Vig = ToString(DxMonth(SCO_DT_PAYMENT), 0)
+    If(DxMonth(SCO_DT_PAYMENT) < 10)Then
+        Mes_De_Vig = "0" + Mes_De_Vig
+    EndIf             
+
+    Mes_De_Imput = ToString(DxMonth(SCO_DT_ALLOCATION), 0)
+    If(DxMonth(SCO_DT_ALLOCATION) < 10)Then
+        Mes_De_Imput = "0" + Mes_De_Imput
+    EndIf             
+
+    
+    Fecha_De_Vig   = ToDate(ToString(DxYear(SCO_DT_PAYMENT), 0) + "/" + Mes_De_Vig + "/01")
+    Fecha_De_Impu  = ToDate(ToString(DxYear(SCO_DT_ALLOCATION), 0) + "/" + Mes_De_Imput + "/01")
+        
+    SAR_HABITUALES.DESTROYBLOCK()                   'Inicializamos los conceptos no habituales del empleadoc
+    SAR_HABITUALES.SAR_P_PROCESO = Mes_Del_Proceso
+    
+    SAR_HABITUALES.LOAD_BLK() 
+    SAR_HABITUALES.Begin() 
+
+    SAR_HABITUALES.BeginTransaction()
+
+    'Procesamos el alta del empleado en caso de serlo o si el mes es el primero del a?o fiscal (Enero):
+    '      Buscamos todos los conceptos candidatos:
+    '                   1- Los que estan siendo cargados en la paga o tengan valor acumulado por si existe paga extra tendran una ocurrencia.
+    '                   2- El resto no tendran ocurrencias. 
+    '      y para ellos cargamos en SAR_HABITUALES una fila nueva. 
+    '      Esto lo hace el metodo SAR_ALTAS_HABITUALES.
+    '      Si es el mes de Enero se hace lo mismo porque los datos de la tabla son propios de cada a?o.
+    '      IMPORTANTE: Tener en cuenta que el metodo carga filas solamente en caso de que estas no existan para el empleado. 
+    
+    If SAR_SLICE_UNIT = 0 Then
+        M4SAR_X_CAND_HAB.SAR_ALTAS_HABITUALES(Fecha_De_Vig, Fecha_De_Impu)
+    endif
+
+    CantRegHab = SAR_HABITUALES.Count()
+    
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()                  'Iniciamos el acumulado
+    CantReg = SCO_AC_HR_PERIOD_READ_1.Count() - 1    'Inicializamos el numero de registros
+    SCO_AC_HR_PERIOD_READ_1.MoveTo(0)                 'Vamos al primer mes 
+    
+    ContReg = 0    
+    
+    Mes = Mes_Fin  'Iniciamos desde Paga
+    
+    If(ContReg <= CantReg)Then
+       Mes_Acu   = DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION) 'Mes del primer registro
+       Anio_Acu  = DxYear(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION)  'A?o del primer registro
+       Tipo_Paga = SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_ALLOC         'Tipo de paga del primer registro    
+    EndIf
+    
+
+    While (ContReg <= CantReg And Mes >= Mes_Ini)    
+       
+       Max_Mes        = 0
+       Procesado_Ejec = 0
+       While(Mes_Acu = Mes  And Anio_Acu = Anio And ContReg <= CantReg)   
+
+         If(Tipo_Paga <> "88")Then         
+         
+            SAC_1   = SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_1..sysTotalSlices(M4_TOTAL_SUM)    
+            SAC_2   = SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_2..sysTotalSlices(M4_TOTAL_SUM)    
+            EGRE_1  = SCO_AC_HR_PERIOD_READ_1.SAR_EGRESO_PAGA_1..sysTotalSlices(M4_TOTAL_SUM)   
+            EGRE_2  = SCO_AC_HR_PERIOD_READ_1.SAR_EGRESO_PAGA_2..sysTotalSlices(M4_TOTAL_SUM)   
+            DIA_GRE = SCO_AC_HR_PERIOD_READ_1.SAR_DIA_GREMIO..sysTotalSlices(M4_TOTAL_SUM)            
+            
+            'No habituales
+            ContConcep     = 0
+            TotNoHabit     = 0
+            TotNoHabitPaga = 0
+            
+            If(CantRegHab > 0)Then 
+                SAR_HABITUALES.Moveto(ContConcep)                          
+                Concepto   = SAR_HABITUALES.SAR_ID_DMD_COMPONENT
+                              
+                While (ContConcep < CantRegHab)'Iteramos siempre hasta la paga normal correspondiente al concepto                                                                         
+                   SAR_HABITUALES.Moveto(ContConcep)                          
+                   If(Concepto = SAR_HABITUALES.SAR_ID_DMD_COMPONENT And SAR_HABITUALES.SAR_DT_VIGENCIA = SAR_HABITUALES.SAR_DT_VIGEN_IMPUT And DxYear(SAR_HABITUALES.SAR_DT_VIGENCIA) = Anio_De_Paga)Then
+
+                         Pos_Act         = SAR_HABITUALES.GetCurrent() 'Esta posicion debe ser la de la paga normal
+                         Concepto        = SAR_HABITUALES.SAR_ID_DMD_COMPONENT 
+                         Fecha_Vig       = SAR_HABITUALES.SAR_DT_VIGENCIA
+                         Fecha_Imp       = SAR_HABITUALES.SAR_DT_VIGEN_IMPUT
+                         Fecha_De_Normal = SAR_HABITUALES.SAR_DT_PAGA_NORMAL
+                         Ocurrs          = SAR_HABITUALES.SAR_CANT_DE_OCURR 
+                         Procesado       = SAR_HABITUALES.SAR_PROCESADO                      
+    
+                         VAL_CON_PAGA = GetValue("SCO_HRPERIOD_CALC",Concepto,-1)  'Tomamos el valor del concepto en la paga actual.
+                     
+                              'Procesa la paga normal actualizando la fecha y cantdad de ocurrencias.
+                              If(VAL_CON_PAGA > 0 And (Procesado = 0 Or Fecha_De_Normal <> Fecha_De_Vig)) and ((DxYear(Fecha_De_Normal) = DxYear(SCO_DT_PAYMENT)OR DxYear(Fecha_De_Normal)=1800) AND  (DxMonth(Fecha_De_Normal) <= DxMonth(SCO_DT_PAYMENT)))Then 'Se actualiza la tabla de habituales                                   
+                        
+                                 Ocurrs = Ocurrs + 1
+                                 Procesado_Ejec = 1
+                                 Procesado      = 1
+                                 SAR_HABITUALES.SAR_DT_PAGA_NORMAL = Fecha_De_Vig
+                                 SAR_HABITUALES.SAR_CANT_DE_OCURR  = Ocurrs                                 
+                                 If (SAR_TP_IMPUT <> "2") Then
+                                    SAR_HABITUALES.SAR_PROCESADO = 1
+                                 EndIf
+
+                              ElseIf(VAL_CON_PAGA = 0 And (Procesado = 1 And Fecha_De_Normal = Fecha_De_Vig)) AND (SAR_TP_IMPUT <> "2")Then
+                                 'El concepto se hace 0   
+                           	   SAR_HABITUALES.SAR_CANT_DE_OCURR = SAR_HABITUALES.SAR_CANT_DE_OCURR - 1     
+                                 SAR_HABITUALES.SAR_PROCESADO = 0
+
+                              EndIf   
+                     
+                     'Vemos si la ocurrencia actual hace que el concepto se pague al menos el 75% de las veces segun el mes                      
+                     'Primero obtenemos el mes correspondiente para ser o no habitual puesto que el alta pudo ser posterior a Enero 2015
+                     meses_lab = DateDiff( SCO_HR_PERIOD.STD_DT_START, SCO_DT_PAYMENT, M4_MONTH) + 1
+                     If(meses_lab <= DxMonth(SCO_DT_PAYMENT))Then
+                          Mes_Para_Porc = meses_lab
+                     Else     
+                          Mes_Para_Porc = Mes_Fin
+                     EndIf
+                     If(Ocurrs < Round(Mes_Para_Porc * 0.75, 0))Then                                          
+                         ValCon     = GetValue("SCO_AC_HR_PERIOD_READ_1",Concepto,-1)  'Tomamos el valor del concepto que se encuentra acumulado.
+                         TotNoHabit = TotNoHabit + ValCon
+                         TotNoHabitPaga = TotNoHabitPaga + VAL_CON_PAGA
+                     Endif                        
+                        
+                   EndIf                       
+                   ContConcep = ContConcep + 1                     
+                   If(ContConcep < CantRegHab) Then 'Reanudamos la la busqueda por contador.
+                       SAR_HABITUALES.MoveTo(ContConcep)
+                       Concepto = SAR_HABITUALES.SAR_ID_DMD_COMPONENT 
+                   EndIf                                                                  
+                 Wend            
+             EndIf    
+             
+             If(Mes = Mes_Fin)Then             
+                If(SAR_ES_ALTA = 1)Then 'Mes de alta se toma el sueldo completo.           
+                   Val_Mes_Paga = Val_Mes_Paga + SCO_AC_HR_PERIOD_READ_1.SAR_P_SUELDO..sysTotalSlices(M4_TOTAL_SUM) + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) - SCO_AC_HR_PERIOD_READ_1.SAR_IMPORTE_SUELDO..sysTotalSlices(M4_TOTAL_SUM) - SAC_1 - EGRE_1 - DIA_GRE - TotNoHabitPaga                                                      
+                Else
+                   Val_Mes_Paga = Val_Mes_Paga + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) - SAC_1 - EGRE_1 - DIA_GRE - TotNoHabitPaga
+                EndIf
+             Else   
+                Val_Mes = Val_Mes + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) - SAC_1 - EGRE_1 - DIA_GRE - TotNoHabit
+                If(Mes = Mes_Fin -1)Then 'Mejor remuneracion del mes anterior.
+                    Max_Rem_Ant = SCO_AC_HR_PERIOD_READ_1.SAR_MAYOR_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM) 
+                EndIf
+             endIf   
+         EndIf 
+                          
+             ContReg = ContReg + 1
+             
+             If(ContReg <= CantReg)Then
+                SCO_AC_HR_PERIOD_READ_1.MoveTo(ContReg)             
+                Mes_Acu   = DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION)
+                Anio_Acu  = DxYear(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION)
+                Tipo_Paga = SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_ALLOC
+             EndIf   
+             
+        Wend 'Cambio de mes
+         
+        'Maxima remuneracion
+         If(Val_Mes > Max_Rem)Then
+               Max_Rem = Val_Mes          
+               NumMesMax = Mes
+         EndIf    
+        Val_Mes = 0
+        Mes = Mes - 1 
+        
+     Wend                     
+     
+     DEVENGOS_ACTUAL = SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM)
+     SAC_1_ACTUAL    = SAR_PAGA_EXTRA_1..sysTotalSlices(M4_TOTAL_SUM)
+     SAC_2_ACTUAL    = SAR_PAGA_EXTRA_2..sysTotalSlices(M4_TOTAL_SUM)
+     EGRE_1_ACTUAL   = SAR_EGRESO_PAGA_1..sysTotalSlices(M4_TOTAL_SUM)
+     EGRE_2_ACTUAL   = SAR_EGRESO_PAGA_2..sysTotalSlices(M4_TOTAL_SUM)
+     DIA_GRE_ACTUAL  = SAR_DIA_GREMIO..sysTotalSlices(M4_TOTAL_SUM)
+     
+     'Ya se proceso el alta o el inicio de a?o en habituales.
+     If(SAR_ES_ALTA = 1)Then   
+     
+        ' Se debe controlar que el RH no tenga tramos, en caso de tenerlos controlamos los valores que seran usados para no sumar el valor del salario total 
+        ' en cada tramo al valor final del 5600  
+        If SAR_SLICE_UNIT..SysSliceNumber > 1 Then
+            'En altas se toma el sueldo completo. 
+            If SAR_P_SUELDO..sysTotalSlices(M4_TOTAL_SUM) > SAR_IMPORTE_SUELDO..sysTotalSlices(M4_TOTAL_SUM) And SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) = SAR_IMPORTE_SUELDO..sysTotalSlices(M4_TOTAL_SUM) Then 
+                ' Si el Salario esta tramado y es total es mayor al importe del 1003 solo tomamos el valor del 1003 
+                DEVENGOS_ACTUAL = SAR_IMPORTE_SUELDO..sysTotalSlices(M4_TOTAL_SUM)
+            Else
+                DEVENGOS_ACTUAL = SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) + SAR_P_SUELDO..sysTotalSlices(M4_TOTAL_SUM) - SAR_IMPORTE_SUELDO..sysTotalSlices(M4_TOTAL_SUM)
+            EndIf              
+        Else
+            DEVENGOS_ACTUAL = SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) + SAR_P_SUELDO..sysTotalSlices(M4_TOTAL_SUM) - SAR_IMPORTE_SUELDO..sysTotalSlices(M4_TOTAL_SUM) 'En altas se toma el sueldo completo.         
+        EndIf
+     EndIf    
+
+
+     'Proceso del mes actual
+     
+     'Paga actual 
+      Val_Actual = DEVENGOS_ACTUAL - SAC_1_ACTUAL - SAC_2_ACTUAL - EGRE_1_ACTUAL - EGRE_2_ACTUAL - DIA_GRE_ACTUAL - TotNoHabitPaga
+      Val_Actual = Val_Actual + Val_Mes_Paga
+      If(Val_Actual >= Max_Rem)Then
+         MaxV = Val_Actual
+         NumMesMax = DxMonth(SCO_DT_PAYMENT)
+      Else   
+         MaxV = Max_Rem
+      EndIf
+
+      SAR_MAYOR_REM_IG_MES_ANT = Max_Rem_Ant
+      SAR_MES_MEJOR_REM_2015_IG  = NumMesMax
+      
+      SAR_HABITUALES.EndTransaction(M4_COMMIT)
+
+Else
+
+    V5600_ant = 0
+    V792_ant  = 0
+    
+    'Recorro el acumulado para obtener el v5600 y el v792 del mes anterior al que estoy liquidando.
+    '----------------------------------------------------------------------------------------------
+    ANIO_ACT = DXYEAR(SAR_FEC_PAGO_IG)
+    MES_ACT  = DXMONTH(SAR_FEC_PAGO_IG)
+    
+    if SAR_ES_BAJA = 1 Then
+        ANIO_ACT = DXYEAR(SCO_DT_PAYMENT)
+        MES_ACT  = DXMONTH(SCO_DT_PAYMENT)
+    endif
+    
+    If(MES_ACT = 1)Then
+        MES_ANT = 12   
+        ANIO_ANT = ANIO_ACT - 1
+    ElseIf(SAR_TP_IMPUT <> "99")Then   
+        MES_ANT = MES_ACT - 1   
+        ANIO_ANT = ANIO_ACT     
+    Else    
+        MES_ANT = MES_ACT 
+        ANIO_ANT = ANIO_ACT  
+    EndIf
+    
+    DIAS_MES_ANT     = DxDaysOfMonth(MES_ANT, DxYear(SCO_DT_PAYMENT))       
+    DIAS_MES_ANT_STR = ToString(DIAS_MES_ANT, 0)  
+    
+    If(MES_ANT < 10)Then
+        MES_ANT_STR = "0" + ToString(MES_ANT, 0)  
+    Else
+        MES_ANT_STR = ToString(MES_ANT, 0)
+    EndIf
+    
+    ANIO_ANT_STR  = Tostring(ANIO_ANT, 0)         
+    
+    F_MES_ANT_INI = ToDate(ANIO_ANT_STR + "-" + MES_ANT_STR + "-" + "01")                  
+    F_MES_ANT_FIN = ToDate(ANIO_ANT_STR + "-" + MES_ANT_STR + "-" + DIAS_MES_ANT_STR)        
+    
+    
+    'Iniciamos la lectura del acumulado:
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()                 'Iniciamos el acumulado
+    CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el numero de registros
+    
+    If(CantReg >= 0) Then
+      ContReg = 0                                     'Lleva el numero leido de registros 
+
+      'Maximo del Mes anterior:
+      While (ContReg <= CantReg)
+         SCO_AC_HR_PERIOD_READ_1.MoveTo(ContReg)
+         If(SCO_AC_HR_PERIOD_READ_1.SAR_FEC_PAGO_IG >= F_MES_ANT_INI And SCO_AC_HR_PERIOD_READ_1.SAR_FEC_PAGO_IG <= F_MES_ANT_FIN And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION = SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) Then
+             V5600_ant = V5600_ant + SCO_AC_HR_PERIOD_READ_1.SAR_MAYOR_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM)
+             V792_ant  = SCO_AC_HR_PERIOD_READ_1.SAR_RANGO_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM) 
+         EndIf
+         ContReg = ContReg + 1
+      Wend       
+    EndIf
+     '-------------------------------------------------------------------------------
+    
+    '------------------------------------------------------------------------------------------------------------------------------------------------------
+    'Por Resolucion 3770
+    'En los casos en que el importe de la mayor Remuneracion y/o haber devengado en el periodo enero a agosto de 2013 NO supera los $15.000  
+    'y en los casos en que sean sujetos que hayan iniciado sus actividades como empleados en relacion de dependencia a partir del mes de Septiembre de 2013 
+    'con salario del primer mes inferior a $15.000
+    'no seran pasible de retencion
+    'Es decir todos los casos de Rango 1, continuan en Rango 1.
+    
+    'En los casos en que el importe de la mayor Remuneracion y/o haber devengado en el periodo enero a agosto de 2013 supera los $15.000 y no supera los $25.000
+    'Es decir todos los casos de altas anteriores a Septiembre de Rango 2, No se revisa su remuneracion y se recategorizan segun Anexo A.
+    '-------------------------------------------------------------------------------------------------------------------------------------------------------
+    If(Datos_A_Abril = 0)Then
+        If (ContReg >= 0) Then
+            MaxV = V5600_ant
+        Endif    
+    EndIf
+    
+    SAR_MAYOR_REM_IG_MES_ANT = V5600_ant      
+
+    '-------------------------------------------------------------------------------------------------------------------
+    'Por Resolucion 3770
+    'En los casos de altas posteriores a Mayo 2015:
+    '   *En el mes del alta se debe tomar la Remuneracion del mes completa.  
+    '   *En meses posteriores al alta, tomamos el 5600 del acumulado (que seria el v5600 obtenido en el mes del alta)
+    '-------------------------------------------------------------------------------------------------------------------
+     
+    If  (DxMonth(SAR_FECHA_ALTA) = DxMonth(SCO_DT_ALLOCATION)) And  (CantReg < 0) Then
+        'Mes del alta    
+        If SAR_ES_ALTA = 1 Then          
+            SAC_1   = SAR_PAGA_EXTRA_1       'SAC 1er. Semestre
+            SAC_2   = SAR_PAGA_EXTRA_2       'SAC 2do. Semestre
+            EGRE_1  = SAR_EGRESO_PAGA_1      'Egreso 1er. Semestre
+            EGRE_2  = SAR_EGRESO_PAGA_2      'Egreso 2do. Semestre
+            DIA_GRE = SAR_DIA_GREMIO         'Dia del gremio.       
+            MaxMes  = SAR_P_SUELDO + SAR_TOTAL_DEVENGOS - SAR_IMPORTE_SUELDO  '1 - Primer asignacion para entender que tenemos el total de devengos.
+            MaxMes  = MaxMes - SAC_1 - SAC_2 - EGRE_1 - EGRE_2 - DIA_GRE      '2 - Al total de devengos le restamos los conceptos de SAC y el dia del gremio 
+            MaxV    = MaxMes            
+        Else   
+            'Meses posteriores al alta.      
+            MaxV = V5600_ant        
+        EndIf   
+         
+    Endif 
+
+    If(MaxV >= mejor_rem_acu) Then
+         mes_mejor_rem = DxMonth(SCO_DT_PAYMENT)
+    EndIf
+    
+    SAR_MES_MEJOR_REM_2015_IG = mes_mejor_rem
+    
+Endif
+
+Return(MaxV)

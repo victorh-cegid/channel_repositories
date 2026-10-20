@@ -1,0 +1,62 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN Return(0)
+
+'No debe tomar el valor en Pagas Extra.
+If (SAR_TP_IMPUT = "2") Then
+    Return(0)    
+EndIf
+
+AUX= SAR_TOT_P_COMP_EA
+AUX= SAR_DIAS_MES_VAC
+'----------------------------
+promedios = 0
+'----------------------------
+'precio
+IF SCO_PAY_FREQ_ALLOC = "004" THEN
+    SAR_ACM_6_MESES_EXTR.BEGIN()
+    IF SAR_ACM_6_MESES_EXTR.COUNT() > 0 THEN
+        promedios = SAR_ACM_6_MESES_EXTR.SAR_TOT_PROMEDIOS
+    ENDIF
+ELSE
+    promedios = SAR_HR_ROLE.SAR_CALCULA_PROM_6_MESES()
+ENDIF
+
+IF IsNull(PROMEDIOS)= TRUE THEN PROMEDIOS = 0
+SALARIO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA + promedios
+IF SAR_TIPO_SALARIO = "001" THEN
+       SALARIO = SALARIO/25
+ENDIF
+
+IF SAR_TIPO_SALARIO = "003" THEN
+    SALARIO = SALARIO * SAR_HS_DIARIAS_PROM
+ENDIF
+
+valor = SALARIO
+IF ISNULL(valor) = TRUE THEN valor = 0
+
+'valor= round(salario * SAR_DIAS_MES_VAC,2)  
+valor= round(salario * SAR_SALDO_VACACION,2) 
+  
+'Asigno valor al v5882
+'-----------------------------------------------------------
+    val = 0
+    SAR_ACM_PAGO_ULT_ANTERIOR.begin()
+    If(SAR_ES_ALTA = 1 And SAR_HR_PERIOD.STD_ID_HRP_START_REASON = "005")Then
+        val = valor
+    Else
+        If (SAR_ACM_PAGO_ULT_ANTERIOR.count() > 0) Then
+            val = valor - SAR_ACM_PAGO_ULT_ANTERIOR.SAR_PROV_VAC_ACUM
+        Else
+            val = valor
+        Endif
+        If val < 0 Then    
+            dias_vac_x_mes = Truncate( SAR_DIAS_VACACION / 12, 1)
+            
+            val= round(salario * dias_vac_x_mes,2) 
+         EndIf
+    EndIf     
+    
+     SAR_PROV_VAC_MES = val   
+'Fin de Asignacion al v5882
+'-----------------------------------------------------------
+
+return(valor)

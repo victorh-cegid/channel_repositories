@@ -1,0 +1,48 @@
+IF (SAR_TP_IMPUT <> "1" AND SAR_TP_IMPUT <> "99" AND SAR_TP_IMPUT <> "3"  AND SAR_TP_IMPUT <> "4") THEN 
+    RETURN(0)
+ENDIF
+
+'Cargo el nodo de Familiares para Impuesto
+IF SAR_FAMIL_IMPUESTO.COUNT() = 0 THEN
+    SAR_FAMIL_IMPUESTO.SAR_FEC_INI_IG = SAR_FEC_INI_IG
+    SAR_FAMIL_IMPUESTO.SAR_FEC_FIN_IG = SAR_FEC_FIN_IG 
+    SAR_FAMIL_IMPUESTO.LOAD_BLK()
+    IF SAR_FAMIL_IMPUESTO.COUNT() = 0 THEN
+       Return(0)
+    ENDIF
+ENDIF
+
+contador = 0
+
+primerreg = 0
+ultimoreg = SAR_FAMIL_IMPUESTO.COUNT() - 1
+
+FOR I = primerreg TO ultimoreg 
+    SAR_FAMIL_IMPUESTO.MOVETO(I)
+    parent = SAR_FAMIL_IMPUESTO.STD_ID_ACT_DEP_TYPE
+    fec_nac = SAR_FAMIL_IMPUESTO.STD_DT_BIRTH
+
+    'Se carga la TI de incapacidades
+    IF SAR_INCAPACIDADES.COUNT() = 0 THEN
+        SAR_INCAPACIDADES.LOAD_BLK()
+        SAR_INCAPACIDADES.BEGIN()
+    ENDIF
+    
+    Existe_hijo_inc = 0
+    If(parent = "2" Or parent = "7" Or parent = "8" ) Then
+       'Se busca (findregister) si existe incapacidad para ese hijo.
+       Reg_inc=SAR_INCAPACIDADES.FindRegister("SCO_ID_HR",SAR_FAMIL_IMPUESTO.STD_ID_FAMILY_PERSON,EQUAL,"SCO_ID_DISABILITY","05",EQUAL)
+       If Reg_inc <> -1 Then
+            Existe_hijo_inc  = 1
+       Else
+            Existe_hijo_inc = 0
+       EndIf
+       edad = Years(fec_nac,SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC)
+       IF (Existe_hijo_inc = 1) or ((edad < SAR_TOPE_EDAD_FAMILIAR OR (edad = SAR_TOPE_EDAD_FAMILIAR AND (DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG) and (DXMONTH(fec_nac) = DXMONTH(SAR_FEC_PAGO_IG))))))Then
+            contador = contador + 1
+       Endif
+    EndIf
+  
+NEXT
+
+Return(contador)

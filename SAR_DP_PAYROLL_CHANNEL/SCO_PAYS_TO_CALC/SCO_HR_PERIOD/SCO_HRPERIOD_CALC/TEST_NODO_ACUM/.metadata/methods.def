@@ -1,4 +1,4 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-CALC_VALUES | BLOCK | NUMBER | 6 | 4 | 0 | Calcular valores
-DESTROY | BLOCK | NUMBER | 6 | 1 | 0 | DESTROY
-LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+CALC_VALUES | BLOCK | NUMBER | 6 | 4 | 0 | Calcular valores | 2
+DESTROY | BLOCK | NUMBER | 6 | 1 | 0 | DESTROY | 3
+LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque | 2

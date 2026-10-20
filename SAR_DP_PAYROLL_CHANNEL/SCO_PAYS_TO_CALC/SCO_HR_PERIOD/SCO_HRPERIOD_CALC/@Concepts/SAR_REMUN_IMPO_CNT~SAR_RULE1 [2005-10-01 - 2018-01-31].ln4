@@ -1,0 +1,8 @@
+'
+'De acuerdo al articulo 3? el decreto 491/04 desde el 01/10/05 no hay topes para 
+'el calculo de la base imponible de las contribuciones.
+'
+real = SAR_TOT_DEV_COTIZ
+base = Max(real,0)
+
+RETURN(base)

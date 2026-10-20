@@ -1,0 +1,10 @@
+valor = SAR_IG_FINAL
+
+'En caso de estar en la paga adicional de liquidacion, y haber calculado alguna deduccion, ya sea en esta paga o en una anterior
+'grabo el impuesto como saldo pendiente, y dejamos este a 0
+If valor < 0 And (SAR_DED_IG_27617_4TA <> 0 Or SAR_DED_IG_27617_T2_4TA <> 0) Then
+    SAR_SALDO_PTE_27617 = Abs(valor)
+    valor = 0
+EndIf
+
+Return(valor)

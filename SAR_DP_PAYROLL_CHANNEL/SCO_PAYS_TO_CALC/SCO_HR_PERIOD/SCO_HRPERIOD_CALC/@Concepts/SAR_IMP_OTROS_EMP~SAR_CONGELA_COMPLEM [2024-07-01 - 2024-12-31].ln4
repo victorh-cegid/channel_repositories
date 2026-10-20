@@ -1,0 +1,9 @@
+'Ley de bases 2024, congela complementos posteriores a calculo del beneficio
+importe = SAR_IMP_OTROS_EMP
+diferencia = 0
+
+SAR_LBASE_CALC_CONGELA_COMPLEM("SAR_IMP_OTROS_EMP",1,diferencia)
+
+importe = importe - diferencia
+
+Return(importe)

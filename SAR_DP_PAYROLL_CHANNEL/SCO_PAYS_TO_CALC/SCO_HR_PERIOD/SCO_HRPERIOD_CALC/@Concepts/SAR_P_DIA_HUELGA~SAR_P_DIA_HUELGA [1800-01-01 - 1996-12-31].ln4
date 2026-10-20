@@ -1,0 +1,10 @@
+// ****************************************************************************************
+// La regla se cierra el 31/12/1996 debido a que los dias de huelga se descuentan 
+// directamente de los dias a abonar de sueldo y por lo tanto no es necesario hacerlo luego.
+// Sin embargo, a modo de ejemplo se incluye la parametrizacion para proceder a la
+// identificacion del descuento si se desea. En ese caso debe modificarse el concepto #410
+// para que no se descuenten.
+// *****************************************************************************************
+
+valor = SAR_P_DIA_AUSENCIA * 1
+Return(valor)

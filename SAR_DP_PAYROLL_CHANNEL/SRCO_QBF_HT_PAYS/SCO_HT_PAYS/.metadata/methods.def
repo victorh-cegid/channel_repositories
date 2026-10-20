@@ -1,6 +1,0 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor
-GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente
-SCO_SET_FILTER_PAY_TYPE | BLOCK | NUMBER | 6 | 1 | 0 | Asignar filtro de tipo de paga
-SCO_SET_MENU | BLOCK | NUMBER | 6 | 4 | 0 | Opcion de menu
-SCO_SET_ORGANIZATION | NODE | NUMBER | 6 | 6 | 0 | SCO_SET_ORGANIZATION

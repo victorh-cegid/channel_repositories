@@ -3,3 +3,4 @@ NAME: Datos del proovedor
 ID_TI: SAR_H_PROVEEDOR
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 7

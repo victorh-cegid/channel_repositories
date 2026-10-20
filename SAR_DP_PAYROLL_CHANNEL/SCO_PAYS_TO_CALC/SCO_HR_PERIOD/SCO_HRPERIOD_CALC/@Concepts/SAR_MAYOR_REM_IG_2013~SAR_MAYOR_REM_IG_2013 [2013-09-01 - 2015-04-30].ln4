@@ -1,0 +1,305 @@
+If (DxYear(SCO_DT_ALLOCATION) = 2013 And DxMonth(SCO_DT_ALLOCATION) = 9 And SAR_FECHA_ALTA < ToDate("2013-09-01")) Then  
+
+    SRAR_PY_MN_HABITUALES.Begin()                  'Inicializamos los conceptos no habituales del empleado
+    CantConcep = SRAR_PY_MN_HABITUALES.Count() - 1
+    ContConcep = 0 
+
+    ENERO       = TODATE("2013-01-01")
+    FEBRERO     = TODATE("2013-02-01")
+    MARZO       = TODATE("2013-03-01")
+    ABRIL       = TODATE("2013-04-01")
+    MAYO        = TODATE("2013-05-01")
+    JUNIO       = TODATE("2013-06-01")
+    JULIO       = TODATE("2013-07-01")
+    AGOSTO      = TODATE("2013-08-01")
+    SEPTIEMBRE  = TODATE("2013-09-01")
+    
+    MaxENE  = 0
+    MaxFEB  = 0
+    MaxMAR  = 0
+    MaxABR  = 0
+    MaxMAY  = 0
+    MaxJUN  = 0
+    MaxJUL  = 0
+    MaxAGO  = 0  
+    MAX_REM = 0
+    
+    SAC_1   = 0
+    EGRE_1  = 0
+    
+    GREM_1  = 0
+    GREM_2  = 0
+    GREM_3  = 0
+    GREM_4  = 0
+    GREM_5  = 0
+    GREM_6  = 0
+    GREM_7  = 0
+    GREM_8  = 0
+
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()                 'Iniciamos el acumulado
+    SCO_AC_HR_PERIOD_READ_1.MoveTo(0)               'Vamos al primer registro
+    CantReg = SCO_AC_HR_PERIOD_READ_1.Count() - 1   'Inicializamos el numero de registros
+
+    ContReg = 0
+    
+    While (ContReg <= CantReg)
+       'Maximo de Enero
+       If(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= ENERO   And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < FEBRERO)Then
+           SAC_1   = SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_1..sysTotalSlices(M4_TOTAL_SUM)    
+           EGRE_1  = SCO_AC_HR_PERIOD_READ_1.SAR_EGRESO_PAGA_1..sysTotalSlices(M4_TOTAL_SUM)   
+           DIA_GRE = SCO_AC_HR_PERIOD_READ_1.SAR_DIA_GREMIO..sysTotalSlices(M4_TOTAL_SUM)  
+           'No habituales
+           ContConcep = 0
+           SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+           TotNoHabit = 0
+           While (ContConcep <= CantConcep)
+                     Concepto = SRAR_PY_MN_HABITUALES.SAR_ID_DMD_COMPONENT 
+                     ValCon = GetValue("SCO_AC_HR_PERIOD_READ_1",Concepto,-1)  'Tomamos el valor del concepto que se encuentra acumulado.
+                     TotNoHabit = TotNoHabit + ValCon
+                     ContConcep = ContConcep + 1
+                     If(ContConcep <= CantConcep)Then
+                        SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+                     EndIf   
+            Wend            
+            MaxENE  = MaxENE + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) - SAC_1 - EGRE_1 - DIA_GRE - TotNoHabit              
+       EndIf
+       'Maximo de Febrero
+       If(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FEBRERO And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < MARZO)Then
+           SAC_1   = SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_1..sysTotalSlices(M4_TOTAL_SUM)    
+           EGRE_1  = SCO_AC_HR_PERIOD_READ_1.SAR_EGRESO_PAGA_1..sysTotalSlices(M4_TOTAL_SUM)   
+           DIA_GRE = SCO_AC_HR_PERIOD_READ_1.SAR_DIA_GREMIO..sysTotalSlices(M4_TOTAL_SUM)  
+           'No habituales
+           ContConcep = 0
+           SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+           TotNoHabit = 0
+           While ContConcep <= CantConcep
+                     Concepto = SRAR_PY_MN_HABITUALES.SAR_ID_DMD_COMPONENT 
+                     ValCon = GetValue("SCO_AC_HR_PERIOD_READ_1",Concepto,-1)  'Tomamos el valor del concepto que se encuentra acumulado.
+                     TotNoHabit = TotNoHabit + ValCon
+                     ContConcep = ContConcep + 1
+                     If(ContConcep <= CantConcep)Then
+                        SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+                     EndIf   
+            Wend            
+            MaxFEB  = MaxFEB + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) - SAC_1 - EGRE_1 - DIA_GRE - TotNoHabit              
+       EndIf
+       'Maximo de Marzo
+       If(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= MARZO   And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < ABRIL)Then
+           SAC_1   = SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_1..sysTotalSlices(M4_TOTAL_SUM)    
+           EGRE_1  = SCO_AC_HR_PERIOD_READ_1.SAR_EGRESO_PAGA_1..sysTotalSlices(M4_TOTAL_SUM)   
+           DIA_GRE = SCO_AC_HR_PERIOD_READ_1.SAR_DIA_GREMIO..sysTotalSlices(M4_TOTAL_SUM)  
+           'No habituales
+           ContConcep = 0
+           SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+           TotNoHabit = 0
+           While ContConcep <= CantConcep
+                     Concepto = SRAR_PY_MN_HABITUALES.SAR_ID_DMD_COMPONENT 
+                     ValCon = GetValue("SCO_AC_HR_PERIOD_READ_1",Concepto,-1)  'Tomamos el valor del concepto que se encuentra acumulado.
+                     TotNoHabit = TotNoHabit + ValCon
+                     ContConcep = ContConcep + 1
+                     If(ContConcep <= CantConcep)Then
+                        SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+                     EndIf   
+            Wend            
+            MaxMAR  = MaxMAR + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) - SAC_1 - EGRE_1 - DIA_GRE - TotNoHabit              
+       EndIf
+       'Maximo de Abril
+       If(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= ABRIL   And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < MAYO)Then
+           SAC_1   = SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_1..sysTotalSlices(M4_TOTAL_SUM)    
+           EGRE_1  = SCO_AC_HR_PERIOD_READ_1.SAR_EGRESO_PAGA_1..sysTotalSlices(M4_TOTAL_SUM)   
+           DIA_GRE = SCO_AC_HR_PERIOD_READ_1.SAR_DIA_GREMIO..sysTotalSlices(M4_TOTAL_SUM)  
+           'No habituales
+           ContConcep = 0
+           SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+           TotNoHabit = 0
+           While ContConcep <= CantConcep
+                     Concepto = SRAR_PY_MN_HABITUALES.SAR_ID_DMD_COMPONENT 
+                     ValCon = GetValue("SCO_AC_HR_PERIOD_READ_1",Concepto,-1)  'Tomamos el valor del concepto que se encuentra acumulado.
+                     TotNoHabit = TotNoHabit + ValCon
+                     ContConcep = ContConcep + 1
+                     If(ContConcep <= CantConcep)Then
+                        SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+                     EndIf   
+            Wend            
+            MaxABR  = MaxABR + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) - SAC_1 - EGRE_1 - DIA_GRE - TotNoHabit              
+       EndIf
+       'Maximo de Mayo
+       If(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= MAYO   And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < JUNIO)Then
+           SAC_1   = SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_1..sysTotalSlices(M4_TOTAL_SUM)    
+           EGRE_1  = SCO_AC_HR_PERIOD_READ_1.SAR_EGRESO_PAGA_1..sysTotalSlices(M4_TOTAL_SUM)   
+           DIA_GRE = SCO_AC_HR_PERIOD_READ_1.SAR_DIA_GREMIO..sysTotalSlices(M4_TOTAL_SUM)  
+           'No habituales
+           ContConcep = 0
+           SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+           TotNoHabit = 0
+           While ContConcep <= CantConcep
+                     Concepto = SRAR_PY_MN_HABITUALES.SAR_ID_DMD_COMPONENT 
+                     ValCon = GetValue("SCO_AC_HR_PERIOD_READ_1",Concepto,-1)  'Tomamos el valor del concepto que se encuentra acumulado.
+                     TotNoHabit = TotNoHabit + ValCon
+                     ContConcep = ContConcep + 1
+                     If(ContConcep <= CantConcep)Then
+                        SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+                     EndIf   
+            Wend            
+            MaxMAY  = MaxMAY + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) - SAC_1 - EGRE_1 - DIA_GRE - TotNoHabit              
+       EndIf
+       'Maximo de Junio
+       If(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= JUNIO   And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < JULIO)Then
+           SAC_1   = SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_1..sysTotalSlices(M4_TOTAL_SUM)    
+           EGRE_1  = SCO_AC_HR_PERIOD_READ_1.SAR_EGRESO_PAGA_1..sysTotalSlices(M4_TOTAL_SUM)   
+           DIA_GRE = SCO_AC_HR_PERIOD_READ_1.SAR_DIA_GREMIO..sysTotalSlices(M4_TOTAL_SUM)  
+           'No habituales
+           ContConcep = 0
+           SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+           TotNoHabit = 0
+           While ContConcep <= CantConcep
+                     Concepto = SRAR_PY_MN_HABITUALES.SAR_ID_DMD_COMPONENT 
+                     ValCon = GetValue("SCO_AC_HR_PERIOD_READ_1",Concepto,-1)  'Tomamos el valor del concepto que se encuentra acumulado.
+                     TotNoHabit = TotNoHabit + ValCon
+                     ContConcep = ContConcep + 1
+                     If(ContConcep <= CantConcep)Then
+                        SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+                     EndIf   
+            Wend            
+            MaxJUN  = MaxJUN + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) - SAC_1 - EGRE_1 - DIA_GRE - TotNoHabit              
+       EndIf
+       'Maximo de Julio
+       If(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= JULIO   And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < AGOSTO)Then
+           SAC_1   = SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_1..sysTotalSlices(M4_TOTAL_SUM)    
+           EGRE_1  = SCO_AC_HR_PERIOD_READ_1.SAR_EGRESO_PAGA_1..sysTotalSlices(M4_TOTAL_SUM)   
+           DIA_GRE = SCO_AC_HR_PERIOD_READ_1.SAR_DIA_GREMIO..sysTotalSlices(M4_TOTAL_SUM)  
+           'No habituales
+           ContConcep = 0
+           SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+           TotNoHabit = 0
+           While ContConcep <= CantConcep
+                     Concepto = SRAR_PY_MN_HABITUALES.SAR_ID_DMD_COMPONENT 
+                     ValCon = GetValue("SCO_AC_HR_PERIOD_READ_1",Concepto,-1)  'Tomamos el valor del concepto que se encuentra acumulado.
+                     TotNoHabit = TotNoHabit + ValCon
+                     ContConcep = ContConcep + 1
+                     If(ContConcep <= CantConcep)Then
+                        SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+                     EndIf   
+            Wend            
+            MaxJUL  = MaxJUL + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) - SAC_1 - EGRE_1 - DIA_GRE - TotNoHabit              
+       EndIf
+       'Maximo de Agosto
+       If(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= AGOSTO   And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < SEPTIEMBRE)Then
+           SAC_1   = SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_1..sysTotalSlices(M4_TOTAL_SUM)    
+           EGRE_1  = SCO_AC_HR_PERIOD_READ_1.SAR_EGRESO_PAGA_1..sysTotalSlices(M4_TOTAL_SUM)   
+           DIA_GRE = SCO_AC_HR_PERIOD_READ_1.SAR_DIA_GREMIO..sysTotalSlices(M4_TOTAL_SUM)  
+           'No habituales
+           ContConcep = 0
+           SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+           TotNoHabit = 0
+           While ContConcep <= CantConcep
+                     Concepto = SRAR_PY_MN_HABITUALES.SAR_ID_DMD_COMPONENT 
+                     ValCon = GetValue("SCO_AC_HR_PERIOD_READ_1",Concepto,-1)  'Tomamos el valor del concepto que se encuentra acumulado.
+                     TotNoHabit = TotNoHabit + ValCon
+                     ContConcep = ContConcep + 1
+                     If(ContConcep <= CantConcep)Then
+                        SRAR_PY_MN_HABITUALES.MoveTo(ContConcep)
+                     EndIf   
+            Wend            
+            MaxAGO  = MaxAGO + SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM) - SAC_1 - EGRE_1 - DIA_GRE - TotNoHabit              
+       EndIf
+       If(ContReg <= CantReg)Then
+          ContReg = ContReg + 1
+       EndIf   
+       SCO_AC_HR_PERIOD_READ_1.MoveTo(ContReg)
+    Wend
+  
+  If(MaxENE >= MAX_REM)Then
+    MAX_REM = MaxENE
+  EndIf  
+  
+  If(MaxFEB >= MAX_REM)Then  
+    MAX_REM = MaxFEB
+  EndIf  
+
+  If(MaxMAR >= MAX_REM)Then  
+    MAX_REM = MaxMAR
+  EndIf  
+  
+  If(MaxABR >= MAX_REM)Then  
+    MAX_REM = MaxABR
+  EndIf  
+
+  If(MaxMAY >= MAX_REM)Then  
+    MAX_REM = MaxMAY
+  EndIf
+    
+  If(MaxJUN >= MAX_REM)Then 
+    MAX_REM = MaxJUN
+  EndIf
+    
+  If(MaxJUL >= MAX_REM)Then  
+    MAX_REM = MaxJUL
+  EndIf
+    
+  If(MaxAGO >= MAX_REM)Then  
+    MAX_REM = MaxAGO
+  EndIf  
+  
+  MaxV = MAX_REM
+  
+ElseIf(SAR_FECHA_ALTA >= ToDate("2013-09-01") And DxMonth(SCO_DT_ALLOCATION) = 9) and (DxYear(SCO_DT_ALLOCATION) = 2013) Then
+ 
+       SAC_1   = SAR_PAGA_EXTRA_1    'SAC 1er. Semestre
+       SAC_2   = SAR_PAGA_EXTRA_2    'SAC 2do. Semestre
+       EGRE_1  = SAR_EGRESO_PAGA_1   'Egreso 1er. Semestre
+       EGRE_2  = SAR_EGRESO_PAGA_2   'Egreso 2do. Semestre
+       DIA_GRE = SAR_DIA_GREMIO      'Dia del gremio.
+       MaxMes = SAR_P_SUELDO + SAR_TOTAL_DEVENGOS - SAR_IMPORTE_SUELDO   '1 - Primer asignacion para entender que tenemos el total de devengos.
+       MaxMes = MaxMes -  SAC_1 - SAC_2 - EGRE_1 -  EGRE_2 - DIA_GRE         '2 - Al total de devengos le restamos los conceptos de SAC y el dia del gremio 
+       MaxV = MaxMes
+       'Veces = 1
+        
+ElseIf((DxMonth(SCO_DT_ALLOCATION) > 9 or DxYear(SCO_DT_ALLOCATION) > 2013) And SCO_DT_PAYMENT = SCO_DT_ALLOCATION)Then 'Ya se calculo la maxima remuneracion en Septiembre => leemos del acumulado el valor del v5600
+   'Se promueve el concepto v5600 con el valor de la paga anterior cada vez.
+   ANIO_ACT = DXYEAR(SCO_DT_PAYMENT)
+   MES_ACT  = DXMONTH(SCO_DT_PAYMENT)
+   If(MES_ACT = 1)Then
+      MES_ANT = 12   
+      ANIO_ANT = ANIO_ACT - 1
+   Else   
+      MES_ANT = MES_ACT - 1 
+      ANIO_ANT = ANIO_ACT  
+   EndIf
+
+   DIAS_MES_ANT = DaysOfMonth(MES_ANT)
+   DIAS_MES_ANT_STR = ToString(DIAS_MES_ANT, 0)
+
+   If(MES_ANT < 10)Then
+      MES_ANT_STR = "0" + ToString(MES_ANT, 0)
+   Else
+      MES_ANT_STR = ToString(MES_ANT, 0)
+   EndIf
+   ANIO_ANT_STR = Tostring(ANIO_ANT, 0)
+   
+   F_MES_ANT_INI = ToDate(ANIO_ANT_STR + "-" + MES_ANT_STR + "-" + "01")
+   F_MES_ANT_FIN = ToDate(ANIO_ANT_STR + "-" + MES_ANT_STR + "-" + DIAS_MES_ANT_STR)  
+   
+   
+   'Iniciamos la lectura del acumulado:
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()                 'Iniciamos el acumulado
+    CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el numero de registros
+   
+    If(CantReg >= 0) Then
+        ContReg = 0                                     'Lleva el numero leido de registros 
+        MaxV = 0
+       'Maximo del Mes anterior:
+        While (ContReg <= CantReg)
+           SCO_AC_HR_PERIOD_READ_1.MoveTo(ContReg)
+           If(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT >= F_MES_ANT_INI And SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT <= F_MES_ANT_FIN And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION = SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT AND SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_ALLOC = "1") Then
+               MaxV = MaxV + SCO_AC_HR_PERIOD_READ_1.SAR_MAYOR_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM)
+           EndIf
+           ContReg = ContReg + 1
+        Wend
+     Else
+        MaxV = SAR_TOTAL_DEVENGOS..sysTotalSlices(M4_TOTAL_SUM)        
+     EndIf 
+
+EndIf
+
+Return(MaxV)

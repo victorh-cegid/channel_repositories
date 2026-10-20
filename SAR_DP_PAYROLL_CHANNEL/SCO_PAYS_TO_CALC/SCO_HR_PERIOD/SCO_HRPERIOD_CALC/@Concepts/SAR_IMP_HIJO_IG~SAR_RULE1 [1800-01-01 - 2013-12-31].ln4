@@ -1,0 +1,201 @@
+IF SAR_TP_IMPUT = "2" And SCO_DT_PAYMENT <> DxDate("02","09","2013") THEN 
+    RETURN(0)
+ENDIF
+
+contador = 0
+
+
+'Cargo el nodo de Familiares para Impuesto
+IF SAR_FAMIL_IMPUESTO.COUNT() = 0 THEN
+    SAR_FAMIL_IMPUESTO.SAR_FEC_INI_IG = SAR_FEC_INI_IG
+    SAR_FAMIL_IMPUESTO.SAR_FEC_FIN_IG = SAR_FEC_FIN_IG 
+    SAR_FAMIL_IMPUESTO.LOAD_BLK()    
+    IF SAR_FAMIL_IMPUESTO.COUNT() = 0 THEN
+       Return(0)
+    ENDIF
+ENDIF
+
+importe=0
+mini=0
+
+primerreg = 0
+ultimoreg = SAR_FAMIL_IMPUESTO.COUNT() -1
+
+'Aca voy a cargar la TI de incapacidades
+IF SAR_INCAPACIDADES.COUNT() = 0 THEN
+    SAR_INCAPACIDADES.LOAD_BLK()
+    SAR_INCAPACIDADES.BEGIN()
+ENDIF
+
+
+FOR I = primerreg TO ultimoreg 
+    SAR_FAMIL_IMPUESTO.MOVETO(I)
+    parent = SAR_FAMIL_IMPUESTO.STD_ID_ACT_DEP_TYPE
+    inc = SAR_FAMIL_IMPUESTO.SSP_ID_MINUSVALIA  ' "S" Con incapacidad 
+    fec_nac =SAR_FAMIL_IMPUESTO.STD_DT_BIRTH
+       ' Reg_inc=SAR_INCAPACIDADES.FindRegister("SCO_ID_HR",SAR_FAMIL_IMPUESTO.STD_ID_FAMILY_PERSON,EQUAL)
+   Existe_hijo_inc = 0
+    If(parent = "2" Or parent = "7" Or parent = "8" ) Then
+       'Voy a buscar (findregister) si existe incapacidad para ese hijo.
+       Reg_inc=SAR_INCAPACIDADES.FindRegister("SCO_ID_HR",SAR_FAMIL_IMPUESTO.STD_ID_FAMILY_PERSON,EQUAL,"SCO_PERMANENT","1",EQUAL,"SCO_ID_DISABILITY","05",EQUAL)
+       If Reg_inc <> -1 Then
+            Existe_hijo_inc  = 1
+       Else
+            Existe_hijo_inc = 0
+       EndIf
+    EndIf
+
+    edad = Years(fec_nac,SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC)
+    IF (Existe_hijo_inc = 1) or (( (edad < SAR_TOPE_EDAD_FAMILIAR OR ((edad < SAR_TOPE_EDAD_FAMILIAR OR (edad = SAR_TOPE_EDAD_FAMILIAR AND (DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG) and (DXMONTH(fec_nac) = DXMONTH(SAR_FEC_PAGO_IG)))))) OR  inc = "S") AND (parent = "2" OR parent = "7" OR parent = "8"))) THEN
+        fecha_alta_impuesto=SAR_FAMIL_IMPUESTO.SAR_DT_ALTA_IMP
+	  fecha_baja_impuesto=SAR_FAMIL_IMPUESTO.SAR_DT_BAJA_IMP
+        fecha_ini=Max(fecha_alta_impuesto,SAR_FEC_INI_IG)
+        IF ISNULL(fecha_baja_impuesto)  = TRUE THEN 
+            fecha_tope=SAR_FEC_PAGO_IG
+	  ELSE
+        	fecha_tope =Min(fecha_baja_impuesto,SAR_FEC_PAGO_IG)
+	  ENDIF
+               
+        IF edad = SAR_TOPE_EDAD_FAMILIAR AND DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG) THEN
+            DIAT = DXDAY(fec_nac)
+            IF DIAT < 10 then
+                DIAT = "0" + TOSTRING(DIAT,0)
+            ELSE
+                DIAT = TOSTRING(DIAT,0)
+            ENDIF
+            MEST = DXMONTH(fec_nac)
+            IF MEST < 10 then
+                MEST = "0" + TOSTRING(MEST,0)
+            ELSE
+                MEST = TOSTRING(MEST,0)
+            ENDIF
+            FECHA = TOSTRING(DXYEAR(SAR_FEC_PAGO_IG),0) + "/" + MEST + "/" + DIAT
+            fecha_tope = TODATE(FECHA)
+            IF fecha_tope > fecha_baja_impuesto AND  ISNULL(fecha_baja_impuesto) = FALSE THEN
+                fecha_tope = fecha_baja_impuesto 
+                IF fecha_baja_impuesto > SAR_FEC_PAGO_IG THEN
+                    fecha_tope=SAR_FEC_PAGO_IG
+                ENDIF
+            ENDIF
+        ENDIF
+        MES = DXMONTH(fecha_ini)
+        IF MES < 10 then
+            MES = "0" + TOSTRING(MES,0)
+        ELSE
+            MES = TOSTRING(MES,0)
+        ENDIF
+        FECHA = TOSTRING(DXYEAR(fecha_ini),0) + "/" + MES + "/" + "25"
+        fecha_ini = TODATE(FECHA)
+        mini=DXMONTH(fecha_ini)
+
+        WHILE mini<=DXMONTH(fecha_tope) 
+            'Toma su valor por valores empresa
+            ind = SAR_IND_DED_IG_2010
+            
+        'Calculo de la deduccion especial segun informacion recopilada del concepto v792 por Decreto 1242/2013.
+        	'v792 Es el rango obtenido en el que el empleado se ubica segun su Maxima remuneracion y la zona desfavorable 
+        	'Y sus valores posibles para este concepto son:
+        	'2: Empleado que tiene entre 15000$ y 25000$ de rem max y zona no desfavorable.
+        	'3: Empleado que tiene mas de 15000$ de rem max y zona desfavorable.                        
+
+
+        	If(SAR_RANGO_REM_IG_2013 = 3)Then
+        	    precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_VAL_HIJO_IMP",fecha,ind))
+        	ElseIf(SAR_RANGO_REM_IG_2013 = 2)Then
+        	    precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("99","SAR_VAL_HIJO_IMP",fecha,ind))
+        	ElseIf(SAR_RANGO_REM_IG_2013 = 1 And SAR_TP_IMPUT = "99")Then  
+                fec_1=SAR_FEC_PAGO_IG
+                fec_2=SAR_FEC_FIN_IG_DEC        
+                if SAR_IG_DEC142_AUX = 0 and SAR_TP_IMPUT = "99" Then 
+                    fec_1 = fec_2
+                endif                                       
+                If(mini <= DXMONTH(fec_1))Then
+                    precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_HIJO_IMP",fecha,ind))
+                Else    
+                    precio = 0
+                EndIf
+        	Else                                        
+                precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_HIJO_IMP",fecha,ind))
+        	EndIf
+
+            importe = importe + precio
+           	mini    = mini + 1
+            mini2   = mini
+                       
+            IF mini < 10 then
+                mini2 = "0" + TOSTRING(mini,0)
+            ELSE
+                mini2 = TOSTRING(mini,0)
+            ENDIF
+            
+            fecha = TOSTRING(DXYEAR(fecha_ini),0) + "/" + mini2 + "/" + "25"
+
+        WEND
+
+    ELSE
+
+        fecha_alta_impuesto=SAR_FAMIL_IMPUESTO.SAR_DT_ALTA_IMP
+        fecha_ini=Max(fecha_alta_impuesto,SAR_FEC_INI_IG)
+        MES = DXMONTH(fecha_ini)
+        IF MES < 10 then
+            MES = "0" + TOSTRING(MES,0)
+        ELSE
+            MES = TOSTRING(MES,0)
+        ENDIF
+        FECHA = TOSTRING(DXYEAR(fecha_ini),0) + "/" + MES + "/" + "25"
+        fecha_ini = TODATE(FECHA)
+        mini=DXMONTH(fecha_ini)
+        fecha_aniv = fec_nac    
+
+        IF (parent = "2" OR parent = "7" OR parent = "8") AND ((edad = SAR_TOPE_EDAD_FAMILIAR AND (DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG) ))) THEN
+  
+            WHILE mini<=DXMONTH(fecha_aniv) 
+                'Toma su valor por valores empresa
+                ind = SAR_IND_DED_IG_2010
+
+                'Calculo de la deduccion especial segun informacion recopilada del concepto v792 por Decreto 1242/2013.
+            	'v792 Es el rango obtenido en el que el empleado se ubica segun su Maxima remuneracion y la zona desfavorable 
+            	'Y sus valores posibles para este concepto son:
+            	'2: Empleado que tiene entre 15000$ y 25000$ de rem max y zona no desfavorable.
+            	'3: Empleado que tiene mas de 15000$ de rem max y zona desfavorable.                        
+
+                If(SAR_RANGO_REM_IG_2013 = 3)Then
+                    precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_VAL_HIJO_IMP",fecha,ind))
+                ElseIf(SAR_RANGO_REM_IG_2013 = 2)Then
+            	  precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("99","SAR_VAL_HIJO_IMP",fecha,ind))
+        	    ElseIf(SAR_RANGO_REM_IG_2013 = 1 And SAR_TP_IMPUT = "99" And DXYEAR(SCO_DT_PAYMENT) = 2013)Then  
+                    fec_1=SAR_FEC_PAGO_IG
+                    fec_2=SAR_FEC_FIN_IG_DEC        
+                    if SAR_IG_DEC142_AUX = 0 and SAR_TP_IMPUT = "99" Then 
+                        fec_1 = fec_2
+                    endif                                       
+                    If(mini <= DXMONTH(fec_1))Then
+                        precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_HIJO_IMP",fecha,ind))
+                    Else    
+                        precio = 0
+                    EndIf
+                Else                                        
+                    precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_HIJO_IMP",fecha,ind))
+                EndIf
+                importe = importe + precio
+                mini    = mini + 1
+                mini2   = mini
+
+                IF mini < 10 then
+                    mini2 = "0" + TOSTRING(mini,0)
+                ELSE
+                    mini2 = TOSTRING(mini,0)
+                ENDIF
+            
+                fecha = TOSTRING(DXYEAR(fecha_ini),0) + "/" + mini2 + "/" + "25"
+                fecha_ini= TODATE(fecha)
+            WEND
+        ENDIF    
+    
+    ENDIF
+
+NEXT
+
+
+'Se redondea el importe antes de su devolucion
+RETURN(Round(importe,2))

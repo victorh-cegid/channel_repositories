@@ -1,0 +1,9 @@
+'Ley de bases 2024, congela complementos posteriores a calculo del beneficio
+importe = SAR_JUR_VEHIC_COR
+diferencia = 0
+
+SAR_LBASE_CALC_CONGELA_COMPLEM("SAR_JUR_VEHIC_COR",0,diferencia)
+
+importe = importe - diferencia
+
+Return(importe)

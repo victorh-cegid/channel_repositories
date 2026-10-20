@@ -1,0 +1,12 @@
+item: END_FILTER_DATE
+name: End Filter Date
+item_type: PROPERTY
+type: DATE
+id_m4_type: 4
+prec: 10
+scale: 0
+scope: BLOCK
+default_value: "4000-01-01"
+internal_type: 11
+item_aux: null
+id_cstype: null

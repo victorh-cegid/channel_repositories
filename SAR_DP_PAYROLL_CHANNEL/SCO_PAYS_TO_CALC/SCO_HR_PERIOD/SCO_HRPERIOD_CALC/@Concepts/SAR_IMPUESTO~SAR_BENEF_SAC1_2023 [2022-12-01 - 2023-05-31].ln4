@@ -1,0 +1,14 @@
+impuesto = SAR_IMPUESTO
+impuestoConSAC = SAR_JUN23_IMPUESTO
+retribJun = SAR_PROM_27617_BONOS
+esBaja = 0
+If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
+
+'Solo se va a aplicar el beneficio en 2 cuotas en pagas de junio y junio en empleados alcanzados por la exencion > 506230
+If DxYear(SAR_FEC_IMPUT_IG) = 2023 And retribJun > 506230 And retribJun <= 880000 And SAR_JUN23_DIF_SAC<>0 And impuestoConSAC>impuesto And esBaja = 1 Then
+    'Bajas no se aplican cuotas, solo exponemos el beneficio aplicado en el impuesto en la paga de baja
+    beneficio = impuestoConSAC - impuesto
+    SAR_JUN23_CUOT_IMP = beneficio
+EndIf
+
+Return(impuesto)

@@ -1,0 +1,6 @@
+'Entidad 33 Alquiler de Inmuebles destinados a casa habitacion (Inquilino)
+'Solo en baja/reliquidacion, sino retorna 0
+importe = 0
+If SAR_IND_PAGA_RELIQ = 1 Or (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") Then importe = SAR_DED_ADI_ALQ_INQ
+
+Return Round(importe,SAR_NUM_DEC)

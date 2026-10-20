@@ -1,0 +1,8 @@
+'
+'De acuerdo al articulo 3? el decreto 491/04 desde el 01/10/05 no hay topes para 
+'el calculo de la base imponible de las contribuciones.
+'
+aux=SAR_ACCIDENTE
+base=SAR_PRESTACION_ART
+
+RETURN(base)

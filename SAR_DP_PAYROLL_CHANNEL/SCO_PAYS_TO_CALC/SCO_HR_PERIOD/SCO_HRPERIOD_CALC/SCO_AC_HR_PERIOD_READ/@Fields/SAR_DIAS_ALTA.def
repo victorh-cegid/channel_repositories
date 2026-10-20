@@ -1,0 +1,13 @@
+item: SAR_DIAS_ALTA
+name: Unidades en alta
+column_name: SAR_DIAS_ALTA
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 9
+scale: 4
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null
+id_cstype: null

@@ -1,0 +1,53 @@
+ban = SAR_TOT_M_LEY_19032
+val_otros_empl = SAR_LEY_19032_OE
+val_ant_emp = SAR_L_19032_ANT_EMP     'el 5016 (SAR_JUB_ANT_EMP) por Anterior empresa de retencion de ganancias
+
+sar_acum_l_19032_oe = 0
+sar_acum_l_19032_ant_emp = 0
+
+
+IF SAR_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" THEN 
+   ban = 0
+ENDIF
+
+' Si es Paga de RETRO modificamos la fecha para que sea el mes anterior a la fecha de imputacion.
+If (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT) Then
+    vfecha = SCO_DT_ALLOCATION
+Else
+    vfecha = SAR_FEC_PAGO_IG
+EndIf
+
+
+'Recorro el acumulado del empleado y sumarizo los valores para armar las TI.
+SCO_AC_HR_PERIOD_READ_1.BEGIN()
+ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()
+
+I = ULTIMO_REG - 1 
+
+WHILE I >= 0 
+    SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
+       
+    ' Armo los datos para SAR_ACM_IMPUESTO
+    IF SAR_FEC_INI_IG <= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG AND vfecha > SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG  THEN 
+        sar_acum_l_19032_oe      = SCO_AC_HR_PERIOD_READ_1.SAR_LEY_19032_OE
+        sar_acum_l_19032_ant_emp      = SCO_AC_HR_PERIOD_READ_1.SAR_L_19032_ANT_EMP
+    ENDIF
+    I = I - 1
+Wend
+
+'REVISION:
+    If(val_ant_emp = sar_acum_l_19032_ant_emp) Then
+       val_ant_emp = 0
+    Else   
+       val_ant_emp = val_ant_emp - sar_acum_l_19032_ant_emp
+    EndIf
+    
+    If(val_otros_empl = sar_acum_l_19032_oe)Then    
+       val_otros_empl = 0
+    Else
+       val_otros_empl = val_otros_empl - sar_acum_l_19032_oe
+    EndIf
+
+valor = ban + val_ant_emp + val_otros_empl  
+
+RETURN(valor)

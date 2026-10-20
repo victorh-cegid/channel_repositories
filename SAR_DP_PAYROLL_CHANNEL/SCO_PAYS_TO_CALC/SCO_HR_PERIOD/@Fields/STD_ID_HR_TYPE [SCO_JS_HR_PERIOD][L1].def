@@ -1,0 +1,11 @@
+item: STD_ID_HR_TYPE
+name: Tipo recurso humano
+column_name: STD_ID_HR_TYPE
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 3
+scale: 0
+scope: RECORD
+default_value: null
+id_cstype: 2

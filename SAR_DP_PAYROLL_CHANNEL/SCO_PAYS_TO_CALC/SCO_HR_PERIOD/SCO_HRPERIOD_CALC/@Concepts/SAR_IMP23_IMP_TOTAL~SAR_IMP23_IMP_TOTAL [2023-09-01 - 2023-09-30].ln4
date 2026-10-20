@@ -1,0 +1,3 @@
+'Retorna el importe de SAR_IMPUESTO_TOTAL, lo que cambia es que se graba en acumulado con valor de la diferencia en caso de retroactivas
+importe = SAR_IMPUESTO_TOTAL
+Return(importe)

@@ -1,0 +1,161 @@
+'impuesto cedular no tiene DEI:
+If SAR_CEDU_IND_IMPUESTO = 1 Then Return(SAR_BASE_IMPUESTO)
+
+'2024 deja de existir DEI
+If DxYear(SAR_FEC_IMPUT_IG)>2023 Then Return(SAR_BASE_IMPUESTO)
+
+'Esta regla es la encargada de calcular la deduccion del piso IG de la ley 27617
+baseImp = SAR_BASE_IMPUESTO
+
+ded_ac_ajust_a = 0 : ded_ac_ajust_b = 0 : sac_grabado_mes = 0 : apo_grabado_mes = 0
+sac_grabado_mes_oe = 0 : apo_grabado_mes_oe = 0 : sac_grabado_mes_ant = 0 : apo_grabado_mes_ant = 0
+sac_grabado_mes_ant_oe = 0 : apo_grabado_mes_ant_oe = 0 : cuo_pro_grabado_mes_ant = 0 : apo_pro_grabado_mes_ant = 0 : porcApo = 0
+
+indAjusteRetro = SAR_IND_IMPUESTO_RETRO
+indAjusteRemun = SAR_IND_AJUSTE_REMUN_27617
+
+'Si viene el valor de la deduccion informado por tabla de valor con algo distinto de 0 se respeta
+If SAR_DED_IG_27617 <> 0 Then
+    baseImp = baseImp - SAR_DED_IG_27617
+ElseIf indAjusteRetro = 0 And SAR_PAYS_TO_CALC.SAR_REVISION = 1 And ((SAR_ES_BAJA <> 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") Or (SAR_ES_BAJA = 1 And SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1)) Then 
+'Controlamos retroactivas que no cambie la deduccion
+    SAR_DED_IG_27617 = SCO_AC_HR_PERIOD_REV_1.SAR_DED_IG_27617
+    SAR_DED_IG_27617_T2 = SCO_AC_HR_PERIOD_REV_1.SAR_DED_IG_27617_T2
+    baseImp = baseImp - SAR_DED_IG_27617 - SAR_DED_IG_27617_T2
+'Solo en pagas normales (mensuales), 1? quincena, paga adicional de liquidacion, o porque el usuario determina 
+'que estamos en la paga donde puede determinarse el importe del mes (informando el indicador a 1), se calcula.
+ElseIf SAR_IND_PAGA_CALCULA_27617 = 1 Then
+    base_mes_ant = 0
+
+    'Porcentajes para calculo de aportes, necesario para OE
+    porcJub = 0
+    porcLey = 0
+    If SAR_EDAD >= 18 Then 
+        porcJub = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
+        porcLey = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032 * SAR_PP_AP_INSSJP/100)
+    EndIf
+    porcObSoc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
+    porcAdObSoc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
+    porcAdObSoc = porcAdObSoc * SAR_FAM_CARGO_OS
+    porcSindObl = SAR_PORC_C_SIND_OBL
+    porcSindVol = SAR_PORC_C_SIND_VOL
+    porcApo = porcJub + porcLey + porcObSoc + porcAdObSoc + porcSindObl + porcSindVol
+    
+    'Obtiene la ultima base del impuesto calculada en algun mes anterior al que se esta procesando, normalmente sera la base del impuesto del mes anterior
+    'pero debemos recorrer el a?o IG completo porque no sabemos si el mes anterior tuvo o no acumulado.
+    If DxMonth(SAR_FEC_IMPUT_IG)>1 Then
+        fec_ig_ant = DxDate(1,1,1800)
+        mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
+        ult_dia_mes = DaysOfMonth (DxDate(1,DxMonth(SAR_FEC_IMPUT_IG)-1,DxYear(SAR_FEC_IMPUT_IG)))
+        mes_fin_ig = DxDate(ult_dia_mes,DxMonth(SAR_FEC_IMPUT_IG)-1,DxYear(SAR_FEC_IMPUT_IG))
+        ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
+        
+        'Decreto 473/23 se hace corte en impuesto desde devengado octubre 2023, respecto a la fecha de imputacion porque no se pueden mezclar meses
+        'acumulados hasta septiembre vs nuevos acumulados desde octubre
+        fec_corte = DxDate(1,1,1800)
+        If DxYear(SAR_FEC_IMPUT_IG) = 2023 Then
+            fec_corte = DxDate(1,10,2023)
+        EndIf
+        
+        For acum = 0 To ult_reg - 1
+
+            If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT<>"88" And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION>= fec_corte Then
+                If SAR_IND_SAC_DEI = 0 Then
+                    sac_grabado_mes_ant = sac_grabado_mes_ant + SCO_AC_HR_PERIOD_READ_1[acum].SAR_DIF_SAC_RG3976 + SCO_AC_HR_PERIOD_READ_1[acum].SAR_B_SAC_MES_RG3976                    
+                    apo_grabado_mes_ant = apo_grabado_mes_ant + SCO_AC_HR_PERIOD_READ_1[acum].SAR_JUB_SAC_MES + SCO_AC_HR_PERIOD_READ_1[acum].SAR_LEY_19032_SAC_MES + SCO_AC_HR_PERIOD_READ_1[acum].SAR_OBRA_SOCIAL_SAC_MES + SCO_AC_HR_PERIOD_READ_1[acum].SAR_OB_SOC_ADIC_SAC_MES + SCO_AC_HR_PERIOD_READ_1[acum].SAR_C_SIND_OBL_SAC_MES + SCO_AC_HR_PERIOD_READ_1[acum].SAR_C_SINDICAL_SAC_MES 
+                    sac_grabado_mes_ant_oe = sac_grabado_mes_ant_oe + SCO_AC_HR_PERIOD_READ_1[acum].SAR_B_PLUR_SAC_MES + SCO_AC_HR_PERIOD_READ_1[acum].SAR_DIF_PROR_SAC
+                    apo_grabado_mes_ant_oe = apo_grabado_mes_ant_oe + SCO_AC_HR_PERIOD_READ_1[acum].SAR_JUB_SAC_OE + SCO_AC_HR_PERIOD_READ_1[acum].SAR_C_SINDICAL_SAC_OE + SCO_AC_HR_PERIOD_READ_1[acum].SAR_LEY_19032_SAC_OE + SCO_AC_HR_PERIOD_READ_1[acum].SAR_OB_SOC_ADIC_SAC_OE + SCO_AC_HR_PERIOD_READ_1[acum].SAR_OBRA_SOCIAL_SAC_OE
+                EndIf
+                
+                cuo_pro_grabado_mes_ant = cuo_pro_grabado_mes_ant + SCO_AC_HR_PERIOD_READ_1[acum].SAR_IG_CUOT_PRORRA
+                apo_pro_grabado_mes_ant = apo_pro_grabado_mes_ant + SCO_AC_HR_PERIOD_READ_1[acum].SAR_IG_CUOT_PROR_JU + SCO_AC_HR_PERIOD_READ_1[acum].SAR_IG_CUO_PROR_LEY + SCO_AC_HR_PERIOD_READ_1[acum].SAR_IG_CUOT_PROR_OB + SCO_AC_HR_PERIOD_READ_1[acum].SAR_IG_CUO_PR_AD_OB + SCO_AC_HR_PERIOD_READ_1[acum].SAR_IG_CP_SIND_ST 
+
+                If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG > fec_ig_ant And (SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION Or SCO_AC_HR_PERIOD_READ_1[acum].SAR_IND_IMPUESTO_RETRO > 0) Then
+                    'Obtiene la ultima base de impuesto
+                    'En caso de retro especial de ajuste DEI desde paga de reliquidacion, no considera la paga especial que hubo en junio
+                    If indAjusteRetro = 2 And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT="99" Then
+                        fec_ig_ant = fec_ig_ant
+                        base_mes_ant = base_mes_ant
+                    Else
+                        fec_ig_ant = SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG
+                        base_mes_ant = SCO_AC_HR_PERIOD_READ_1[acum].SAR_BASE_IMPUESTO
+                    EndIf
+                EndIf
+            EndIf
+        Next
+    EndIf
+
+    'Se excluye el SAC del calculo de la base mes para DEI segun el indicador
+    If SAR_IND_SAC_DEI = 0 Then
+        sac_grabado_mes = SAR_DIF_SAC_RG3976 + SAR_B_SAC_MES_RG3976 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_DIF_SAC_RG3976 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_B_SAC_MES_RG3976
+        apo_grabado_mes = SAR_JUB_SAC_MES + SAR_LEY_19032_SAC_MES + SAR_OBRA_SOCIAL_SAC_MES + SAR_OB_SOC_ADIC_SAC_MES + SAR_C_SIND_OBL_SAC_MES + SAR_C_SINDICAL_SAC_MES + SAR_ACM_IG_ANIO_IMPUT[0].SAR_JUB_SAC_MES + SAR_ACM_IG_ANIO_IMPUT[0].SAR_LEY_19032_SAC_MES + SAR_ACM_IG_ANIO_IMPUT[0].SAR_OBRA_SOCIAL_SAC_MES + SAR_ACM_IG_ANIO_IMPUT[0].SAR_OB_SOC_ADIC_SAC_MES + SAR_ACM_IG_ANIO_IMPUT[0].SAR_C_SIND_OBL_SAC_MES + SAR_ACM_IG_ANIO_IMPUT[0].SAR_C_SINDICAL_SAC_MES
+        sac_grabado_mes_oe = SAR_DIF_PROR_SAC + SAR_B_PLUR_SAC_MES + SAR_ACM_IG_ANIO_IMPUT[0].SAR_DIF_PROR_SAC + SAR_ACM_IG_ANIO_IMPUT[0].SAR_B_PLUR_SAC_MES
+        apo_grabado_mes_oe = SAR_JUB_SAC_OE + SAR_C_SINDICAL_SAC_OE + SAR_LEY_19032_SAC_OE + SAR_OB_SOC_ADIC_SAC_OE + SAR_OBRA_SOCIAL_SAC_OE + SAR_ACM_IG_ANIO_IMPUT[0].SAR_JUB_SAC_OE + SAR_ACM_IG_ANIO_IMPUT[0].SAR_C_SINDICAL_SAC_OE + SAR_ACM_IG_ANIO_IMPUT[0].SAR_LEY_19032_SAC_OE + SAR_ACM_IG_ANIO_IMPUT[0].SAR_OB_SOC_ADIC_SAC_OE + SAR_ACM_IG_ANIO_IMPUT[0].SAR_OBRA_SOCIAL_SAC_OE
+    EndIf
+
+    'Se excluye el prorrateo del calculo de la base
+    cuo_pro_grabado_mes = SAR_IG_CUOT_PRORRA + SAR_ACM_IG_ANIO_IMPUT[0].SAR_IG_CUOT_PRORRA
+    apo_pro_grabado_mes = SAR_IG_CUOT_PROR_JU + SAR_IG_CUO_PROR_LEY + SAR_IG_CUOT_PROR_OB + SAR_IG_CUO_PR_AD_OB + SAR_IG_CP_SIND_ST
+    apo_pro_grabado_mes = apo_pro_grabado_mes + SAR_ACM_IG_ANIO_IMPUT[0].SAR_IG_CUOT_PROR_JU + SAR_ACM_IG_ANIO_IMPUT[0].SAR_IG_CUO_PROR_LEY + SAR_ACM_IG_ANIO_IMPUT[0].SAR_IG_CUOT_PROR_OB + SAR_ACM_IG_ANIO_IMPUT[0].SAR_IG_CUO_PR_AD_OB + SAR_ACM_IG_ANIO_IMPUT[0].SAR_IG_CP_SIND_ST
+
+    'Al recalcular DEI dentro de todas las pagas del mes, baseImp debe ir sin las deducciones T1 o T2 calculadas previamente en el mismo mes IG
+    dedTramoUnoPagAnt = SAR_ACM_MESACT_IMPIG[0].SAR_DED_IG_27617
+    dedTramoDosPagAnt = SAR_ACM_MESACT_IMPIG[0].SAR_DED_IG_27617_T2
+    baseImp = baseImp + dedTramoUnoPagAnt + dedTramoDosPagAnt
+
+    'Control de bajas con deducciones anuales, no deben formar parte de la DEI
+    dedAnu = 0
+    If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then dedAnu = SAR_TOT_DED_AUALES
+
+    base_mes_aplica_ded = (baseImp + dedAnu - sac_grabado_mes - sac_grabado_mes_oe - cuo_pro_grabado_mes + apo_grabado_mes + apo_grabado_mes_oe + apo_pro_grabado_mes)
+    base_mes_aplica_ded = base_mes_aplica_ded - (base_mes_ant - sac_grabado_mes_ant - sac_grabado_mes_ant_oe - cuo_pro_grabado_mes_ant + apo_grabado_mes_ant + apo_grabado_mes_ant_oe + apo_pro_grabado_mes_ant)
+
+    'Calcula la deduccion que pertenece al mes de proceso
+    'indAjusteRemun = 1 remuneracion y promedio se miran por criterio percibido
+    If indAjusteRemun = 1 Then
+        remun_mes = SAR_REM_27617_DEI_PERC
+        remun_prom = SAR_PROM_27617_DEI_PERC
+        fec_ded = SAR_FEC_IMPUT_IG
+    'indAjusteRemun = 0 remuneracion y promedio se miran por criterio devengado (excepto jornalizados)
+    Else
+        If SAR_TIPO_SALARIO = "003" Then
+            remun_mes = SAR_TOT_REMUN_27617
+            remun_prom = SAR_PROM_27617_DEI_IG
+            fec_ded = SAR_FEC_IMPUT_IG 'Se mantiene fecha IG por coherencia de calculo en jornalizados, cambiar por SCO_DT_ALLOCATION si se considera que debe levantarse el dato por devengado
+        Else
+            remun_mes = SAR_REM_27617_DEI_DEV
+            remun_prom = SAR_PROM_27617_DEI_DEV
+            fec_ded = SCO_DT_ALLOCATION
+            'Diferidos diciembre 2020 IG 2021 debe calcular deduccion
+            If indAjusteRetro = 2 And DxYear(SAR_FEC_IMPUT_IG) > DxYear(SCO_DT_ALLOCATION) Then fec_ded = SAR_FEC_IMPUT_IG
+        EndIf
+    EndIf
+    
+    retrib = Min(remun_mes,remun_prom)
+    vTramo = 0
+    If retrib <= SAR_TOPE_DEI Then vTramo = 1
+    
+    SAR_AUX_REMUN_27617 = retrib
+    SAR_AUX_TRAMO_27617 = vTramo
+    SAR_AUX_PROMEDIO_27617 = remun_prom
+    SAR_AUX_BASE_IMP_MES = base_mes_aplica_ded
+    
+    dedIgTramoUno = 0
+    dedIgTramoDos = 0
+    If base_mes_aplica_ded > 0 And vTramo = 1 Then
+        dedIgTramoUno = base_mes_aplica_ded
+        baseImp = baseImp - base_mes_aplica_ded
+    EndIf
+
+    'Ajustamos en la paga en caso de existir calculo DEI en pagas anteriores del mes fiscal
+    dedIgTramoUnoPaga = dedIgTramoUno - dedTramoUnoPagAnt
+    SAR_DED_IG_27617 = dedIgTramoUnoPaga
+    
+    If abs(baseImp)<=SAR_TOLERANCIA_DEC Then baseImp = 0
+EndIf
+
+'Se agrega el importe DEI T1 o T2 de AE informado por tabla de valor:
+SAR_DED_IG_27617 = SAR_DED_IG_27617 + SAR_AE_DED_IG_27617_T1
+baseImp = baseImp - SAR_AE_DED_IG_27617_T1
+
+Return(baseImp)

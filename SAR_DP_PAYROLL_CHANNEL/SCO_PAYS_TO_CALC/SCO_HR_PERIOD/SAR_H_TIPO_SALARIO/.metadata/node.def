@@ -3,3 +3,4 @@ NAME: Historico de Tipo de Salario
 ID_TI: SAR_H_TIPO_SALARIO
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

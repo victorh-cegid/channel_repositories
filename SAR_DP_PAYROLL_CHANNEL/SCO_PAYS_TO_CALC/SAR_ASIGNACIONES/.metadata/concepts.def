@@ -1,2 +1,2 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SAR_RETORNA_VALOR | NODE | NUMBER | 6 | 18 | 6 | SAR_RETORNA_VALOR
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+SAR_RETORNA_VALOR | NODE | NUMBER | 6 | 18 | 6 | SAR_RETORNA_VALOR | 

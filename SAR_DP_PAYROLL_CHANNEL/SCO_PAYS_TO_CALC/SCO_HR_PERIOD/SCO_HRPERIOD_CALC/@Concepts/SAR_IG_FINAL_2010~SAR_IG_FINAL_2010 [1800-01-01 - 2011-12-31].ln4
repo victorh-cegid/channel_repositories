@@ -1,0 +1,15 @@
+'Se calcula en el concepto #5300 Inpuesto final del a?o 2010, en paga 99 de reliquidacion del impuesto
+'se deja el valor acumulado, en caso de ser positivo, luego se toma desde a traves de la TI de acumulado SAR_ACM_IG_ANIO_ANT 
+'en el concepto #5310 hasta el momento del recalculo del impuesto final del 2011, es por ese motivo que la regla tiene 
+'fecha de vigencia hasta el 31/12/2011.
+
+
+valor_act = SAR_IG_FINAL_2010
+
+
+IF valor_act <= 0 THEN
+    valor_act = 0
+ENDIF
+
+
+Return(valor_act)

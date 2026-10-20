@@ -1,0 +1,12 @@
+item: DATA_END_DATE
+name: DATA_END_DATE
+item_type: PROPERTY
+type: DATE
+id_m4_type: 4
+prec: 10
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 11
+item_aux: null
+id_cstype: 7

@@ -1,0 +1,9 @@
+'Es el componente porcentual de la cuota mensual para la ART
+'Segun el decreto 290/2000 se calcula sobre una Remuneracion Imponible de 60 MOPRES
+
+base=SAR_VAC_IMPO
+valor=base*SAR_PORC_PAT_ART/100
+IF ISNULL(valor) = TRUE THEN
+    valor = 0
+ENDIF
+RETURN(valor)

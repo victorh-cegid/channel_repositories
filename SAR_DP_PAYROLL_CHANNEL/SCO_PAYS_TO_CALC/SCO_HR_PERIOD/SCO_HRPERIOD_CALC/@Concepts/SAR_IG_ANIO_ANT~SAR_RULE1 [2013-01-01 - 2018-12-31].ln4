@@ -1,0 +1,45 @@
+IF SAR_TP_IMPUT = "77" or SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR (SAR_TP_IMPUT = "3"  AND SAR_ES_BAJA = 0 ) THEN
+    Return(0)
+ENDIF
+
+SAR_ACM_IG_ANIO_ACT.BEGIN()
+IF SAR_ACM_IG_ANIO_ACT.COUNT() > 0 THEN
+    IF ISNULL(SAR_ACM_IG_ANIO_ACT.SAR_IG_ANIO_ANT)= FALSE THEN
+        valor_act = SAR_ACM_IG_ANIO_ACT.SAR_IG_ANIO_ANT
+        valor_act_benef = SAR_ACM_IG_ANIO_ACT.SAR_BENEF_ANIO_ANT
+    ELSE
+        valor_act = 0
+    ENDIF
+ELSE
+    valor_act = 0
+ENDIF
+
+IF  valor_act <> 0 THEN   
+    RETURN(0)
+ENDIF
+
+valor_benef = 0
+'Solo vamos a buscar la reliquidacion para la paga anual
+'si estoy en una paga normal. No queremos que se calcule en retro
+If SCO_DT_ALLOCATION = SCO_DT_PAYMENT Then
+    SAR_ACM_IG_ANIO_ANT.BEGIN()
+    IF SAR_ACM_IG_ANIO_ANT.COUNT() > 0 THEN
+        IF ISNULL(SAR_ACM_IG_ANIO_ANT.SAR_IG_FINAL) = FALSE THEN
+            valor = SAR_ACM_IG_ANIO_ANT.SAR_IG_FINAL
+            'Se contabiliza el beneficio correspondiente a Devolucion IG SAC Ley 27.260, Art. 63 2016
+            valor_benef = SAR_ACM_IG_ANIO_ANT.SAR_BENEF_FINAL
+        ELSE
+            valor = 0
+        ENDIF
+    ELSE
+        valor = 0
+    ENDIF
+Else
+    valor = 0
+Endif
+
+if valor_act_benef = 0 Then
+    SAR_BENEF_ANIO_ANT = valor_benef
+Endif
+
+RETURN(valor)

@@ -10,3 +10,4 @@ scope: RECORD
 default_value: null
 internal_type: 23
 item_aux: ID_M4_TYPE
+id_cstype: null

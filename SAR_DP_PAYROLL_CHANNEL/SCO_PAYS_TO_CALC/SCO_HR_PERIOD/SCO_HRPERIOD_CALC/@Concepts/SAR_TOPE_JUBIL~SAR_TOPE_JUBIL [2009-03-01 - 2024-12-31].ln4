@@ -1,0 +1,6 @@
+'Equivalente a 180.89775  veces el valor de un MOPRE para SIPA.
+
+
+valor = SAR_VALOR_AMPO * SAR_C_MOPRE_TOPE_SIPA 
+
+RETURN(valor)

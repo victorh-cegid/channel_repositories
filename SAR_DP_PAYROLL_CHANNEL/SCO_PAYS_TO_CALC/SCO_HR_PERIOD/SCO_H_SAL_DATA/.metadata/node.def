@@ -3,3 +3,4 @@ NAME: Historico de datos salariales
 ID_TI: SCO_H_SAL_DATA
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

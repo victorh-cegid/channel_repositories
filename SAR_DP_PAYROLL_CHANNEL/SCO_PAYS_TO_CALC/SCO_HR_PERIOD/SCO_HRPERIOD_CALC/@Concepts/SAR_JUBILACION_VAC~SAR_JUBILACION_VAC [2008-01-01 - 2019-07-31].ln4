@@ -1,0 +1,19 @@
+'calcula valor si es paga de vacaciones o si es paga normal o segunda quincena de normal, y si el ajuste de vacaciones es distinto de cero
+If SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" Then Return(0)
+
+If SAR_TP_IMPUT = "77" And SAR_IND_PAGA_ESP_VAC = 0 Then Return(0)
+If (SAR_TP_IMPUT = "1" or SAR_TP_IMPUT = "3" or SAR_TP_IMPUT = "4") And SAR_IND_PAGA_ESP_VAC = 1 Then Return(0)
+
+edad = SAR_EDAD
+valor = 0
+
+IF edad >= 18 THEN
+    porc = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION*SAR_PP_AP_JUBILA / 100)
+    valor = SAR_VAC_IMPO_JUB * porc / 100
+ENDIF
+
+IF ISNULL(valor) = TRUE THEN
+    valor = 0
+ENDIF
+
+Return(valor)

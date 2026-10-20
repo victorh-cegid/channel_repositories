@@ -1,0 +1,26 @@
+IF (SCO_DT_PAYMENT <> SCO_DT_ALLOCATION) AND SAR_ES_BAJA <> 1 THEN
+     Return(0)
+ENDIF
+
+
+Beneficio_anterior = 0
+'-------------------------------------------------------------
+'Recorro acumulado de lectura para armar una TI de IG 
+'-------------------------------------------------------------
+SCO_AC_HR_PERIOD_READ_1.BEGIN()
+ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()
+
+I = ULTIMO_REG - 1 
+
+WHILE I >= 0 
+    SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
+			
+    IF SAR_FEC_INI_IG <= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG AND SAR_FEC_PAGO_IG > SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION THEN    
+        Beneficio_anterior =  Beneficio_anterior + SCO_AC_HR_PERIOD_READ_1.SAR_BENEF_SAC_IG + SCO_AC_HR_PERIOD_READ_1.SAR_BENEF_SAC_IG_P_TOPE
+    ENDIF
+    I = I - 1
+WEND
+
+Beneficio_acumulado =  Beneficio_anterior + SAR_BENEF_SAC_IG
+
+Return(Beneficio_acumulado)

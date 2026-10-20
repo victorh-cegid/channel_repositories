@@ -1,0 +1,57 @@
+'Antes de realizar cualquier calculo del impuesto verificamos que la modificacion se realizo a fin del mes
+'de la paga para de esta forma dejar el calculo al nuevo periodo.
+If (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017")Then
+         Return(0)
+EndIf
+valor = 0
+
+
+IF SAR_TP_IMPUT = "99" THEN
+
+    
+'Inicializo variable
+
+v1 = SAR_IMPUESTO_TOTAL
+v2 = 0
+dev = 0
+v3 = SAR_IMP_ANT_EMP
+v4 = SAR_IMP_DEB_BAN
+    
+    
+'-------------------------------------------------------------
+'Recorro acumulado de lectura para armar las TI de IG
+'-------------------------------------------------------------
+    
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()
+    ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()- 1
+    
+    FOR I = 0 TO ULTIMO_REG 
+        SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
+    
+        ' Armo los datos para SAR_ACM_IMPUESTO
+        IF SAR_FEC_INI_IG <= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG AND SAR_FEC_PAGO_IG > SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG THEN 
+            v2 = v2 + SCO_AC_HR_PERIOD_READ_1.SAR_ACM_IMPUESTO
+        ENDIF
+        
+    NEXT
+    
+    
+    valor = v1 - (v2 + v3) - v4
+
+    
+'---------------- Res Gral.3008/2010 ------------------------------------------------------
+'Se guarda la diferencia de gcias del a?o 2010, en caso de que resulte a favor de la AFIP
+'para la reliquidacion del a?o fiscal 2011 a aplicar en el cpto.v5310.
+    
+    IF valor > 0 THEN
+        SAR_IG_FINAL_2010 = valor
+    ELSE
+        SAR_IG_FINAL_2010 = 0
+    ENDIF
+
+'-------------------------------------------------------------------------------------------
+
+ENDIF
+
+
+RETURN(valor)

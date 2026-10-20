@@ -1,4 +1,4 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-PVT_GET_FROM | NODE | STRING | 2 | 255 | 0 | Obtener sentencia from
-PVT_GET_WHERE | NODE | STRING | 3 | -1 | 0 | Obtener sentencia where
-USE_EXTERN_FILTER | NODE | NUMBER | 6 | 1 | 0 | Utilizar filtro externo
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+PVT_GET_FROM | NODE | STRING | 2 | 255 | 0 | Obtener sentencia from | 3
+PVT_GET_WHERE | NODE | STRING | 3 | -1 | 0 | Obtener sentencia where | 3
+USE_EXTERN_FILTER | NODE | NUMBER | 6 | 1 | 0 | Utilizar filtro externo | 3

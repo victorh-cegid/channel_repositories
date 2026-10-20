@@ -1,7 +1,7 @@
-# parent_node | parent_ti | connection_type
-SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | RECORD_BLOCK
+# parent_node | parent_ti | connection_type | origin
+SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | RECORD_BLOCK | OWN
 
-# child_node | connection_type
+# child_node | connection_type | origin
 
-# ti | item | parent_node | parent_ti | parent_item | precedence
-SAR_ASIGNACIONES | SAR_DT_ALLOCATION | SCO_PAYS_TO_CALC | SCO_JS_PAYS_TO_CALC | SCO_DT_ALLOCATION | AFTER_PARENT
+# ti | item | parent_node | parent_ti | parent_item | precedence | id_cstype | origin
+SAR_ASIGNACIONES | SAR_DT_ALLOCATION | SCO_PAYS_TO_CALC | SCO_JS_PAYS_TO_CALC | SCO_DT_ALLOCATION | AFTER_PARENT | 2 | OWN

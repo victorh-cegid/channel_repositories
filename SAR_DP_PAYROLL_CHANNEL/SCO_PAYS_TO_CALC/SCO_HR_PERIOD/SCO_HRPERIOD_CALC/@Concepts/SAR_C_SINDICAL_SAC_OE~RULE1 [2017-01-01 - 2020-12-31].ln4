@@ -1,0 +1,17 @@
+If SAR_TP_IMPUT = "88" Then
+    Return(0)
+EndIf
+
+'En baja o reliquidacion retornamos la diferencia entre el descuento del pago y el que se ha ido descontando mes a mes
+If SAR_TP_IMPUT = "99" OR SAR_ES_BAJA = 1 Then 
+    tot_desc_sac_pago = SAR_JUR_SAC * SAR_PORC_C_SIND_VOL_OE / 100
+    tot_desc_sac_mes = SAR_ACM_IG_ANIO_IMPUT[0].SAR_C_SINDICAL_SAC_OE
+    valor = tot_desc_sac_pago - tot_desc_sac_mes
+    Return (valor)
+EndIf
+
+base = SAR_B_PLUR_SAC_MES
+
+valor = base * SAR_PORC_C_SIND_VOL_OE / 100
+
+Return(valor)

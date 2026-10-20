@@ -1,0 +1,6 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+base = SAR_PRESTACION_ART + SAR_TOT_DEV_COTIZ
+valor = SAR_PORC_C_SIND_VOL * base / 100
+RETURN(valor)

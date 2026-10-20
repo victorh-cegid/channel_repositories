@@ -1,0 +1,56 @@
+indReliq = SAR_IND_PAGA_RELIQ
+If indReliq = 1 And SCO_DT_ALLOCATION = DxDate(30,9,2023) Then indReliq = 0
+
+dif_sac_RG3976 = 0
+
+'Solo 2023 correccion de ajustes de SAC1 realizadas posteriormente a octubre que han quedado en ambos periodos fiscales, se saca del periodo desde octubre
+ajusteSobraDifSac = 0
+If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 And DxYear(SCO_DT_ALLOCATION) = 2023 And DxMonth(SAR_FEC_PAGO_IG) = 12 And DxMonth(SCO_DT_ALLOCATION) > 9 Then
+    mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
+    ult_dia_mes = DaysOfMonth (DxDate(1,DxMonth(SAR_FEC_IMPUT_IG)-1,DxYear(SAR_FEC_IMPUT_IG)))
+    mes_fin_ig = DxDate(ult_dia_mes,DxMonth(SAR_FEC_IMPUT_IG)-1,DxYear(SAR_FEC_IMPUT_IG))
+    ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
+    For acum = 0 To ult_reg - 1
+        If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT<>"88" And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT<>"99" And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION <> SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION < DxDate(1,10,2023) And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT >= DxDate(1,10,2023) And SCO_AC_HR_PERIOD_READ_1[acum].SAR_IND_D473_IMP_PER_ANT = 0 Then
+            ajusteSobraDifSac = ajusteSobraDifSac + SCO_AC_HR_PERIOD_READ_1[acum].SAR_DIF_SAC_RG3976
+        EndIf
+    Next
+EndIf
+'Fin solo 2023
+
+If SAR_ES_BAJA = 1 Or indReliq = 1 Or SAR_IND_AJUSTE_SAC = 1 Then
+    valoracum = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_B_SAC_MES_RG3976 + SAR_ACM_IG_ANIO_COMPLETO[0].SAR_DIF_SAC_RG3976
+    sum_tot_sac = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_TOT_PROR_SAC + SAR_TOT_PROR_SAC
+Else
+    valoracum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_B_SAC_MES_RG3976 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_DIF_SAC_RG3976 - ajusteSobraDifSac
+    sum_tot_sac = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_PROR_SAC + SAR_TOT_PROR_SAC
+EndIf
+valormes = SAR_B_SAC_MES_RG3976
+
+importe = valoracum + valormes
+
+If SAR_ES_BAJA = 1 Or indReliq = 1 Or SAR_IND_AJUSTE_SAC = 1 Then
+    dif_sac_RG3976 = sum_tot_sac - importe
+    If abs(dif_sac_RG3976) <= SAR_TOLERANCIA_DEC   Then
+        dif_sac_RG3976 = 0
+        importe = sum_tot_sac
+    Endif
+EndIf    
+
+'Control retroactividad a?os anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
+sac_anio_ant = SAR_IND_SAC_ANIO_ANT
+If sac_anio_ant = 1 Then
+    mes_orig = SAR_AC_SAC_REV[0].SAR_DIF_SAC_RG3976
+    sac_dif = SAR_TOT_PROR_SAC - SAR_AC_SAC_REV[0].SAR_TOT_PROR_SAC
+    dif_sac_RG3976 = mes_orig + sac_dif
+    importe = SAR_AC_SAC_REV[0].SAR_ACM_PROR_SAC
+EndIf
+
+SAR_DIF_SAC_RG3976 = dif_sac_RG3976
+
+'Control baja/extra/reliq 2023
+If DxYear(SAR_FEC_IMPUT_IG) = 2023 And (SAR_ES_BAJA = 1 Or indReliq = 1 Or SAR_IND_AJUSTE_SAC = 1) Then
+    importe = SAR_ACM_IG_ANIO_IMPUT[0].SAR_B_SAC_MES_RG3976 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_DIF_SAC_RG3976 + SAR_B_SAC_MES_RG3976 - ajusteSobraDifSac
+EndIf
+
+Return(importe)

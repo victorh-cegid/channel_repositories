@@ -1,0 +1,5 @@
+'Equivalente a 75 veces el valor de un MOPRE respecto de la contribucion a 
+'cargo del empleador. Segun decreto 491/2004 art. 3ro. inciso a)
+
+valor = SAR_VALOR_AMPO * 75 
+RETURN(valor)

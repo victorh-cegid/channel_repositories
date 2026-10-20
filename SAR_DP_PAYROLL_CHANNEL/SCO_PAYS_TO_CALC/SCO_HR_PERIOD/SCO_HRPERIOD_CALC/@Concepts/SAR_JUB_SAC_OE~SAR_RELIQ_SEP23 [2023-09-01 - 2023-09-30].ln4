@@ -1,0 +1,14 @@
+'Si el promedio de la paga normal desde la que se ejecuta la retroactiva de reliq.
+'es inferior al tope para dei, devuelve las cuotas del impuesto del segundo semestre (julio/agosto/septiembre) de no haberse devuelto antes
+'para que quede imputado en el periodo fiscal SEPTIEMBRE
+
+importe = SAR_JUB_SAC_OE
+
+If SAR_IND_PAGA_RELIQ = 1 And SCO_DT_ALLOCATION = DxDate(30,9,2023) Then
+    imp_acum = SAR_ACM_AJSAC_RELIQ923[0].SAR_JUB_SAC_OE
+    prom_ult = SAR_PROM_SAC2_ULTIMO
+    If prom_ult <= SAR_TOPE_DEI And imp_acum > 0 Then
+        importe = Round(imp_acum*-1,SAR_NUM_DEC)
+    EndIf
+EndIf
+Return(importe)

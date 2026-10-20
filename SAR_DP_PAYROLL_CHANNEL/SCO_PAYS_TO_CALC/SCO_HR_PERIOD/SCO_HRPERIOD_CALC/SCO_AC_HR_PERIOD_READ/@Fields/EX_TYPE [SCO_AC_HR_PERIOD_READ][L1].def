@@ -1,0 +1,13 @@
+item: EX_TYPE
+name: Fuente de tipo de cambio
+column_name: EX_TYPE
+item_type: FIELD
+type: STRING
+id_m4_type: 1
+prec: 10
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 29
+item_aux: null
+id_cstype: 2

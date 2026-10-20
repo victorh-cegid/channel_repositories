@@ -1,0 +1,11 @@
+'De acuerdo al articulo 3? el decreto 491/04 desde el 01/10/05 no hay topes para 
+'el calculo de la base imponible de las contribuciones.
+
+base = SAR_PAGA_EXTRA_1 + SAR_PAGA_EXTRA_2 + SAR_PAGA_EXTRA_AJ_1 + SAR_PAGA_EXTRA_AJ_2
+
+'Por modificacion del empleado se agrega : And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "17"
+IF SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" THEN
+    base= SAR_EGRESO_PAGA_1 + SAR_EGRESO_PAGA_2
+ENDIF
+
+RETURN(base)

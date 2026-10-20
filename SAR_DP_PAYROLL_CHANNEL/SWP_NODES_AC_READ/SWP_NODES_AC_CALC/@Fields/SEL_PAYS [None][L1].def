@@ -1,0 +1,11 @@
+item: SEL_PAYS
+name: Pagas seleccionadas
+column_name: SEL_PAYS
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 4
+scale: 0
+scope: RECORD
+default_value: null
+id_cstype: 2

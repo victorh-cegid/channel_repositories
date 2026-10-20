@@ -1,0 +1,17 @@
+'Este concepto se crea con el fin de calcular el importe fijo que resulta del decreto 590/97
+'Este valor se calcula por cada empleado que se informe a la Administracion Federal de
+'Ingresos Publicos mensualmente al realizar el pago de los Aportes y las Contribuciones.-
+
+valor = 0
+
+IF SAR_TP_IMPUT = "88" THEN
+    Return(0)
+ENDIF
+
+'Toma valor por Empresa
+
+IF SCO_H_HR_PAY_FREQ.SCO_ID_PAY_FREQUENCY = "004" OR SAR_TP_IMPUT = "4" OR SAR_ES_BAJA = 1 THEN 
+    valor = SAR_ART_FON_E
+ENDIF
+
+return(valor)

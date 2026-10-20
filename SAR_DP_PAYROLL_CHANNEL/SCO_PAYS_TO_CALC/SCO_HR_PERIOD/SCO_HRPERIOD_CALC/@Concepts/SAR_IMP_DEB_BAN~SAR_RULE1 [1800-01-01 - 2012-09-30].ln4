@@ -1,0 +1,12 @@
+'Calculamos la deduccion por impuesto a los debitos y creditos
+'si es una liquidacion anual o final segun la R.G. 1674/2004
+
+valor=0
+
+IF SAR_TP_IMPUT = "99" OR (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") OR SAR_MES_PAGO_IG = 12 THEN
+
+   valor= Min(SAR_DEBITO_BANCARIO,SAR_IMPUESTO_TOTAL) 'Con este control verificamos que no le descontemos un importe superior al impuesto calculado
+
+ENDIF
+
+RETURN(valor)  'Importe efectivamente deducido

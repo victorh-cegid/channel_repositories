@@ -1,0 +1,5 @@
+a = SAR_BASE_IMPUESTO 'dependencia
+
+val = SAR_T_IG_HAB_MES_ANT
+
+Return(val)

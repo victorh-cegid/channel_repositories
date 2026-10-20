@@ -1,0 +1,19 @@
+'Se calcula el rango correspondiente al empleado.
+SAR_HR_ROLE.begin()
+SAR_HRROLE_CALC.begin()
+IND_DES = SAR_HRROLE_CALC.SAR_INDIC_REDUC_ZON_DES 'Indicador de zona desfavorable
+MAX_REM = SAR_MAYOR_REM_IG_2013   'Maxima remuneracion
+RANGO   = 0       'Rango a retornar: 0, 1, 2, 3
+
+
+If(MAX_REM <= 15000 )Then 'Rango 1
+   RANGO = 1
+ElseIf(IND_DES <> 1 And MAX_REM > 15000 And MAX_REM <= 25000)Then 'Rango 2
+   RANGO = 2
+ElseIf(IND_DES = 1 And MAX_REM > 15000)Then 'Rango 3
+   RANGO = 3
+ElseIf(MAX_REM > 25000 )Then 'Rango 0
+   RANGO = 0
+EndIf
+
+Return(RANGO)

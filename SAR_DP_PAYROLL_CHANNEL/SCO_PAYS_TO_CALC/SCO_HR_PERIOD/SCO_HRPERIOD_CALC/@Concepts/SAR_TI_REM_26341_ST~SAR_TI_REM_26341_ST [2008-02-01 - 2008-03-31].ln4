@@ -1,0 +1,24 @@
+'Se calcula de acuerdo a lo especificado en el Decreto 198/2008, hasta su finalizacion en Agosto 2009.
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN     Return(0)
+IF SAR_TP_IMPUT <> "1" AND SAR_TP_IMPUT <> "4" THEN Return(0)'Tipo mensual y quincenal
+If SCO_DT_ALLOCATION > SAR_FECHA_BAJA and SAR_ES_BAJA <> 1 Then RETURN(0) 'Condicion para que no se pague el concepto en nomina despues de la baja.
+if SAR_TI_NRE_26341_ST = 0 Then Return(0)
+
+aux = SAR_CARGA_AUSENTISM
+valor=SAR_TI_NRE_26341_ST * (10/100)
+adicional =  (100 - (SAR_PORC_JUBILACION+SAR_PORC_LEY_19032+SAR_PORC_OBR_SOCIAL) ) /100
+
+valor = valor / adicional
+
+'_______________________________________________________________________________________
+
+'Calculo de los dias a pagar
+
+dias = 30 - SAR_DIAS_ANT_ALTA - SAR_DIAS_POST_BAJA - SAR_DIAS_HUELGA - SAR_LIC_S_GOC_SUELD  - SAR_R_PTO_ACC - SAR_R_PTO_ENF - SAR_R_PTO_SIN - SAR_DIAS_EXCEDENCIA - SAR_DIAS_SUS_DISCI  - SAR_DIAS_AUSENCIA 'Se descuentan los dias impagos
+If dias < 0 Then Return(0)
+
+'_______________________________________________________________________________________
+
+valor = valor * dias / 30   'Proporcionamos el importe a pagar de acuerdo a los dias pagos.
+
+Return(valor)

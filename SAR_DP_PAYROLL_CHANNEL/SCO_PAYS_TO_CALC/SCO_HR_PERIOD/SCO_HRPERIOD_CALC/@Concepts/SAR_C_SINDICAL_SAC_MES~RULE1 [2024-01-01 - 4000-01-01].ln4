@@ -1,0 +1,34 @@
+If SAR_TP_IMPUT = "88" Then Return(0)
+sac_anio_ant = SAR_IND_SAC_ANIO_ANT
+
+'Control retroactividad a?os anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
+If sac_anio_ant = 1 Then
+    mes_orig = SAR_AC_SAC_REV[0].SAR_C_SINDICAL_SAC_MES
+    sac_dif = SAR_C_SINDICAL_SAC - SAR_AC_SAC_REV[0].SAR_C_SINDICAL_SAC
+    valor = mes_orig + sac_dif
+    If SAR_TFUEG_IND = 1 Then valor = mes_orig    
+    Return(valor)
+EndIf
+
+IF SAR_IND_PAGA_RELIQ = 1 Or (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") Or SAR_IND_AJUSTE_SAC = 1 Then
+    'En baja o reliquidacion retornamos la diferencia entre el descuento del pago y el que se ha ido descontando mes a mes
+    tot_desc_sac_pago = SAR_ACM_IG_ANIO_IMPUT[0].SAR_C_SINDICAL_SAC + SAR_C_SINDICAL_SAC
+
+    'Tierra de fuego a descontar
+    tot_csind_sac_tfuego = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TFUEG_SIND_SAC + SAR_TFUEG_SIND_SAC
+    tot_desc_sac_pago = tot_desc_sac_pago - tot_csind_sac_tfuego
+
+    tot_desc_sac_mes = SAR_ACM_IG_ANIO_IMPUT[0].SAR_C_SINDICAL_SAC_MES
+    valor = tot_desc_sac_pago - tot_desc_sac_mes
+    
+    'Para evitar diferencias en reliquidacion por redondeos
+    If abs(valor) <= SAR_TOLERANCIA_DEC Then valor = 0
+    
+    Return (valor)
+EndIf
+
+base = SAR_B_SAC_MES_RG3976
+
+valor = base * SAR_PORC_C_SIND_VOL / 100
+
+Return(valor)

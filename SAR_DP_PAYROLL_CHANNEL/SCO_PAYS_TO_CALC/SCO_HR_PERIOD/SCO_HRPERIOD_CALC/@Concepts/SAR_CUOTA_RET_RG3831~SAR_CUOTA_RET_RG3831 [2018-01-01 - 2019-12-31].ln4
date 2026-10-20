@@ -1,0 +1,96 @@
+AUX = SAR_DESCUENTOS()
+'Solo se debe calcular en paga normal.
+IF SAR_TP_IMPUT = "2" OR SAR_TP_IMPUT = "77" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN Return(0)
+IF SAR_MES_PAGO_IG = 1  THEN Return(0)
+
+'-------------------------------------------------------------------------------
+'Se determina el valor de la cuota a prorratear de acuerdo a los meses 
+'restantes, tomando como referncia el mes de la fecha de pago IG, ante
+'la posibilidad de fechas de pagas diferidas. 
+'Se refleja en el concepto 5937 - SAR_CUOTA_RET_RG3831.
+'-------------------------------------------------------------------------------
+cuota = 0
+cuota_ant = 0
+cuota_no_desc = 0
+cuota_no_desc_ant = 0
+cuota_pr = 0
+aus_n_rem = SAR_DIAS_DTO_AGUIN
+nummes = SAR_MES_PAGO_IG
+
+IF SAR_TP_IMPUT = "4" THEN 'Si el tipo de paga es segunda quincena, contabilizamos las ausencias no remuneradas de la primer quincena para tener las totales del mes
+    SAR_ACM_PAG_QUIN_1RA.BEGIN()
+    IF SAR_ACM_PAG_QUIN_1RA.COUNT() > 0 THEN
+    aus_n_rem_1q = SAR_ACM_PAG_QUIN_1RA.SAR_DIAS_DTO_AGUIN
+        IF aus_n_rem_1q > 0 then
+            aus_n_rem = aus_n_rem + aus_n_rem_1q
+        ENDIF	
+    ENDIF
+ENDIF
+
+SAR_ACM_ULT_MES.BEGIN()
+IF SAR_ACM_ULT_MES.COUNT() > 0 THEN
+    cuota_ant = SAR_ACM_ULT_MES.SAR_CUOTA_RET_RG3831
+    saldo = SAR_ACM_ULT_MES.SAR_SALDO_RET_RG3831
+    cuota_no_desc_ant = SAR_ACM_ULT_MES.SAR_CUOTA_N_RET_RG3831
+ENDIF
+
+SAR_HT_PAYS.BEGIN()
+IF (DxMonth(SCO_DT_ALLOCATION) = 4 and SAR_TP_IMPUT = "4") and SAR_FEC_PAGO_IG > SAR_HT_PAYS.SCO_DT_END THEN
+    SAR_ACM_2QNA_MES_ANT.BEGIN()
+    IF SAR_ACM_2QNA_MES_ANT.COUNT() > 0 THEN
+        saldo = SAR_ACM_2QNA_MES_ANT.SAR_SALDO_RET_RG3831
+    ENDIF
+ENDIF
+
+'-----------------------------------------------------------------------------
+'En caso de baja del empleado antes de Diciembre se
+'descuenta el saldo a ese mes.
+'-----------------------------------------------------------------------------
+IF SAR_ES_BAJA = 1 THEN
+    cuota = saldo
+Else
+    IF SAR_TP_IMPUT = "3" THEN
+        Return(0)
+    ENDIF
+    
+    IF aus_n_rem >= 1 THEN  
+        'Se condiciona para controlar en base al ingreso del empleado, en base a eso se considera la retencion de la cuota o no.
+        rem_neta = SAR_TOT_REM_IMP - (SAR_TOT_RETEN_SIN_IG + SAR_DESCUENTOS_RG3831 + SAR_IG_CUOT_PRORRA + SAR_IG_CUOT_SAC)
+
+        If rem_neta < (cuota_ant + cuota_no_desc_ant) Then                   
+            meses_pro = (12 - nummes) + 1
+            cuota_ant = Round((saldo - cuota_no_desc_ant)/ meses_pro,2)
+            cuota_no_desc = cuota_no_desc_ant + cuota_ant
+            SAR_CUOTA_N_RET_RG3831 = cuota_no_desc
+            Return(0)
+        Endif
+    ENDIF
+    
+    IF cuota_no_desc_ant > 0 or cuota_no_desc > 0 THEN
+        meses_pro = (12 - nummes) + 1
+        cuota_ant = Round((saldo - cuota_no_desc_ant)/ meses_pro,2)
+        cuota_ant = cuota_ant + cuota_no_desc_ant
+    ENDIF
+
+    IF cuota_ant > 0  THEN
+        IF cuota_no_desc_ant > 0 THEN
+            cuota = cuota_ant
+        Else
+            if DxMonth(SCO_DT_ALLOCATION) = 3 and SAR_TP_IMPUT = "3" then           
+                cuota = cuota_ant        
+            Else
+                If saldo > 0 then
+                    meses_pro = (12 - nummes) + 1
+                    cuota_pr = Round((saldo)/ meses_pro,2)
+                    IF saldo <= cuota_pr THEN
+                        cuota = saldo
+                    Else        
+                        cuota = cuota_pr
+                    ENDIF
+                Endif
+            Endif        
+        endif
+    ENDIF
+Endif
+
+Return(cuota)

@@ -1,0 +1,3 @@
+valor = SAR_BASE_COTIZ_ART * SAR_P_PAT_L_19032 / 100
+
+RETURN(valor)

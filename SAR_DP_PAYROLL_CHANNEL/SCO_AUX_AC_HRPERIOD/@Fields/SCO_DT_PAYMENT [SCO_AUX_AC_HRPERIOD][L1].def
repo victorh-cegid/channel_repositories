@@ -10,3 +10,4 @@ scope: NODE
 default_value: null
 internal_type: 25
 item_aux: null
+id_cstype: null

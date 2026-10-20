@@ -1,0 +1,11 @@
+item: SCO_ID_PAYFTR
+name: Filtro paga
+column_name: SCO_ID_PAYFTR
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 9
+scale: 0
+scope: RECORD
+default_value: "0"
+id_cstype: 7

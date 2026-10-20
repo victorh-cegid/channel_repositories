@@ -3,3 +3,4 @@ NAME: Numero de periodos del RH para calcular
 ID_TI: SAR_HR_PERIOD_COUNT
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

@@ -1,0 +1,66 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+'If SAR_COEF_JORNADA_PER = 0 Then
+If SAR_COEF_JORNADA_PER = 1 Then
+    Return (0)
+Endif
+/* Primero armamos la base */
+
+'Se corresponde con el 5810 
+IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
+    tope = SAR_TOPE_COTIZ - SAR_BASE_COTIZ_ART_OS / SAR_COEF_JORNADA_PER
+    tope = tope / SAR_DIAS_NORM_COTIZ * (SAR_DIAS_NORM_COTIZ - SAR_DIAS_VACACIONES) 
+ELSE
+    SAR_ACM_ACT_CONTRIB.BEGIN()
+    'Resto al tope lo acumulado en el mes
+    vac_periodo = SAR_ACM_ACT_CONTRIB.SAR_DIAS_VACACIONES + SAR_DIAS_VACACIONES
+    tope = (SAR_TOPE_COTIZ - SAR_BASE_COTIZ_ART_OS / SAR_COEF_JORNADA_PER) / SAR_DIAS_NORM_COTIZ *(SAR_DIAS_NORM_COTIZ - vac_periodo)
+
+    'tope = tope / #405 *(#405 - vac_periodo)
+    tope = tope -  SAR_ACM_ACT_CONTRIB.SAR_REMUN_IMPO_OS / SAR_COEF_JORNADA_PER
+ENDIF
+IF SAR_TP_IMPUT = "2" THEN tope = 0
+ 
+real= SAR_TOT_DEV_COTIZ / SAR_COEF_JORNADA_PER
+base = Max(real,0)
+base = Min(tope,base)
+base_rem = base
+
+
+'Se corresponde con el 5805
+IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
+    tope = SAR_TOPE_COTIZ
+ELSE
+    SAR_ACM_ACT_CONTRIB.BEGIN()
+    'resto al tope lo acumuldo en el mes
+    tope = SAR_TOPE_COTIZ - SAR_ACM_ACT_CONTRIB.SAR_BASE_COTIZ_ART_OS / SAR_COEF_JORNADA_PER
+ENDIF
+aux = SAR_DIAS_ACCIDENTE
+diasart = SAR_DIAS_ART
+IF diasart = 0 THEN
+    basetop = 0
+ELSE
+    basetop = tope / SAR_DIAS_NORM_COTIZ * diasart
+ENDIF
+
+real = SAR_PRESTACION_ART / SAR_COEF_JORNADA_PER
+IF real < basetop THEN
+    base = real 
+ELSE
+    base= basetop
+ENDIF  
+base = base + base_rem
+
+/* Fin de la base */
+
+
+porc=SAR_PORC_OBR_SOCIAL-(SAR_PORC_OBR_SOCIAL*SAR_PP_AP_OB_SOC/100)
+
+valor = base * porc / 100
+IF ISNULL(valor) = TRUE THEN
+    valor = 0
+ENDIF
+
+valor = valor - SAR_OBRA_SOCIAL
+RETURN(valor)

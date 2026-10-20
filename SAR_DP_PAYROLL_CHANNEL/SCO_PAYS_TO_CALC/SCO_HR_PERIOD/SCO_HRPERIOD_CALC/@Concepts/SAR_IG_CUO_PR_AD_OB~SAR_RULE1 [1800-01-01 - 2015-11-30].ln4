@@ -1,0 +1,84 @@
+' Cambio Legal SP042 - Impuesto a las Ganancias.
+' Se elimina el calculo de la cuota prorrateada en Pagas Extras
+If (SAR_TP_IMPUT = "2") Then Return(0)
+
+
+IF (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT) THEN
+    mes = DxMonth(SAR_PAGA_ACTUAL_IMPUT.SAR_FECHA_PAGO_IG)
+ELSE   
+    mes=SAR_MES_PAGO_IG
+ENDIF 
+
+
+dif=0
+saldo=0
+cuota_ant=0
+cuota=0
+base=0
+meses_quedan=0
+valor = 0
+
+
+IF mes <> 1 AND mes >= 6 THEN
+    SAR_ACM_ULT_MES.begin()
+    saldo = SAR_ACM_ULT_MES.SAR_IG_SAL_PR_AD_OB
+    cuota_ant = SAR_ACM_ULT_MES.SAR_IG_CUO_PR_AD_OB
+ENDIF
+
+IF saldo < cuota_ant THEN
+    cuota_ant=saldo
+ENDIF
+
+'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+IF((SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" ) OR mes = 12 Or mes = 1)  THEN
+    If(mes = 1 And DxMonth(SCO_DT_PAYMENT) <> DxMonth(SAR_FEC_PAGO_IG))Then
+       valor = SAR_OB_SOC_ADIC_SAC
+    Else
+       valor = SAR_OB_SOC_ADIC_SAC + SAR_IG_AD_OS_NO_HAB + saldo
+    EndIf          
+    RETURN(valor)
+ENDIF
+
+IF SCO_DT_ALLOCATION <> SCO_DT_PAYMENT THEN
+   SAR_PAGA_ACTUAL_IMPUT.BEGIN()
+   IF ISNULL(SAR_PAGA_ACTUAL_IMPUT.SAR_OB_SOC_ADIC_SAC) = FALSE THEN
+        obra_social_adic_sac = SAR_PAGA_ACTUAL_IMPUT.SAR_OB_SOC_ADIC_SAC 
+   ELSE
+        obra_social_adic_sac = 0
+   ENDIF
+   IF ISNULL(SAR_PAGA_ACTUAL_IMPUT.SAR_IG_AD_OS_NO_HAB) = FALSE THEN
+        obra_social_no_hab = SAR_PAGA_ACTUAL_IMPUT.SAR_IG_AD_OS_NO_HAB
+   ELSE
+        obra_social_no_hab = 0
+   ENDIF 
+   dif = SAR_OB_SOC_ADIC_SAC + SAR_IG_AD_OS_NO_HAB - obra_social_adic_sac - obra_social_no_hab
+   IF dif >= 0 THEN
+      IF ISNULL(SAR_PAGA_ACTUAL_IMPUT.SAR_IG_CUO_PR_AD_OB) = FALSE THEN
+         obra_social_pr_ad = SAR_PAGA_ACTUAL_IMPUT.SAR_IG_CUO_PR_AD_OB
+      ELSE
+        obra_social_pr_ad = 0
+      ENDIF
+      aux = obra_social_pr_ad
+      SAR_IG_PRO_ADI_O=dif
+      RETURN(aux)
+   ELSE
+      base= SAR_OB_SOC_ADIC_SAC + SAR_IG_AD_OS_NO_HAB
+   ENDIF
+ELSE
+    SAR_INCRE_PRORRATEOS.BEGIN()
+    IF ISNULL(SAR_INCRE_PRORRATEOS.SAR_IG_PRO_ADI_O) = FALSE THEN
+        incre_obra_social_pr_ad = SAR_INCRE_PRORRATEOS.SAR_IG_PRO_ADI_O
+    ELSE
+        incre_obra_social_pr_ad = 0
+    ENDIF
+    base= SAR_OB_SOC_ADIC_SAC + SAR_IG_AD_OS_NO_HAB + incre_obra_social_pr_ad
+ENDIF
+
+meses_quedan = 12 - mes + 1
+cuota = base/meses_quedan
+IF saldo = 0 THEN
+    RETURN(cuota)
+ELSE
+    valor = cuota + cuota_ant
+    RETURN(valor)
+ENDIF

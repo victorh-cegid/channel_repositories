@@ -1,2 +1,2 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-GONEXT | RECORD | NUMBER | 6 | 18 | 0 | Siguiente
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+GONEXT | RECORD | NUMBER | 6 | 18 | 0 | Siguiente | 

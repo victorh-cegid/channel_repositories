@@ -10,3 +10,4 @@ scope: RECORD
 default_value: null
 internal_type: 14
 item_aux: SCO_CUR_DATE_3
+id_cstype: null

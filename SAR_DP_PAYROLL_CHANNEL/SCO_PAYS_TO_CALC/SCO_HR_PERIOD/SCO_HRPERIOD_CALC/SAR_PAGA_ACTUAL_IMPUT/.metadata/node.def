@@ -3,3 +3,4 @@ NAME: Valores paga actual por imputacion
 ID_TI: SAR_PAGA_ACTUAL_IMPUT
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

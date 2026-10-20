@@ -1,0 +1,11 @@
+item: FORWARD_MONTH
+name: Meses futuros
+column_name: FORWARD_MONTH
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 10
+scale: 0
+scope: RECORD
+default_value: null
+id_cstype: 2

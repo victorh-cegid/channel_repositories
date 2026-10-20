@@ -1,0 +1,38 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN Return(0)
+
+If SAR_TP_IMPUT = "77" And SAR_IND_PAGA_ESP_VAC = 0 Then Return(0)
+
+If (SAR_TP_IMPUT = "1" or SAR_TP_IMPUT = "3" or SAR_TP_IMPUT = "4") And SAR_IND_PAGA_ESP_VAC = 1 Then Return(0)
+
+If SAR_COEF_JORNADA_PER = 1 Then Return (0)
+
+/* Calculamos primero la base */ 
+IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
+    tope = SAR_TOPE_COTIZ 
+ELSE
+    SAR_ACM_ACT_CONTRIB.BEGIN()
+    'Resto al tope lo acumulado en el mes
+    tope = SAR_TOPE_COTIZ - (SAR_ACM_ACT_CONTRIB.SAR_VAC_IMPO_OS / SAR_COEF_JORNADA_PER)
+ENDIF
+
+IF SAR_DIAS_NORM_COTIZ = 0 THEN
+    base = 0
+ELSE
+    base = tope / SAR_DIAS_NORM_COTIZ
+ENDIF
+
+tope = base * SAR_UN_VACACIONES
+vac  = SAR_VACACIONES / SAR_COEF_JORNADA_PER
+base = Min(tope, vac)
+
+/* Fin base */
+porc   = SAR_PORC_OBR_SOCIAL - (SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC / 100)
+precio = base * porc / 100
+
+IF ISNULL(precio) = TRUE THEN
+    precio = 0
+ENDIF
+
+precio = precio - SAR_OBRA_SOCIAL_VAC
+
+Return(precio)

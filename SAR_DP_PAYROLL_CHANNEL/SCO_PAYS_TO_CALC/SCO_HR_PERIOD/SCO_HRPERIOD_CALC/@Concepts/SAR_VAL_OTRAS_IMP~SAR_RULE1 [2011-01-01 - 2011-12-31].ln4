@@ -1,0 +1,21 @@
+' las bajas a partir de enero 2011 deben ser procesadas con los valores anteriores a julio 2010
+' para esto se duplican los valores en M4SCO_LE_VALUES para la empresa ficticia 999999
+
+'tomamos el a?o de la fecha de baja
+anio_baja   = DxYear(SAR_HR_PERIOD.STD_DT_END)
+ind         = SAR_IND_DED_IG_2010
+
+'Fecha Cambio Legal 26.731
+vFCambLegal = DxDate("28","12","2011")
+
+
+
+If  (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") and anio_baja = 2011 And SAR_FECHA_BAJA < vFCambLegal Then
+    'Toma su valor por valores empresa con valores anteriores a julio 2010
+    P_ID_LEG_ENT = "999999"
+    RETURN(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(P_ID_LEG_ENT,"SAR_VAL_OTRAS_IMP",SAR_FEC_PAGO_IG,ind))
+
+Else
+    'Toma su valor por valores empresa actuales
+    RETURN(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_OTRAS_IMP",SAR_FEC_PAGO_IG,ind))
+Endif

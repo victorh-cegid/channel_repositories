@@ -1,0 +1,9 @@
+// Acumula el valor del beneficio del mes y lo acumulado en los meses anteriores
+
+BenefHast = SAR_ACM_IG_ANIO_IMPUT[0].SAR_BENEF_IG_DEC651_2019 
+BenefApli = SAR_BENEF_IG_DEC651_2019
+
+
+BenefAcum = BenefHast + BenefApli
+
+Return(BenefAcum)

@@ -1,0 +1,17 @@
+If SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "88" Then Return(0)
+
+'Este concepto es para calcular las vacaciones en modalidad plus vacacional para OS
+importe = 0
+If SAR_LSD_IND_VAC_AD = 1 Then importe = SAR_LSD_TOT_VAC_OS
+
+'Puede cambiar de adelanto vacacional a plus vacacional, solo hay que considerar la diferencia, no el importe completo
+If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then 
+    importe = 0
+    vacAdOrig = SCO_AC_HR_PERIOD_REV_1.SAR_LSD_VAC_AD_OS
+    vacTotalOrig = SCO_AC_HR_PERIOD_REV_1.SAR_LSD_TOT_VAC_OS
+    difTotal = SAR_LSD_TOT_VAC_OS - vacTotalOrig
+    If SAR_LSD_IND_VAC_AD = 1 Then importe = difTotal
+    importe = importe + vacAdOrig
+EndIf
+
+Return(importe)

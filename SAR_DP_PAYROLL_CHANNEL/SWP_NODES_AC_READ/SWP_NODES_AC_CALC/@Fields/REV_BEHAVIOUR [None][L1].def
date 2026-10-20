@@ -1,0 +1,11 @@
+item: REV_BEHAVIOUR
+name: Comport. entre revisiones
+column_name: REV_BEHAVIOUR
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 10
+scale: 0
+scope: RECORD
+default_value: null
+id_cstype: 2

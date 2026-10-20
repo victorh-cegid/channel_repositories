@@ -1,0 +1,13 @@
+item: SCO_LEGAL_EFFECTS
+name: Efecto legal
+column_name: SCO_LEGAL_EFFECTS
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 1
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null
+id_cstype: null

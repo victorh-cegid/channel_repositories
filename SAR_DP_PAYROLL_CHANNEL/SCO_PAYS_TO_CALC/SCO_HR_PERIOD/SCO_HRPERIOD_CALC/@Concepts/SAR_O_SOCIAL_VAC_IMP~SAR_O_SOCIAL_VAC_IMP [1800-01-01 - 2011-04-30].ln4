@@ -1,0 +1,15 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+porc = SAR_PORC_OBR_SOCIAL - (SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
+precio = SAR_VAC_IMPO * porc / 100
+IF ISNULL(precio) = TRUE THEN
+    precio = 0
+ENDIF
+
+anssal = round(precio * SAR_PORC_ANSSAL / 100, 2)
+SAR_ANSSAL_VAC = anssal
+precio = precio - anssal
+
+Return(precio)

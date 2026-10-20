@@ -1,0 +1,168 @@
+'RG 3976. Se cierra esta norma a 31/12/2017. Se mantiene durante 2017 por si existiesen prorrateos pendientes del SAC del a?o 2016.
+
+If SAR_TP_IMPUT = "77" or SAR_TP_IMPUT = "88" or SAR_TP_IMPUT = "99" Then Return(0)
+
+'No se ejecuta en la primera quincena
+IF (SAR_TP_IMPUT = "3"  AND SAR_ES_BAJA = 0 ) THEN RETURN (0)
+
+'No tomara valor en la paga normal de Junio si no existe ajuste:
+If (SAR_TP_IMPUT = "1" And DxMonth(SCO_DT_PAYMENT) = 6 And SAR_PAGA_EXTRA_AJ_1 = 0 And SAR_IND_AGUINALDO = 0) Then
+  Return(0)
+EndIf
+
+' Se elimina Del calculo la paga extra que no sea de aguinaldo
+If (SAR_TP_IMPUT = "2") AND (SAR_PAGA_EXTRA_AJ_1 = 0) AND (SAR_PAGA_EXTRA_AJ_2 = 0) And (SAR_PAGA_EXTRA_1 = 0) And (SAR_PAGA_EXTRA_2 = 0) Then Return(0)
+
+SAR_ACM_ULT_MES.BEGIN()
+SAR_PAGA_ACTUAL_IMPUT.BEGIN()
+SAR_FEC_ACREDIT_IMP.BEGIN()
+SAR_INCRE_PRORRATEOS.BEGIN()
+SAR_SAC_PRORR_ANT.BEGIN()
+
+IF (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT) THEN
+    mes = DxMonth(SAR_PAGA_ACTUAL_IMPUT.SAR_FECHA_PAGO_IG)
+ELSE   
+    mes = SAR_MES_PAGO_IG
+ENDIF 
+
+
+dif = 0
+saldo = 0
+cuota_ant = 0
+cuota = 0
+base = 0
+meses_quedan = 0
+
+'Modificacion RG3976.
+base_mes_actual = 0
+
+' No se debe tomar el valor de la cuota en Paga Extra de Diciembre de Aguinaldo.
+If SAR_TP_IMPUT = "2" And DxMonth(SCO_DT_PAYMENT) = 12 And SAR_IND_AGUINALDO = 1 Then
+    cuota_ant = 0
+    Return(base_mes_actual)
+ElseIF(mes > 1 And DXMonth(SCO_DT_PAYMENT) = DxMonth(SAR_FEC_PAGO_IG)) Or (mes >= 6 And DxMonth(SCO_DT_PAYMENT) <> DxMonth(SAR_FEC_PAGO_IG)) THEN 'and mes >= 6 
+     SAR_ACM_ULT_MES.BEGIN()
+     saldo = SAR_ACM_ULT_MES.SAR_IG_SAL_PROR_LEY
+     cuota_ant = SAR_ACM_ULT_MES.SAR_IG_CUO_PROR_LEY
+ENDIF
+
+    IF saldo < cuota_ant THEN
+       cuota_ant = saldo
+    ENDIF
+
+IF (SAR_ES_BAJA = 1) Then
+    If(SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" ) Then
+      dia_baja = DXDAY(SAR_FECHA_BAJA) 
+      mes_baja = DXMONTH(SAR_FECHA_BAJA) 
+      If mes_baja = 2 Then  
+            If (dia_baja < 28 And DaysOfMonth(2) = 28) Then  
+                Return(0)
+            EndIf  
+        Else  
+            If (dia_baja < 29 And DaysOfMonth(2) = 29) Then  
+                Return(0)
+            EndIf  
+        EndIf
+        
+        If mes_baja = 1 Or mes_baja = 3 Or mes_baja = 5 Or mes_baja = 7 Or mes_baja = 8 Or mes_baja = 10 Or mes_baja = 12 Then  
+            If dia_baja < 31 Then  
+                Return(0)
+            EndIf  
+        EndIf
+    
+        If mes_baja = 4 Or mes_baja = 6 Or mes_baja = 9 Or mes_baja = 11  Then  
+            If dia_baja < 30 Then  
+                Return(0)
+            EndIf  
+        EndIf
+    EndIf
+EndIf
+
+
+
+IF ((SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") OR mes = 12  OR mes = 1) THEN 
+
+    saldo = SAR_ACM_ULT_MES.SAR_IG_SAL_PROR_LEY
+
+    If (mes = 1 And DxMonth(SCO_DT_PAYMENT) <> DxMonth(SAR_FEC_PAGO_IG)) Then
+      If(SAR_ES_BAJA = 1)Then
+        RETURN(base_mes_actual + SAR_IG_19032_NO_HAB + saldo)
+      Else      
+        RETURN(base_mes_actual) / 12
+      EndIf
+    Else
+        RETURN(base_mes_actual + SAR_IG_19032_NO_HAB + saldo)
+    EndIf  
+ENDIF
+
+IF (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT) THEN
+    SAR_PAGA_ACTUAL_IMPUT.BEGIN()
+    dif = base_mes_actual + SAR_IG_19032_NO_HAB - SAR_PAGA_ACTUAL_IMPUT.SAR_LEY_19032_SAC - SAR_PAGA_ACTUAL_IMPUT.SAR_IG_19032_NO_HAB
+    IF dif >= 0 THEN
+        aux = SAR_PAGA_ACTUAL_IMPUT.SAR_IG_CUO_PROR_LEY
+        SAR_IG_PRO_A_LEY = dif
+        RETURN(aux)
+    ELSE
+        base= base_mes_actual + SAR_IG_19032_NO_HAB
+    ENDIF
+ELSE
+    SAR_INCRE_PRORRATEOS.BEGIN()
+    If (SAR_TP_IMPUT = "4") AND (SAR_IND_AGUINALDO = 0 And SAR_PAGA_AJ_EXTRA_SAC = 0)Then 
+      base_1q = 0
+      base=base_1q + base_mes_actual + SAR_IG_19032_NO_HAB + SAR_INCRE_PRORRATEOS.SAR_IG_PRO_A_LEY
+    Else
+      base=base_mes_actual + SAR_IG_19032_NO_HAB + SAR_INCRE_PRORRATEOS.SAR_IG_PRO_A_LEY
+    EndIf  
+ENDIF
+
+'meses_quedan = 12 - mes + 1
+Mes_De_Paga_Ant =  DxMonth(SAR_SAC_PRORR_ANT.SAR_FECHA_BASE)
+Mes_De_IG_Ant   =  DxMonth(SAR_SAC_PRORR_ANT.SAR_FEC_PAGO_IG)
+If((Mes_De_Paga_Ant <> Mes_De_IG_Ant) Or (DxMonth(SCO_DT_PAYMENT) <> DxMonth(SAR_FEC_PAGO_IG)))Then
+    If(Mes_De_IG_Ant < 12)Then
+     meses_quedan = 12 - Mes_De_IG_Ant
+    Else
+     meses_quedan = 12
+    EndIf 
+Else
+  meses_quedan = 12 - mes + 1
+EndIf
+
+cuota = base / meses_quedan
+    '***************************************************
+    If(DxMonth(SCO_DT_PAYMENT) <> DxMonth(SAR_FEC_PAGO_IG) And mes >= 2)Then 
+       
+    '  'Buscar la cuota anterior acumulada en paga normal o extra distinta del SAC de diciembre:
+       If(Mes = 2 Or Mes = 8)Then 
+            SCO_AC_HR_PERIOD_READ_1.Begin()
+            Cont          = 0
+            Cuota_Liq_Ant = 0
+            Registros = SCO_AC_HR_PERIOD_READ_1.Count() - 1
+            If(Registros >= 0)Then
+               SCO_AC_HR_PERIOD_READ_1.MoveTo(Cont)
+               Mes_Paga  = DxMonth(SCO_DT_PAYMENT)
+               Anio_Paga = DxYear(SCO_DT_PAYMENT)                
+               While(Cont <= Registros)
+                    SCO_AC_HR_PERIOD_READ_1.MoveTo(Cont)           
+                    Mes_Acu   = DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT)
+                    Anio_Acu  = DxYear(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT)
+                    If(Mes_Acu = Mes_Paga - 1 And Anio_Acu = Anio_Paga) Or ((Mes_Acu = Mes_Paga + 11) And (Anio_Acu = Anio_Paga - 1))Then           
+                      If(SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_2 = 0)Then
+                        Cuota_Liq_Ant = Cuota_Liq_Ant + SCO_AC_HR_PERIOD_READ_1.SAR_IG_CUO_PROR_LEY 'Tomamos el valor en la paga acumulada distinta a la extra del SAC.
+                      EndIf  
+                    EndIf
+                    Cont = Cont + 1 
+               Wend
+            EndIf            
+            Return(cuota + Cuota_Liq_Ant)
+         ElseIf(Mes <> 7)Then
+               cuota_ant = SAR_SAC_PRORR_ANT.SAR_IG_CUO_PROR_LEY 'valor de la ultima cuota calculada.     
+               Return(cuota_ant)
+         EndIf   
+    EndIf
+
+IF saldo = 0 THEN
+   RETURN(cuota)
+ELSE
+   RETURN(cuota + cuota_ant)
+ENDIF

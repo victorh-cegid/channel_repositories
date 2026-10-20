@@ -1,0 +1,5 @@
+base =SAR_BASE_REM_PRORR
+porc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
+precio = base * porc / 100
+valor = precio * SAR_FAM_CARGO_OS
+RETURN(valor)

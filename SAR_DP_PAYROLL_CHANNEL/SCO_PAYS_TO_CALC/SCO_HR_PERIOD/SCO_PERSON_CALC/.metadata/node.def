@@ -3,3 +3,4 @@ NAME: Nodo persona
 ID_TI: SAR_PERSON_CALC
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

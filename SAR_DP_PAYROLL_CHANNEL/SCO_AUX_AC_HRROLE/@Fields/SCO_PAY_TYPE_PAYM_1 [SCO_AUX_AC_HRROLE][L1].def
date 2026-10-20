@@ -1,0 +1,13 @@
+item: SCO_PAY_TYPE_PAYM_1
+name: Tipo paga
+column_name: SCO_PAY_TYPE_PAYM
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 3
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 26
+item_aux: null
+id_cstype: null

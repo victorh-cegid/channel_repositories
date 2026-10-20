@@ -1,0 +1,7 @@
+'If SAR_COEF_JORNADA_PER = 0 Then
+If SAR_COEF_JORNADA_PER = 1 Then
+    Return (0)
+Endif
+valor = SAR_VAC_23660_PAT / SAR_COEF_JORNADA_PER
+valor = valor - SAR_VAC_23660_PAT
+RETURN(valor)

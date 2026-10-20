@@ -1,0 +1,60 @@
+'-----------------------------------------------------------------------------------
+'Solo se debe calcular en paga normal y de tener saldo al final del periodo fiscal
+'se ajusta en la reliquidacion anual del impuesto.
+'------------------------------------------------------------------------------------
+IF SAR_TP_IMPUT = "2" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR (SAR_TP_IMPUT = "3" AND SAR_ES_BAJA = 0 and SAR_REC_BAS_IMP_RG3831 = 0) THEN Return(0)
+
+IF SAR_MES_PAGO_IG = 1  THEN Return(0)
+
+sal = 0
+'------------------------------------------------------------------------------------
+'El importe del impuesto recalculado al mes anterior es el saldo
+'a prorratear en el resto del a?o. Se refleja en el concepto
+'5936 - SAR_SALDO_RET_RG3831.
+'------------------------------------------------------------------------------------
+
+SAR_ACM_ULT_MES.BEGIN()
+IF SAR_ACM_ULT_MES.COUNT() > 0 THEN
+    sal_ant = SAR_ACM_ULT_MES.SAR_SALDO_RET_RG3831
+ENDIF
+
+SAR_HT_PAYS.BEGIN()
+IF DxMonth(SCO_DT_ALLOCATION) = 3 THEN
+    IF SAR_REC_BAS_IMP_RG3831 > 0 THEN
+        sal = SAR_REC_BAS_IMP_RG3831
+    ELSEIF (SAR_REC_BAS_IMP_RG3831 = 0 AND SAR_TP_IMPUT = "4") and SAR_FEC_PAGO_IG > SAR_HT_PAYS.SCO_DT_END THEN 'Si el tipo de paga es segunda quincena, el saldo es el valor del recalculo del impuesto que se calculo en la primer quincena    
+        SAR_ACM_PAG_QUIN_1RA.BEGIN()
+        IF SAR_ACM_PAG_QUIN_1RA.COUNT() > 0 THEN
+            saldo_1q = SAR_ACM_PAG_QUIN_1RA.SAR_SALDO_RET_RG3831
+		IF saldo_1q > 0 THEN
+                sal = saldo_1q
+                sal_ant = sal
+		ENDIF	
+        ENDIF
+    ENDIF	
+ELSEIF (DxMonth(SCO_DT_ALLOCATION) = 4 and SAR_FEC_PAGO_IG > SAR_HT_PAYS.SCO_DT_END) and (SAR_TIPO_SALARIO <> "001") THEN
+    SAR_ACM_2QNA_MES_ANT.BEGIN()
+    IF SAR_ACM_2QNA_MES_ANT.COUNT() > 0 THEN
+        sal_ant = SAR_ACM_2QNA_MES_ANT.SAR_SALDO_RET_RG3831
+    ENDIF
+ENDIF    
+  
+cuota_pro = SAR_CUOTA_RET_RG3831
+
+
+'-----------------------------------------------------------------------------------
+'Si no hay saldo anterior se trata del inicio se toma el valor 
+'del impuesto recalculado y se le descuenta la primer cuota
+'-----------------------------------------------------------------------------------
+IF sal_ant = 0 and sal > 0 THEN
+    sal = Round(sal - cuota_pro,2)
+ELSEIF sal_ant > 0 THEN
+    'En los meses posteriores a marzo, el saldo se completa desde el 5010 luego de la retencion de la cuota.
+    'Este concepto de saldo tomara el valor del saldo del mes anterior, para ser usado en el 5010 correctamente.
+    'Y en el 5010 se le terminara dejando el saldo correspondiente al mes en curso.
+    sal = sal_ant     
+ENDIF
+
+If SAR_ES_BAJA = 1 Then sal = 0
+
+Return(sal)

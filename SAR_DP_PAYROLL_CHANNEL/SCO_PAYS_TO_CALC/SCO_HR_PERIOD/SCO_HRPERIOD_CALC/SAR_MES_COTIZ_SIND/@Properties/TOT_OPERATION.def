@@ -1,0 +1,10 @@
+item: TOT_OPERATION
+name: Operacion
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 10
+scale: 0
+scope: NODE
+default_value: "2"
+id_cstype: 2

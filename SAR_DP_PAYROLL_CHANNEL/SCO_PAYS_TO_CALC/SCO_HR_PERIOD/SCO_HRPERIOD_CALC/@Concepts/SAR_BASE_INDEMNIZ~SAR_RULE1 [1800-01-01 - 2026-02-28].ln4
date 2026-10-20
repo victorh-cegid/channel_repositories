@@ -1,0 +1,25 @@
+IF SAR_ES_BAJA <> 1 THEN 
+    RETURN(0)
+ENDIF
+
+aux = SAR_M_REMUN_INDEM
+base = 0
+valor = 0
+
+IF SAR_TIPO_SALARIO = "001" THEN
+    SAR_ACM_12_INDEM.BEGIN()
+    IF SAR_ACM_12_INDEM.COUNT() > 0 THEN
+        base = SAR_ACM_12_INDEM.SAR_TOTAL_P_SAC   
+    ENDIF
+    base = Max(SAR_TOTAL_P_SAC,base)
+ELSE
+    SAR_ACM_12_INDEM.BEGIN()
+    IF SAR_ACM_12_INDEM.COUNT() > 0 THEN
+        base = SAR_ACM_12_INDEM.SAR_M_REMUN_INDEM   
+    ENDIF
+    base = Max(SAR_M_REMUN_INDEM,base)
+ENDIF
+
+valor = base
+
+RETURN(valor)

@@ -7,3 +7,4 @@ prec: 4
 scale: 0
 scope: NODE
 default_value: "2"
+id_cstype: null

@@ -1,0 +1,13 @@
+item: SYSPARAM
+name: SYSPARAM
+item_type: PROPERTY
+type: STRING
+id_m4_type: 3
+prec: -1
+scale: 0
+scope: NODE
+default_value: null
+internal_type: 33
+item_aux: null
+id_cstype: null
+api_sql_extension: true

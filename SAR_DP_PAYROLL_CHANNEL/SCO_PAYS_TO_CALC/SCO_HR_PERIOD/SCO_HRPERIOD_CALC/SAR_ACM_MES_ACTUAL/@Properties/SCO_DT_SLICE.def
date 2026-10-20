@@ -9,3 +9,4 @@ scope: RECORD
 default_value: "1899-12-30"
 internal_type: 74
 item_aux: SCO_DT_PRORATE
+id_cstype: 2

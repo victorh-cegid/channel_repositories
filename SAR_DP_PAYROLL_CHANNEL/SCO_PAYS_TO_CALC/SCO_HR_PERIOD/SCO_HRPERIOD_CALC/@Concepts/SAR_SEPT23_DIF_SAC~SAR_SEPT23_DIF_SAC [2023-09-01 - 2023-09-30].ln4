@@ -1,0 +1,39 @@
+'Importe neto del sac a devolver
+
+''Porcentajes para calculo de aportes
+'porcJub = 0
+'porcLey = 0
+'If SAR_EDAD >= 18 Then 
+'    porcJub = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
+'    porcLey = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032 * SAR_PP_AP_INSSJP/100)
+'EndIf
+'porcObSoc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
+'porcAdObSoc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
+'porcAdObSoc = porcAdObSoc * SAR_FAM_CARGO_OS
+'porcSindObl = SAR_PORC_C_SIND_OBL
+'porcSindVol = SAR_PORC_C_SIND_VOL 
+'
+'porcFinal = porcJub + porcLey + porcObSoc + porcAdObSoc + porcSindObl + porcSindVol
+
+sac = SAR_SEP23_SAC_BRUTO_AJ+SAR_SEP23_SAC_BRUTO_AJ_OE
+
+aportes = 0
+If sac <> 0 Then
+    aportes = aportes + SAR_ACM_6_MESES_SUMA[0].SAR_JUB_SAC_MES
+    aportes = aportes + SAR_ACM_6_MESES_SUMA[0].SAR_LEY_19032_SAC_MES
+    aportes = aportes + SAR_ACM_6_MESES_SUMA[0].SAR_OBRA_SOCIAL_SAC_MES
+    aportes = aportes + SAR_ACM_6_MESES_SUMA[0].SAR_OB_SOC_ADIC_SAC_MES
+    aportes = aportes + SAR_ACM_6_MESES_SUMA[0].SAR_C_SIND_OBL_SAC_MES
+    aportes = aportes + SAR_ACM_6_MESES_SUMA[0].SAR_C_SINDICAL_SAC_MES
+    aportes = aportes + SAR_ACM_6_MESES_SUMA[0].SAR_JUB_SAC_OE
+    aportes = aportes + SAR_ACM_6_MESES_SUMA[0].SAR_C_SINDICAL_SAC_OE
+    aportes = aportes + SAR_ACM_6_MESES_SUMA[0].SAR_LEY_19032_SAC_OE
+    aportes = aportes + SAR_ACM_6_MESES_SUMA[0].SAR_OB_SOC_ADIC_SAC_OE
+    aportes = aportes + SAR_ACM_6_MESES_SUMA[0].SAR_OBRA_SOCIAL_SAC_OE
+EndIf
+
+'aportes = Percentage(porcFinal,sac)
+
+sacNeto = Round(sac - aportes,SAR_NUM_DEC)
+
+Return(sacNeto)

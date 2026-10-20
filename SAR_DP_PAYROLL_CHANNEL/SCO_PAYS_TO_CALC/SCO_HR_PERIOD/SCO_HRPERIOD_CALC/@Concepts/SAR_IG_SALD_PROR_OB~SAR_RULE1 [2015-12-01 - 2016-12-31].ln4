@@ -1,0 +1,71 @@
+'No se ejecuta en la primera quincena
+IF SAR_TP_IMPUT = "3" THEN RETURN (0)
+
+'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+IF ((SAR_MES_PAGO_IG=12 and SCO_DT_ALLOCATION = SCO_DT_PAYMENT) OR (SAR_ES_BAJA=1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017")) THEN
+    RETURN(0)
+ENDIF
+
+'No tomara valor en la paga normal de Junio si no existe ajuste:
+If (SAR_TP_IMPUT = "1" And DxMonth(SCO_DT_PAYMENT) = 6 And SAR_PAGA_EXTRA_AJ_1 = 0 And SAR_IND_AGUINALDO = 0) Then
+  Return(0)
+EndIf
+
+aux_1q = 0
+dif = 0
+
+'Se agrega el valor de la Ti, para obtener el valor de la 1era quincena
+If SAR_TP_IMPUT = "4" AND SAR_IND_AGUINALDO = 0 And SAR_PAGA_AJ_EXTRA_SAC = 0 Then 
+    aux_1q = SAR_ACM_PAG_QUIN_1RA.SAR_OBRA_SOCIAL_SAC
+EndIf  
+
+aux = SAR_OBRA_SOCIAL_SAC + SAR_IG_O_SOC_NO_HAB + aux_1q
+
+IF SCO_DT_ALLOCATION <> SCO_DT_PAYMENT THEN
+   SAR_PAGA_ACTUAL_IMPUT.BEGIN()
+   IF ISNULL(SAR_PAGA_ACTUAL_IMPUT.SAR_OBRA_SOCIAL_SAC) = FALSE THEN
+        obra_social_sac = SAR_PAGA_ACTUAL_IMPUT.SAR_OBRA_SOCIAL_SAC
+   ELSE
+        obra_social_sac = 0
+   ENDIF 
+   IF ISNULL(SAR_PAGA_ACTUAL_IMPUT.SAR_IG_O_SOC_NO_HAB) = FALSE THEN
+        obra_social_no_hab = SAR_PAGA_ACTUAL_IMPUT.SAR_IG_O_SOC_NO_HAB
+   ELSE
+        obra_social_no_hab = 0
+   ENDIF    
+   dif = SAR_OBRA_SOCIAL_SAC + SAR_IG_O_SOC_NO_HAB - obra_social_sac - obra_social_no_hab 
+   IF dif > 0 THEN
+      aux = obra_social_sac + obra_social_no_hab 
+   ENDIF
+   SAR_ACM_ULT_MES.BEGIN() 
+   IF ISNULL(SAR_ACM_ULT_MES.SAR_IG_SALD_PROR_OB) = FALSE THEN
+        ig_saldo_pror_ob = SAR_ACM_ULT_MES.SAR_IG_SALD_PROR_OB
+   ELSE
+        ig_saldo_pror_ob = 0
+   ENDIF
+   valor = aux - SAR_IG_CUOT_PROR_OB + ig_saldo_pror_ob
+    IF valor < 0 THEN
+        valor = 0
+    ENDIF
+ELSE
+    SAR_INCRE_PRORRATEOS.BEGIN()
+    IF ISNULL(SAR_INCRE_PRORRATEOS.SAR_IG_PRO_AD_OB) = FALSE THEN
+        incre_ig_saldo_pror_ob = SAR_INCRE_PRORRATEOS.SAR_IG_PRO_AD_OB
+    ELSE
+        incre_ig_saldo_pror_ob = 0
+    ENDIF
+    SAR_ACM_ULT_MES.BEGIN()   
+    IF ISNULL(SAR_ACM_ULT_MES.SAR_IG_SALD_PROR_OB) = FALSE THEN
+        ig_saldo_pror_ob = SAR_ACM_ULT_MES.SAR_IG_SALD_PROR_OB
+    ELSE
+        ig_saldo_pror_ob = 0
+    ENDIF
+    
+    valor = aux - SAR_IG_CUOT_PROR_OB + ig_saldo_pror_ob + incre_ig_saldo_pror_ob
+    
+    If valor < SAR_IG_CUOT_PROR_OB AND valor > 0 Then
+        valor = SAR_IG_CUOT_PROR_OB
+    EndIf
+ENDIF
+
+RETURN(valor)

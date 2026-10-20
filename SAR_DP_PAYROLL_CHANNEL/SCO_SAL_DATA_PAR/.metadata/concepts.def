@@ -1,2 +1,2 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SCO_ORG_SYSSENTENCE | NODE | STRING | 3 | -1 | 0 | SCO_ORG_SYSSENTENCE
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+SCO_ORG_SYSSENTENCE | NODE | STRING | 3 | -1 | 0 | SCO_ORG_SYSSENTENCE | 

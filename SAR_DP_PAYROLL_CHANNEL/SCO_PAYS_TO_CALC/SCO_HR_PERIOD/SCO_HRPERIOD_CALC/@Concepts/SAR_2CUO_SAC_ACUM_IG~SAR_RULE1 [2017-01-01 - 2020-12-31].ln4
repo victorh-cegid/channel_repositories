@@ -1,0 +1,6 @@
+'Importe SAC para reportes IG. Se resta importe de SAC imputado a a?os anteriores
+If SAR_TP_IMPUT <> "99" And SAR_ES_BAJA = 0 And SAR_IND_AJUSTE_SAC = 0 Then Return(0) 
+cuota_acum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_PAGA_EXTRA_2 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_PAGA_EXTRA_AJ_2 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_EGRESO_PAGA_2
+cuota_act = SAR_PAGA_EXTRA_2 + SAR_PAGA_EXTRA_AJ_2 + SAR_EGRESO_PAGA_2
+cuota_anio_ant = SAR_SAC_2_ANIO_ANT
+Return Round(cuota_acum + cuota_act - cuota_anio_ant,SAR_NUM_DEC)

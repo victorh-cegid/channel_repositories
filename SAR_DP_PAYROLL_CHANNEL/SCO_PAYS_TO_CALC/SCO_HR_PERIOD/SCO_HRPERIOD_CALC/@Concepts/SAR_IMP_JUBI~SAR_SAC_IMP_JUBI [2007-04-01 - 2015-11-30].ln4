@@ -1,0 +1,13 @@
+'deberia ser dias para S.A.C.
+
+tope = (SAR_TOPE_JUBIL * (SAR_U_PAGA_EX_1 + SAR_U_PAGA_EX_2) *180)/360
+sac  = SAR_PAGA_EXTRA_1 + SAR_PAGA_EXTRA_2
+
+IF (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") THEN
+    tope = (SAR_TOPE_JUBIL * (SAR_U_EGRESO_PAGA_1+SAR_U_EGRESO_PAGA_2) * 180)/360
+    sac  = SAR_EGRESO_PAGA_1 + SAR_EGRESO_PAGA_2
+ENDIF
+
+base = Min(tope,sac)
+
+RETURN(base)

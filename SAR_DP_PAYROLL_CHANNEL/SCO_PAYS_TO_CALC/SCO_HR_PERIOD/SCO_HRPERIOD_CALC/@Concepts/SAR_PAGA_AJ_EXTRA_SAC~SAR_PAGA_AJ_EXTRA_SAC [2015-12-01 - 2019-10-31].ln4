@@ -1,0 +1,167 @@
+/*
+Descripcion: Se crea la variable con la finalidad de ajustar los saldos que no fueron tenidos en cuenta en la paga del Junio o Diciembre
+             en la paga extra de SAC.
+             El mismo ajusta el valor y recalcula el Concepto Final 3613 o 3623 de SAC
+             Solo tomara valor en Junio o Diciembre si existe un saldo pendiente de abonar, quedando el mismo registrado en dicha variable.
+*/
+
+IntValor        = 0
+IntValorAnt     = 0
+vPrSacAnt_v3605 = 0
+strMes          = ""
+
+'Solo debe tomar valor en Paga Mensual o Quincenal o Extra de Ajuste de SAC
+If SAR_TP_IMPUT = "77" Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Or SAR_ES_BAJA = 1 Then
+    Return(0)
+EndIf
+
+/**** Recupero de la Fecha de Paga Extra de SAC ****/
+If DxMonth(SCO_DT_ALLOCATION) = 6 Or DxMonth(SCO_DT_ALLOCATION) = 12 Then
+    If SAR_TP_IMPUT = "1" Or SAR_TP_IMPUT = "2" Then
+        If DxMonth(SCO_DT_ALLOCATION) = 6 Then
+            vPos = SAR_PAGAS_EXTRAS.FINDREGISTER("SAR_ID_CONVENIO", SAR_ID_CONVENIO,EQUAL,"SCO_ID_PAY_FREQUENCY",SCO_PAY_FREQ_ALLOC,EQUAL,"SAR_ORDEN",3,EQUAL,"SAR_MES",SAR_PAYS_TO_CALC.SAR_MES_PROCESO,EQUAL,"SAR_DIA",SAR_PAYS_TO_CALC.SAR_DIA_PROCESO,EQUAL,0)
+        Else
+            vPos = SAR_PAGAS_EXTRAS.FINDREGISTER("SAR_ID_CONVENIO", SAR_ID_CONVENIO,EQUAL,"SCO_ID_PAY_FREQUENCY",SCO_PAY_FREQ_ALLOC,EQUAL,"SAR_ORDEN",4,EQUAL,"SAR_MES",SAR_PAYS_TO_CALC.SAR_MES_PROCESO,EQUAL,"SAR_DIA",SAR_PAYS_TO_CALC.SAR_DIA_PROCESO,EQUAL,0)
+        EndIf
+    EndIf
+     
+    If vPos <> -1 Then
+        If DxMonth(SCO_DT_ALLOCATION) = 6 Then
+            strMes = "JUNIO"
+        ElseIf DxMonth(SCO_DT_ALLOCATION) = 12 Then
+            strMes = "DIC"
+        EndIf        
+    EndIf
+    
+    /** Solo realizamos el ajuste de SAC si se creo la paga extra de SAC tipo 4 **/
+    If vPos <> -1 Then
+        /*** Se recupera el valor del SAC Abonado del Mes ***/
+        SAR_SAC_AJUSTE_CONTRIB.Begin()
+        vPrSacAnt_v3605  = SAR_SAC_AJUSTE_CONTRIB.SAR_PR_AGUINALDO                 
+        vDiasLicSac_v585 = SAR_SAC_AJUSTE_CONTRIB.SAR_TOT_D_DTO_AGUIN
+        vPrSacDic_v3600  = SAR_SAC_AJUSTE_CONTRIB.SAR_TOTAL_P_SAC        
+        vPrSacDic_v3644  = SAR_SAC_AJUSTE_CONTRIB.SAR_PAGA_EXTRA_AJ_2
+        vPrSacDic_v3633  = SAR_SAC_AJUSTE_CONTRIB.SAR_PAGA_EXTRA_AJ_1
+        vPrSacDic_v3613  = SAR_SAC_AJUSTE_CONTRIB.SAR_PAGA_EXTRA_1        
+        
+        SAR_AJUSTE_PARA_SAC.Begin()
+        p_ext = SAR_AJUSTE_PARA_SAC.SAR_TP_IMPUT
+        
+        If p_ext = "2" Or p_ext = "3" then
+            vPrSacAnt_v3605  = SAR_AJUSTE_PARA_SAC.SAR_PR_AGUINALDO 
+        Endif
+
+        'Para Jornales el precio del SAC concepto 3605 se tomara de de la TI SAR_AJUSTE_PARA_SAC
+        
+        ' Caso1: Donde se carga la licencia por accidente despues de la paga extra de sac, de debe descontar los dias de accidente.
+        If vPrSacAnt_v3605 = SAR_PR_AGUINALDO And vDiasLicSac_v585 = 0 And SAR_TOT_D_DTO_AGUIN > 0 Then
+            intValorAux = SAR_PR_AGUINALDO
+        Else
+            'intValor = SAR_PR_AGUINALDO - vPrSacAnt_v3605
+            If SCO_PAY_FREQ_ALLOC = "004" Then
+                If SAR_ACM_6_MESES_SAC.COUNT() > 0 Then
+                    SAR_ACM_6_MESES_SAC.BEGIN()
+                 
+                    If SAR_TP_IMPUT = "1" Then
+                        'SAC abonado en paga normal y se debe evaluar si se precisa Ajustar en una paga Posterior.
+                        If (vPrSacDic_v3600 > 0 or vPrSacAnt_v3605 > 0)  And (vPrSacDic_v3644 = 0 Or vPrSacDic_v3633 = 0) Then 
+
+                            vTotalDic = SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) + vPrSacDic_v3600
+                            ' Usamos la mejor remuneracion de los 6 meses
+                            vMejorSalario = Max(SAR_ACM_6_MESES_SAC.SAR_M_REMUN_INDEM,vTotalDic)
+                            Nuevo_v3605 = vMejorSalario / 2
+
+                            If (Nuevo_v3605 <> vPrSacAnt_v3605) Then    
+                                intValor = (Nuevo_v3605 - vPrSacAnt_v3605)
+                                SAR_PR_AGUINALDO =  Nuevo_v3605
+                            Endif
+                        Else 
+                            'SAC abonado en paga normal y se precisa Ajustar                     
+                            If vPrSacDic_v3600 <> SAR_TOTAL_P_SAC Then 
+                                intValor = SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) / 2
+                            EndIf
+                        Endif                        
+                    Else                         
+                        if vPrSacDic_v3600 = 0 Then                           
+                            vTotalDic = (SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) / 2) + vPrSacAnt_v3605
+                        else
+                            vTotalDic = (SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) + vPrSacDic_v3600) / 2
+                        endif       
+                                     
+                        Nuevo_v3605 = vTotalDic 
+                        
+                        If (Nuevo_v3605 <> vPrSacAnt_v3605) Then                                  
+                            intValor = (Nuevo_v3605 - vPrSacAnt_v3605)
+                            SAR_PR_AGUINALDO =  Nuevo_v3605
+                        Endif
+                    EndIf                    
+                Else
+                    intValor = SAR_PR_AGUINALDO - vPrSacAnt_v3605
+                EndIf
+            Else
+                If SAR_ACM_6_MESES_SAC.COUNT() > 0 Then
+                    SAR_ACM_6_MESES_SAC.BEGIN()
+                 
+                    If SAR_TP_IMPUT = "4" Then
+                    
+                        'SAC abonado en paga normal y se debe evaluar si se precisa Ajustar en una paga Posterior.
+                        If (vPrSacDic_v3600 > 0 or vPrSacAnt_v3605 > 0)  And (vPrSacDic_v3644 = 0 Or vPrSacDic_v3633 = 0) Then 
+                        
+                            vTotalDic = SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) + vPrSacDic_v3600
+                            ' Usamos la mejor remuneracion de los 6 meses
+                            vMejorSalario = Max(SAR_ACM_6_MESES_SAC.SAR_M_REMUN_INDEM, vTotalDic)
+                            Nuevo_v3605 = vMejorSalario  / 2
+                            If (Nuevo_v3605 <> vPrSacAnt_v3605) Then
+                                intValor = (Nuevo_v3605 - vPrSacAnt_v3605)
+                            Endif
+                            
+                            SAR_PR_AGUINALDO =  Nuevo_v3605 
+                        Else 
+                            'SAC abonado en paga normal y se precisa Ajustar                     
+                            If vPrSacDic_v3600 <> SAR_TOTAL_P_SAC Then 
+                                intValor = SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) / 2 '********
+                            EndIf
+                        Endif
+                    Else
+                        if vPrSacDic_v3600 = 0 Then                           
+                            vTotalDic = (SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) / 2) + vPrSacAnt_v3605
+                        else
+                            vTotalDic = (SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) + vPrSacDic_v3600) / 2                            
+                            vTotalDic = Max(SAR_ACM_6_MESES_SAC.SAR_M_REMUN_INDEM / 2,vTotalDic)                                                        
+                        endif      
+                                      
+                        Nuevo_v3605 = vTotalDic 
+
+                        If (Nuevo_v3605 <> vPrSacAnt_v3605) Then
+                            IF vPrSacDic_v3613 <> 0 Then    
+                                IntValor = (Nuevo_v3605 - vPrSacAnt_v3605) 
+                                SAR_PR_AGUINALDO =  Nuevo_v3605
+                            EndIf
+                        Endif
+                    EndIf                    
+                Else
+                    IntValor = (SAR_PR_AGUINALDO - vPrSacAnt_v3605)
+                EndIf
+            EndIf          
+        EndIf  
+        
+        /*** Se verifica el valor a recalcular del SAC ***/    
+       If strMes = "JUNIO" Then
+            IF vPrSacDic_v3613 <> 0 Then    
+                SAR_P_PAGA_EX = IntValor 
+                Aux1 = SAR_P_PAGA_EX
+            endif
+        ElseIf strMes = "DIC" Then
+            SAR_P_PAGA_EX_2 = IntValor
+            Aux1 = SAR_P_PAGA_EX_2             
+        EndIf        
+    Else
+        Return(IntValor)
+    EndIf         
+Else
+    Return(IntValor)
+EndIf
+
+If IntValor < 1 And IntValor > 0 Then Return(0)
+
+Return(IntValor)

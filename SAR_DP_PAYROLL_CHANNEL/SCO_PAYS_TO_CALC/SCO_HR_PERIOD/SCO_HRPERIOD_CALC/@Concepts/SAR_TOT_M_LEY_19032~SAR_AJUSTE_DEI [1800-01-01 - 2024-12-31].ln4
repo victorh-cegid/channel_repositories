@@ -1,0 +1,12 @@
+'Cuando SAR_IND_AJUSTE_DEI = 1 en retroactividad no se tendra en cuenta los importes que cambien (salvo OE).
+'Dichos importes no considerados en retroactividad se guardan en el concepto SAR_AJIG_XXX para considerarlos en la paga normal siguiente.
+importe = 0
+
+'Ley de bases, incluimos horas extra
+If DxYear(SAR_FEC_IMPUT_IG)<2024 Then
+    SAR_CALCULA_AJIG_27617("SAR_TOT_M_LEY_19032","SAR_AJIG_LEY","SAR_BONO_IG_LEY","SAR_FCAJA_IG_LEY","SAR_SIMILAR_NAT_IG_LEY","SAR_LEY_19032_SAC_MES","SAR_IG_CUO_PROR_LEY","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",importe)
+Else
+    SAR_CALCULA_AJIG_27617("SAR_TOT_M_LEY_19032","SAR_AJIG_LEY","SAR_BONO_IG_LEY","SAR_FCAJA_IG_LEY","SAR_SIMILAR_NAT_IG_LEY","SAR_LEY_19032_SAC_MES","SAR_IG_CUO_PROR_LEY","SAR_AJ_L19032_HS_EXEN","SAR_L19032_HS_FINDE_EXEN","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",importe)
+EndIf
+
+Return(importe)

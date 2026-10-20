@@ -1,0 +1,13 @@
+item: STD_N_COMP_BASIS_LEG
+name: Nombre base remuneraciones
+column_name: STD_N_COMP_BASIS
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 62
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 8
+item_aux: null
+id_cstype: null

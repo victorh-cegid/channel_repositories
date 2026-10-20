@@ -1,0 +1,34 @@
+/*
+Deberia ser dias para S.A.C.
+*/
+
+tope_maximo =(SAR_TOPE_COTIZ*(SAR_U_PAGA_EX_1 + SAR_U_PAGA_EX_2 + SAR_U_PAGA_AJ_EX_1 + SAR_U_PAGA_AJ_EX_2 + SAR_U_EGRESO_PAGA_1 + SAR_U_EGRESO_PAGA_2)*180)/360
+sac  = SAR_TOT_SAC_COTIZ
+
+/*Se calcula la base de acuerdo a los topes maximos */
+tope_maximo         = Round(tope_maximo, 2)
+Base_Total          = 0
+Base                = 0
+Sac_Total_Previo    = 0
+
+/*** Verificamos si existen un valor abonado en otra paga que supera el TOPE ***/
+SAR_SAC_AJUSTE_CONTRIB.Begin()
+If(SAR_SAC_AJUSTE_CONTRIB.Count() > 0)Then
+    base_total = SAR_SAC_AJUSTE_CONTRIB.SAR_SAC_IMPO
+    Sac_Total_Previo = SAR_SAC_AJUSTE_CONTRIB.SAR_TOT_SAC_COTIZ 'Contiene la suma de los SACs anteriormente liquidados.    
+EndIf
+
+Sac_Del_Mes = Sac_Total_Previo + Sac 'Contiene el total actual del SAC con paga actual incluida.
+
+If(Sac <> 0)Then
+    If(Sac_Del_Mes > Tope_Maximo)Then         'Si Pasamos el tope maximo....  
+           Sac_Del_Mes = Tope_Maximo              '   Por lo que se toma como valor el del mismo tope maximo.
+           Base        = Sac_Del_Mes - Base_Total '   La base sera la diferencia entre el tope maximo y la base total anteriormente aplicada.                        
+    Else                                      'Si No.... 
+        Base = Sac_Del_Mes - Base_Total         '   La base sera la diferencia entre el SAC del mes y el total de la base.  
+    EndIf
+EndIf
+
+Base = Round(Base, 2)
+
+RETURN(Base)

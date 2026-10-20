@@ -1,0 +1,10 @@
+item: SCO_ACTUAL_PAY
+name: Paga real
+item_type: PROPERTY
+type: NUMBER
+id_m4_type: 6
+prec: 4
+scale: 0
+scope: BLOCK
+default_value: "0.00000000"
+id_cstype: 7

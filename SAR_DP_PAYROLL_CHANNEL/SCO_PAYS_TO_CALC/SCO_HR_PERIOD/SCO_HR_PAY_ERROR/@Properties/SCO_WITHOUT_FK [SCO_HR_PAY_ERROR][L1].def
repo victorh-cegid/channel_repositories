@@ -9,3 +9,4 @@ scope: NODE
 default_value: "34.00000000"
 internal_type: 51
 item_aux: null
+id_cstype: 2

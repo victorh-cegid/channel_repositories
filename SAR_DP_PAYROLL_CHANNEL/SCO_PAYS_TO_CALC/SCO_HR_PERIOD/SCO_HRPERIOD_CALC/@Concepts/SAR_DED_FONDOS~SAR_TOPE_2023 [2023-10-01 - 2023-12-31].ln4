@@ -1,0 +1,9 @@
+'Controla que no se supere el importe anual
+valor = SAR_DED_FONDOS
+
+importeSep = SAR_ACM_SEP23_DED_REV[0].SAR_DED_FONDOS
+importeCompleto = SAR_TOPE_SEG_RET
+
+If valor + importeSep > importeCompleto Then valor = importeCompleto - importeSep
+
+Return Round(valor,SAR_NUM_DEC)

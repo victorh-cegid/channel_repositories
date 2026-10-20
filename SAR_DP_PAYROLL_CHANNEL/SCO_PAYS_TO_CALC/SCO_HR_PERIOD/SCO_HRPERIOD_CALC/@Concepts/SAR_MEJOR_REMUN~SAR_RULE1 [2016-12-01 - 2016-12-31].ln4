@@ -1,0 +1,113 @@
+'Vigencia por Decreto 1253/2016 (En relacion a la aplicacion de deduccion por SAC en brutos mensuales <= $55000).
+'Este decreto establece que para comprobar si el empleado se debe de beneficiar de la deduccion es necesario calcular el mejor salario percibido en el
+'segundo semestre (comprende desde Julio a Diciembre del 2016)
+
+'Calculo la fecha de inicio del mes actual y la fecha de inicio del mes resultante a restar 5 meses al mes actual          
+FECHA_BASE    = SAR_FEC_PAGO_IG'SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC
+FECHA_DIA_ANT = SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC
+MES_ACTUAL    = DxMonth(FECHA_BASE) 
+ 
+'Armo los topes para el segundo semestre 
+If MES_ACTUAL < 12 Then
+    FECHA_TOPE = ToString(DxYear(FECHA_BASE),0) + "-07" + "-01"
+    FECHA_TOPE = ToDate(FECHA_TOPE)
+Else
+    FECHA_TOPE = ToString(DxYear(FECHA_BASE),0) + "-12" + "-01"
+    FECHA_TOPE = ToDate(FECHA_TOPE)
+EndIf
+
+MES_ANT_5 = DxMonth(DateAdd(FECHA_BASE,-5,M4_MONTH))
+
+If MES_ANT_5 < 10 Then
+    MES_ANT_5 = "0" + ToString(MES_ANT_5,0)
+Else
+    MES_ANT_5 = ToString(MES_ANT_5,0)
+EndIf
+
+If MES_ACTUAL < 10 Then
+    MES_ACTUAL = "0" + ToString(MES_ACTUAL,0)
+Else
+    MES_ACTUAL = ToString(MES_ACTUAL,0)
+EndIf
+
+'Asigno los valores correspondientes a las variables de fecha 
+FECHA_ACT       = ToString(DxYear(FECHA_BASE),0) + "-" + MES_ACTUAL + "-01"
+FECHA_INICIO    = ToDate(FECHA_ACT)
+FECHA_5_ANT     = ToString(DxYear(DateAdd(FECHA_BASE,-5,M4_MONTH)),0) + "-" + MES_ANT_5 + "-01"
+FECHA_ANT_5     = ToDate(FECHA_5_ANT)
+FECHA_ANT_4     = DateAdd(FECHA_ANT_5,1,M4_MONTH)
+FECHA_ANT_3     = DateAdd(FECHA_ANT_5,2,M4_MONTH)
+FECHA_ANT_2     = DateAdd(FECHA_ANT_5,3,M4_MONTH)
+FECHA_ANT_1     = DateAdd(FECHA_ANT_5,4,M4_MONTH)
+FECHA_ANT_RELIQ = DateAdd(FECHA_ANT_5,5,M4_MONTH)
+
+'Inicializo valores de cada uno de los meses anteriores
+valor_act           = SAR_TOTAL_P_SAC 
+valor_1             = 0
+valor_2             = 0
+valor_3             = 0
+valor_4             = 0
+valor_5             = 0
+valor_6             = 0
+valor_R             = 0
+valor_1_b           = 0
+valor_2_b           = 0
+valor_3_b           = 0
+valor_4_b           = 0
+valor_5_b           = 0
+valor_R_b           = 0
+Deduccion_Normal    = 0
+max                 = 0
+    
+'Recorro el acumulado del empleado y contabilizo los valores de cada mes anterior
+SCO_AC_HR_PERIOD_READ_1.BEGIN()
+ULTIMO_REG_AC = SCO_AC_HR_PERIOD_READ_1.COUNT() - 1
+
+If SCO_AC_HR_PERIOD_READ_1.COUNT() > 0 Then
+    For i = 0 To ULTIMO_REG_AC
+        SCO_AC_HR_PERIOD_READ_1.MoveTo(i)
+          
+        If SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_INICIO And FECHA_INICIO <= FECHA_TOPE And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= FECHA_DIA_ANT Then
+            valor_act = valor_act + (SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM))
+             
+        ElseIf SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_1 And FECHA_ANT_1 <= FECHA_TOPE And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_INICIO,-1,M4_DAY) Then
+            valor_1   = valor_1 + (SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM))
+            
+        ElseIf SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_2 And FECHA_ANT_2 <= FECHA_TOPE And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_1,-1,M4_DAY) Then
+            valor_2   = valor_2 + (SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM))
+
+        ElseIf SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_3 And FECHA_ANT_3 <= FECHA_TOPE And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_2,-1,M4_DAY) Then
+            valor_3   = valor_3 + (SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM))
+
+        ElseIf SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_4 And FECHA_ANT_4 <= FECHA_TOPE And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_3,-1,M4_DAY) Then
+           valor_4   = valor_4 + (SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM))
+
+        ElseIf SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_5 And FECHA_ANT_5 <= FECHA_TOPE And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_4,-1,M4_DAY) Then
+           valor_5   = valor_5 + (SCO_AC_HR_PERIOD_READ_1.SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM))         
+        EndIf
+
+    Next
+EndIf
+/**** Calculo el mayor total de los seis meses anteriores a la fecha de imputacion ****/
+    If valor_act > max Then
+        max = valor_act
+    EndIf
+    If valor_1 > max Then
+        max = valor_1
+    EndIf
+    If valor_2 > max Then
+        max = valor_2
+    EndIf
+    If valor_3 > max Then
+        max = valor_3
+    EndIf
+    If valor_4 > max Then
+        max = valor_4
+    EndIf
+    If valor_5 > max Then
+        max = valor_5
+    EndIf
+    
+    valor = max
+
+Return(valor)

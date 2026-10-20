@@ -3,3 +3,4 @@ NAME: Orden pago
 ID_TI: SCO_PAYMENT_ORDER
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

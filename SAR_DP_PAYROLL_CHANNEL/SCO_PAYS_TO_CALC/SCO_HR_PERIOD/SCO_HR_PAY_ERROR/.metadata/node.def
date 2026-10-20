@@ -3,3 +3,4 @@ NAME: Errores del empleado
 ID_TI: SAR_HR_PAY_ERROR
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

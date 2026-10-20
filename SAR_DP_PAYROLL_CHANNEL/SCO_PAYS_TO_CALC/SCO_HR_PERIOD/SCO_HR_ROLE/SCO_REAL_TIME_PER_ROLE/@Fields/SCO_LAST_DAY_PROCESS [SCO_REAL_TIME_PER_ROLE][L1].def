@@ -1,0 +1,13 @@
+item: SCO_LAST_DAY_PROCESS
+name: Last calculated day
+column_name: SCO_LAST_DAY_PROCESS
+item_type: FIELD
+type: DATE
+id_m4_type: 4
+prec: 0
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null
+id_cstype: null

@@ -1,0 +1,41 @@
+If SAR_TP_IMPUT = "88" Then Return(0)
+sac_anio_ant = SAR_IND_SAC_ANIO_ANT
+
+'Control retroactividad a?os anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
+If sac_anio_ant = 1 Then 
+    mes_orig = SAR_AC_SAC_REV[0].SAR_OBRA_SOCIAL_SAC_MES
+    sac_dif = SAR_OBRA_SOCIAL_SAC - SAR_AC_SAC_REV[0].SAR_OBRA_SOCIAL_SAC
+    valor = mes_orig + sac_dif
+    Return(valor)
+EndIf
+
+If SAR_IND_PAGA_RELIQ = 1 OR SAR_ES_BAJA = 1 Or SAR_IND_AJUSTE_SAC = 1 Then
+    'En baja o reliquidacion retornamos la diferencia entre el descuento del pago y el que se ha ido descontando mes a mes
+    tot_desc_sac_pago = SAR_ACM_IG_ANIO_IMPUT[0].SAR_OBRA_SOCIAL_SAC + SAR_OBRA_SOCIAL_SAC
+    tot_desc_sac_mes = SAR_ACM_IG_ANIO_IMPUT[0].SAR_OBRA_SOCIAL_SAC_MES
+    valor = tot_desc_sac_pago - tot_desc_sac_mes
+    
+    'Para evitar diferencias en reliquidacion por redondeos
+    If abs(valor) <= SAR_TOLERANCIA_DEC Then valor = 0
+    
+    Return (valor)
+EndIf
+
+base = SAR_B_SAC_MES_RG3976
+
+If SCO_PAY_FREQ_PAYM = "004" Then 'Tope mensual de cotizacion para el SAC porrateado
+    Tope = SAR_TOPE_COTIZ / 12
+Else 
+    Tope = SAR_TOPE_COTIZ / 24 'Tope quincenal de cotizacion para el SAC porrateado
+EndIf
+
+BaseTopada = Min(Base, Tope)
+
+porc = SAR_PORC_OBR_SOCIAL - (SAR_PORC_OBR_SOCIAL*SAR_PP_AP_OB_SOC/100)
+
+precio = BaseTopada * porc / 100
+IF ISNULL(precio) = TRUE THEN
+    precio = 0
+ENDIF
+
+Return(precio)

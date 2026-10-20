@@ -1,0 +1,3 @@
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+SCO_SELECT_FILTER | BLOCK | NUMBER | 6 | 1 | 0 | Selec. filtro | 7
+SME_FILTRO_SDI | BLOCK | NUMBER | 6 | 1 | 0 | Filtro para el SDI | 7

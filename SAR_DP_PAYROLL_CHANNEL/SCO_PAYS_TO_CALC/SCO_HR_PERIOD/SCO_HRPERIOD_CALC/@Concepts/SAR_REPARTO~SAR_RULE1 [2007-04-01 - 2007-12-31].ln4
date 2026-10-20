@@ -1,0 +1,15 @@
+aux = #SAR_PORC_JUBILACION
+fec = "2007-05-28"
+'Modificaciones Decreto 313/07
+      'Validamos que el alta sea posterior al 28/05/2007 y que sea nuevo aportante al Sistema de Jubilaciones
+     IF #SAR_FECHA_ALTA >= todate(Fec) and #SAR_IND_NUE_AP = 1 then
+         return(1)
+     endif
+
+     IF aux = 11 THEN
+        valor = 1
+     ELSE
+        valor = 0
+     ENDIF
+     
+return(valor)

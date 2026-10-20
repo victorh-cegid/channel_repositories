@@ -1,5 +1,5 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-BSearch | BLOCK | NUMBER | 6 | 1 | 0 | Busqueda binaria
-ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor
-LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque
-SCO_DELETE_RUN_PAY | NODE | NUMBER | 6 | 1 | 0 | Borrar paga ejecutada
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+BSearch | BLOCK | NUMBER | 6 | 1 | 0 | Busqueda binaria | 2
+ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor | 7
+LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque | 2
+SCO_DELETE_RUN_PAY | NODE | NUMBER | 6 | 1 | 0 | Borrar paga ejecutada | 2

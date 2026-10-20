@@ -1,9 +1,0 @@
-item: SCO_PAY_FREQ_PAYM
-name: Frecuencia pago 
-item_type: PROPERTY
-type: STRING
-id_m4_type: 2
-prec: 3
-scale: 0
-scope: RECORD
-default_value: null

@@ -1,0 +1,251 @@
+'En caso de Retroactividades ejecutadas a estas reglas se condiciona lo siguiente. 
+'---------------------------------------------------------------------------------------------------------- 
+If(SCO_DT_ALLOCATION <> SCO_DT_PAYMENT) and SAR_FEC_PAGO_IG >= ToDate("2016-03-01")  Then
+   Return(SAR_MAYOR_REM_IG_2013)
+EndIf
+'----------------------------------------------------------------------------------------------------------
+
+
+
+'Se actualiza la tabla de conceptos habituales por retroactividades
+'------------------------------------------------------------------------------------------------------
+If(SCO_DT_PAYMENT <> SCO_DT_ALLOCATION)Then
+
+    
+        'Recorro el acumulado para obtener el 792 del mes anterior al que estoy liquidando.
+        '----------------------------------------------------------------------------------------------
+        ANIO_ACT = DXYEAR(SCO_DT_ALLOCATION)
+        MES_ACT  = DXMONTH(SCO_DT_ALLOCATION)
+        
+        if SAR_ES_BAJA = 1 Then
+            ANIO_ACT = DXYEAR(SCO_DT_PAYMENT)
+            MES_ACT  = DXMONTH(SCO_DT_PAYMENT)       
+        endif
+        
+        If(MES_ACT = 1)Then
+            MES_ANT = 12   
+            ANIO_ANT = ANIO_ACT - 1
+        Else   
+            MES_ANT = MES_ACT - 1 
+            ANIO_ANT = ANIO_ACT  
+        EndIf
+        
+        DIAS_MES_ANT     = DaysOfMonth(MES_ANT)
+        DIAS_MES_ANT_STR = ToString(DIAS_MES_ANT, 0)
+        
+        If(MES_ANT < 10)Then
+            MES_ANT_STR = "0" + ToString(MES_ANT, 0)
+        Else
+            MES_ANT_STR = ToString(MES_ANT, 0)
+        EndIf
+        
+        ANIO_ANT_STR  = Tostring(ANIO_ANT, 0)
+        
+        F_MES_ANT_INI = ToDate(ANIO_ANT_STR + "-" + MES_ANT_STR + "-" + "01")
+        F_MES_ANT_FIN = ToDate(ANIO_ANT_STR + "-" + MES_ANT_STR + "-" + DIAS_MES_ANT_STR) 
+    
+    
+        SCO_AC_HR_PERIOD_READ_1.BEGIN()                 'Iniciamos el acumulado
+        CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el numero de registros
+        
+        If(CantReg >= 0) Then
+          ContReg = 0                                     'Lleva el numero leido de registros 
+          V792_ant  = 0
+          While (ContReg <= CantReg)
+             SCO_AC_HR_PERIOD_READ_1.MoveTo(ContReg)
+             If(SCO_AC_HR_PERIOD_READ_1.SAR_FEC_PAGO_IG >= F_MES_ANT_INI And SCO_AC_HR_PERIOD_READ_1.SAR_FEC_PAGO_IG <= F_MES_ANT_FIN And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION = SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT AND SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_ALLOC = "1") Then
+                 V792_ant  = SCO_AC_HR_PERIOD_READ_1.SAR_RANGO_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM) 
+             EndIf
+             ContReg = ContReg + 1
+          Wend    
+        EndIf
+        
+        recalc = 0
+        If (V792_ant = 3) or(V792_ant = 0) Then
+           recalc = 1
+        EndIf
+    
+              
+        If  (((SAR_FECHA_ALTA >= ToDate("2013-09-01"))and (SAR_FECHA_ALTA < SCO_DT_ALLOCATION) and  (V792_ant = 2)) or  (recalc = 1)) and (SAR_IND_RECALC_MEJOR_REM = 1)Then         
+              
+            ' Se recalculan los conceptos no habituales de Enero a Abril de 2015 y se evalua la mejor remuneracion.
+            '------------------------------------------------------------------------------------------------------
+            
+            ContConcep  = 0     
+            
+            Val_Mes = 0   
+            Mes_Ini = 1     
+            Mes_Fin = DxMonth(SCO_DT_ALLOCATION)
+        
+            Mes_Fin_Habit = ToString(DxMonth(SCO_DT_PAYMENT), 0)
+            If(DxMonth(SCO_DT_PAYMENT) < 10)Then
+                Mes_Fin_Habit = "0" + Mes_Fin_Habit
+            EndIf             
+        
+            Anio_De_Paga = DxYear(SCO_DT_PAYMENT)
+            Mes_Alloc = DxMonth(SCO_DT_ALLOCATION) 
+            Anio = DxYear(SCO_DT_ALLOCATION)
+        
+            Mes_Busq_Habit = ToDate(ToString(Anio, 0)+ "/" + Mes_Fin_Habit + "/01")
+            
+            If(Anio_de_Paga = 2015)Then
+               Mes_Del_Proceso = ToDate("2015/06/01")'En 2015 se busca desde Junio. 
+            Else   
+               Mes_Del_Proceso = ToDate(ToString(Anio_De_Paga, 0) + "/01/01")'Del 2016 en adelante se busca desde el principio del a?o.
+            EndIf                        
+            
+            Mes_De_Vig = ToString(DxMonth(SCO_DT_PAYMENT), 0)
+            If(DxMonth(SCO_DT_PAYMENT) < 10)Then
+                Mes_De_Vig = "0" + Mes_De_Vig
+            EndIf             
+        
+            Mes_De_Imput = ToString(DxMonth(SCO_DT_ALLOCATION), 0)
+            If(DxMonth(SCO_DT_ALLOCATION) < 10)Then
+                Mes_De_Imput = "0" + Mes_De_Imput
+            EndIf             
+        
+            
+            Fecha_De_Vig   = ToDate(ToString(DxYear(SCO_DT_PAYMENT), 0) + "/" + Mes_De_Vig + "/01")
+            Fecha_De_Impu  = ToDate(ToString(DxYear(SCO_DT_ALLOCATION), 0) + "/" + Mes_De_Imput + "/01")
+                
+            SAR_HABITUALES.DESTROYBLOCK()                   'Inicializamos los conceptos no habituales del empleadoc
+            SAR_HABITUALES.SAR_P_PROCESO = Mes_Del_Proceso
+            
+            SAR_HABITUALES.BeginTransaction()
+
+            M4SAR_X_CAND_HAB.SAR_ALTAS_HABITUALES(Fecha_De_Vig, Fecha_De_Impu)
+
+
+            SAR_HABITUALES.LOAD_BLK() 
+            SAR_HABITUALES.Begin() 
+            CantRegHab = SAR_HABITUALES.Count()
+            
+            SCO_AC_HR_PERIOD_READ_1.BEGIN()                  'Iniciamos el acumulado
+            CantReg = SCO_AC_HR_PERIOD_READ_1.Count() - 1    'Inicializamos el numero de registros
+            SCO_AC_HR_PERIOD_READ_1.MoveTo(0)                'Vamos al primer mes             
+            
+            Mes = Mes_Fin  'Iniciamos desde Paga - 1
+            
+            Mes_Acu   = DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION) 'Mes del primer registro
+            Anio_Acu  = DxYear(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION)  'A?o del primer registro
+            Tipo_Paga = SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_ALLOC         'Tipo de paga del primer registro    
+            
+                       
+                    'No habituales
+                    ContConcep     = 0
+                    TotNoHabit     = 0
+                    TotNoHabitPaga = 0
+                    SAR_HABITUALES.Moveto(ContConcep)                          
+                    Concepto   = SAR_HABITUALES.SAR_ID_DMD_COMPONENT
+                    If(CantRegHab > 0)Then        
+                        While (ContConcep < CantRegHab)'Iteramos siempre hasta la paga normal correspondiente al concepto                                                                         
+                           SAR_HABITUALES.Moveto(ContConcep)                          
+                           If(Concepto = SAR_HABITUALES.SAR_ID_DMD_COMPONENT And SAR_HABITUALES.SAR_DT_VIGENCIA = SAR_HABITUALES.SAR_DT_VIGEN_IMPUT And DxYear(SAR_HABITUALES.SAR_DT_VIGENCIA) = Anio_De_Paga)Then
+        
+                                Pos_Act         = SAR_HABITUALES.GetCurrent() 'Esta posicion debe ser la de la paga normal
+                                Organizacion    = SAR_HABITUALES.ID_ORGANIZATION                
+                                Id_Del_Rh       = SAR_HABITUALES.STD_ID_HR
+                                Orden_Del_Rh    = SAR_HABITUALES.STD_OR_HR_PERIOD
+                                Concepto        = SAR_HABITUALES.SAR_ID_DMD_COMPONENT 
+                                Sinonimo        = SAR_HABITUALES.SAR_ID_SYNONYM 
+                                DMD             = SAR_HABITUALES.SAR_ID_DMD  
+                                Nodo            = SAR_HABITUALES.SAR_ID_NODE  
+                                Fecha_Vig       = SAR_HABITUALES.SAR_DT_VIGENCIA
+                                Fecha_Imp       = SAR_HABITUALES.SAR_DT_VIGEN_IMPUT
+                                Fecha_De_Normal = SAR_HABITUALES.SAR_DT_PAGA_NORMAL
+                                Ocurrs          = SAR_HABITUALES.SAR_CANT_DE_OCURR 
+                                Procesado       = SAR_HABITUALES.SAR_PROCESADO                      
+            
+                                VAL_CON_PAGA = GetValue("SCO_HRPERIOD_CALC",Concepto,-1)  'Tomamos el valor del concepto en la paga actual.
+                             
+                                Existe_Algun_Pago = 0
+                                Valor_Del_Mes     = 0
+                                ContReg = 0    
+                                Elimina_Valor = 0
+                                While (ContReg <= CantReg)    
+               
+                                    If(Mes_Acu = Mes_Alloc And Anio_Acu = Anio And Tipo_Paga <> "88" And ContReg <= CantReg)Then   
+        
+                                         ValCon = GetValue("SCO_AC_HR_PERIOD_READ_1",Concepto,-1)  'Tomamos el valor del concepto que se encuentra acumulado.
+                                         Valor_Del_Mes = Valor_Del_Mes + ValCon
+                                         If(ValCon > 0)Then
+                                            Existe_Algun_Pago = 1
+                                         EndIf 
+                                    EndIf                                             
+                                    ContReg = ContReg + 1
+                                    If(ContReg <= CantReg)Then
+                                            SCO_AC_HR_PERIOD_READ_1.MoveTo(ContReg)             
+                                            Mes_Acu   = DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION)
+                                            Anio_Acu  = DxYear(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION)
+                                            Tipo_Paga = SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_ALLOC
+                                    EndIf           
+                                Wend   
+                                If((VAL_CON_PAGA = 0) And Valor_Del_Mes > 0)Then 'Se esta eliminando el valor del concepto
+                                    Elimina_Valor = 1     'Se debe quitar la ocurrencia
+                                EndIf             
+                                'Procesa la retroactividad de habituales
+                                Pos_En_Habit_Retro = SAR_HABITUALES.FindRegister("SAR_ID_DMD_COMPONENT", Concepto, M4_EQUAL, "SAR_DT_VIGENCIA", Fecha_De_Vig, M4_EQUAL, "SAR_DT_VIGEN_IMPUT", Fecha_De_Impu, M4_EQUAL)                                
+                             	  If(VAL_CON_PAGA > 0 And existe_algun_pago = 0)Then 'El concepto toma valor posible incremento o se modifica.
+                   	                     VarOcuRetro = 0
+                             		   If(Pos_En_Habit_Retro < 0)Then 
+                                               SAR_HABITUALES.AddRegister()
+                                               SAR_HABITUALES.ID_ORGANIZATION      = Organizacion    
+                                               SAR_HABITUALES.STD_ID_HR            = Id_Del_Rh    
+                                               SAR_HABITUALES.STD_OR_HR_PERIOD     = Orden_Del_Rh    
+                                               SAR_HABITUALES.SAR_ID_DMD_COMPONENT = Concepto 
+                                               SAR_HABITUALES.SAR_ID_SYNONYM       = Sinonimo                                       
+                                               SAR_HABITUALES.SAR_ID_DMD           = DMD   
+                                               SAR_HABITUALES.SAR_ID_NODE          = Nodo   
+                                               SAR_HABITUALES.SAR_DT_VIGENCIA      = Fecha_De_Vig   
+                                               SAR_HABITUALES.SAR_DT_VIGEN_IMPUT   = Fecha_De_Impu
+                                               SAR_HABITUALES.SAR_DT_PAGA_NORMAL   = Fecha_De_Vig
+                                               SAR_HABITUALES.SAR_CANT_DE_OCURR    = 0 'Pero se debe actualizar las OCURR en la normal.
+                                               SAR_HABITUALES.SAR_PROCESADO        = 1
+                             	               VarOcuRetro = 1 'Usada para actualizar la normal.
+                             		   Else
+                             		           SAR_HABITUALES.MoveTo(Pos_En_Habit_Retro)     
+                             		           If(SAR_HABITUALES.SAR_PROCESADO = 0)Then 
+                             				   SAR_HABITUALES.SAR_PROCESADO = 1 'Retro
+
+                             	                     VarOcuRetro = 1
+                             		           EndIf
+                             		   EndIf  
+
+                             		   SAR_HABITUALES.MoveTo(Pos_Act)'Va a paga normal de habituales
+                             	         If(VarOcuRetro = 1)Then
+                             		          SAR_HABITUALES.SAR_CANT_DE_OCURR  = SAR_HABITUALES.SAR_CANT_DE_OCURR + 1 'Se suman las ocurrencias sin importar el proceso.
+                             	         EndIf 
+                                 Else 'El concepto deja de tomar valor
+                             	           If(Pos_En_Habit_Retro >= 0 And (existe_algun_pago = 1 Or VAL_CON_PAGA = 0))Then
+                             		               SAR_HABITUALES.MoveTo(Pos_En_Habit_Retro)
+                             		               If(SAR_HABITUALES.SAR_PROCESADO = 1)then
+                             			             SAR_HABITUALES.SAR_PROCESADO = 0 'Retro
+                             			             SAR_HABITUALES.MoveTo(Pos_Act)
+                             			             SAR_HABITUALES.SAR_CANT_DE_OCURR = SAR_HABITUALES.SAR_CANT_DE_OCURR - 1     
+                                                       SAR_HABITUALES.Update_Blk()
+                                                   EndIf    
+                                         ElseIf(Elimina_Valor = 1)Then 
+                             			             SAR_HABITUALES.MoveTo(Pos_Act)
+                             			             SAR_HABITUALES.SAR_CANT_DE_OCURR = SAR_HABITUALES.SAR_CANT_DE_OCURR - 1   
+                                                       If(SAR_HABITUALES.SAR_CANT_DE_OCURR <= 0)Then
+                                                             SAR_HABITUALES.SAR_CANT_DE_OCURR = 0
+                               			             SAR_HABITUALES.SAR_PROCESADO = 0 'Normal
+                                                       EndIf    
+                                                       SAR_HABITUALES.Update_Blk()                                                   
+                             	           EndIf
+                       	         EndIf                        
+                           EndIf                       
+                           ContConcep = ContConcep + 1                     
+                           If(ContConcep < CantRegHab) Then 'Reanudamos la la busqueda por contador.
+                               SAR_HABITUALES.MoveTo(ContConcep)
+                               Concepto = SAR_HABITUALES.SAR_ID_DMD_COMPONENT 
+                           EndIf                                                                  
+                         Wend            
+                     EndIf                 
+              
+              SAR_HABITUALES.EndTransaction(M4_COMMIT)
+        
+        EndIf
+EndIf  
+' Se retorna el valor calculado en la regla sar_mayor_rem_ig_2013.  
+Return(SAR_MAYOR_REM_IG_2013)

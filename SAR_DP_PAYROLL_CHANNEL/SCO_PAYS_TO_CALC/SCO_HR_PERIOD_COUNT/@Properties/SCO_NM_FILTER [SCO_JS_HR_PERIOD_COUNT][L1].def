@@ -1,0 +1,10 @@
+item: SCO_NM_FILTER
+name: Nombre filtro
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 64
+scale: 0
+scope: BLOCK
+default_value: null
+id_cstype: 2

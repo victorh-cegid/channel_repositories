@@ -3,3 +3,4 @@ NAME: Nodos de acumulado
 ID_TI: SWP_NODES_AC_CALC
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

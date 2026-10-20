@@ -1,0 +1,10 @@
+item: SCO_DT_PAYMENT
+name: Fecha de pago
+item_type: PROPERTY
+type: DATE
+id_m4_type: 4
+prec: 10
+scale: 0
+scope: BLOCK
+default_value: null
+id_cstype: 2

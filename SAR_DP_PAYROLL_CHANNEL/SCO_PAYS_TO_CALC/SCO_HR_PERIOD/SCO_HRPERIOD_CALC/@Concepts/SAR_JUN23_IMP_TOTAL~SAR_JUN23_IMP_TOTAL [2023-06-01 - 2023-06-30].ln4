@@ -1,0 +1,11 @@
+aux    = 0
+debito = 0
+
+aux = SAR_JUN23_DESDE_IMP
+base = SAR_BASE_IMPUESTO + SAR_JUN23_DIF_SAC
+
+valor = SAR_JUN23_C_FIJ_IMP + SAR_JUN23_PORC_IMP * (base - aux )/100
+
+if isnull(valor) = true Then valor = 0
+
+RETURN(valor)

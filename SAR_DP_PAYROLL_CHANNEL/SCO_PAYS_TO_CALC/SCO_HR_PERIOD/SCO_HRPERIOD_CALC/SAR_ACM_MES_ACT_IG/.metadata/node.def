@@ -3,3 +3,4 @@ NAME: Acumulado mes actual IG
 ID_TI: SAR_ACM_MES_ACT_IG
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

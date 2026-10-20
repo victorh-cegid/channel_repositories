@@ -1,0 +1,60 @@
+If SAR_IND_NO_RET_GAN = 1 Or SAR_TP_IMPUT <> "99" Or (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" And SAR_FECHA_BAJA < DxDate("31","12",DxYear(SAR_FEC_IMPUT_IG))) Then Return(0)
+
+'Reliquidacion especial septiembre 2023, se hace en otro concepto diferenciado (5303 - SAR_IG_SEP23).
+If SAR_IND_PAGA_RELIQ = 1 And DxYear(SCO_DT_ALLOCATION) = 2023 And DxMonth(SCO_DT_ALLOCATION) = 9 Then Return(0)
+
+impuesto_tot = SAR_IMPUESTO_TOTAL
+imp_ae = SAR_IMP_ANT_EMP
+imp_ban = SAR_IMP_DEB_BAN
+imp_oe = SAR_IMP_OTROS_EMP
+
+'2024 Ley de bases beneficio por el paso a nuevo impuesto 4ta, Beneficio positivo: No debe incluirse en el impuesto
+benef = 0
+If DxYear(SAR_FEC_IMPUT_IG) =  2024 And SAR_LBASE_BENEF_ACM > 0 Then benef = SAR_LBASE_BENEF_ACM
+
+impuesto_acum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_IMPUESTO + SAR_ACM_IG_ANIO_IMPUT[0].SAR_IG_FINAL
+
+'Primero se consideran los pagos a cuenta (para controles del 2024)
+impuesto_tot = impuesto_tot - imp_ban
+
+'Control para que el beneficio 2024 no produzca un impuesto negativo, considerando los pagos a cuenta, y se exponga correctamente en los reportes (minorandolo si supera el beneficio)
+SAR_LBASE_BENEF_ACM = 0
+If DxYear(SAR_FEC_IMPUT_IG) =  2024 And benef > 0 And impuesto_tot > 0 Then
+    If benef <= impuesto_tot Then
+        impuesto_tot = impuesto_tot - benef
+        SAR_LBASE_BENEF_ACM = benef
+    Else
+        SAR_LBASE_BENEF_ACM = impuesto_tot
+        impuesto_tot = 0
+    EndIf
+EndIf
+
+'Por ultimo se considera el impuesto abonado en el a?o y otros empleadores
+valor = impuesto_tot - impuesto_acum - imp_ae - imp_oe
+
+'Reliquidacion de diciembre de 2023, debe considerar el importe de la paga especial de reliquidacion de septiembre
+If DxYear(SAR_FEC_IMPUT_IG) = 2023 Then
+    valorSep = SAR_ACM_SEP23_IMP_DIF[0].SAR_IG_SEP23
+    valor = valor + valorSep
+EndIf
+
+'Ante casos con indicativo de Tope del 35% activo, el valor topado se guarda en SAR_SALD_RET_GAN_ST,debiendo el empleado 
+'responsabilizarse en la AFIP por ese valor no retenido.
+If SAR_IND_APLIC_TOPE_35 = 1 Then
+    SAR_SALD_RET_GAN_ST = valor
+    Return(0) 
+EndIf
+
+''Para evitar diferencias por decimales y cuadren reportes
+'If abs(valor) <= SAR_TOLERANCIA_DEC Then 
+'    valor = 0
+'    SetValuePriority(0,"SAR_HRPERIOD_CALC","SAR_IMP_RET_TOT",-1,SAR_IMPUESTO_TOTAL)
+'EndIf
+
+If abs(valor) <= SAR_TOLERANCIA_DEC and valor <> 0 then
+    ImpRetTot = imp_ae + imp_oe + impuesto_acum + valor
+    valor = 0
+    SetvaluePriority(0,"SAR_HRPERIOD_CALC","SAR_IMP_RET_TOT",-1,ImpRetTot)
+EndIf
+
+Return(valor)

@@ -1,0 +1,7 @@
+' Cambio Ganancias Ley 26.731
+
+' las bajas a partir del 28 Diciembre 2011 deben ser procesadas con los valores de las tablas de vigencia del 2011
+'Toma su valor por valores empresa
+
+ind = SAR_IND_DED_IG_2010
+RETURN(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_GAN_NO_IMP",SAR_FEC_PAGO_IG,ind))

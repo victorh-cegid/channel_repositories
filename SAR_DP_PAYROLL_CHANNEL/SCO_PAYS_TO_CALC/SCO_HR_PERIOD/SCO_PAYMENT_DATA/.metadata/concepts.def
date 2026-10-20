@@ -1,3 +1,3 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SCO_FILTER_PAL | BLOCK | STRING | 3 | -1 | 0 | Filtro para los nominas despues de la baja
-SCO_VALUE | RECORD | CURRENCY | 8 | 18 | 5 | Valor
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+SCO_FILTER_PAL | BLOCK | STRING | 3 | -1 | 0 | Filtro para los nominas despues de la baja | 
+SCO_VALUE | RECORD | CURRENCY | 8 | 18 | 5 | Valor | 2

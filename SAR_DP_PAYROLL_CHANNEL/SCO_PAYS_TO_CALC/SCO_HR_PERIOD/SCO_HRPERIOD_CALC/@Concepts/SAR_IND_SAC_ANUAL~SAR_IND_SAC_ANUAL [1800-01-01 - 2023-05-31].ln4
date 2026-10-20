@@ -1,0 +1,14 @@
+'Retorna valor 1 cuando el importe del tramo 1 es igual en junio y diciembre, en caso contrario retorna 0
+indicador = 1
+
+fecJunio = DxDate(30,6,SAR_ANIO_IMPUT_IG)
+fecDiciembre = DxDate(31,12,SAR_ANIO_IMPUT_IG)
+
+vValorJun = SAR_DED_ESP_INC.SAR_RETORNA_VAL_TRAM(1,fecJunio,ID_CURRENCY)
+vValorDic = SAR_DED_ESP_INC.SAR_RETORNA_VAL_TRAM(1,fecDiciembre,ID_CURRENCY)
+
+If vValorJun <> vValorDic Then indicador = 0
+
+If DxYear(SAR_FEC_IMPUT_IG) = 2023 Then indicador = 1
+
+Return(indicador)

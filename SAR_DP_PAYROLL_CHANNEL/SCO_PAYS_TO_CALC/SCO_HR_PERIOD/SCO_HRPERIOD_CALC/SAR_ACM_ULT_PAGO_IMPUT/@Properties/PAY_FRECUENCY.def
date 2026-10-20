@@ -7,3 +7,4 @@ prec: 50
 scale: 0
 scope: NODE
 default_value: "001;003;004;009;010"
+id_cstype: 2

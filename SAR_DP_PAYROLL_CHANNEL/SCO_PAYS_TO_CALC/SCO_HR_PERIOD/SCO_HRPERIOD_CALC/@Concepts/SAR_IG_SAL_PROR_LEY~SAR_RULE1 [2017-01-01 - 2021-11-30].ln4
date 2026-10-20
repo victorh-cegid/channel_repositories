@@ -1,0 +1,48 @@
+'RG 3976. Se cierra esta norma a 31/12/2017. Se mantiene durante 2017 por si existiesen prorrateos pendientes del SAC del a?o 2016.
+
+'No se ejecuta en la primera quincena
+IF SAR_TP_IMPUT = "3" THEN RETURN (0)
+
+'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+IF ((SAR_MES_PAGO_IG=12 and SCO_DT_ALLOCATION = SCO_DT_PAYMENT) OR (SAR_ES_BAJA=1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017")) THEN RETURN(0)
+
+'No tomara valor en la paga normal de Junio si no existe ajuste:
+If (SAR_TP_IMPUT = "1" And DxMonth(SCO_DT_PAYMENT) = 6 And SAR_PAGA_EXTRA_AJ_1 = 0 And SAR_IND_AGUINALDO = 0) Then
+  Return(0)
+EndIf
+
+aux_1q = 0
+dif = 0
+
+'Modificacion RG3976.
+'Se agrega el valor de la Ti, para obtener el valor de la 1era quincena
+If SAR_TP_IMPUT = "4" AND SAR_IND_AGUINALDO = 0 And SAR_PAGA_AJ_EXTRA_SAC = 0 Then 
+    aux_1q = 0
+EndIf  
+
+base_mes_actual = 0
+
+aux = base_mes_actual+ SAR_IG_19032_NO_HAB  + aux_1q
+
+IF SCO_DT_ALLOCATION <> SCO_DT_PAYMENT THEN
+   SAR_PAGA_ACTUAL_IMPUT.BEGIN()
+   SAR_ACM_ULT_MES.BEGIN() 
+   dif = base_mes_actual + SAR_IG_19032_NO_HAB - SAR_PAGA_ACTUAL_IMPUT.SAR_LEY_19032_SAC - SAR_PAGA_ACTUAL_IMPUT.SAR_IG_19032_NO_HAB
+   IF dif > 0 THEN
+      aux = SAR_PAGA_ACTUAL_IMPUT.SAR_LEY_19032_SAC + SAR_PAGA_ACTUAL_IMPUT.SAR_IG_19032_NO_HAB
+   ENDIF
+   valor = aux - SAR_IG_CUO_PROR_LEY + SAR_ACM_ULT_MES.SAR_IG_SAL_PROR_LEY
+    IF valor < 0 THEN
+        valor = 0
+    ENDIF
+ELSE
+   SAR_ACM_ULT_MES.BEGIN()
+   SAR_INCRE_PRORRATEOS.BEGIN()
+   valor = aux - SAR_IG_CUO_PROR_LEY + SAR_ACM_ULT_MES.SAR_IG_SAL_PROR_LEY + SAR_INCRE_PRORRATEOS.SAR_IG_PRO_A_LEY
+   
+   If valor < SAR_IG_CUO_PROR_LEY AND valor > 0 Then
+       valor = SAR_IG_CUO_PROR_LEY
+   EndIf
+ENDIF
+
+RETURN(valor)

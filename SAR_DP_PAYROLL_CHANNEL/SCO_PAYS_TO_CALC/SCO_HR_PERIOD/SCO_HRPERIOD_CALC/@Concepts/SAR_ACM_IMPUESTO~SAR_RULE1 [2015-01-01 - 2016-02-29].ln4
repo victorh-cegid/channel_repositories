@@ -1,0 +1,65 @@
+'Antes de realizar cualquier calculo del impuesto verificamos que la modificacion se realizo a fin del mes
+'de la paga para de esta forma dejar el calculo al nuevo periodo.
+
+'En casos retroactivos que no sean baja, se retorna el valor de la paga original para que por comportamiento en diferencias resulte calculando 0.
+'Es decir en pagas retroactivas no se calcula el 5011.
+'--------------------------------------------------------------------------------------------------------------------------------------------------
+val_paga_original = 0
+IF (SCO_DT_PAYMENT <> SCO_DT_ALLOCATION) AND (SAR_ES_BAJA <> 1) THEN
+        SCO_AC_HR_PERIOD_READ_1.BEGIN()
+    ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()- 1
+    FOR I = 0 TO ULTIMO_REG 
+       SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
+       IF SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT = SCO_DT_ALLOCATION AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION = SCO_DT_ALLOCATION THEN
+              val_paga_original = SCO_AC_HR_PERIOD_READ_1.SAR_ACM_IMPUESTO
+       ENDIF
+    NEXT
+    Return(val_paga_original)
+ENDIF
+'--------------------------------------------------------------------------------------------------------------------------------------------------
+
+IF ISNULL(SAR_IG_FINAL) = TRUE THEN
+    imp_fin = 0 
+ELSE
+    imp_fin = SAR_IG_FINAL
+ENDIF
+
+val_ant_emp = SAR_IMP_ANT_EMP
+val_oe = SAR_IMP_OTROS_EMP
+sar_acum_imp_ant_emp = 0
+sar_acum_imp_oe = 0
+
+'-------------------------------------------------------------
+'Recorro acumulado de lectura para armar las TI de IG
+'-------------------------------------------------------------
+SCO_AC_HR_PERIOD_READ_1.BEGIN()
+ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()
+
+I = ULTIMO_REG - 1 
+
+WHILE I >= 0 
+    SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
+       
+    ' Armo los datos para SAR_ACM_IMPUESTO
+    IF SAR_FEC_INI_IG <= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG AND SAR_FEC_PAGO_IG > SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION THEN    
+        sar_acum_imp_ant_emp = SCO_AC_HR_PERIOD_READ_1.SAR_IMP_ANT_EMP
+        sar_acum_imp_oe      = SCO_AC_HR_PERIOD_READ_1.SAR_IMP_OTROS_EMP
+    ENDIF
+    I = I - 1
+Wend
+
+'REVISION:
+If (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT) Then
+    val_ant_emp = sar_acum_imp_ant_emp
+    val_oe = sar_acum_imp_oe
+Else    
+    val_ant_emp = val_ant_emp - sar_acum_imp_ant_emp
+    val_oe = val_oe - sar_acum_imp_oe
+EndIf
+
+
+
+valor = SAR_IMPUESTO + val_ant_emp + val_oe + imp_fin
+
+
+RETURN(valor)

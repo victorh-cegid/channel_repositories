@@ -1,2 +1,2 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SAR_CARGA_FECHA_ANT | BLOCK | STRING | 0 | 1 | 0 | SAR_CARGA_FECHA_ANT
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+SAR_CARGA_FECHA_ANT | BLOCK | STRING | 0 | 1 | 0 | SAR_CARGA_FECHA_ANT | 

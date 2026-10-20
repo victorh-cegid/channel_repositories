@@ -1,0 +1,1049 @@
+' No se ejecuta en las pagas extras, salvo si en las Pagas Extras de Aguinaldo
+If (SAR_TP_IMPUT = "2") AND SAR_IND_AGUINALDO = 0 Then Return(0)
+
+IF SAR_TP_IMPUT = "99" THEN 
+    Return(0)
+ENDIF
+
+'Obtengo la fecha de inicio y fin de cada tramo
+
+INICIO_TRAMO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysStartDate
+FIN_TRAMO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysEndDate
+
+
+'para que se ejecuten antes de hacer la asignacion y funcione en revision
+
+
+aux = SAR_DIA_DONAR_SANG     'Donacion Sangre
+aux = SAR_DIAS_EXAMEN        'Lic. Examen 
+aux = SAR_DIAS_DEFUNCION     'Lic.Defuncion
+aux = SAR_DIAS_NACIMIENTO    'Lic.Nacimiento
+aux = SAR_DIAS_CASAMIENTO    'Lic.Casamiento
+aux = SAR_DIAS_VACACIONES    'Vacaciones
+aux = SAR_DIAS_HUELGA        'Huelga
+aux = SAR_DIAS_LIC_CONV      'Lic.Convenio
+aux = SAR_LIC_S_GOC_SUELD    'Lic.sin Goce de Sueldo
+aux = SAR_DIAS_EXCEDENCIA    'Excedencia
+aux = SAR_DIAS_SUS_DISCI     'Suspension
+aux = SAR_DIAS_ENFERMEDAD    'Enfermedad
+aux = SAR_DIAS_MATERN        'Maternidad
+aux = SAR_DIAS_AUSENCIA      'Ausencia sin aviso
+aux = SAR_R_PTO_ACC          'Reserva de Puesto por Accidente
+aux = SAR_R_PTO_ENF          'Reserva de Puesto por Enfermedad
+aux = SAR_R_PTO_SIN          'Reserva de Puesto por Actividad Sindical
+'Bug(0310670) - No eliminar el codigo
+'aux = SAR_UN_HORAS_150
+aux = SAR_UNIDAD_HS_AUSENCIA
+aux = SAR_UN_FER_TRAB
+
+'Cantidades de dias de licencias
+
+dias_enf = 0        'dias de enfermedad
+dias_acc = 0        'dias accidente
+dias_mat = 0        'dias maternidad
+dias_lconv = 0      'dias de licencia convenio
+dias_lsgs = 0       'dias de licencia sin goce de sueldo
+dias_exced = 0      'dias de excedencia
+dias_ausin = 0      'dias de ausencia injustificada
+dia_huelga = 0      'dias de huelga
+dias_vac = 0        'dias de descuento vacaciones
+dias_lic_vac = 0    'dias licencia vacaciones
+dias_lcas = 0       'dias licencia casamiento
+dias_lnac = 0       'dias licencia nacimiento
+dias_ldef = 0       'dias de licencia por defuncion
+dias_lex = 0        'dias de licencia por examen
+dias_dsan = 0       'dias donacion de sangre
+dias_susp=0         'dias suspension
+dias_re_acc = 0     'dias de reserva de puesto por accidente
+dias_re_enf = 0     'dias de reserva de puesto por enfermedad
+dias_re_sin = 0     'dias de reserva de puesto por actividad sindical
+'Bug(0310670) - No eliminar el codigo
+'horas_150 = 0       'horas al 150%
+horas_ausencia = 0  'horas ausencia
+d_tomados = 0 
+plus_noc_100 = 0    'plus nocturno 100%
+horas_fer_trab = 0  'horas feriado trabajado
+
+
+dias_vacaciones_recalc = 0
+
+'Fechas para topear:
+'5 Lic. sin  Goce de Sueldo
+    fec_fin_abs_lsgs   = ToDate("1800-01-01")
+'6 Excedencia
+    fec_fin_abs_exced  = ToDate("1800-01-01")
+'1 Enfermedad
+    fec_fin_abs_enfer  = ToDate("1800-01-01")
+'3 Maternidad
+    fec_fin_abs_matern = ToDate("1800-01-01")
+'31 Reserva de Puesto por Accidente
+    fec_fin_abs_rpa    = ToDate("1800-01-01")
+'30 Reserva de Puesto por Enfermedad
+    fec_fin_abs_rpe    = ToDate("1800-01-01")
+'32 Reserva de Puesto por Actividad Sindical*/
+    fec_fin_abs_rpas   = ToDate("1800-01-01")
+
+'Verificamos si el empleado posee ausentismos a nivel de Periodo y a nivel de Role
+'Si posee a nivel de Rol, contamos las Hs de ausencia y las Hs Extras
+
+REG_AUSENTISMOS = SAR_REAL_TIME_PERIOD.COUNT()
+
+
+REG_HS_AUSENCIA = 0
+SAR_HR_ROLE.BEGIN()
+WHILE SAR_HR_ROLE.ISEOF() = FALSE
+    IF SAR_REAL_TIME_PER_ROLE.COUNT() > 0 THEN
+        REG_HS_AUSENCIA = REG_HS_AUSENCIA + 1
+        SAR_REAL_TIME_PER_ROLE.BEGIN()
+        WHILE SAR_REAL_TIME_PER_ROLE.ISEOF() = FALSE
+            'Para calcular las unidades de Horas Extras y ausencias se tiene en cuenta que la 
+            'fecha de inicio del ausentismo este comprendida en el tramo que se esta procesando.
+            IF INICIO_TRAMO <= SAR_REAL_TIME_PER_ROLE.SCO_DT_START AND SAR_REAL_TIME_PER_ROLE.SCO_DT_START <=  FIN_TRAMO THEN 
+                motivoabs = FORMAT(SAR_REAL_TIME_PER_ROLE.SCO_ID_INC_GROUP,0)
+                fec_abs = SAR_REAL_TIME_PER_ROLE.SCO_DT_END
+
+                
+                '
+                'Para contar las Hs de ausencia consideramos el tipo de incidencia SCO_ID_INC_GROUP
+                '
+                IF motivoabs = "500" THEN
+                    horas_ausencia = horas_ausencia + SAR_REAL_TIME_PER_ROLE.SCO_UNITS
+                ENDIF
+                '
+                'Para contar las Hs Extras consideramos el ID de incidencia SCO_ID_INCIDENCE
+                '
+                idabs = FORMAT(SAR_REAL_TIME_PER_ROLE.SCO_ID_INCIDENCE,0)
+                'Calculamos las unidades de las horas extras al 50%
+                'Bug(0310670) - No eliminar el codigo
+                'IF idabs = "35" THEN
+                '   horas_150 = horas_150 + SAR_REAL_TIME_PER_ROLE.SCO_UNITS
+                'Fin Bug(0310670)
+                IF idabs = "54" THEN  
+                'Calculamos las unidades de las horas de feriado trabajado
+                   horas_fer_trab = horas_fer_trab + SAR_REAL_TIME_PER_ROLE.SCO_UNITS
+                ENDIF
+
+
+            ENDIF
+            SAR_REAL_TIME_PER_ROLE.GONEXT()
+        WEND
+    ENDIF
+    SAR_HR_ROLE.GONEXT()
+WEND
+
+
+
+'Se busca si existe un registro para esta paga en la tabla Vacaciones a Descontar.
+'En caso que exista se elimina.
+'--------------------------------------------------------------------------------.  
+IF REG_AUSENTISMOS = 0 THEN
+    SAR_VAC_DELETE.begin()
+    if SAR_VAC_DELETE.COUNT() > 0 Then
+        primerreg_vac = 0
+        ultimoreg_vac = SAR_VAC_DELETE.COUNT() - 1
+        FOR  I = primerreg_vac  TO  ultimoreg_vac 
+             SAR_VAC_DELETE.MOVETO(I)
+             fec_pago_del = SAR_VAC_DELETE.SCO_DT_PAY
+             if fec_pago_del = SCO_DT_PAYMENT Then
+                'Se elimina el registro existente.
+                '--------------------------------.
+                SAR_VAC_DELETE.Deleteregister()
+                '--------------------------------.
+             endif
+        NEXT
+    endif
+ENDIF
+
+
+IF REG_AUSENTISMOS = 0 THEN
+    IF REG_HS_AUSENCIA = 0 THEN
+        Return(0)
+    ENDIF
+ENDIF
+
+
+
+'Ahora contabilizamos las ausencias diarias que se cargan a nivel de period
+
+
+
+primerreg = 0
+ultimoreg = SAR_REAL_TIME_PERIOD.COUNT() - 1
+
+
+'Asigno las fechas de inicio y fin de tramo
+
+fec_ini_paga = INICIO_TRAMO
+fec_fin_paga = FIN_TRAMO
+FOR  I = primerreg  TO  ultimoreg 
+    SAR_REAL_TIME_PERIOD.MOVETO(I)
+    motivoabs = FORMAT(SAR_REAL_TIME_PERIOD.SCO_ID_INCIDENCE,0)
+    fec_ini_abs = SAR_REAL_TIME_PERIOD.SCO_DT_START
+    fec_fin_abs = SAR_REAL_TIME_PERIOD.SCO_DT_END
+    '
+    'Contabilizo la cantidad de dias y si el tipo de salario es Horario, 
+    'traspaso las unidades a horas
+    '
+    IF SAR_TIPO_SALARIO <> "003" THEN    
+        IF motivoabs = "1" THEN
+            dias_enf = dias_enf + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+            'Agregado por exceso de dias ---------------------------------- 
+            if fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
+                dias_enf = dias_enf -1                                 '  |
+            endif                                                      '  |
+            'Fin agregado por exceso de dias-------------------------------
+        ELSEIF motivoabs = "2" THEN
+            dias_susp = dias_susp + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+        ELSEIF motivoabs = "3" THEN
+            dias_mat = dias_mat + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+            'Agregado por exceso de dias ---------------------------------- 
+            if fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
+                dias_mat = dias_mat -1                                 '  |
+            endif                                                      '  |
+            'Fin agregado por exceso de dias-------------------------------
+        ELSEIF motivoabs = "4" THEN
+            dias_lconv = dias_lconv + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+        ELSEIF motivoabs = "5" THEN
+            dias_lsgs = dias_lsgs + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+            'Agregado por exceso de dias ---------------------------------- 
+            if fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
+                dias_lsgs = dias_lsgs -1                               '  |
+            endif                                                      '  |
+            'Fin agregado por exceso de dias-------------------------------
+        ELSEIF motivoabs = "6" THEN
+            dias_exced = dias_exced + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) 
+            fecha_ini_exced = fec_ini_abs
+            fecha_fin_exced = fec_fin_abs
+            'Agregado por exceso de dias ---------------------------------- 
+            if fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
+                dias_exced = dias_exced -1                             '  |
+            endif                                                      '  |
+            'Fin agregado por exceso de dias-------------------------------
+        ELSEIF motivoabs = "7" THEN
+            dias_ausin = dias_ausin + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+        ELSEIF motivoabs = "8" THEN
+            dia_huelga = dia_huelga + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+        ELSEIF motivoabs = "9" THEN
+            dias_vac = dias_vac + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+            fecha_ini_vac = fec_ini_abs
+            fecha_fin_vac = fec_fin_abs
+        ELSEIF motivoabs = "10" THEN
+            dias_lcas = dias_lcas + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+        ELSEIF motivoabs = "11" THEN
+            dias_lnac = dias_lnac + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+        ELSEIF motivoabs = "12" THEN
+            dias_ldef = dias_ldef + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+        ELSEIF motivoabs = "13" THEN
+            dias_lex = dias_lex + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+        ELSEIF motivoabs = "17" THEN
+            dias_dsan = dias_dsan + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+        ELSEIF motivoabs = "31" THEN
+            dias_re_acc = dias_re_acc + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+            'Agregado por exceso de dias ---------------------------------- 
+            if fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
+                dias_re_acc = dias_re_acc -1                           '  |
+            endif                                                      '  |
+            'Fin agregado por exceso de dias-------------------------------
+        ELSEIF motivoabs = "30" THEN
+            dias_re_enf = dias_re_enf + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+            'Agregado por exceso de dias ---------------------------------- 
+            if fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
+                dias_re_enf = dias_re_enf -1                           '  |
+            endif                                                      '  |
+            'Fin agregado por exceso de dias-------------------------------
+        ELSEIF motivoabs = "32" THEN
+            dias_re_sin = dias_re_sin + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs )
+            'Agregado por exceso de dias ---------------------------------- 
+            if fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
+                dias_re_sin = dias_re_sin -1                           '  |
+            endif                                                      '  |
+            'Fin agregado por exceso de dias-------------------------------
+        ENDIF           
+    ELSE 'tipo salario horario
+        IF SCO_NUM_HOURS_THEO > 0 THEN
+            IF fec_fin_abs > fec_fin_paga then
+               fec_fin_abs = fec_fin_paga
+            ENDIF
+            IF fec_ini_abs < fec_ini_paga then
+               fec_ini_abs = fec_ini_paga
+            ENDIF
+        ENDIF
+        IF motivoabs = "1" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_enf = dias_enf + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_enf = dias_enf + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "2" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_susp = dias_susp + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_susp = dias_susp + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "3" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_mat = dias_mat + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_mat = dias_mat + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "4" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_lconv = dias_lconv + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_lconv = dias_lconv + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "5" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+               dias_lsgs = dias_lsgs + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+               dias_lsgs = dias_lsgs + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "6" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_exced = dias_exced + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_exced = dias_exced + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "7" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_ausin = dias_ausin + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_ausin = dias_ausin + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "8" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dia_huelga = dia_huelga + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dia_huelga = dia_huelga + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "9" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_vac = dias_vac + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_vac = dias_vac + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM
+            ENDIF
+        ELSEIF motivoabs = "10" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_lcas = dias_lcas + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_lcas = dias_lcas + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "11" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_lnac = dias_lnac + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_lnac = dias_lnac + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "12" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_ldef = dias_ldef + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_ldef = dias_ldef + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "13" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_lex = dias_lex + SAR_CALC_HORAS_TEORICAS (fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_lex = dias_lex + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "17" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_dsan = dias_dsan + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_dsan = dias_dsan + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "31" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_re_acc = dias_re_acc + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_re_acc = dias_re_acc + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "30" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_re_enf = dias_re_enf + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_re_enf = dias_re_enf + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSEIF motivoabs = "32" THEN
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+               dias_re_sin = dias_re_sin + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)
+            ELSE
+                dias_re_sin = dias_re_sin + CommonTime(fec_ini_paga , fec_fin_paga , fec_ini_abs , fec_fin_abs ) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ENDIF
+    ENDIF
+NEXT
+
+
+
+'Contabilizamos las vacaciones
+'                             
+primerreg = 0
+ultimoreg = SAR_VACACIONES.COUNT() - 1
+FOR  I = primerreg  TO  ultimoreg 
+    SAR_VACACIONES.MOVETO(I)
+    motivoabs = FORMAT(SAR_VACACIONES.SCO_ID_INCIDENCE,0)
+    fec_ini_abs = SAR_VACACIONES.SCO_DT_START
+    fec_fin_abs = SAR_VACACIONES.SCO_DT_END
+
+    'Calculo de los dias a pagar de vacaciones
+    IF SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC <= fec_ini_abs AND fec_ini_abs <= SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC THEN
+        fec_ini_tramo = INICIO_TRAMO
+        fec_fin_tramo = FIN_TRAMO
+        IF FIN_TRAMO = SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC THEN
+            fec_fin_tramo = fec_fin_abs
+        ENDIF
+        IF  SAR_TIPO_SALARIO <> "003" THEN             
+            dias_lic_vac = dias_lic_vac + CommonTime(fec_ini_tramo , fec_fin_tramo , fec_ini_abs , fec_fin_abs) 
+        ELSEIF SCO_NUM_HOURS_THEO > 0 THEN
+                dias_lic_vac = dias_lic_vac + SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs)              
+            ELSE
+                dias_lic_vac = dias_lic_vac + CommonTime(fec_ini_tramo , fec_fin_tramo , fec_ini_abs , fec_fin_abs) * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ENDIF
+
+NEXT
+
+                     
+tipo_paga = SAR_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM
+
+FECHA_FIN_TRAMO = FIN_TRAMO
+
+
+
+IF SAR_TIPO_SALARIO = "001" THEN
+    IF DXDAY(FIN_TRAMO) > 30 THEN
+        DIA = "30"
+        MES = DXMONTH(FIN_TRAMO)
+        IF MES < 10 THEN
+            MES = "0" + TOSTRING(MES,0)
+        ELSE
+            MES = TOSTRING(MES,0)
+        ENDIF
+        ANIO = TOSTRING(DXYEAR(FIN_TRAMO),0)
+        STR_FECHA = ANIO + "-" + MES + "-" + DIA
+        FECHA_FIN_TRAMO = TODATE(STR_FECHA)
+    ENDIF
+    IF DXMONTH(FIN_TRAMO) = 2 THEN
+        IF DXDAY(FIN_TRAMO) = 28 THEN
+            FECHA_FIN_TRAMO = FECHA_FIN_TRAMO + 2
+        ELSEIF DXDAY(FIN_TRAMO) = 29 THEN
+            FECHA_FIN_TRAMO = FECHA_FIN_TRAMO + 1
+        ENDIF
+    ENDIF
+ENDIF
+
+'Calculo los dias del tramo
+dias_tramo = (FECHA_FIN_TRAMO - INICIO_TRAMO) + 1
+
+'Calculo los dias del tramo real
+dias_tramo_real = FIN_TRAMO - INICIO_TRAMO + 1
+
+IF dias_lex > 0 THEN
+    IF dias_lex = dias_tramo_real AND SAR_TIPO_SALARIO = "001" THEN
+        dias_lex = Max(dias_lex, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_lex = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_lex = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_lex = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_lex = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_lex = Min(dias_lex, maxdias_lex)
+    dias_lex = Max(dias_lex, 0)
+ENDIF
+
+IF dias_ldef > 0 THEN
+    IF dias_ldef = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_ldef = Max(dias_ldef, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_ldef = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_ldef = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_ldef = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_ldef = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_ldef = Min(dias_ldef, maxdias_ldef)
+    dias_ldef = Max(dias_ldef, 0)
+ENDIF
+
+IF dias_lnac > 0 THEN
+    IF dias_lnac =dias_tramo_real AND tipo_paga = "1" THEN
+        dias_lnac = Max(dias_lnac, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_lnac = dias_tramo     
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_lnac = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_lnac = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_lnac = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_lnac = Min(dias_lnac, maxdias_lnac)
+    dias_lnac = Max(dias_lnac, 0)
+ENDIF
+
+IF dias_lcas > 0 THEN
+    IF dias_lcas = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_lcas = Max(dias_lcas, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_lcas = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_lcas = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO, FIN_TRAMO)
+            ELSE
+                maxdias_lcas = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_lcas = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_lcas = Min(dias_lcas, maxdias_lcas)
+    dias_lcas = Max(dias_lcas, 0)
+ENDIF
+
+IF dias_enf > 0 THEN
+    IF dias_enf = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_enf = max (dias_tramo,dias_enf)       'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_enf = dias_tramo  
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_enf = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_enf = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_enf = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_enf = Min(dias_enf, maxdias_enf)
+    dias_enf = Max(dias_enf, 0)
+ENDIF
+
+IF dias_acc > 0 THEN
+    IF dias_acc = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_acc = Max(dias_acc, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_acc = dias_tramo      
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_acc = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_acc = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_acc = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_acc = Min(dias_acc, maxdias_acc)
+    dias_acc = Max(dias_acc, 0)
+ENDIF
+
+IF dias_mat > 0 THEN
+    IF dias_mat = dias_tramo_real AND (tipo_paga = "1" or tipo_paga = "4") THEN
+        dias_mat = Max(dias_mat, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_mat = dias_tramo
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_mat = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_mat = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_mat = dias_tramo_real
+        ENDIF
+    ENDIF
+'-----------------------------------------------------------------------------------------------------
+'Verifico el tope de los dias de Maternidad - Bug 175621
+
+tope_dias = 90
+FECHA_BASE = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC
+FECHA_DIA_ANT = FECHA_BASE - 1
+MES_ACTUAL = DXMONTH(FECHA_BASE)
+MES_ANT_12 = DxMonth(DateAdd(FECHA_BASE,-3,M4_MONTH))
+IF MES_ANT_12 < 10 THEN
+    MES_ANT_12 = "0" + TOSTRING(MES_ANT_12,0)
+ELSE
+    MES_ANT_12 = TOSTRING(MES_ANT_12,0)
+ENDIF
+IF MES_ACTUAL < 10 THEN
+    MES_ACTUAL = "0" + TOSTRING(MES_ACTUAL,0)
+ELSE
+    MES_ACTUAL = TOSTRING(MES_ACTUAL,0)
+ENDIF
+FECHA_ACT = TOSTRING(DxYear(FECHA_BASE),0) + "-" + MES_ACTUAL + "-01"
+FECHA_INICIO = ToDate(FECHA_ACT)
+FECHA_12_ANT = TOSTRING(DxYear(DateAdd(FECHA_BASE,-3,M4_MONTH)),0) + "-" + MES_ANT_12 + "-01"
+FECHA_ANT_12 = ToDate(FECHA_12_ANT)
+FECHA_ANT_11 = DateAdd(FECHA_ANT_12,1,M4_MONTH)
+FECHA_ANT_10 = DateAdd(FECHA_ANT_12,2,M4_MONTH)
+FECHA_ANT_9 = DateAdd(FECHA_ANT_12,3,M4_MONTH)
+
+
+'Inicializo variables para los meses
+
+
+valor_mes10= 0
+valor_mes11= 0
+valor_mes12= 0
+
+
+'Recorro el acumulado del empleado y contabilizo los valores de cada mes anterior
+
+SCO_AC_HR_PERIOD_READ_1.BEGIN()
+ULTIMO_REG_AC = SCO_AC_HR_PERIOD_READ_1.COUNT() - 1
+FOR J = 0 TO ULTIMO_REG_AC
+    SCO_AC_HR_PERIOD_READ_1.MOVETO(J)
+    IF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_12 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_INICIO,-1,M4_DAY) THEN
+        valor_mes12 = valor_mes12 + SCO_AC_HR_PERIOD_READ_1.SAR_DIAS_MATERN
+    ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_11 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_10,-1,M4_DAY) THEN
+        valor_mes11 = valor_mes11 + SCO_AC_HR_PERIOD_READ_1.SAR_DIAS_MATERN
+    ELSEIF SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION >= FECHA_ANT_10 AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION <= DateAdd(FECHA_ANT_9,-1,M4_DAY) THEN
+        valor_mes10 = valor_mes10 + SCO_AC_HR_PERIOD_READ_1.SAR_DIAS_MATERN
+    ENDIF
+NEXT       
+
+
+dias_mat_ac = valor_mes12 + valor_mes11 + valor_mes10 + dias_mat
+
+meses_antig = Months(SAR_HR_PERIOD.STD_DT_START, SCO_DT_ALLOCATION)
+IF dias_mat_ac >= tope_dias  THEN
+    dias_mat_ac = tope_dias - dias_mat_ac
+Else
+    dias_mat_ac = 0    
+ENDIF    
+    
+    dias_mat = dias_mat + dias_mat_ac    
+    dias_mat = Min(dias_mat, maxdias_mat)
+    dias_mat = Max(dias_mat, 0)
+
+'------------------------------------------------------------------------------------------------------
+ENDIF
+
+IF  dias_susp > 0 THEN
+    IF  dias_susp = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_susp = Max(dias_susp, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_susp = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_susp = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_susp = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_susp = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_susp = Min(dias_susp, maxdias_susp)
+    dias_susp = Max(dias_susp, 0)
+ENDIF
+
+IF dias_lsgs > 0 THEN
+    IF dias_lsgs = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_lsgs = Max(dias_lsgs, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_lsgs = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_lsgs = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_lsgs = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_lsgs = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_lsgs = Min(dias_lsgs, maxdias_lsgs)
+    dias_lsgs = Max(dias_lsgs, 0)
+ENDIF
+
+IF  dias_exced > 0 THEN
+    IF  dias_exced = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_exced = Max(dias_exced, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_exced = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_exced = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_exced = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_exced = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_exced = Min(dias_exced, maxdias_exced)
+    dias_exced = Max(dias_exced, 0)
+ENDIF
+
+
+IF  dias_ausin > 0 THEN
+    IF  dias_ausin = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_ausin = Max(dias_ausin, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_ausin = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_ausin = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_ausin = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_ausin = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_ausin = Min(dias_ausin, maxdias_ausin)
+    dias_ausin = Max(dias_ausin, 0)
+ENDIF
+
+IF  dia_huelga > 0 THEN
+    IF  dia_huelga = dias_tramo_real AND tipo_paga = "1" THEN
+        dia_huelga = Max(SAR_DIAS_HUELGA, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_huelga = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_huelga = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_huelga = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_huelga = dias_tramo_real
+        ENDIF
+    ENDIF
+    dia_huelga = Min(dia_huelga, maxdias_huelga)
+    dia_huelga = Max(dia_huelga, 0)
+ENDIF
+
+'*-------------------------------------------------------------
+/* se descomento*/
+IF dias_vac > 0 And  SAR_TIPO_SALARIO <> "001" THEN 
+
+    'Se busca si existe un registro para esta paga en la tabla Vacaciones a Descontar.
+    '--------------------------------------------------------------------------------.  
+    SAR_VAC_DELETE.begin()
+    if SAR_VAC_DELETE.COUNT() > 0 Then
+        primerreg_vac = 0
+        ultimoreg_vac = SAR_VAC_DELETE.COUNT() - 1
+        FOR  I = primerreg_vac  TO  ultimoreg_vac 
+             SAR_VAC_DELETE.MOVETO(I)
+             fec_pago_del = SAR_VAC_DELETE.SCO_DT_PAY
+             fec_inicio_del = SAR_VAC_DELETE.DT_START_VAC
+           
+             if fec_pago_del = SCO_DT_PAYMENT and  fec_inicio_del <> fec_ini_abs Then
+                'Se elimina el registro existente.
+                '--------------------------------.
+                SAR_VAC_DELETE.Deleteregister()
+                '--------------------------------.
+             endif
+        NEXT
+    Endif
+    '--------------------------------------------------------------------------------.
+        
+    IF dias_vac = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_vac = Max(dias_vac, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_vac = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_vac = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_vac = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_vac = dias_tramo_real
+        ENDIF
+    ENDIF
+       dias_vac = Min(dias_vac, maxdias_vac)
+       dias_vac = Max(dias_vac, 0)
+
+    If (FIN_TRAMO = SAR_HR_PERIOD.SCO_DT_ALLOC_END) and (dias_vac > 0) Then
+        pos = 0
+        fin_inc = 0
+
+        if SAR_VAC_DESC.count() = 0 then 
+               SAR_VAC_DESC.SAR_DT_ALLOC_START = fec_ini_abs               
+               SAR_VAC_DESC.SCO_ID_INCIDENCIA = "9"               
+               SAR_VAC_DESC.LOAD_BLK()
+        endif  
+        If dias_tramo_real < dias_lic_vac Then
+            SAR_VAC_DESC.begin()
+            'Se verifica si existe el registro con datos de la paga, si no existe inserto el registro.
+            IF SAR_VAC_DESC.count()=0 THEN 
+                        'Se inserta nuevo registro en Vacaciones a Descontar
+                        SAR_VAC_DESC.Addregister()
+                        SAR_VAC_DESC.DT_START_VAC = fec_ini_abs
+                        SAR_VAC_DESC.DT_END_VAC = fec_fin_abs
+                        SAR_VAC_DESC.SAR_DIAS_TOMADOS = dias_lic_vac
+                        SAR_VAC_DESC.SAR_DIAS_DESCONT = dias_vac
+                        SAR_VAC_DESC.SCO_DT_PAY = SCO_DT_PAYMENT
+                        SAR_VAC_DESC.SCO_DT_ALLOC = SCO_DT_ALLOCATION
+                        'A continuacion el campo nuevo: la ID de Incidencia = 9                           
+                        SAR_VAC_DESC.SCO_ID_INCIDENCE = "9"
+'                    endif
+             ELSE
+             'Se actualizan los datos, dado que el registro existe.   
+                SAR_VAC_DESC.DT_START_VAC = fec_ini_abs
+                SAR_VAC_DESC.DT_END_VAC = fec_fin_abs
+                SAR_VAC_DESC.SAR_DIAS_TOMADOS = dias_lic_vac
+                SAR_VAC_DESC.SAR_DIAS_DESCONT = dias_vac
+            Endif
+        Else
+            'Se busca el registro con el inicio de la incidencia.                 
+            pos =  SAR_VAC_DESC.FINDREGISTER("DT_START_VAC",fec_ini_abs,equal,0)                                   
+
+            IF POS <> -1  tHEN
+                SAR_VAC_DESC.moveto(pos)           
+                dias_tomados = SAR_VAC_DESC.SAR_DIAS_TOMADOS  
+                dias_descontados = SAR_VAC_DESC.SAR_DIAS_DESCONT  
+                fec_paga =  SAR_VAC_DESC.SCO_DT_PAY 
+                fec_imput =  SAR_VAC_DESC.SCO_DT_ALLOC 
+
+                'Se verifica si el fin de la incidencia corresponde a la paga que se esta calculando.
+                'En caso afirmativo, fin_inc valdra 1, de lo contrario valdra 0.
+                '------------------------------------------------------------------------------------------------------------
+                fin_inc = commontime(SAR_HR_PERIOD.SCO_DT_ALLOC_START, SAR_HR_PERIOD.SCO_DT_ALLOC_END,fec_fin_abs,fec_fin_abs)
+                '------------------------------------------------------------------------------------------------------------
+                'Se verifica que la paga calculada exista en la tabla SAR_VAC_DESC, 
+                'para analizar si corresponde insertar un nuevo registro o actualizarlo.
+                If (fec_paga <> SCO_DT_PAYMENT)  then
+                        'Se inserta nuevo registro en Vacaciones a Descontar 
+                         SAR_VAC_DESC.Addregister()
+                         SAR_VAC_DESC.DT_START_VAC = fec_ini_abs
+                         SAR_VAC_DESC.DT_END_VAC = fec_fin_abs
+       
+                         SAR_VAC_DESC.SAR_DIAS_TOMADOS = dias_tomados
+                         if fin_inc = 1 then
+                             'El fin de la incidencia corresponde al mes de la paga que se esta calculando.
+                             'Por lo que se debe modificar dias_vac que es el valor a descontar en la paga actual
+                             'de manera que coincida con los dias reales pagos de la incidencia.
+                             SAR_VAC_DESC.SAR_DIAS_DESCONT = dias_tomados
+                             dias_vac = dias_tomados - dias_descontados                      
+                         else
+                             SAR_VAC_DESC.SAR_DIAS_DESCONT = dias_descontados + dias_vac
+                         endif
+                         SAR_VAC_DESC.SCO_DT_PAY = SCO_DT_PAYMENT
+                         SAR_VAC_DESC.SCO_DT_ALLOC = SCO_DT_ALLOCATION
+                         'A continuacion el campo nuevo: la ID de Incidencia = 9  
+                         SAR_VAC_DESC.SCO_ID_INCIDENCE = "9"
+                Else
+                    
+                    'Se elimina el registro existente.
+                    '--------------------------------.
+                    SAR_VAC_DESC.Deleteregister()
+                    '--------------------------------.
+
+                    'Se verifica si es revision.
+                    if SCO_DT_PAYMENT = SCO_DT_ALLOCATION then
+                        'Se obtiene la posicion siguiente.
+                        '--------------------------------.
+                        SAR_VAC_DESC.getcurrent()
+                        SAR_VAC_DESC.moveto(pos + 1)
+                        '--------------------------------.
+                        If(SAR_VAC_DESC.isEOF() = FALSE)Then
+                          dias_tomados = SAR_VAC_DESC.SAR_DIAS_TOMADOS  
+                          dias_descontados = SAR_VAC_DESC.SAR_DIAS_DESCONT
+                        EndIf
+                    else
+                        'Se obtiene la posicion.
+                        '--------------------------------.
+                        SAR_VAC_DESC.getcurrent()
+                        SAR_VAC_DESC.moveto(pos + 2)
+                        '--------------------------------.
+                        If(SAR_VAC_DESC.isEOF() = FALSE)Then
+                           dias_tomados = SAR_VAC_DESC.SAR_DIAS_TOMADOS  
+                           dias_descontados = SAR_VAC_DESC.SAR_DIAS_DESCONT
+                        EndIf   
+                    endif    
+
+                    'Se inserta nuevo registro en Vacaciones a Descontar
+                    SAR_VAC_DESC.Addregister()
+                    SAR_VAC_DESC.DT_START_VAC = fec_ini_abs
+                    SAR_VAC_DESC.DT_END_VAC = fec_fin_abs
+                    SAR_VAC_DESC.SAR_DIAS_TOMADOS = dias_tomados
+                    if fin_inc = 1 then
+                        'El fin de la incidencia corresponde al mes de la paga que se esta calculando.
+                        'Por lo que se debe modificar dias_vac que es el valor a descontar en la paga actual
+                        'de manera que coincida con los dias reales pagos de la incidencia.
+                         SAR_VAC_DESC.SAR_DIAS_DESCONT = dias_tomados
+                         dias_vac = dias_tomados - dias_descontados                     
+                    else
+                        SAR_VAC_DESC.SAR_DIAS_DESCONT = dias_descontados + dias_vac
+                    endif
+                    SAR_VAC_DESC.SCO_DT_PAY = SCO_DT_PAYMENT
+                    SAR_VAC_DESC.SCO_DT_ALLOC = SCO_DT_ALLOCATION
+                   'A continuacion el campo nuevo: la ID de Incidencia = 9  
+                    SAR_VAC_DESC.SCO_ID_INCIDENCE = "9"                        
+                EndIf
+               '---------------------------------------------------------------------------------------
+            EndIf
+        EndIf
+    EndIf
+EndIf
+'*----------------------------------
+/*se descomento*/ 
+
+IF  dias_dsan > 0 THEN
+    IF  dias_dsan = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_dsan = Max(dias_dsan, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_dsan = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_dsan = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_dsan = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_dsan = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_dsan = Min(dias_dsan, maxdias_dsan)
+    dias_dsan = Max(dias_dsan, 0)
+ENDIF
+IF  dias_re_acc > 0 THEN
+    IF  dias_re_acc = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_re_acc = Max(dias_re_acc, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_re_acc = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_re_acc = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_re_acc = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_re_acc = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_re_acc = Min(dias_re_acc, maxdias_re_acc)
+    dias_re_acc = Max(dias_re_acc, 0)
+ENDIF
+
+IF  dias_re_enf > 0 THEN
+    IF  dias_re_enf = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_re_enf = Max(dias_re_enf, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_re_enf = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_re_enf = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_re_enf = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_re_enf = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_re_enf = Min(dias_re_enf, maxdias_re_enf)
+    dias_re_enf = Max(dias_re_enf, 0)
+ENDIF
+IF  dias_re_sin > 0 THEN
+    IF  dias_re_sin = dias_tramo_real AND tipo_paga = "1" THEN
+        dias_re_sin = Max(dias_re_sin, dias_tramo)        'para los mensuales en febrero
+    ENDIF
+    IF SAR_TIPO_SALARIO = "001" THEN 'es mensual
+        maxdias_re_sin = dias_tramo       
+    ELSE
+        IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
+            
+            IF SCO_NUM_HOURS_THEO > 0 THEN
+                maxdias_re_sin = SAR_CALC_HORAS_TEORICAS(INICIO_TRAMO,FIN_TRAMO)
+            ELSE
+                maxdias_re_sin = dias_tramo_real * SAR_HS_DIARIAS_PROM 
+            ENDIF
+        ELSE
+            maxdias_re_sin = dias_tramo_real
+        ENDIF
+    ENDIF
+    dias_re_sin = Min(dias_re_sin, maxdias_re_sin)
+    dias_re_sin = Max(dias_re_sin, 0)
+ENDIF
+
+
+
+
+'Asigno las cantidades obtenidas a los conceptos correspondientes
+
+SAR_DIA_DONAR_SANG = dias_dsan
+SAR_DIAS_EXAMEN = dias_lex
+SAR_DIAS_DEFUNCION = dias_ldef
+SAR_DIAS_NACIMIENTO = dias_lnac
+SAR_DIAS_CASAMIENTO = dias_lcas
+SAR_DIAS_VACACIONES = dias_vac
+SAR_UN_VACACIONES = dias_lic_vac
+SAR_DIAS_HUELGA = dia_huelga
+SAR_DIAS_LIC_CONV = dias_lconv
+SAR_LIC_S_GOC_SUELD = dias_lsgs
+SAR_R_PTO_ACC = dias_re_acc
+SAR_R_PTO_ENF = dias_re_enf
+SAR_R_PTO_SIN = dias_re_sin
+SAR_DIAS_EXCEDENCIA = dias_exced
+SAR_DIAS_SUS_DISCI = dias_susp 
+SAR_DIAS_ENFERMEDAD = dias_enf
+SAR_DIAS_MATERN = dias_mat
+SAR_DIAS_AUSENCIA = dias_ausin
+'Bug(0310670) - No eliminar el codigo
+'SAR_UN_HORAS_150 = horas_150
+SAR_UNIDAD_HS_AUSENCIA = horas_ausencia
+SAR_UN_FER_TRAB = horas_fer_trab
+
+
+Return(0)

@@ -1,0 +1,3 @@
+' Segun ley 24700 articulo 1.
+'Se carga el % por Tabla de Valores Convenio.
+return(#SAR_VAL_TICKET_ALIM)

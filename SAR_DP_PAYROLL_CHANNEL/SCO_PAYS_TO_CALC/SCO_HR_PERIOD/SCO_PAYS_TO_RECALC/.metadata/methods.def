@@ -1,2 +1,2 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SCO_SELECT_LOCKED | BLOCK | NUMBER | 6 | 1 | 0 | Sentencia de carga de bloqueo
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+SCO_SELECT_LOCKED | BLOCK | NUMBER | 6 | 1 | 0 | Sentencia de carga de bloqueo | 2

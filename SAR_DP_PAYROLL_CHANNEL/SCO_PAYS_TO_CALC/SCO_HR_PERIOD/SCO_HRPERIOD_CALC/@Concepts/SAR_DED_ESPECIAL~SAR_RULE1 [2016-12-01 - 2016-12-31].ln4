@@ -1,0 +1,78 @@
+ind     = SAR_IND_DED_IG_2010 
+importe = 0
+    
+fecha_tope = SAR_FEC_IMPUT_IG
+fecha_ini  = DxDate("01","01",DxYear(SAR_FEC_IMPUT_IG))
+MES = DXMONTH(fecha_ini)
+
+IF MES < 10 then
+    MES = "0" + TOSTRING(MES,0)
+else
+    MES = TOSTRING(MES,0)
+endif
+
+FECHA = TOSTRING(DXYEAR(fecha_ini),0) + "/" + MES + "/" + "25"
+
+If SAR_IG_DICIEMBRE = 1 and SAR_ES_BAJA = 1 Then
+    FEC = TOSTRING(DxYear(fecha_ini),0)
+    FEC_PAG = TOSTRING(SAR_PAYS_TO_CALC.SAR_ANIO_PROCESO,0)
+    If FEC <> FEC_PAG Then
+        FECHA = FEC_PAG + "/" + MES + "/" + "25"
+        fecha_ini = TODATE(FECHA)
+        fecha_tope =  todate(FEC_PAG + "/" + "12" + "/" + "25")
+    EndIf
+Endif
+
+ANIO_PAGA   = TOSTRING(DXYEAR(SCO_DT_ALLOCATION),0)
+FECHA_ENERO = DXDATE("01", "01", ANIO_PAGA)
+mini = DXMONTH(fecha_ini)
+
+WHILE mini<=DXMONTH(fecha_tope) 
+    'Toma su valor por valores empresa
+    ind   = SAR_IND_DED_IG_2010
+    precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_DED_ESPECIAL",FECHA_ENERO,ind))
+    importe=importe + precio
+	  mini = mini + 1
+    mini2 = mini
+    IF mini < 10 then
+        mini2 = "0" + TOSTRING(mini,0)
+    else
+        mini2 = TOSTRING(mini,0)
+    endif
+    fecha = TOSTRING(DXYEAR(fecha_ini),0) + "/" + mini2 + "/" + "25"
+    fecha_ini= TODATE(fecha)
+    dias_mes = DaysOfMonth(fecha_ini)
+    diaDIA = TOSTRING(dias_mes,0) 
+WEND
+
+If isNull(importe) = M4_TRUE Then
+    importe = 0
+Endif
+
+Deduccion_normal = importe 
+
+
+'Cambios para el Decreto 1253/2016 ?Deduccion Especial. Incremento?.
+'--------------------------------------------------------------------------
+sac_neto_2d_sem = SAR_SAC_NETO_2DO_SEM
+'Se agrega validacion para que en caso que el SAC Neto 2do Semestre sea negativo, no altere el valor de la deduccion especial legal.
+'-------------------------------
+if sac_neto_2d_sem < 0 Then
+    sac_neto_2d_sem = 0
+Endif
+'-------------------------------
+
+If (SAR_TP_IMPUT <> "99") Then
+    If (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT And DxYear(SAR_FEC_PAGO_IG) <> 2016 ) Then
+        Deduccion = TODOUBLE(Deduccion_normal)
+    Else
+        Deduccion = TODOUBLE(Deduccion_normal) + sac_neto_2d_sem
+    EndIf
+Else
+    Deduccion = TODOUBLE(Deduccion_normal) + sac_neto_2d_sem
+EndIf
+
+'--------------------------------------------------------------------------
+
+'Se redondea el importe antes de su devolucion
+RETURN(Round(Deduccion,2))

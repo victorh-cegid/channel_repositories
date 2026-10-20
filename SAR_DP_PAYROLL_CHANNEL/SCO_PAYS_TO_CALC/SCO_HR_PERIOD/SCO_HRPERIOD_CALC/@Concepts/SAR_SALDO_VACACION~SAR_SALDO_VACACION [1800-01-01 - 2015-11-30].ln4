@@ -1,0 +1,17 @@
+'No debe calcularse en pafa de reliquidacion:
+If(SAR_TP_IMPUT = "99")Then
+   Return(0) 
+EndIf  
+
+'No debe tomar el valor en Paga Extra de Aguinaldo ni en Retroactividad.
+If (SAR_TP_IMPUT = "2") Then
+    Return(0)    
+EndIf 
+
+saldo=0
+
+SAR_ACM_DIC_SALDO.BEGIN()
+SAR_ACM_DIAS_VAC_DISFR.BEGIN()
+saldo=SAR_ACM_DIC_SALDO.SAR_SALDO_VACACION + SAR_DIAS_MES_VAC - SAR_ACM_DIAS_VAC_DISFR.SAR_UN_VACACIONES - SAR_UN_VACACIONES 
+
+RETURN(saldo)

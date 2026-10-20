@@ -1,0 +1,11 @@
+item: SCO_NUM_HR_PERIOD
+name: Numero RH en periodo a calcular
+column_name: STD_ID_HR
+item_type: FIELD
+type: NUMBER
+id_m4_type: 6
+prec: 10
+scale: 0
+scope: RECORD
+default_value: "0"
+id_cstype: 2

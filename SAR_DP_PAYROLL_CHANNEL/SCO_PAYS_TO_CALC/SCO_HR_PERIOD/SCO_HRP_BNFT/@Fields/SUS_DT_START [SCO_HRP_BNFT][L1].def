@@ -1,0 +1,13 @@
+item: SUS_DT_START
+name: Inicio
+column_name: SUS_DT_START
+item_type: FIELD
+type: DATE
+id_m4_type: 4
+prec: 0
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 2
+item_aux: null
+id_cstype: null

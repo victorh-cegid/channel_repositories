@@ -1,0 +1,35 @@
+IntValor = 0
+
+'En caso de baja retroactiva debe rertornar el valor de la paga original
+if ((SCO_DT_PAYMENT <> SCO_DT_ALLOCATION) AND (SAR_ES_BAJA = 1 AND (SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017")))  Then   
+    val_paga_original = 0
+             
+    SCO_AC_HR_PERIOD_READ_1.BEGIN()
+    ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()- 1
+    FOR I = 0 TO ULTIMO_REG 
+       SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
+       IF SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT = SCO_DT_ALLOCATION AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION = SCO_DT_ALLOCATION THEN
+              val_paga_original = SCO_AC_HR_PERIOD_READ_1.SAR_PAGA_EXTRA_AJ_2
+       ENDIF
+    NEXT
+    Return(val_paga_original)
+endif
+
+If SAR_U_PAGA_AJ_EX_2 <= 0 Then Return(IntValor)
+
+/*** Se recupera el valor del SAC Abonado ***/
+SAR_SAC_AJUSTE_CONTRIB.Begin()                 
+vDiasLicSac_v585 = SAR_SAC_AJUSTE_CONTRIB.SAR_TOT_D_DTO_AGUIN
+vSACDic = SAR_SAC_AJUSTE_CONTRIB.SAR_PAGA_EXTRA_2
+
+' Se condiciona para que en caso que se cargue alguna licencia despues de la paga extra de sac, se debe descontar los dias
+If vDiasLicSac_v585 <> SAR_TOT_D_DTO_AGUIN Then
+    /* Se obtiene el SAC actualizado con las unidades correctas, y se le resta el SAC abonado en la Paga Extra de SAC */
+    SAC_nuevo =  (SAR_U_PAGA_AJ_EX_2 * SAR_PR_AGUINALDO)
+    IntValor = SAC_nuevo - vSACDic
+Else
+    IntValor = SAR_U_PAGA_AJ_EX_2 * SAR_PAGA_AJ_EXTRA_SAC
+EndIf
+
+
+Return(IntValor)

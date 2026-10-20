@@ -7,3 +7,4 @@ prec: 10
 scale: 0
 scope: NODE
 default_value: "DYN"
+id_cstype: 2

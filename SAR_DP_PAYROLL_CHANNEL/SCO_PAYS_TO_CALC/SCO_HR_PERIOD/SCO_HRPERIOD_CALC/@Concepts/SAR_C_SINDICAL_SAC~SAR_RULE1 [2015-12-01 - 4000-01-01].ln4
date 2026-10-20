@@ -1,0 +1,4 @@
+If SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" Then Return(0)
+base = SAR_TOT_SAC_COTIZ
+valor = base * SAR_PORC_C_SIND_VOL / 100
+Return(valor)

@@ -1,0 +1,11 @@
+item: ID_CURRENCY
+name: ID Moneda
+column_name: ID_CURRENCY
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 3
+scale: 0
+scope: RECORD
+default_value: null
+id_cstype: 2

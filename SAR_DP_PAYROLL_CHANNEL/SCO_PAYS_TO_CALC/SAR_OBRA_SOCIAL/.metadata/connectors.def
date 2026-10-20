@@ -1,9 +1,9 @@
-# parent_node | parent_ti | connection_type
-SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | RECORD_BLOCK
+# parent_node | parent_ti | connection_type | origin
+SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | RECORD_BLOCK | OWN
 
-# child_node | connection_type
+# child_node | connection_type | origin
 
-# ti | item | parent_node | parent_ti | parent_item | precedence
-SAR_OBRA_SOCIAL | UPDATE_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | UPDATE_PRG | BEFORE_PARENT
-SAR_OBRA_SOCIAL | INSERT_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | INSERT_PRG | AFTER_PARENT
-SAR_OBRA_SOCIAL | DELETE_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | DELETE_PRG | BEFORE_PARENT
+# ti | item | parent_node | parent_ti | parent_item | precedence | id_cstype | origin
+SAR_OBRA_SOCIAL | UPDATE_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | UPDATE_PRG | BEFORE_PARENT | 2 | OWN
+SAR_OBRA_SOCIAL | INSERT_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | INSERT_PRG | AFTER_PARENT | 2 | OWN
+SAR_OBRA_SOCIAL | DELETE_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | DELETE_PRG | BEFORE_PARENT | 2 | OWN

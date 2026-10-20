@@ -1,0 +1,192 @@
+'Inicializo variables
+ano_pago_act = DxYear(SAR_FEC_IMPUT_IG)         'A?o fecha imput IG calculo actual
+mes_pago_act = DxMonth(SAR_FEC_IMPUT_IG)        'Mes fecha imput IG calculo actual
+dia_pago_act = DaysOfMonth(SAR_FEC_IMPUT_IG) 	'Dia fecha imput IG calculo actual
+indZonaPat = SAR_IND_ZONA_PAT                   'Indicador zona patagonica
+indDeduc = SAR_IND_DED_IG_2010                  'Indicador deduccion 2010
+meses = 0
+importe = 0
+importe_inc = 0
+num_hijos_ig = 0
+num_hijos_mitad = 0
+num_hijos_entero = 0
+num_edu_mitad = 0
+num_edu_entero = 0
+num_inc_mitad = 0
+num_inc_entero = 0
+num_hijos_ig_inc = 0
+id_hr_previo = ""
+
+'Control, baja debe calcularse respecto a la fecha de pago IG
+If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
+    ano_pago_act        = DxYear(SAR_FEC_PAGO_IG)      'A?o fecha calculo actual
+    mes_pago_act        = DxMonth(SAR_FEC_PAGO_IG)     'Mes fecha calculo actual
+    dia_pago_act        = DaysOfMonth(SAR_FEC_PAGO_IG) 'Dia fecha calculo actual
+EndIf
+
+'***********************************************************************
+'INICIO: Hijos entre 18 y 24 con gastos educativos
+'***********************************************************************
+
+'Fecha inicio y fin de periodo fiscal a considerar. Un empleado no diferido en paga de enero seran 01/01/a?oIG y 31/01/a?oIG
+'un empleado diferido en enero seran 01/01/a?oIG y 28/02/a?oIG
+fec_mes_ini = DxDate("01","01",ano_pago_act)
+fec_mes_fin = DxDate(dia_pago_act,mes_pago_act,ano_pago_act)
+
+'Si es baja y esta activo el indicador de calcular el impuesto a diciembre, llevamos la fecha de fin a 31/12/IgImput actual        
+If SAR_IG_DICIEMBRE = 1 And SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then fec_mes_fin = DxDate("31", "12", ano_pago_act)
+
+'Variables para el control de varios hijos con distintas fechas de impuesto:
+fec_mes_ini_paga = fec_mes_ini
+fec_mes_fin_paga = fec_mes_fin
+
+'Desde octubre 2023 el impuesto es mensual, solo se considera el mes
+'Desde octubre se reinicia por devengado segun afip ("El ingreso devengado en el mes de octubre de 2023 que se percibe ese mes o en el mes de noviembre de
+'2023: considerando el importe correspondiente al acumulado al mes de enero de 2023")
+If DxYear(SAR_FEC_IMPUT_IG) = 2023 And DxMonth(SCO_DT_ALLOCATION)>9 Then 
+    mes_imp_ig = SAR_DIFERIDO_SEPT_2023[0].SAR_MES_IMPUT_IG
+    mes_inicio_corte_imp = 10
+    'Si los hijos cargados en octubre ya se han considerado en septiembre (por ser diferido), no se vuelven a considerar en el nuevo periodo fiscal.
+    If mes_imp_ig = 10 Then mes_inicio_corte_imp = 11
+    inicio_mes_fiscal = DxDate(1,mes_inicio_corte_imp,2023)
+    fin_mes_fiscal = DxDate(DaysOfMonth(SAR_FEC_IMPUT_IG),DxMonth(SAR_FEC_IMPUT_IG),DxYear(SAR_FEC_IMPUT_IG))
+    fec_mes_ini = Max(fec_mes_ini,inicio_mes_fiscal)
+    fec_mes_fin = Min(fec_mes_fin,fin_mes_fiscal)
+EndIf
+
+SAR_H_COMPLEM_NUM_HIJ_EDU.DESTROY()
+SAR_H_COMPLEM_NUM_HIJ_EDU.SAR_ID_HR = SCO_ID_HR
+SAR_H_COMPLEM_NUM_HIJ_EDU.SAR_OR_HR_PERIOD = SCO_OR_HR_PERIOD
+SAR_H_COMPLEM_NUM_HIJ_EDU.SAR_FEC_INI_PAGA = fec_mes_ini
+SAR_H_COMPLEM_NUM_HIJ_EDU.SAR_FEC_FIN_PAGA = fec_mes_fin
+SAR_H_COMPLEM_NUM_HIJ_EDU.Load_Blk()
+hijos_edu = SAR_H_COMPLEM_NUM_HIJ_EDU.Count()
+
+For cont_hijos = 0 To hijos_edu -1
+    If SAR_H_COMPLEM_NUM_HIJ_EDU[cont_hijos].SAR_PORC_INFO_XML = 50 Then num_edu_mitad = num_edu_mitad + 1
+    If SAR_H_COMPLEM_NUM_HIJ_EDU[cont_hijos].SAR_PORC_INFO_XML = 100 Then num_edu_entero = num_edu_entero + 1
+Next
+
+'***********************************************************************
+'FIN: Hijos entre 18 y 24 con gastos educativos
+'***********************************************************************
+
+'Cargo el nodo de Familiares para Impuesto
+SAR_FAMIL_IMPUESTO.DESTROYBLOCK()
+
+'Desde octubre 2023 se hace corte en impuesto
+SAR_FAMIL_IMPUESTO.SAR_FEC_INI_IG = fec_mes_ini
+SAR_FAMIL_IMPUESTO.SAR_FEC_FIN_IG = fec_mes_fin
+
+SAR_FAMIL_IMPUESTO.Load_Blk()
+
+num_reg = SAR_FAMIL_IMPUESTO.Count()
+
+'Calculamos el precio mensual de los conceptos de Deduccion
+If indZonaPat = 1 Then
+    valorMensual = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_HIJO_IMP_REDUC",DxDate(dia_pago_act,mes_pago_act,ano_pago_act),indDeduc))
+Else
+    valorMensual = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_HIJO_IMP",DxDate(dia_pago_act,mes_pago_act,ano_pago_act),indDeduc))
+EndIf
+
+If IsNull(valorMensual) = True Then valorMensual = 0
+
+'Recorremos los familiares a procesar
+For i = 0 To num_reg - 1 
+    SAR_FAMIL_IMPUESTO.MoveTo(i)
+    parent      = SAR_FAMIL_IMPUESTO.STD_ID_ACT_DEP_TYPE	'Tipo de dependencia
+    tipFam      = SAR_FAMIL_IMPUESTO.STD_ID_DEP_TYPE        'Tipo de familiar
+    fec_nac     = SAR_FAMIL_IMPUESTO.STD_DT_BIRTH       	'Fecha de nacimiento del dependiente
+    porcDed     = SAR_FAMIL_IMPUESTO.SAR_PORC_DEDUC_FAM     'RG 4286
+    fec_ini_incap = DxDate ("01","01","4000")
+    fec_fin_incap = DxDate ("01","01","1800")
+    fec_edad_ini = DxDate ("01","01","4000")
+    fec_edad_fin = DxDate ("01","01","4000")    
+
+    'Vamos a considerar los siguientes tipos de dependientes: Hijo/a, Hijastro/a, Guarda y Tutela.
+    If (parent = "2" Or parent = "7" Or parent = "8" ) And porcDed>0 Then
+        valorDeduc = valorMensual * (porcDed/100)
+        'Ley 27617 valor doble incapacidad
+        valorDeduc_inc = valorDeduc * 2
+        'Fechas del impuesto a considerar del familiar
+        fec_alta_imp = SAR_FAMIL_IMPUESTO.SAR_DT_ALTA_IMP
+        'fec_baja_imp = SAR_FAMIL_IMPUESTO.SAR_DT_BAJA_IMP
+        fec_baja_imp = Min(SAR_FAMIL_IMPUESTO.SAR_DT_BAJA_IMP,SAR_FAMIL_IMPUESTO.DT_END)
+        'Si no se ha informado fecha de baja en el impuesto asignamos el tope del a?o fiscal
+        If IsNull(fec_baja_imp) = M4_TRUE Then fec_baja_imp = DxDate("31", "12", ano_pago_act)
+
+        'Si es baja y esta activo el indicador de calcular el impuesto a diciembre, llevamos la fecha de fin a 31/12/IgImput actual        
+        If SAR_IG_DICIEMBRE = 1 And SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then fec_mes_fin = DxDate("31", "12", ano_pago_act)
+        
+        'Topamos las fechas de familiar y del periodo a considerar
+        fec_mes_ini = max(fec_alta_imp,fec_mes_ini_paga)
+        fec_mes_fin = min(fec_baja_imp,fec_mes_fin_paga)
+
+        'Realizamos una busqueda para determinar si existe incapacidad del dependiente, y obtenemos sus fechas inicio y fin
+        SAR_INCAPACIDADES.Begin()
+        Reg_inc = SAR_INCAPACIDADES.FindRegister("SCO_ID_HR",SAR_FAMIL_IMPUESTO.STD_ID_FAMILY_PERSON,EQUAL,"SCO_ID_DISABILITY","05",EQUAL)
+        If Reg_inc <> -1 Then
+            SAR_INCAPACIDADES.MoveTo(Reg_inc)
+            fec_ini_incap = SAR_INCAPACIDADES.SCO_DT_START
+            fec_fin_incap = SAR_INCAPACIDADES.SCO_DT_END
+        EndIf
+		
+        'Obtenemos las fechas de inicio y fin en las que el familiar se puede deducir por su edad
+        fec_edad_ini = fec_nac
+        fec_edad_fin = AddYears(fec_nac,SAR_TOPE_EDAD_FAMILIAR)
+        'El mes que cumple la edad no debe considerarse
+        'fec_edad_fin = AddMonths(fec_edad_fin,-1)
+       
+        'Evaluamos si corresponde deducirse o por incapacidad, o por edad.
+        'Tenemos que evaluar cada mes del periodo IG por separado porque pueden quedar huecos
+        For j = DxMonth(fec_mes_ini) To DxMonth(fec_mes_fin)
+            mes = 0
+            fec_ini_j = DxDate("01",j,DxYear(fec_mes_ini))
+            fec_fin_j = DxDate(DaysOfMonth(fec_ini_j),j,DxYear(fec_mes_ini))
+            'Evaluo si el mes debe considerarse atendiendo a la incapacidad
+            If fec_ini_incap <= fec_fin_j And fec_fin_incap >= fec_ini_j Then 
+                mes = 2
+                'Acumulamos por separado el importe de la deduccion por hijo / hijastro incapacitado
+                importe_inc = importe_inc + valorDeduc_inc
+                importe = importe + valorDeduc_inc
+            'Evaluo si el mes debe considerarse atendiendo a la edad
+            ElseIf fec_edad_ini <= fec_fin_j And fec_edad_fin >= fec_ini_j Then 
+                mes = 1
+                importe = importe + valorDeduc
+            EndIf
+            If mes >= 1 Then 
+                If id_hr_previo <> SAR_FAMIL_IMPUESTO.STD_ID_FAMILY_PERSON Then
+                    id_hr_previo = SAR_FAMIL_IMPUESTO.STD_ID_FAMILY_PERSON
+                    num_hijos_ig = num_hijos_ig + 1
+                    If mes <> 2 Then
+                        If porcDed = 50 Then num_hijos_mitad = num_hijos_mitad + 1
+                        If porcDed = 100 Then num_hijos_entero = num_hijos_entero + 1                        
+                    Else
+                        num_hijos_ig_inc = num_hijos_ig_inc + 1
+                        If porcDed = 50 Then num_inc_mitad = num_inc_mitad + 1
+                        If porcDed = 100 Then num_inc_entero = num_inc_entero + 1                           
+                    EndIf
+                EndIf        
+            EndIf
+        Next
+    EndIf
+Next
+
+SAR_IG_HIJOS_INC = Round(importe_inc,SAR_NUM_DEC)
+
+'Segundo periodo fiscal 2023, el conteo se realiza por ambos periodos fiscales en otro concepto: SAR_IMP23_HIJ_COMPL
+conteoAnual = 0
+If DxYear(SAR_FEC_IMPUT_IG) = 2023 And SCO_DT_ALLOCATION > DxDate(1,10,2023) Then conteoAnual = 1
+If conteoAnual = 0 Then
+    SAR_NUM_HIJOS_IG = num_hijos_ig
+    SAR_NUM_HIJOS_IG_INC = num_hijos_ig_inc
+    'F1357 desde a?o 2022 desglosa el conteo de los hijos
+    SAR_NUM_HIJOS_50 = num_hijos_mitad
+    SAR_NUM_HIJOS_100 = num_hijos_entero
+    SAR_NUM_EDU_M_50 = num_edu_mitad
+    SAR_NUM_EDU_M_100 = num_edu_entero
+    SAR_NUM_HIJOS_INC_50 = num_inc_mitad
+    SAR_NUM_HIJOS_INC_100 = num_inc_entero
+EndIf
+
+Return(Round(importe,SAR_NUM_DEC))

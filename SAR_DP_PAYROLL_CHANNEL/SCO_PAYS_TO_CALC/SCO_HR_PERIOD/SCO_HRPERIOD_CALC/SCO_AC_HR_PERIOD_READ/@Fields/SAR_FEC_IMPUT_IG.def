@@ -1,0 +1,13 @@
+item: SAR_FEC_IMPUT_IG
+name: Fecha imputacion impuesto a las ganancias
+column_name: SAR_FEC_IMPUT_IG
+item_type: FIELD
+type: DATE
+id_m4_type: 4
+prec: 1
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null
+id_cstype: null

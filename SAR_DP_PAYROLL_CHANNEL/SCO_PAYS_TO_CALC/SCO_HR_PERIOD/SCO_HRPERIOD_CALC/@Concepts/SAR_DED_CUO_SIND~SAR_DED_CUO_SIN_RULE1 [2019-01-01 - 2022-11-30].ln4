@@ -1,0 +1,7 @@
+importeacum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_M_CUOSIN
+importemes = SAR_TOT_M_CUOSIN
+importe_oe = SAR_SIND_ANT_EMP + SAR_CUOTA_SINDICAL_OE
+
+importe_tot = importeacum + importemes + importe_oe
+
+Return(importe_tot)

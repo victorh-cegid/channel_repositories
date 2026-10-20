@@ -10,3 +10,4 @@ scope: RECORD
 default_value: "4000-01-01"
 internal_type: 3
 item_aux: null
+id_cstype: null

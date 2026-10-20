@@ -1,6 +1,6 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SCO_DELETE_ERRORS | NODE | NUMBER | 6 | 1 | 0 | Borrar errores del empleado
-SCO_FIND_ERROR | BLOCK | NUMBER | 6 | 1 | 0 | Encontrar error
-SCO_GET_ERRORS | BLOCK | NUMBER | 6 | 2 | 0 | Obtener errores
-SCO_MANAGE_ERRORS | BLOCK | NUMBER | 6 | 1 | 0 | Gestion de errores
-SCO_SET_ERROR_POSITION | BLOCK | NUMBER | 6 | 1 | 0 | Asignar posicion de error
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+SCO_DELETE_ERRORS | NODE | NUMBER | 6 | 1 | 0 | Borrar errores del empleado | 2
+SCO_FIND_ERROR | BLOCK | NUMBER | 6 | 1 | 0 | Encontrar error | 
+SCO_GET_ERRORS | BLOCK | NUMBER | 6 | 2 | 0 | Obtener errores | 
+SCO_MANAGE_ERRORS | BLOCK | NUMBER | 6 | 1 | 0 | Gestion de errores | 
+SCO_SET_ERROR_POSITION | BLOCK | NUMBER | 6 | 1 | 0 | Asignar posicion de error | 

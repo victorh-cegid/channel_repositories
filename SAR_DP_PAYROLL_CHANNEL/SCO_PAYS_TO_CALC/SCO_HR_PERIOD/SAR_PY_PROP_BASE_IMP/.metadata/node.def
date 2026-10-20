@@ -3,3 +3,4 @@ NAME: Propagador  de la base del impuesto
 ID_TI: SAR_PY_PROP_BASE_IMP
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 7

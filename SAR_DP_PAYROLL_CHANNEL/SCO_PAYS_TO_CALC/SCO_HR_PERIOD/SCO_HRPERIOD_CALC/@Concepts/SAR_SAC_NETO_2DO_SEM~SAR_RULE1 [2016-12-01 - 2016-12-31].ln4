@@ -1,0 +1,115 @@
+imp_Exento = 0
+
+'Control para que no se calcule en caso de cambio de a?o fiscal (diferidos en diciembre)
+If DxYear(SAR_FEC_PAGO_IG) = DxYear(SCO_DT_ALLOCATION) Then
+
+    'Tenemos que tomar el valor del SAC 2? Semestre abonado en la Paga Especial de Diciembre
+        SAR_SAC_AJUSTE_CONTRIB.Begin()
+        
+        If SAR_SAC_AJUSTE_CONTRIB.Count() > 0 Then
+            base = SAR_SAC_ABONADO + SAR_SAC_AJUSTE_CONTRIB.SAR_SAC_ABONADO     'Tomamos como base el SAC Abonado del segundo semestre.
+        Else
+            base = 0
+        EndIf
+        
+        edad = SAR_EDAD
+        
+        '----------
+        'Jubilacion
+        '----------
+        desc_jub = 0
+        
+        If edad >= 18 Then
+            porc  = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA/100)
+            desc_jub = base * porc / 100
+        EndIf
+        
+        If IsNull(desc_jub) = TRUE Then
+            desc_jub = 0
+        EndIf
+    
+        '---------
+        'Ley 19032
+        '---------
+        desc_ley = 0
+        
+        If edad >= 18 Then
+            porc = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032 * SAR_PP_AP_INSSJP/100)
+            desc_ley = base * porc / 100
+        EndIf
+        
+        If IsNull(desc_ley) = TRUE Then
+            desc_ley = 0
+        EndIf
+        
+        '-----------
+        'Obra Social
+        '-----------
+        porc = SAR_PORC_OBR_SOCIAL - (SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
+        desc_obr1 = base * porc / 100
+        
+        If IsNull(desc_obr1) = TRUE Then
+            desc_obr1 = 0
+        EndIf
+        
+        porc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
+        desc_obr2 = base * porc / 100
+        desc_obr2 = desc_obr2 * SAR_FAM_CARGO_OS
+        
+        If IsNull(desc_obr2) = TRUE Then
+            desc_obr2 = 0
+        EndIf
+        
+        desc_obr = desc_obr1 + desc_obr2
+        
+        '----------
+        'Sindicatos
+        '----------       
+        desc_sin1 = base * SAR_PORC_C_SIND_VOL / 100
+        
+        desc_sin2 = base * SAR_PORC_C_SIND_OBL / 100
+        
+        desc_sin = desc_sin1 + desc_sin2
+    
+    'Sumamos los importes de los diferentes descuentos de ley obligatorios (c5161, c5162, c5163, y c5165)
+        tot_desc = desc_jub + desc_ley + desc_obr + desc_sin
+    
+    'Calculamos el valor Neto de de la parte Exenta que se tiene en cuenta para el calculo del impuesto
+        valor = base - tot_desc
+    
+    'Sumamos el SAC neto Exento procedente de otros empleadores que se informa por valores
+        valor = valor + SAR_SAC_NETO_2DO_SEM_OE
+    
+
+
+    'Cambios para el Decreto 1253/2016 ?Deduccion Especial. Incremento?.
+    '--------------------------------------------------------------------------
+    'Inicializamos las variables   
+    imp_Rem = SAR_MEJOR_REMUN   'Importe de la mejor remuneracion del 2? Semestre
+    imp_Exento = 0              'Importe de la exencion del SAC sobre el impuesto
+    imp_SAC = valor             'Importe del SAC Neto del 2? Semestre
+        
+ 
+    'El primer nivel de validacion evalua el tope de salario bruto para el 2? semestre 
+    If imp_Rem <= SAR_TOPE_SALARIO_BRUTO Then
+    'Caso 1: remuneracion inferior o igual al tope del salario bruto -> pasamos al segundo nivel de validacion
+        If imp_SAC <= SAR_TOPE_SAC_EXENTO Then
+        'Caso 1.A: importe de SAC inferior o igual al tope del SAC Neto exento -> asignamos el valor de la exencion
+            imp_Exento = imp_SAC
+        Else
+        'Caso 2.A: importe de SAC inferior o igual al tope del SAC exento -> asignamos el valor de la exencion
+            imp_Exento = SAR_TOPE_SAC_EXENTO
+        EndIf
+    Else
+    'Caso2: remuneracion superior al tope del salario bruto -> no se calcula beneficio alguno
+        imp_Exento = 0
+    EndIf
+
+EndIf
+
+'Se agrega condicion para que en caso que el SAC Neto 2do Semestre resulte negativo, tome valor 0, para no afectar el valor de la deduccion especial.
+If imp_Exento < 0 Then
+    imp_Exento = 0
+Endif
+
+Return(imp_Exento)

@@ -1,0 +1,28 @@
+'----------------------------------------------------------------------------------------------------------
+'Se cierra la regla de calculo a partir del 29/02/2016, debido a la publicacion del Decreto 394/2016 que
+'deja sin efecto los rangos de remuneraciones para determinar los valores correspodientes a aplicar de 
+'deducciones.
+'----------------------------------------------------------------------------------------------------------
+
+
+valor     = 0
+
+ANIO = TOSTRING(DXYEAR(SAR_FEC_PAGO_IG),0)
+MES = TOSTRING(DXMONTH(SAR_FEC_PAGO_IG),0)
+DIA = "01"
+fec_ini_pago = DXDATE(DIA, MES, ANIO)
+IF fec_ini_pago >= SAR_FECHA_ALTA THEN
+    rango_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_RANGO_REM_IG_2013
+    rango_act = SAR_RANGO_REM_IG_2013
+ELSE
+    rango_ant = SAR_RANGO_REM_IG_2013
+    rango_act = SAR_RANGO_REM_IG_2013
+ENDIF
+
+if rango_ant <> rango_act then
+    valor = 1
+else
+    valor = 0
+endif
+
+return(valor)

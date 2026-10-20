@@ -1,0 +1,12 @@
+impuesto = SAR_IMPUESTO
+If SAR_TP_IMPUT = "88" Then return(impuesto)
+esBaja = 0
+If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
+
+If DxYear(SAR_FEC_IMPUT_IG) = 2023 And esBaja = 1 Then
+    'Bajas no se aplican cuotas, solo exponemos el beneficio aplicado en el impuesto en la paga de baja
+    beneficio = Round(SAR_AGO23_BENEF_TOTAL * -1,SAR_NUM_DEC)
+    SAR_AGO23_BENEF_IMP = beneficio
+EndIf
+
+Return(impuesto)

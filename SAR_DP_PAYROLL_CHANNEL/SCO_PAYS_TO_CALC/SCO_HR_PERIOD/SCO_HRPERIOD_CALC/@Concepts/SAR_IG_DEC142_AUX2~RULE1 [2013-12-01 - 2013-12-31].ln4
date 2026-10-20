@@ -1,0 +1,59 @@
+if SAR_TP_IMPUT <>  "99"  Then return(0)
+
+if SAR_RANGO_REM_IG_2013 <>  1  Then return(0)
+   
+base          = SAR_IMPUESTO_TOTAL
+vCuota_fija   = 0
+vPorcentaje   = 0
+vValor        = 0
+vBaseEspecial = 0
+
+vCuota_fija = SAR_IMPUESTO_CF.SAR_RETORNA_CUOTA_FIJA_CF(base,SAR_FEC_PAGO_IG,ID_CURRENCY)
+vPorcentaje = SAR_IMPUESTO_CF.SAR_RETORNA_PORCENTAJE_CF(base,SAR_FEC_PAGO_IG,ID_CURRENCY)
+vValor      = SAR_IMPUESTO_CF.SAR_RETORNA_VALOR_CF(base,SAR_FEC_PAGO_IG,ID_CURRENCY)
+
+' Se valida el valor del porcentaje para evitar que se haga una division por cero
+If vPorcentaje > 0 Then
+    vBaseEspecial = ((base - vCuota_fija) * 100 / vPorcentaje) + vValor
+Else
+    vBaseEspecial = 0
+EndIf
+        
+    '---------------------------------------------------------------------------------------------------------------------------------------------
+    if (SAR_TP_IMPUT = "99")  and (SAR_RANGO_REM_IG_2013 = 1) and (SAR_IG_DEC142_AUX = 0) Then        
+        SAR_IG_DEC142_AUX = 1
+        aux_0 = SAR_PORC_TOPE_C_MED()
+        aux_1 = SAR_TOPE_SER_DOM()
+        aux_2 = SAR_TOPE_GAST_SEP()
+        aux_3 = SAR_TOPE_SEG_VIDA()
+        aux_4 = SAR_DED_ESPECIAL()
+        aux_5 =SAR_GAN_NO_IMP()
+        aux_6 =SAR_IMP_CONY_IG() 
+        aux_7 =SAR_IMP_HIJO_IG() 
+        aux_8 =SAR_IMP_O_CAR_IG()
+        aux = SAR_TOT_INT_HIP()        
+        aux_9 = SAR_RET_VALOR_COMPL()
+        aux_10 = SAR_BASE_IMPUESTO()
+        
+        'forzamos a que los conceptos tomen los valores correctos a diciembre.
+        '---------------------------------------------------------------------
+        porc=SAR_PORC_IMP()
+        cuota_fija =SAR_CANT_FIJA_IMP()
+        desde = SAR_DESDE_IMP()              
+        SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_CANT_FIJA_IMP",-1,cuota_fija)  
+        SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_PORC_IMP",-1,porc)
+        SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_DESDE_IMP",-1,desde) 
+        '---------------------------------------------------------------------
+ 
+        
+        SAR_BENEF_IG_DEC1242_2013 = SAR_BASE_IMPUESTO
+        diferencia = SAR_BENEF_IG_DEC1242_2013 - vBaseEspecial
+        SAR_IG_DEC142_AUX = diferencia
+        if SAR_BENEF_IG_DEC1242_2013 > 0 Then    
+            aux_11 = SAR_BASE_IMPUESTO()
+        Endif
+
+    endif
+    '---------------------------------------------------------------------------------------------------------------------------------------------
+
+RETURN(vBaseEspecial)

@@ -1,0 +1,59 @@
+IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
+    tope = SAR_TOPE_COTIZ 
+    dias_ajuste = 0
+    IF SAR_DIAS_NORM_COTIZ = 0 THEN
+        base = 0
+    ELSE
+        base = tope/SAR_DIAS_NORM_COTIZ
+    ENDIF
+    tope = base * SAR_UN_VACACIONES
+    aux = SAR_IMPORTE_LICENCIAS
+    aux = SAR_AJ_VACACIONES
+    vac = SAR_VACACIONES
+
+    'Si hay ajuste en el pago contemplamos el ajuste en el impuesto
+    If SAR_AJ_VACACIONES > 0 Then
+        dias_ajuste = SAR_DIAS_VACACIONES
+        If dias_ajuste + SAR_UN_VACACIONES > SAR_DIAS_NORM_COTIZ Then dias_ajuste = SAR_DIAS_NORM_COTIZ - SAR_UN_VACACIONES
+        tope_ajuste = base * dias_ajuste
+        tope = tope + tope_ajuste
+        vac = vac + SAR_AJ_VACACIONES
+    EndIf
+    vac = vac / SAR_COEF_JORNADA_PER
+    base = Min(tope,vac)
+    'Comparacion con el minimo imponible solo si base  > 0
+    If(base > 0)Then
+        base_min_impo = (SAR_CANT_B_MIN_AP_Y_CNT_OS * SAR_TOPE_B_MIN_IMPO) / 30 * (SAR_UN_VACACIONES)
+        base = Max(base_min_impo, base)
+    EndIf   
+ELSE
+    SAR_ACM_ACT_CONTRIB.BEGIN()
+    'Resto al tope lo acumulado en el mes.
+    tope = SAR_TOPE_COTIZ - SAR_ACM_ACT_CONTRIB.SAR_VAC_IMPO_OS
+    base_min_impo = ((SAR_CANT_B_MIN_AP_Y_CNT_OS * SAR_TOPE_B_MIN_IMPO) / 240 * (SAR_UN_VACACIONES)) - SAR_ACM_ACT_CONTRIB.SAR_VAC_IMPO_OS
+    If(base_min_impo <= 0)Then
+        base = 0
+    Else
+        vac = SAR_VACACIONES + SAR_AJ_VACACIONES
+    EndIf
+
+    If SAR_DIAS_NORM_COTIZ = 0 Then
+        base = 0
+    Else
+        base = tope/SAR_DIAS_NORM_COTIZ
+    EndIf 
+    tope = base * SAR_UN_VACACIONES
+
+    'Si hay ajuste en el pago contemplamos el ajuste en el impuesto
+    If SAR_AJ_VACACIONES > 0 Then
+        dias_ajuste = SAR_DIAS_VACACIONES
+        If dias_ajuste + SAR_UN_VACACIONES > SAR_DIAS_NORM_COTIZ Then dias_ajuste = SAR_DIAS_NORM_COTIZ - SAR_UN_VACACIONES
+        tope_ajuste = base * dias_ajuste
+        tope = tope + tope_ajuste
+    EndIf
+    vac = vac / SAR_COEF_JORNADA_PER    
+    base = Min(tope,vac)       
+    base = max(base, base_min_impo) 
+ENDIF
+
+Return(base)

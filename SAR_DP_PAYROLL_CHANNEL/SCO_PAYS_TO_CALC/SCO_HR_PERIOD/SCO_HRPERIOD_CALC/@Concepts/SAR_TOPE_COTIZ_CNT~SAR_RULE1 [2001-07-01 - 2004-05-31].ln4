@@ -1,0 +1,5 @@
+'Equivalente a veinte veces el valor de tres MOPRES respecto de la contribucion a 
+'cargo del empleador. Segun decreto 814/2001 art. 3ro.
+
+valor = #SAR_VALOR_AMPO * 60 
+RETURN(valor)

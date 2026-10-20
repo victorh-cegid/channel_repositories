@@ -1,0 +1,15 @@
+aux= 0
+debito= 0
+
+fec_1=SAR_FEC_PAGO_IG
+fec_2=SAR_FEC_FIN_IG_DEC
+
+if SAR_IG_DEC142_AUX = 0 and SAR_TP_IMPUT = "99"  and SAR_RANGO_REM_IG_2013 = 1 Then 
+    fec_1 = fec_2
+endif
+  
+aux = SAR_IMPUESTO.SAR_RETORNA_VALOR(SAR_BASE_IMPUESTO,fec_1,ID_CURRENCY)
+valor = SAR_CANT_FIJA_IMP + SAR_PORC_IMP * (SAR_BASE_IMPUESTO - aux )/100
+
+if isnull(valor) = true Then valor = 0
+RETURN(valor)

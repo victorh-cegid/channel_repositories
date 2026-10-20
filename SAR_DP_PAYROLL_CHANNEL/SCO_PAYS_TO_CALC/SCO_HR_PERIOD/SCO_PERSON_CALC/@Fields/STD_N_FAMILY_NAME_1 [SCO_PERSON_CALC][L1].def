@@ -8,3 +8,4 @@ prec: 50
 scale: 0
 scope: RECORD
 default_value: null
+id_cstype: 2

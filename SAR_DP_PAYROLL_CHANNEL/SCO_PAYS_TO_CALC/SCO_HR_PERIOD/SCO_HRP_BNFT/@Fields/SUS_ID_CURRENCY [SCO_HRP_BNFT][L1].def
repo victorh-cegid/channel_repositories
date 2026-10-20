@@ -1,0 +1,13 @@
+item: SUS_ID_CURRENCY
+name: Tipo de moneda
+column_name: SUS_ID_CURRENCY
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 3
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 14
+item_aux: SUS_CUR_DATE
+id_cstype: null

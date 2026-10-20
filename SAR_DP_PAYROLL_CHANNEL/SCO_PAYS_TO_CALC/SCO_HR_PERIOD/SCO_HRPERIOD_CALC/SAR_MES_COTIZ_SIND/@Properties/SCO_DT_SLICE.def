@@ -1,0 +1,12 @@
+item: SCO_DT_SLICE
+name: Fecha del tramo
+item_type: PROPERTY
+type: DATE
+id_m4_type: 4
+prec: 0
+scale: 0
+scope: RECORD
+default_value: "0"
+internal_type: 74
+item_aux: SCO_DT_PRORATE
+id_cstype: 2

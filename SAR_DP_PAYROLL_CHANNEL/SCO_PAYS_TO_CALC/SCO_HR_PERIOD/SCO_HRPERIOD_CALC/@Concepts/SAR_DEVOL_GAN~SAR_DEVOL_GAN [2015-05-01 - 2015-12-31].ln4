@@ -1,0 +1,24 @@
+'Solo en pagas normales y relioquidacion:
+If(SAR_TP_IMPUT <> "1" And SAR_TP_IMPUT <> "99")Then
+  Return(0)
+EndIf
+
+'En caso de baja, se devuelve el valor del saldo.
+If SAR_ES_BAJA = 1 Then
+    Return(0)
+Endif
+
+vIniDevolucion = DxDate(01,05,2015)
+If DxMonth(SCO_PAYS_TO_CALC.SCO_DT_ALLOCATION) = DxMonth(SAR_FEC_PAGO_IG) and DxYear(SCO_PAYS_TO_CALC.SCO_DT_ALLOCATION) = DxYear(SAR_FEC_PAGO_IG) Then 'Para pagas normales
+    vFinDevolucion = DxDate(30,09,2015)                      
+Else 'Para pagas diferidas
+    vFinDevolucion = DxDate(30,10,2015)
+Endif
+
+dif_tot = 0
+
+if (vIniDevolucion <= SAR_FEC_PAGO_IG and vFinDevolucion >= SAR_FEC_PAGO_IG) then
+    dif_tot = (SAR_DIF_TOT_DEVOL/5) * (-1) 'Devolver siempre el importe en negativo
+endif
+
+Return(dif_tot)

@@ -1,6 +1,0 @@
-# parent_node | parent_ti | connection_type
-SCO_HT_PAYS | SCO_HT_PAYS | RECORD_BLOCK
-
-# child_node | connection_type
-
-# ti | item | parent_node | parent_ti | parent_item | precedence

@@ -3,3 +3,4 @@ NAME: Maxima fecha de pago anterior
 ID_TI: SAR_AC_MAX_DT_PAY
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

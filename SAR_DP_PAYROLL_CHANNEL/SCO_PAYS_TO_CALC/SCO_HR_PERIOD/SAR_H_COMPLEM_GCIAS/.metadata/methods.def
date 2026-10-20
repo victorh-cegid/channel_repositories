@@ -1,2 +1,2 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-CUREXCHANGERECORD | NODE | NUMBER | 6 | 1 | 0 | Cambio moneda del registro
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+CUREXCHANGERECORD | NODE | NUMBER | 6 | 1 | 0 | Cambio moneda del registro | 3

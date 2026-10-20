@@ -3,3 +3,4 @@ NAME: Pagas ejecutadas
 ID_TI: SCO_HT_RUN_PAYS
 IS_ROOT: false
 IS_FREE: true
+ID_CSTYPE: 2

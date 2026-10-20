@@ -1,0 +1,10 @@
+item: SCO_FROM_JS
+name: Desde el planificador
+item_type: PROPERTY
+type: NUMBER
+id_m4_type: 6
+prec: 1
+scale: 0
+scope: NODE
+default_value: "0.00000000"
+id_cstype: 7

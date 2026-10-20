@@ -1,0 +1,72 @@
+'Comentario de prueba
+IF  SAR_DIAS_VACACIONES = 0 THEN 
+    Return(0)
+ENDIF
+IF  SAR_DIAS_NORM_COTIZ=0 THEN 
+    Return(0)
+ENDIF
+
+aux = SAR_CARGA_AUSENTISM
+INICIO_TRAMO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysStartDate
+FIN_TRAMO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysEndDate
+dt_start_p = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC
+fec_alta = SAR_FECHA_ALTA 'fecha de alta del empleado
+MesPaga = DxMonth(dt_start_p)
+AnioPaga = DxYear(dt_start_p)
+MesAlta = DxMonth(fec_alta)
+AnioAlta = DxYear(fec_alta)
+
+
+primerreg = 0
+ultimoreg = SAR_REAL_TIME_PERIOD.COUNT() - 1
+fec_ini_paga = SAR_REAL_TIME_PERIOD.SAR_DT_ALLOC_START
+fec_fin_paga = SAR_REAL_TIME_PERIOD.SAR_DT_ALLOC_END
+FOR  I = primerreg  TO  ultimoreg 
+    SAR_REAL_TIME_PERIOD.MOVETO(I)
+    motivoabs = FORMAT(SAR_REAL_TIME_PERIOD.SCO_ID_INCIDENCE,0)
+    fec_ini_abs = SAR_REAL_TIME_PERIOD.SCO_DT_START
+    fec_fin_abs = SAR_REAL_TIME_PERIOD.SCO_DT_END
+
+    'Si la fecha de inicio del ausentismo esta comprendida en el tramo o
+    'la fecha de fin del ausentismo esta comprendida en el tramo obtenemos
+    'los precios de las licencias.
+
+    IF (INICIO_TRAMO <= fec_ini_abs AND fec_ini_abs <= FIN_TRAMO) OR (INICIO_TRAMO <= fec_fin_abs AND fec_ini_abs <= FIN_TRAMO) THEN
+        'Si la fecha de inicio del ausentismo es menor a la fecha de inicio del tramo la reemplazamos
+        IF fec_ini_abs < INICIO_TRAMO THEN
+            fec_ini_abs = INICIO_TRAMO
+        ENDIF    
+        IF motivoabs = "9" THEN
+            IF SAR_TIPO_SALARIO = "003" THEN
+                IF MesPaga = MesAlta and AnioPaga = AnioAlta THEN 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                    pr_ant = SAR_TOT_P_COMP_EA
+                ELSE   
+                    SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
+                    IF SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 THEN
+                        pr_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_TOT_P_COMP_EA
+                    ENDIF
+                ENDIF    
+            ENDIF
+        ENDIF
+    ENDIF           
+NEXT
+
+/*
+ 'Proceso para calcular el precio del descuento considerando lo siguiente:
+ '    Sueldo. Este pudo haber cambiado en uno de los pagos.
+ '    Dias de vacaciones pendientes de descontar.
+      If (INICIO_TRAMO <= fec_ini_abs AND fec_ini_abs <= FIN_TRAMO) OR (INICIO_TRAMO <= fec_fin_abs AND fec_ini_abs <= FIN_TRAMO) Then
+      EndIf
+*/
+
+IF SAR_TIPO_SALARIO = "001" THEN
+    IF SAR_DIAS_NORM_SUELD = 0 THEN
+        valor = 0
+    ELSE
+        valor = (SAR_TOT_P_COMP_EA / SAR_DIAS_NORM_SUELD) * -1
+    ENDIF
+ELSE 'Salario diario y horario
+    valor = pr_ant * -1
+ENDIF
+
+Return(valor)

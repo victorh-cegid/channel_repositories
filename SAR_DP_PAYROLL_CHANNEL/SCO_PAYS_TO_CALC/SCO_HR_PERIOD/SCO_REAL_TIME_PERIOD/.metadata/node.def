@@ -3,3 +3,4 @@ NAME: Tiempo real del periodo
 ID_TI: SAR_REAL_TIME_PERIOD
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

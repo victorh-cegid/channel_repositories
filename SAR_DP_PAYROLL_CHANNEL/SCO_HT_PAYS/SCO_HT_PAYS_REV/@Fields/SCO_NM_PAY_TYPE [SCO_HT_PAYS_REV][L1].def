@@ -1,0 +1,11 @@
+item: SCO_NM_PAY_TYPE
+name: Nombre tipo paga
+column_name: SCO_NM_PAY_TYPE
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 62
+scale: 0
+scope: RECORD
+default_value: null
+id_cstype: 7

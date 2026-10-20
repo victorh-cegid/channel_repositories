@@ -1,0 +1,2 @@
+valor = SAR_TOTAL_DEVENGOS - SAR_TOT_HAB_CON_AP
+RETURN(valor)

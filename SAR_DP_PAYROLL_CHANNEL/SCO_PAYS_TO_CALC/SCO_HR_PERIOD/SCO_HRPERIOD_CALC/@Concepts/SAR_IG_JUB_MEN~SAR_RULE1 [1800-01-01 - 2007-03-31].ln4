@@ -1,0 +1,8 @@
+edad = SAR_EDAD
+base = SAR_REMUN_IMPO + SAR_BASE_COTIZ_ART - SAR_BASE_REM_PRORR
+valor = 0
+IF edad >= 18 THEN
+    porc = SAR_PORC_JUBILACION -  (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
+    valor = base * porc / 100
+ENDIF
+RETURN(valor)

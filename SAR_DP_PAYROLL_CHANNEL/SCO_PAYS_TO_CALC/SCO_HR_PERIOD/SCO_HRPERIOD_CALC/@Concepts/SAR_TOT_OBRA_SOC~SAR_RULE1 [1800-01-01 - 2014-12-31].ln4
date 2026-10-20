@@ -1,0 +1,36 @@
+ban            = SAR_TOT_M_O_SOC
+val_otros_empl = SAR_OBRA_SOCIAL_OE
+val_ant_emp    = SAR_SOC_ANT_EMP
+
+sar_acum_ob_soc_oe = 0
+sar_acum_ob_soc_ant_emp = 0
+
+IF SAR_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" THEN 
+    ban            = 0
+    'val_otros_empl = 0
+ENDIF
+
+'Recorro el acumulado del empleado y sumarizo los valores para armar las TI.
+SCO_AC_HR_PERIOD_READ_1.BEGIN()
+ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()
+
+I = ULTIMO_REG - 1 
+
+WHILE I >= 0 
+    SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
+       
+    ' Armo los datos para SAR_ACM_IMPUESTO
+    IF SAR_FEC_INI_IG <= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG AND SAR_FEC_PAGO_IG > SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG AND SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT = SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION THEN 
+        sar_acum_ob_soc_oe      = sar_acum_ob_soc_oe + SCO_AC_HR_PERIOD_READ_1.SAR_OBRA_SOCIAL_OE
+        sar_acum_ob_soc_ant_emp      = sar_acum_ob_soc_ant_emp + SCO_AC_HR_PERIOD_READ_1.SAR_SOC_ANT_EMP
+
+    ENDIF
+    I = I - 1
+Wend
+
+val_otros_empl = val_otros_empl - sar_acum_ob_soc_oe
+val_ant_emp = val_ant_emp - sar_acum_ob_soc_ant_emp
+
+valor = ban + val_ant_emp + val_otros_empl  
+
+RETURN(valor)

@@ -1,0 +1,11 @@
+item: SCO_NM_PAY
+name: Nombre
+column_name: SCO_NM_PAY
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 62
+scale: 0
+scope: RECORD
+default_value: null
+id_cstype: 2

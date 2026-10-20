@@ -1,0 +1,10 @@
+item: START_POINT
+name: Origen
+item_type: PROPERTY
+type: STRING
+id_m4_type: 2
+prec: 10
+scale: 0
+scope: NODE
+default_value: "DYN"
+id_cstype: 2

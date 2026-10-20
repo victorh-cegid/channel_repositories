@@ -1,0 +1,4 @@
+'Modificacion de acuerdo al RG 3073/11
+'Toma valor en el #5010.
+
+RETURN(SAR_DEV_RET08_ST)

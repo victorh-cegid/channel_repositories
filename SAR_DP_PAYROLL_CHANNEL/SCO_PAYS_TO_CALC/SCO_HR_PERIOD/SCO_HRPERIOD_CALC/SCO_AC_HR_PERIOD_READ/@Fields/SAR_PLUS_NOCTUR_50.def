@@ -1,0 +1,11 @@
+item: SAR_PLUS_NOCTUR_50
+name: Horas extras nocturnas al 50%
+column_name: SAR_PLUS_NOCTUR_50
+item_type: FIELD
+type: CURRENCY
+id_m4_type: 8
+prec: 18
+scale: 6
+scope: RECORD
+default_value: null
+id_cstype: null

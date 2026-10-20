@@ -7,3 +7,4 @@ prec: 50
 scale: 0
 scope: NODE
 default_value: "SCO_AC_HR_ROLE_READ"
+id_cstype: 2

@@ -1,0 +1,13 @@
+item: SCO_ID_FIELD_PERCE
+name: Campo para calcular porcentaje
+column_name: SCO_ID_FIELD_PERCE
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 30
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null
+id_cstype: null

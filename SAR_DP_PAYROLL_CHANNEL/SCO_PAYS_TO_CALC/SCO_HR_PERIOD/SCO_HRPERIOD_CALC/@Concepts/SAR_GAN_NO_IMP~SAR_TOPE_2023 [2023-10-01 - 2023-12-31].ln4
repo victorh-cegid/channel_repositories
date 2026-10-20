@@ -1,0 +1,11 @@
+If DxYear(SAR_FEC_IMPUT_IG) > 2023 Then Return (SAR_GAN_NO_IMP)
+
+'Controla que no se supere el importe anual
+valor = SAR_GAN_NO_IMP
+
+importeSep = SAR_ACM_SEP23_DED_REV[0].SAR_IG_G_NO_IMP
+importeCompleto = SAR_IMP23_GNI_COMPL
+
+If valor + importeSep > importeCompleto Then valor = importeCompleto - importeSep
+
+Return Round(valor,SAR_NUM_DEC)

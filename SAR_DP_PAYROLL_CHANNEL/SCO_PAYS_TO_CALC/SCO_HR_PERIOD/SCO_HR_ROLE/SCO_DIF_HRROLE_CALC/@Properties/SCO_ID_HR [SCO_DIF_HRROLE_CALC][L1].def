@@ -7,3 +7,4 @@ prec: 9
 scale: 0
 scope: BLOCK
 default_value: null
+id_cstype: 2

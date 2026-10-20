@@ -9,3 +9,4 @@ scope: RECORD
 default_value: "0"
 internal_type: 1
 item_aux: null
+id_cstype: null

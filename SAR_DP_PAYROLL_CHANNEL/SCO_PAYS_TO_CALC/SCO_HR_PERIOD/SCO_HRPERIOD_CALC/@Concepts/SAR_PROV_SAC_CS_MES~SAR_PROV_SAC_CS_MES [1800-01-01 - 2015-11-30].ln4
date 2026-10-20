@@ -1,0 +1,51 @@
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
+    Return(0)
+ENDIF
+
+'No debe tomar el valor en Pagas Extra.
+If (SAR_TP_IMPUT = "2") Then
+    Return(0)    
+EndIf
+
+valor = 0  
+    If(SAR_HR_PERIOD.STD_ID_HRP_START_REASON = "005")Then
+            If dxmonth(SCO_DT_ALLOCATION) = 1 or dxmonth(SCO_DT_ALLOCATION) = 7 or SAR_ES_ALTA = 1 then  
+                 valor = SAR_PROV_SAC_CS_ACUM  
+            Else
+                 'Se obtiene el acumulado de SAR_PROV_SAC_MES desde el mes del alta especial hasta la paga actual 
+                 'Nos posicionamos en el mes del alta especial
+                 '"SCO_DT_ALLOC", SCO_DT_ALLOCATION,EQUAL,
+                 Pos_Actual = SCO_AC_HR_PERIOD_READ_1.GetCurrent()
+                 SCO_AC_HR_PERIOD_READ_1.Begin()
+                 If(SCO_AC_HR_PERIOD_READ_1.Count() > 0)Then
+                    Pos_Nuevo_Per = 0
+                    Ultimo_Reg = SCO_AC_HR_PERIOD_READ_1.Count() - 1
+                    Valor_Acu = 0 
+                    While(Pos_Nuevo_Per <= Ultimo_Reg)
+                        SCO_AC_HR_PERIOD_READ_1.MoveTo(Pos_Nuevo_Per)
+                        If(DXMONTH(SCO_DT_ALLOCATION) < 7)Then
+                            If(SCO_AC_HR_PERIOD_READ_1.SCO_OR_HR_PERIOD = SCO_OR_HR_PERIOD And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < SCO_DT_ALLOCATION And DXMONTH(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION) >= 1 And DXMONTH(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION) < 7 And DXYEAR(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION) = DXYEAR(SCO_DT_ALLOCATION) )Then
+                              Valor_Acu = Valor_Acu + SCO_AC_HR_PERIOD_READ_1.SAR_PROV_SAC_CS_MES
+                            EndIf
+                        ElseIf(DXMONTH(SCO_DT_ALLOCATION) > 7)Then  
+                            If(SCO_AC_HR_PERIOD_READ_1.SCO_OR_HR_PERIOD = SCO_OR_HR_PERIOD And SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION < SCO_DT_ALLOCATION And DXMONTH(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION) >= 7 And DXMONTH(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION) < 12 And DXYEAR(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION) = DXYEAR(SCO_DT_ALLOCATION) )Then
+                              Valor_Acu = Valor_Acu + SCO_AC_HR_PERIOD_READ_1.SAR_PROV_SAC_CS_MES
+                            EndIf
+                        EndIf
+                        Pos_Nuevo_Per = Pos_Nuevo_Per + 1
+                    Wend
+                    valor =  SAR_PROV_SAC_CS_ACUM - Valor_Acu
+
+                  EndIf                    
+                 SCO_AC_HR_PERIOD_READ_1.MoveTo(Pos_Actual)
+            EndIf                 
+    Else
+        SAR_ACM_PROVISIONES_SEM.begin() 
+        if dxmonth(SCO_DT_ALLOCATION) = 1 or dxmonth(SCO_DT_ALLOCATION) = 7 then  
+            valor = SAR_PROV_SAC_CS_ACUM  
+        else 
+            valor = SAR_PROV_SAC_CS_ACUM - SAR_ACM_PROVISIONES_SEM.SAR_PROV_SAC_CS_MES     
+        endif 
+    EndIf
+
+return(valor)

@@ -1,0 +1,95 @@
+dias_trabajados = SAR_TIEMPO_EFVO_TR
+tope_min = (SAR_CANT_B_MIN_AP_Y_CNT_OS * SAR_TOPE_B_MIN_IMPO)
+d_cot = SAR_DIAS_NORM_COTIZ
+
+
+'Frecuencia de pago mensual
+If SCO_PAY_FREQ_ALLOC = "004" Then 
+    tope = SAR_TOPE_COTIZ - SAR_BASE_COTIZ_ART_OS
+    tope = tope / SAR_DIAS_NORM_COTIZ * (SAR_DIAS_NORM_COTIZ - SAR_DIAS_VACACIONES ) 
+Else
+    SAR_ACM_ACT_CONTRIB.BEGIN()
+    'Resto al tope lo acumulado en el mes
+    vac_periodo = SAR_ACM_ACT_CONTRIB.SAR_DIAS_VACACIONES + SAR_DIAS_VACACIONES
+    art_periodo = SAR_ACM_ACT_CONTRIB.SAR_DIAS_ART + SAR_DIAS_ART
+    tope        = (SAR_TOPE_COTIZ - SAR_BASE_COTIZ_ART_OS) / d_cot *(d_cot  - vac_periodo )
+    tope        = tope - SAR_ACM_ACT_CONTRIB.SAR_REMUN_IMPO_OS - SAR_ACM_ACT_CONTRIB.SAR_BASE_COTIZ_ART_OS
+EndIf
+
+
+If SAR_TP_IMPUT = "2" Then Return(0)
+real                = SAR_TOT_DEV_COTIZ 
+base                = Max(real,0)
+base                = Min(tope,base)
+vSalario            = 0
+vBaseQuincAnterio   = 0
+
+
+If (base > 0) Then
+    'Aplicamos el minimo imponible considerando los dias trabajados si la base  > 0:
+    If SCO_PAY_FREQ_ALLOC = "004" Then 'Frecuencia de pago mensual
+        base_min_trab = (tope_min / 30 * dias_trabajados) - SAR_BASE_COTIZ_ART_OS
+        base_min_trab = base_min_trab / SAR_DIAS_NORM_COTIZ * (SAR_DIAS_NORM_COTIZ - SAR_DIAS_VACACIONES )
+        base          = Max(base_min_trab, base)
+'    Else
+'        'Tratar Quincenales
+'        base_min_impo = (tope_min / d_cot * dias_trabajados ) - SAR_BASE_COTIZ_ART_OS 'horas_prueba
+'        base_min_trab = round(base_min_impo  / d_cot  *(d_cot  - vac_periodo - art_periodo), 2)
+'        base_min_trab = base_min_trab -  SAR_ACM_ACT_CONTRIB.SAR_REMUN_IMPO_OS
+'        base = Max(base_min_trab, base)
+    EndIf     
+EndIf   
+
+'Horas Extras RG3976
+'calculamos los descuentos de jubilacion por las horas extra
+base_extras_trib = SAR_TOT_HS_EX_IG 
+base_extras_exen = SAR_TOT_HS_EX_EX_IG
+
+valor_trib = 0
+valor_exen = 0
+valor_trib_ad = 0
+valor_exen_ad = 0
+
+'Obra Social
+porc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
+
+'Si estamos en tope SIPA, hacemos la proporcion para hallar la parte del descuento que corresponde
+If base = tope and real <> 0 Then
+    desc_tot_os = base * (porc/100)
+    porc_prop_trib = base_extras_trib/real
+    porc_prop_exen = base_extras_exen/real
+    valor_trib = desc_tot_os * porc_prop_trib
+    valor_exen = desc_tot_os * porc_prop_exen
+    If SCO_PAY_FREQ_ALLOC = "003" Then
+        valor_trib = 0
+        valor_exen = 0            
+    EndIf
+Else
+    valor_trib = base_extras_trib * porc / 100
+    valor_exen = base_extras_exen * porc / 100
+EndIf
+
+'Obra Social Adicional
+porc_ad = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100) 
+If SAR_FAM_CARGO_OS > 0 Then
+    'Si estamos en tope SIPA, hacemos la proporcion para hallar la parte del descuento que corresponde
+    If base = tope and real <> 0 Then
+        desc_tot_ad = base * SAR_FAM_CARGO_OS * (porc_ad/100)
+        porc_prop_trib = base_extras_trib/real
+        porc_prop_exen = base_extras_exen/real
+        valor_trib_ad = desc_tot_ad * porc_prop_trib
+        valor_exen_ad = desc_tot_ad * porc_prop_exen
+    Else
+        valor_trib_ad = (base_extras_trib * SAR_FAM_CARGO_OS * porc_ad / 100) 
+        valor_exen_ad = (base_extras_exen * SAR_FAM_CARGO_OS * porc_ad / 100)
+    EndIf
+EndIf
+
+'asignamos los valores de los descuentos tributable y exento.
+SAR_OBR_HS_FINDE_TRIB = valor_trib
+SAR_OBR_HS_FINDE_EXEN = valor_exen
+SAR_AD_OBR_HS_FINDE_TRIB = valor_trib_ad
+SAR_AD_OBR_HS_FINDE_EXEN = valor_exen_ad
+'Fin horas extras RG3976
+
+Return(base)

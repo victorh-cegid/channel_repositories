@@ -1,0 +1,30 @@
+'Solo en pagas normales y relioquidacion:
+If(SAR_TP_IMPUT <> "1" And SAR_TP_IMPUT <> "99")Then
+  Return(0)
+EndIf
+
+dif_tot = 0
+If SAR_ES_BAJA = 1 Then
+    Acum = 0
+    vDevolucion = 0
+    If SCO_AC_HR_PERIOD_READ_1.count() > 0 Then
+        For a = 0 To SCO_AC_HR_PERIOD_READ_1.count() -1
+            SCO_AC_HR_PERIOD_READ_1.MoveTo(a)
+            vDevolucion = SCO_AC_HR_PERIOD_READ_1.SAR_DEVOL_GAN
+            IF ISNULL(vDevolucion)= TRUE tHEN vDevolucion = 0
+            Acum = Acum + vDevolucion
+        Next
+    Endif
+
+    If(Abs(Truncate(SAR_DIF_TOT_DEVOL, 0)) = Abs(Truncate(Acum, 0)))Then
+       dif_tot = 0
+    Else   
+       dif_tot = SAR_DIF_TOT_DEVOL + Acum   ' Se suma el acum porque el valor de la cuota v5932 viene en negativo, de esta forma se va a restar del valor total.
+    EndIf
+        
+    If(dif_tot > 0)Then
+        dif_tot = (-1) * dif_tot
+    EndIf
+ 
+Endif
+Return(dif_tot)

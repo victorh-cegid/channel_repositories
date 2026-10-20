@@ -1,0 +1,14 @@
+If SAR_TP_IMPUT = "88" Then return(0)
+esBaja = 0
+If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
+If SCO_DT_PAYMENT = SCO_DT_ALLOCATION Or (DxMonth(SCO_DT_ALLOCATION) <> 7 And esBaja = 0) Then Return(0)
+
+impuesto_orig = SCO_AC_HR_PERIOD_REV_1.SAR_IMPUESTO
+impuesto_nuevo = SAR_AGO23_IMPUESTO
+beneficio = Max(impuesto_orig - impuesto_nuevo,0)
+
+'Para varias pagas calculadas, hay que ajustar el beneficio para que la suma se traslade al mes siguiente
+benefCalcMismoMes = SAR_ACM_MES_ACTUAL_DIF[0].SAR_AGO23_BENEF_TOTAL
+beneficio = beneficio - SAR_ACM_MES_ACTUAL_DIF[0].SAR_AGO23_BENEF_TOTAL
+
+Return Round(beneficio,SAR_NUM_DEC)

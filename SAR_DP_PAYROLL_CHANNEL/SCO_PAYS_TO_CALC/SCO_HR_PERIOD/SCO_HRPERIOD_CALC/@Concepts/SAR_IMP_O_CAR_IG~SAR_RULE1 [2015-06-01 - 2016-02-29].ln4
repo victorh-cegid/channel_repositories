@@ -1,0 +1,427 @@
+'----------------------------------------------------------------------------------------------------------
+'Se cierra la regla de calculo a partir del 29/02/2016, debido a la publicacion del Decreto 394/2016 que
+'deja sin efecto los rangos de remuneraciones para determinar los valores correspodientes a aplicar de 
+'deducciones.
+'----------------------------------------------------------------------------------------------------------
+
+
+contador = 0
+
+'Cargo el nodo de Familiares para Impuesto
+SAR_FAMIL_IMPUESTO.DESTROYBLOCK()
+IF SAR_ES_BAJA = 1 and (DXYEAR(SCO_DT_ALLOCATION) <> DXYEAR(SAR_FEC_INI_IG)) THEN
+    YEAR_ALLOC = TOSTRING(DXYEAR(SCO_DT_ALLOCATION),0)
+    SAR_FAMIL_IMPUESTO.SAR_FEC_INI_IG = DXDATE("01", "01", YEAR_ALLOC)
+    SAR_FAMIL_IMPUESTO.SAR_FEC_FIN_IG = DXDATE("31", "12", YEAR_ALLOC)
+ELSE
+    SAR_FAMIL_IMPUESTO.SAR_FEC_INI_IG = SAR_FEC_INI_IG
+    SAR_FAMIL_IMPUESTO.SAR_FEC_FIN_IG = SAR_FEC_FIN_IG 
+ENDIF
+    SAR_FAMIL_IMPUESTO.LOAD_BLK()
+    IF SAR_FAMIL_IMPUESTO.COUNT() = 0 THEN
+       Return(0)
+    ENDIF
+
+importe   = 0
+mini      = 0
+primerreg = 0
+ultimoreg = SAR_FAMIL_IMPUESTO.COUNT() -1
+
+'Inicio - Manejo de las incapacidades - Validaciones por edad de familiares a cargo 
+'Aca voy a cargar la TI de incapacidades
+IF SAR_INCAPACIDADES.COUNT() = 0 THEN
+    SAR_INCAPACIDADES.LOAD_BLK()
+    SAR_INCAPACIDADES.BEGIN()
+ENDIF
+
+SAR_ACM_ULT_PAGO_IMPUT.Begin()
+indic_cambio_rango = SAR_ACM_ULT_PAGO_IMPUT.SAR_IND_CAMBIO_RANGO
+ANIO               = TOSTRING(DXYEAR(SAR_FEC_PAGO_IG),0)
+MES                = TOSTRING(DXMONTH(SAR_FEC_PAGO_IG),0)
+DIA                = "01"
+fec_ini_pago = DXDATE(DIA, MES, ANIO)
+IF fec_ini_pago >= SAR_FECHA_ALTA THEN
+    rango_ant = SAR_ACM_ULT_PAGO_IMPUT.SAR_RANGO_REM_IG_2013
+    rango_act = SAR_RANGO_REM_IG_2013
+ELSE
+    rango_ant = SAR_RANGO_REM_IG_2013
+    rango_act = SAR_RANGO_REM_IG_2013
+ENDIF
+
+ano_pago_ant  = DxYear(SAR_ACM_ULT_PAGO_IMPUT.SAR_FEC_PAGO_IG)
+ano_pago_act  = DxYear(SAR_FEC_PAGO_IG)
+deduc_ant     = 0
+deduc_ant_nov = 0
+mes_pago_act  = 0
+new_deduc     = 0
+val_o_car_ant = 0
+
+Rango_Actual  = -1
+Rango_Previo  = -1
+Zona_Actual   = -1
+Zona_Mes_Paga = -1
+Zona_Mes      = -1
+ID_DMD          = "SAR_INDIC_REDUC_ZON_DES_1"
+
+'se modifica el indicativo de cambio de rango, al cambiar el A?o Fiscal.
+If ano_pago_ant <> ano_pago_act Then
+ indic_cambio_rango = 0
+ SAR_IND_CAMBIO_RANGO = 0
+EndIf
+
+FOR I = primerreg TO ultimoreg 
+    SAR_FAMIL_IMPUESTO.MOVETO(I)
+    parent              = SAR_FAMIL_IMPUESTO.STD_ID_ACT_DEP_TYPE
+    tipo_parent         = SAR_FAMIL_IMPUESTO.STD_ID_DEP_TYPE
+    fec_nac             = SAR_FAMIL_IMPUESTO.STD_DT_BIRTH
+    Existe_inc = 0
+    If (tipo_parent = "11" OR tipo_parent = "12" OR tipo_parent = "16" OR tipo_parent = "18" or tipo_parent = "2" Or tipo_parent = "5" Or tipo_parent = "13" Or tipo_parent = "14" Or tipo_parent = "15" Or tipo_parent = "17") Then
+        If(parent = "3" Or parent = "9" ) Then      
+            'Se busca (findregister) si existe incapacidad para el familiar
+            SAR_INCAPACIDADES.BEGIN()
+    
+            Reg_inc = SAR_INCAPACIDADES.FindRegister("SCO_ID_HR",SAR_FAMIL_IMPUESTO.STD_ID_FAMILY_PERSON,EQUAL,"SCO_ID_DISABILITY","05",EQUAL)
+            If Reg_inc <> -1 Then
+                SAR_INCAPACIDADES.moveto(Reg_inc)
+                If (SAR_FEC_PAGO_IG >= SAR_INCAPACIDADES.SCO_DT_START) and (SAR_FEC_PAGO_IG <= SAR_INCAPACIDADES.SCO_DT_END) then
+                    Existe_inc = 1
+                Else
+                    Existe_inc = 0
+                Endif
+            Endif
+    
+                If Reg_inc <> -1 Then
+                    inc_permanente = SAR_INCAPACIDADES.SCO_PERMANENT
+                    
+                    if inc_permanente = "1" then
+                        inc = "N"
+                    else
+                        inc = "S"
+                    endif
+                Else
+                    inc = "N"
+                EndIf
+        EndIf
+        
+        '-------------------------------------------------------------------------------------------
+        'Se condiciona para controlar la edad en este tipo de parentezcos.
+        '11- Nieto, 12 - Bisnieto, 16 - Hermano, 18 - Yerno/Nuera.
+        IF (tipo_parent= "11" OR tipo_parent= "12" OR tipo_parent= "16" OR tipo_parent= "18") THEN
+            control_edad = 1
+        else
+            control_edad = 0
+        ENDIF
+        '------------------------------------------------------------------------------------------- 
+
+        edad = Years(fec_nac,SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC)
+        fecha_alta_impuesto = SAR_FAMIL_IMPUESTO.SAR_DT_ALTA_IMP
+	  fecha_baja_impuesto = SAR_FAMIL_IMPUESTO.SAR_DT_BAJA_IMP
+        fecha_ini           = Max(fecha_alta_impuesto,SAR_FEC_INI_IG)
+        IF ISNULL(fecha_baja_impuesto)  = M4_TRUE THEN 
+            fecha_tope = SAR_FEC_PAGO_IG
+	  ELSE
+        	fecha_tope = Min(fecha_baja_impuesto,SAR_FEC_PAGO_IG)
+	  ENDIF
+
+        'Si no posee incapacidad permanente, y es un tipo de parentezco que se debe controlar la edad, verifico los a?os contra el tope de la edad para ganancias.(24 a?os)      
+        IF (edad < SAR_TOPE_EDAD_FAMILIAR OR (edad = SAR_TOPE_EDAD_FAMILIAR AND DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG)))  AND (Existe_inc <> 1) and (control_edad = 1) and (inc = "N") THEN
+            DIAT = DXDAY(fec_nac)
+            IF DIAT < 10 then
+                DIAT = "0" + TOSTRING(DIAT,0)
+            ELSE
+                DIAT = TOSTRING(DIAT,0)
+            ENDIF
+            MEST = DXMONTH(fec_nac)
+            IF MEST < 10 then
+                MEST = "0" + TOSTRING(MEST,0)
+            ELSE
+                MEST = TOSTRING(MEST,0)
+            ENDIF
+            If MEST = "02" Then
+                DIAT = "28"
+            Endif
+
+            FECHA      = ToDate(TOSTRING(DXYEAR(SAR_FEC_PAGO_IG),0) + "-" + MEST + "-" + DIAT)
+            
+            IF fecha_tope > fecha_baja_impuesto AND  ISNULL(fecha_baja_impuesto) = FALSE THEN
+                fecha_tope = fecha_baja_impuesto 
+                IF fecha_baja_impuesto > SAR_FEC_PAGO_IG THEN
+                    fecha_tope = SAR_FEC_PAGO_IG
+                ENDIF
+            ENDIF
+            fec_paga = todate(SAR_FEC_PAGO_IG)
+            fec_tope = todate(fecha_tope)
+            
+            If (fec_tope > fec_paga) or ((edad < SAR_TOPE_EDAD_FAMILIAR OR (edad = SAR_TOPE_EDAD_FAMILIAR AND DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG)))  AND (Existe_inc <> 1) and (control_edad = 1) and (inc = "N")) Then
+                IF fec_tope >= fecha_baja_impuesto AND  ISNULL(fecha_baja_impuesto) = FALSE THEN
+                    fecha_tope = fecha_baja_impuesto
+                Else
+                    fecha_tope = SAR_FEC_PAGO_IG
+                Endif
+            Endif
+      
+            If edad >= SAR_TOPE_EDAD_FAMILIAR then
+                'fecha_tope = FECHA
+                fecha_tope = Min(FECHA, fecha_baja_impuesto)
+            Endif
+        ENDIF    
+        
+        'Verficacion que permite obtener lafecha de inicio cuando existe incapacidad en meses mayores al inicio del 
+        'a?o fiscal, con familiares de 24 a?os o mas.
+            'edad < SAR_TOPE_EDAD_FAMILIAR OR (edad = SAR_TOPE_EDAD_FAMILIAR AND (DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG) and (DXMONTH(fec_nac) = DXMONTH(SAR_FEC_PAGO_IG)))
+        If(edad >= SAR_TOPE_EDAD_FAMILIAR And Existe_inc = 1) Then 
+          If(SAR_FEC_PAGO_IG >= SAR_INCAPACIDADES.SCO_DT_START And DxYear(SAR_INCAPACIDADES.SCO_DT_START) = DxYear(SAR_FEC_PAGO_IG))Then
+               fecha_ini = SAR_INCAPACIDADES.SCO_DT_START
+          EndIf 
+        EndIf
+        
+        
+        MES = DXMONTH(fecha_ini)
+        IF MES < 10 then
+            MES = "0" + TOSTRING(MES,0)
+        ELSE
+            MES = TOSTRING(MES,0)
+        ENDIF
+        
+        FECHA     = TOSTRING(DXYEAR(fecha_ini),0) + "/" + MES + "/" + "25"
+        If SAR_IG_DICIEMBRE = 1 and SAR_ES_BAJA = 1 Then
+            FEC = TOSTRING(DxYear(SAR_FEC_INI_IG),0)
+            FEC_PAG = TOSTRING(SAR_PAYS_TO_CALC.SAR_ANIO_PROCESO,0)
+            If FEC <> FEC_PAG Then
+                FECHA = fecha_alta_impuesto
+                fecha_ini = TODATE(FECHA)
+                IF ISNULL(fecha_baja_impuesto)  = M4_TRUE THEN
+                    fecha_tope =  todate(FEC_PAG + "/" + "12" + "/" + "25")
+                ELSE
+                    MES_BAJA = DXMONTH(fecha_baja_impuesto)
+                    IF MES_BAJA < 10 then
+                        MES_BAJA = "0" + TOSTRING(MES_BAJA,0)
+                    else
+                        MES_BAJA = TOSTRING(MES_BAJA,0)
+                    endif
+                    fecha_tope =  todate(FEC_PAG + "/" + MES_BAJA + "/" + "25")
+                ENDIF
+            EndIf
+        Endif
+
+
+        mini      = DXMONTH(fecha_ini)
+        
+        ' Fecha para verificar el lugar de trabajo
+        vFechaLU = DxDate("25",MES,DxYear(fecha_ini))
+        dias_mes = DaysOfMonth(fecha_ini)
+        Zona_Actual = SAR_HR_ROLE.SAR_OBTENER_LUGAR_ZONA(SCO_DT_PAYMENT)
+        Zona_Actual = ToString(ToDouble(Zona_Actual), 0)
+        
+        DIA = TOSTRING(dias_mes,0)
+        FECHA_LUGAR= DxDate(DIA,MES,DxYear(fecha_ini))
+        ' Cargo la Ti para verIficar si existe algun cambio de lugar de trabajo no informado a tiempo.
+        SAR_LUGAR_TRABA_ZONA_DES.begin()
+        IntCantRegLugTrab = SAR_LUGAR_TRABA_ZONA_DES.count()
+        RANGO = SAR_RANGO_REM_IG_2015 'Rango normal de la paga
+        
+        'La siguiente condicion permite decidir lo siguiente:
+        '           Si existio cambio de zona en lo que va del a?o fiscal => 
+        '                    determina el importe resultante de las dos zonas mes a mes.
+        '           Si no 
+        '                    determina el importe de la dos zonas a la pga actual directo de la tabla.
+        '           Fin Si 
+        
+        MES_CAMBIO_PREVIO = -1 'Es el mes previo al cambio de zona de existir. De no existir es -1. Se pasa como parametro 
+                               'al metodo SAR_HR_ROLE.SAR_OBTENER_CAMBIO_ZONA   
+                               
+        Zona_Pre_Cambio = SAR_HR_ROLE.SAR_OBTENER_CAMBIO_ZONA(MES_CAMBIO_PREVIO, SCO_DT_ALLOCATION)       
+        If(MES_CAMBIO_PREVIO <> -1)Then
+                    WHILE mini <= DXMONTH(fecha_tope) 
+                        'Toma su valor por valores empresa
+                        
+                        ind = SAR_IND_DED_IG_2010
+                        RANGO_792 = SAR_RANGO_REM_IG_2013
+                        RANGO = SAR_RANGO_REM_IG_2015
+                        vDia = tostring(DxDaysOfMonth(mini, DxYear(SAR_FEC_PAGO_IG)),0)
+
+                        IF mini < 10 then
+                            mini3 = "0" + TOSTRING(mini,0)
+                        ELSE
+                            mini3 = TOSTRING(mini,0)
+                        ENDIF
+
+                        vAnio = tostring(DxYear(SAR_FEC_PAGO_IG),0)  
+                        vFecha = DxDate(vDia,mini3,vAnio)
+                        minimo = mini-1
+                        mescumple = tostring(minimo,0)
+                        vFechaCumple = DxDate(vDia,mescumple,vAnio)
+                        edad = Years(fec_nac,vFechaCumple)
+                        SAR_INCAPACIDADES.BEGIN()
+                        Reg_inc = SAR_INCAPACIDADES.FindRegister("SCO_ID_HR",SAR_FAMIL_IMPUESTO.STD_ID_FAMILY_PERSON,EQUAL,"SCO_ID_DISABILITY","05",EQUAL)
+                        If Reg_inc <> -1 Then
+                            SAR_INCAPACIDADES.moveto(Reg_inc)
+                            If (vFecha >= SAR_INCAPACIDADES.SCO_DT_START) and (vFecha <= SAR_INCAPACIDADES.SCO_DT_END) then
+                                Existe_inc = 1
+                            Else
+                                Existe_inc = 0
+                            Endif
+                        Endif
+                        /******************* Verificamos si hay cambio de Rango **********************************/
+                            If IntCantRegLugTrab > 0 Then           
+            
+                                vPos = SAR_LUGAR_TRABA_ZONA_DES.FindRegister("SCO_DT_START",FECHA_LUGAR,M4_SMALLER_OR_EQUAL,"SCO_DT_END",FECHA_LUGAR,M4_GREATER_OR_EQUAL)
+                            If vPos = -1 Then
+                                If FECHA_LUGAR < SAR_FECHA_ALTA Then
+                                    dias_mes_alta = DaysOfMonth(SAR_FECHA_ALTA)
+                                    DIAS_ALTA = TOSTRING(dias_mes_alta,0)
+                                    FECHA_ALTA= DxDate(DIAS_ALTA,DxMonth(SAR_FECHA_ALTA),DxYear(SAR_FECHA_ALTA))
+                                    vPos_Alta = SAR_LUGAR_TRABA_ZONA_DES.FindRegister("SCO_DT_START",FECHA_ALTA,M4_SMALLER_OR_EQUAL,"SCO_DT_END",FECHA_ALTA,M4_GREATER_OR_EQUAL)
+                                    If vPos_Alta <> -1 and SCO_AC_HR_PERIOD_READ_1.count() > 0 Then
+
+                                        '*********************************************************
+                                        If(DxMonth(SCO_DT_PAYMENT) <> DxMonth(SAR_FEC_PAGO_IG))Then
+                                             If(mini = DxMonth(SAR_FEC_PAGO_IG))Then
+                                                 Zona_Mes = Zona_Mes_Paga
+                                             Else
+                                                 Zona_Mes = SAR_HR_ROLE.SAR_OBTENER_LUGAR_ZONA(FECHA_ALTA)
+                                                 Zona_Mes = ToString(ToDouble(Zona_Mes), 0)
+                                                 Zona_Mes_Paga = Zona_Mes
+                                             EndIf 
+                                        Else     
+                                            Zona_Mes = SAR_HR_ROLE.SAR_OBTENER_LUGAR_ZONA(FECHA_ALTA)                   
+                                            Zona_Mes = ToString(ToDouble(Zona_Mes), 0) 
+                                        EndIf
+                                        If(Zona_Mes = "-1")Then
+                                            Zona_Mes = Zona_Actual
+                                        EndIf
+                                        If(Zona_Mes = Zona_Actual)Then
+                                             RANGO = SAR_RANGO_REM_IG_2015 'Rango Actual
+                                        Else
+                                             RANGO = SAR_RAN_REM_IG_2015_PRE 'Rango Previo
+                                        EndIf
+                                         '********************************************************
+                                    Endif                           
+                                Endif
+                            Endif
+                                If vPos <> -1 Then                   
+                                    SAR_LUGAR_TRABA_ZONA_DES.MOVETO(vPos)
+                                    vId_Lug_Trab = SAR_LUGAR_TRABA_ZONA_DES.SCO_ID_WORK_LOCATION
+                                    vFec = SAR_LUGAR_TRABA_ZONA_DES.SCO_DT_START
+                                    vPosVal = SAR_WLOC_VALUES.FindRegister("SCO_ID_WORK_LOCATION", vId_Lug_Trab, M4_EQUAL, "ID_DMD_COMPONENT", ID_DMD, M4_EQUAL, "SCO_DT_START",vFec,M4_EQUAL)
+                                    SAR_WLOC_VALUES.MOVETO(vPosVal)
+                                    If vPosVal <> -1 Then
+                                        vIND_DES = SAR_WLOC_VALUES.SCO_VALUE
+                                    Else
+                                        vIND_DES = 0
+                                    Endif
+            
+                                           
+                                    SCO_AC_HR_PERIOD_READ_1.Begin()   
+                                    
+                                    intCountRead = SCO_AC_HR_PERIOD_READ_1.Count()
+                                    If intCountRead > 0 Then  
+                                        vFechaRead    = vFechaLU
+                                        vFechaIniPaga = DxDate("01",DxMonth(vFechaRead),Dxyear(vFechaRead))                                
+                                        vDiaFinPaga   = DaysOfMonth(vFechaRead)
+                                        vFechaFinPaga = DxDate(vDiaFinPaga,DxMonth(vFechaRead),Dxyear(vFechaRead))
+                                        
+                                        '*********************************************************
+                                        If(DxMonth(SCO_DT_PAYMENT) <> DxMonth(SAR_FEC_PAGO_IG))Then
+                                             If(mini = DxMonth(SAR_FEC_PAGO_IG))Then
+                                                 Zona_Mes = Zona_Mes_Paga
+                                             Else
+                                                 Zona_Mes = SAR_HR_ROLE.SAR_OBTENER_LUGAR_ZONA(vFechaLU)
+                                                 Zona_Mes = ToString(ToDouble(Zona_Mes), 0)
+                                                 Zona_Mes_Paga = Zona_Mes
+                                             EndIf 
+                                        Else     
+                                            Zona_Mes = SAR_HR_ROLE.SAR_OBTENER_LUGAR_ZONA(vFechaLU)                   
+                                            Zona_Mes = ToString(ToDouble(Zona_Mes), 0)
+                                        EndIf
+                                        If(Zona_Mes = "-1")Then
+                                            Zona_Mes = Zona_Actual
+                                        EndIf
+                                        If(Zona_Mes = Zona_Actual)Then
+                                             RANGO = SAR_RANGO_REM_IG_2015   'Rango Actual
+                                        Else
+                                             RANGO = SAR_RAN_REM_IG_2015_PRE 'Rango Previo
+                                        EndIf
+                                         '********************************************************
+                                    Endif
+                                        
+                                EndIf    
+                                    
+                                vFechaLU = DxDate(DxDay(vFechaLU),DxMonth(vFechaLU)+1,DxYear(vFechaLU))
+                            EndIf
+                    
+                    'Calculo de IMPUESTO OTRAS CARGAS segun informacion recopilada del concepto v793 por Decreto 3770/2015.
+            
+                        R = TOSTRING(RANGO,0)
+                        If (mini <= DxMonth(fecha_tope)) And ((Existe_inc = 1 or control_edad = 0) or (control_edad = 1 and (edad < SAR_TOPE_EDAD_FAMILIAR OR (edad = SAR_TOPE_EDAD_FAMILIAR AND (DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG) and (DXMONTH(fec_nac) = DXMONTH(SAR_FEC_PAGO_IG))))))) Then
+
+                            If(RANGO = 3)Then
+                                precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_VAL_OTRAS_IMP",fecha,ind))
+                            ElseIf(RANGO = 2)Then
+                                precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("99","SAR_VAL_OTRAS_IMP",fecha,ind))
+                            ElseIf(RANGO >= 20 and RANGO <= 25) OR (RANGO >= 30 and RANGO <= 35)Then    
+                                precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(R,"SAR_VAL_OTRAS_IMP",fecha,ind))
+                            Else
+                                precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_OTRAS_IMP",fecha,ind))
+                            EndIf    
+                            
+                            'En caso de Retroactividades ejecutadas a estas reglas se condiciona lo siguiente. 
+                            '----------------------------------------------------------------------------------------------------------
+                            IF SCO_DT_PAYMENT <> SCO_DT_ALLOCATION AND SAR_FEC_PAGO_IG >= ToDate("2016-03-01") Then
+                                    precio  = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_OTRAS_IMP",SAR_FEC_PAGO_IG,ind))
+                            ENDIF
+                            '----------------------------------------------------------------------------------------------------------         
+                            
+                            importe = importe + precio
+                        Endif                              
+                        
+                        mini    = mini + 1
+                        mini2   = mini    
+                        IF mini < 10 then
+                            mini2 = "0" + TOSTRING(mini,0)
+                        ELSE
+                            mini2 = TOSTRING(mini,0)
+                        ENDIF
+                            
+                        fecha = TOSTRING(DXYEAR(fecha_ini),0) + "/" + mini2 + "/" + "25"
+                        fecha_ini= TODATE(fecha)
+                        dias_mes = DaysOfMonth(fecha_ini)
+                        DIA = TOSTRING(dias_mes,0)
+                        FECHA_LUGAR = DxDate(DIA,mini2,DxYear(fecha_ini)) 
+                    WEND
+
+            ElseIf(mini <= DxMonth(fecha_tope)) And (((Existe_inc = 1 or control_edad = 0) or (control_edad = 1 and (edad < SAR_TOPE_EDAD_FAMILIAR OR (edad = SAR_TOPE_EDAD_FAMILIAR AND (DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG) ))))))Then
+                        R = TOSTRING(RANGO,0) 
+                        'Calculo de la ganancia no imponible segun informacion recopilada del concepto v793 por Decreto 3770/2015.
+                        If(RANGO = 3)Then
+                            precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_VAL_OTRAS_IMP",SAR_FEC_PAGO_IG,ind))
+                        ElseIf(RANGO = 2)Then
+                            precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("99","SAR_VAL_OTRAS_IMP",SAR_FEC_PAGO_IG,ind))
+                        ElseIf(RANGO >= 20 and RANGO <= 25) OR (RANGO >= 30 and RANGO <= 35)Then    
+                            precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(R,"SAR_VAL_OTRAS_IMP",SAR_FEC_PAGO_IG,ind))
+                        Else
+                            precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_OTRAS_IMP",SAR_FEC_PAGO_IG,ind))
+                        EndIf  
+                        If(DxMonth(SCO_DT_PAYMENT) <> DxMonth(SAR_FEC_PAGO_IG))Then
+                            meses_reales = DxMonth(FECHA_TOPE) - mini + 1                
+                        Else
+                            meses_reales = DxMonth(FECHA_TOPE) - mini + 1
+                        EndIf
+                        
+                        'En caso de Retroactividades ejecutadas a estas reglas se condiciona lo siguiente. 
+                        '----------------------------------------------------------------------------------------------------------
+                        IF SCO_DT_PAYMENT <> SCO_DT_ALLOCATION AND SAR_FEC_PAGO_IG >= ToDate("2016-03-01") Then
+                                 precio  = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_OTRAS_IMP",SAR_FEC_PAGO_IG,ind))
+                        ENDIF
+                        '----------------------------------------------------------------------------------------------------------         
+                        
+                        importe = importe + (precio * meses_reales)  
+            EndIf            
+   endif
+NEXT
+
+If isNull(importe) = M4_TRUE Then
+    importe = 0
+Endif
+'Se redondea el importe antes de su devolucion
+RETURN(Round(importe,2))

@@ -3,3 +3,4 @@ NAME: Datos pago
 ID_TI: SAR_PAYROLL_PAYMENT_DATA
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

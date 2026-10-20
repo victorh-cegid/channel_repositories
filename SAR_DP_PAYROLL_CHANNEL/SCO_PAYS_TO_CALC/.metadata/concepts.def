@@ -1,11 +1,11 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SAR_ANIO_PROCESO | RECORD | NUMBER | 6 | 9 | 4 | A?o de proceso de la paga (Imputacion)
-SAR_DIA_PROCESO | RECORD | NUMBER | 6 | 13 | 4 | Dia de proceso de la paga (Imputacion)
-SAR_FE_REGI_NVO_S | RECORD | DATE | 4 | 10 | 0 | Fecha Regimen nuevo
-SAR_MES_PROCESO | RECORD | NUMBER | 6 | 18 | 0 | Mes de proceso de la paga (Imputacion)
-SAR_NUM_DIAS_PAGA | RECORD | NUMBER | 6 | 18 | 0 | Numero de dias de la paga
-SAR_REVISION | RECORD | NUMBER | 6 | 18 | 0 | Revision
-SCO_ALLOC_DAY | RECORD | NUMBER | 6 | 4 | 0 | Dia imputacion
-SCO_ALLOC_MONTH | RECORD | NUMBER | 6 | 2 | 0 | Mes imputacion
-SCO_ALLOC_YEAR | RECORD | NUMBER | 6 | 4 | 0 | A?o imputacion
-SCO_REVISION | RECORD | NUMBER | 6 | 2 | 0 | Es revision
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+SAR_ANIO_PROCESO | RECORD | NUMBER | 6 | 9 | 4 | A?o de proceso de la paga (Imputacion) | 
+SAR_DIA_PROCESO | RECORD | NUMBER | 6 | 13 | 4 | Dia de proceso de la paga (Imputacion) | 
+SAR_FE_REGI_NVO_S | RECORD | DATE | 4 | 10 | 0 | Fecha Regimen nuevo | 
+SAR_MES_PROCESO | RECORD | NUMBER | 6 | 18 | 0 | Mes de proceso de la paga (Imputacion) | 
+SAR_NUM_DIAS_PAGA | RECORD | NUMBER | 6 | 18 | 0 | Numero de dias de la paga | 2
+SAR_REVISION | RECORD | NUMBER | 6 | 18 | 0 | Revision | 2
+SCO_ALLOC_DAY | RECORD | NUMBER | 6 | 4 | 0 | Dia imputacion | 2
+SCO_ALLOC_MONTH | RECORD | NUMBER | 6 | 2 | 0 | Mes imputacion | 2
+SCO_ALLOC_YEAR | RECORD | NUMBER | 6 | 4 | 0 | A?o imputacion | 2
+SCO_REVISION | RECORD | NUMBER | 6 | 2 | 0 | Es revision | 2

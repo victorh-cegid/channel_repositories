@@ -1,0 +1,87 @@
+IF SAR_TP_IMPUT = "2" And SCO_DT_PAYMENT <> DxDate("02","09","2013") THEN  RETURN(0)
+contador = 0
+
+'Cargo el nodo de Familiares para Impuesto
+IF SAR_FAMIL_IMPUESTO.COUNT() = 0 THEN
+    SAR_FAMIL_IMPUESTO.SAR_FEC_INI_IG = SAR_FEC_INI_IG
+    SAR_FAMIL_IMPUESTO.SAR_FEC_FIN_IG = SAR_FEC_FIN_IG 
+    SAR_FAMIL_IMPUESTO.LOAD_BLK()
+    IF SAR_FAMIL_IMPUESTO.COUNT() = 0 THEN
+       Return(0)
+    ENDIF
+ENDIF
+
+importe=0
+mini=0
+
+primerreg = 0
+ultimoreg = SAR_FAMIL_IMPUESTO.COUNT() -1
+
+FOR I = primerreg TO ultimoreg 
+	SAR_FAMIL_IMPUESTO.MOVETO(I)
+	parent = SAR_FAMIL_IMPUESTO.STD_ID_ACT_DEP_TYPE
+	IF  parent = "1" THEN
+        	fecha_alta_impuesto=SAR_FAMIL_IMPUESTO.SAR_DT_ALTA_IMP
+	        fecha_baja_impuesto=SAR_FAMIL_IMPUESTO.SAR_DT_BAJA_IMP
+        	  fecha_ini=Max(fecha_alta_impuesto,SAR_FEC_INI_IG)
+	        IF fecha_baja_impuesto=0 THEN 
+        	   fecha_tope=SAR_FEC_PAGO_IG
+	        ELSE
+        	   fecha_tope =Min(fecha_baja_impuesto,SAR_FEC_PAGO_IG)
+	        ENDIF
+            MES = DXMONTH(fecha_ini)
+            IF MES < 10 then
+                MES = "0" + TOSTRING(MES,0)
+            else
+                MES = TOSTRING(MES,0)
+            endif
+            FECHA = TOSTRING(DXYEAR(fecha_ini),0) + "/" + MES + "/" + "25"
+	      fecha_ini = TODATE(FECHA)
+        	mini=DXMONTH(fecha_ini)
+
+	       WHILE mini<=DXMONTH(fecha_tope) 
+                 'Toma su valor por valores empresa
+                 ind = SAR_IND_DED_IG_2010
+
+                'Calculo de la deduccion especial segun informacion recopilada del concepto v792 por Decreto 1242/2013.
+                'v792 Es el rango obtenido en el que el empleado se ubica segun su Maxima remuneracion y la zona desfavorable 
+                'Y sus valores posibles para este concepto son:
+                '2: Empleado que tiene entre 15000$ y 25000$ de rem max y zona no desfavorable.
+                '3: Empleado que tiene mas de 15000$ de rem max y zona desfavorable.
+                If(SAR_RANGO_REM_IG_2013 = 3)Then
+                    precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_VAL_CONY_IMP",fecha_ini,ind))
+                ElseIf(SAR_RANGO_REM_IG_2013 = 2)Then
+                    precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("99","SAR_VAL_CONY_IMP",fecha_ini,ind))
+        	    ElseIf(SAR_RANGO_REM_IG_2013 = 1 And SAR_TP_IMPUT = "99")Then
+                    fec_1=SAR_FEC_PAGO_IG
+                    fec_2=SAR_FEC_FIN_IG_DEC        
+                    if SAR_IG_DEC142_AUX = 0 and SAR_TP_IMPUT = "99" Then 
+                        fec_1 = fec_2
+                    endif                    
+                    If(mini <= DXMONTH(fec_1))Then
+                      precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_CONY_IMP",fecha,ind))
+                    Else
+                      precio = 0
+                    EndIf
+                Else    
+                    precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_CONY_IMP",fecha_ini,ind))
+                EndIf
+
+
+                 'precio= SAR_VAL_CONY_IMP
+                 importe=importe + precio
+        	     mini=mini+1
+                 mini2 = mini
+                IF mini < 10 then
+                    mini2 = "0" + TOSTRING(mini,0)
+                else
+                    mini2 = TOSTRING(mini,0)
+                endif
+                fecha = TOSTRING(DXYEAR(fecha_ini),0) + "/" + mini2 + "/" + "25"
+	          fecha_ini= TODATE(fecha)
+	       WEND
+	    ENDIF
+
+	NEXT
+'Se redondea el importe antes de su devolucion
+RETURN(Round(importe,2))

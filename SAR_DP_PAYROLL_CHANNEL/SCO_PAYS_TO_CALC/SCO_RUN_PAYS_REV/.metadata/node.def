@@ -3,3 +3,4 @@ NAME: Pagas a revisar automaticamente
 ID_TI: SAR_RUN_PAYS_REV
 IS_ROOT: false
 IS_FREE: false
+ID_CSTYPE: 2

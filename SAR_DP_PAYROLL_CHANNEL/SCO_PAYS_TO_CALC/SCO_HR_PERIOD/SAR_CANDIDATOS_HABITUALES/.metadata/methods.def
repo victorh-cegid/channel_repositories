@@ -1,2 +1,2 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SAR_ALTAS_HABITUALES | NODE | NUMBER | 6 | 18 | 0 | Actualizador de habituales en altas
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
+SAR_ALTAS_HABITUALES | NODE | NUMBER | 6 | 18 | 0 | Actualizador de habituales en altas | 3
