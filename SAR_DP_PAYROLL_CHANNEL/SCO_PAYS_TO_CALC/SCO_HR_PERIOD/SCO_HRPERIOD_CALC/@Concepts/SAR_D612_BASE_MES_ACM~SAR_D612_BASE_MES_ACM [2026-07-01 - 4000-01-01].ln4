@@ -1,3 +1,5 @@
+If SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" Then Return(0)
+
 'Carga nodo acum cotiz
 SAR_MES_COTIZ_SIND.DESTROY()
 SAR_MES_COTIZ_SIND.SCO_DT_START = DxDate(1,1,DxYear(SCO_DT_ALLOCATION)-1)
