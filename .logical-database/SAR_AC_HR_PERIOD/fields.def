@@ -3247,14 +3247,6 @@ fields:
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
-  - ID_FIELD: SAR_TOT_PRE_FERIADO
-    NAME_ESP: Total Precios Feriados
-    REAL_NAME: SAR_TOT_PRE_FERIAD
-    POSITION: 408
-    IS_PK: false
-    POS_PK: 0
-    ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
   - ID_FIELD: SAR_PP_RET_GAN_ST
     NAME_ESP: Porcentaje Tope Retencion de G
     REAL_NAME: SAR_PP_RET_GAN_ST
@@ -3262,6 +3254,14 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_PY_NUMBER_9_4
+    NOT_NULL: false
+  - ID_FIELD: SAR_TOT_PRE_FERIADO
+    NAME_ESP: Total Precios Feriados
+    REAL_NAME: SAR_TOT_PRE_FERIAD
+    POSITION: 408
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
   - ID_FIELD: SAR_SALD_RET_GAN_ST
     NAME_ESP: Saldo IG. por Tope RG 2437/08
@@ -3543,17 +3543,17 @@ fields:
     POS_PK: 0
     ID_TYPE: NUMBER_1
     NOT_NULL: false
-  - ID_FIELD: SAR_IG_FINAL_2010
-    NAME_ESP: Impuesto final del a?o 2010
-    REAL_NAME: SAR_IG_FINAL_2010
+  - ID_FIELD: SAR_O_SOCIAL_IMP
+    NAME_ESP: Obra Social imputacion
+    REAL_NAME: SAR_O_SOCIAL_IMP
     POSITION: 445
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
-  - ID_FIELD: SAR_O_SOCIAL_IMP
-    NAME_ESP: Obra Social imputacion
-    REAL_NAME: SAR_O_SOCIAL_IMP
+  - ID_FIELD: SAR_IG_FINAL_2010
+    NAME_ESP: Impuesto final del a?o 2010
+    REAL_NAME: SAR_IG_FINAL_2010
     POSITION: 445
     IS_PK: false
     POS_PK: 0
@@ -3831,14 +3831,6 @@ fields:
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
-  - ID_FIELD: SAR_TOT_AP_OBRA_SOC_SIJP
-    NAME_ESP: Aporte obra social SIJP
-    REAL_NAME: SAR_TOT_AP_OBRA_SOC_SIJP
-    POSITION: 485
-    IS_PK: false
-    POS_PK: 0
-    ID_TYPE: SCO_CURRENCY_DEF_0
-    NOT_NULL: false
   - ID_FIELD: SAR_VAC_IMPO_CNT_OS
     NAME_ESP: Vacaciones Imponible para cont
     REAL_NAME: SAR_VAC_IMPO_CNT_OS
@@ -3847,10 +3839,10 @@ fields:
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
-  - ID_FIELD: SAR_TOT_ADIC_SUELDO_SIJP
-    NAME_ESP: Sueldo adicional SIJP
-    REAL_NAME: SAR_TOT_ADIC_SUELDO_SIJP
-    POSITION: 486
+  - ID_FIELD: SAR_TOT_AP_OBRA_SOC_SIJP
+    NAME_ESP: Aporte obra social SIJP
+    REAL_NAME: SAR_TOT_AP_OBRA_SOC_SIJP
+    POSITION: 485
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY_DEF_0
@@ -3863,6 +3855,14 @@ fields:
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
+  - ID_FIELD: SAR_TOT_ADIC_SUELDO_SIJP
+    NAME_ESP: Sueldo adicional SIJP
+    REAL_NAME: SAR_TOT_ADIC_SUELDO_SIJP
+    POSITION: 486
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
   - ID_FIELD: SAR_DEBITO_BANCARIO
     NAME_ESP: Debitos y creditos bancarios
     REAL_NAME: SAR_DEBITO_BANCARIO
@@ -3870,6 +3870,14 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_TOT_SUELDO_IMP_SIJP
+    NAME_ESP: Sueldo Imp. SIJP
+    REAL_NAME: SAR_TOT_SUELDO_IMP_SIJP
+    POSITION: 487
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
     NOT_NULL: false
   - ID_FIELD: SAR_REMUN_IMPO_CNT_OS
     NAME_ESP: Remuneracion imponible para co
@@ -3886,14 +3894,6 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
-  - ID_FIELD: SAR_TOT_SUELDO_IMP_SIJP
-    NAME_ESP: Sueldo Imp. SIJP
-    REAL_NAME: SAR_TOT_SUELDO_IMP_SIJP
-    POSITION: 487
-    IS_PK: false
-    POS_PK: 0
-    ID_TYPE: SCO_CURRENCY_DEF_0
     NOT_NULL: false
   - ID_FIELD: SAR_TOT_VALOR_AUX_SIJP
     NAME_ESP: Valor auxiliar SIJP
@@ -3919,14 +3919,6 @@ fields:
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
-  - ID_FIELD: SAR_TOT_DIAS_TRAB_SIJP
-    NAME_ESP: Dias trabajados SIJP
-    REAL_NAME: SAR_TOT_DIAS_TRAB_SIJP
-    POSITION: 489
-    IS_PK: false
-    POS_PK: 0
-    ID_TYPE: SCO_CURRENCY_DEF_0
-    NOT_NULL: false
   - ID_FIELD: SAR_DIAS_AUSENCIA_PARA_ANTIGUE
     NAME_ESP: SAR_DIAS_AUSENCIA_PARA_ANTIGUE
     REAL_NAME: SAR_DIAS_AUSENCIA_PARA_ANTIGUE
@@ -3943,10 +3935,10 @@ fields:
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
-  - ID_FIELD: SAR_TOT_REM_DEC_SIJP
-    NAME_ESP: Remuneracion decreto SIJP
-    REAL_NAME: SAR_TOT_REM_DEC_SIJP
-    POSITION: 490
+  - ID_FIELD: SAR_TOT_DIAS_TRAB_SIJP
+    NAME_ESP: Dias trabajados SIJP
+    REAL_NAME: SAR_TOT_DIAS_TRAB_SIJP
+    POSITION: 489
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY_DEF_0
@@ -3967,10 +3959,26 @@ fields:
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
+  - ID_FIELD: SAR_TOT_REM_DEC_SIJP
+    NAME_ESP: Remuneracion decreto SIJP
+    REAL_NAME: SAR_TOT_REM_DEC_SIJP
+    POSITION: 490
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
   - ID_FIELD: SAR_BASE_COTIZ_ART_OS
     NAME_ESP: Base cotizacion ART obra socia
     REAL_NAME: SAR_BASE_COTIZ_ART_OS
     POSITION: 491
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_BASE_CO_ART_CNT_OS
+    NAME_ESP: Base cotizacion ART contrib. o
+    REAL_NAME: SAR_BASE_CO_ART_CNT_OS
+    POSITION: 492
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
@@ -3982,14 +3990,6 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY_DEF_0
-    NOT_NULL: false
-  - ID_FIELD: SAR_BASE_CO_ART_CNT_OS
-    NAME_ESP: Base cotizacion ART contrib. o
-    REAL_NAME: SAR_BASE_CO_ART_CNT_OS
-    POSITION: 492
-    IS_PK: false
-    POS_PK: 0
-    ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
   - ID_FIELD: SAR_TOT_REM_IMP5_SIJP
     NAME_ESP: Remuneracion imponible 5 SIJP
@@ -6031,14 +6031,6 @@ fields:
     POS_PK: 0
     ID_TYPE: SCO_DATE
     NOT_NULL: false
-  - ID_FIELD: SAR_TOT_REDUC_IMPO
-    NAME_ESP: Total Detraccion Ley 27430
-    REAL_NAME: SAR_TOT_REDUC_IMPO
-    POSITION: 756
-    IS_PK: false
-    POS_PK: 0
-    ID_TYPE: SCO_CURRENCY_DEF_0
-    NOT_NULL: false
   - ID_FIELD: SAR_ANIO_PAY_IG
     NAME_ESP: A?o pago IG
     REAL_NAME: SAR_ANIO_PAY_IG
@@ -6047,13 +6039,13 @@ fields:
     POS_PK: 0
     ID_TYPE: SAR_NUMBER_4
     NOT_NULL: false
-  - ID_FIELD: SAR_CONTR_REG_DIF
-    NAME_ESP: Contribucion Regimen Diferenci
-    REAL_NAME: SAR_CONTR_REG_DIF
-    POSITION: 757
+  - ID_FIELD: SAR_TOT_REDUC_IMPO
+    NAME_ESP: Total Detraccion Ley 27430
+    REAL_NAME: SAR_TOT_REDUC_IMPO
+    POSITION: 756
     IS_PK: false
     POS_PK: 0
-    ID_TYPE: SCO_CURRENCY
+    ID_TYPE: SCO_CURRENCY_DEF_0
     NOT_NULL: false
   - ID_FIELD: SAR_MES_PAGO_IG
     NAME_ESP: Mes pago impuesto a las gananc
@@ -6062,6 +6054,14 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_NUMBER_2
+    NOT_NULL: false
+  - ID_FIELD: SAR_CONTR_REG_DIF
+    NAME_ESP: Contribucion Regimen Diferenci
+    REAL_NAME: SAR_CONTR_REG_DIF
+    POSITION: 757
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
   - ID_FIELD: SAR_CONTR_REG_DIF_ART
     NAME_ESP: Contribucion Regimen Diferenci
@@ -6095,14 +6095,6 @@ fields:
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY_DEF_0
     NOT_NULL: false
-  - ID_FIELD: SAR_OTROS_CONC_NR_SICOSS
-    NAME_ESP: Otros conceptos no remunerativ
-    REAL_NAME: SAR_OTROS_CONC_NR_SICOSS
-    POSITION: 760
-    IS_PK: false
-    POS_PK: 0
-    ID_TYPE: SCO_CURRENCY_DEF_0
-    NOT_NULL: false
   - ID_FIELD: SAR_CONTR_REG_DIF_VAC
     NAME_ESP: Contribucion Regimen Diferenci
     REAL_NAME: SAR_CONTR_REG_DIF_VAC
@@ -6110,6 +6102,14 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_OTROS_CONC_NR_SICOSS
+    NAME_ESP: Otros conceptos no remunerativ
+    REAL_NAME: SAR_OTROS_CONC_NR_SICOSS
+    POSITION: 760
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
     NOT_NULL: false
   - ID_FIELD: SAR_TOT_CONTR_REG_DIF
     NAME_ESP: Total Contribucion Regimen Dif
@@ -6567,17 +6567,17 @@ fields:
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY_DEF_0
     NOT_NULL: false
-  - ID_FIELD: SAR_NO_CONTRIB_SIPA
-    NAME_ESP: SAR_NO_CONTRIB_SIPA
-    REAL_NAME: SAR_NO_CONTRIB_SIPA
+  - ID_FIELD: SAR_DESC_SUSP_ART_223BIS
+    NAME_ESP: Descuento suspension Art. 223 
+    REAL_NAME: SAR_DESC_SUSP_ART_223BIS
     POSITION: 833
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY_DEF_0
     NOT_NULL: false
-  - ID_FIELD: SAR_DESC_SUSP_ART_223BIS
-    NAME_ESP: Descuento suspension Art. 223 
-    REAL_NAME: SAR_DESC_SUSP_ART_223BIS
+  - ID_FIELD: SAR_NO_CONTRIB_SIPA
+    NAME_ESP: SAR_NO_CONTRIB_SIPA
+    REAL_NAME: SAR_NO_CONTRIB_SIPA
     POSITION: 833
     IS_PK: false
     POS_PK: 0
@@ -10439,14 +10439,6 @@ fields:
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY_DEF_0
     NOT_NULL: false
-  - ID_FIELD: SAR_D612_DIAS_ENF
-    NAME_ESP: Total Dias Enfermedad  Dec.612
-    REAL_NAME: SAR_D612_DIAS_ENF
-    POSITION: 1311
-    IS_PK: false
-    POS_PK: 0
-    ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
   - ID_FIELD: TEST_C_SINDICAL_SAC
     NAME_ESP: TEST_C_SINDICAL_SAC
     REAL_NAME: TEST_C_SINDICAL_SAC
@@ -10454,6 +10446,14 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: SAR_D612_DIAS_ENF
+    NAME_ESP: Total Dias Enfermedad  Dec.612
+    REAL_NAME: SAR_D612_DIAS_ENF
+    POSITION: 1311
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
     NOT_NULL: false
   - ID_FIELD: TEST_C_SINDIC_OBL_SAC
     NAME_ESP: TEST_C_SINDIC_OBL_SAC
@@ -10510,4 +10510,36 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_NUMBER_4
+    NOT_NULL: false
+  - ID_FIELD: SAR_D612_TOT_BASE
+    NAME_ESP: Total conceptos para base tope
+    REAL_NAME: SAR_D612_TOT_BASE
+    POSITION: 1319
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: SAR_D612_BASE_TOPE_MES
+    NAME_ESP: Base sindicato para tope mes
+    REAL_NAME: SAR_D612_BASE_TOPE_MES
+    POSITION: 1320
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: SAR_D612_TOT_CUOTAS_SIND
+    NAME_ESP: Total cuotas topeadas sindicat
+    REAL_NAME: SAR_D612_TOT_CUOTAS_SIND
+    POSITION: 1321
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: SAR_D612_AJUSTE_SIND
+    NAME_ESP: D612 ajuste cuotas sindicales
+    REAL_NAME: SAR_D612_AJUSTE_SIND
+    POSITION: 1322
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
     NOT_NULL: false
