@@ -1,0 +1,105 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: false
+  - ID_FIELD: SUS_ID_PLAN
+    NAME_ESP: ID Beneficio
+    REAL_NAME: SUS_ID_PLAN
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: SUS_ID_PLAN
+    NOT_NULL: true
+  - ID_FIELD: SUS_ID_OPTION
+    NAME_ESP: ID Opcion
+    REAL_NAME: SUS_ID_OPTION
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SUS_ID_OPTION
+    NOT_NULL: true
+  - ID_FIELD: SUS_N_OPTION
+    NAME_ESP: Nombre opcion
+    REAL_NAME: SUS_N_OPTION
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_N_OPTION
+    NOT_NULL: true
+  - ID_FIELD: SUS_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: SUS_DT_START
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: true
+  - ID_FIELD: SUS_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: SUS_DT_END
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_DT_END
+    NOT_NULL: false
+  - ID_FIELD: SUS_ID_OPTION_GRP
+    NAME_ESP: Agrupacion de beneficios
+    REAL_NAME: SUS_ID_OPTION_GRP
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUS_ID_OPTION_GRP
+    NOT_NULL: false
+  - ID_FIELD: SUS_CK_WAIVE
+    NAME_ESP: Verificar renuncia
+    REAL_NAME: SUS_CK_WAIVE
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_BNFT_Y_N
+    NOT_NULL: false
+  - ID_FIELD: SUS_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SUS_COMMENT
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_COMENT
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID_APPROLE
+    REAL_NAME: ID_APPROLE
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_DOC
+    NAME_ESP: Detalle conocimiento
+    REAL_NAME: SCO_ID_DOC
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ORD8_PK
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID_APP_USER
+    REAL_NAME: ID_SECUSER
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

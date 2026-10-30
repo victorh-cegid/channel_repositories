@@ -1,0 +1,185 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_CONTRATO
+    NAME_ESP: ID Contrato
+    REAL_NAME: SAR_ID_CONTRATO
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: SAR_ID_CONTRATO
+    NOT_NULL: true
+  - ID_FIELD: DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: DT_START
+    POSITION: 3
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: START_DATE
+    NOT_NULL: false
+  - ID_FIELD: DT_END
+    NAME_ESP: Fin
+    REAL_NAME: DT_END
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_NM_CONTRATO
+    NAME_ESP: Contrato
+    REAL_NAME: SAR_NM_CONTRATO
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SHORT_DESCRIPTION
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_CONTR_LEG
+    NAME_ESP: ID Contrato legal
+    REAL_NAME: SAR_ID_CONTR_LEG
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ID_CONTR_LEG
+    NOT_NULL: false
+  - ID_FIELD: SME_ID_CONTRATO_CFDI
+    NAME_ESP: Contrato CFDI
+    REAL_NAME: SME_ID_CONTRATO_CFDI
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SME_CT_CFDI_6
+    NOT_NULL: false
+  - ID_FIELD: SAR_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SAR_COMMENT
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: SCL_NO_DEFINIDO_ST
+    NAME_ESP: No definido
+    REAL_NAME: SCL_NO_DEFINIDO_ST
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCL_NO_DEFINIDO_ST
+    NOT_NULL: false
+  - ID_FIELD: SCL_DUR_MAX_D_CONT
+    NAME_ESP: Duracion max. Contrato
+    REAL_NAME: SCL_DUR_MAX_D_CONT
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCL_NUMBER_CONT
+    NOT_NULL: false
+  - ID_FIELD: SCL_DUR_MIN_D_CONT
+    NAME_ESP: Duracion min. contrato
+    REAL_NAME: SCL_DUR_MIN_D_CONT
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCL_NUMBER_CONT
+    NOT_NULL: false
+  - ID_FIELD: SCL_NUM_MAX_PRORR
+    NAME_ESP: Num. max. Prorrogas
+    REAL_NAME: SCL_NUM_MAX_PRORR
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCL_NUMBER_CONT
+    NOT_NULL: false
+  - ID_FIELD: SCL_DUR_MAX_PRORR
+    NAME_ESP: Duracion max prorroga
+    REAL_NAME: SCL_DUR_MAX_PRORR
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCL_NUMBER_CONT
+    NOT_NULL: false
+  - ID_FIELD: SCL_DUR_MIN_PRORR
+    NAME_ESP: Duracion min. prorroga
+    REAL_NAME: SCL_DUR_MIN_PRORR
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCL_NUMBER_CONT
+    NOT_NULL: false
+  - ID_FIELD: SCL_CLAUSULAS_ST
+    NAME_ESP: Clausulas del contrato
+    REAL_NAME: SCL_CLAUSULAS_ST
+    POSITION: 22
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCL_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: SCL_APRENDIZAJE
+    NAME_ESP: Contrato de Aprendizaje
+    REAL_NAME: SCL_APRENDIZAJE
+    POSITION: 23
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_BNFT_0_1
+    NOT_NULL: false
+  - ID_FIELD: SCL_JORNADA
+    NAME_ESP: Jornada
+    REAL_NAME: SCL_JORNADA
+    POSITION: 24
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCL_JORNADA
+    NOT_NULL: false
+  - ID_FIELD: SCL_N_HS_TRAB_SEM
+    NAME_ESP: Horas semanales
+    REAL_NAME: SCL_N_HS_TRAB_SEM
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_NUMBER_4
+    NOT_NULL: false
+  - ID_FIELD: SAR_UNITS_PRU
+    NAME_ESP: Unidades (prueba)
+    REAL_NAME: SAR_UNITS_PRU
+    POSITION: 26
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER4
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_TIME_UNIT_PRU
+    NAME_ESP: ID Unidad tiempo (prueba)
+    REAL_NAME: SAR_ID_TIME_UNIT_PRU
+    POSITION: 27
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ID_TIME_UNIT_PA
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 28
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 29
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 30
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

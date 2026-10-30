@@ -1,0 +1,193 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 6
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: STD_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: STD_OR_HR_PERIOD
+    NAME_ESP: Num. periodo
+    REAL_NAME: STD_OR_HR_PERIOD
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_OR_HR_PERIOD
+    NOT_NULL: true
+  - ID_FIELD: SAR_OR_DESCUENTO
+    NAME_ESP: Ordinal del descuento
+    REAL_NAME: SAR_OR_DESCUENTO
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: STD_ORDINAL_6
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_PAY_TYPE
+    NAME_ESP: ID Tipo paga
+    REAL_NAME: SCO_ID_PAY_TYPE
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: SCO_ID_PAY_TYPE
+    NOT_NULL: true
+  - ID_FIELD: SAR_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: SAR_DT_START
+    POSITION: 6
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: SME_ID_GRUPO_DESC
+    NAME_ESP: ID Grupo descuentos
+    REAL_NAME: SME_ID_GRUPO_DESC
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SME_ID_GRUPO_CON
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: SAR_DT_END
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_VALOR_FIJO
+    NAME_ESP: Valor Fijo
+    REAL_NAME: SAR_VALOR_FIJO
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: EX_TYPE
+    NAME_ESP: Fuente de tipo de cambio
+    REAL_NAME: EX_TYPE
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: FIXCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: CUR_DATE
+    NAME_ESP: Fecha de cambio
+    REAL_NAME: CUR_DATE
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TODAY
+    NOT_NULL: false
+  - ID_FIELD: ID_CURRENCY
+    NAME_ESP: Tipo de moneda
+    REAL_NAME: ID_CURRENCY
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_PORCENTAJE
+    NAME_ESP: Porcentaje
+    REAL_NAME: SAR_PORCENTAJE
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_PORCENTAJE_4_2
+    NOT_NULL: false
+  - ID_FIELD: SAR_FACTOR
+    NAME_ESP: Factor
+    REAL_NAME: SAR_FACTOR
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_PY_NUMBER_9_4
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_SYNONYM
+    NAME_ESP: ID Sinonimo
+    REAL_NAME: SAR_ID_SYNONYM
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_LONG
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_DMD
+    NAME_ESP: Identificador de dominio
+    REAL_NAME: SAR_ID_DMD
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_DMD_COMPONENT
+    NAME_ESP: Identificador de componente
+    REAL_NAME: SAR_ID_DMD_COMPONE
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_NODE
+    NAME_ESP: ID Nodo
+    REAL_NAME: SAR_ID_NODE
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SAR_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SAR_COMMENT
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_COMENT
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SAR_CK_RESOL_JUD
+    NAME_ESP: Por resolucion judicial
+    REAL_NAME: SAR_CK_RESOL_JUD
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_S_10_D0
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false
+  - ID_FIELD: SLA_FIJO_PROPORCIONADO
+    NAME_ESP: Fijo proporcionado
+    REAL_NAME: SLA_FIJO_PROPORCIONADO
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER1_DEF0
+    NOT_NULL: false

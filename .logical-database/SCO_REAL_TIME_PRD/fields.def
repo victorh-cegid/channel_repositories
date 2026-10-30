@@ -1,0 +1,193 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 6
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: STD_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: STD_OR_HR_PERIOD
+    NAME_ESP: Num. periodo
+    REAL_NAME: STD_OR_HR_PERIOD
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_OR_HR_PERIOD
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_INCIDENCE
+    NAME_ESP: ID Incidencia
+    REAL_NAME: SCO_ID_INCIDENCE
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: SCO_TA_VARCHAR9
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_START
+    NAME_ESP: Fecha inicio
+    REAL_NAME: SCO_DT_START
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: SCO_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_OR_PART_TIME
+    NAME_ESP: Num. incidencia
+    REAL_NAME: SCO_OR_PART_TIME
+    POSITION: 6
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: SCO_OR_HR_PERIOD
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_END
+    NAME_ESP: Fecha fin
+    REAL_NAME: SCO_DT_END
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_NO_DEFAULT
+    NOT_NULL: false
+  - ID_FIELD: SCO_START_TIME
+    NAME_ESP: Hora de inicio
+    REAL_NAME: SCO_START_TIME
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_TIME
+    NOT_NULL: false
+  - ID_FIELD: SCO_END_TIME
+    NAME_ESP: Hora de fin
+    REAL_NAME: SCO_END_TIME
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_TIME
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_TIME_UNIT
+    NAME_ESP: ID Unidad tiempo
+    REAL_NAME: SCO_ID_TIME_UNIT
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_TIME_UNIT
+    NOT_NULL: true
+  - ID_FIELD: SCO_UNITS
+    NAME_ESP: Unidades
+    REAL_NAME: SCO_UNITS
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMERO16
+    NOT_NULL: true
+  - ID_FIELD: SCO_LAST_DAY_PROCESS
+    NAME_ESP: SCO_LAST_DAY_PROCESS
+    REAL_NAME: SCO_LAST_DAY_PROCE
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_DATE
+    NOT_NULL: false
+  - ID_FIELD: SCO_CK_IN_PAYROLL
+    NAME_ESP: SCO_CK_IN_PAYROLL
+    REAL_NAME: SCO_CK_IN_PAYROLL
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_APP_10_D1
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_INP_PAYPERIOD
+    NAME_ESP: SCO_ID_INP_PAYPERIOD
+    REAL_NAME: SCO_ID_INP_PAYPERI
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_INP_PAYROLL
+    NOT_NULL: true
+  - ID_FIELD: CFR_DATE_DEBUT_ABSENCE
+    NAME_ESP: Fecha de origen de la asuencia
+    REAL_NAME: CFR_DATE_DEBUT_ABS
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: CFR_NB_JRS_CARENCE_PAYES
+    NAME_ESP: N? de dias de carencia pagados
+    REAL_NAME: CFR_NB_JRS_CARENCE
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER1_DEF0
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_SIT_REVISTA
+    NAME_ESP: ID Sit revista
+    REAL_NAME: SAR_ID_SIT_REVISTA
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ID_SIT_REVISTA
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_START_APL
+    NAME_ESP: Fecha inicio aplicacion
+    REAL_NAME: SAR_DT_START_APL
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_NO_DEFAULT
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_END_APL
+    NAME_ESP: Fecha fin aplicacion
+    REAL_NAME: SAR_DT_END_APL
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_NO_DEFAULT
+    NOT_NULL: false
+  - ID_FIELD: SCO_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SCO_COMMENT
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: SLA_ID_INSTANCIA_IMP
+    NAME_ESP: ID Instancia
+    REAL_NAME: SLA_ID_INSTANCIA_IMP
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: VARCHAR_60
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 22
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 23
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

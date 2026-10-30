@@ -1,0 +1,161 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: false
+  - ID_FIELD: SUS_ID_PLAN
+    NAME_ESP: ID Beneficio
+    REAL_NAME: SUS_ID_PLAN
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: SUS_ID_PLAN
+    NOT_NULL: true
+  - ID_FIELD: SUS_OR_CREDIT
+    NAME_ESP: Ordinal
+    REAL_NAME: SUS_OR_CREDIT
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: STD_ORDINAL_3
+    NOT_NULL: true
+  - ID_FIELD: SUS_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: SUS_DT_START
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: STD_DATE
+    NOT_NULL: true
+  - ID_FIELD: SUS_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: SUS_DT_END
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_DT_END
+    NOT_NULL: false
+  - ID_FIELD: SUS_ID_OPTION
+    NAME_ESP: ID Opcion
+    REAL_NAME: SUS_ID_OPTION
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUS_ID_OPTION
+    NOT_NULL: false
+  - ID_FIELD: SUS_ID_COV_CAT
+    NAME_ESP: ID Categoria de cobertura
+    REAL_NAME: SUS_ID_COV_CAT
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUS_ID_COV_CAT
+    NOT_NULL: false
+  - ID_FIELD: SUS_CREDIT
+    NAME_ESP: Cantidad
+    REAL_NAME: SUS_CREDIT
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: true
+  - ID_FIELD: SUS_RATE_TYPE
+    NAME_ESP: Tipo de coste
+    REAL_NAME: SUS_RATE_TYPE
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: COMBO_RATE_TYPE
+    NOT_NULL: false
+  - ID_FIELD: SUS_COV_TYPE
+    NAME_ESP: Tipo de cobertura
+    REAL_NAME: SUS_COV_TYPE
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: COMBO_COV_TYPE
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_COMP_BASIS
+    NAME_ESP: ID Base de frecuencia
+    REAL_NAME: STD_ID_COMP_BASIS
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_COMP_BASIS
+    NOT_NULL: false
+  - ID_FIELD: SUS_ID_ELG_RULE1
+    NAME_ESP: Regla de elegibilidad num. 1
+    REAL_NAME: SUS_ID_ELG_RULE1
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUS_ID_ELG_RULE
+    NOT_NULL: false
+  - ID_FIELD: SUS_ID_ELG_RULE2
+    NAME_ESP: Regla de elegibilidad num. 2
+    REAL_NAME: SUS_ID_ELG_RULE2
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUS_ID_ELG_RULE
+    NOT_NULL: false
+  - ID_FIELD: SUS_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SUS_COMMENT
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_COMENT
+    NOT_NULL: false
+  - ID_FIELD: SCO_EX_TYPE
+    NAME_ESP: Fuente de tipo de cambio
+    REAL_NAME: SCO_EX_TYPE
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: FIXCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: SCO_CUR_DATE
+    NAME_ESP: Fecha de cambio
+    REAL_NAME: SCO_CUR_DATE
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TODAY
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_CURRENCY
+    NAME_ESP: Tipo de moneda
+    REAL_NAME: SCO_ID_CURRENCY
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID_APPROLE
+    REAL_NAME: ID_APPROLE
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID_APP_USER
+    REAL_NAME: ID_SECUSER
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

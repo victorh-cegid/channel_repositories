@@ -1,0 +1,145 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 9
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_ORIGIN_TYPE
+    NAME_ESP: ID Tipo origen
+    REAL_NAME: SCO_ORIGIN_TYPE
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 8
+    ID_TYPE: SCO_ID_ORIGIN
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: SCO_ID_HR
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: SCO_OR_HR_PERIOD
+    NAME_ESP: Num. periodo
+    REAL_NAME: SCO_OR_HR_PERIOD
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 6
+    ID_TYPE: SCO_OR_HR_PERIOD
+    NOT_NULL: true
+  - ID_FIELD: SCO_OR_PAYMENTDATA
+    NAME_ESP: Num. secuencia datos pago
+    REAL_NAME: SCO_OR_PAYMENTDATA
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 7
+    ID_TYPE: STD_ORDINAL_6
+    NOT_NULL: true
+  - ID_FIELD: SCO_PAY_FREQ_PAYM
+    NAME_ESP: Frecuencia pago
+    REAL_NAME: SCO_PAY_FREQ_PAYM
+    POSITION: 6
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: SCO_ID_PAY_FREQUENCY
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_PAYMENT
+    NAME_ESP: Fecha de pago
+    REAL_NAME: SCO_DT_PAYMENT
+    POSITION: 7
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: STD_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_PAY_FREQ_ALLOC
+    NAME_ESP: Frecuencia imputacion
+    REAL_NAME: SCO_PAY_FREQ_ALLOC
+    POSITION: 8
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: SCO_ID_PAY_FREQUENCY
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_ALLOCATION
+    NAME_ESP: Fecha imputacion
+    REAL_NAME: SCO_DT_ALLOCATION
+    POSITION: 9
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: STD_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_TRANSFER
+    NAME_ESP: Fecha transf.
+    REAL_NAME: SCO_DT_TRANSFER
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_DATE
+    NOT_NULL: true
+  - ID_FIELD: EX_TYPE
+    NAME_ESP: Fuente tipo cambio
+    REAL_NAME: EX_TYPE
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: FIXCHAR_10
+    NOT_NULL: true
+  - ID_FIELD: ID_CURRENCY_PRIM
+    NAME_ESP: Moneda ppal.
+    REAL_NAME: ID_CURRENCY_PRIM
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: true
+  - ID_FIELD: SCO_AMT_PAYORDPRIM
+    NAME_ESP: Total pago moneda ppal.
+    REAL_NAME: SCO_PAYORDPRIM
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_PAYMORDTYPE
+    NAME_ESP: ID Tipo orden pago
+    REAL_NAME: SCO_ID_PAYMORDTYPE
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_PAYMORDTYPE
+    NOT_NULL: true
+  - ID_FIELD: SCO_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SCO_COMMENT
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_COMENT
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 101
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 101
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 101
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

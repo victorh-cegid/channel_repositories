@@ -1,0 +1,129 @@
+fields:
+  - ID_FIELD: ID_T3_PAYROLL
+    NAME_ESP: ID Nomina Meta4Object
+    REAL_NAME: ID_T3_PAYROLL
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: ID_NODE_AC_READ
+    NAME_ESP: ID Lectura nodo cuenta
+    REAL_NAME: ID_NODE_AC_READ
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: ID_REV_ITEM
+    NAME_ESP: ID Elemento de revision
+    REAL_NAME: ID_REV_ITEM
+    POSITION: 3
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_BACKPAY_ITEM
+    NAME_ESP: ID Elemento de pagos atrasados
+    REAL_NAME: ID_BACKPAY_ITEM
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_NODE_PREV_ALLOC
+    NAME_ESP: Nodo fecha imputacion anterior
+    REAL_NAME: ID_NODE_PREV_ALLOC
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_NODE_PREV_PAYM
+    NAME_ESP: ID Nodo pago anterior
+    REAL_NAME: ID_NODE_PREV_PAYM
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_NODE_CALC
+    NAME_ESP: ID Calculo nodo
+    REAL_NAME: ID_NODE_CALC
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_NODE_DATES
+    NAME_ESP: ID Nodo para datos
+    REAL_NAME: ID_NODE_DATES
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: BUFFER1
+    NAME_ESP: Bufer 1
+    REAL_NAME: BUFFER1
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: COMMENTS
+    NOT_NULL: false
+  - ID_FIELD: BUFFER2
+    NAME_ESP: Bufer 2
+    REAL_NAME: BUFFER2
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: BUFFER3
+    NAME_ESP: Bufer 3
+    REAL_NAME: BUFFER3
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: ID_ITEM_RETROSP
+    NAME_ESP: ID_ITEM_RETROSP
+    REAL_NAME: ID_ITEM_RETROSP
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_NODE_PERIOD_CALC
+    NAME_ESP: ID_NODE_PERIOD_CALC
+    REAL_NAME: ID_NODE_PERIOD_CAL
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

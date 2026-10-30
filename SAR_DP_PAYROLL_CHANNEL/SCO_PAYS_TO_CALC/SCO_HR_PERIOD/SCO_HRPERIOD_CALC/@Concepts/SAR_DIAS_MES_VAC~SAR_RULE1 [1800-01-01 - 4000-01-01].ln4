@@ -38,10 +38,9 @@ IF dias_teor <> 0 AND prop = 1  THEN  'entro despues de Junio y tiene antiguedad
         FECHA = TOSTRING(SAR_PAYS_TO_CALC.SAR_ANIO_PROCESO,0) + "/" + "01" + "/" + "01"
         fec_ini_anio = TODATE(FECHA)  
         dias_alta = CommonTime(fec_ini_anio,SAR_HR_PERIOD.SCO_DT_ALLOC_END,SAR_FECHA_ALTA,SAR_FECHA_BAJA) 
-        
         dias_vac = dias_teor*dias_alta/365  
     Else 'Por modificacion del empleado
-        dias_alta = CommonTime(SAR_FECHA_ALTA_PER_ANT,SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC, SAR_FECHA_ALTA_PER_ANT,SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC)             
+        dias_alta = CommonTime(SAR_FECHA_ALTA_PER_ANT,SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC, SAR_FECHA_ALTA_PER_ANT,SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC)      
         dias_vac = dias_teor*dias_alta/365   
     EndIf  
 ELSE
@@ -51,7 +50,7 @@ ELSE
         Elseif SAR_ES_BAJA = 1 then 
             FECHA = TOSTRING(SAR_PAYS_TO_CALC.SAR_ANIO_PROCESO,0) + "/" + "01" + "/" + "01"
             fec_ini_anio = TODATE(FECHA)  
-            dias_alta = CommonTime(fec_ini_anio,SAR_HR_PERIOD.SCO_DT_ALLOC_END,SAR_FECHA_ALTA,SAR_FECHA_BAJA)            
+            dias_alta = CommonTime(fec_ini_anio,SAR_HR_PERIOD.SCO_DT_ALLOC_END,SAR_FECHA_ALTA,SAR_FECHA_BAJA) 
             dias_vac = dias_teor*dias_alta/365  
         Endif
     ELSE 

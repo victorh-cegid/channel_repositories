@@ -106,6 +106,7 @@ SAR_ANT_SAC_LEY | RECORD | CURRENCY | 8 | 18 | 6 | SAC Ley a?o anterior |
 SAR_ANT_SAC_OSOC | RECORD | CURRENCY | 8 | 18 | 6 | SAC Obra social a?o anterior | 
 SAR_ANT_SAC_SIND | RECORD | CURRENCY | 8 | 18 | 6 | SAC sindicato a?o anterior | 
 SAR_ANT_SAC_SIND_OB | RECORD | CURRENCY | 8 | 18 | 6 | SAC sindicato obligatorio a?o anterior | 
+SAR_APORTES_PORC_PAGANT | RECORD | CURRENCY | 8 | 18 | 6 | Aportes para %imp paga anterior | 
 SAR_APORTE_ART | RECORD | CURRENCY | 8 | 18 | 6 | Aporte A.R.T. | 
 SAR_APOR_VOLUNT | RECORD | CURRENCY | 8 | 18 | 6 | Aporte Voluntario | 
 SAR_AP_CAP_SOC_4CATEG | RECORD | CURRENCY | 8 | 18 | 6 | Aportes capital social o fondo riesgo Rep 4 categ | 
@@ -165,6 +166,7 @@ SAR_BASE_CO_ART_CNT_OS | RECORD | CURRENCY | 8 | 18 | 6 | Base cotizacion ART co
 SAR_BASE_DIF_APO_OS | RECORD | CURRENCY | 8 | 18 | 6 | Base diferencial aporte obra social | 
 SAR_BASE_DIF_CONTR_OS | RECORD | CURRENCY | 8 | 18 | 6 | Base diferencial contribucion obra social | 
 SAR_BASE_IMPUESTO | RECORD | CURRENCY | 8 | 18 | 6 | Ganancia Neta Sujeta a Impuesto | 
+SAR_BASE_IMP_PORC_PAGANT | RECORD | CURRENCY | 8 | 18 | 6 | Base impuesto para %imp paga anterior | 
 SAR_BASE_IMP_SUBDONAC | RECORD | CURRENCY | 8 | 18 | 6 | Base impuesto sub. donac. | 
 SAR_BASE_PRORRAT | RECORD | CURRENCY | 8 | 18 | 6 | Base remunerativa prorrateada (Jubilacion) | 
 SAR_BASE_PRORRAT_TEO | RECORD | CURRENCY | 8 | 18 | 6 | Base remunerativa prorrateada (Jubilacion) teorica | 
@@ -414,7 +416,7 @@ SAR_FECHA_BAJA | RECORD | DATE | 4 | 1 | 0 | Fecha de baja del empleado |
 SAR_FECHA_BASE | RECORD | DATE | 4 | 0 | 0 | Fecha Base | 
 SAR_FECHA_CORTE_IMP | RECORD | DATE | 4 | 0 | 0 | Fecha de corte en el impuesto | 
 SAR_FECHA_IMPUTACION | RECORD | DATE | 4 | 1 | 0 | Fecha imputacion carga acumulado IG | 
-SAR_FECHA_PAGO | RECORD | DATE | 4 | 1 | 0 | Fecha de pago | 
+SAR_FECHA_PAGO | RECORD | DATE | 4 | 0 | 0 | Fecha de pago | 
 SAR_FECHA_SICOSS | RECORD | DATE | 4 | 0 | 0 | Fecha de imputacion rectificativa SICOSS | 
 SAR_FEC_10_23 | RECORD | DATE | 4 | 1 | 0 | Fecha 01/10/2023 | 
 SAR_FEC_FIN_IG_DEC | RECORD | DATE | 4 | 0 | 0 | Fecha fin del IG por decreto 1242 2013 | 
@@ -537,7 +539,6 @@ SAR_IG_SIND_MEN | RECORD | CURRENCY | 8 | 18 | 6 | IG Sindicato Mensual |
 SAR_IG_SIND_NH_ST | RECORD | CURRENCY | 8 | 18 | 6 | IG Sindicato no habitual | 
 SAR_IG_SP_SIND_ST | RECORD | CURRENCY | 8 | 18 | 6 | I.G.Saldo Pagos Prorrat. Sindicato | 
 SAR_IG_TOT_C_IM | RECORD | CURRENCY | 8 | 18 | 6 | Total Imponible Acumulado IG | 
-SAR_IG_TOT_C_IM_CTRL | RECORD | CURRENCY | 8 | 18 | 6 | Total Imponible Acumulado Reporte  IG | 
 SAR_IG_TOT_JUB | RECORD | CURRENCY | 8 | 18 | 6 | Total Jubilacion Acumulado IG | 
 SAR_IG_TOT_OB_S | RECORD | CURRENCY | 8 | 18 | 6 | Total Obra Social Acumulada IG | 
 SAR_IG_T_19032 | RECORD | CURRENCY | 8 | 18 | 6 | Total Ley 19032 Acumulada IG | 
@@ -1079,8 +1080,6 @@ SAR_SIND_ANT_EMP | RECORD | CURRENCY | 8 | 18 | 6 | Sindicato anteriores empresa
 SAR_SOC_ANT_EMP | RECORD | CURRENCY | 8 | 18 | 6 | Total obra social en anteriores empresas | 
 SAR_SUPL_LEY_19101_OE | RECORD | CURRENCY | 8 | 18 | 6 | Suplementos particulares art 57 Ley 19.101 OE | 
 SAR_SUS_DISCI | RECORD | CURRENCY | 8 | 18 | 6 | Suspension disciplinaria | 
-SAR_TEST_DIAS_INC | RECORD | NUMBER | 6 | 9 | 4 | Prueba dias incidencia cliente | 
-SAR_TEST_PRECIO_INC | RECORD | CURRENCY | 8 | 18 | 6 | Prueba precio incidencia cliente | 
 SAR_TFUEG_ADOS_SAC | RECORD | CURRENCY | 8 | 18 | 6 | Ad. Obra social S/SAC restar t fuego | 
 SAR_TFUEG_DIF_SAC | RECORD | CURRENCY | 8 | 18 | 6 | Dif SAC real restar tierra de fuego | 
 SAR_TFUEG_EXT1_EXEN | RECORD | CURRENCY | 8 | 18 | 6 | Paga extra 1 exenta t fuego | 
@@ -1101,6 +1100,7 @@ SAR_TIEMPO_EFVO_TR | RECORD | NUMBER | 6 | 9 | 4 | Tiempo efectivo de trabajo |
 SAR_TIPO_SALARIO | RECORD | STRING | 2 | 3 | 0 | Tipo de Salario Base | 
 SAR_TITULO | RECORD | CURRENCY | 8 | 18 | 6 | Titulo | 
 SAR_TI_NRE_26341_ST | RECORD | CURRENCY | 8 | 18 | 6 | Vales Alimentarios Canasta(No remunerativos) | 
+SAR_TI_REM_26341_ST | RECORD | CURRENCY | 8 | 18 | 6 | Asignacion Remunerativa Ley 26.341 (T.R) | 
 SAR_TOPE_COTIZ | RECORD | CURRENCY | 8 | 18 | 6 | Tope Cotizaciones | 
 SAR_TOPE_COTIZ_IMPUT | RECORD | CURRENCY | 8 | 18 | 6 | Tope cotizaciones por imputacion | 
 SAR_TOPE_DEI | RECORD | CURRENCY | 8 | 18 | 6 | Tope para deduccion especial incrementada | 
@@ -1321,21 +1321,10 @@ TEST_AJCOT_TOT_COTIZ | RECORD | CURRENCY | 8 | 18 | 6 | TEST_AJCOT_TOT_COTIZ |
 TEST_AP_JUB_LSD | RECORD | CURRENCY | 8 | 18 | 6 | TEST_AP_JUB_LSD | 
 TEST_AP_JUB_RECIBO | RECORD | CURRENCY | 8 | 18 | 6 | TEST_AP_JUB_RECIBO | 
 TEST_AP_JUB_RETRO | RECORD | CURRENCY | 8 | 18 | 6 | TEST_AP_JUB_RETRO | 
-TEST_C_SINDICAL_OBL_VAC | RECORD | CURRENCY | 8 | 18 | 6 | TEST_C_SINDICAL_OBL_VAC | 
-TEST_C_SINDICAL_SAC | RECORD | CURRENCY | 8 | 18 | 6 | TEST_C_SINDICAL_SAC | 
-TEST_C_SINDICAL_VAC | RECORD | CURRENCY | 8 | 18 | 6 | TEST_C_SINDICAL_VAC | 
-TEST_C_SINDIC_OBL | RECORD | CURRENCY | 8 | 18 | 6 | TEST_C_SINDIC_OBL | 
-TEST_C_SINDIC_OBL_SAC | RECORD | CURRENCY | 8 | 18 | 6 | TEST_C_SINDIC_OBL_SAC | 
-TEST_C_SINDIC_VOL | RECORD | CURRENCY | 8 | 18 | 6 | TEST_C_SINDIC_VOL | 
 TEST_DANI2 | RECORD | CURRENCY | 8 | 18 | 6 | TEST_DANI2 | 
 TEST_FECHA_LSD | RECORD | DATE | 4 | 1 | 0 | TEST_FECHA_LSD | 
 TEST_FECHA_LSD_ANIO | RECORD | NUMBER | 6 | 4 | 0 | TEST_FECHA_LSD_ANIO | 
 TEST_FECHA_LSD_MES | RECORD | NUMBER | 6 | 2 | 0 | TEST_FECHA_LSD_MES | 
-TEST_IG_SIND_MEN | RECORD | CURRENCY | 8 | 18 | 6 | TEST_IG_SIND_MEN | 
-TEST_INDEM_FIJ_INCMES | RECORD | CURRENCY | 8 | 18 | 6 | Base indemniz fija inc. mes bajaa | 
-TEST_INDEM_FIJ_NOINCMES | RECORD | CURRENCY | 8 | 18 | 6 | Base indemniz fija NO inc. mes baja | 
-TEST_INDEM_VAR_INCMES | RECORD | CURRENCY | 8 | 18 | 6 | Base indemniz variable inc. mes baja | 
-TEST_INDEM_VAR_NOINCMES | RECORD | CURRENCY | 8 | 18 | 6 | Base indemniz variable NO inc. mes baja | 
 TEST_IND_COT_PAGO | RECORD | CURRENCY | 8 | 18 | 6 | TEST_IND_COT_PAGO | 
 TEST_REMUN_IMPO | RECORD | CURRENCY | 8 | 18 | 6 | TEST_REMUN_IMPO | 
 TEST_SAL_BASE | RECORD | CURRENCY | 8 | 18 | 6 | TEST_SAL_BASE | 

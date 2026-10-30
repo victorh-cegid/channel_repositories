@@ -1,0 +1,73 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_PAGA_EXTRA
+    NAME_ESP: ID Paga extra
+    REAL_NAME: SAR_ID_PAGA_EXTRA
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: SAR_PY_STRING_10
+    NOT_NULL: true
+  - ID_FIELD: SAR_NM_PAGA_EXTRA
+    NAME_ESP: Paga extra
+    REAL_NAME: SAR_NM_PAGA_EXTRA
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_STRING40
+    NOT_NULL: true
+  - ID_FIELD: DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: DT_START
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: DT_END
+    NAME_ESP: Fin
+    REAL_NAME: DT_END
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_COMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SAR_COMENT
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

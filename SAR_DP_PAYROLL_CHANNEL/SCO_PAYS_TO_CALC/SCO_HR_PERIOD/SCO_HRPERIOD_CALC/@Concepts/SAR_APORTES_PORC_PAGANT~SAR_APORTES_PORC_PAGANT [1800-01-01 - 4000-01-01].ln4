@@ -1,0 +1,10 @@
+'Funcionalidad de aplicar porcentaje impuesto de paga anterior. Si se configura que descarte aportes estos no se consideran. Por defecto si se consideran para minorar la base.
+importe = SAR_APORTES_PORC_PAGANT
+
+SAR_CONFIGURA_PROCESOS.DESTROY()
+SAR_CONFIGURA_PROCESOS.SLA_CARGAR_CONFIGURACION("SAR_PY_PORC_IMP_MESANT")
+descartarAportes = SAR_CONFIGURA_PROCESOS.SLA_GET_VALOR("SAR_DESCARTA_APORTES")
+
+If descartarAportes = "SI" Then importe = 0
+
+Return(importe)

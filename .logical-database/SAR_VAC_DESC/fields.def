@@ -1,0 +1,129 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: ID_ORG_MONO
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_HR
+    NAME_ESP: ID HR
+    REAL_NAME: SCO_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_INCIDENCE
+    NAME_ESP: ID Incidencia
+    REAL_NAME: SCO_ID_INCIDENCE
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: SCO_TA_INCIDENCE
+    NOT_NULL: true
+  - ID_FIELD: SCO_OR_HR_PERIOD
+    NAME_ESP: Num. periodo
+    REAL_NAME: SCO_OR_HR_PERIOD
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_OR_HR_PERIOD
+    NOT_NULL: false
+  - ID_FIELD: DT_START_VAC
+    NAME_ESP: Inicio Vacacion
+    REAL_NAME: DT_START_VAC
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_PAY
+    NAME_ESP: Fecha de Pago
+    REAL_NAME: SCO_DT_PAY
+    POSITION: 6
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_DATE
+    NOT_NULL: true
+  - ID_FIELD: DT_END_VAC
+    NAME_ESP: Fin Vacacion
+    REAL_NAME: DT_END_VAC
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_ALLOC
+    NAME_ESP: Fecha de Imputacion
+    REAL_NAME: SCO_DT_ALLOC
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_DIAS_TOMADOS
+    NAME_ESP: Dias Tomados
+    REAL_NAME: SAR_DIAS_TOMADOS
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER_2
+    NOT_NULL: false
+  - ID_FIELD: SAR_DIAS_DESCONT
+    NAME_ESP: Dias Descontados
+    REAL_NAME: SAR_DIAS_DESCONT
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER_2
+    NOT_NULL: false
+  - ID_FIELD: SCO_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SCO_COMMENT
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SAR_HORAS_TOMADAS
+    NAME_ESP: Horas Tomadas
+    REAL_NAME: SAR_HORAS_TOMADAS
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_HORAS
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SAR_HORAS_DESCONT
+    NAME_ESP: Horas descontadas
+    REAL_NAME: SAR_HORAS_DESCONT
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_HORAS
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

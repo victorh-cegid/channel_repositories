@@ -1,0 +1,161 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: SCO_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: SCO_OR_HR_PERIOD
+    NAME_ESP: Num. periodo
+    REAL_NAME: SCO_OR_HR_PERIOD
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_OR_HR_PERIOD
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: SCO_DT_START
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: SCO_DT_END
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SCO_FIX_SALARY
+    NAME_ESP: Salario bruto fijo
+    REAL_NAME: SCO_FIX_SALARY
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: SCO_FIX_SALARY_REAL
+    NAME_ESP: Salario bruto fijo (real)
+    REAL_NAME: SCO_FIX_SALARY_RL
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: SCO_VAR_SALARY
+    NAME_ESP: Salario bruto variable
+    REAL_NAME: SCO_VAR_SALARY
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: SCO_VAR_SALARY_REAL
+    NAME_ESP: Salario bruto variable (real)
+    REAL_NAME: SCO_VAR_SALARY_RL
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: SCO_FIX_SALARY_PER
+    NAME_ESP: Aumento salario bruto fijo
+    REAL_NAME: SCO_FIX_SALARY_PER
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DEC_9_2
+    NOT_NULL: false
+  - ID_FIELD: SCO_VAR_SALARY_PER
+    NAME_ESP: Aumento salario bruto variable
+    REAL_NAME: SCO_VAR_SALARY_PER
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DEC_9_2
+    NOT_NULL: false
+  - ID_FIELD: SCO_COT_EMP
+    NAME_ESP: Coste cotizacion empresa
+    REAL_NAME: SCO_COT_EMP
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: ID_CURRENCY
+    NAME_ESP: ID Moneda
+    REAL_NAME: ID_CURRENCY
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SCO_DT_EXCHANGE
+    NAME_ESP: Fecha de cambio
+    REAL_NAME: SCO_DT_EXCHANGE
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_DATE
+    NOT_NULL: false
+  - ID_FIELD: EX_TYPE
+    NAME_ESP: Fuente de tipo de cambio
+    REAL_NAME: EXT_TYPE
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: FIXCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: SCO_BNFT_LEG_ENT
+    NAME_ESP: Beneficios por cuenta empresa
+    REAL_NAME: SCO_BNFT_LEG_ENT
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: SCO_BNFT_LEG_PER
+    NAME_ESP: Aumento beneficios empresa (%)
+    REAL_NAME: SCO_BNFT_LEG_PER
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DEC_9_2
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

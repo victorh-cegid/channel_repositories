@@ -1,0 +1,81 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_WL_CHILD
+    NAME_ESP: ID Lugar trabajo subord.
+    REAL_NAME: STD_ID_WL_CHILD
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_WORK_LOCATION
+    NOT_NULL: true
+  - ID_FIELD: STD_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: STD_DT_START
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: STD_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: STD_DT_END
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_WL_PARENT
+    NAME_ESP: ID Lugar trabajo padre
+    REAL_NAME: STD_ID_WL_PARENT
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_WORK_LOCATION
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_LOC_CHG_RE
+    NAME_ESP: ID Motivo cambio
+    REAL_NAME: SCO_ID_LOC_CHG_RE
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_LOC_CHG_REA
+    NOT_NULL: true
+  - ID_FIELD: SCO_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SCO_COMMENT
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

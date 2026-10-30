@@ -1,0 +1,97 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_VACACIONES
+    NAME_ESP: ID Vacacion
+    REAL_NAME: SAR_ID_VACACIONES
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: SCO_VARCHAR2
+    NOT_NULL: true
+  - ID_FIELD: SAR_DESDE
+    NAME_ESP: Desde
+    REAL_NAME: SAR_DESDE
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: SCO_NUMBER_10
+    NOT_NULL: true
+  - ID_FIELD: SAR_HASTA
+    NAME_ESP: Hasta
+    REAL_NAME: SAR_HASTA
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: SCO_NUMBER_10
+    NOT_NULL: true
+  - ID_FIELD: SAR_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: SAR_DT_START
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: SAR_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: SAR_DT_END
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_DIAS
+    NAME_ESP: Dias
+    REAL_NAME: SAR_DIAS
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_NUMBER6
+    NOT_NULL: true
+  - ID_FIELD: SAR_DIAS_AUMENTAR
+    NAME_ESP: Dias aumentar
+    REAL_NAME: SAR_DIAS_AUMENTAR
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_NUMBER6
+    NOT_NULL: false
+  - ID_FIELD: SAR_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SAR_COMMENT
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

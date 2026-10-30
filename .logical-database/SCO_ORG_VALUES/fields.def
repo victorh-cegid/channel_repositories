@@ -1,0 +1,153 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: ID_DMD
+    NAME_ESP: ID Dominio
+    REAL_NAME: ID_DMD
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: DT_START
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: ID_DMD_COMPONENT
+    NAME_ESP: ID Componente del dominio
+    REAL_NAME: ID_DMD_COMPONENT
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: DT_COR_START
+    NAME_ESP: Inicio correccion
+    REAL_NAME: DT_COR_START
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: DT_COR_END
+    NAME_ESP: Fin correccion
+    REAL_NAME: DT_COR_END
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: DT_END
+    NAME_ESP: Fin
+    REAL_NAME: DT_END
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: PROJ
+    NAME_ESP: Proyeccion
+    REAL_NAME: PROJ
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: PROJECTION_FIELD
+    NOT_NULL: false
+  - ID_FIELD: ID_M4_TYPE
+    NAME_ESP: ID Tipo basico
+    REAL_NAME: ID_M4_TYPE
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_SHORT
+    NOT_NULL: true
+  - ID_FIELD: SCO_VALUE
+    NAME_ESP: Valor
+    REAL_NAME: SCO_VALUE
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARIANT_VALUE
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_CURRENCY
+    NAME_ESP: ID Moneda
+    REAL_NAME: SCO_ID_CURRENCY
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SCO_DT_EXCHANGE
+    NAME_ESP: Fecha cambio
+    REAL_NAME: SCO_DT_EXCHANGE
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_DATE
+    NOT_NULL: false
+  - ID_FIELD: EX_TYPE
+    NAME_ESP: Fuente tipo cambio
+    REAL_NAME: EX_TYPE
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: FIXCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_REASON_CHANGE
+    NAME_ESP: ID Motivo cambio
+    REAL_NAME: SCO_ID_REA_CHANG
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_REASON_CHANGE
+    NOT_NULL: false
+  - ID_FIELD: ID_PRIORITY
+    NAME_ESP: ID Prioridad
+    REAL_NAME: ID_PRIORITY
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_SHORT
+    NOT_NULL: true
+  - ID_FIELD: SCO_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SCO_COMMENT
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

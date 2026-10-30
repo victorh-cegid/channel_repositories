@@ -1,0 +1,137 @@
+fields:
+  - ID_FIELD: ID_TI
+    NAME_ESP: ID Estructura nodo
+    REAL_NAME: ID_TI
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: ID_ITEM
+    NAME_ESP: ID Elemento
+    REAL_NAME: ID_ITEM
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: DT_START
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: DATE
+    NOT_NULL: true
+  - ID_FIELD: DT_END
+    NAME_ESP: Fin
+    REAL_NAME: DT_END
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: DATE
+    NOT_NULL: true
+  - ID_FIELD: ID_ITEM_USED
+    NAME_ESP: ID Elemento utilizado
+    REAL_NAME: ID_ITEM_USED
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: DT_START_USED
+    NAME_ESP: Fecha inicio utilizada
+    REAL_NAME: DT_START_USED
+    POSITION: 6
+    IS_PK: true
+    POS_PK: 6
+    ID_TYPE: DATE
+    NOT_NULL: true
+  - ID_FIELD: DT_END_USED
+    NAME_ESP: Fecha fin utilizada
+    REAL_NAME: DT_END_USED
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE
+    NOT_NULL: true
+  - ID_FIELD: ID_ITEM_USED_TI
+    NAME_ESP: ID Estructura nodo de elemento
+    REAL_NAME: ID_ITEM_USED_TI
+    POSITION: 8
+    IS_PK: true
+    POS_PK: 7
+    ID_TYPE: LOGIC_NAME_DEF
+    NOT_NULL: true
+  - ID_FIELD: BUFFER1
+    NAME_ESP: Bufer 1
+    REAL_NAME: BUFFER1
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: COMMENTS
+    NOT_NULL: false
+  - ID_FIELD: BUFFER2
+    NAME_ESP: Bufer 2
+    REAL_NAME: BUFFER2
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: BUFFER3
+    NAME_ESP: Bufer 3
+    REAL_NAME: BUFFER3
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: ID_TOTAL_TI
+    NAME_ESP: ID Estructura nodo de elemento
+    REAL_NAME: ID_TOTAL_TI
+    POSITION: 12
+    IS_PK: true
+    POS_PK: 8
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: IS_SUM
+    NAME_ESP: Suma
+    REAL_NAME: IS_SUM
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: T_BOOL
+    NOT_NULL: true
+  - ID_FIELD: ID_TOTAL_REF_TI
+    NAME_ESP: ID Estructura nodo total ref.
+    REAL_NAME: ID_TOTAL_REF_TI
+    POSITION: 14
+    IS_PK: true
+    POS_PK: 9
+    ID_TYPE: LOGIC_NAME_DEF
+    NOT_NULL: true
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

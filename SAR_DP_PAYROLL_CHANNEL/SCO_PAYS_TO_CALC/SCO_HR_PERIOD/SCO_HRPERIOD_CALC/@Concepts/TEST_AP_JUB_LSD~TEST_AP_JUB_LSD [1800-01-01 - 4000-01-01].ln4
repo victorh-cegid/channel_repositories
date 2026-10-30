@@ -1,24 +1,10 @@
-diferente = 0
-importe = 76077775.97
-totRemGravValida = importe 
+edad = SAR_EDAD
+base = TEST_REMUN_IMPO
+valor = 0
 
-vresta = importe - totRemGravValida
+IF edad >= 18 THEN
+    porc = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
+    valor = base * porc / 100
+ENDIF
 
-if vresta <> 0 Then diferente = 1
-
-return (vresta)
-
-'a = TEST_AP_JUB_RECIBO
-'
-'RETURN(0)
-
-'edad = SAR_EDAD
-'base = TEST_REMUN_IMPO
-'valor = 0
-'
-'IF edad >= 18 THEN
-'    porc = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
-'    valor = base * porc / 100
-'ENDIF
-'
-'Return(valor)
+Return(valor)

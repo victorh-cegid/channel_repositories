@@ -1,0 +1,105 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_PAGA_EXTRA
+    NAME_ESP: ID Paga extra
+    REAL_NAME: SAR_ID_PAGA_EXTRA
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: SAR_PY_STRING_10
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_CONVENIO
+    NAME_ESP: ID Convenio
+    REAL_NAME: SAR_ID_CONVENIO
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SAR_ID_CONVENIO
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_PAY_FREQUENCY
+    NAME_ESP: ID Frecuencia pago
+    REAL_NAME: SCO_ID_PAY_FREQ
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: SCO_ID_PAY_FREQUENCY
+    NOT_NULL: true
+  - ID_FIELD: DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: DT_START
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: DT_END
+    NAME_ESP: Fin
+    REAL_NAME: DT_END
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES
+    NAME_ESP: Mes de pago de la extra
+    REAL_NAME: SAR_MES
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER_2
+    NOT_NULL: true
+  - ID_FIELD: SAR_DIA
+    NAME_ESP: Dia de pago de la extra
+    REAL_NAME: SAR_DIA
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER_2
+    NOT_NULL: true
+  - ID_FIELD: SAR_ORDEN
+    NAME_ESP: Orden
+    REAL_NAME: SAR_ORDEN
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER_3
+    NOT_NULL: true
+  - ID_FIELD: SAR_COMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SAR_COMENT
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

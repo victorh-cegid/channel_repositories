@@ -12,5 +12,3 @@
 '    MIN_DT_START = MINUS_INF
 '    MAX_DT_END = PLUS_INF
 'Endif
-'
-'

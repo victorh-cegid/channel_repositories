@@ -1,0 +1,105 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_INC_GROUP
+    NAME_ESP: ID Grupo de incidencias
+    REAL_NAME: SCO_ID_INC_GROUP
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: SCO_TA_ID_INC_GROUP
+    NOT_NULL: true
+  - ID_FIELD: SCO_NM_INC_GROUP
+    NAME_ESP: Grupo de incidencias
+    REAL_NAME: SCO_NM_INC_GROUP
+    POSITION: 3
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_TA_VARCHAR62
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_INCIDENCE_TP
+    NAME_ESP: ID Tipo de incidencia
+    REAL_NAME: SCO_ID_INCIDENCE_T
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_TA_INCIDENCE_TYPE
+    NOT_NULL: true
+  - ID_FIELD: SCO_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SCO_COMMENT
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: SFR_ID_ITR_GROUP
+    NAME_ESP: ID Grupo interno
+    REAL_NAME: SFR_ID_ITR_GROUP
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SFR_ID_ITR_GROUP
+    NOT_NULL: false
+  - ID_FIELD: SLA_PER_DIA
+    NAME_ESP: Modo Periodo por dia
+    REAL_NAME: SLA_PER_DIA
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SLA_MODO_VISUALIZA
+    NOT_NULL: false
+  - ID_FIELD: SLA_PER_HORA
+    NAME_ESP: Modo Periodo por hora
+    REAL_NAME: SLA_PER_HORA
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SLA_MODO_VISUALIZA
+    NOT_NULL: false
+  - ID_FIELD: SLA_DIARIA_DIA
+    NAME_ESP: Modo diaria por dia
+    REAL_NAME: SLA_DIARIA_DIA
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SLA_MODO_VISUALIZA
+    NOT_NULL: false
+  - ID_FIELD: SLA_DIARIA_HORAS
+    NAME_ESP: Modo diaria por horas
+    REAL_NAME: SLA_DIARIA_HORAS
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SLA_MODO_VISUALIZA
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 201
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 202
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 203
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

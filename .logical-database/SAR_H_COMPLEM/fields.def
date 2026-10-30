@@ -1,0 +1,673 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: STD_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: STD_OR_HR_PERIOD
+    NAME_ESP: Num. periodo
+    REAL_NAME: STD_OR_HR_PERIOD
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_OR_HR_PERIOD
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_ENTIDAD
+    NAME_ESP: ID Entidad
+    REAL_NAME: SAR_ID_ENTIDAD
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: SCO_VARCHAR2
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_ORDINAL
+    NAME_ESP: Ordinal
+    REAL_NAME: SAR_ID_ORDINAL
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: STD_ORDINAL_8
+    NOT_NULL: true
+  - ID_FIELD: SAR_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: SAR_DT_START
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: SAR_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: SAR_DT_END
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: true
+  - ID_FIELD: SAR_NOMBRE
+    NAME_ESP: Nombre
+    REAL_NAME: SAR_NOMBRE
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR_254
+    NOT_NULL: false
+  - ID_FIELD: SAR_CUIT
+    NAME_ESP: CUIT
+    REAL_NAME: SAR_CUIT
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_13
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_COUNTRY
+    NAME_ESP: ID Pais
+    REAL_NAME: STD_ID_COUNTRY
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_COUNTRY
+    NOT_NULL: false
+  - ID_FIELD: SAR_DOMICILIO
+    NAME_ESP: Domicilio
+    REAL_NAME: SAR_DOMICILIO
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: VARCHAR40
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_PAGO
+    NAME_ESP: Fecha de pago
+    REAL_NAME: SAR_DT_PAGO
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_JUBILACION
+    NAME_ESP: Jubilacion
+    REAL_NAME: SAR_JUBILACION
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_OBRA_SOCIAL
+    NAME_ESP: Obra Social
+    REAL_NAME: SAR_OBRA_SOCIAL
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_LEY_19032
+    NAME_ESP: Ley 19032
+    REAL_NAME: SAR_LEY_19032
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_RETENCION
+    NAME_ESP: Retencion
+    REAL_NAME: SAR_RETENCION
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_BRUTO
+    NAME_ESP: Bruto
+    REAL_NAME: SAR_BRUTO
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMPORTE_TOTAL
+    NAME_ESP: Importe Total
+    REAL_NAME: SAR_IMPORTE_TOTAL
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMPORTE_DIF
+    NAME_ESP: Diferencia
+    REAL_NAME: SAR_IMPORTE_DIF
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_EX_TYPE
+    NAME_ESP: Fuente de tipo de cambio
+    REAL_NAME: SAR_EX_TYPE
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: FIXCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: SAR_CUR_DATE
+    NAME_ESP: Fecha de cambio
+    REAL_NAME: SAR_CUR_DATE
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TODAY
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_CURRENCY
+    NAME_ESP: Tipo de moneda
+    REAL_NAME: SAR_ID_CURRENCY
+    POSITION: 22
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_CUOTA_SINDICAL
+    NAME_ESP: Cuota Sindical
+    REAL_NAME: SAR_CUOTA_SINDICAL
+    POSITION: 23
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_OTRAS_DEDUC
+    NAME_ESP: Otras deducciones
+    REAL_NAME: SAR_OTRAS_DEDUC
+    POSITION: 24
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_SEGURO_VIDA
+    NAME_ESP: Seguro de vida
+    REAL_NAME: SAR_SEGURO_VIDA
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_SEGURO_SEPELIO
+    NAME_ESP: Seguro sepelio
+    REAL_NAME: SAR_SEGURO_SEPELIO
+    POSITION: 26
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_PAY_FREQUENCY
+    NAME_ESP: ID Frecuencia de pago
+    REAL_NAME: SAR_ID_PAY_FREQ
+    POSITION: 27
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_PAY_FREQUENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_FREC_CARGA
+    NAME_ESP: Frecuencia de carga
+    REAL_NAME: SAR_FREC_CARGA
+    POSITION: 28
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_STRING_1
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES
+    NAME_ESP: Mes
+    REAL_NAME: SAR_MES
+    POSITION: 29
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_70
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_FIN
+    NAME_ESP: Mes de fin
+    REAL_NAME: SAR_MES_FIN
+    POSITION: 30
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_70
+    NOT_NULL: false
+  - ID_FIELD: SAR_ANIO
+    NAME_ESP: A?o
+    REAL_NAME: SAR_ANIO
+    POSITION: 31
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER4
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_START_ENT
+    NAME_ESP: Inicio entidad
+    REAL_NAME: SAR_DT_START_ENT
+    POSITION: 32
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SUK_DATE
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_EXTERNAL_ORG
+    NAME_ESP: ID Org. externa
+    REAL_NAME: SAR_ID_EXTERN_ORG
+    POSITION: 33
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_EXTERNAL_ORG
+    NOT_NULL: false
+  - ID_FIELD: SAR_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SAR_COMMENT
+    POSITION: 34
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: SAR_TIPO_TARJETA
+    NAME_ESP: Tipo de tatjeta para compras
+    REAL_NAME: SAR_TIPO_TARJETA
+    POSITION: 35
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR_2
+    NOT_NULL: false
+  - ID_FIELD: SAR_VALOR_TOPEADO
+    NAME_ESP: Valor topeado
+    REAL_NAME: SAR_VALOR_TOPEADO
+    POSITION: 36
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: EX_TYPE
+    NAME_ESP: Fuente de tipo de cambio
+    REAL_NAME: EX_TYPE
+    POSITION: 37
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: FIXCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: CUR_DATE
+    NAME_ESP: Fecha de cambio
+    REAL_NAME: CUR_DATE
+    POSITION: 38
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TODAY
+    NOT_NULL: false
+  - ID_FIELD: ID_CURRENCY
+    NAME_ESP: Tipo de moneda
+    REAL_NAME: ID_CURRENCY
+    POSITION: 39
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_CK_SIRADIG
+    NAME_ESP: Check para origen en SiRADIG
+    REAL_NAME: SAR_CK_SIRADIG
+    POSITION: 40
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_SIDARIG_NUMERICO_1
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMP_EXE_NO_ALC
+    NAME_ESP: Importe Exento/No alcanzado
+    REAL_NAME: SAR_IMP_EXE_NO_ALC
+    POSITION: 41
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_SAC
+    NAME_ESP: Sueldo Anual Complementario
+    REAL_NAME: SAR_SAC
+    POSITION: 42
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMP_HS_EXTRAS_GRAV
+    NAME_ESP: Importe Horas Extras Gravadas
+    REAL_NAME: SAR_IMP_HS_EXTRAS_GRAV
+    POSITION: 43
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMP_HS_EXTRAS_EXENT
+    NAME_ESP: Importe Horas Extras Exentas
+    REAL_NAME: SAR_IMP_HS_EXTRAS_EXENT
+    POSITION: 44
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_JUR_Z_PAT
+    NAME_ESP: Declar. Jurada en zona Patag.
+    REAL_NAME: SAR_JUR_Z_PAT
+    POSITION: 45
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_NUMERICO_1_DEFAULT_0
+    NOT_NULL: false
+  - ID_FIELD: SAR_NO_HAB_OE
+    NAME_ESP: Retribuciones no habituales
+    REAL_NAME: SAR_NO_HAB_OE
+    POSITION: 46
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_MOV_VIA_TRIB_OE
+    NAME_ESP: Movilidad y viaticos Rem Grav.
+    REAL_NAME: SAR_MOV_VIA_TRIB_OE
+    POSITION: 47
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_MAT_DIC_TRIB_OE
+    NAME_ESP: Material didactico Rem Grav.
+    REAL_NAME: SAR_MAT_DIC_TRIB_OE
+    POSITION: 48
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_MOV_VIA_EXEN_OE
+    NAME_ESP: Movilidad y viaticos Exenta
+    REAL_NAME: SAR_MOV_VIA_EXEN_OE
+    POSITION: 49
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_MAT_DIC_EXEN_OE
+    NAME_ESP: Material didactico Exenta
+    REAL_NAME: SAR_MAT_DIC_EXEN_OE
+    POSITION: 50
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_NO_HAB_EXEN_OE
+    NAME_ESP: Retrib no habituales exetas OE
+    REAL_NAME: SAR_NO_HAB_EXEN_OE
+    POSITION: 51
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_SAC_1_EXEN_OE
+    NAME_ESP: SAC 1ra cta exenta OE
+    REAL_NAME: SAR_SAC_1_EXEN_OE
+    POSITION: 52
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_SAC_2_EXEN_OE
+    NAME_ESP: SAC 2da cta exenta OE
+    REAL_NAME: SAR_SAC_2_EXEN_OE
+    POSITION: 53
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_PER_ANT_GRAV_OE
+    NAME_ESP: Ajustes per. ant. Remun Grav
+    REAL_NAME: SAR_PER_ANT_GRAV_OE
+    POSITION: 54
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_PER_ANT_NO_GRAV_OE
+    NAME_ESP: Ajustes per. ant. Remun exenta
+    REAL_NAME: SAR_PER_ANT_NO_GRAV_OE
+    POSITION: 55
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMP_BONOS_PROD_OE
+    NAME_ESP: Bono por productividad
+    REAL_NAME: SAR_IMP_BONOS_PROD_OE
+    POSITION: 56
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMP_FCAJA_OE
+    NAME_ESP: Fallos de Caja
+    REAL_NAME: SAR_IMP_FCAJA_OE
+    POSITION: 57
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMP_SIMILAR_NAT_OE
+    NAME_ESP: Conceptos similar Naturaleza
+    REAL_NAME: SAR_IMP_SIMILAR_NAT_OE
+    POSITION: 58
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_LEY_27549_OE
+    NAME_ESP: Remuneracion exenta Ley 27549
+    REAL_NAME: SAR_LEY_27549_OE
+    POSITION: 59
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_SUPL_LEY_19101_OE
+    NAME_ESP: Supl particular a.57 Ley 19101
+    REAL_NAME: SAR_SUPL_LEY_19101_OE
+    POSITION: 60
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_GASTOS_DEC27_OE
+    NAME_ESP: Comp. gastos art.10 Dec.27/21
+    REAL_NAME: SAR_GASTOS_DEC27_OE
+    POSITION: 61
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_PORC_INFO_XML
+    NAME_ESP: % informado en el xml
+    REAL_NAME: SAR_PORC_INFO_XML
+    POSITION: 62
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_PORCENTAJE
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_PARENTESCO
+    NAME_ESP: Parentesco
+    REAL_NAME: SAR_ID_PARENTESCO
+    POSITION: 63
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_6
+    NOT_NULL: false
+  - ID_FIELD: SAR_CUIL_FAM
+    NAME_ESP: CUIL familiar
+    REAL_NAME: SAR_CUIL_FAM
+    POSITION: 64
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_SS_NUMBER
+    NOT_NULL: false
+  - ID_FIELD: SAR_CONV_COLECTIVO_OE
+    NAME_ESP: Convenio colectivo
+    REAL_NAME: SAR_CONV_COLECTIVO_OE
+    POSITION: 65
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: SAR_TRANSP_LARGA_DIST_OE
+    NAME_ESP: Transporte de larga distancia
+    REAL_NAME: SAR_TRANSP_LARGA_DIST_OE
+    POSITION: 66
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_NUMERICO_1_DEFAULT_0
+    NOT_NULL: false
+  - ID_FIELD: SAR_TRANSP_TERR_LARG_DIST_OE
+    NAME_ESP: Transp. Terrestre larga dist.
+    REAL_NAME: SAR_TRANSP_TERR_LARG_DIST_OE
+    POSITION: 67
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_NUMERICO_1_DEFAULT_0
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMP_MOVILIDAD_OE
+    NAME_ESP: Gastos de Movilidad
+    REAL_NAME: SAR_IMP_MOVILIDAD_OE
+    POSITION: 68
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMP_OTROS_CONCEPT_ANA_OE
+    NAME_ESP: Otros conceptos analogos
+    REAL_NAME: SAR_IMP_OTROS_CONCEPT_ANA_OE
+    POSITION: 69
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REGIMEN_OE
+    NAME_ESP: Regimen
+    REAL_NAME: SAR_REGIMEN_OE
+    POSITION: 70
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_STRING_1
+    NOT_NULL: false
+  - ID_FIELD: SAR_ASIGN_FAM
+    NAME_ESP: Asignaciones familiares
+    REAL_NAME: SAR_ASIGN_FAM
+    POSITION: 71
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_INT_PRES_EMP
+    NAME_ESP: Intereses por Prestamos al Emp
+    REAL_NAME: SAR_INT_PRES_EMP
+    POSITION: 72
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_INDEM_LEY4003
+    NAME_ESP: Indemnizaciones RG 4003/2017
+    REAL_NAME: SAR_INDEM_LEY4003
+    POSITION: 73
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REMUN_LEY19640
+    NAME_ESP: Remuneraciones Ley 19.640
+    REAL_NAME: SAR_REMUN_LEY19640
+    POSITION: 74
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REMUN_CCT_PETRO
+    NAME_ESP: Remun bajo el CCT 396/2204
+    REAL_NAME: SAR_REMUN_CCT_PETRO
+    POSITION: 75
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_CURSOS_SEMIN
+    NAME_ESP: Cursos y Seminarios
+    REAL_NAME: SAR_CURSOS_SEMIN
+    POSITION: 76
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_INDUM_EQUIP_EMP
+    NAME_ESP: Indum y Equip prov por el Empl
+    REAL_NAME: SAR_INDUM_EQUIP_EMP
+    POSITION: 77
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_SEG_SOC_ANSES
+    NAME_ESP: Jubilaciones ANSES
+    REAL_NAME: SAR_SEG_SOC_ANSES
+    POSITION: 78
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_SEG_SOC_CAJAS
+    NAME_ESP: Jubilaciones Cajas previsional
+    REAL_NAME: SAR_SEG_SOC_CAJAS
+    POSITION: 79
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REMUN_PODER_JUDIC_OE
+    NAME_ESP: Remuneraciones Judiciales
+    REAL_NAME: SAR_REMUN_PODER_JUDIC_OE
+    POSITION: 80
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_NO_RET_MED_CAUT_OE
+    NAME_ESP: No Retenido Medidas cautelares
+    REAL_NAME: SAR_NO_RET_MED_CAUT_OE
+    POSITION: 81
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 82
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 83
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 84
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

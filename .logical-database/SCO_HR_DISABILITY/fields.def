@@ -1,0 +1,105 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: ID_ORG_MONO
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: SCO_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_DISABILITY
+    NAME_ESP: ID Discapacidad
+    REAL_NAME: SCO_ID_DISABILITY
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: STD_ID_DISABILITY
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: SCO_DT_START
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: SCO_DT_END
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SCO_DT_DISABILITY
+    NAME_ESP: Fecha discapacidad
+    REAL_NAME: SCO_DT_DISABILITY
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SCO_PERMANENT
+    NAME_ESP: Permanente
+    REAL_NAME: SCO_PERMANENT
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CHECK_DEFAULT_0
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_DISABILITY_GRADE
+    NAME_ESP: ID Grado discapacidad
+    REAL_NAME: SCO_ID_DISAB_GRADE
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_DISABILITY_GRADE
+    NOT_NULL: true
+  - ID_FIELD: SFR_CK_COTOREP
+    NAME_ESP: Cotorep
+    REAL_NAME: SFR_CK_COTOREP
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_COTOREP_DN
+    NOT_NULL: false
+  - ID_FIELD: SFR_CAT_COTOREP
+    NAME_ESP: Id Cat. COTOREP
+    REAL_NAME: SFR_CAT_COTOREP
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SFR_CAT_COTOREP
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

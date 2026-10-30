@@ -1,7 +1,6 @@
 # item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
 APLICAR_ORDINAL | BLOCK | NUMBER | 6 | 18 | 0 | APLICAR_ORDINAL | 3
 CUREXCHANGERECORDROUNDED | NODE | NUMBER | 6 | 1 | 0 | Cambio moneda del registro con redondeo | 2
-DESTROY | BLOCK | NUMBER | 6 | 1 | 0 | DESTROY | 3
 SCO_CALL_UNFLATTEN | BLOCK | NUMBER | 6 | 1 | 0 | Llamar Unflatten | 2
 SCO_EURO_ROUND | BLOCK | NUMBER | 6 | 1 | 0 | Redondeo del Euro | 
 SCO_SELECT | BLOCK | NUMBER | 6 | 1 | 0 | Selec. sentencia | 2

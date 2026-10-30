@@ -1,0 +1,65 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: ID_ORG_MONO
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_WHEN
+    NAME_ESP: Fecha modificacion
+    REAL_NAME: SCO_DT_WHEN
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: SCO_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_REV
+    NAME_ESP: Fecha revision
+    REAL_NAME: SCO_DT_REV
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_ITEM
+    NAME_ESP: Concepto
+    REAL_NAME: SCO_ID_ITEM
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_RULE
+    NAME_ESP: ID Regla
+    REAL_NAME: SCO_ID_RULE
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 101
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 101
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 101
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false

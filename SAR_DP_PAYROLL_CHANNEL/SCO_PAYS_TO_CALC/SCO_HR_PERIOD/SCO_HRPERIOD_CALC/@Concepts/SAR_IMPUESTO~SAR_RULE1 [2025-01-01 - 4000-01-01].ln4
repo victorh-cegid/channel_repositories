@@ -10,6 +10,16 @@ esBaja = 0
 If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
 If SAR_PAYS_TO_CALC.SAR_REVISION = 1 And imp_retro = 0 And ((esBaja = 0) Or (SAR_ES_BAJA = 1 And SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1)) Then Return (SCO_AC_HR_PERIOD_REV_1.SAR_IMPUESTO)
 
+'Situacion especial: Pagas donde no se quiere recalcular el impuesto sino solo aplicar el % de la paga anterior sobre los importes de la propia paga
+IndPorcPagAnt = SAR_IND_PORCIMP_PAGANT
+If IndPorcPagAnt = 1 Then
+    baseImp = SAR_BASE_IMP_PORC_PAGANT
+    porcImp = SAR_ACM_ULT_PAG_NORMAL[0].SAR_PORC_IMP
+    impuesto = Percentage(porcImp,baseImp)
+    Return Round(impuesto,SAR_NUM_DEC)
+EndIf
+'Fin situacion especial
+
 impuesto_tot = SAR_IMPUESTO_TOTAL
 imp_autoret = SAR_IMPUESTO_AUTORET
 imp_ae = SAR_IMP_ANT_EMP

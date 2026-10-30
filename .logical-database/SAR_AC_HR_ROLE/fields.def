@@ -1,0 +1,129 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 10
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: SCO_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: SCO_OR_HR_ROLE
+    NAME_ESP: Num. rol
+    REAL_NAME: SCO_OR_HR_ROLE
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_OR_HR_ROLE
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_ALLOCATION
+    NAME_ESP: Fecha de imputacion
+    REAL_NAME: SCO_DT_ALLOC
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: STD_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_PAYMENT
+    NAME_ESP: Fecha de pago
+    REAL_NAME: SCO_DT_PAY
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: STD_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_PAY_FREQ_ALLOC
+    NAME_ESP: Frecuencia de imputacion
+    REAL_NAME: SCO_PAY_FREQ_ALLOC
+    POSITION: 6
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: SCO_ID_PAY_FREQUENCY
+    NOT_NULL: true
+  - ID_FIELD: SCO_PAY_FREQ_PAYM
+    NAME_ESP: Frecuencia de pago
+    REAL_NAME: SCO_PAY_FREQ_PAY
+    POSITION: 7
+    IS_PK: true
+    POS_PK: 6
+    ID_TYPE: SCO_ID_PAY_FREQUENCY
+    NOT_NULL: true
+  - ID_FIELD: ID_CURRENCY
+    NAME_ESP: ID Moneda
+    REAL_NAME: ID_CURRENCY
+    POSITION: 8
+    IS_PK: true
+    POS_PK: 7
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_START_SLICE
+    NAME_ESP: Fecha inicio tramo
+    REAL_NAME: SCO_DT_START_SLICE
+    POSITION: 9
+    IS_PK: true
+    POS_PK: 8
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_WORK_LOCATION
+    NAME_ESP: Lugar trabajo
+    REAL_NAME: STD_ID_WORK_LOCAT
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_WORK_LOCATION
+    NOT_NULL: false
+  - ID_FIELD: STD_ID_JOB_CODE
+    NAME_ESP: ID puesto
+    REAL_NAME: STD_ID_JOB_CODE
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_JOB_CODE
+    NOT_NULL: false
+  - ID_FIELD: SSP_ID_CENT_COSTO
+    NAME_ESP: Id centro coste
+    REAL_NAME: SSP_ID_CENT_COSTO
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR15
+    NOT_NULL: false
+  - ID_FIELD: SAR_P_SAL_BASE
+    NAME_ESP: Precio Sueldo
+    REAL_NAME: SAR_P_SAL_BASE
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_ACTIVIDAD
+    NAME_ESP: Id Actividad
+    REAL_NAME: SAR_ID_ACTIVIDAD
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ID_ACTIVIDAD
+    NOT_NULL: false
+  - ID_FIELD: SAR_P_ASIG_ESTIM_ROL
+    NAME_ESP: Precio por rol de la asignacio
+    REAL_NAME: SAR_P_ASIG_ESTIM_ROL
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY_DEF_0
+    NOT_NULL: false
+  - ID_FIELD: SAR_INDIC_REDUC_ZON_DES
+    NAME_ESP: Reduccion por zona desfavorabl
+    REAL_NAME: SAR_INDIC_REDUC_ZON_DES
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER1_DEF0
+    NOT_NULL: false

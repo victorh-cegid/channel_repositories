@@ -1,6 +1,6 @@
 # item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
 SAR_ALI_CRED_IVA_ROL | RECORD | NUMBER | 6 | 9 | 4 | Alicuota Credito Iva Rol | 
-SAR_CALCULA_PRECIO_FECHA | BLOCK | NUMBER | 6 | 18 | 0 | SAR_CALCULA_PRECIO_FECHA | 
+SAR_CALCULA_PRECIO_FECHA | NODE | NUMBER | 6 | 18 | 0 | SAR_CALCULA_PRECIO_FECHA | 
 SAR_COEF_JORNADA | BLOCK | NUMBER | 6 | 13 | 4 | Coeficiente de jornada | 
 SAR_ID_ACTIVIDAD | BLOCK | STRING | 2 | 4 | 0 | Id Actividad | 
 SAR_ID_CENTRO_TRAB | RECORD | STRING | 2 | 8 | 0 | Centro de trabajo del empleado | 
@@ -10,7 +10,6 @@ SAR_PRECIO_HS_AUSENCIA_ROL | RECORD | CURRENCY | 8 | 18 | 6 | Precio horas de au
 SAR_P_ASIG_ESTIM_ROL | RECORD | CURRENCY | 8 | 18 | 6 | Precio por rol de la asignacion estimulo | 
 SAR_P_SAL_BASE | RECORD | CURRENCY | 8 | 18 | 6 | Precio sueldo Rol | 
 SAR_SAL_BASE_ROL | RECORD | CURRENCY | 8 | 18 | 0 | Salario base Rol | 
-SAR_TFUEG_IND_ROL | BLOCK | NUMBER | 6 | 1 | 0 | Indicador tierra de fuego ROL | 
 SAR_TOT_P_COMP_EA_ROLE | RECORD | CURRENCY | 8 | 18 | 6 | Total de devengos por roles | 
 SAR_U_CONC_FIJOS_ROL | BLOCK | NUMBER | 6 | 9 | 4 | Unidades conceptos fijos Rol | 
 SCO_COMP_BASIS | BLOCK | NUMBER | 6 | 3 | 0 | Base de remuneraciones | 

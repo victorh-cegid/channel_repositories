@@ -1,0 +1,49 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: Id Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: NM_ORGANIZATION
+    NAME_ESP: Nombre sociedad
+    REAL_NAME: NM_ORGANIZATION
+    POSITION: 2
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NAME
+    NOT_NULL: true
+  - ID_FIELD: ID_LEVEL
+    NAME_ESP: ID Nivel
+    REAL_NAME: ID_LEVEL
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DEC_6_2_DEFAULT_1
+    NOT_NULL: true
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Fecha ult. actual.
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

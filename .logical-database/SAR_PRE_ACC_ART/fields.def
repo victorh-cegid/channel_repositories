@@ -1,0 +1,281 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: STD_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: STD_OR_HR_PERIOD
+    NAME_ESP: Num. periodo
+    REAL_NAME: STD_OR_HR_PERIOD
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_OR_HR_PERIOD
+    NOT_NULL: true
+  - ID_FIELD: SAR_ID_ORDINAL
+    NAME_ESP: Num. accidente
+    REAL_NAME: SAR_ID_ORDINAL
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: SAR_ORDINAL_9
+    NOT_NULL: true
+  - ID_FIELD: SAR_TOT_DIAS
+    NAME_ESP: Total de dias
+    REAL_NAME: SAR_TOT_DIAS
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER_4
+    NOT_NULL: false
+  - ID_FIELD: EX_TYPE
+    NAME_ESP: Fuente de tipo de cambio
+    REAL_NAME: EX_TYPE
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: FIXCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: CUR_DATE
+    NAME_ESP: Fecha de cambio
+    REAL_NAME: CUR_DATE
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TODAY
+    NOT_NULL: false
+  - ID_FIELD: ID_CURRENCY
+    NAME_ESP: Tipo de moneda
+    REAL_NAME: ID_CURRENCY
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_1
+    NAME_ESP: Remuneracion mes 1
+    REAL_NAME: SAR_REM_MES_1
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_2
+    NAME_ESP: Remuneracion mes 2
+    REAL_NAME: SAR_REM_MES_2
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_3
+    NAME_ESP: Remuneracion mes 3
+    REAL_NAME: SAR_REM_MES_3
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_4
+    NAME_ESP: Remuneracion mes 4
+    REAL_NAME: SAR_REM_MES_4
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_5
+    NAME_ESP: Remuneracion mes 5
+    REAL_NAME: SAR_REM_MES_5
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_6
+    NAME_ESP: Remuneracion mes 6
+    REAL_NAME: SAR_REM_MES_6
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_7
+    NAME_ESP: Remuneracion mes 7
+    REAL_NAME: SAR_REM_MES_7
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_8
+    NAME_ESP: Remuneracion mes 8
+    REAL_NAME: SAR_REM_MES_8
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_9
+    NAME_ESP: Remuneracion mes 9
+    REAL_NAME: SAR_REM_MES_9
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_10
+    NAME_ESP: Remuneracion mes 10
+    REAL_NAME: SAR_REM_MES_10
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_11
+    NAME_ESP: Remuneracion mes 11
+    REAL_NAME: SAR_REM_MES_11
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_REM_MES_12
+    NAME_ESP: Remuneracion mes 12
+    REAL_NAME: SAR_REM_MES_12
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_1
+    NAME_ESP: Mes 1
+    REAL_NAME: SAR_MES_1
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_2
+    NAME_ESP: Mes 2
+    REAL_NAME: SAR_MES_2
+    POSITION: 22
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_3
+    NAME_ESP: Mes 3
+    REAL_NAME: SAR_MES_3
+    POSITION: 23
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_4
+    NAME_ESP: Mes 4
+    REAL_NAME: SAR_MES_4
+    POSITION: 24
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_5
+    NAME_ESP: Mes 5
+    REAL_NAME: SAR_MES_5
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_6
+    NAME_ESP: Mes 6
+    REAL_NAME: SAR_MES_6
+    POSITION: 26
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_7
+    NAME_ESP: Mes 7
+    REAL_NAME: SAR_MES_7
+    POSITION: 27
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_8
+    NAME_ESP: Mes 8
+    REAL_NAME: SAR_MES_8
+    POSITION: 28
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_9
+    NAME_ESP: Mes 9
+    REAL_NAME: SAR_MES_9
+    POSITION: 29
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_10
+    NAME_ESP: Mes 10
+    REAL_NAME: SAR_MES_10
+    POSITION: 30
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_11
+    NAME_ESP: Mes 11
+    REAL_NAME: SAR_MES_11
+    POSITION: 31
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_MES_12
+    NAME_ESP: Mes 12
+    REAL_NAME: SAR_MES_12
+    POSITION: 32
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 33
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 34
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 35
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

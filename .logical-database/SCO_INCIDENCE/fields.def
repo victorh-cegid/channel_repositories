@@ -1,0 +1,177 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_INCIDENCE
+    NAME_ESP: ID Incidencia
+    REAL_NAME: SCO_ID_INCIDENCE
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: SCO_TA_INCIDENCE
+    NOT_NULL: true
+  - ID_FIELD: SCO_NM_INCIDENCE
+    NAME_ESP: Nombre de incidencia
+    REAL_NAME: SCO_NM_INCIDENCE
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_TA_VARCHAR62
+    NOT_NULL: true
+  - ID_FIELD: DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: DT_START
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: DT_END
+    NAME_ESP: Fin
+    REAL_NAME: DT_END
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_INC_GROUP
+    NAME_ESP: ID Grupo de incidencias
+    REAL_NAME: SCO_ID_INC_GROUP
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_TA_ID_INC_GROUP
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_DEPENDENCE
+    NAME_ESP: Alcance incidencia
+    REAL_NAME: SCO_ID_DEPENDENCE
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_TA_DEPENDENCE
+    NOT_NULL: true
+  - ID_FIELD: SCO_CK_IN_PAYROLL
+    NAME_ESP: Process in Payroll
+    REAL_NAME: SCO_CK_IN_PAYROLL
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_APP_10_D1
+    NOT_NULL: true
+  - ID_FIELD: SCO_CK_CONTR_SUSP
+    NAME_ESP: Ausencia prolongada
+    REAL_NAME: SCO_CK_CONTR_SUSP
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_APP_10_D0
+    NOT_NULL: true
+  - ID_FIELD: SCO_CK_PAID
+    NAME_ESP: Paid
+    REAL_NAME: SCO_CK_PAID
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: CHK_APP_10_D1
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_INP_PAYPERIOD
+    NAME_ESP: ID input payperiod
+    REAL_NAME: SCO_ID_INP_PAYPERI
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_INP_PAYROLL
+    NOT_NULL: true
+  - ID_FIELD: SCO_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SCO_COMMENT
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: SAR_CK_INTERRUP
+    NAME_ESP: Es Interrupcion
+    REAL_NAME: SAR_CK_INTERRUP
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_1_S_N_DEF_N
+    NOT_NULL: false
+  - ID_FIELD: SME_RAMA_INC
+    NAME_ESP: Rama de la incapacidad
+    REAL_NAME: SME_RAMA_INC
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_VARCHAR_1
+    NOT_NULL: false
+  - ID_FIELD: SME_RIESGO_SUA
+    NAME_ESP: Riesgo SUA
+    REAL_NAME: SME_RIESGO_SUA
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_VARCHAR_1
+    NOT_NULL: false
+  - ID_FIELD: SAR_CK_ANTIGUEDAD
+    NAME_ESP: Afecta antiguedad
+    REAL_NAME: SAR_CK_ANTIGUEDAD
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_VARCHAR_1_S_N_DEF_N
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 24
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SME_IND_DESGLOSAR
+    NAME_ESP: Desglosar por horas
+    REAL_NAME: SME_IND_DESGLOSAR
+    POSITION: 24
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SME_CHECK_BOOLEAM
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SME_IND_PRIM_DOM
+    NAME_ESP: Genera prima dominical
+    REAL_NAME: SME_IND_PRIM_DOM
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SME_CHECK_BOOLEAM
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_SIT_REVISTA
+    NAME_ESP: Sit. Revista
+    REAL_NAME: SAR_ID_SIT_REVISTA
+    POSITION: 26
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ID_SIT_REVISTA
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 26
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

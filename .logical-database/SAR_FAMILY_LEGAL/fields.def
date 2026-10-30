@@ -1,0 +1,153 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: ID_ORG_MONO
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: STD_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: STD_OR_DEP_NB
+    NAME_ESP: Num. secuencia
+    REAL_NAME: STD_OR_DEP_NB
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_DEP_NB
+    NOT_NULL: true
+  - ID_FIELD: DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: DT_START
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: DT_END
+    NAME_ESP: Fin
+    REAL_NAME: DT_END
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_TIPO_ASIG
+    NAME_ESP: ID. Tipo de asignacion
+    REAL_NAME: SAR_ID_TIPO_ASIG
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ID_TIPO_ASIG
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_OCUPACION
+    NAME_ESP: ID. Tipo de ocupacion
+    REAL_NAME: SAR_ID_OCUPACION
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_ID_OCUPACION
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_PRES_CERT
+    NAME_ESP: Fecha de presentacion de certi
+    REAL_NAME: SAR_DT_PRES_CERT
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_ALTA_IMP
+    NAME_ESP: Fecha de alta del impuesto
+    REAL_NAME: SAR_DT_ALTA_IMP
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_BAJA_IMP
+    NAME_ESP: Fecha de baja del impuesto
+    REAL_NAME: SAR_DT_BAJA_IMP
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_ALTA_FAM_CARGO
+    NAME_ESP: Fecha de alta fam. a cargo Os.
+    REAL_NAME: SAR_DT_ALTA_FAM_CA
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_BAJA_FAM_CARGO
+    NAME_ESP: Fecha de baja fam. a cargo Os.
+    REAL_NAME: SAR_DT_BAJA_FAM_CA
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_INICIO_EMBAR
+    NAME_ESP: Fecha de inicio del embarazo
+    REAL_NAME: SAR_DT_INICIO_EMBA
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_DEC_JUR
+    NAME_ESP: Fecha de declaracion jurada
+    REAL_NAME: SAR_DT_DEC_JUR
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SAR_COMMENT
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: SAR_PORC_DEDUC_FAM
+    NAME_ESP: Porcentaje de deduccion
+    REAL_NAME: SAR_PORC_DEDUC_FAM
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_NUMERIC_3_2_DEFAULT
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

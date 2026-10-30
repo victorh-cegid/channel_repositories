@@ -6,5 +6,5 @@ id_m4_type: 2
 prec: 50
 scale: 0
 scope: NODE
-default_value: "003;004"
+default_value: null
 id_cstype: 2

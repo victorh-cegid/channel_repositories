@@ -1,0 +1,121 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: ID_ORG_MONO
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_DAY_CALENDAR
+    NAME_ESP: ID Dia festivo
+    REAL_NAME: SCO_ID_DAY_CALENDA
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: SCO_TA_DAY_CALENDAR
+    NOT_NULL: true
+  - ID_FIELD: DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: DT_START
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: DT_END
+    NAME_ESP: Fin
+    REAL_NAME: DT_END
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_DAYCALEN_TYPE
+    NAME_ESP: ID Tipo dia festivo
+    REAL_NAME: SCO_ID_DAYCALEN_TY
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_TA_VARCHAR9
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_DAY
+    NAME_ESP: ID Dia
+    REAL_NAME: SCO_ID_DAY
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_DAY
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_TIME_UNIT
+    NAME_ESP: ID Unidad tiempo
+    REAL_NAME: SCO_ID_TIME_UNIT
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_TIME_UNIT
+    NOT_NULL: false
+  - ID_FIELD: SCO_UNIT_REPEAT
+    NAME_ESP: Num. de repeticiones
+    REAL_NAME: SCO_UNIT_REPEAT
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER4
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_RULE
+    NAME_ESP: ID Regla
+    REAL_NAME: SCO_ID_RULE
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_TA_ID_RULE
+    NOT_NULL: false
+  - ID_FIELD: SCO_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SCO_COMMENT
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_COMMENT
+    NOT_NULL: false
+  - ID_FIELD: SCO_FIX_MONTH
+    NAME_ESP: Mes
+    REAL_NAME: SCO_FIX_MONTH
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_ID_MONTH
+    NOT_NULL: false
+  - ID_FIELD: SCO_FIX_MONTH_DAY
+    NAME_ESP: Dia del mes
+    REAL_NAME: SCO_FIX_MONTH_DAY
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_FIX_MONTH_DAY
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 201
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 202
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 203
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

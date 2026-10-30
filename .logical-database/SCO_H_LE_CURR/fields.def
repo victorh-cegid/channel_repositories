@@ -1,0 +1,97 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 5
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_LEG_ENT
+    NAME_ESP: ID Empresa
+    REAL_NAME: SCO_ID_LEG_ENT
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_LEG_ENT
+    NOT_NULL: true
+  - ID_FIELD: SCO_ID_PROCESS_TP
+    NAME_ESP: ID Tipo proceso
+    REAL_NAME: SCO_ID_PROCESS_TP
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_ID_PROCESS_TP
+    NOT_NULL: true
+  - ID_FIELD: ID_CURRENCY
+    NAME_ESP: ID Moneda
+    REAL_NAME: ID_CURRENCY
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_START
+    NAME_ESP: Inicio
+    REAL_NAME: SCO_DT_START
+    POSITION: 5
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCO_DT_END
+    NAME_ESP: Fin
+    REAL_NAME: SCO_DT_END
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SCO_IND_MAIN_CURR
+    NAME_ESP: Indicador moneda ppal.
+    REAL_NAME: SCO_IND_MAIN_CURR
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_IND_MAIN_CURR
+    NOT_NULL: true
+  - ID_FIELD: SCO_BEHAV_CURR
+    NAME_ESP: Comportamiento moneda
+    REAL_NAME: SCO_BEHAV_CURR
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_BEHAV_CURR
+    NOT_NULL: true
+  - ID_FIELD: EX_TYPE
+    NAME_ESP: Fuente tipo cambio
+    REAL_NAME: EX_TYPE
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: FIXCHAR_10
+    NOT_NULL: true
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false

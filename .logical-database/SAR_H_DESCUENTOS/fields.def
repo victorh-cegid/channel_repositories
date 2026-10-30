@@ -1,0 +1,481 @@
+fields:
+  - ID_FIELD: ID_ORGANIZATION
+    NAME_ESP: ID Sociedad
+    REAL_NAME: ID_ORGANIZATION
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: ID_ORG_MULTI
+    NOT_NULL: true
+  - ID_FIELD: STD_ID_HR
+    NAME_ESP: ID RH
+    REAL_NAME: STD_ID_HR
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: STD_ID_HR
+    NOT_NULL: true
+  - ID_FIELD: STD_OR_HR_PERIOD
+    NAME_ESP: Num. periodo
+    REAL_NAME: STD_OR_HR_PERIOD
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: SCO_OR_HR_PERIOD
+    NOT_NULL: true
+  - ID_FIELD: SAR_OR_DESCUENTO
+    NAME_ESP: Ordinal del descuento
+    REAL_NAME: SAR_OR_DESCUENTO
+    POSITION: 4
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: STD_ORDINAL_6
+    NOT_NULL: true
+  - ID_FIELD: SAR_DT_START
+    NAME_ESP: Inicio del descuento
+    REAL_NAME: DT_START
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: START_DATE
+    NOT_NULL: true
+  - ID_FIELD: SCB_ID_JUZGADO
+    NAME_ESP: ID Juzgado
+    REAL_NAME: SCB_ID_JUZGADO
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_EXTERNAL_ORG
+    NOT_NULL: false
+  - ID_FIELD: SAR_DT_END
+    NAME_ESP: Fin del descuento
+    REAL_NAME: DT_END
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: END_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_DESCUENTO
+    NAME_ESP: ID Descuento
+    REAL_NAME: SAR_ID_DESCUENTO
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_PY_STRING_10
+    NOT_NULL: true
+  - ID_FIELD: SAR_PRIORIDAD_DESC
+    NAME_ESP: Prioridad aplic. descuento
+    REAL_NAME: SAR_PRIORIDAD_DESC
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_NUMBER_3
+    NOT_NULL: true
+  - ID_FIELD: SAR_IMP_MENSUAL
+    NAME_ESP: Importe mensual a retener
+    REAL_NAME: SAR_IMP_MENSUAL
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_PORC_LIQUID
+    NAME_ESP: Porcentaje del liquido
+    REAL_NAME: SAR_PORC_LIQUID
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_NUMBER_5_2
+    NOT_NULL: false
+  - ID_FIELD: SAR_PAGA_AFECT
+    NAME_ESP: Pagas afectadas
+    REAL_NAME: SAR_PAGA_AFECT
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SAR_STRING_1
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMP_INICIAL
+    NAME_ESP: Importe inicial del descuento
+    REAL_NAME: SAR_IMP_INICIAL
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_IMP_ACUM_RET
+    NAME_ESP: Importe acumulado retenido
+    REAL_NAME: SAR_IMP_ACUM_RET
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: SAR_SALDO_PTE
+    NAME_ESP: Saldo pendiente
+    REAL_NAME: SAR_SALDO_PTE
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: CUR_DATE
+    NAME_ESP: Fecha de cambio
+    REAL_NAME: CUR_DATE
+    POSITION: 16
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TODAY
+    NOT_NULL: false
+  - ID_FIELD: ID_CURRENCY
+    NAME_ESP: Tipo de moneda
+    REAL_NAME: ID_CURRENCY
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_CURRENCY
+    NOT_NULL: false
+  - ID_FIELD: EX_TYPE
+    NAME_ESP: Fuente de tipo de cambio
+    REAL_NAME: EX_TYPE
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: FIXCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_PERSON
+    NAME_ESP: ID Persona beneficiaria
+    REAL_NAME: SCO_ID_PERSON
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_PERSON
+    NOT_NULL: false
+  - ID_FIELD: SCO_OR_ACCOUNT
+    NAME_ESP: Num. sec. cuenta de persona
+    REAL_NAME: SCO_OR_ACCOUNT
+    POSITION: 20
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ORDINAL_6
+    NOT_NULL: false
+  - ID_FIELD: SAR_ID_EXT_ORG_BEN
+    NAME_ESP: ID Org. externa beneficiaria
+    REAL_NAME: SAR_ID_EXT_ORG_BEN
+    POSITION: 21
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_EXTERNAL_ORG
+    NOT_NULL: false
+  - ID_FIELD: SCO_OR_ACCOUNT_EO
+    NAME_ESP: Num. sec. cuenta Org. externa
+    REAL_NAME: SCO_OR_ACCOUNT_EO
+    POSITION: 22
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ORDINAL_6
+    NOT_NULL: false
+  - ID_FIELD: SAR_COMMENT
+    NAME_ESP: Comentario
+    REAL_NAME: SAR_COMMENT
+    POSITION: 23
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_COMENT
+    NOT_NULL: false
+  - ID_FIELD: SAR_COD_EXPEDIENTE
+    NAME_ESP: Num. de expediente
+    REAL_NAME: SAR_COD_EXPEDIENTE
+    POSITION: 24
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_20
+    NOT_NULL: false
+  - ID_FIELD: SAR_FEC_RESOL_JUD
+    NAME_ESP: Fecha de resolucion judicial
+    REAL_NAME: SAR_FEC_RESOL_JUD
+    POSITION: 25
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_ORG_JUDICIAL
+    NAME_ESP: Juzgado/Organismo Judicial
+    REAL_NAME: SAR_ORG_JUDICIAL
+    POSITION: 26
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_30
+    NOT_NULL: false
+  - ID_FIELD: SAR_FICH_SENTENCIA
+    NAME_ESP: Fichero resolucion judicial
+    REAL_NAME: SAR_FICH_SENTENCIA
+    POSITION: 27
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: BLOB
+    NOT_NULL: false
+  - ID_FIELD: SAR_FEC_LEVANTAMIENTO
+    NAME_ESP: Fecha de levantamiento
+    REAL_NAME: SAR_FEC_LEVANTAM
+    POSITION: 28
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SAR_NUM_JUZGADO
+    NAME_ESP: Num. de juzgado
+    REAL_NAME: SAR_NUM_JUZGADO
+    POSITION: 29
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_20
+    NOT_NULL: false
+  - ID_FIELD: SAR_SECRETARIA
+    NAME_ESP: Secretaria
+    REAL_NAME: SAR_SECRETARIA
+    POSITION: 30
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_30
+    NOT_NULL: false
+  - ID_FIELD: SAR_NUM_SECRETARIA
+    NAME_ESP: Num. de secretaria
+    REAL_NAME: SAR_NUM_SECRETARIA
+    POSITION: 31
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_20
+    NOT_NULL: false
+  - ID_FIELD: SAR_LIBRO
+    NAME_ESP: Libro
+    REAL_NAME: SAR_LIBRO
+    POSITION: 32
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_30
+    NOT_NULL: false
+  - ID_FIELD: SAR_FOLIO
+    NAME_ESP: Folio
+    REAL_NAME: SAR_FOLIO
+    POSITION: 33
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_30
+    NOT_NULL: false
+  - ID_FIELD: SAR_D_V
+    NAME_ESP: D. V.
+    REAL_NAME: SAR_D_V
+    POSITION: 34
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_30
+    NOT_NULL: false
+  - ID_FIELD: SAR_CODIGO_FUERO
+    NAME_ESP: Codigo fuero
+    REAL_NAME: SAR_CODIGO_FUERO
+    POSITION: 35
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_30
+    NOT_NULL: false
+  - ID_FIELD: SME_NUM_CONTRATO
+    NAME_ESP: Num. contrato
+    REAL_NAME: SME_NUM_CONTRATO
+    POSITION: 36
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_VARCHAR10
+    NOT_NULL: false
+  - ID_FIELD: SME_DT_MOV
+    NAME_ESP: Fecha de movimiento
+    REAL_NAME: SME_DT_MOV
+    POSITION: 37
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SCB_NUM_CTA_AFC
+    NAME_ESP: Numero Cuenta AFC
+    REAL_NAME: SCB_NUM_CTA_AFC
+    POSITION: 38
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCO_GL_ACCOUNT
+    NOT_NULL: false
+  - ID_FIELD: SCB_NUM_PROC
+    NAME_ESP: Numero del proceso
+    REAL_NAME: SCB_NUM_PROC
+    POSITION: 39
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCB_NUM_PROC
+    NOT_NULL: false
+  - ID_FIELD: SME_ID_MOV
+    NAME_ESP: ID Movimiento
+    REAL_NAME: SME_ID_MOV
+    POSITION: 40
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SME_ID_MOV
+    NOT_NULL: false
+  - ID_FIELD: SCO_ID_DOC
+    NAME_ESP: ID Documento asociado
+    REAL_NAME: SCO_ID_DOC
+    POSITION: 41
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: NUMBER_8
+    NOT_NULL: false
+  - ID_FIELD: SME_ID_PER_BEN
+    NAME_ESP: ID Persona beneficiaria Cheque
+    REAL_NAME: SME_ID_PER_BEN
+    POSITION: 42
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_PERSON
+    NOT_NULL: false
+  - ID_FIELD: SME_NRO_CUENTA_V_DESP
+    NAME_ESP: Nro. Cuenta vale despensa
+    REAL_NAME: SME_NRO_CUENTA_V_DESP
+    POSITION: 43
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STRING_20
+    NOT_NULL: false
+  - ID_FIELD: SME_ID_PER_BEN_VALE
+    NAME_ESP: ID Persona benef Vale Desp.
+    REAL_NAME: SME_ID_PER_BEN_VAL
+    POSITION: 44
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_ID_PERSON
+    NOT_NULL: false
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 45
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO01
+    NAME_ESP: Anexo01
+    REAL_NAME: SLA_ANEXO01
+    POSITION: 45
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SLA_NUMBER_18_6
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO02
+    NAME_ESP: Anexo02
+    REAL_NAME: SLA_ANEXO02
+    POSITION: 46
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SLA_NUMBER_18_6
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 46
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 47
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO03
+    NAME_ESP: Anexo03
+    REAL_NAME: SLA_ANEXO03
+    POSITION: 47
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SLA_NUMBER_18_6
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO04
+    NAME_ESP: Anexo04
+    REAL_NAME: SLA_ANEXO04
+    POSITION: 48
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SLA_NUMBER_18_6
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO05
+    NAME_ESP: Anexo05
+    REAL_NAME: SLA_ANEXO05
+    POSITION: 49
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO06
+    NAME_ESP: Anexo06
+    REAL_NAME: SLA_ANEXO06
+    POSITION: 50
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO07
+    NAME_ESP: Anexo07
+    REAL_NAME: SLA_ANEXO07
+    POSITION: 51
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO08
+    NAME_ESP: Anexo08
+    REAL_NAME: SLA_ANEXO08
+    POSITION: 52
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_DATE
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO09
+    NAME_ESP: Anexo09
+    REAL_NAME: SLA_ANEXO09
+    POSITION: 53
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_NUMBER_1
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO10
+    NAME_ESP: Anexo10
+    REAL_NAME: SLA_ANEXO10
+    POSITION: 54
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_NUMBER_1
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO11
+    NAME_ESP: Anexo11
+    REAL_NAME: SLA_ANEXO11
+    POSITION: 55
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_NUMBER_1
+    NOT_NULL: false
+  - ID_FIELD: SLA_ANEXO12
+    NAME_ESP: Anexo12
+    REAL_NAME: SLA_ANEXO12
+    POSITION: 56
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: STD_NUMBER_1
+    NOT_NULL: false
+  - ID_FIELD: SCB_ID_BANK_EMB
+    NAME_ESP: ID Banco embargo
+    REAL_NAME: SCB_ID_BANK_EMB
+    POSITION: 58
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: SCB_CADENA_11_DEF_0
+    NOT_NULL: false

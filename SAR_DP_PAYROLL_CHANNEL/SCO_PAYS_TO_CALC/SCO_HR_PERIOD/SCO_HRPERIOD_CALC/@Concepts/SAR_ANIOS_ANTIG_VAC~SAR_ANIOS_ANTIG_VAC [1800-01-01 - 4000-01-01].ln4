@@ -1,7 +1,7 @@
 ' Calcula el num. de a?os en alta en la empresa a la fecha de proceso
 
 IF ISNULL(SAR_HR_PERIOD.SSP_FEC_ANTIGUEDAD) = FALSE THEN
-    M1 = SAR_HR_PERIOD.SSP_FEC_ANTIGUEDAD -1
+    M1 = SAR_HR_PERIOD.SSP_FEC_ANTIGUEDAD - 1
 ELSEIf SAR_HR_PERIOD.STD_ID_HRP_START_REASON <> "005" THEN
     M1 = SAR_FECHA_ALTA - 1
 Else 

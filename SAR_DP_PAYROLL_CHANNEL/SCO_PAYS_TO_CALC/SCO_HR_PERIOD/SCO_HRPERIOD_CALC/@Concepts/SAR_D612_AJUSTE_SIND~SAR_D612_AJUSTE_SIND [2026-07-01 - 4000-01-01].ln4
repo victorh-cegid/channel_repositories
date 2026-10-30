@@ -1,19 +1,13 @@
-'En este concepto devuelve la diferencia entre las cuotas sindicales y el tope D612
-If SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" Then Return(0)
-
 ajuste = 0
 
 If SAR_D612_IND = 1 Then
-    tope = Round(Percentage(SAR_D612_PORC_TOPE,SAR_D612_BASE_TOPE_MES),SAR_NUM_DEC)
-    
-    'Pagas donde excluimos el topado por ser anteriores a paga normal (donde se tiene el valor del tope)
-    If SAR_TP_IMPUT = "2" And tope = 0 Then Return(0)
-    
+    tope = Percentage(SAR_D612_PORC_TOPE,SAR_D612_BASE_TOPE_MES)
+
     cuotSindPaga = SAR_D612_TOT_CUOTAS_SIND
     cuotSindPrev = SAR_MES_COTIZ_SIND[0].SAR_D612_TOT_CUOTAS_SIND
     cuotSindTot = cuotSindPaga + cuotSindPrev
-    
-    If cuotSindTot > tope Then ajuste = tope - cuotSindTot
+
+    ajuste = tope - cuotSindTot
 EndIf
 
 'En este punto en ajuste tenemos el ajuste completo del mes, hay que considerar lo que ya llevamos ajustado en el mismo mes

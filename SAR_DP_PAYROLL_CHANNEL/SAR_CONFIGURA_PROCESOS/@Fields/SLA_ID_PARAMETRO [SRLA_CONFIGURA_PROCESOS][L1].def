@@ -1,0 +1,13 @@
+item: SLA_ID_PARAMETRO
+name: ID Parametro
+column_name: SLA_ID_PARAMETRO
+item_type: FIELD
+type: STRING
+id_m4_type: 2
+prec: 100
+scale: 0
+scope: RECORD
+default_value: null
+internal_type: 1
+item_aux: null
+id_cstype: null

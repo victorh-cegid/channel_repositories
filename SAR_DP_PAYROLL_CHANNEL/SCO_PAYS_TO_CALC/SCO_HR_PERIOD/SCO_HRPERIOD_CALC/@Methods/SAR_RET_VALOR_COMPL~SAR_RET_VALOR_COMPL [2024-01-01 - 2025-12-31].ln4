@@ -2066,18 +2066,15 @@ EndIf
 'Movilidad corredores y viajantes de comercio - Entidad 17
 If IsNull(imp_tot_17) = M4_False Then
    IF imp_tot_17 > 0 Then
-   
-        'CASO CSS 3639222 Dejan de estar vigentes el resto de deducciones
-        If SAR_IND_VIAJANTE = 1 Then  SAR_JUR_MOV_COR = imp_tot_17 'El empleado es viajante de comercio, se asignara el valor el concepto 4917
-        
-  
-        'ElseIf SAR_IND_VIAJANTE = 0 Then 'El empleado no es viajante de comercio, se asignara el valor al concepto 4950 - RG4003
-        '    SAR_IG_VIATICOS = imp_tot_17
-        'ElseIf SAR_IND_VIAJANTE = 2 Then 'Deduccion transporte larga distancia
-        '    SAR_DED_TRANS = imp_tot_17
-        'ElseIf SAR_IND_VIAJANTE = 3 Then 'Deduccion transporte carga larga distancia
-        '    SAR_DED_CARGA = imp_tot_17
-        'EndIf
+        If SAR_IND_VIAJANTE = 1 Then 'El empleado es viajante de comercio, se asignara el valor el concepto 4917
+            SAR_JUR_MOV_COR = imp_tot_17
+        ElseIf SAR_IND_VIAJANTE = 0 Then 'El empleado no es viajante de comercio, se asignara el valor al concepto 4950 - RG4003
+            SAR_IG_VIATICOS = imp_tot_17
+        ElseIf SAR_IND_VIAJANTE = 2 Then 'Deduccion transporte larga distancia
+            SAR_DED_TRANS = imp_tot_17
+        ElseIf SAR_IND_VIAJANTE = 3 Then 'Deduccion transporte carga larga distancia
+            SAR_DED_CARGA = imp_tot_17
+        EndIf
    EndIf
 Else
     SAR_JUR_MOV_COR = 0

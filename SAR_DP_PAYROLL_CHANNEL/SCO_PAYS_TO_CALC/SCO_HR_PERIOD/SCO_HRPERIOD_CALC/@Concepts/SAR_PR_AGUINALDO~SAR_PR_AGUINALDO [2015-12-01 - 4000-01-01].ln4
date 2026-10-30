@@ -12,9 +12,6 @@ Else
     fec_fin = DxDate("31","12",DxYear(SCO_DT_ALLOCATION))
 EndIf
 
-'En caso de baja, no debe leer pagas futuras
-If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then fec_fin = Min(fec_fin,SCO_DT_ALLOCATION-1)
-
 SAR_ACM_6_MESES_SAC.DESTROYBLOCK()
 SAR_ACM_6_MESES_SAC.SCO_DT_PAYMENT = fec_fin
 SAR_ACM_6_MESES_SAC.SCO_DT_START = fec_ini

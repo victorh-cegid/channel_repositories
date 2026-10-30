@@ -1,0 +1,153 @@
+fields:
+  - ID_FIELD: ID_T3_PAYROLL
+    NAME_ESP: ID Nomina Meta4Object
+    REAL_NAME: ID_T3_PAYROLL
+    POSITION: 1
+    IS_PK: true
+    POS_PK: 1
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: ID_NODE_AC_READ
+    NAME_ESP: ID Lectura nodo cuenta
+    REAL_NAME: ID_NODE_AC_READ
+    POSITION: 2
+    IS_PK: true
+    POS_PK: 2
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: ID_NODE_AC_CALC
+    NAME_ESP: ID Calculo nodo cuenta
+    REAL_NAME: ID_NODE_AC_CALC
+    POSITION: 3
+    IS_PK: true
+    POS_PK: 3
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: true
+  - ID_FIELD: SEARCH_TYPE
+    NAME_ESP: Buscar tipo
+    REAL_NAME: SEARCH_TYPE
+    POSITION: 4
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_SHORT
+    NOT_NULL: false
+  - ID_FIELD: PAY_TYPE
+    NAME_ESP: Tipo pago
+    REAL_NAME: PAY_TYPE
+    POSITION: 5
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: PAY_FRECUENCY
+    NAME_ESP: Frecuencia pago
+    REAL_NAME: PAY_FRECUENCY
+    POSITION: 6
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: TOT_OPERATION
+    NAME_ESP: Operacion de total
+    REAL_NAME: TOT_OPERATION
+    POSITION: 7
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: VARCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: START_POINT
+    NAME_ESP: Punto inicio
+    REAL_NAME: START_POINT
+    POSITION: 8
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: VARCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: BACK_MONTH
+    NAME_ESP: Mes anterior
+    REAL_NAME: BACK_MONTH
+    POSITION: 9
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_LONG
+    NOT_NULL: false
+  - ID_FIELD: FORWARD_MONTH
+    NAME_ESP: Mes siguiente
+    REAL_NAME: FORWARD_MONTH
+    POSITION: 10
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_LONG
+    NOT_NULL: false
+  - ID_FIELD: REV_BEHAVIOUR
+    NAME_ESP: Rev. comportamiento
+    REAL_NAME: REV_BEHAVIOUR
+    POSITION: 11
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: VARCHAR_10
+    NOT_NULL: false
+  - ID_FIELD: SEL_PAYS
+    NAME_ESP: Pagas seleccionadas
+    REAL_NAME: SEL_PAYS
+    POSITION: 12
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: ID_SHORT
+    NOT_NULL: false
+  - ID_FIELD: BUFFER1
+    NAME_ESP: Bufer 1
+    REAL_NAME: BUFFER1
+    POSITION: 13
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: COMMENTS
+    NOT_NULL: false
+  - ID_FIELD: BUFFER2
+    NAME_ESP: Bufer 2
+    REAL_NAME: BUFFER2
+    POSITION: 14
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: BUFFER3
+    NAME_ESP: Bufer 3
+    REAL_NAME: BUFFER3
+    POSITION: 15
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DESCRIPTION
+    NOT_NULL: false
+  - ID_FIELD: ID_NODE_AC_CALC_T3
+    NAME_ESP: Meta4Object creacion nodo
+    REAL_NAME: ID_NODE_AC_CALC_T3
+    POSITION: 16
+    IS_PK: true
+    POS_PK: 4
+    ID_TYPE: LOGIC_NAME_DEF
+    NOT_NULL: true
+  - ID_FIELD: ID_APPROLE
+    NAME_ESP: ID Rol aplicacion
+    REAL_NAME: ID_APPROLE
+    POSITION: 17
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: ID_APP_USER
+    NAME_ESP: ID Usuario aplicacion
+    REAL_NAME: ID_SECUSER
+    POSITION: 18
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: LOGIC_NAME
+    NOT_NULL: false
+  - ID_FIELD: DT_LAST_UPDATE
+    NAME_ESP: Ultima actualizacion
+    REAL_NAME: DT_LAST_UPDATE
+    POSITION: 19
+    IS_PK: false
+    POS_PK: 0
+    ID_TYPE: DATE_TRANS
+    NOT_NULL: false
