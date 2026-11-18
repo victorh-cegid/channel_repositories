@@ -37,7 +37,7 @@ If SWP_NODES_AC_CALC.SCO_EXPREV = 1 Then
 	EndIf
 EndIf
 
-If SWP_NODES_AC_CALC.SCO_DYN_ORIGIN = 1 Then    'Gestion de nodos de acumulado de origen dinamico
+If SWP_NODES_AC_CALC.SCO_DYN_ORIGIN = 1 Then    'Gestion de nodos de acumulado de origen dinámico
     dtMinDyn= M4_MINUS_INF
     dtMaxDyn = M4_PLUS_INF
     SCO_DYN_CALC_MIN_MAX_DATE(id_node,dtMinDyn,dtMaxDyn)

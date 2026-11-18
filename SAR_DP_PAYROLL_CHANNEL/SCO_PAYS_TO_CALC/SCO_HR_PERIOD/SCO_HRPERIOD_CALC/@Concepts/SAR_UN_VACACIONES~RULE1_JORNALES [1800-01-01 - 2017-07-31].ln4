@@ -7,11 +7,11 @@ ENDIF
 INICIO_TRAMO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysStartDate
 FIN_TRAMO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysEndDate
 
-'para que se ejecuten antes de hacer la asignacion y funcione en revision
+'para que se ejecuten antes de hacer la asignación y funcione en revisión
 aux = SAR_DIAS_VACACIONES       'Vacaciones
 
-dias_vac = 0        'dias de descuento vacaciones
-dias_lic_vac = 0    'dias licencia vacaciones
+dias_vac = 0        'días de descuento vacaciones
+dias_lic_vac = 0    'días licencia vacaciones
 
 REG_AUSENTISMOS = SAR_REAL_TIME_PERIOD.COUNT()
 REG_HS_AUSENCIA = 0
@@ -60,7 +60,7 @@ FOR  J = primerreg  TO  ultimoreg
     t_unid = SAR_REAL_TIME_PERIOD.SCO_ID_TIME_UNIT
     unid = SAR_REAL_TIME_PERIOD.SCO_UNITS
     '
-    'Contabilizo la cantidad de dias y si el tipo de salario es Horario, 
+    'Contabilizo la cantidad de días y si el tipo de salario es Horario, 
     'traspaso las unidades a horas
     '
     IF SAR_TIPO_SALARIO = "003" THEN
@@ -90,7 +90,7 @@ FOR G = primerreg  TO  ultimoreg
     fec_ini_abs = SAR_VACACIONES.SCO_DT_START
     fec_fin_abs = SAR_VACACIONES.SCO_DT_END
 
-    'Calculo de los dias a pagar de vacaciones
+    'Calculo de los días a pagar de vacaciones
     IF SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC <= fec_ini_abs AND fec_ini_abs <= SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC THEN
         fec_ini_tramo = INICIO_TRAMO
         fec_fin_tramo = FIN_TRAMO
@@ -124,10 +124,10 @@ NEXT
 tipo_paga = SAR_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM
 FECHA_FIN_TRAMO = FIN_TRAMO
 
-'Calculo los dias del tramo
+'Calculo los días del tramo
 dias_tramo = (FECHA_FIN_TRAMO - INICIO_TRAMO) + 1
 
-'Calculo los dias del tramo real
+'Calculo los días del tramo real
 dias_tramo_real = FIN_TRAMO - INICIO_TRAMO + 1
 
 
@@ -180,7 +180,7 @@ IF dias_vac > 0 And  SAR_TIPO_SALARIO <> "001" THEN
                     SAR_VAC_DESC.SAR_DIAS_TOMADOS = dias_lic_vac
                     SAR_VAC_DESC.SAR_DIAS_DESCONT = dias_vac
                 ENDIF
-                'A continuacion el campo nuevo: la ID de Incidencia = 9                           
+                'A continuación el campo nuevo: la ID de Incidencia = 9                           
                 SAR_VAC_DESC.SCO_ID_INCIDENCE = "9"
             ELSE
              'Se actualizan los datos, dado que el registro existe.   
@@ -234,7 +234,7 @@ IF dias_vac > 0 And  SAR_TIPO_SALARIO <> "001" THEN
                     endif
                     SAR_VAC_DESC.SCO_DT_PAY = SCO_DT_PAYMENT
                     SAR_VAC_DESC.SCO_DT_ALLOC = SCO_DT_ALLOCATION
-                    'A continuacion el campo nuevo: la ID de Incidencia = 9  
+                    'A continuación el campo nuevo: la ID de Incidencia = 9  
                     SAR_VAC_DESC.SCO_ID_INCIDENCE = "9"
                 Else
                     'Se elimina el registro existente.
@@ -290,7 +290,7 @@ IF dias_vac > 0 And  SAR_TIPO_SALARIO <> "001" THEN
                     endif
                     SAR_VAC_DESC.SCO_DT_PAY = SCO_DT_PAYMENT
                     SAR_VAC_DESC.SCO_DT_ALLOC = SCO_DT_ALLOCATION
-                    'A continuacion el campo nuevo: la ID de Incidencia = 9  
+                    'A continuación el campo nuevo: la ID de Incidencia = 9  
                     SAR_VAC_DESC.SCO_ID_INCIDENCE = "9"                        
                 EndIf
                '---------------------------------------------------------------------------------------

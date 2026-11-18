@@ -1,17 +1,17 @@
-'Antes de realizar cualquier calculo se verifica que la empresa haga la retencion correspondiente a ganancias:
+'Antes de realizar cualquier cálculo se verifica que la empresa haga la retención correspondiente a ganancias:
 If(SAR_IND_NO_RET_GAN = 1)Then 
     Return(0)
 endIf  
 
-'En esta formula se utilizan tres nodos que devuelven:
+'En esta fórmula se utilizan tres nodos que devuelven:
 'SAR_ACM_IMPUESTO: 
-'La suma de los valores del actual a?o fiscal, excepto las revisiones con la misma fecha de pago que la paga actual.
+'La suma de los valores del actual año fiscal, excepto las revisiones con la misma fecha de pago que la paga actual.
 
 'SAR_REV_ACM_IMPUESTO2: 
 'La suma de los valores de las revisiones cuya fecha de pago coincida con la fecha de pago de la paga actual.
 
 'REV_ACM_IMPUESTO: 
-'Solo actua en una revision y devuelve los valores originales de la paga original que estamos revisando.
+'Sólo actúa en una revisión y devuelve los valores originales de la paga original que estamos revisando.
 
 '---------------------------------------------------
 '                  Aclaraciones
@@ -19,18 +19,18 @@ endIf
 
 'COMPORTAMIENTO EN LAS REVISIONES
 
-'Si es una revision descontamos el importe que se acumulo en la paga original
-'Es importante entender bien como funciona en estos casos:
-'Si la revision es del mismo a?o fiscal entonces descontamos el importe porque ya lo estamos tomando
-'en la TI ACM_IMPUESTO, si no lo descontaramos estariamos sumando dos veces la misma base imponible.
-'Si la revision es de diferente a?o fiscal respecto al actual, entonces no debemos tomar la base imponible
-'de la paga original debido a que corresponde a otro a?o fiscal. Como la TI ACM_IMPUESTO solo devuelve ''los valores del actual a?o fiscal entonces basta con restar al valor recalculado del v4999 la parte correspondiente 
-'a la paga original, de esa manera la base imponible acumulada solo se incrementara en la parte que estamos''pagando en este a?o fiscal.
+'Si es una revision descontamos el importe que se acumuló en la paga original
+'Es importante entender bién como funciona en estos casos:
+'Si la revisión es del mismo año fiscal entonces descontamos el importe porque ya lo estamos tomando
+'en la TI ACM_IMPUESTO, si no lo descontáramos estaríamos sumando dos veces la misma base imponible.
+'Si la revisión es de diferente año fiscal respecto al actual, entonces no debemos tomar la base imponible
+'de la paga original debido a que corresponde a otro año fiscal. Como la TI ACM_IMPUESTO sólo devuelve ''los valores del actual año fiscal entonces basta con restar al valor recalculado del v4999 la parte correspondiente 
+'a la paga original, de esa manera la base imponible acumulada sólo se incrementará en la parte que estamos''pagando en este año fiscal.
 
 
 
 '---------------------------------------------------
-'          Inicializacion de variables
+'          Inicialización de variables
 '---------------------------------------------------
 aux = 0
 base = 0           
@@ -38,7 +38,7 @@ nummes = 0          'Mes de pago
 tsv = 0             'Tope seguro de vida
 tgs = 0             'Tope gastos de sepelio
 gni = 0             'Ganancia no imponible
-desp = 0            'Deduccion especial
+desp = 0            'Deducción especial
 tcma = 0            'Tope cuota medica asistencial
 gnoi = 0            'Ganancias no Imponibles 
 oded = 0            'Otras deducciones
@@ -49,15 +49,15 @@ retjur = 0          'Ingreso 572 Seguro de retiro
 sepjur = 0          'Ingreso 572 Seguro de vida 
 cmajur = 0          'Ingreso 572 Prepaga 
 donajur = 0         'Ingreso 572 Donaciones 
-topehm = 0          'Tope honorarios medicos 
-hono = 0            'Honorarios Medicos 
-serv = 0            'Servicio Domestico
-tope_serv = 0       'Tope Servicio Domestico
-tope_servicio = 0   'Deduccion Servicio Domestico
+topehm = 0          'Tope honorarios médicos 
+hono = 0            'Honorarios Médicos 
+serv = 0            'Servicio Doméstico
+tope_serv = 0       'Tope Servicio Doméstico
+tope_servicio = 0   'Deducción Servicio Doméstico
 ap_cap_soc = 0      'Aporte capital socia o fondo de riesgo
 sac_neto = 0         'SAC neto dic08
-tot_gtias_recip = 0   'Garantias Reciprocas
-tot_gtos_viajantes = 0 'Gastos vehiculos y movilidad
+tot_gtias_recip = 0   'Garantías Recíprocas
+tot_gtos_viajantes = 0 'Gastos vehículos y movilidad
 ig_caja_prev_prof = 0 'Declar. Jurada Aportes a Cajas Prev. Profesionales
 ig_d_ley_nac_prov = 0 'Declar. Jurada Desc. obligat. establecidos por ley nacional, provincial o municipal
 donac_con_sac = 0           'Donaciones 
@@ -76,30 +76,30 @@ SAR_IG_TOT_C_IM = 0    'Total haberes tributables
 SAR_IG_TOT_JUB = 0    'Fondos de Jubilaciones
 SAR_IG_T_19032 = 0    'Obras Sociales
 SAR_IG_TOT_OB_S = 0    'Ley 19032
-SAR_IG_CMASIS_REMUN = 0    'Cobertura medico asistencial
+SAR_IG_CMASIS_REMUN = 0    'Cobertura médico asistencial
 SAR_IG_SEGURO_REMUN = 0    'Primas de seguro para el caso de muerte
 SAR_IG_SEPELIO_REM = 0    'Gastos de sepelio
 SAR_IG_DONAC_REMUN = 0    'Donaciones
 SAR_IG_RETIRO_REMUN = 0    'Aportes seguros de retiro
 SAR_IG_O_DEDUC_REM = 0    'Otras deducciones
-SAR_IMP_DED_HON_MED = 0    'Honorarios y gastos medicos
-SAR_IMP_D_IN_HIP = 0    'Intereses creditos hipotecarios 
+SAR_IMP_DED_HON_MED = 0    'Honorarios y gastos médicos
+SAR_IMP_D_IN_HIP = 0    'Intereses créditos hipotecarios 
 SAR_IG_G_NO_IMP = 0    'Ganancias no imponibles
-SAR_IG_DED_ESP = 0    'Deduccion especial
+SAR_IG_DED_ESP = 0    'Deducción especial
 SAR_IG_AP_VOL_REM = 0    'Aporte Voluntario
-SAR_IG_CONYUGE_REM = 0    'Conyuge
+SAR_IG_CONYUGE_REM = 0    'Cónyuge
 SAR_IG_HIJOS_REM = 0    'Hijos
 SAR_IG_OCARGAS_REM = 0    'Otras cargas de familia
-SAR_DED_SER_DOM = 0    'Servicio Domestico
+SAR_DED_SER_DOM = 0    'Servicio Doméstico
 SAR_TOT_AP_C_SOC = 0    'Aporte capital social o fondo de riesgo
 SAR_DED_CUO_SIND = 0    'Cuota Sindical de acuerdo a la RG. 2362/07  
-SAR_IG_GTIA_RECIP_REM = 0    'Garantias Reciprocas
-SAR_IG_GTOS_COR = 0    'Gastos vehiculos y movilidad
-SAR_IG_CAJA_PREV_PROF = 0 'IG de Aportes a las cajas de prevision para profesionales
+SAR_IG_GTIA_RECIP_REM = 0    'Garantías Recíprocas
+SAR_IG_GTOS_COR = 0    'Gastos vehículos y movilidad
+SAR_IG_CAJA_PREV_PROF = 0 'IG de Aportes a las cajas de previsión para profesionales
 SAR_IG_DESC_LEY_NAC_PROV = 0 'IG de Descuentos obligatorios establecidos por ley nacional, provincial o municipal
 
 '---------------------------------------------------
-'          Calculo de la Ganancia Bruta
+'          Cálculo de la Ganancia Bruta
 '---------------------------------------------------
 
 'Recorro el acumulado del empleado y sumarizo los valores para armar las TI.
@@ -245,7 +245,7 @@ sum_tot_sar_bruto_oe    = 0
     
     
     '---------------------------------------------------
-    '          Calculo de las Deducciones
+    '          Cálculo de las Deducciones
     '---------------------------------------------------
     tot_jub            = SAR_TOT_JUBILACION + sum_tot_jub + sum_tot_jub_rev2
     tot_ap_vol         = SAR_TOT_AP_VOLUNT + sum_tot_ap_vol + sum_tot_ap_vol_rev2 
@@ -278,7 +278,7 @@ sum_tot_sar_bruto_oe    = 0
     
     
     '---------------------------------------------------
-    '          Inicio del calculo
+    '          Inicio del cálculo
     '---------------------------------------------------
     'Calculamos el mes de pago.
     nummes = SAR_MES_PAGO_IG
@@ -289,7 +289,7 @@ sum_tot_sar_bruto_oe    = 0
     
     
     '---------------------------------------------------
-    '               Deduccion Especial
+    '               Deducción Especial
     '         (Res.Gral. AFIP 1410/2003 ANEXO I
     '---------------------------------------------------
     desp = SAR_DED_ESPECIAL..SYSTOTALSLICES(TOTAL_SUM)
@@ -309,7 +309,7 @@ sum_tot_sar_bruto_oe    = 0
     
     
     '-------------------------------------------------------------------------------------------    
-    'Servicio Domestico RG 1978 AFIP
+    'Servicio Doméstico RG 1978 AFIP
     '-------------------------------------------------------------------------------------------
     serv          = SAR_SERV_DOMEST
     tope_serv     = SAR_TOPE_SER_DOM
@@ -318,7 +318,7 @@ sum_tot_sar_bruto_oe    = 0
     
     '---------------------------------------------------
     '     Aportes capital social o fondo de riesgo
-    '               Art.79 Ley N? 2446
+    '               Art.79 Ley N° 2446
     '---------------------------------------------------
     ap_cap_soc = tot_ap_cap_soc + SAR_AP_CAP_SOC_FDO_R
     
@@ -356,8 +356,8 @@ sum_tot_sar_bruto_oe    = 0
     '                   Donaciones
     '     (Res.Gral. AFIP 1261/2002 ANEXO III g)
     '---------------------------------------------------
-    'Segun el inciso L del art. 53 del decreto 290/00. Se exceptuan las deducciones del
-    'inciso g (obras sociales y cuota medico-asistenciales), honorarios medicos, donaciones
+    'Según el inciso L del art. 53 del decreto 290/00. Se exceptúan las deducciones del
+    'inciso g (obras sociales y cuota medico-asistenciales), honorarios médicos, donaciones
     'y las deducciones del art. 23. de la ley.
     
     'Para calcular el subtotal desde el cual se calcula el tope del 5% se descuentan del Total haberes tributables:
@@ -367,8 +367,8 @@ sum_tot_sar_bruto_oe    = 0
     'Gastos de sepelio
     'Aportes seguros de retiro
     'Otras deducciones
-    'Intereses creditos hipotecarios 
-    'Servicio Domestico
+    'Intereses créditos hipotecarios 
+    'Servicio Doméstico
     'Cuota Sindical
     
     'Modif. IG SAC Ley 27.260, Art. 63 - SAC Neto 1er. semestre exento
@@ -390,7 +390,7 @@ sum_tot_sar_bruto_oe    = 0
     donac    = Max(donac,0)
     base     = base - donac
          
-    'Modificacion de acuerdo a Devolucion IG SAC Ley 27.260, Art. 63
+    'Modificación de acuerdo a Devolución IG SAC Ley 27.260, Art. 63
     '----------------------------------------------------------------------
     subdonac_con_sac = tot_con_imp - tot_jub - tot_ap_vol -tot_gtias_recip - tot_ley_19032 - tsv - tgs - oded - tot_int_hip - tope_servicio - tot_cuo_sind - ap_cap_soc - tot_gtos_viajantes - ig_caja_prev_prof - ig_d_ley_nac_prov - tot_ob_soc
     topdonac_con_sac = subdonac_con_sac * SAR_TOPE_DONAC / 100 ' tope donaciones
@@ -401,13 +401,13 @@ sum_tot_sar_bruto_oe    = 0
     '----------------------------------------------------------------------
 
     '---------------------------------------------------
-    '          Cuota medica asistencial
+    '          Cuota médica asistencial
     ' (Res.Gral. AFIP 1261/2002 ANEXO III c)
     '---------------------------------------------------
     'Para calcular el subtotal al tope de donaciones se le descuenta la obra social.
-    'Segun el inciso M del art. 53 del decreto 290/00. 
-    'Este inciso solo exceptua a las propias cuotas medica-asistenciales, a las
-    'donaciones, a los honorarios medicos y a las deducciones del art. 23. de la ley.
+    'Según el inciso M del art. 53 del decreto 290/00. 
+    'Este inciso sólo exceptúa a las propias cuotas médica-asistenciales, a las
+    'donaciones, a los honorarios médicos y a las deducciones del art. 23. de la ley.
     
     
     submedhon = subdonac 
@@ -417,7 +417,7 @@ sum_tot_sar_bruto_oe    = 0
     tcma      = Max(tcma,0)    
     base      = base - tcma
 
-    'Modificacion de acuerdo a Devolucion IG SAC Ley 27.260, Art. 63
+    'Modificación de acuerdo a Devolución IG SAC Ley 27.260, Art. 63
     '----------------------------------------------------------------------
     submedhon_con_sac = subdonac_con_sac 
     aux_con_sac       = submedhon_con_sac * SAR_PORC_TOPE_C_MED / 100      'tope cuota med.asistencial 
@@ -430,24 +430,24 @@ sum_tot_sar_bruto_oe    = 0
     
     
     '---------------------------------------------------
-    '             Honorarios Medicos
+    '             Honorarios Médicos
     '    (Res.Gral. AFIP 1261/2002 ANEXO III j)
     '---------------------------------------------------
-    'Se utiliza el mismo subtotal que para el calculo de las cuota medico asistenciales
+    'Se utiliza el mismo subtotal que para el cálculo de las cuota médico asistenciales
     'Inciso M del art. 53 del decreto 290/00. 
     
     If SAR_TP_IMPUT = "99" Or (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017")  Then
     
-        'Calculamos la deduccion por  honorarios medicos
-        'si es una liquidacion anual o final segun RG 756/2000 de la AFIP
-        hono   = SAR_HONORAR_MEDICOS * (SAR_P_TOPE_HONORAR_MED/100)             'Art. 7 inciso j de la RG 4139 DGI, segun RG 756 AFIP
-        topehm = Min(hono,submedhon * 0.05)     'tope honorarios medicos 
+        'Calculamos la deducción por  honorarios médicos
+        'si es una liquidación anual o final según RG 756/2000 de la AFIP
+        hono   = SAR_HONORAR_MEDICOS * (SAR_P_TOPE_HONORAR_MED/100)             'Art. 7 inciso j de la RG 4139 DGI, según RG 756 AFIP
+        topehm = Min(hono,submedhon * 0.05)     'tope honorarios médicos 
         topehm = Max(topehm,0)
         base   = base - topehm    
 
-        'Modificacion de acuerdo a Devolucion IG SAC Ley 27.260, Art. 63
+        'Modificación de acuerdo a Devolución IG SAC Ley 27.260, Art. 63
         '----------------------------------------------------------------------
-        topehm_con_sac = Min(hono,submedhon_con_sac * 0.05)     'tope honorarios medicos 
+        topehm_con_sac = Min(hono,submedhon_con_sac * 0.05)     'tope honorarios médicos 
         topehm_con_sac = Max(topehm_con_sac,0)
         dif_hono_con_sac  = topehm_con_sac - topehm
         SAR_DIF_TOPE_HONO_SAC_IG = Max(dif_hono_con_sac,0)
@@ -488,15 +488,15 @@ sum_tot_sar_bruto_oe    = 0
     
     
     /*-----------------------------------------------------------------------------
-            Grabacion de los valores calculados en cada variable
+            Grabación de los valores calculados en cada variable
     '-----------------------------------------------------------------------------*/
     
     SAR_IG_TOT_C_IM = tot_con_imp    'total acumulado de haberes tributables     
-    SAR_IG_TOT_JUB = tot_jub        'total acumulado de retencion por jubilacion
-    SAR_IG_T_19032 = tot_ley_19032  'total acumulado de retencion para el INSSJP-Ley 19032
-    SAR_IG_TOT_OB_S = tot_ob_soc     'total acumulado de retencion para la obra social
+    SAR_IG_TOT_JUB = tot_jub        'total acumulado de retención por jubilación
+    SAR_IG_T_19032 = tot_ley_19032  'total acumulado de retención para el INSSJP-Ley 19032
+    SAR_IG_TOT_OB_S = tot_ob_soc     'total acumulado de retención para la obra social
     SAR_IG_O_DEDUC_REM = oded	          'Otras Deducciones
-    SAR_DED_CUO_SIND = tot_cuo_sind   'total acumulado de retencion para el sindicato    
+    SAR_DED_CUO_SIND = tot_cuo_sind   'total acumulado de retención para el sindicato    
 
     SAR_IG_AP_VOL_REM = tot_ap_vol     'total acumulado de aporte voluntario       
     SAR_IG_DED_ESP = desp           'deduccion especial
@@ -517,14 +517,14 @@ sum_tot_sar_bruto_oe    = 0
     SAR_IG_CONYUGE_REM = SAR_IMP_CONY_IG	          'Conyuge
     SAR_IG_HIJOS_REM = SAR_IMP_HIJO_IG	          'Hijos
     SAR_IG_OCARGAS_REM = SAR_IMP_O_CAR_IG	          'Otras Cargas
-    SAR_IMP_DED_HON_MED = topehm	    'Honorarios Medicos
+    SAR_IMP_DED_HON_MED = topehm	    'Honorarios Médicos
     
     SAR_IMP_D_IN_HIP = tot_int_hip     'Intereses Hipotecarios            
-    SAR_DED_SER_DOM = tope_servicio   'Servicio Domestico  
+    SAR_DED_SER_DOM = tope_servicio   'Servicio Doméstico  
     SAR_TOT_AP_C_SOC = ap_cap_soc      'Aporte capital social o fondo riesgo
-    SAR_IG_GTIA_RECIP_REM = tot_gtias_recip 'Garantias reciprocas
-    SAR_IG_GTOS_COR = tot_gtos_viajantes 'gastos vehiculos y movilidad
-    SAR_IG_CAJA_PREV_PROF = ig_caja_prev_prof 'IG de Aportes a las cajas de prevision para profesionales
+    SAR_IG_GTIA_RECIP_REM = tot_gtias_recip 'Garantías recíprocas
+    SAR_IG_GTOS_COR = tot_gtos_viajantes 'gastos vehículos y movilidad
+    SAR_IG_CAJA_PREV_PROF = ig_caja_prev_prof 'IG de Aportes a las cajas de previsión para profesionales
     SAR_IG_DESC_LEY_NAC_PROV = ig_d_ley_nac_prov 'IG de Descuentos obligatorios establecidos por ley nacional, provincial o municipal
     
 Return(base)

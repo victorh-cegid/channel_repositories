@@ -57,7 +57,7 @@ WHILE SAR_HR_ROLE.ISEOF() = FALSE
             motivoabs = FORMAT(SAR_REAL_TIME_PER_ROLE.SCO_ID_INC_GROUP,0)
             fec_ini_abs = SAR_REAL_TIME_PER_ROLE.SCO_DT_START
             fec_fin_abs = SAR_REAL_TIME_PER_ROLE.SCO_DT_END
-            'Si la fecha de inicio del ausentismo esta comprendida entre el inicio y 
+            'Si la fecha de inicio del ausentismo está comprendida entre el inicio y 
             'el fin del tramo calculo el precio a la fecha de fin de la incidencia
             IF (INICIO_TRAMO <= fec_ini_abs AND fec_ini_abs <= FIN_TRAMO) THEN
                 IF fec_fin_abs > fec_fin_paga THEN
@@ -68,7 +68,7 @@ WHILE SAR_HR_ROLE.ISEOF() = FALSE
                 'Para contar las Hs de ausencia consideramos el tipo de incidencia SCO_ID_INC_GROUP
                 '
                 '
-                'Calculo el importe para el dia de fin de la incidencia
+                'Calculo el importe para el día de fin de la incidencia
                 '
                 IF motivoabs = "2" THEN
                     PRECIO_HS_AUSENCIA = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_abs,"#4463")
@@ -77,7 +77,7 @@ WHILE SAR_HR_ROLE.ISEOF() = FALSE
                 'Para contar las Hs Extras consideramos el ID de incidencia SCO_ID_INCIDENCE
                 '
                 '
-                'Calculo el importe para el dia de fin de la incidencia
+                'Calculo el importe para el día de fin de la incidencia
                 '
                 idabs = FORMAT(SAR_REAL_TIME_PER_ROLE.SCO_ID_INCIDENCE,0)
 
@@ -119,8 +119,8 @@ FOR  I = primerreg  TO  ultimoreg
         fec_ini_abs = SAR_REAL_TIME_PERIOD.SCO_DT_START
         fec_fin_abs = SAR_REAL_TIME_PERIOD.SCO_DT_END
 
-        'Si la fecha de inicio del ausentismo esta comprendida en el tramo o
-        'la fecha de fin del ausentismo esta comprendida en el tramo obtenemos
+        'Si la fecha de inicio del ausentismo está comprendida en el tramo o
+        'la fecha de fin del ausentismo está comprendida en el tramo obtenemos
         'los precios de las licencias 
 
         IF (INICIO_TRAMO <= fec_ini_abs AND fec_ini_abs <= FIN_TRAMO) OR (INICIO_TRAMO <= fec_fin_abs AND fec_ini_abs <= FIN_TRAMO) THEN
@@ -132,49 +132,49 @@ FOR  I = primerreg  TO  ultimoreg
            
             IF motivoabs = "1" THEN
                 '
-                'Calculo el precio de la enfermedad para esos dias
+                'Calculo el precio de la enfermedad para esos días
                 '
                 PRECIO_DIAS_ENF = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4110")
            
             ELSEIF motivoabs = "2" THEN
                 '
-                'Calculo el precio de la suspension disciplinaria para esos dias
+                'Calculo el precio de la suspensión disciplinaria para esos días
                 '
                 PRECIO_DIAS_SUS_DISCI = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4180")
   
             ELSEIF motivoabs = "3" THEN
                 '
-                'Calculo el precio de la maternidad para esos dias
+                'Calculo el precio de la maternidad para esos días
                 '
                 PRECIO_DIAS_MAT = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"NONE")
                    
             ELSEIF motivoabs = "4" THEN
                 '
-                'Calculo el precio para esos dias
+                'Calculo el precio para esos días
                 '
                 PRECIO_DIAS_LCONV = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4060")
             
             ELSEIF motivoabs = "6" THEN
                 '
-                'Calculo el precio de la excedencia para esos dias
+                'Calculo el precio de la excedencia para esos días
                 '
                 PRECIO_DIAS_EXCED = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4160")
         
             ELSEIF motivoabs = "7" THEN
                 '
-                'Calculo el precio de la ausencia injustificada para esos dias
+                'Calculo el precio de la ausencia injustificada para esos días
                 '
                 PRECIO_DIAS_AUS_INJUST = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4170")
             ELSEIF motivoabs = "8" THEN
                 '
-                'Calculo el precio de los dias de huelga para esos dias
+                'Calculo el precio de los dias de huelga para esos días
                 '
                 PRECIO_DIAS_HUELGA = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"NONE")
            
             ELSEIF motivoabs = "9" THEN
     
-                'Si la fecha de inicio de las vacaciones esta comprendida en el tramo o
-                'la fecha de fin de las vacaciones esta comprendida en el tramo obtenemos
+                'Si la fecha de inicio de las vacaciones está comprendida en el tramo o
+                'la fecha de fin de las vacaciones está comprendida en el tramo obtenemos
                 'el precio de las vacaciones 
 
                 IF (INICIO_TRAMO <= fec_ini_abs AND fec_ini_abs <= FIN_TRAMO) OR (INICIO_TRAMO <= fec_fin_abs AND fec_ini_abs <= FIN_TRAMO) THEN
@@ -184,7 +184,7 @@ FOR  I = primerreg  TO  ultimoreg
                     ENDIF    
 
                     '
-                    'Calculo el precio de los dias de vacaciones para esos dias
+                    'Calculo el precio de los dias de vacaciones para esos días
                     '
                     PRECIO_DIAS_VAC = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#3553")
                   
@@ -192,31 +192,31 @@ FOR  I = primerreg  TO  ultimoreg
 
             ELSEIF motivoabs = "10" THEN
                 '
-                'Calculo el precio de la licencia por casamiento para esos dias
+                'Calculo el precio de la licencia por casamiento para esos días
                 '
                 PRECIO_DIAS_LCAS = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4070")
            
             ELSEIF motivoabs = "11" THEN
                 '
-                'Calculo el precio de la licencia por nacimiemto para esos dias
+                'Calculo el precio de la licencia por nacimiemto para esos días
                 '
                 PRECIO_DIAS_LNAC = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4080")
                     
             ELSEIF motivoabs = "12" THEN
                 '
-                'Calculo el importe de la licencia por defuncion para esos dias
+                'Calculo el importe de la licencia por defunción para esos días
                 '
                 PRECIO_DIAS_LDEF = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4090")
                    
             ELSEIF motivoabs = "13" THEN
                 '
-                'Calculo el precio de la licencia por examen para esos dias
+                'Calculo el precio de la licencia por examen para esos días
                 '
                 PRECIO_DIAS_LEX = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4100")
                     
             ELSEIF motivoabs = "17" THEN
                 '
-                'Calculo el precio para hemodonacion 
+                'Calculo el precio para hemodonación 
                 '
                 PRECIO_DIAS_DSAN = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4108")
                 
@@ -247,7 +247,7 @@ NEXT
 '
 
 '
-'Donacion sangre y Enfermedad 
+'Donación sangre y Enfermedad 
 '
 importe_aux = 0
 IF SAR_DIA_DONAR_SANG > 0 THEN
@@ -316,7 +316,7 @@ IF SAR_UN_VACACIONES > 0 THEN
 ENDIF 
 
 '
-'Lic. Gremial, Casamiento, Nacimiento, Defuncion o Examen
+'Lic. Gremial, Casamiento, Nacimiento, Defunción o Examen
 '
 IF SAR_DIAS_LIC_CONV > 0 THEN
     SAR_PRE_LICENCIAS = ROUND(PRECIO_DIAS_LCONV,SAR_NUM_DEC) 
@@ -375,7 +375,7 @@ IF SAR_UN_FER_TRAB > 0 THEN
 ENDIF
 
 
-'Estos quedan comentados porque no tienen asociado ningun concepto de tipo Importe
+'Estos quedan comentados porque no tienen asociado ningún concepto de tipo Importe
 '
 'IMPORTE_DIAS_RE_ENF
 'IMPORTE_DIAS_RE_SIN

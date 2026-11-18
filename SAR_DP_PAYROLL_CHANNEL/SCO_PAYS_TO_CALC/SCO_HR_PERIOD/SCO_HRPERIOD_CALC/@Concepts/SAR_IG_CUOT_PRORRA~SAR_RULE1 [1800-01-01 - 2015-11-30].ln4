@@ -45,7 +45,7 @@ IF saldo < cuota_ant THEN
 cuota_ant=saldo
 ENDIF
 
-'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+'Por modificación del empleado se agregó: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
 IF ((SAR_ES_BAJA=1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") OR mes=12)  THEN
     if SAR_TP_IMPUT = "4" Then        
         saldo= SAR_ACM_ULT_PAGO_IMPUT.SAR_IG_SALDO_PRORRA

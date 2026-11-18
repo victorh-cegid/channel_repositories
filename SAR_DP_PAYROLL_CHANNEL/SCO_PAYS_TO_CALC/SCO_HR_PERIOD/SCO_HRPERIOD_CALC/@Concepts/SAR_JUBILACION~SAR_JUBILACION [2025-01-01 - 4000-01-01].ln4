@@ -16,7 +16,7 @@ IF edad >= 18 THEN
         valor = valor - descDec
     Else
         tope_diario_jub = SAR_TOPE_JUBIL/SAR_DIAS_NORM_COTIZ
-        tope_jub_dec792 = tope_diario_jub * (SAR_DIAS_DEC792+SAR_DIAS_MATERN+SAR_LIC_ONCO_DIAS) 'proporcionamos el tope de jubilacion por los dias de decreto 792
+        tope_jub_dec792 = tope_diario_jub * (SAR_DIAS_DEC792+SAR_DIAS_MATERN+SAR_LIC_ONCO_DIAS) 'proporcionamos el tope de jubilación por los días de decreto 792
         valor = valor - Percentage(SAR_PORC_JUBILACION,Min(SAR_IMP_DEC792_NRED,tope_jub_dec792))
     EndIf
 

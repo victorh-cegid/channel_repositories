@@ -1,6 +1,6 @@
 '------------------------------------------------------------------------------------------------
-'Description: Metodo que ejecuta en una sola transaccion los metodos  APPLY_FILTER y LIST
-'  para la ejecucion desde cliente.
+'Description: Método que ejecuta en una sóla transacción los métodos  APPLY_FILTER y LIST
+'  para la ejecución desde cliente.
 '------------------------------------------------------------------------------------------------
 
     M4DQ = CHR(DOUBLE_QUOTE)

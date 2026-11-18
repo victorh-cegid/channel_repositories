@@ -10,7 +10,7 @@ SAR_ACM_DYN_DIF.SCO_DT_END = fec_fin
 SAR_ACM_DYN_DIF.Load_Blk()
 promedio = SAR_ACM_DYN_DIF[0].SAR_PROM_27617_SAC2
 
-'Si no encuentra valor en la paga normal (no se ha acumulado previamente), intenta recuperar el ultimo promedio del a?o fiscal.
+'Si no encuentra valor en la paga normal (no se ha acumulado previamente), intenta recuperar el último promedio del año fiscal.
 If promedio <= 0 Then
     ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
     ultFecImput = DxDate(1,1,1800)

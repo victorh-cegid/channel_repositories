@@ -27,8 +27,8 @@ FOR  I = primerreg  TO  ultimoreg
     fec_ini_abs = SAR_REAL_TIME_PERIOD.SCO_DT_START
     fec_fin_abs = SAR_REAL_TIME_PERIOD.SCO_DT_END
 
-    'Si la fecha de inicio del ausentismo esta comprendida en el tramo o
-    'la fecha de fin del ausentismo esta comprendida en el tramo obtenemos
+    'Si la fecha de inicio del ausentismo está comprendida en el tramo o
+    'la fecha de fin del ausentismo está comprendida en el tramo obtenemos
     'los precios de las licencias.
 
     IF (INICIO_TRAMO <= fec_ini_abs AND fec_ini_abs <= FIN_TRAMO) OR (INICIO_TRAMO <= fec_fin_abs AND fec_ini_abs <= FIN_TRAMO) THEN
@@ -38,7 +38,7 @@ FOR  I = primerreg  TO  ultimoreg
         ENDIF    
         IF motivoabs = "9" THEN
             IF SAR_TIPO_SALARIO = "003" THEN
-                IF MesPaga = MesAlta and AnioPaga = AnioAlta THEN 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                IF MesPaga = MesAlta and AnioPaga = AnioAlta THEN 'si estamos en el mes del alta el precio se calcula en función de valores de la paga que se calcula
                     pr_ant = SAR_TOT_P_COMP_EA
                 ELSE   
                     SAR_ACM_ULT_PAGO_IMPUT.BEGIN()

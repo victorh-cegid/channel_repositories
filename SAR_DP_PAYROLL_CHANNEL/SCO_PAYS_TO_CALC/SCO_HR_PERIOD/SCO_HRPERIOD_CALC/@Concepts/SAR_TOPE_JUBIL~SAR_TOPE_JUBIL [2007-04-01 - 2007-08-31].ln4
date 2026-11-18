@@ -1,4 +1,4 @@
-'Equivalente a 75 veces el valor de un MOPRE exclusivo para aporte personal de jubilacion. Segun Ley 26,222
+'Equivalente a 75 veces el valor de un MOPRE exclusivo para aporte personal de jubilación. Según Ley 26,222
 
 valor = SAR_VALOR_AMPO * 75 
 RETURN(valor)

@@ -1,4 +1,4 @@
-'Esta regla es solo para bajas anteriores a junio en periodo fiscal 2023
+'Esta regla es sólo para bajas anteriores a junio en periodo fiscal 2023
 esBaja = 0
 If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" And DxYear(SAR_FEC_IMPUT_IG) = 2023 Then esBaja = 1
 If esBaja = 0 Then Return(0)

@@ -1,5 +1,5 @@
-'Este metodo filtra por fechas los registros del historico que se deben cargar 
-'Si el periodo tiene pago despues de la baja, los registros se filtran por fecha de imputacion
+'Este método filtra por fechas los registros del histórico que se deben cargar 
+'Si el periodo tiene pago después de la baja, los registros se filtran por fecha de imputación
 'En cualquier otro caso, se filtran por la fecha SCO_DT_FILTER_BASE
 
 If SCO_HR_PERIOD.SCO_IS_PAL = 1 Then

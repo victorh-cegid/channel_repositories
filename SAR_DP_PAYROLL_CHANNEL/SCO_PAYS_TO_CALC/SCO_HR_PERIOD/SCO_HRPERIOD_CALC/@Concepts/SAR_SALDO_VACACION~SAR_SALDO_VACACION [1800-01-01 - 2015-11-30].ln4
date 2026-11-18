@@ -1,4 +1,4 @@
-'No debe calcularse en pafa de reliquidacion:
+'No debe calcularse en pafa de reliquidación:
 If(SAR_TP_IMPUT = "99")Then
    Return(0) 
 EndIf  

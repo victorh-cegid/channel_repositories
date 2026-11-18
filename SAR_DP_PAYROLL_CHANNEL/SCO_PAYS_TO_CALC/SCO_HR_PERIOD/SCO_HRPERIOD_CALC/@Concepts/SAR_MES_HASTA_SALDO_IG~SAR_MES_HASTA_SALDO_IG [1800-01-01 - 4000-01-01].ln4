@@ -1,6 +1,6 @@
 /*
-el concepto toma valor por tabla de valor, se debe indicar el numero de mes que se va a 
-considerar para revisar el saldo del a?o anterior del Impuesto a las ganancias.
+el concepto toma valor por tabla de valor, se debe indicar el número de mes que se va a 
+considerar para revisar el saldo del año anterior del Impuesto a las ganancias.
 
 Ej. Se quiere revisar el saldo hasta el mes de Mayo(inclusive), se debe colocar "6" 
 */

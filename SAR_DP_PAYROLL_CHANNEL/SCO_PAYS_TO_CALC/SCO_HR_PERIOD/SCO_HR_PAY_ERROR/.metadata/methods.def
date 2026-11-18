@@ -1,6 +1,7 @@
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
-SCO_DELETE_ERRORS | NODE | NUMBER | 6 | 1 | 0 | Borrar errores del empleado | 2
-SCO_FIND_ERROR | BLOCK | NUMBER | 6 | 1 | 0 | Encontrar error | 
-SCO_GET_ERRORS | BLOCK | NUMBER | 6 | 2 | 0 | Obtener errores | 
-SCO_MANAGE_ERRORS | BLOCK | NUMBER | 6 | 1 | 0 | Gestion de errores | 
-SCO_SET_ERROR_POSITION | BLOCK | NUMBER | 6 | 1 | 0 | Asignar posicion de error | 
+# item_metadata_format: 2
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
+SCO_DELETE_ERRORS | NODE | NUMBER | 6 | 1 | 0 | Borrar errores del empleado | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_FIND_ERROR | BLOCK | NUMBER | 6 | 1 | 0 | Encontrar error |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_GET_ERRORS | BLOCK | NUMBER | 6 | 2 | 0 | Obtener errores |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_MANAGE_ERRORS | BLOCK | NUMBER | 6 | 1 | 0 | Gestión de errores |  | 1 | null | 4 | null | 4 | null | 2 | 1 | null | null | 1
+SCO_SET_ERROR_POSITION | BLOCK | NUMBER | 6 | 1 | 0 | Asignar posición de error |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1

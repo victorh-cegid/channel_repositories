@@ -1,9 +1,10 @@
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
-SAR_CALCULA_PRECIO_FECHA | NODE | NUMBER | 6 | 18 | 0 | SAR_CALCULA_PRECIO_FECHA | 
-SAR_CALCULA_PROM_6_MESES | NODE | NUMBER | 6 | 18 | 0 | SAR_CALCULA_PROM_6_MESES | 
-SCO_DT_END_CALC_ROLE | RECORD | DATE | 4 | 10 | 0 | Fecha de fin para el calculo del rol | 
-SCO_DT_END_CALC_ROLE_RETRO | RECORD | DATE | 4 | 10 | 0 | Fecha de fin para el calculo del rol retroactivo | 
-SCO_DT_FILTER_BASE | RECORD | DATE | 4 | 10 | 0 | Fecha base para filtro | 2
-SCO_DT_START_CALC_ROLE | RECORD | DATE | 4 | 10 | 0 | Fecha de inicio para el calculo del rol | 
-SCO_DT_START_CALC_ROLE_RETRO | RECORD | DATE | 4 | 10 | 0 | Fecha de inicio para el calculo del rol retroactiv | 
-SCO_FILTER_DATES_PAL | BLOCK | STRING | 3 | -1 | 0 | Filtro para los nominas despues de la baja | 
+# item_metadata_format: 2
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
+SAR_CALCULA_PRECIO_FECHA | NODE | NUMBER | 6 | 18 | 0 | SAR_CALCULA_PRECIO_FECHA |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SAR_CALCULA_PROM_6_MESES | NODE | NUMBER | 6 | 18 | 0 | SAR_CALCULA_PROM_6_MESES |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_DT_END_CALC_ROLE | RECORD | DATE | 4 | 10 | 0 | Fecha de fin para el cálculo del rol |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_DT_END_CALC_ROLE_RETRO | RECORD | DATE | 4 | 10 | 0 | Fecha de fin para el cálculo del rol retroactivo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_DT_FILTER_BASE | RECORD | DATE | 4 | 10 | 0 | Fecha base para filtro | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_DT_START_CALC_ROLE | RECORD | DATE | 4 | 10 | 0 | Fecha de inicio para el cálculo del rol |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_DT_START_CALC_ROLE_RETRO | RECORD | DATE | 4 | 10 | 0 | Fecha de inicio para el cálculo del rol retroactiv |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_FILTER_DATES_PAL | BLOCK | STRING | 3 | -1 | 0 | Filtro para los nóminas después de la baja |  | 20 | SCO_FILTER_DATES_PAL_PARAM | 2 | null | 4 | null | 2 | 0 | null | null | 1

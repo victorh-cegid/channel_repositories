@@ -2,7 +2,7 @@
 a = SAR_BASE_IMPUESTO
 importe = SAR_AP_JUB_OE_4CATEG
 
-'Desde 2025 pueden venir informador aportes de caja, como este concepto lleva mas cosas aparte de la jubilacion informada
+'Desde 2025 pueden venir informador aportes de caja, como este concepto lleva más cosas aparte de la jubilacion informada
 'como por ejemplo la parte de sac y sus 12avas, que se calcula, se hace el reparto proporcional del total repecto a lo informado en anses y cajas.
 If importe > 0 And SAR_JUB_CAJA_OE > 0 And SAR_JUB_ANSES_OE + SAR_JUB_CAJA_OE > 0 Then
     totalInformado = SAR_JUB_ANSES_OE + SAR_JUB_CAJA_OE

@@ -1,5 +1,5 @@
-'Cada nodo de acumulado con origen calculado dinamicamente(en adelante llamado nodo DYN) leera la informacion del acumulado en un intervalo de fechas. Para que el origen dinamico funcione correctamete, el nodo de lectura de acumulado debe cargar toda la informacion que vayan a necesitar los nodos DYN, y para ello hay que asignarle un intervalo de fechas lo bastante grande como para contener todas las fechas que posteriormente se asignaran para cargar los nodos DYN. De esta forma, se hara una unica carga del acumulado con toda la informacion necesaria para el calculo del empleado.
-'Este metodo recoge en el argumento ID_NODE el nodo de calculo, y debe devolver en los argumentos MIN_DT_START y MAX_DT_END la minima fecha de inicio y la maxima fecha de fin que se necesiten en todos los nodos DYN definidos en el nodo de calculo. El metodo SCO_CALC_MIN_MAX_DATE recogera esta informacion y, junto con las fechas de los nodos de acumulado que no sean DYN, asignara el intervalo de fechas definitivo al nodo de lectura. Si las fechas son MINUS_INF y PLUS_INF, no se tendran en cuenta.
+'Cada nodo de acumulado con origen calculado dinámicamente(en adelante llamado nodo DYN) leerá la información del acumulado en un intervalo de fechas. Para que el origen dinámico funcione correctamete, el nodo de lectura de acumulado debe cargar toda la información que vayan a necesitar los nodos DYN, y para ello hay que asignarle un intervalo de fechas lo bastante grande como para contener todas las fechas que posteriormente se asignarán para cargar los nodos DYN. De esta forma, se hará una única carga del acumulado con toda la información necesaria para el cálculo del empleado.
+'Este método recoge en el argumento ID_NODE el nodo de cálculo, y debe devolver en los argumentos MIN_DT_START y MAX_DT_END la mínima fecha de inicio y la máxima fecha de fin que se necesiten en todos los nodos DYN definidos en el nodo de cálculo. El método SCO_CALC_MIN_MAX_DATE recogerá esta información y, junto con las fechas de los nodos de acumulado que no sean DYN, asignará el intervalo de fechas definitivo al nodo de lectura. Si las fechas son MINUS_INF y PLUS_INF, no se tendrán en cuenta.
 
 sNode = ID_NODE
 
@@ -8,7 +8,7 @@ MAX_DT_END = PLUS_INF
 
 Return(0)
 
-'Para utilizar un nodo DYN, durante el calculo hay que:
-' - asignar en las propiedades SCO_DT_START y SCO_DT_END del nodo DYN las fechas de inicio y fin entre las que queremos leer la informacion del acumulado
-' - cargar el nodo DYN. Si aun no se ha cargado, se puede hacer con un Begin()
-'Con esto ya se pueden leer los datos. Si posteriormente se quiere leer informacion en otro periodo de fechas, pero dentro del calculo del mismo empleado, hay que hacer un Destroyblock() del nodo DYN, asignar las nuevas fechas y cargar.
+'Para utilizar un nodo DYN, durante el cálculo hay que:
+' - asignar en las propiedades SCO_DT_START y SCO_DT_END del nodo DYN las fechas de inicio y fin entre las que queremos leer la información del acumulado
+' - cargar el nodo DYN. Si aún no se ha cargado, se puede hacer con un Begin()
+'Con esto ya se pueden leer los datos. Si posteriormente se quiere leer información en otro periodo de fechas, pero dentro del cálculo del mismo empleado, hay que hacer un Destroyblock() del nodo DYN, asignar las nuevas fechas y cargar.

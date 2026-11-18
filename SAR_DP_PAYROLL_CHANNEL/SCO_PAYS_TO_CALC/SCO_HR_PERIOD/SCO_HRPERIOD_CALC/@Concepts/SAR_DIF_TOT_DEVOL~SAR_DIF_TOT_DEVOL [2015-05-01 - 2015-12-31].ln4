@@ -1,4 +1,4 @@
-'Solo en pagas normales, reliquidacion o Paga extra de Aguinaldo:
+'Solo en pagas normales, reliquidación o Paga extra de Aguinaldo:
 If(SAR_TP_IMPUT = "1" Or SAR_TP_IMPUT = "99") Or (SAR_TP_IMPUT = "2" AND SAR_IND_AGUINALDO = 1) Then
 
 'Por Res 3770 para los empleados rango 1 no debe recalcularse nada.

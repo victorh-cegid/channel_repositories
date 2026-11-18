@@ -1,4 +1,4 @@
-'No se calcula en reliquidacion ni en paga de Vacaciones/Anticipo:
+'No se calcula en reliquidación ni en paga de Vacaciones/Anticipo:
 If SAR_TP_IMPUT = "77" or SAR_TP_IMPUT = "88" or SAR_TP_IMPUT = "99" Then Return(0)
 
 'No se ejecuta en la primera quincena
@@ -27,7 +27,7 @@ cuota = 0
 base = 0
 meses_quedan = 0
 
-'No tomara valor en la paga normal de Junio si no existe ajuste:
+'No tomará valor en la paga normal de Junio si no existe ajuste:
 If (SAR_TP_IMPUT = "1" And DxMonth(SCO_DT_PAYMENT) = 6 And SAR_PAGA_EXTRA_AJ_1 = 0 And SAR_IND_AGUINALDO = 0) Then
   Return(0)
 EndIf

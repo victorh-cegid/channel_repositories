@@ -26,7 +26,7 @@ base            = 0
 meses_quedan    = 0
 valor           = 0
 
-'No tomara valor en la paga normal de Junio si no existe ajuste:
+'No tomará valor en la paga normal de Junio si no existe ajuste:
 If (SAR_TP_IMPUT = "1" And DxMonth(SCO_DT_PAYMENT) = 6 And SAR_PAGA_EXTRA_AJ_1 = 0 And SAR_IND_AGUINALDO = 0) Then
   Return(0)
 EndIf

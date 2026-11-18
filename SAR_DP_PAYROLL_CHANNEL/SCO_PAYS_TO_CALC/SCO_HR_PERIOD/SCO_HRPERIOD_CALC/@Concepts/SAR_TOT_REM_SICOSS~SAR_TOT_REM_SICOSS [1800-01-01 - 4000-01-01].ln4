@@ -1,5 +1,5 @@
 // No toma valor para las pagas no remunerativas.
-// En el estandar es la paga 88 - Anticipo de vacaciones
+// En el estándar es la paga 88 - Anticipo de vacaciones
 
 valor = SAR_TOT_REM_SICOSS
 

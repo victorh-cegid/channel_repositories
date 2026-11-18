@@ -3,12 +3,12 @@ IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "77" THEN
 ENDIF
 'si es baja y si el motivo de baja es:
 '
-'4  (Incapacidad articulo 212 ley 20744 segundo parrafo)
-'5  (Incapacidad articulo 212 ley 20744 cuarto parrafo)
+'4  (Incapacidad articulo 212 ley 20744 segundo párrafo)
+'5  (Incapacidad articulo 212 ley 20744 cuarto párrafo)
 '9  (Despido sin causa sin otorgar preaviso)
-'11 (Incapacidad articulo 212 ley 20744 tercer parrafo)
+'11 (Incapacidad articulo 212 ley 20744 tercer párrafo)
 '13 (Delegado gremial)
-'14 (Fuerza mayor o Disminucion del Trabajo)
+'14 (Fuerza mayor o Disminución del Trabajo)
 '15 (Embarazo)
 '16 (Matrimonio)
 

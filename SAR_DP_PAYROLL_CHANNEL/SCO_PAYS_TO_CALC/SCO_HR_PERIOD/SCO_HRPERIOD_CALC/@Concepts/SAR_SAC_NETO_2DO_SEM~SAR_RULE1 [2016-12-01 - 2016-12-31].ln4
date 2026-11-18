@@ -1,9 +1,9 @@
 imp_Exento = 0
 
-'Control para que no se calcule en caso de cambio de a?o fiscal (diferidos en diciembre)
+'Control para que no se calcule en caso de cambio de año fiscal (diferidos en diciembre)
 If DxYear(SAR_FEC_PAGO_IG) = DxYear(SCO_DT_ALLOCATION) Then
 
-    'Tenemos que tomar el valor del SAC 2? Semestre abonado en la Paga Especial de Diciembre
+    'Tenemos que tomar el valor del SAC 2º Semestre abonado en la Paga Especial de Diciembre
         SAR_SAC_AJUSTE_CONTRIB.Begin()
         
         If SAR_SAC_AJUSTE_CONTRIB.Count() > 0 Then
@@ -15,7 +15,7 @@ If DxYear(SAR_FEC_PAGO_IG) = DxYear(SCO_DT_ALLOCATION) Then
         edad = SAR_EDAD
         
         '----------
-        'Jubilacion
+        'Jubilación
         '----------
         desc_jub = 0
         
@@ -74,7 +74,7 @@ If DxYear(SAR_FEC_PAGO_IG) = DxYear(SCO_DT_ALLOCATION) Then
     'Sumamos los importes de los diferentes descuentos de ley obligatorios (c5161, c5162, c5163, y c5165)
         tot_desc = desc_jub + desc_ley + desc_obr + desc_sin
     
-    'Calculamos el valor Neto de de la parte Exenta que se tiene en cuenta para el calculo del impuesto
+    'Calculamos el valor Neto de de la parte Exenta que se tiene en cuenta para el cálculo del impuesto
         valor = base - tot_desc
     
     'Sumamos el SAC neto Exento procedente de otros empleadores que se informa por valores
@@ -82,26 +82,26 @@ If DxYear(SAR_FEC_PAGO_IG) = DxYear(SCO_DT_ALLOCATION) Then
     
 
 
-    'Cambios para el Decreto 1253/2016 ?Deduccion Especial. Incremento?.
+    'Cambios para el Decreto 1253/2016 “Deducción Especial. Incremento”.
     '--------------------------------------------------------------------------
     'Inicializamos las variables   
-    imp_Rem = SAR_MEJOR_REMUN   'Importe de la mejor remuneracion del 2? Semestre
-    imp_Exento = 0              'Importe de la exencion del SAC sobre el impuesto
-    imp_SAC = valor             'Importe del SAC Neto del 2? Semestre
+    imp_Rem = SAR_MEJOR_REMUN   'Importe de la mejor remuneración del 2º Semestre
+    imp_Exento = 0              'Importe de la exención del SAC sobre el impuesto
+    imp_SAC = valor             'Importe del SAC Neto del 2º Semestre
         
  
-    'El primer nivel de validacion evalua el tope de salario bruto para el 2? semestre 
+    'El primer nivel de validación evalua el tope de salario bruto para el 2º semestre 
     If imp_Rem <= SAR_TOPE_SALARIO_BRUTO Then
-    'Caso 1: remuneracion inferior o igual al tope del salario bruto -> pasamos al segundo nivel de validacion
+    'Caso 1: remuneración inferior o igual al tope del salario bruto -> pasamos al segundo nivel de validación
         If imp_SAC <= SAR_TOPE_SAC_EXENTO Then
-        'Caso 1.A: importe de SAC inferior o igual al tope del SAC Neto exento -> asignamos el valor de la exencion
+        'Caso 1.A: importe de SAC inferior o igual al tope del SAC Neto exento -> asignamos el valor de la exención
             imp_Exento = imp_SAC
         Else
-        'Caso 2.A: importe de SAC inferior o igual al tope del SAC exento -> asignamos el valor de la exencion
+        'Caso 2.A: importe de SAC inferior o igual al tope del SAC exento -> asignamos el valor de la exención
             imp_Exento = SAR_TOPE_SAC_EXENTO
         EndIf
     Else
-    'Caso2: remuneracion superior al tope del salario bruto -> no se calcula beneficio alguno
+    'Caso2: remuneración superior al tope del salario bruto -> no se calcula beneficio alguno
         imp_Exento = 0
     EndIf
 

@@ -1,17 +1,17 @@
 'Regla "vieja" SAR_IMP_CONY_IG, para tener el valor anual completo y usarlo de tope
 'Inicializo variables
-ano_pago_act = DxYear(SAR_FEC_IMPUT_IG)         'A?o fecha imput IG calculo actual
-mes_pago_act = DxMonth(SAR_FEC_IMPUT_IG)        'Mes fecha imput IG calculo actual
-dia_pago_act = DaysOfMonth(SAR_FEC_IMPUT_IG) 	'Dia fecha imput IG calculo actual
-indZonaPat = SAR_IND_ZONA_PAT                   'Indicador zona patagonica
-indDeduc = SAR_IND_DED_IG_2010                  'Indicador deduccion 2010
+ano_pago_act = DxYear(SAR_FEC_IMPUT_IG)         'Año fecha imput IG cálculo actual
+mes_pago_act = DxMonth(SAR_FEC_IMPUT_IG)        'Mes fecha imput IG cálculo actual
+dia_pago_act = DaysOfMonth(SAR_FEC_IMPUT_IG) 	'Día fecha imput IG cálculo actual
+indZonaPat = SAR_IND_ZONA_PAT                   'Indicador zona patagónica
+indDeduc = SAR_IND_DED_IG_2010                  'Indicador deducción 2010
 meses = 0
 
 'Control, baja retroactiva debe calcularse respecto a la fecha de pago IG
 If SAR_ES_BAJA = 1 Then
-    ano_pago_act        = DxYear(SAR_FEC_PAGO_IG)      'A?o fecha calculo actual
-    mes_pago_act        = DxMonth(SAR_FEC_PAGO_IG)     'Mes fecha calculo actual
-    dia_pago_act        = DaysOfMonth(SAR_FEC_PAGO_IG) 'Dia fecha calculo actual
+    ano_pago_act        = DxYear(SAR_FEC_PAGO_IG)      'Año fecha cálculo actual
+    mes_pago_act        = DxMonth(SAR_FEC_PAGO_IG)     'Mes fecha cálculo actual
+    dia_pago_act        = DaysOfMonth(SAR_FEC_PAGO_IG) 'Día fecha cálculo actual
 EndIf
 
 'Cargo el nodo de Familiares para Impuesto
@@ -26,7 +26,7 @@ num_reg = SAR_FAMIL_IMPUESTO.Count()
 
 If num_reg = 0 Then Return(0)
 
-'Calculamos el precio mensual de los conceptos de Deduccion partiendo del valor acumulado anual del mes de Diciembre, que figura por valores Empresa
+'Calculamos el precio mensual de los conceptos de Deducción partiendo del valor acumulado anual del mes de Diciembre, que figura por valores Empresa
 If indZonaPat = 1 Then
     valorMensual = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_CONY_IMP_REDUC",DxDate(dia_pago_act,mes_pago_act,ano_pago_act),indDeduc))
 Else
@@ -47,21 +47,21 @@ For i = 0 To num_reg - 1
         fec_alta_imp = SAR_FAMIL_IMPUESTO.SAR_DT_ALTA_IMP
         fec_baja_imp = Min(SAR_FAMIL_IMPUESTO.SAR_DT_BAJA_IMP,SAR_FAMIL_IMPUESTO.DT_END)
         
-        'Si no se ha informado fecha de baja en el impuesto asignamos el tope del a?o fiscal
+        'Si no se ha informado fecha de baja en el impuesto asignamos el tope del año fiscal
         If IsNull(fec_baja_imp) = M4_TRUE Then fec_baja_imp = DxDate("31", "12", ano_pago_act)
         
-        'Fecha inicio y fin a procesar, en enero un empleado no diferido seran 01/01/a?oIG y 31/01/a?oIG, un empleado diferido seran 01/01/a?oIG y 28/02/a?oIG
+        'Fecha inicio y fin a procesar, en enero un empleado no diferido serán 01/01/añoIG y 31/01/añoIG, un empleado diferido serán 01/01/añoIG y 28/02/añoIG
         fec_mes_ini = DxDate("01","01",ano_pago_act)
         fec_mes_fin = DxDate(dia_pago_act,mes_pago_act,ano_pago_act)
         
-        'Si es baja y esta activo el indicador de calcular el impuesto a diciembre, llevamos la fecha de fin a procesar a 31/12/IgImput actual        
+        'Si es baja y está activo el indicador de calcular el impuesto a diciembre, llevamos la fecha de fin a procesar a 31/12/IgImput actual        
         If SAR_IG_DICIEMBRE = 1 and SAR_ES_BAJA = 1 Then fec_mes_fin = DxDate("31", "12", ano_pago_act)
         
         'Topamos fechas de proceso y de impuesto del familiar
         fec_mes_ini = max(fec_alta_imp,fec_mes_ini)
         fec_mes_fin = min(fec_baja_imp,fec_mes_fin)
         
-        'Para contar correctamente el numero de meses completos, llevamos la fecha de inicio al primer dia del mes y la fecha fin al ultimo dia del mes
+        'Para contar correctamente el numero de meses completos, llevamos la fecha de inicio al primer día del mes y la fecha fin al último día del mes
         fec_mes_ini = DxDate ("01",DxMonth(fec_mes_ini),DxYear(fec_mes_ini))
         fec_mes_fin = DxDate (DaysOfMonth(fec_mes_fin),DxMonth(fec_mes_fin),DxYear(fec_mes_fin))
         If fec_mes_fin>=fec_mes_ini Then meses = meses + DateDiff (fec_mes_ini,fec_mes_fin+1,M4_MONTH)

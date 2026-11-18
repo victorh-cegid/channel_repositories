@@ -1,4 +1,4 @@
-'Suma el importe del a?o fiscal de los conceptos mensuales incluidos en 6574 (SAR_PER_ANT_GRAV_MES)
+'Suma el importe del año fiscal de los conceptos mensuales incluidos en 6574 (SAR_PER_ANT_GRAV_MES)
 total = SAR_PER_ANT_GRAV
 importe_mes = SAR_PER_ANT_GRAV_MES
 importe_mes_acum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_PER_ANT_GRAV_MES

@@ -1,6 +1,6 @@
 If SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "88" Then Return(0)
 
-'Calcula todas las remuneraciones imponibles de jubilacion y LEY. El calculo se realiza en forma mensual por mes de LSD.
+'Calcula todas las remuneraciones imponibles de jubilación y LEY. El cálculo se realiza en forma mensual por mes de LSD.
 baseRem = 0 : baseRemArt = 0 : baseRemVac = 0 : RemImpoOrig = 0 : RemImpoOrigArt = 0 : RemImpoOrigVac = 0
 topeMax = SAR_LSD_TOPE_COTIZ_PROP
 
@@ -24,7 +24,7 @@ If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then
     devengosTot = devengosNorm + devengosArt + devengosVac
 EndIf
 
-'Se a?aden al calculo los devengos cotizables de pagas ANTERIORES del mismo mes de LSD, 
+'Se añaden al cálculo los devengos cotizables de pagas ANTERIORES del mismo mes de LSD, 
 'para tener el importe completo sobre el que realizar topes
 devengosNormPrev = SAR_LSD_COTIZ[0].SAR_TOT_DEV_COTIZ 
 devengosArtPrev = SAR_LSD_COTIZ[0].SAR_PRESTACION_ART 
@@ -56,13 +56,13 @@ baseRem = baseRem - baseRemPrev + RemImpoOrig
 baseRemArt = baseRemArt - baseRemArtPrev + RemImpoOrigArt
 baseRemVac = baseRemVac - baseRemVacPrev + RemImpoOrigVac
 
-'Se mira el indicador de desglose vacaciones, si no esta activado las vacaciones se integran en los imponibles normales
+'Se mira el indicador de desglose vacaciones, si no está activado las vacaciones se integran en los imponibles normales
 If SAR_LSD_IND_DESGLOSE_VAC = 0 Then
     baseRem = baseRem + baseRemVac
     baseRemVac = 0
 EndIf
 
-'Asigna a los conceptos tanto de jubilacion como de ley
+'Asigna a los conceptos tanto de jubilación como de ley
 SAR_REM_IMPO_JUB = Round(baseRem,SAR_NUM_DEC)
 SAR_BASE_COTIZ_ART = Round(baseRemArt,SAR_NUM_DEC)
 SAR_BASE_ART_JUB = Round(baseRemArt,SAR_NUM_DEC)

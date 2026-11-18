@@ -1,4 +1,4 @@
-'El valor del Reintegro se obtendra desde el modulo de Beneficios, en la opcion Otros Beneficios/Costes de otros beneficios.
+'El valor del Reintegro se obtendrà desde el modulo de Beneficios, en la opcion Otros Beneficios/Costes de otros beneficios.
 'Ingresando el valor a reintegrar de manera mensual.
 
 valor= 0

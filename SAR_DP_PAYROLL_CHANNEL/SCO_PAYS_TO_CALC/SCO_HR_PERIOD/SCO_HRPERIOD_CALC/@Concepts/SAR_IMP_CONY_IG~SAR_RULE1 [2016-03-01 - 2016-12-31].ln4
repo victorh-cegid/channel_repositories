@@ -93,5 +93,5 @@ If isNull(importe) = M4_TRUE Then
     importe = 0
 Endif
 
-'Se redondea el importe antes de su devolucion
+'Se redondea el importe antes de su devolución
 RETURN(Round(importe,2))

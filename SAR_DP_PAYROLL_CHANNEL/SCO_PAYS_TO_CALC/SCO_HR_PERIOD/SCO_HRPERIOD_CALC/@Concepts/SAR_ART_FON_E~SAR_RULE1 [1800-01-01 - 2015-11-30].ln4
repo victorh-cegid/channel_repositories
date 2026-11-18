@@ -1,6 +1,6 @@
 'Este concepto se crea con el fin de calcular el importe fijo que resulta del decreto 590/97
-'Este valor se calcula por cada empleado que se informe a la Administracion Federal de
-'Ingresos Publicos mensualmente al realizar el pago de los Aportes y las Contribuciones.-
+'Este valor se calcula por cada empleado que se informe a la Administración Federal de
+'Ingresos Públicos mensualmente al realizar el pago de los Aportes y las Contribuciones.-
 
 valor = 0
 

@@ -1,4 +1,4 @@
-'Busco el primer dia de licencia por oncopediatria si posee alguna
+'Busco el primer día de licencia por oncopediatria si posee alguna
 I           = 0
 fec_ini_abs = PLUS_INF
 ultimoreg   = SAR_REAL_TIME_PERIOD.COUNT() - 1
@@ -66,18 +66,18 @@ IF fec_ini_abs <> PLUS_INF THEN
         ENDIF
     NEXT
 
-    'Sumo todos los promedios de los tres meses anteriores a la fecha de imputacion
+    'Sumo todos los promedios de los tres meses anteriores a la fecha de imputación
     valor_total = valor_1 + valor_2 + valor_3
 
     'Calculo el promedio total.
-    'Verifico si tiene mas de 3 meses de antiguedad, sino calculo el promedio con los meses trabajados
+    'Verifico si tiene más de 3 meses de antiguedad, sino calculo el promedio con los meses trabajados
     If(SAR_HR_PERIOD.STD_ID_HRP_START_REASON <> "005") Then
         dias_trabajados = fec_ini_abs - SAR_HR_PERIOD.STD_DT_START
     Else
         dias_trabajados = fec_ini_abs - SAR_FECHA_ALTA_PER_ANT
     EndIf  
 
-    'Transformo el precio en dias
+    'Transformo el precio en días
     IF dias_trabajados > 90 THEN
         valor = valor_total / 90
     ELSE

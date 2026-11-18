@@ -1,4 +1,4 @@
-'deberia ser dias para S.A.C.
+'debería ser días para S.A.C.
 tope_maximo = (SAR_TOPE_JUBIL * (SAR_U_PAGA_EX_1 + SAR_U_PAGA_EX_2 + SAR_U_PAGA_AJ_EX_1 + SAR_U_PAGA_AJ_EX_2 + SAR_U_EGRESO_PAGA_1 + SAR_U_EGRESO_PAGA_2) *180)/360
 sac  = SAR_TOT_SAC_COTIZ
 
@@ -20,9 +20,9 @@ Sac_Del_Mes = Sac_Total_Previo + Sac 'Contiene el total actual del SAC con paga 
 If(Sac <> 0)Then
     If(Sac_Del_Mes > Tope_Maximo)Then         'Si Pasamos el tope maximo....  
            Sac_Del_Mes = Tope_Maximo              '   Por lo que se toma como valor el del mismo tope maximo.
-           Base        = Sac_Del_Mes - Base_Total '   La base sera la diferencia entre el tope maximo y la base total anteriormente aplicada.                        
+           Base        = Sac_Del_Mes - Base_Total '   La base será la diferencia entre el tope maximo y la base total anteriormente aplicada.                        
     Else                                      'Si No.... 
-        Base = Sac_Del_Mes - Base_Total         '   La base sera la diferencia entre el SAC del mes y el total de la base.  
+        Base = Sac_Del_Mes - Base_Total         '   La base será la diferencia entre el SAC del mes y el total de la base.  
     EndIf
 EndIf
 

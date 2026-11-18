@@ -1,7 +1,7 @@
-'Cuando SAR_IND_AJUSTE_DEI = 1 en retroactividad no se tendra en cuenta los importes que cambien (salvo OE) para formar parte de la base del impuesto y la DEI.
+'Cuando SAR_IND_AJUSTE_DEI = 1 en retroactividad no se tendrá en cuenta los importes que cambien (salvo OE) para formar parte de la base del impuesto y la DEI.
 'Dichos importes no considerados en retroactividad se guardan en el concepto SAR_AJIG_XXX para considerarlos en la paga normal siguiente.
 
-'Este concepto realiza dicho calculo recibiendo varios parametros:
+'Este concepto realiza dicho cálculo recibiendo varios parámetros:
 
 'ARG_CNCPTO_IMP: El concepto que suma a la base del impuesto, normalmente desde el que se llama a este concepto.
 'ARG_CNCPTO_DIF: El concepto donde se graba la diferencia que no se va a incluir en la base del impuesto retro sino en la normal.
@@ -22,7 +22,7 @@
 'ARG_CNCPTO_EXC15: Poner "0" si no aplica. Concepto 15 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
 'ARG_CNCPTO_EXC16: Poner "0" si no aplica. Concepto 16 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
 
-'Ampliacion
+'Ampliación
 'ARG_CNCPTO_EXC17: Poner "0" si no aplica. Concepto 17 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
 'ARG_CNCPTO_EXC18: Poner "0" si no aplica. Concepto 18 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
 'ARG_CNCPTO_EXC19: Poner "0" si no aplica. Concepto 19 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
@@ -47,7 +47,7 @@
 'ARG_CNCPTO_EXC38: Poner "0" si no aplica. Concepto 38 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
 'ARG_CNCPTO_EXC39: Poner "0" si no aplica. Concepto 39 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
 'ARG_CNCPTO_EXC40: Poner "0" si no aplica. Concepto 40 que forma parte de ARG_CNCPTO_IMP y que SI debe formar parte de la base y DEI en retroactividad (normalmente OE)
-'fin ampliacion
+'fin ampliación
 
 'Retorna el valor que debe tener ARG_CNCPTO_IMP tanto en normal como en retroactividad
 
@@ -56,34 +56,34 @@ conceptoDif = ARG_CNCPTO_DIF
 conceptoExcA = ARG_CNCPTO_EXC1 : conceptoExcB = ARG_CNCPTO_EXC2 : conceptoExcC = ARG_CNCPTO_EXC3 : conceptoExcD = ARG_CNCPTO_EXC4 : conceptoExcE = ARG_CNCPTO_EXC5 : conceptoExcF = ARG_CNCPTO_EXC6 : conceptoExcG = ARG_CNCPTO_EXC7 : conceptoExcH = ARG_CNCPTO_EXC8
 conceptoExcI = ARG_CNCPTO_EXC9 : conceptoExcJ = ARG_CNCPTO_EXC10 : conceptoExcK = ARG_CNCPTO_EXC11 : conceptoExcL = ARG_CNCPTO_EXC12 : conceptoExcM = ARG_CNCPTO_EXC13 : conceptoExcN = ARG_CNCPTO_EXC14 : conceptoExcO = ARG_CNCPTO_EXC15 : conceptoExcP = ARG_CNCPTO_EXC16
 
-'Ampliacion
+'Ampliación
 conceptoExcQ  = ARG_CNCPTO_EXC17 : conceptoExcR  = ARG_CNCPTO_EXC18 : conceptoExcS  = ARG_CNCPTO_EXC19 : conceptoExcT  = ARG_CNCPTO_EXC20 : conceptoExcU  = ARG_CNCPTO_EXC21 : conceptoExcV  = ARG_CNCPTO_EXC22 : conceptoExcW  = ARG_CNCPTO_EXC23 : conceptoExcX  = ARG_CNCPTO_EXC24
 conceptoExcY  = ARG_CNCPTO_EXC25 : conceptoExcZ  = ARG_CNCPTO_EXC26 : conceptoExcAa = ARG_CNCPTO_EXC27 : conceptoExcAb = ARG_CNCPTO_EXC28 : conceptoExcAc = ARG_CNCPTO_EXC29 : conceptoExcAd = ARG_CNCPTO_EXC30 : conceptoExcAe = ARG_CNCPTO_EXC31 : conceptoExcAf = ARG_CNCPTO_EXC32
 conceptoExcAg = ARG_CNCPTO_EXC33 : conceptoExcAh = ARG_CNCPTO_EXC34 : conceptoExcAi = ARG_CNCPTO_EXC35 : conceptoExcAj = ARG_CNCPTO_EXC36 : conceptoExcAk = ARG_CNCPTO_EXC37 : conceptoExcAl = ARG_CNCPTO_EXC38 : conceptoExcAm = ARG_CNCPTO_EXC39 : conceptoExcAn = ARG_CNCPTO_EXC40
-'fin ampliacion
+'fin ampliación
 
 impOeA = 0 : impOeB = 0 : impOeC = 0 : impOeD = 0 : impOeE = 0 : impOeF = 0 : impOeG = 0 : impOeH = 0
 impOeI = 0 : impOeJ = 0 : impOeK = 0 : impOeL = 0 : impOeM = 0 : impOeN = 0 : impOeO = 0 : impOeP = 0
 difOeA = 0 : difOeB = 0 : difOeC = 0 : difOeD = 0 : difOeE = 0 : difOeF = 0 : difOeG = 0 : difOeH = 0
 difOeI = 0 : difOeJ = 0 : difOeK = 0 : difOeL = 0 : difOeM = 0 : difOeN = 0 : difOeO = 0 : difOeP = 0
 
-'Ampliacion
+'Ampliación
 impOeQ  = 0 : impOeR  = 0 : impOeS  = 0 : impOeT  = 0 : impOeU  = 0 : impOeV  = 0 : impOeW  = 0 : impOeX  = 0
 impOeY  = 0 : impOeZ  = 0 : impOeAa = 0 : impOeAb = 0 : impOeAc = 0 : impOeAd = 0 : impOeAe = 0 : impOeAf = 0
 impOeAg = 0 : impOeAh = 0 : impOeAi = 0 : impOeAj = 0 : impOeAk = 0 : impOeAl = 0 : impOeAm = 0 : impOeAn = 0
 difOeQ  = 0 : difOeR  = 0 : difOeS  = 0 : difOeT  = 0 : difOeU  = 0 : difOeV  = 0 : difOeW  = 0 : difOeX  = 0
 difOeY  = 0 : difOeZ  = 0 : difOeAa = 0 : difOeAb = 0 : difOeAc = 0 : difOeAd = 0 : difOeAe = 0 : difOeAf = 0
 difOeAg = 0 : difOeAh = 0 : difOeAi = 0 : difOeAj = 0 : difOeAk = 0 : difOeAl = 0 : difOeAm = 0 : difOeAn = 0
-'fin ampliacion
+'fin ampliación
 
 importeOrig = 0 : impOeOrigA = 0 : impOeOrigB = 0 : impOeOrigC = 0 : impOeOrigD = 0 : impOeOrigE = 0 : impOeOrigF = 0 : impOeOrigG = 0 : impOeOrigH = 0
 impOeOrigI = 0 : impOeOrigJ = 0 : impOeOrigK = 0 : impOeOrigL = 0 : impOeOrigM = 0 : impOeOrigN = 0 : impOeOrigO = 0 : impOeOrigP = 0
 
-'Ampliacion
+'Ampliación
 impOeOrigQ  = 0 : impOeOrigR  = 0 : impOeOrigS  = 0 : impOeOrigT  = 0 : impOeOrigU  = 0 : impOeOrigV  = 0 : impOeOrigW  = 0 : impOeOrigX  = 0
 impOeOrigY  = 0 : impOeOrigZ  = 0 : impOeOrigAa = 0 : impOeOrigAb = 0 : impOeOrigAc = 0 : impOeOrigAd = 0 : impOeOrigAe = 0 : impOeOrigAf = 0
 impOeOrigAg = 0 : impOeOrigAh = 0 : impOeOrigAi = 0 : impOeOrigAj = 0 : impOeOrigAk = 0 : impOeOrigAl = 0 : impOeOrigAm = 0 : impOeOrigAn = 0
-'fin ampliacion
+'fin ampliación
 
 valorImp = 0
 difOeTot = 0
@@ -92,7 +92,7 @@ importeDifEspOct = 0
 
 valorImp = GetValue("SCO_HRPERIOD_CALC",conceptoImp,-1)
 
-'Paga especial de reliquidacion septiembre, nos aseguramos que en esta paga retroactiva se imputen las diferencias a la paga de reliquidacion y no a la normal.
+'Paga especial de reliquidación septiembre, nos aseguramos que en esta paga retroactiva se imputen las diferencias a la paga de reliquidacion y no a la normal.
 If SAR_IND_PAGA_RELIQ = 1 And SCO_DT_ALLOCATION = DxDate(30,9,2023) Then
     IMPORTE = valorImp
     Return(0)
@@ -111,7 +111,7 @@ If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja 
 
 'En retroactividad no se generan diferencias en base de impuesto salvo OE
 If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And indAjusteDEI = 1 And esBaja = 0 Then
-    'Reconstruimos los importes de pagas que ya han tenido ajustes previamente sin este criterio. Tomar como importe orig solo la propia paga y retros con origen la propia paga
+    'Reconstruimos los importes de pagas que ya han tenido ajustes previamente sin este criterio. Tomar como importe orig sólo la propia paga y retros con origen la propia paga
     ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
     For acum = 0 To ult_reg - 1
         If SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT = SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acum].SCO_PAY_FREQ_PAYM = SCO_PAY_FREQ_ALLOC And SCO_AC_HR_PERIOD_READ_1[acum].SCO_PAY_TYPE_PAYM = SAR_TP_IMPUT Then
@@ -133,7 +133,7 @@ If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And indAjusteDEI = 1 And esBaja = 0 Then
             If conceptoExcO <> "0" Then impOeOrigO = impOeOrigO + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcO,acum)                               
             If conceptoExcP <> "0" Then impOeOrigP = impOeOrigP + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcP,acum) 
 
-'Ampliacion
+'Ampliación
             If conceptoExcQ <> "0" Then impOeOrigQ = impOeOrigQ + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcQ,acum) 
             If conceptoExcR <> "0" Then impOeOrigR = impOeOrigR + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcR,acum) 
             If conceptoExcS <> "0" Then impOeOrigS = impOeOrigS + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcS,acum) 
@@ -158,11 +158,11 @@ If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And indAjusteDEI = 1 And esBaja = 0 Then
             If conceptoExcAl <> "0" Then impOeOrigAl = impOeOrigAl + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAl,acum) 
             If conceptoExcAm <> "0" Then impOeOrigAm = impOeOrigAm + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAm,acum) 
             If conceptoExcAn <> "0" Then impOeOrigAn = impOeOrigAn + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoExcAn,acum) 
-'fin ampliacion
+'fin ampliación
 
         EndIf
         
-        'Situacion especial Octubre: retro imputada a Septiembre para ajustear D473 y ademas se pago algo adicional.
+        'Situación especial Octubre: retro imputada a Septiembre para ajustear D473 y además se pago algo adicional.
         'en retro desde reliq a Octubre vamos a incorporar los importes que se generaron en Octubre imputado a septiembre
 
         If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 And DxYear(SCO_DT_ALLOCATION) = 2023 And DxMonth(SCO_DT_ALLOCATION) = 10 And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT = SCO_DT_ALLOCATION And DxMonth(SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION) = 9 And SCO_AC_HR_PERIOD_READ_1[acum].SAR_IND_D473_IMP_PER_ANT = 1 Then
@@ -170,7 +170,7 @@ If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And indAjusteDEI = 1 And esBaja = 0 Then
             importeDifEspOct = importeDifEspOct + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoDif,acum)
         EndIf
                 
-        'Fin Situacion especial Octubre
+        'Fin Situación especial Octubre
         
     Next
 
@@ -488,7 +488,7 @@ If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And indAjusteDEI = 1 And esBaja = 0 Then
         
     EndIf 			
 
-'Ampliacion
+'Ampliación
     If conceptoExcQ <> "0" Then
         impOeQ = GetValue("SCO_HRPERIOD_CALC",conceptoExcQ,-1)
         difOeQ = impOeQ - impOeOrigQ
@@ -968,13 +968,13 @@ If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And indAjusteDEI = 1 And esBaja = 0 Then
         difOeAn = difOeAn * signo             
         
     EndIf 
-'Fin ampliacion
+'Fin ampliación
 
     difOeTot = difOeA + difOeB + difOeC + difOeD + difOeE + difOeF + difOeG + difOeH + difOeI + difOeJ + difOeK + difOeL + difOeM + difOeN + difOeO + difOeP
 
-'Ampliacion
+'Ampliación
     difOeTot = difOeTot + difOeQ + difOeR + difOeS + difOeT + difOeU + difOeV + difOeW + difOeX + difOeY + difOeZ + difOeAa + difOeAb + difOeAc + difOeAd + difOeAe + difOeAf + difOeAg + difOeAh + difOeAi + difOeAj + difOeAk + difOeAl + difOeAm + difOeAn
-'Fin ampliacion
+'Fin ampliación
 
     'Fin control de conceptos OE
 

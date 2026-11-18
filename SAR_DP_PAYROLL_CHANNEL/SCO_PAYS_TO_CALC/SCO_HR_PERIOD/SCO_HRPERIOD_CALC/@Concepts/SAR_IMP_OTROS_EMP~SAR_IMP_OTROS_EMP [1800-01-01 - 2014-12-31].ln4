@@ -1,4 +1,4 @@
-'Toma su valor a traves del metodo SAR_RET_VALOR_COMPL
+'Toma su valor a traves del método SAR_RET_VALOR_COMPL
 
 val_otros_emp = SAR_IMP_OTROS_EMP     
 sar_acum_imp_oe = 0

@@ -1,4 +1,4 @@
-'Cuando SAR_IND_AJUSTE_DEI = 1 en retroactividad no se tendra en cuenta los importes que cambien (salvo OE).
+'Cuando SAR_IND_AJUSTE_DEI = 1 en retroactividad no se tendrá en cuenta los importes que cambien (salvo OE).
 'Dichos importes no considerados en retroactividad se guardan en el concepto SAR_AJIG_XXX para considerarlos en la paga normal siguiente.
 importe = 0
 SAR_CALCULA_AJIG_27617("SAR_TOT_BONOS_27617","SAR_AJIG_BONO","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",importe)

@@ -1,4 +1,4 @@
-'El importe SAC imputado al a?o anterior no se considerara SAC en reportes. Se calcula con la misma condicion 
+'El importe SAC imputado al año anterior no se considerará SAC en reportes. Se calcula con la misma condición 
 'que los conceptos 5358 (SAR_1CUO_SAC_ACUM_IG) y 5360 (SAR_2CUO_SAC_ACUM_IG) porque va a restar en ellos.
 If SAR_IND_PAGA_RELIQ <> 1 And SAR_ES_BAJA = 0 And SAR_IND_AJUSTE_SAC = 0 Then Return(0)
 acum_ig = SAR_AC_SAC_REV_IG[0].SAR_SAC_1_ANIO_ANT_AJ + SAR_ACM_IG_ANIO_IMPUT[0].SAR_SAC_1_ANIO_ANT_AJ + SAR_SAC_1_ANIO_ANT_AJ

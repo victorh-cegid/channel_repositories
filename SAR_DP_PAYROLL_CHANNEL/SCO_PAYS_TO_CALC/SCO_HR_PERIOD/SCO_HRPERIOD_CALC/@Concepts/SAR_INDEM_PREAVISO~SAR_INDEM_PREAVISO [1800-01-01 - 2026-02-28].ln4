@@ -5,28 +5,28 @@ ENDIF
 fin_prueba = SAR_DT_END_PRUEBA
 
    '02/12/2011 Fernando Miguel Siri
-   'agregado para detectar si se esta en el fin del periodo de prueba ya que en ese caso este concepto debe retornar 0.
+   'agregado para detectar si se está en el fin del período de prueba ya que en ese caso este concepto debe retornar 0.
    IF SAR_FECHA_BAJA = fin_prueba Then
      Return(0)
    EndIf
    'fin del agregado
 
-' De acuerdo al articulo 2do. de la Ley 25.877 se considera que se encuentra dentro del periodo a prueba durante 
-' los tres primeros meses de la relacion laboral. Por lo tanto:
-' si se encontrare dentro del periodo a prueba se abonan quince dias de sueldo + la parte proporcional del aguinaldo del preaviso.
-' si la antiguedad es menor a cinco a?os y no esta dentro del periodo a prueba se le paga un mes de sueldo + la parte proporcional del aguinaldo del mes de preaviso.
-' si la antiguedad es mayor a los cinco a?os se le pagan dos meses de sueldo + la parte proporcional del aguinaldo del mes de preaviso.
+' De acuerdo al artículo 2do. de la Ley 25.877 se considera que se encuentra dentro del periódo a prueba durante 
+' los tres primeros meses de la relación laboral. Por lo tanto:
+' si se encontrare dentro del período a prueba se abonan quince dias de sueldo + la parte proporcional del aguinaldo del preaviso.
+' si la antiguedad es menor a cinco años y no está dentro del período a prueba se le paga un mes de sueldo + la parte proporcional del aguinaldo del mes de preaviso.
+' si la antiguedad es mayor a los cinco años se le pagan dos meses de sueldo + la parte proporcional del aguinaldo del mes de preaviso.
 
 
 ' Cuando se da de baja un empleado por los motivos abajo detallados se le paga el preaviso
 
-'4   (Incapacidad articulo 212 ley 20744 segundo parrafo)
-'5   (Incapacidad articulo 212 ley 20744 cuarto parrafo)
+'4   (Incapacidad articulo 212 ley 20744 segundo párrafo)
+'5   (Incapacidad articulo 212 ley 20744 cuarto párrafo)
 '9   (Despido sin causa sin otorgar preaviso)
-'11 (Incapacidad articulo 212 ley 20744 tercer parrafo)
+'11 (Incapacidad articulo 212 ley 20744 tercer párrafo)
 '12 (Fin de contrato sin otorgar preaviso) 
 '13 (Delegado gremial)
-'14 (Fuerza mayor o Disminucion del Trabajo)
+'14 (Fuerza mayor o Disminución del Trabajo)
 '15 (Embarazo)
 '16 (Matrimonio)
 prom_var = 0
@@ -46,7 +46,7 @@ endif
 
 prom_ult_6_meses = SAR_PRO_VAR_ULT_6
 
-aantig = SAR_ANIOS_ANTIG      'a?os de antiguedad
+aantig = SAR_ANIOS_ANTIG      'años de antiguedad
 
 coef=0
 

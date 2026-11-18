@@ -1,4 +1,4 @@
-'Solo en pagas normales y relioquidacion:
+'Solo en pagas normales y relioquidación:
 If(SAR_TP_IMPUT <> "1" And SAR_TP_IMPUT <> "99")Then
   Return(0)
 EndIf
@@ -33,7 +33,7 @@ EndIf
 intAjuste   = SAR_IG_DEC142_AUX       
 SAR_IG_DEC142_AUX       = 1
 
-'Si ponemos v5930 = 1 activamos la orden para que el concepto v57 en su propia reejecucion tome el valor 
+'Si ponemos v5930 = 1 activamos la orden para que el concepto v57 en su propia reejecución tome el valor 
 'de nuevas tablas al reejecutarse cada uno de los siguientes conceptos:.
 aux_14     = SAR_LEG_TABLA_IG()
 aux_15     = SAR_RANGO_REM_IG_2015()
@@ -49,8 +49,8 @@ aux_9      = SAR_IMP_CONY_IG()
 aux_10     = SAR_IMP_HIJO_IG() 
 aux_11     = SAR_IMP_O_CAR_IG()
 
-/*ACLARACION: Se realiza el ajuste con la variable interna "intajuste", dado que el v5930 se utiliza como variable de tipo indicador, y al ser numerico por error
-suma 1 peso mas al calculo de la variable v5041 cuando se re-ejecuta el v5002 */
+/*ACLARACIÓN: Se realiza el ajuste con la variable interna "intajuste", dado que el v5930 se utiliza como variable de tipo indicador, y al ser númerico por error
+suma 1 peso más al calculo de la variable v5041 cuando se re-ejecuta el v5002 */
 SAR_IG_DEC142_AUX      = intAjuste
 aux_13     = SAR_BASE_IMPUESTO()
 

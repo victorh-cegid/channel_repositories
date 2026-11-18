@@ -73,7 +73,7 @@ If SAR_ES_BAJA = 0 Or (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <
 EndIf
 
 '2024 Ley de bases beneficio por el paso a nuevo impuesto 4ta
-'Si quedo un beneficio negativo, se trata de ir compensando en meses de paga normal posteriores. Si no sera en reliquidacion.
+'Si quedo un beneficio negativo, se trata de ir compensando en meses de paga normal posteriores. Si no será en reliquidacion.
 If DxYear(SAR_FEC_IMPUT_IG) = 2024 and SAR_PAYS_TO_CALC.SAR_REVISION = 0 Then
     descuento = 0
     If valor >0 and benefneg < 0 then

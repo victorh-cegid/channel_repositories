@@ -23,7 +23,7 @@ If Output=0 Then
 
 	Return(0)
 Else
-	//En caso de que no haya dado error el calculo de la frecuencia, continuo el calculo
+	//En caso de que no haya dado error el cálculo de la frecuencia, continuo el cálculo
 	If SCO_ERROR <> 1 Then
 		SCO_AUX_AC_HRPERIOD.DestroyBlock()
 		SCO_AUX_AC_HRROLE.DestroyBlock()

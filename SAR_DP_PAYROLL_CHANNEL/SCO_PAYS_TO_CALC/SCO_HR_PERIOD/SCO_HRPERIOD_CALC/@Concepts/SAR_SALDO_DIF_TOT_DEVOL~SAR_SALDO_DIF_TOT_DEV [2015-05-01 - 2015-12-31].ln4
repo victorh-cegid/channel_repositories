@@ -1,4 +1,4 @@
-'Solo en pagas normales y relioquidacion:
+'Solo en pagas normales y relioquidación:
 If(SAR_TP_IMPUT <> "1" And SAR_TP_IMPUT <> "99")Then
   Return(0)
 EndIf

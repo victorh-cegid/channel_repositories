@@ -1,4 +1,4 @@
-'Aportes de SAC a?os anteriores entran directamente a impuesto, no forman parte de la 12ava
+'Aportes de SAC años anteriores entran directamente a impuesto, no forman parte de la 12ava
 sac_anio_ant = SAR_AJUSTE_SAC2_ANT
 If sac_anio_ant = 0 Then Return(0)
 

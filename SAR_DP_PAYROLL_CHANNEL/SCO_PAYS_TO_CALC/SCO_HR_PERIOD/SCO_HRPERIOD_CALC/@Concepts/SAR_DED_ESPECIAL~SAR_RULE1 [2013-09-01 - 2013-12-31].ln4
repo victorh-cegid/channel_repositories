@@ -38,7 +38,7 @@
 
 valor_sac_neto = SAR_SAC_NETO_2013
 
-'Calculo normal del  concepto de Deduccion especial + SAC segun se aplique el decreto 2191 2012.
+'Calculo normal del  concepto de Deducción especial + SAC según se aplique el decreto 2191 2012.
 
 'Cambio Ganancias Ley 26.731
 '----------------------------
@@ -49,8 +49,8 @@ valor_sac_neto = SAR_SAC_NETO_2013
 
 ind = SAR_IND_DED_IG_2010
 
-'Calculo de la deduccion especial segun informacion recopilada del concepto v792 por Decreto 1242/2013.
-'v792 Es el rango obtenido en el que el empleado se ubica segun su Maxima remuneracion y la zona desfavorable 
+'Calculo de la deducción especial según información recopilada del concepto v792 por Decreto 1242/2013.
+'v792 Es el rango obtenido en el que el empleado se ubica según su Máxima remuneración y la zona desfavorable 
 'Y sus valores posibles para este concepto son:
 '2: Empleado que tiene entre 15000$ de rem max y zona no desfavorable.
 '3: Empleado que tiene entre 15000$ de rem max y zona desfavorable.
@@ -99,7 +99,7 @@ AUX = SAR_RANGO_REM_IG_2013
     
 
 
-'Solo en la paga de reliquidacion del impuesto a las ganancias, sumamos a la deduccion especial
+'Solo en la paga de reliquidación del impuesto a las ganancias, sumamos a la deducción especial
 'el neto obtenido por el decreto 2191/2012, correspondiente a Diciembre.
 If(SAR_TP_IMPUT = "99")Then
    Deduccion = TODOUBLE(Deduccion_Normal) + valor_sac_neto

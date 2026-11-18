@@ -1,4 +1,4 @@
-If SCO_JS_HT_PAYS.SME_IND_CLC_SDI = 0 Then Return(0)       ' Calculo de nomina
+If SCO_JS_HT_PAYS.SME_IND_CLC_SDI = 0 Then Return(0)       ' Cálculo de nómina
 DestroyBlock()
 
 SetStartDate(M4_MINUS_INF)
@@ -34,10 +34,10 @@ Else
             'Carga de datos del bloque
             Call ("SME_H_REG_MOV_SDI_FECHAS", "Load_Blk")
             
-            'Situa el puntero en el primer registro
+            'Sitúa el puntero en el primer registro
             Call ("SME_H_REG_MOV_SDI_FECHAS", "Begin")
 
-            'Cuenta el numero de registros
+            'Cuenta el número de registros
             cadena = ("Return(SME_H_REG_MOV_SDI_FECHAS.Count())")
             aux = clcExecuteLN4JIT(cadena)
             ultimo_reg = aux - 1
@@ -71,7 +71,7 @@ Else
 
             f_ejecucion = Today()
 
-            'Si la fecha de ejecucion esta comprendida entre las fechas de inicio y fin de la paga
+            'Si la fecha de ejecución está comprendida entre las fechas de inicio y fin de la paga
             If f_inicio_paga <= f_ejecucion And f_ejecucion <= f_fin_paga Then
                 x = FindRegister("SCO_DT_ALLOCATION",f_ejecucion,M4_EQUAL)
 
@@ -110,10 +110,10 @@ Else
             'Carga de datos del bloque
             Call ("SME_PER_VAR_IMSS_FECHAS", "Load_Blk")
 
-            'Situa el puntero en el primer registro
+            'Sitúa el puntero en el primer registro
             Call ("SME_PER_VAR_IMSS_FECHAS", "Begin")
 
-            'Cuenta el numero de registros
+            'Cuenta el número de registros
             cadena = ("Return(SME_PER_VAR_IMSS_FECHAS.Count())")
             aux = clcExecuteLN4JIT(cadena)
             ultimo_reg = aux - 1

@@ -1,9 +1,9 @@
 'Inicializo variables
-ano_pago_act = DxYear(SAR_FEC_IMPUT_IG)         'A?o fecha imput IG calculo actual
-mes_pago_act = DxMonth(SAR_FEC_IMPUT_IG)        'Mes fecha imput IG calculo actual
-dia_pago_act = DaysOfMonth(SAR_FEC_IMPUT_IG) 	'Dia fecha imput IG calculo actual
-indZonaPat = SAR_IND_ZONA_PAT                   'Indicador zona patagonica
-indDeduc = SAR_IND_DED_IG_2010                  'Indicador deduccion 2010
+ano_pago_act = DxYear(SAR_FEC_IMPUT_IG)         'Año fecha imput IG cálculo actual
+mes_pago_act = DxMonth(SAR_FEC_IMPUT_IG)        'Mes fecha imput IG cálculo actual
+dia_pago_act = DaysOfMonth(SAR_FEC_IMPUT_IG) 	'Día fecha imput IG cálculo actual
+indZonaPat = SAR_IND_ZONA_PAT                   'Indicador zona patagónica
+indDeduc = SAR_IND_DED_IG_2010                  'Indicador deducción 2010
 meses = 0
 importe = 0
 importe_inc = 0
@@ -20,9 +20,9 @@ indBajaReliq = 0
 
 'Control, baja debe calcularse respecto a la fecha de pago IG
 If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
-    ano_pago_act        = DxYear(SAR_FEC_PAGO_IG)      'A?o fecha calculo actual
-    mes_pago_act        = DxMonth(SAR_FEC_PAGO_IG)     'Mes fecha calculo actual
-    dia_pago_act        = DaysOfMonth(SAR_FEC_PAGO_IG) 'Dia fecha calculo actual
+    ano_pago_act        = DxYear(SAR_FEC_PAGO_IG)      'Año fecha cálculo actual
+    mes_pago_act        = DxMonth(SAR_FEC_PAGO_IG)     'Mes fecha cálculo actual
+    dia_pago_act        = DaysOfMonth(SAR_FEC_PAGO_IG) 'Día fecha cálculo actual
     indBajaReliq = 1
 EndIf
 
@@ -32,12 +32,12 @@ If SAR_IND_PAGA_RELIQ = 1 Then indBajaReliq = 1
 'INICIO: Hijos entre 18 y 24 con gastos educativos
 '***********************************************************************
 
-'Fecha inicio y fin de periodo fiscal a considerar. Un empleado no diferido en paga de enero seran 01/01/a?oIG y 31/01/a?oIG
-'un empleado diferido en enero seran 01/01/a?oIG y 28/02/a?oIG
+'Fecha inicio y fin de periodo fiscal a considerar. Un empleado no diferido en paga de enero serán 01/01/añoIG y 31/01/añoIG
+'un empleado diferido en enero serán 01/01/añoIG y 28/02/añoIG
 fec_mes_ini = DxDate("01","01",ano_pago_act)
 fec_mes_fin = DxDate(dia_pago_act,mes_pago_act,ano_pago_act)
 
-'Si es baja y esta activo el indicador de calcular el impuesto a diciembre, llevamos la fecha de fin a 31/12/IgImput actual        
+'Si es baja y está activo el indicador de calcular el impuesto a diciembre, llevamos la fecha de fin a 31/12/IgImput actual        
 If SAR_IG_DICIEMBRE = 1 And SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then fec_mes_fin = DxDate("31", "12", ano_pago_act)
 
 'Variables para el control de varios hijos con distintas fechas de impuesto:
@@ -90,10 +90,10 @@ For i = 0 To num_reg - 1
         fec_alta_imp = SAR_FAMIL_IMPUESTO.SAR_DT_ALTA_IMP
         'fec_baja_imp = SAR_FAMIL_IMPUESTO.SAR_DT_BAJA_IMP
         fec_baja_imp = Min(SAR_FAMIL_IMPUESTO.SAR_DT_BAJA_IMP,SAR_FAMIL_IMPUESTO.DT_END)
-        'Si no se ha informado fecha de baja en el impuesto asignamos el tope del a?o fiscal
+        'Si no se ha informado fecha de baja en el impuesto asignamos el tope del año fiscal
         If IsNull(fec_baja_imp) = M4_TRUE Then fec_baja_imp = DxDate("31", "12", ano_pago_act)
 
-        'Si es baja y esta activo el indicador de calcular el impuesto a diciembre, llevamos la fecha de fin a 31/12/IgImput actual        
+        'Si es baja y está activo el indicador de calcular el impuesto a diciembre, llevamos la fecha de fin a 31/12/IgImput actual        
         If SAR_IG_DICIEMBRE = 1 And SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then fec_mes_fin = DxDate("31", "12", ano_pago_act)
         
         'Topamos las fechas de familiar y del periodo a considerar
@@ -118,11 +118,11 @@ For i = 0 To num_reg - 1
         'Evaluamos si corresponde deducirse o por incapacidad, o por edad.
         'Tenemos que evaluar cada mes del periodo IG por separado porque pueden quedar huecos
         For j = DxMonth(fec_mes_ini) To DxMonth(fec_mes_fin)
-            'Desde septiembre 2024, el valor puede cambiar a lo largo del a?o
+            'Desde septiembre 2024, el valor puede cambiar a lo largo del año
             fechaValor = DxDate(1,j,ano_pago_act)
             If indBajaReliq = 1 Then fechaValor = DxDate(1,12,ano_pago_act)
 
-            'Calculamos el precio mensual de los conceptos de Deduccion, desde 2024 SAR_VAL_HIJO_IMP_REDUC lleva el importe de hijo incapacitado
+            'Calculamos el precio mensual de los conceptos de Deducción, desde 2024 SAR_VAL_HIJO_IMP_REDUC lleva el importe de hijo incapacitado
             valorMensual = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_HIJO_IMP",fechaValor,indDeduc))
             valorMensualInc = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_VAL_HIJO_IMP_REDUC",fechaValor,indDeduc))
 
@@ -137,7 +137,7 @@ For i = 0 To num_reg - 1
             'Evaluo si el mes debe considerarse atendiendo a la incapacidad
             If fec_ini_incap <= fec_fin_j And fec_fin_incap >= fec_ini_j Then 
                 mes = 2
-                'Acumulamos por separado el importe de la deduccion por hijo / hijastro incapacitado
+                'Acumulamos por separado el importe de la deducción por hijo / hijastro incapacitado
                 importe_inc = importe_inc + valorDeduc_inc
                 importe = importe + valorDeduc_inc
             'Evaluo si el mes debe considerarse atendiendo a la edad
@@ -171,7 +171,7 @@ If DxYear(SAR_FEC_IMPUT_IG) = 2023 And SCO_DT_ALLOCATION > DxDate(1,10,2023) The
 If conteoAnual = 0 Then
     SAR_NUM_HIJOS_IG = num_hijos_ig
     SAR_NUM_HIJOS_IG_INC = num_hijos_ig_inc
-    'F1357 desde a?o 2022 desglosa el conteo de los hijos
+    'F1357 desde año 2022 desglosa el conteo de los hijos
     SAR_NUM_HIJOS_50 = num_hijos_mitad
     SAR_NUM_HIJOS_100 = num_hijos_entero
     SAR_NUM_EDU_M_50 = num_edu_mitad

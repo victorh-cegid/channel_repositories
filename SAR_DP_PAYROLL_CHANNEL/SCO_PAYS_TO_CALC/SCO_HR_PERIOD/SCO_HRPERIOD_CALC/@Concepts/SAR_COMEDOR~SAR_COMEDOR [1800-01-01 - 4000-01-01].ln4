@@ -9,7 +9,7 @@ while (SAR_HRP_BNFT.iseof()  = M4_FALSE)
     SAR_HRP_BNFT.GONEXT()
 WEND 
 
-'Calculo de los dias a pagar
+'Cálculo de los días a pagar
 IF #SAR_TIPO_SALARIO =  "003" THEN
     dias = (#SAR_U_CONC_FIJOS/#SAR_HS_DIARIAS_PROM) + #SCO_NUM_DAYS_CAL  'se tiene en cuenta los dia de feriados
 ELSE

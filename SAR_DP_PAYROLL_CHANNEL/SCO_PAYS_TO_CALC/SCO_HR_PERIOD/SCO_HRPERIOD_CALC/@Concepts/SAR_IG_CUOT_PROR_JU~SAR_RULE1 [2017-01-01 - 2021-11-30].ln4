@@ -1,6 +1,6 @@
-'RG 3976. Se cierra esta norma a 31/12/2017. Se mantiene durante 2017 por si existiesen prorrateos pendientes del SAC del a?o 2016.
+'RG 3976. Se cierra esta norma a 31/12/2017. Se mantiene durante 2017 por si existiesen prorrateos pendientes del SAC del año 2016.
 
-'No se calcula en reliquidacion ni en paga de Vacaciones/Anticipo:
+'No se calcula en reliquidación ni en paga de Vacaciones/Anticipo:
 If SAR_TP_IMPUT = "77" or SAR_TP_IMPUT = "88" or SAR_TP_IMPUT = "99" Then Return(0)
 
 'No se ejecuta en la primera quincena
@@ -29,12 +29,12 @@ cuota = 0
 base = 0
 meses_quedan = 0
 
-'No tomara valor en la paga normal de Junio si no existe ajuste:
+'No tomará valor en la paga normal de Junio si no existe ajuste:
 If (SAR_TP_IMPUT = "1" And DxMonth(SCO_DT_PAYMENT) = 6 And SAR_PAGA_EXTRA_AJ_1 = 0 And SAR_IND_AGUINALDO = 0) Then
   Return(0)
 EndIf
 
-'Modificacion RG3976. En 2017 no se va a prorratear el SAC desde junio en este concepto, se hara en el concepto 5192 segun la nueva definicion legal.
+'Modificación RG3976. En 2017 no se va a prorratear el SAC desde junio en este concepto, se hará en el concepto 5192 según la nueva definición legal.
 base_mes_actual = 0
 
 ' No se debe tomar el valor de la cuota en Paga Extra de Diciembre de Aguinaldo.

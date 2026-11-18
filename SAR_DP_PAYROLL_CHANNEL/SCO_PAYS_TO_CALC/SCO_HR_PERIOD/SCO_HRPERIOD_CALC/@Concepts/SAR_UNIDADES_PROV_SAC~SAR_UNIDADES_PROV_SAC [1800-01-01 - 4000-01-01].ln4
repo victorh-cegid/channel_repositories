@@ -65,7 +65,7 @@ IF POS <> -1 THEN
     fec_fin_per = DxDate(dia_fin_dev,mes_fin_dev,ANIO)
      
     fec_baja = SAR_FECHA_BAJA
-    'Por modificacion del empleado
+    'Por modificación del empleado
     '--------------------------------------------------------------------------
     If(SAR_HR_PERIOD.STD_ID_HRP_START_REASON = "005")Then
         meses_activo_con_nueva_alta = Months(SCO_DT_PAYMENT, SAR_FECHA_ALTA)
@@ -134,7 +134,7 @@ ELSE
     uni = 0
     '
     'No existe la paga extra creada para el convenio del empleado %0:s. 
-    'Esto sucedio en la ejecucion del concepto #980. 
+    'Esto sucedió en la ejecución del concepto #980. 
     '
     SetLog(-1,80,4,206,SCO_ID_HR)
 

@@ -5,21 +5,21 @@ IF SAR_TP_IMPUT = "99" THEN
     Return(0)
 ENDIF
 
-id_Incidencia = "21" 'Suspension Laboral Ley 20.744 art 223 bis
-horas = 0 		   'Inicializacion de las horas totales de Licencia sin goce de sueldo
-horas_teor_abs = 0   'Inicializacion de las horas teoricas de cada registro de Licencia sin goce de sueldo
-dias_abs_tot = 0     'dias totales del ausentismo 
+id_Incidencia = "21" 'Suspensión Laboral Ley 20.744 art 223 bis
+horas = 0 		   'Inicialización de las horas totales de Licencia sin goce de sueldo
+horas_teor_abs = 0   'Inicialización de las horas teóricas de cada registro de Licencia sin goce de sueldo
+dias_abs_tot = 0     'días totales del ausentismo 
 
 'Tramos
 INICIO_TRAMO = SAR_TOT_P_COMP_EA_AUX..SysStartDate
 FIN_TRAMO = SAR_TOT_P_COMP_EA_AUX..SysEndDate
 
-'Cargamos el nodo de incidencias del periodo, en caso de que no este ya cargado.
+'Cargamos el nodo de incidencias del periodo, en caso de que no esté ya cargado.
 IF SAR_REAL_TIME_PERIOD.COUNT()= 0 THEN
     SAR_REAL_TIME_PERIOD.LOAD_BLK()
 ENDIF
 
-'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de Licencia sin goce de sueldo
+'Añadimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de Licencia sin goce de sueldo
 sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
 SAR_REAL_TIME_PERIOD.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", id_Incidencia)
 
@@ -29,8 +29,8 @@ WHILE SAR_REAL_TIME_PERIOD.ISEOF() = FALSE
         	
     fec_ini_abs = SAR_REAL_TIME_PERIOD.SCO_DT_START 	' fecha de inicio del ausentismo
     fec_fin_abs = SAR_REAL_TIME_PERIOD.SCO_DT_END	' fecha de fin del ausentismo
-    t_unid = SAR_REAL_TIME_PERIOD.SCO_ID_TIME_UNIT 	' tipo de unidades del ausentismo, Horas o Dias
-    unid = SAR_REAL_TIME_PERIOD.SCO_UNITS 		' numero de unidades del ausentismo
+    t_unid = SAR_REAL_TIME_PERIOD.SCO_ID_TIME_UNIT 	' tipo de unidades del ausentismo, Horas o Días
+    unid = SAR_REAL_TIME_PERIOD.SCO_UNITS 		' número de unidades del ausentismo
 
     excedente = 0
 	
@@ -84,10 +84,10 @@ IF DXMONTH(FIN_TRAMO) = 2 THEN
     ENDIF
 ENDIF
 
-'Calculo los dias del tramo
+'Calculo los días del tramo
 dias_tramo = (FECHA_FIN_TRAMO - INICIO_TRAMO) + 1
 
-'Calculo los dias del tramo real
+'Calculo los días del tramo real
 dias_tramo_real = FIN_TRAMO - INICIO_TRAMO + 1
 
 IF dias_abs_tot > 0 THEN

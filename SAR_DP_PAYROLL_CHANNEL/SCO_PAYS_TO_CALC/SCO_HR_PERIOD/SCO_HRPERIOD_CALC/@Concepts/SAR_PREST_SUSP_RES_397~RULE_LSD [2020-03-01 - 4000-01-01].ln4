@@ -1,6 +1,6 @@
 If SAR_TP_IMPUT <> "1" And SAR_TP_IMPUT <> "3" And SAR_TP_IMPUT <> "4" Then Return(0)
 
-'LSD diferencia la exposicion del concepto dependiendo de si se percibe por mes completo o no
+'LSD diferencia la exposición del concepto dependiendo de si se percibe por mes completo o no
 importe = SAR_PREST_SUSP_RES_397
 If SAR_DIAS_SUSP_RES_397 = SAR_DIAS_NORM_SUELD Then
     SAR_RES_397_COMPLET = importe

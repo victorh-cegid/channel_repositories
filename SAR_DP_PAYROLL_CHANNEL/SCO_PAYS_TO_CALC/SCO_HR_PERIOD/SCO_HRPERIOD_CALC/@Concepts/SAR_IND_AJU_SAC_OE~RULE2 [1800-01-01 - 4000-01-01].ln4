@@ -3,7 +3,7 @@ a = SAR_IND_AJUSTE_SAC
 
 indicador_oe = SAR_IND_AJU_SAC_OE
 
-'Comprueba si el indicador esta activo y ademas existe abono de SAC, si no es asi retorna 0
+'Comprueba si el indicador está activo y además existe abono de SAC, si no es así retorna 0
 sac_abonado = SAR_JUR_SAC_MES
 ind_pagas_ant = SAR_ACM_MES_ACTUAL[0].SAR_IND_AJU_SAC_OE
 valor = 0

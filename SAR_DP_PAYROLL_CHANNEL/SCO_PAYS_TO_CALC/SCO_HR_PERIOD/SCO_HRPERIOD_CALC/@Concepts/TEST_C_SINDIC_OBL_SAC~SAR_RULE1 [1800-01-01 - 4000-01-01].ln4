@@ -1,0 +1,9 @@
+'prueba
+If SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" Then Return(0)
+base = SAR_TOT_SAC_COTIZ
+
+'D612 2026
+If SAR_D612_IND = 1 Then base = 0
+
+valor = base * SAR_PORC_C_SIND_OBL / 100
+Return(valor)

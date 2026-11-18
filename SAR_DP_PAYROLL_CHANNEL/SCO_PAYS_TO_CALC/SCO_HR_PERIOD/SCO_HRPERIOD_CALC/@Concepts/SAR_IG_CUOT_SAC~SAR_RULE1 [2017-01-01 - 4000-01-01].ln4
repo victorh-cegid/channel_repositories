@@ -1,6 +1,6 @@
-'RG 3976. Se condiciona el calculo para que desde 2017 el SAC de Junio y Diciembre no se lleve al prorrateo como se hacia anteriormente.
+'RG 3976. Se condiciona el cálculo para que desde 2017 el SAC de Junio y Diciembre no se lleve al prorrateo como se hacía anteriormente.
 
-'No se calcula en reliquidacion ni en paga de Vacaciones/Anticipo:
+'No se calcula en reliquidación ni en paga de Vacaciones/Anticipo:
 If SAR_TP_IMPUT = "77" OR SAR_TP_IMPUT = "88" or SAR_TP_IMPUT = "99" Then Return(0)
 
 'No se ejecuta en la primera quincena
@@ -38,7 +38,7 @@ cuota = 0
 meses_quedan = 0
 base_1q =0
 
-'Modificacion RG3976. Desde 2017 no se va a prorratear el SAC desde junio en este concepto, se hara en el concepto 5192 segun la nueva definicion legal.
+'Modificación RG3976. Desde 2017 no se va a prorratear el SAC desde junio en este concepto, se hará en el concepto 5192 según la nueva definición legal.
 base_mes_actual = 0
 
 ' No se debe tomar el valor de la cuota en Paga Extra de Diciembre de Aguinaldo.
@@ -101,7 +101,7 @@ IF (SAR_ES_BAJA = 1) Then
     EndIf
 EndIf
 
-'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+'Por modificación del empleado se agregó: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
 IF ((SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" ) OR mes = 12 ) THEN 
      RETURN(base_mes_actual + saldo)	 
 ENDIF

@@ -2,19 +2,19 @@
 ' Method:       SCO_MANAGE_ERRORS
 ' Date:         19/03/2003
 ' Version:      1.0
-' Description:  Este metodo gestiona lo referente a errores del empleado, tanto la actualizacion
-'               de la tabla de errores como la actualizacion del nodo que se visualiza desde
+' Description:  Este método gestiona lo referente a errores del empleado, tanto la actualización
+'               de la tabla de errores como la actualización del nodo que se visualiza desde
 '               el lanzador.
 '
-' Variable arguments: si. Se espera que en estos argumentos lleguen los valores de las
+' Variable arguments: sí. Se espera que en estos argumentos lleguen los valores de las
 '                       variables que se utilizan para recuperar los valores de retorno de 
-'                       otros metodos.
+'                       otros métodos.
 '******************************************************************************************
 
-//Posicion del primer argumento variable
+//Posición del primer argumento variable
 nFirstVarArg = 1
 
-//Dejamos abierta la posibilidad de pasar varios parametros que indiquen error. Por eso se
+//Dejamos abierta la posibilidad de pasar varios parámetros que indiquen error. Por eso se
 //indica con argumentos variables. Si alguno de los argumentos variables nos indica un error,
 //es que se ha producido un error.
 bOtherErrors = false
@@ -29,25 +29,25 @@ WEnd
 //Esta variable indica si hay un error en la pila de errores.
 bExistsError  = false
 
-//Hay que actualizar la posicion de la pila.
+//Hay que actualizar la posición de la pila.
 //SCO_HR_PAY_ERROR.SCO_ERROR_POSITION = nNumPreviousErrors + 1
 
-//Se ejecuta este metodo por si se ha producido algun error que no teniamos controlado.
+//Se ejecuta este método por si se ha producido algún error que no teníamos controlado.
 SCO_FIND_ERROR()
 
-//Este es un error del calculo
+//Este es un error del cálculo
 bExistsError = SCO_HR_PERIOD.SCO_ERROR
 
 If bExistsError = true OR bOtherErrors = true Then
-	//Si ha dado problemas la retroactividad automatica o el calculo normal, o si hay
+	//Si ha dado problemas la retroactividad automática o el cálculo normal, o si hay
 	//errores anteriores grabados o si hemos encontrado un error en la pila de errores,
 	//el empleado no ha sido calculado correctamente.
      SCO_HR_PAY_ERROR.SCO_GET_ERRORS()
 
 	SCO_PAYS_TO_CALC.SCO_NUM_CALC_EMP_ERR = SCO_PAYS_TO_CALC.SCO_NUM_CALC_EMP_ERR + 1
 
-	//La visualizacion de este nodo solo se hace desde la pantalla resumen del 
-	//calculo, no se necesita cuando se ejecuta en planificador.
+	//La visualización de este nodo sólo se hace desde la pantalla resumen del 
+	//cálculo, no se necesita cuando se ejecuta en planificador.
 	If SCO_HT_PAYS.SCO_FROM_JS = 0 Then
 		SCO_ERROR_EMPLOYEE.AddRegister()
 		SCO_ERROR_EMPLOYEE.SCO_ID_HR = GetValue("SCO_HR_PERIOD","STD_ID_HR",-1)

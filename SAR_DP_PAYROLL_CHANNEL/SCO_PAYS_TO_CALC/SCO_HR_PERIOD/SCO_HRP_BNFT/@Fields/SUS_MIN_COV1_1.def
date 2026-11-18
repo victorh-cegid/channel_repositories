@@ -1,5 +1,5 @@
 item: SUS_MIN_COV1_1
-name: Cobertura minima
+name: Cobertura mínima
 column_name: SUS_MIN_COV1
 item_type: FIELD
 type: CURRENCY
@@ -11,3 +11,12 @@ default_value: null
 internal_type: 15
 item_aux: SCO_ID_CURRENCY_2
 id_cstype: null
+totalize_type: 4
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: null
+variable_arguments: 0
+item_aux_prorat: null
+dimension: null
+conv_function: 1

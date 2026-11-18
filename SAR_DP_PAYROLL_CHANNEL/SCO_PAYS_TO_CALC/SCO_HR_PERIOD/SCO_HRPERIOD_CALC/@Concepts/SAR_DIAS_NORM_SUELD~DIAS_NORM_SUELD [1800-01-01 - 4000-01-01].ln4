@@ -27,7 +27,7 @@ ELSEIF SAR_TIPO_SALARIO = "003" THEN    'tipo salario horario
                 valor = 0
             else
                 '
-                'El empleado %1:s. , que posee tipo de salario horario, no tiene asignado tiempo teorico ni horas de trabajo. Esto sucedio en la ejecucion del concepto #401. 
+                'El empleado %1:s. , que posee tipo de salario horario, no tiene asignado tiempo teórico ni horas de trabajo. Esto sucedió en la ejecución del concepto #401. 
                 '
                 SetLog(M4_WARNINGLOG,80,4,201,SCO_ID_HR)
             endif

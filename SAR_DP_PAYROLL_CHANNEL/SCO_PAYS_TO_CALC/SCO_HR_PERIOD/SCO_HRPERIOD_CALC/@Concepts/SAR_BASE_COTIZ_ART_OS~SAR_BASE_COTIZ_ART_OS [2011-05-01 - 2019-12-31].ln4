@@ -24,7 +24,7 @@ ELSE
     base= basetop
 ENDIF  
 
-'Comparamos con el minimo imponible solo si la base es >0
+'Comparamos con el mínimo imponible solo si la base es >0
 basemin = tope_min / SAR_DIAS_NORM_COTIZ * diasart
 IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
    If (base > 0)Then  

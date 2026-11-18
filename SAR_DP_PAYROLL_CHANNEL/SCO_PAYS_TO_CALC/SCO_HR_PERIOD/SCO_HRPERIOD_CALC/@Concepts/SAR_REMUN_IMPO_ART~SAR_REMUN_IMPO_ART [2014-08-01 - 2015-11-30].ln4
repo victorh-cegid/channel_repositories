@@ -17,10 +17,10 @@ base4 = 0
 real1 = SAR_TOT_DEV_COTIZ 
 
 If(SAR_ASIGNACION_ESTIMULO > 0)Then 
-   real1 = real1 + SAR_ASIGNACION_ESTIMULO 'Sumamos la asignacion estimulo para pasantes
+   real1 = real1 + SAR_ASIGNACION_ESTIMULO 'Sumamos la asignación estimulo para pasantes
 EndIf
 
-IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Calculo sin tope
+IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Cálculo sin tope
     base1 = Max(real1,0)
 ELSE
     IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
@@ -47,7 +47,7 @@ IF (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") THEN
     sac = SAR_EGRESO_PAGA_1 + SAR_EGRESO_PAGA_2
 ENDIF
 
-IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Calculo sin tope
+IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Cálculo sin tope
     base2 = sac
 ELSE
     tope2 = ((SAR_TOPE_ART_VAR * SAR_VALOR_AMPO)*(SAR_U_PAGA_EX_1+SAR_U_PAGA_EX_2)*180)/360
@@ -63,7 +63,7 @@ sac_impo = base2
 
 'Preparo el VAC imponible
 '----------------------------------------------------------------------.
-IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Calculo sin tope
+IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Cálculo sin tope
     aux = SAR_IMPORTE_LICENCIAS    
     vac = SAR_VACACIONES
     base3 = SAR_VACACIONES
@@ -92,7 +92,7 @@ vac_impo = base3
 
 'Preparo la base de Cotizacion ART
 '----------------------------------------------------------------------.
-IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Calculo sin tope
+IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Cálculo sin tope
     aux = SAR_DIAS_ACCIDENTE
     diasart = SAR_DIAS_ART
     base4 = SAR_PRESTACION_ART
@@ -123,7 +123,7 @@ base_Cot_art = base4
 '----------------------------------------------------------------------.
 REM_IMP_9 = base_Cot_art + rem_impo + sac_impo + vac_impo
 
-IF (SAR_IND_REM9_SIN_TOPE = 1 OR SAR_IND_REM9_SIN_TOPE = 2) THEN 'Calculo sin tope+No Remunerativos O con tope+No Remunerativos
+IF (SAR_IND_REM9_SIN_TOPE = 1 OR SAR_IND_REM9_SIN_TOPE = 2) THEN 'Cálculo sin tope+No Remunerativos O con tope+No Remunerativos
     REM_IMP_9 = REM_IMP_9 + SAR_TOT_NO_REMUN
 ENDIF
 

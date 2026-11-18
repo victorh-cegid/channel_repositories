@@ -1,8 +1,8 @@
 '
 'Busco el precio del sueldo que tiene el empleado a la fecha recibida por argumento.
-'Leo dicho precio desde el tramo correspondiente al concepto 1002 si esta cargado a nivel
+'Leo dicho precio desde el tramo correspondiente al concepto 1002 si está cargado a nivel
 'de period, sino loleo del tramo correspondiente al concepto 10002 (nivel de rol)
-'La formula del precio se calcula segun el concepto recibido por parametro
+'La fórmula del precio se calcula según el concepto recibido por parámetro
 '
 SALARIO = 0
 SUELDO_PERIOD = SAR_HRPERIOD_CALC.SAR_P_SUELDO

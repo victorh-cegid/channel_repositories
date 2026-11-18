@@ -1,4 +1,4 @@
-'Este indicador si vale 1 indica que el ajuste del decreto 473/23 va a producirse en la paga normal (no retro excepto bajas) de septiembre, por defecto solo para bajas.
+'Este indicador si vale 1 indica que el ajuste del decreto 473/23 va a producirse en la paga normal (no retro excepto bajas) de septiembre, por defecto sólo para bajas.
 'Sin se activa este in
 indicador = 0
 If SCO_DT_PAYMENT = SCO_DT_ALLOCATION Then indicador = 1

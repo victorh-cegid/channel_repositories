@@ -1,6 +1,6 @@
 'Este concepto debera ser cargado por tabla de Valores empresa, 
 'El valor a cargar debera ser la cantidad de veces a multiplicar el MOPRE 
 'para establecer el tope para aportes y contribuciones de Obra social, ANSSAL y ART 
-'y el tope para aportes Jubilacion y Ley 19032.
+'y el tope para aportes Jubilación y Ley 19032.
 
 RETURN(#SAR_CANT_MOPRE_TOPE)

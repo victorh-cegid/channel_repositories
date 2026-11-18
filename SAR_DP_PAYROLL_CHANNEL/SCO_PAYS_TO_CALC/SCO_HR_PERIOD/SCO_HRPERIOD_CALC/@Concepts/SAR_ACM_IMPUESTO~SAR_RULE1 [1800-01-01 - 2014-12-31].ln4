@@ -1,5 +1,5 @@
-'Antes de realizar cualquier calculo del impuesto verificamos que la modificacion se realizo a fin del mes
-'de la paga para de esta forma dejar el calculo al nuevo periodo.
+'Antes de realizar cualquier calculo del impuesto verificamos que la modificación se realizó a fin del mes
+'de la paga para de esta forma dejar el calculo al nuevo período.
 
 IF ISNULL(SAR_IG_FINAL) = TRUE THEN
     imp_fin = 0 

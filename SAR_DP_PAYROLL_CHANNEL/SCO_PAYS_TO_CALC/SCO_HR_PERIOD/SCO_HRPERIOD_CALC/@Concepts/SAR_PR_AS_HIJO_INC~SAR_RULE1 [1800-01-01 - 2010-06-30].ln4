@@ -1,8 +1,8 @@
 '
-'De acuerdo con la resolucion 136/98 de la Administracion Federal de Ingresos Publicos
-'se modifica la formula para tener en cuenta todas las zonas posibles de Asignaciones 
-'Familiares para el calculo del precio respectivo segun los rangos en los que se encuentre el 
-'empleado. Esta Resolucion se publico en el boletin oficial del 14/05/1998.
+'De acuerdo con la resolución 136/98 de la Administración Federal de Ingresos Públicos
+'se modifica la fórmula para tener en cuenta todas las zonas posibles de Asignaciones 
+'Familiares para el cálculo del precio respectivo según los rangos en los que se encuentre el 
+'empleado. Esta Resolución se publicó en el boletín oficial del 14/05/1998.
 '
 
 IF SAR_TP_IMPUT <> "1" AND SAR_TP_IMPUT <> "4" THEN 'Tipo mensual y quincenal

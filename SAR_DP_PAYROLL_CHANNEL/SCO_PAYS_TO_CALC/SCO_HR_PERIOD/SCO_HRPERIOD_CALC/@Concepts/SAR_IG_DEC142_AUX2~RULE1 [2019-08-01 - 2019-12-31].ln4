@@ -1,15 +1,15 @@
-'Antes de realizar cualquier calculo se verifica que la empresa haga la retencion correspondiente a ganancias:
+'Antes de realizar cualquier cálculo se verifica que la empresa haga la retención correspondiente a ganancias:
 If(SAR_IND_NO_RET_GAN = 1)Then 
     Return(0)
 EndIf
 
-// Calculamos el concepto en pagas 1 - normales, 3 - 1? quincena, 4 - 2? quincena (de agosto 2019 para que no aplique las direncias de tablas nuevas) y 99 - reliquidacion
+// Calculamos el concepto en pagas 1 - normales, 3 - 1ª quincena, 4 - 2ª quincena (de agosto 2019 para que no aplique las direncias de tablas nuevas) y 99 - reliquidación
 If (SAR_TP_IMPUT <> "1" And SAR_TP_IMPUT <> "3" And SAR_TP_IMPUT <> "4" And SAR_TP_IMPUT <> "99" And SAR_TP_IMPUT <> "2") Then
     Return(0)
 EndIf
 
 /* ------------------------------------------------------------------------------ */
-/*    SOLO DEBE CALCULARSE CUANDO LA FECHA DE IMPUESTO ES SEPTIEMBRE DE 2019    */
+/*    SÓLO DEBE CALCULARSE CUANDO LA FECHA DE IMPUESTO ES SEPTIEMBRE DE 2019    */
 /* ------------------------------------------------------------------------------ */
 MMPagoIG = DxMonth(SAR_FEC_IMPUT_IG)
 AAPagoIG = DxYear (SAR_FEC_IMPUT_IG)
@@ -39,7 +39,7 @@ ElseIf MMPagoIG < 9 Then
 EndIf    
 
 '---------------------------------------------------
-'          Inicializacion de variables
+'          Inicialización de variables
 '---------------------------------------------------
 BaseAjusteDec561 = 0
 BaHEAjusteDec561 = 0
@@ -56,7 +56,7 @@ DComAjusteDec561 = 0
 AlquAjusteDec561 = 0
 DAlqAjusteDec561 = 0
 
-// En paga de tipo 3 calculamos solo si no tenemos valor acumulado ya en la paga 4 anterior
+// En paga de tipo 3 calculamos sólo si no tenemos valor acumulado ya en la paga 4 anterior
 BenefDecreto561 = SAR_ACM_ULT_PAGO_IMPUT[0].SAR_IG_DEC142_AUX2
 
 If SAR_TP_IMPUT = "3" And BenefDecreto561 <> 0 Then
@@ -70,16 +70,16 @@ Else
     BaHEAjusteDec561 = BaHEAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_B_IMP_SIN_HEXT        // para obtener el porcentaje de impuesto
     ImpuAjusteDec561 = ImpuAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_IMPUESTO_TOTAL        // impuesto acumulado
     
-    DEspAjusteDec561 = DEspAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_IG_DED_ESP            // 5041       SAR_IG_DED_ESP        Deduccion especial
+    DEspAjusteDec561 = DEspAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_IG_DED_ESP            // 5041       SAR_IG_DED_ESP        Deducción especial
     GNImAjusteDec561 = GNImAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_IG_G_NO_IMP           // 5040       SAR_IG_G_NO_IMP       Ganancias no imponibles
     
-    ServAjusteDec561 = ServAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_SERV_DOMEST           // 5075       SAR_SERV_DOMEST       Servicio Domestico 
-    DSerAjusteDec561 = DSerAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_DED_SER_DOM           // 5077       SAR_DED_SER_DOM       Importe deducible de Servicio Domestico
+    ServAjusteDec561 = ServAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_SERV_DOMEST           // 5075       SAR_SERV_DOMEST       Servicio Doméstico 
+    DSerAjusteDec561 = DSerAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_DED_SER_DOM           // 5077       SAR_DED_SER_DOM       Importe deducible de Servicio Doméstico
         
-    ViatAjusteDec561 = ViatAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_IG_VIATICOS           // 4950       SAR_IG_VIATICOS       Declar. Jurada Gastos de Movilidad Viaticos
-    DViaAjusteDec561 = DViaAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_DED_IG_VIATICOS       // 4960       SAR_DED_IG_VIATICOS   Ded. Gastos de Movilidad Viaticos 
+    ViatAjusteDec561 = ViatAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_IG_VIATICOS           // 4950       SAR_IG_VIATICOS       Declar. Jurada Gastos de Movilidad Viáticos
+    DViaAjusteDec561 = DViaAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_DED_IG_VIATICOS       // 4960       SAR_DED_IG_VIATICOS   Ded. Gastos de Movilidad Viáticos 
     
-    VComAjusteDec561 = VComAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_JUR_VEHIC_COR         // 4916       SAR_JUR_VEHIC_COR     Declar. Jurada vehiculos corredores comercio
+    VComAjusteDec561 = VComAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_JUR_VEHIC_COR         // 4916       SAR_JUR_VEHIC_COR     Declar. Jurada vehículos corredores comercio
     MComAjusteDec561 = MComAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_JUR_MOV_COR           // 4917       SAR_JUR_MOV_COR       Declar. Jurada movilidad corredores comercio  
     DComAjusteDec561 = DComAjusteDec561 + SAR_ACM_ULT_PAGO_IMPUT_REV[0].SAR_IG_GTOS_COR           // 5038       SAR_IG_GTOS_COR       I.G. Gastos Movilidad Corredores comercio
     
@@ -98,8 +98,8 @@ BaHEAjusteDec561 = BaHEAjusteDec561 + DeducAjusteDec561
 '---------------------------------------------------------------
 ' Valores nuevos que debemos aplicar
 '---------------------------------------------------------------
-indZonaPat = SAR_IND_ZONA_PAT              'indicador zona patagonica
-indDeduc   = SAR_IND_DED_IG_2010           'indicador deduccion 2010
+indZonaPat = SAR_IND_ZONA_PAT              'indicador zona patagónica
+indDeduc   = SAR_IND_DED_IG_2010           'indicador deducción 2010
 If indZonaPat = 1 Then
     DEspValorMensual = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_DED_ESPECIAL_REDUC",FePagoIG,indDeduc))/12
     GNImValorMensual = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_GAN_NO_IMP_REDUC",FePagoIG,indDeduc))/12
@@ -113,14 +113,14 @@ If IsNull(DEspValorMensual) = True Then DEspValorMensual = 0
 If IsNull(GNImValorMensual) = True Then GNImValorMensual = 0
 If IsNull(TSerValorMensual) = True Then TSerValorMensual = 0
     
-DEspNuevaDec561 = Round(DEspValorMensual * MMAjusteDec561, SCO_CURR_DECIMALS)   // Deduccion Especial
+DEspNuevaDec561 = Round(DEspValorMensual * MMAjusteDec561, SCO_CURR_DECIMALS)   // Deducción Especial
 GNImNuevaDec561 = Round(GNImValorMensual * MMAjusteDec561, SCO_CURR_DECIMALS)   // Ganancia no Imponible
 
-tope_serv       = Round(TSerValorMensual * MMAjusteDec561, SCO_CURR_DECIMALS)   // Tope Servicio domestico
-DSerNuevaDec561 = Min(ServAjusteDec561, tope_serv)                              // Servicio Domestico RG 1978 AFIP
+tope_serv       = Round(TSerValorMensual * MMAjusteDec561, SCO_CURR_DECIMALS)   // Tope Servicio doméstico
+DSerNuevaDec561 = Min(ServAjusteDec561, tope_serv)                              // Servicio Doméstico RG 1978 AFIP
 
 tope_viaticos   = Percentage(SAR_TOPE_PORC_VIATICO, tope_serv)
-DViaNuevaDec561 = Min(ViatAjusteDec561, tope_viaticos)                          // Gastos de Movilidad Viaticos RG 4003
+DViaNuevaDec561 = Min(ViatAjusteDec561, tope_viaticos)                          // Gastos de Movilidad Viáticos RG 4003
 
 tope_viajantes  = Percentage(SAR_TOPE_GTOS_COR, tope_serv)
 viajantes       = Min(MComAjusteDec561, tope_viajantes)
@@ -136,8 +136,8 @@ DeducNuevaDec561 = DEspNuevaDec561 + GNImNuevaDec561 + DSerNuevaDec561 + DViaNue
 BaseAjusteDec561 = BaseAjusteDec561 - DeducNuevaDec561
 BaHEAjusteDec561 = BaHEAjusteDec561 - DeducNuevaDec561    
 
-SAR_IG_DEC142_AUX = BaHEAjusteDec561            // Para revision se guarda la base de impuesto calculada incluyendo HE
-SAR_DIF_TOT_DEVOL = BaseAjusteDec561            // Para revision se guarda la base de impuesto calculada
+SAR_IG_DEC142_AUX = BaHEAjusteDec561            // Para revisión se guarda la base de impuesto calculada incluyendo HE
+SAR_DIF_TOT_DEVOL = BaseAjusteDec561            // Para revisión se guarda la base de impuesto calculada
 
 '------------------------------------------------------------------
 ' Calculamos el porcentaje de impuesto a aplicar y la parte fija
@@ -160,7 +160,7 @@ If IsNull(ImpuNuevaDec561) = M4_TRUE Then ImpuNuevaDec561 = 0
 BenefDecreto561 = ImpuNuevaDec561 - ImpuAjusteDec561
 
 '------------------------------------------------------------------
-' Control: Si hubo imposibilidad de retencion, el beneficio se minora hasta ella
+' Control: Si hubo imposibilidad de retención, el beneficio se minora hasta ella
 '------------------------------------------------------------------
 impor_ret = SAR_ACM_ULT_PAGO_IMPUT[0].SAR_SALD_RET_GAN_ST * -1
 BenefDecreto561 = Min(BenefDecreto561 - impor_ret,0)

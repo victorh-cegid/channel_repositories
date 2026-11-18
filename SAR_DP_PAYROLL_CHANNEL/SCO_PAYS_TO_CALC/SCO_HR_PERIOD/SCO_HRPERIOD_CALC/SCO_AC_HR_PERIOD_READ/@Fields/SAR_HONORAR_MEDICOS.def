@@ -1,5 +1,5 @@
 item: SAR_HONORAR_MEDICOS
-name: Honorarios Medicos
+name: Honorarios Médicos
 column_name: SAR_HONORAR_MEDICOS
 item_type: FIELD
 type: CURRENCY
@@ -11,3 +11,12 @@ default_value: null
 internal_type: 15
 item_aux: ID_CURRENCY
 id_cstype: null
+totalize_type: 4
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: null
+variable_arguments: 0
+item_aux_prorat: null
+dimension: null
+conv_function: 1

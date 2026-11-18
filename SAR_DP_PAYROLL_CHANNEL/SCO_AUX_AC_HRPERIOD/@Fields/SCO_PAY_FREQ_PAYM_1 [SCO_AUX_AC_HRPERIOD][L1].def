@@ -1,5 +1,5 @@
 item: SCO_PAY_FREQ_PAYM_1
-name: Frecuencia de pago solo para informes
+name: Frecuencia de pago sólo para informes
 column_name: SCO_PAY_FREQ_PAYM
 item_type: FIELD
 type: STRING
@@ -11,3 +11,12 @@ default_value: null
 internal_type: 27
 item_aux: null
 id_cstype: null
+totalize_type: 2
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: null
+variable_arguments: 0
+item_aux_prorat: null
+dimension: null
+conv_function: 1

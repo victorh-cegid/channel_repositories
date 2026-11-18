@@ -21,7 +21,7 @@ IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
     EndIf
 
     base = Min(tope,vac)
-    'Comparacion con el minimo imponible solo si base  > 0
+    'Comparación con el mínimo imponible solo si base  > 0
     If(base > 0)Then
         base_min_impo = (SAR_CANT_B_MIN_AP_Y_CNT_OS * SAR_TOPE_B_MIN_IMPO) / 30 * (SAR_UN_VACACIONES)
         base = Max(base_min_impo, base)

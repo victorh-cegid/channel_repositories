@@ -1,7 +1,7 @@
-'Es un concepto indicador para anular completamente el calculo de las 12avas de SAC sindicato para otros empleadores, ya que no se puede discriminar el calculo de la parte no habitual con la informacion disponible.
+'Es un concepto indicador para anular completamente el cálculo de las 12avas de SAC sindicato para otros empleadores, ya que no se puede discriminar el cálculo de la parte no habitual con la información disponible.
 'Si este indicador tiene valor 1 no se va a calcular 12ava parte de OE de aportes sindicales.
-'Si vale 0 continuara calculandose como hasta ahora.
-'En producto estandar este concepto va a devolver por defecto el mismo valor que tenga el nuevo #4510 (SAR_D612_IND) desde el 01/07/2026.
+'Si vale 0 continuará cálculándose como hasta ahora.
+'En producto estándar este concepto va a devolver por defecto el mismo valor que tenga el nuevo #4510 (SAR_D612_IND) desde el 01/07/2026.
 'El motivo de la existencia de este indicador es permitir separar el comportamiento de OE del caso general. 
 
 indGral = SAR_D612_IND

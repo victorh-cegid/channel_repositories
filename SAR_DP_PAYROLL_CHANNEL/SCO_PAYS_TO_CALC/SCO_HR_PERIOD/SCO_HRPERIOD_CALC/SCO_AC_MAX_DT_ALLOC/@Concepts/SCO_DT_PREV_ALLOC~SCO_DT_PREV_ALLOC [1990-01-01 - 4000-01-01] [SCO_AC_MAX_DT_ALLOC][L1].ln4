@@ -1,10 +1,10 @@
 md_max_fec_imp = 0
-'Por cuestion de rendimiento, para no cargar todas las pagas, se limita la carga de las pagas anteriores a una fecha determinada.
+'Por cuestión de rendimiento, para no cargar todas las pagas, se limita la carga de las pagas anteriores a una fecha determinada.
 SCO_SYSSENTENCE_LIMITED_DATE()
 numreg = Count()-1
 
 If numreg < 0 Then 
-    'Si no se encuentran registros, se cargan todas las pagas sin limite de fechas
+    'Si no se encuentran registros, se cargan todas las pagas sin límite de fechas
     DestroyBlock()
     numreg = Count()-1
 Endif

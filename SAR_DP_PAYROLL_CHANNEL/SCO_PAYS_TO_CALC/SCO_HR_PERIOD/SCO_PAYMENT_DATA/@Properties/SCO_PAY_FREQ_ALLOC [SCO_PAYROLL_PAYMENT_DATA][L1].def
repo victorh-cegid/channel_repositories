@@ -1,5 +1,5 @@
 item: SCO_PAY_FREQ_ALLOC
-name: Frecuencia imputacion
+name: Frecuencia imputación
 item_type: PROPERTY
 type: STRING
 id_m4_type: 2
@@ -7,4 +7,15 @@ prec: 3
 scale: 0
 scope: BLOCK
 default_value: null
+internal_type: null
+item_aux: null
 id_cstype: 2
+totalize_type: 2
+sent_tot_type: null
+transact_type: 1
+exe_group: null
+exe_level: null
+variable_arguments: 0
+item_aux_prorat: null
+dimension: null
+conv_function: 1

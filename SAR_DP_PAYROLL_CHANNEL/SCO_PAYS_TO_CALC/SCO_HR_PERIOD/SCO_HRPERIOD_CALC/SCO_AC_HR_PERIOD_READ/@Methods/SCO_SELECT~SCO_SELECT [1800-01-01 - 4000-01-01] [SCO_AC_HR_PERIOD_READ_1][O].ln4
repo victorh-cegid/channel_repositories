@@ -1,5 +1,5 @@
 /*Atencion:
-    Para dejar el metodo en su estado original comentar la linea APLICAR_ORDINAL() y copiar y pegar el codigo de la regla sobreescrita*/
+    Para dejar el método en su estado original comentar la línea APLICAR_ORDINAL() y copiar y pegar el código de la regla sobreescrita*/
 APLICAR_ORDINAL()
 
 RETURN(0)

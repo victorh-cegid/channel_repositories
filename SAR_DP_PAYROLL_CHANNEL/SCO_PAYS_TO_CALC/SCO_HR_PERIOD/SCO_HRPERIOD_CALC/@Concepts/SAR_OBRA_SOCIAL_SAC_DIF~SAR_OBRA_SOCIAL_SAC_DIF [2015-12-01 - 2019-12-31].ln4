@@ -7,13 +7,13 @@ If SAR_COEF_JORNADA_PER = 1 Then
 Endif
 
 /*  Primero calculamos la base 
-    deberia ser dias para S.A.C. */
+    debería ser días para S.A.C. */
 tope     = (SAR_TOPE_COTIZ*(SAR_U_PAGA_EX_1 + SAR_U_PAGA_EX_2 + SAR_U_PAGA_AJ_EX_1 +SAR_U_PAGA_AJ_EX_2)*180)/360
 tope_min = ((SAR_CANT_B_MIN_AP_Y_CNT_OS * SAR_TOPE_B_MIN_IMPO) * (SAR_U_PAGA_EX_1 + SAR_U_PAGA_EX_2 + SAR_U_PAGA_AJ_EX_1 + SAR_U_PAGA_AJ_EX_2)*180)/360
 sac      = (SAR_PAGA_EXTRA_1 + SAR_PAGA_EXTRA_2 + SAR_PAGA_EXTRA_AJ_1 + SAR_PAGA_EXTRA_AJ_2)/SAR_COEF_JORNADA_PER
 
 
-'Por modificacion del empleado se agrega : And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "17"
+'Por modificación del empleado se agrega : And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "17"
 IF SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" THEN
     tope = (SAR_TOPE_COTIZ*(SAR_U_EGRESO_PAGA_1+SAR_U_EGRESO_PAGA_2)*180)/360
     tope_min = ((SAR_CANT_B_MIN_AP_Y_CNT_OS * SAR_TOPE_B_MIN_IMPO)*(SAR_U_EGRESO_PAGA_1+SAR_U_EGRESO_PAGA_2)*180)/360

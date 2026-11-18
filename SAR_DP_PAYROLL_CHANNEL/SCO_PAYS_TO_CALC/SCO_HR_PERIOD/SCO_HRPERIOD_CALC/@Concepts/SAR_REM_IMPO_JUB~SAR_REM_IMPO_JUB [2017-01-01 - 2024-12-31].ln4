@@ -26,7 +26,7 @@ valor_trib = 0
 valor_exen = 0
 IF edad >= 18 THEN
     porc = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
-    'Si estamos en tope SIPA, hacemos la proporcion para hallar la parte del descuento que corresponde
+    'Si estamos en tope SIPA, hacemos la proporción para hallar la parte del descuento que corresponde
     If base = tope and real <> 0 Then
         desc_tot_jub = base * (porc/100)
         porc_prop_trib = base_extras_trib/real

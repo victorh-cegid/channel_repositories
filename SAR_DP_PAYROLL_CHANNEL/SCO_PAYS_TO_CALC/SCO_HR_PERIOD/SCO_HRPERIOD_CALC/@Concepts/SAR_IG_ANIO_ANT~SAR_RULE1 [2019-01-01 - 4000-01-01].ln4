@@ -9,7 +9,7 @@ If (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT And esBaja = 0) Then Return(SCO_AC_HR_PE
 
 valor = SAR_ACM_IG_ANIO_ANT[0].SAR_IG_FINAL
 
-'Esta condicion es para que si se informa un mes de presentacion de liq. anual, se considera la liq. anual en la primera paga de alloc del mes que se ha informado.
+'Esta condición es para que si se informa un mes de presentación de liq. anual, se considera la liq. anual en la primera paga de alloc del mes que se ha informado.
 If SCO_DT_ALLOCATION = SCO_DT_PAYMENT And SAR_4TA_MES_PRESENTACION > 0 And SAR_4TA_MES_PRESENTACION < 12 And esBaja = 0 And DxMonth(SCO_DT_ALLOCATION) <> SAR_4TA_MES_PRESENTACION Then valor = 0
 
 Return(valor)

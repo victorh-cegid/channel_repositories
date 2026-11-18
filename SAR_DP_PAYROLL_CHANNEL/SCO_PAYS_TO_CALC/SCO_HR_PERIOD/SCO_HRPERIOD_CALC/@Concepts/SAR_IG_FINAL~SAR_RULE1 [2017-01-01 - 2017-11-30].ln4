@@ -1,10 +1,10 @@
-'Antes de realizar cualquier calculo se verifica que la empresa haga la retencion correspondiente a ganancias:
+'Antes de realizar cualquier cálculo se verifica que la empresa haga la retención correspondiente a ganancias:
 If(SAR_IND_NO_RET_GAN = 1)Then 
     Return(0)
 EndIf  
 
-'Antes de realizar cualquier calculo del impuesto verificamos que la modificacion se realizo a fin del mes
-'de la paga para de esta forma dejar el calculo al nuevo periodo.
+'Antes de realizar cualquier calculo del impuesto verificamos que la modificación se realizó a fin del mes
+'de la paga para de esta forma dejar el calculo al nuevo período.
 If (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017")Then
     Return(0)
 EndIf

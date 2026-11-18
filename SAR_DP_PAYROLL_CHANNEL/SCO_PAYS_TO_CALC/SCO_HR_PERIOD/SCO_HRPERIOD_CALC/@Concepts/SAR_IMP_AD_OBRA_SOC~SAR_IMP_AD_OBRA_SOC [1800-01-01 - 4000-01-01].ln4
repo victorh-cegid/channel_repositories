@@ -3,9 +3,9 @@ IF SAR_TP_IMPUT = "77" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
 ENDIF
 '
 'Se calculan los aportes y  contribuciones con cargo al dependiente, emergentes de  la diferencia entre la 
-'remuneracion  efectivamente percibida por el trabajador contratado a tiempo parcial y la equivalente a 3 
-'MOPRES, a los efectos de acceder una cobertura medico asistencial (Art.8? Decreto N? 492/95) 
-'En el caso de que el empleado opte por no tener cobertura medica, habra que cargarle por valores fase 
+'remuneración  efectivamente percibida por el trabajador contratado a tiempo parcial y la equivalente a 3 
+'MOPRES, a los efectos de acceder una cobertura médico asistencial (Art.8° Decreto N° 492/95) 
+'En el caso de que el empleado opte por no tener cobertura médica, habrá que cargarle por valores fase 
 'de alta el valor 0 con prioridad 0.
 '
 valor = 0

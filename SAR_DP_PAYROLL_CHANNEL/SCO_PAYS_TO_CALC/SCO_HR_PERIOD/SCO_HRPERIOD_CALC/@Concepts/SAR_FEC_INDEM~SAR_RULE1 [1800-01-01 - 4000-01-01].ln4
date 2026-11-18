@@ -1,4 +1,4 @@
-'Retorna la fecha de antiguedad para indemnizacion
+'Retorna la fecha de antigüedad para indemnización
 If IsNull(SAR_HR_PERIOD.SAR_FEC_ANTIG_INDEM) = M4_FALSE Then
     fecAntig = SAR_HR_PERIOD.SAR_FEC_ANTIG_INDEM
 ElseIf IsNull(SAR_HR_PERIOD.SSP_FEC_ANTIGUEDAD) = M4_FALSE Then

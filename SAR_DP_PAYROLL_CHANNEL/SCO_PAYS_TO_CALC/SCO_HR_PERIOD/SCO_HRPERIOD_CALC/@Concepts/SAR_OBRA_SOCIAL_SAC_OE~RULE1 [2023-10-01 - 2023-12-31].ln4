@@ -10,13 +10,13 @@ porc = SAR_PORC_OBR_SOCIAL - (SAR_PORC_OBR_SOCIAL*SAR_PP_AP_OB_SOC/100)
 indReliq = SAR_IND_PAGA_RELIQ
 If indReliq = 1 And SCO_DT_ALLOCATION = DxDate(30,9,2023) Then indReliq = 0
 
-'En baja o reliquidacion retornamos la diferencia entre el descuento del pago y el que se ha ido descontando mes a mes
+'En baja o reliquidación retornamos la diferencia entre el descuento del pago y el que se ha ido descontando mes a mes
 If indReliq = 1 OR SAR_ES_BAJA = 1 Or SAR_IND_AJU_SAC_OE = 1 Then 
     tot_desc_sac_pago = (SAR_SAC_1_GRAV_ACM_OE + SAR_SAC_2_GRAV_ACM_OE) * porc / 100
     tot_desc_sac_mes = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_OBRA_SOCIAL_SAC_OE
     valor = tot_desc_sac_pago - tot_desc_sac_mes
     
-    'Para evitar diferencias en reliquidacion por redondeos
+    'Para evitar diferencias en reliquidación por redondeos
     If abs(valor) <= SAR_TOLERANCIA_DEC Then valor = 0
     
     Return (valor)

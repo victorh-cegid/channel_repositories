@@ -1,58 +1,59 @@
-'Cuando TEST_IND_COT_PAGO = 1 en retroactividad, se mueven los importes a la paga normal de origen.
-'ARG_CONCEPTO
-'ARG_CONCEPTO_DIF
-'ARG_IMPORTE
-
-conceptoCot = ARG_CONCEPTO
-conceptoDif = ARG_CONCEPTO_DIF
-valorCotDif = 0
-valorCotFinal = 0
-importeDif = 0
-importeOrigIncr = 0
-
-'Valor recalculado
-valorCotRecalc = GetValue("SCO_HRPERIOD_CALC",conceptoCot,-1)
-
-indCotPago = TEST_IND_COT_PAGO
-
-esBaja = 0
-If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
-
-If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then
-    'Valor original
-    valorCotOrig = GetValue("SCO_AC_HR_PERIOD_REV_1",conceptoCot,-1)
-    
-    'Al valor de cotizacion recalculado, se le deben considerar los ajustes ya realizados desde retros anteriores, para que no se levanten de nuevo
-    ult_regi = SCO_AC_HR_PERIOD_READ_1.Count()
-    For acumu = 0 To ult_regi - 1
-        If SCO_AC_HR_PERIOD_READ_1[acumu].SCO_DT_ALLOCATION = SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acumu].SCO_DT_PAYMENT<SCO_DT_PAYMENT Then
-            importeOrigIncr = importeOrigIncr + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoDif,acumu)
-        EndIf
-    Next   
-    
-    valorCotRecalc = valorCotRecalc - importeOrigIncr
-    
-    'Si activa el indicador por pago, guardamos la diferencia para la paga normal y la sacamos del recalculado
-    If indCotPago = 1 And esBaja = 0 Then 
-        valorCotDif = valorCotRecalc - valorCotOrig
-        valorCotRecalc = valorCotRecalc - valorCotDif
-    EndIf
-
-    'Para considerar en concepto dif, importes de retros anteriores preexistentes, suma importeOrigIncr
-    valorCotDif = valorCotDif + importeOrigIncr
-    SetValue("SCO_HRPERIOD_CALC",conceptoDif,-1,valorCotDif)
-EndIf
-
-'Levanta todos los conceptoDif con fecha lsd = fecha pago, esto se debe hacer tanto en paga normal como en retroactiva (para que esta considere ajustes saldados en la normal)
-ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
-For acum = 0 To ult_reg - 1
-    If SCO_AC_HR_PERIOD_READ_1[acum].TEST_FECHA_LSD = SCO_DT_ALLOCATION Then
-        importeDif = importeDif + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoDif,acum)
-    EndIf
-Next                             
-    
-valorCotFinal = valorCotRecalc + importeDif
-
-ARG_IMPORTE = valorCotFinal
-
-Return(0)
+''Cuando TEST_IND_COT_PAGO = 1 en retroactividad, se mueven los importes a la paga normal de origen.
+''ARG_CONCEPTO
+''ARG_CONCEPTO_DIF
+''ARG_IMPORTE
+'
+'conceptoCot = ARG_CONCEPTO
+'conceptoDif = ARG_CONCEPTO_DIF
+'valorCotDif = 0
+'valorCotFinal = 0
+'importeDif = 0
+'importeOrigIncr = 0
+'
+''Valor recalculado
+'valorCotRecalc = GetValue("SCO_HRPERIOD_CALC",conceptoCot,-1)
+'
+'indCotPago = TEST_IND_COT_PAGO
+'
+'esBaja = 0
+'If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
+'
+'If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then
+'    'Valor original
+'    valorCotOrig = GetValue("SCO_AC_HR_PERIOD_REV_1",conceptoCot,-1)
+'    
+'    'Al valor de cotización recalculado, se le deben considerar los ajustes ya realizados desde retros anteriores, para que no se levanten de nuevo
+'    ult_regi = SCO_AC_HR_PERIOD_READ_1.Count()
+'    For acumu = 0 To ult_regi - 1
+'        If SCO_AC_HR_PERIOD_READ_1[acumu].SCO_DT_ALLOCATION = SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acumu].SCO_DT_PAYMENT<SCO_DT_PAYMENT Then
+'            importeOrigIncr = importeOrigIncr + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoDif,acumu)
+'        EndIf
+'    Next   
+'    
+'    valorCotRecalc = valorCotRecalc - importeOrigIncr
+'    
+'    'Si activa el indicador por pago, guardamos la diferencia para la paga normal y la sacamos del recálculado
+'    If indCotPago = 1 And esBaja = 0 Then 
+'        valorCotDif = valorCotRecalc - valorCotOrig
+'        valorCotRecalc = valorCotRecalc - valorCotDif
+'    EndIf
+'
+'    'Para considerar en concepto dif, importes de retros anteriores preexistentes, suma importeOrigIncr
+'    valorCotDif = valorCotDif + importeOrigIncr
+'    SetValue("SCO_HRPERIOD_CALC",conceptoDif,-1,valorCotDif)
+'EndIf
+'
+''Levanta todos los conceptoDif con fecha lsd = fecha pago, esto se debe hacer tanto en paga normal como en retroactiva (para que esta considere ajustes saldados en la normal)
+'ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
+'For acum = 0 To ult_reg - 1
+'    If SCO_AC_HR_PERIOD_READ_1[acum].TEST_FECHA_LSD = SCO_DT_ALLOCATION Then
+'        importeDif = importeDif + GetValue("SCO_AC_HR_PERIOD_READ_1",conceptoDif,acum)
+'    EndIf
+'Next                             
+'    
+'valorCotFinal = valorCotRecalc + importeDif
+'
+'ARG_IMPORTE = valorCotFinal
+'
+'Return(0)
+'

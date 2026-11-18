@@ -1,5 +1,5 @@
 '----------------------------------------------------------------------------------------------------------
-'Se cierra la regla de calculo a partir del 29/02/2016, debido a la publicacion del Decreto 394/2016 que
+'Se cierra la regla de cálculo a partir del 29/02/2016, debido a la publicación del Decreto 394/2016 que
 'deja sin efecto los rangos de remuneraciones para determinar los valores correspodientes a aplicar de 
 'deducciones.
 '----------------------------------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ Zona_Mes      = -1
 Zona_Mes_Paga = -1
 ID_DMD          = "SAR_INDIC_REDUC_ZON_DES_1"
 
-'se modIfica el indicativo de cambio de rango, al cambiar el A?o Fiscal.
+'se modIfica el indicativo de cambio de rango, al cambiar el Año Fiscal.
 If ano_pago_ant <> ano_pago_act Then
     indic_cambio_rango   = 0
     SAR_IND_CAMBIO_RANGO = 0
@@ -116,7 +116,7 @@ For I = primerreg To ultimoreg
         	fecha_tope = Min(fecha_baja_impuesto,SAR_FEC_PAGO_IG)
 	  EndIf
 
-'        Si no es hijo incapacitado, verIfico los a?os contra el tope de la edad para ganancias.(24 a?os) 
+'        Si no es hijo incapacitado, verIfico los años contra el tope de la edad para ganancias.(24 años) 
         
         If (edad = SAR_TOPE_EDAD_FAMILIAR) AND (DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG)) AND (Existe_hijo_inc <> 1) Then
             DIAT = DXDAY(fec_nac)
@@ -173,8 +173,8 @@ For I = primerreg To ultimoreg
             EndIf
         Endif
 
-        'Verficacion que permite obtener lafecha de inicio cuando existe incapacidad en meses mayores al inicio del 
-        'a?o fiscal, con familiares de 24 a?os o mas.
+        'Verficación que permite obtener lafecha de inicio cuando existe incapacidad en meses mayores al inicio del 
+        'año fiscal, con familiares de 24 años o mas.
         If(edad >= SAR_TOPE_EDAD_FAMILIAR And Existe_hijo_inc = 1) Then 
            If(SAR_FEC_PAGO_IG >= SAR_INCAPACIDADES.SCO_DT_START And DxYear(SAR_INCAPACIDADES.SCO_DT_START) = DxYear(SAR_FEC_PAGO_IG))Then
               fecha_ini = SAR_INCAPACIDADES.SCO_DT_START
@@ -199,8 +199,8 @@ For I = primerreg To ultimoreg
 
         RANGO = SAR_RANGO_REM_IG_2015 'Rango normal de la paga
         
-        'La siguiente condicion permite decidir lo siguiente:
-        '           Si existio cambio de zona en lo que va del a?o fiscal => 
+        'La siguiente condición permite decidir lo siguiente:
+        '           Si existio cambio de zona en lo que va del año fiscal => 
         '                    determina el importe resultante de las dos zonas mes a mes.
         '           Si no 
         '                    determina el importe de la dos zonas a la pga actual directo de la tabla.
@@ -323,14 +323,14 @@ For I = primerreg To ultimoreg
                             vFechaLU = DxDate(DxDay(vFechaLU),DxMonth(vFechaLU)+1,DxYear(vFechaLU))
                         EndIf
                                 
-                    'Calculo de la deduccion especial segun informacion recopilada del concepto 792 por Decreto 1242/2013.
-                    '792 Es el rango obtenido en el que el empleado se ubica segun su Maxima remuneracion y la zona desfavorable 
+                    'Calculo de la deducción especial según información recopilada del concepto 792 por Decreto 1242/2013.
+                    '792 Es el rango obtenido en el que el empleado se ubica según su Máxima remuneración y la zona desfavorable 
                     'Y sus valores posibles para este concepto son:
                     '2: Empleado que tiene entre 15000$ y 25000$ de rem max y zona no desfavorable.
                     '3: Empleado que tiene mas de 15000$ de rem max y zona desfavorable.           
                     If ((Existe_hijo_inc = 1 or edad < SAR_TOPE_EDAD_FAMILIAR or(edad = SAR_TOPE_EDAD_FAMILIAR AND DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG) and DXMONTH(fec_nac) >= mini))) and (parent = "2" OR parent = "7" OR parent = "8") Then           
                         R = TOSTRING(RANGO,0)
-                        'Calculo de la ganancia no imponible segun informacion recopilada del concepto v793 por Decreto 3770/2015.
+                        'Calculo de la ganancia no imponible según información recopilada del concepto v793 por Decreto 3770/2015.
                         If(RANGO = 3)Then
                             precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_VAL_HIJO_IMP",fecha,ind))
                         ElseIf(RANGO = 2)Then
@@ -368,7 +368,7 @@ For I = primerreg To ultimoreg
 
             ElseIf(mini <= DxMonth(fecha_tope) And (Existe_hijo_inc = 1 or edad < SAR_TOPE_EDAD_FAMILIAR or(edad = SAR_TOPE_EDAD_FAMILIAR AND DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG) and DXMONTH(fec_nac) >= mini))) and (parent = "2" OR parent = "7" OR parent = "8")Then
                 R = TOSTRING(RANGO,0) 
-                'Calculo de la ganancia no imponible segun informacion recopilada del concepto v793 por Decreto 3770/2015.
+                'Calculo de la ganancia no imponible según información recopilada del concepto v793 por Decreto 3770/2015.
                 If(RANGO = 3)Then
                     precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_VAL_HIJO_IMP",SAR_FEC_PAGO_IG,ind))
                 ElseIf(RANGO = 2)Then
@@ -402,5 +402,5 @@ If isNull(importe) = M4_TRUE Then
     importe = 0
 EndIf
  
-'Se redondea el importe antes de su devolucion
+'Se redondea el importe antes de su devolución
 RETURN(Round(importe,2))

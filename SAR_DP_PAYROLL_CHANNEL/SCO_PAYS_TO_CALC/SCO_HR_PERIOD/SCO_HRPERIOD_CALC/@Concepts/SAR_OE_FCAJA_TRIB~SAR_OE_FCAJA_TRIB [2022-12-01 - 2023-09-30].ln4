@@ -1,5 +1,5 @@
 If DxYear(SAR_FEC_IMPUT_IG) < 2023 Then Return(0)
-'Recorre la tabla detalle complementos y aplica un tope por cada concepto SAR_DESCRIPCION diferente que encuentre en el a?o fiscal.
+'Recorre la tabla detalle complementos y aplica un tope por cada concepto SAR_DESCRIPCION diferente que encuentre en el año fiscal.
 importe = SAR_IMP_FCAJA_OE
 indGravado = SAR_OE_IND_FCAJA_TRIB
 If importe = 0 Then return (0)
@@ -79,7 +79,7 @@ Next
 gravadoTot = gravadoTot + gravado
 exentoTot = exentoTot + exento
 
-'Controla si no se informo detalle, pero si importe, entonces se va a contar como un solo FCAJA
+'Controla si no se informó detalle, pero si importe, entonces se va a contar como un sólo FCAJA
 If numReg = 0 Then
     importe = SAR_IMP_FCAJA_OE
     topeExento = Percentage(40,SAR_NO_IMP_27617)

@@ -1,5 +1,5 @@
 item: SCO_NUM_DAYS_CAL_ROLE
-name: Numero de dias festivos
+name: Número de dias festivos
 column_name: SCO_NUM_D_CAL_ROLE
 item_type: FIELD
 type: NUMBER
@@ -8,4 +8,15 @@ prec: 6
 scale: 2
 scope: RECORD
 default_value: "0"
+internal_type: null
+item_aux: null
 id_cstype: null
+totalize_type: 4
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: 2
+variable_arguments: 0
+item_aux_prorat: null
+dimension: null
+conv_function: 1

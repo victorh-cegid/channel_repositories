@@ -1,4 +1,4 @@
-'Excluimos del calculo los tipos de paga: Extra(2)-Aguinaldo, Anticipo de Vacaciones(88), Reliquidacion impuesto(99).
+'Excluimos del calculo los tipos de paga: Extra(2)-Aguinaldo, Anticipo de Vacaciones(88), Reliquidación impuesto(99).
 If (SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1) Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Then Return(0)
 
 'Evaluamos si se ha activado el indicador de Paga Licencia por Vacaciones. En este tipo de paga se liquidan las vacaciones y no se descuentan.
@@ -6,7 +6,7 @@ If SAR_TP_IMPUT = "77" Then Return(0)
 
 a = SAR_PRE_DESC_VAC       'Para generar dependencias
 
-'Si existe un calculo de un mes anterior obtengo el precio de descuento de las vacaciones pendientes para liquidarlas en la paga actual.
+'Si existe un cálculo de un mes anterior obtengo el precio de descuento de las vacaciones pendientes para liquidarlas en la paga actual.
 If SAR_ACM_ULT_MES.Count() > 0 Then
     SAR_ACM_ULT_MES.Begin()
     

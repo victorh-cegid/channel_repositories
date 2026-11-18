@@ -8,15 +8,15 @@ IsNotEof=Begin()
 If IsNotEof=TRUE then
 
 
-	//Miro el numero de errores que tengo antes de empezar el calculo.
+	//Miro el número de errores que tengo antes de empezar el cálculo.
 	SCO_HR_PAY_ERROR.SCO_SET_ERROR_POSITION()
 	
-	//Antes de calcular se comprueba que no tiene errores anteriores que impedirian continuar el calculo.
+	//Antes de calcular se comprueba que no tiene errores anteriores que impedirían continuar el cálculo.
 	If SCO_HR_PAY_ERROR.Count()<>0 Then
 
-            //No se va a calcular el periodo %0:n del empleado %1:s en la nomina %2:s de pago %3:d
-            //e imputacion %4:d porque hay errores en nominas anteriores. 
-            //Debe solucionar esas nominas erroneas antes de ejecutar esta nomina.
+            //No se va a calcular el periodo %0:n del empleado %1:s en la nómina %2:s de pago %3:d
+            //e imputación %4:d porque hay errores en nóminas anteriores. 
+            //Debe solucionar esas nóminas erroneas antes de ejecutar esta nómina.
             
 		SetLog (-1,1,101,46,STD_OR_HR_PERIOD,STD_ID_HR,NmFrequency,SCO_DT_PAYMENT,DtAllocation)
             SCO_HR_PERIOD.SCO_ERROR = 1
@@ -64,9 +64,9 @@ If IsNotEof=TRUE then
 Else
 	Output=SCO_CALC_NEXT()
 
-	//Este error no se gestiona porque ya se controla dentro del metodo SCO_CALC_NEXT.
-	//Se hace dentro del metodo porque el SCO_CALC_NEXT se ejecuta de manera independiente
-	//y tiene su propia gestion de errores. Solo se retorna un -1 para que se vea que ha dado error.
+	//Este error no se gestiona porque ya se controla dentro del método SCO_CALC_NEXT.
+	//Se hace dentro del método porque el SCO_CALC_NEXT se ejecuta de manera independiente
+	//y tiene su propia gestión de errores. Sólo se retorna un -1 para que se vea que ha dado error.
 	If Output = M4_ERROR Then
 		Return(-1)
 	EndIf

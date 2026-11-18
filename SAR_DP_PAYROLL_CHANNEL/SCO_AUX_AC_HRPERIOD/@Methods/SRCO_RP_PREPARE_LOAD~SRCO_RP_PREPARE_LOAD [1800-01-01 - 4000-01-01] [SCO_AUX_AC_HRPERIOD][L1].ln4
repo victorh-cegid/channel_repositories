@@ -3,17 +3,17 @@ sFrom = "FROM &" + sWriteObj + " A"
 
 sFixedWhere = " WHERE A.SCO_IND_MAIN_CURR = 1"
 
-'Si se quiere mostrar la informacion de cada paga de retroactividad por separado, habria que llevar esta parte de la 
-'sentencia al metodo SRCO_PY_RP_PERIOD.SRCO_PREPARE_LOAD.
+'Si se quiere mostrar la información de cada paga de retroactividad por separado, habría que llevar esta parte de la 
+'sentencia al método SRCO_PY_RP_PERIOD.SRCO_PREPARE_LOAD.
 sExeType = SRCO_PY_RP_QUERY_STEP.SRCO_PAY_EXE_TYPE
 If sExeType = "1" Then
-    'Solo paga normal
+    'Sólo paga normal
     sWhere = " AND A.SCO_DT_PAYMENT = A.SCO_DT_ALLOCATION AND A.SCO_PAY_FREQ_PAYM = A.SCO_PAY_FREQ_ALLOC"
 ElseIf sExeType = "2" Then
-    'Solo pagas retroactivas
+    'Sólo pagas retroactivas
     sWhere = " AND A.SCO_DT_PAYMENT <> A.SCO_DT_ALLOCATION AND A.SCO_PAY_FREQ_PAYM = A.SCO_PAY_FREQ_ALLOC"
 ElseIf sExeType = "3" Then
-    'Se muestran todas las pagas (normales y retroactivas) no hay que a?adir filtro
+    'Se muestran todas las pagas (normales y retroactivas) no hay que añadir filtro
     sWhere = ""
 EndIf
 

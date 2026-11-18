@@ -1,5 +1,5 @@
 'Este concepto devuelve la mejor remuneracion de los conceptos fijos configurados en el total SAR_TOT_INDEM_CONC_FIJ
-'en los 12 meses por imputacion anteriores a la fecha de proceso (SCO_DT_ALLOCATION)
+'en los 12 meses por imputación anteriores a la fecha de proceso (SCO_DT_ALLOCATION)
 
 'dependencias
 a = SAR_TOT_INDEM_CONC_FIJ

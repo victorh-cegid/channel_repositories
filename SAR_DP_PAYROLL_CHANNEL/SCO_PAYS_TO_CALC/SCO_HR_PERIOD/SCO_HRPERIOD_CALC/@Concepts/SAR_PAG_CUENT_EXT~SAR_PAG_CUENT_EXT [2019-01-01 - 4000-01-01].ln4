@@ -1,4 +1,4 @@
-'Solo baja y reliquidacion. Recibe el valor de SAR_RET_VALOR_COMPL
+'Sólo baja y reliquidación. Recibe el valor de SAR_RET_VALOR_COMPL
 importe = 0
 
 'Paga especial de reliq septiembre, no se levantan pagos a cta.

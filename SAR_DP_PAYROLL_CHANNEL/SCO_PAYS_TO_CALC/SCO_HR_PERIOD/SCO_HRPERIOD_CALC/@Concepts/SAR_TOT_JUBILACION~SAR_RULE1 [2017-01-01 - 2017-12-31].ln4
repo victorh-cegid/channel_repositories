@@ -1,10 +1,10 @@
 ban = SAR_TOT_M_JUB
-val_otros_empl = SAR_JUBILACION_OE  'el 5118 (SAR_JUBILACION_OE) por empresa de retencion de ganancias
-val_ant_emp = SAR_JUB_ANT_EMP     'el 5016 (SAR_JUB_ANT_EMP) por Anterior empresa de retencion de ganancias
+val_otros_empl = SAR_JUBILACION_OE  'el 5118 (SAR_JUBILACION_OE) por empresa de retención de ganancias
+val_ant_emp = SAR_JUB_ANT_EMP     'el 5016 (SAR_JUB_ANT_EMP) por Anterior empresa de retención de ganancias
 sar_acum_jub_oe = 0
 sar_acum_jub_ant_emp = 0
 
-' Si es Paga de RETRO modificamos la fecha para que sea el mes anterior a la fecha de imputacion.
+' Si es Paga de RETRO modificamos la fecha para que sea el mes anterior a la fecha de imputación.
 If (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT) Then
     vfecha = SCO_DT_ALLOCATION
 Else

@@ -33,7 +33,7 @@
     
     'Iniciamos la lectura del acumulado:
     SCO_AC_HR_PERIOD_READ_1.BEGIN()                 'Iniciamos el acumulado
-    CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el numero de registros
+    CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el número de registros
     
     If(CantReg >= 0) Then
       ContReg = 0                                     'Lleva el numero leido de registros 
@@ -55,7 +55,7 @@ EndIf
 ' Por Resolucion 3770
 '       Para altas entre Septiembre 2013 y Mayo 2015, con Rango 2 y
 '       Para rango 3 y 0 sin importar el alta
-'       se debe recalcular la mejor Remuneracion teniendo en cuenta lo percibido de Enero a Abril de 2015.
+'       se debe recalcular la mejor Remuneración teniendo en cuenta lo percibido de Enero a Abril de 2015.
 '--------------------------------------------------------------------------------------------------------------  
 If  (((SAR_FECHA_ALTA >= ToDate("2013-09-01"))and (SAR_FECHA_ALTA < ToDate("2015-05-01")) and  (V792_ant = 2)) or  (recalc = 1)) and (SCO_DT_PAYMENT = SCO_DT_ALLOCATION )Then         
     
@@ -87,7 +87,7 @@ If  (((SAR_FECHA_ALTA >= ToDate("2013-09-01"))and (SAR_FECHA_ALTA < ToDate("2015
     GREM_4  = 0
     
     
-    SRAR_PY_MN_HABITUALES.DESTROYBLOCK()                   'Inicializamos los conceptos no habituales del empleadoc
+    SRAR_PY_MN_HABITUALES.DESTROYBLOCK()                   'Inicializamos los conceptos no habituales del empleadoç
     SRAR_PY_MN_HABITUALES.SAR_P_PROCESO = MAYO
     SRAR_PY_MN_HABITUALES.LOAD_BLK() 
     SRAR_PY_MN_HABITUALES.Begin() 
@@ -95,7 +95,7 @@ If  (((SAR_FECHA_ALTA >= ToDate("2013-09-01"))and (SAR_FECHA_ALTA < ToDate("2015
     
     SCO_AC_HR_PERIOD_READ_1.BEGIN()                  'Iniciamos el acumulado
     SCO_AC_HR_PERIOD_READ_1.MoveTo(0)                'Vamos al primer registro
-    CantReg = SCO_AC_HR_PERIOD_READ_1.Count() - 1    'Inicializamos el numero de registros
+    CantReg = SCO_AC_HR_PERIOD_READ_1.Count() - 1    'Inicializamos el número de registros
     
     ContReg = 0
             
@@ -273,7 +273,7 @@ Else
     
     'Iniciamos la lectura del acumulado:
     SCO_AC_HR_PERIOD_READ_1.BEGIN()                 'Iniciamos el acumulado
-    CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el numero de registros
+    CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el número de registros
     
     If(CantReg >= 0) Then
       ContReg = 0                                     'Lleva el numero leido de registros 
@@ -292,14 +292,14 @@ Else
     
     
     '------------------------------------------------------------------------------------------------------------------------------------------------------
-    'Por Resolucion 3770
-    'En los casos en que el importe de la mayor Remuneracion y/o haber devengado en el periodo enero a agosto de 2013 NO supera los $15.000  
-    'y en los casos en que sean sujetos que hayan iniciado sus actividades como empleados en relacion de dependencia a partir del mes de Septiembre de 2013 
+    'Por Resolución 3770
+    'En los casos en que el importe de la mayor Remuneración y/o haber devengado en el período enero a agosto de 2013 NO supera los $15.000  
+    'y en los casos en que sean sujetos que hayan iniciado sus actividades como empleados en relación de dependencia a partir del mes de Septiembre de 2013 
     'con salario del primer mes inferior a $15.000
-    'no seran pasible de retencion
-    'Es decir todos los casos de Rango 1, continuan en Rango 1.
+    'no serán pasible de retención
+    'Es decir todos los casos de Rango 1, continúan en Rango 1.
     
-    'En los casos en que el importe de la mayor Remuneracion y/o haber devengado en el periodo enero a agosto de 2013 supera los $15.000 y no supera los $25.000
+    'En los casos en que el importe de la mayor Remuneración y/o haber devengado en el período enero a agosto de 2013 supera los $15.000 y no supera los $25.000
     'Es decir todos los casos de altas anteriores a Septiembre de Rango 2, No se revisa su remuneracion y se recategorizan segun Anexo A.
     '-------------------------------------------------------------------------------------------------------------------------------------------------------
     If (ContReg >= 0) Then
@@ -308,9 +308,9 @@ Else
        
      
     '-------------------------------------------------------------------------------------------------------------------
-    'Por Resolucion 3770
+    'Por Resolución 3770
     'En los casos de altas posteriores a Mayo 2015:
-    '   *En el mes del alta se debe tomar la Remuneracion del mes completa.  
+    '   *En el mes del alta se debe tomar la Remuneración del mes completa.  
     '   *En meses posteriores al alta, tomamos el 5600 del acumulado (que seria el 5600 obtenido en el mes del alta)
     '-------------------------------------------------------------------------------------------------------------------
      
@@ -322,7 +322,7 @@ Else
             EGRE_1  = SAR_EGRESO_PAGA_1      'Egreso 1er. Semestre
             EGRE_2  = SAR_EGRESO_PAGA_2      'Egreso 2do. Semestre
             DIA_GRE = SAR_DIA_GREMIO         'Dia del gremio.
-            MaxMes  = SAR_P_SUELDO + SAR_TOTAL_DEVENGOS - SAR_IMPORTE_SUELDO  '1 - Primer asignacion para entender que tenemos el total de devengos.
+            MaxMes  = SAR_P_SUELDO + SAR_TOTAL_DEVENGOS - SAR_IMPORTE_SUELDO  '1 - Primer asignación para entender que tenemos el total de devengos.
             MaxMes  = MaxMes -  SAC_1 - SAC_2 - EGRE_1 -  EGRE_2 - DIA_GRE    '2 - Al total de devengos le restamos los conceptos de SAC y el dia del gremio 
             MaxV    = MaxMes    
         Else   

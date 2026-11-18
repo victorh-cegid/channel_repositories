@@ -35,17 +35,17 @@ If cont_fest > 0 then
         
         total_unid_ausen = SAR_TOT_U_AUSEN
         
-        'Si esta toda la paga ausente
+        'Si está toda la paga ausente
         IF nTotTheoHours  = total_unid_ausen THEN 
             Return(0)
         ENDIF   
         
-        'Cargamos el nodo de incidencias del periodo (ausentismos), en caso de que no este ya cargado.
+        'Cargamos el nodo de incidencias del periodo (ausentismos), en caso de que no esté ya cargado.
         IF SAR_REAL_TIME_PERIOD.COUNT()= 0 THEN
             SAR_REAL_TIME_PERIOD.LOAD_BLK()
         ENDIF
         
-        'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de ausencia
+        'Añadimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de ausencia
         sFilter = "If SCO_ID_INCIDENCE_TP = ARG_SCO_ID_INCIDENCE_TP Then Return(M4_TRUE) Else Return(M4_FALSE)"
         SAR_REAL_TIME_PERIOD.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE_TP", tipo_incidencia)
         

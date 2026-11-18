@@ -1,8 +1,8 @@
-''Indicador de aplicacion ley 27617 piso salarial, se realiza aqui el calculo, tambien permite ser informado por tabla de valor.
+''Indicador de aplicación ley 27617 piso salarial, se realiza aquí el cálculo, también permite ser informado por tabla de valor.
 ''0 - No aplica
-''1 - Aplica exencion completa del impuesto
-''2 - Aplica exencion parcial del impuesto
-''3 - Alcanzado solo para deduccion de bonos de productividad
+''1 - Aplica exención completa del impuesto
+''2 - Aplica exención parcial del impuesto
+''3 - Alcanzado sólo para deducción de bonos de productividad
 '
 'If SAR_PISO_IG_27617 = 0 Then Return(0)
 '

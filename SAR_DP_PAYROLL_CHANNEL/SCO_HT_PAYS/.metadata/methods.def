@@ -1,6 +1,7 @@
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
-ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor | 7
-GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 7
-SCO_SET_FILTER_PAY_TYPE | BLOCK | NUMBER | 6 | 1 | 0 | Asignar filtro de tipo de paga | 3
-SCO_SET_MENU | BLOCK | NUMBER | 6 | 4 | 0 | Opcion de menu | 7
-SCO_SET_ORGANIZATION | NODE | NUMBER | 6 | 6 | 0 | SCO_SET_ORGANIZATION | 
+# item_metadata_format: 2
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
+ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor | 7 | 71 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_SET_FILTER_PAY_TYPE | BLOCK | NUMBER | 6 | 1 | 0 | Asignar filtro de tipo de paga | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_SET_MENU | BLOCK | NUMBER | 6 | 4 | 0 | Opción de menú | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_SET_ORGANIZATION | NODE | NUMBER | 6 | 6 | 0 | SCO_SET_ORGANIZATION |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1

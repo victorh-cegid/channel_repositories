@@ -1,26 +1,27 @@
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
-DestroyBlock | BLOCK | NUMBER | 6 | 1 | 0 | Eliminar bloque | 2
-ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor | 7
-GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 2
-GOPREVIOUS | BLOCK | NUMBER | 6 | 1 | 0 | GOPREVIOUS | 7
-LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque | 7
-SAR_SET_SIMUL | BLOCK | NUMBER | 6 | 1 | 0 | Inicio la variable de simulacion | 3
-SCO_ASIGN_FILTER_BY_LOT | BLOCK | NUMBER | 6 | 1 | 0 | SCO_ASIGN_FILTER_BY_LOT | 7
-SCO_CALCALLPAYS | BLOCK | NUMBER | 6 | 1 | 0 | Calcular todas la pagas | 2
-SCO_CALCINIT | BLOCK | NUMBER | 6 | 1 | 0 | Iniciar el calculo | 2
-SCO_CALCPAY | RECORD | NUMBER | 6 | 4 | 0 | Calcular paga | 2
-SCO_CALCREV_PAY | RECORD | NUMBER | 6 | 1 | 0 | Calculo revision auto. paga | 2
-SCO_CALCULATION | BLOCK | NUMBER | 6 | 1 | 0 | Calculo | 7
-SCO_CALC_END | BLOCK | NUMBER | 6 | 1 | 0 | Finalizar el calculo | 2
-SCO_CALC_PAYROLL_HRP | BLOCK | NUMBER | 6 | 1 | 0 | Calcular nomina para el periodo del RH | 2
-SCO_CHECK_PAY_DATA | RECORD | NUMBER | 6 | 18 | 0 | Comprobar datos de la paga | 3
-SCO_FILL_SEL_PAY | BLOCK | NUMBER | 6 | 1 | 0 | Rellenar pagas seleccionadas | 7
-SCO_GETPARAM | BLOCK | STRING | 3 | -1 | 0 | Obtener parametros | 7
-SCO_JS_CALCULATION | BLOCK | NUMBER | 6 | 1 | 0 | Calculo planificado | 2
-SCO_JS_REPRO_STATUS | BLOCK | NUMBER | 6 | 18 | 0 | Reproducir estado original para presentacion | 7
-SCO_LP_MNG_LOCKED_PAYS | BLOCK | NUMBER | 6 | 18 | 0 | Gestionar pagas con estado de bloqueo | 3
-SCO_PAYINIT | RECORD | NUMBER | 6 | 5 | 0 | Iniciar calculo paga | 2
-SCO_PAY_END | RECORD | NUMBER | 6 | 5 | 0 | Finalizar calculo paga | 2
-SCO_SETPARAM | BLOCK | NUMBER | 6 | 1 | 0 | Asignar parametros | 7
-SCO_UPDATE_RUN_PAYS | RECORD | NUMBER | 6 | 4 | 0 | Actualizar pagas calculadas | 2
-SME_FILL_SEL_PAY_SDI | BLOCK | NUMBER | 6 | 1 | 0 | Rellenar pagas seleccionadas para calculo del SDI | 7
+# item_metadata_format: 2
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
+DestroyBlock | BLOCK | NUMBER | 6 | 1 | 0 | Eliminar bloque | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor | 7 | 71 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+GOPREVIOUS | BLOCK | NUMBER | 6 | 1 | 0 | GOPREVIOUS | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SAR_SET_SIMUL | BLOCK | NUMBER | 6 | 1 | 0 | Inicio la variable de simulación | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_ASIGN_FILTER_BY_LOT | BLOCK | NUMBER | 6 | 1 | 0 | SCO_ASIGN_FILTER_BY_LOT | 7 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALCALLPAYS | BLOCK | NUMBER | 6 | 1 | 0 | Calcular todas la pagas | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALCINIT | BLOCK | NUMBER | 6 | 1 | 0 | Iniciar el cálculo | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALCPAY | RECORD | NUMBER | 6 | 4 | 0 | Calcular paga | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALCREV_PAY | RECORD | NUMBER | 6 | 1 | 0 | Cálculo revisión auto. paga | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALCULATION | BLOCK | NUMBER | 6 | 1 | 0 | Cálculo | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALC_END | BLOCK | NUMBER | 6 | 1 | 0 | Finalizar el cálculo | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALC_PAYROLL_HRP | BLOCK | NUMBER | 6 | 1 | 0 | Cálcular nómina para el periodo del RH | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CHECK_PAY_DATA | RECORD | NUMBER | 6 | 18 | 0 | Comprobar datos de la paga | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_FILL_SEL_PAY | BLOCK | NUMBER | 6 | 1 | 0 | Rellenar pagas seleccionadas | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_GETPARAM | BLOCK | STRING | 3 | -1 | 0 | Obtener parámetros | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_JS_CALCULATION | BLOCK | NUMBER | 6 | 1 | 0 | Cálculo planificado | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_JS_REPRO_STATUS | BLOCK | NUMBER | 6 | 18 | 0 | Reproducir estado original para presentación | 7 | null | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_LP_MNG_LOCKED_PAYS | BLOCK | NUMBER | 6 | 18 | 0 | Gestionar pagas con estado de bloqueo | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_PAYINIT | RECORD | NUMBER | 6 | 5 | 0 | Iniciar cálculo paga | 2 | null | null | 1 | null | 1 | null | 2 | 0 | null | null | 1
+SCO_PAY_END | RECORD | NUMBER | 6 | 5 | 0 | Finalizar cálculo paga | 2 | null | null | 1 | null | 1 | null | 2 | 0 | null | null | 1
+SCO_SETPARAM | BLOCK | NUMBER | 6 | 1 | 0 | Asignar parámetros | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_UPDATE_RUN_PAYS | RECORD | NUMBER | 6 | 4 | 0 | Actualizar pagas calculadas | 2 | null | null | 1 | null | 1 | null | 2 | 0 | null | null | 1
+SME_FILL_SEL_PAY_SDI | BLOCK | NUMBER | 6 | 1 | 0 | Rellenar pagas seleccionadas para cálculo del SDI | 7 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1

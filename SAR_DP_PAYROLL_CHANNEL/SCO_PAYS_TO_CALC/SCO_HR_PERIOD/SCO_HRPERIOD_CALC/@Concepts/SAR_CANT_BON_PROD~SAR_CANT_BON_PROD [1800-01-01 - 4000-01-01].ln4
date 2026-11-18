@@ -1,5 +1,5 @@
 conteo = 0
-'conceptos ESTANDAR pagados en el a?o fiscal incluida la paga de proceso
+'conceptos ESTANDAR pagados en el año fiscal incluida la paga de proceso
 totalSTDAnioIG = SAR_TOT_BONOS_27617 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_BONOS_27617
 
 If DxYear(SAR_FEC_IMPUT_IG) = 2023 And DxMonth(SCO_DT_ALLOCATION) > 9 Then

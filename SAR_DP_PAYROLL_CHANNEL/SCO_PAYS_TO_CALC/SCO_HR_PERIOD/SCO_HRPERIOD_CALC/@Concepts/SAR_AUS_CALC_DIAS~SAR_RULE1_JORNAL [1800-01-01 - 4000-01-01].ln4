@@ -1,8 +1,8 @@
 'Esta regla es para empleados jornales.
 'Permite calcular las horas que corresponden a un ausentismo que se calcule de forma similar a otro existente. 
-'Recibe 2 parametros: argIncCliente es el ID del ausentismo propio del cliente / argIncClonar el el ID del ausentismo cuyo comportamiento queremos replicar
+'Recibe 2 parámetros: argIncCliente es el ID del ausentismo propio del cliente / argIncClonar el el ID del ausentismo cuyo comportamiento queremos replicar
 'Devuelve horas del ausentismo
-'Evita la creacion de regla jornal en los conceptos de dias, si tiene sobreescrita con criterio diferente alguna de estas reglas (por ejemplo SAR_DIAS_ENFERMEDAD.SAR_RULE1_JORNAL), el mismo cambio aplicara en esta regla
+'Evita la creación de regla jornal en los conceptos de días, si tiene sobreescrita con criterio diferente alguna de estas reglas (por ejemplo SAR_DIAS_ENFERMEDAD.SAR_RULE1_JORNAL), el mismo cambio aplicará en esta regla
 
 argIncCliente = ARG_INC_CLIENTE
 argIncClonar = ARG_INC_CLONAR
@@ -11,13 +11,13 @@ ARG_DIAS_INC = 0
 If SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "77" Or SAR_TP_IMPUT = "88" Or (SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 0) Then Return(0)
 
 horas = 0 		  'Inicializamos las horas
-horas_teor_abs = 0  'Inicializacion de las horas teoricas de cada registro
+horas_teor_abs = 0  'Inicialización de las horas teóricas de cada registro
 
 'Tramos
 inicioTramo = SAR_TOT_P_COMP_EA_AUX..SysStartDate
 finTramo = SAR_TOT_P_COMP_EA_AUX..SysEndDate
 
-'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de la incidencia
+'Añadimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de la incidencia
 sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
 SAR_REAL_TIME_PERIOD.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", argIncCliente)
 
@@ -28,16 +28,16 @@ For i = primerreg  To  ultimoreg
     fec_ini_abs = SAR_REAL_TIME_PERIOD[i].SCO_DT_START 	' fecha de inicio del ausentismo
     fec_fin_abs = SAR_REAL_TIME_PERIOD[i].SCO_DT_END	' fecha de fin del ausentismo
     t_unid = SAR_REAL_TIME_PERIOD[i].SCO_ID_TIME_UNIT 	' tipo de unidades del ausentismo, Horas o Dias
-    unid = SAR_REAL_TIME_PERIOD[i].SCO_UNITS 		' numero de unidades del ausentismo
+    unid = SAR_REAL_TIME_PERIOD[i].SCO_UNITS 		' número de unidades del ausentismo
     
     If commontime(inicioTramo,finTramo,fec_ini_abs,fec_fin_abs) > 0 Then
         If fec_fin_abs > finTramo Then fec_fin_abs = finTramo
         If fec_ini_abs < inicioTramo Then fec_ini_abs = inicioTramo
 
-        If SCO_NUM_HOURS_THEO > 0 Then 'tiene asignado un modelo teorico
-            horas_teor_abs = SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs) 'las horas se calculan en funcion del tiempo teorico
+        If SCO_NUM_HOURS_THEO > 0 Then 'tiene asignado un modelo teórico
+            horas_teor_abs = SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs) 'las horas se calculan en función del tiempo teórico
 		If t_unid = "05" Then 'Horas
-		  horas = horas + Min(unid, horas_teor_abs) 'si las horas informadas superan el numero de horas de tiempo teorico de la jornada, nos quedamos con las teoricas. 
+		  horas = horas + Min(unid, horas_teor_abs) 'si las horas informadas superan el número de horas de tiempo teórico de la jornada, nos quedamos con las teóricas. 
 		Else 'Dias
 		  horas = horas + horas_teor_abs
 		EndIf
@@ -48,13 +48,13 @@ Next
 'Se elimina el filtro RAM aplicado al nodo
 SAR_REAL_TIME_PERIOD.REMOVEFILTER()
 
-'Incorporamos las incidencias de rol, en estandar solo se toman las unidades del id ausentismo 54, ampliar segun necesidades de cada cliente:
+'Incorporamos las incidencias de rol, en estándar sólo se toman las unidades del id ausentismo 54, ampliar según necesidades de cada cliente:
 horas_fer_trab = 0
 hrRole = SAR_HR_ROLE.Count() - 1
 For j = 0 To hrRole
     SAR_HR_ROLE.MoveTo(j)
 
-    'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de horas de feriado trabajado
+    'Añadimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de horas de feriado trabajado
     sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
     SAR_REAL_TIME_PER_ROLE.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", argIncCliente)
 

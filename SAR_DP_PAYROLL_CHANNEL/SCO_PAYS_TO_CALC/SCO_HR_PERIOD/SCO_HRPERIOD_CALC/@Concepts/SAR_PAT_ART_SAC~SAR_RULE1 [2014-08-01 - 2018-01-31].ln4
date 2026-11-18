@@ -1,7 +1,7 @@
 'Es el componente porcentual de la cuota mensual para la ART
-'Segun el decreto 290/2000 se calcula sobre una Remuneracion Imponible de 60 MOPRES
+'Según el decreto 290/2000 se calcula sobre una Remuneración Imponible de 60 MOPRES
 
-IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Calculo sin tope
+IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Cálculo sin tope
     base=SAR_SAC_IMPO_CNT
 ELSE
     base=SAR_SAC_IMPO

@@ -16,13 +16,13 @@ totSacCompleto = devengosNorm
 noRemNorm = SAR_TOT_SAC_NO_REMUN
 unidades = SAR_U_PAGA_EX_1 + SAR_U_PAGA_EX_2 + SAR_U_PAGA_AJ_EX_1 + SAR_U_PAGA_AJ_EX_2 + SAR_U_EGRESO_PAGA_1 + SAR_U_EGRESO_PAGA_2
 
-'Control unidades falta de precision:
+'Control unidades falta de precisión:
 If unidades <> 1 And unidades > 0 And SAR_DIAS_SAC > 0 Then
     unidPorDias = 180/SAR_DIAS_SAC
     unidPorDiasRound = Round(unidPorDias,4)
     If unidPorDiasRound = unidades And unidPorDias <> unidades Then unidades = unidPorDias
 EndIf
-'Fin control unidades falta de precision
+'Fin control unidades falta de precisión
 
 esBaja = 0
 If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
@@ -35,7 +35,7 @@ If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then
     noRemNorm = noRemNorm - noRemOrigNorm
     RemImpoOrig = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_IMPO
     RemImpoOsOrig = SCO_AC_HR_PERIOD_REV_1.SAR_SAC_IMPO_OS
-    'Si existe importe de ajuste de SAC en modalidad por pago, los dias son SAR_LSD_SAC_POR_PAGO_DIAS, excepto en baja que son las reales, tambien se expone el pago como SAC PROPORCIONAL
+    'Si existe importe de ajuste de SAC en modalidad por pago, los días son SAR_LSD_SAC_POR_PAGO_DIAS, excepto en baja que son las reales, también se expone el pago como SAC PROPORCIONAL
     If SAR_LSD_IND_PAGO = 1 And devengosNorm <> 0 And esBaja = 0 Then
         unidades = SAR_LSD_SAC_POR_PAGO_DIAS/180
         SAR_DIAS_SAC = diasSac + SAR_LSD_SAC_POR_PAGO_DIAS
@@ -55,7 +55,7 @@ If devengosNorm <> 0 Then
     remImpoConsumido = SAR_LSD_SAC_COTIZ[0].SAR_SAC_IMPO
     remImpoOsConsumido = SAR_LSD_SAC_COTIZ[0].SAR_SAC_IMPO_OS 
     
-    'Si llegamos a este punto habiendo pago de SAC y con unidades = 0 vamos a considerar que estamos ante un pago de sac proporcional propio de cliente y que quiere aplicar el tope maximo completo
+    'Si llegamos a este punto habiendo pago de SAC y con unidades = 0 vamos a considerar que estamos ante un pago de sac proporcional propio de cliente y que quiere aplicar el tope máximo completo
     sacProporcionalCliente = 0
     If unidades = 0 And totSacCompleto <> 0 Then 
         sacProporcionalCliente = 1
@@ -70,7 +70,7 @@ If devengosNorm <> 0 Then
     topeMinOs = topeMinOs * unidades
     topeMinOsFinal = topeMinOs - remImpoOsConsumido
 
-    'Control para modalidad por devengado en retros negativas que se encuentran en tope, no se puede restar mas que el tope
+    'Control para modalidad por devengado en retros negativas que se encuentran en tope, no se puede restar más que el tope
     If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And SAR_LSD_IND_PAGO = 0 And devengosNorm < 0 Then
         If SAR_TOT_SAC_COTIZ > topeMaxUni And topeMaxFinal < 0 And devengosNorm < topeMaxFinal Then
             devengosNorm = topeMaxFinal
@@ -80,7 +80,7 @@ If devengosNorm <> 0 Then
         If totSacCotizOs > topeMaxUni And topeMaxFinalOs < 0 And devengosNormOs < topeMaxFinalOs Then
             devengosNormOs = topeMaxFinalOs
         EndIf
-        'Si el pago en retro negativo deja el SAC a 0, significa que se ha anulado el pago del SAC, por tanto debe devolverse el imponible de la paga original, no el recalculo
+        'Si el pago en retro negativo deja el SAC a 0, significa que se ha anulado el pago del SAC, por tanto debe devolverse el imponible de la paga original, no el recálculo
         If totSacCotizOs = 0 Then anulaSac = 1
     EndIf
     'Fin control negativo
@@ -93,19 +93,19 @@ If devengosNorm <> 0 Then
     If SCO_DT_PAYMENT = SCO_DT_ALLOCATION Or (SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And SAR_LSD_IND_PAGO = 0) Then
         baseOsTopada = Max(baseOsTopada,topeMinOsFinal)
     EndIf
-    'Se evalua si debe dar valor al concepto "LSD SAC ajuste de bases imponibles" (codigo AFIP 810013): 
+    'Se evalua si debe dar valor al concepto "LSD SAC ajuste de bases imponibles" (código AFIP 810013): 
     'Que sea paga normal en junio o diciembre, o baja del empleado, se abone SAC y se encuentre en tope.
     If sacProporcionalCliente = 0 And devengosNorm <> 0 And devengosNorm > topeMaxFinal And (esBaja = 1 Or (SCO_DT_PAYMENT = SCO_DT_ALLOCATION And (DxMonth(SCO_DT_ALLOCATION) = 6 Or DxMonth(SCO_DT_ALLOCATION) = 12))) Then 
         ajImponible = remImpoConsumido
         imponibleCompleto = Round (baseTopada+RemImpoOrig,SAR_NUM_DEC)
         'Se ha solicitado que si el sac abonado en la paga (SAR_TOT_SAC_COTIZ) es mayor que el tope de sac (TOPE SAC) el ajuste imponible es la suma de los imponibles ya consumidos en el semestre. 
-        'En caso contrario es el sac abonado en la paga MENOS el imponible de la propia paga y si esta operacion diese negativo se cambian el signo y se pone positivo
+        'En caso contrario es el sac abonado en la paga MENOS el imponible de la propia paga y si esta operación diese negativo se cambian el signo y se pone positivo
         If totSacCompleto < topeMaxUni Then
             ajImponible = totSacCompleto - imponibleCompleto
             If ajImponible < 0 Then ajImponible = ajImponible * -1
         EndIf
         SAR_LSD_SAC_AJ_IMPO = ajImponible
-    'Si se hace una retro se mantiene el importe de  "LSD SAC ajuste de bases imponibles" (codigo AFIP 810013) para que no sea 0 y genere diferencias.
+    'Si se hace una retro se mantiene el importe de  "LSD SAC ajuste de bases imponibles" (código AFIP 810013) para que no sea 0 y genere diferencias.
     ElseIf SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then
         SAR_LSD_SAC_AJ_IMPO = SCO_AC_HR_PERIOD_REV_1.SAR_LSD_SAC_AJ_IMPO
     EndIf

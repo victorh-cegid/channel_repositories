@@ -3,11 +3,11 @@ a = SAR_BASE_IMPUESTO 'Dependencia
 sac_acum_ig = 0
 sac_anio_ant = 0
 
-If SAR_IND_PAGA_RELIQ = 1 OR SAR_ES_BAJA = 1 Or (SAR_IND_AJUSTE_SAC = 1 And SAR_IND_SAC_ANIO_ANT = 0) Then 'Solo se calcula en paga de reliquidacion o baja del empleado
+If SAR_IND_PAGA_RELIQ = 1 OR SAR_ES_BAJA = 1 Or (SAR_IND_AJUSTE_SAC = 1 And SAR_IND_SAC_ANIO_ANT = 0) Then 'Sólo se calcula en paga de reliquidación o baja del empleado
     sac_acum_ig = SAR_ACM_PROR_SAC + SAR_DIF_SAC_RG3976
     sac_anio_ant = SAR_SAC_1_ANIO_ANT + SAR_SAC_2_ANIO_ANT
 EndIf
 
-'Control negativos, en caso que se den, se mostraran en reporte como remuneracion bruta dejando a 0 este concepto
+'Control negativos, en caso que se den, se mostraran en reporte como remuneración bruta dejando a 0 este concepto
 valor = Max(sac_acum_ig - sac_anio_ant,0)
 Return Round(valor,SAR_NUM_DEC)

@@ -1,7 +1,7 @@
-'La primer linea calcula la base imponible para Obra Social segun la RG 953/01 de la AFIP
-'La segunda linea le pasa como parametro dicho valor a un nodo que devuelve el % asociado 
+'La primer línea calcula la base imponible para Obra Social según la RG 953/01 de la AFIP
+'La segunda línea le pasa como parámetro dicho valor a un nodo que devuelve el % asociado 
 'al tipo de obra social.
-'La ultima realiza el calculo
+'La última realiza el cálculo
 
 base = SAR_REMUN_IMPO + SAR_BASE_COTIZ_ART + SAR_SAC_IMPO + SAR_VAC_IMPO 
 

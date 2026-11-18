@@ -1,7 +1,7 @@
 'impuesto cedular tiene otra base:
 base = SAR_BASE_IMPUESTO
 
-'Ley de bases guarda la base que habria tenido siendo de 4ta
+'Ley de bases guarda la base que habría tenido siendo de 4ta
 SAR_LBASE_BASE_4TA = base
 
 If SAR_CEDU_IND_IMPUESTO = 1 Then 

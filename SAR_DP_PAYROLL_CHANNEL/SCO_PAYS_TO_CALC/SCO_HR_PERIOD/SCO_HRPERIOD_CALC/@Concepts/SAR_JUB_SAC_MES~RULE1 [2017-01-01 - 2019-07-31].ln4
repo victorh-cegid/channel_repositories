@@ -5,7 +5,7 @@ valor = 0
 
 sac_anio_ant = SAR_IND_SAC_ANIO_ANT
 
-'Control retroactividad a?os anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
+'Control retroactividad años anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
 If sac_anio_ant = 1 Then 
     mes_orig = SAR_AC_SAC_REV[0].SAR_JUB_SAC_MES
     sac_dif = SAR_JUBILACION_SAC - SAR_AC_SAC_REV[0].SAR_JUBILACION_SAC
@@ -14,13 +14,13 @@ If sac_anio_ant = 1 Then
 EndIf
 
 If SAR_TP_IMPUT = "99" Or SAR_ES_BAJA = 1 Or SAR_IND_AJUSTE_SAC = 1 Then 
-    'En baja o reliquidacion retornamos la diferencia entre el descuento del pago y el que se ha ido descontando mes a mes
+    'En baja o reliquidación retornamos la diferencia entre el descuento del pago y el que se ha ido descontando mes a mes
     tot_jub_sac_pago = SAR_ACM_IG_ANIO_IMPUT[0].SAR_JUBILACION_SAC + SAR_JUBILACION_SAC
     tot_jub_sac_mes = SAR_ACM_IG_ANIO_IMPUT[0].SAR_JUB_SAC_MES
 
     valor = tot_jub_sac_pago - tot_jub_sac_mes
 
-    'Para evitar diferencias en reliquidacion por redondeos
+    'Para evitar diferencias en reliquidación por redondeos
     If abs(valor) <= SAR_TOLERANCIA_DEC Then valor = 0
 
     Return (valor)
@@ -29,10 +29,10 @@ Else
 EndIf
 
 
-If SCO_PAY_FREQ_PAYM = "004" Then 'Tope mensual de cotizacion para el SAC porrateado
+If SCO_PAY_FREQ_PAYM = "004" Then 'Tope mensual de cotización para el SAC porrateado
     Tope = SAR_TOPE_COTIZ / 12
 Else 
-    Tope = SAR_TOPE_COTIZ / 24 'Tope quincenal de cotizacion para el SAC porrateado
+    Tope = SAR_TOPE_COTIZ / 24 'Tope quincenal de cotización para el SAC porrateado
 EndIf
 
 BaseTopada = Min(Base, Tope)

@@ -104,7 +104,7 @@ Elseif (SAR_ES_BAJA = 1 and SAR_IG_DICIEMBRE = 1) and (DXYEAR(SAR_FECHA_BAJA) <>
     Else
         mes_paga_efecti = SAR_MES_PAGO_IG
     If (SAR_TP_IMPUT = "99") Then
-        AUX = SAR_RANGO_REM_IG_2013() 'Llamamos a la ejecucion del concepto necesario para obtener el rango de la remuneracion por decreto 1242 / 2013.
+        AUX = SAR_RANGO_REM_IG_2013() 'Llamamos a la ejecución del concepto necesario para obtener el rango de la remuneración por decreto 1242 / 2013.
     EndIf  
 EndIf
 
@@ -123,7 +123,7 @@ If SAR_H_COMPLEM_GCIAS.count() > 0 Then
              entidad = SAR_H_COMPLEM_GCIAS.SAR_ID_ENTIDAD
         endif
         
-        'Si es necesario se realiza la conversion de monedas:
+        'Si es necesario se realiza la conversión de monedas:
         vRecordCurrency  = SAR_H_COMPLEM_GCIAS.SAR_ID_CURRENCY
         vPayrollCurrency = SAR_HRPERIOD_CALC.ID_CURRENCY
         
@@ -322,7 +322,7 @@ If SAR_H_COMPLEM_GCIAS.count() > 0 Then
                     EndIf
                     frec_06 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
                                                 
-                ElseIf entidad = "07" then '--Honorarios Medicos--                                
+                ElseIf entidad = "07" then '--Honorarios Médicos--                                
                     IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti  Or (SAR_TP_IMPUT = "99") ) THEN
                         If (SAR_TP_IMPUT = "99")Then
                             dif_meses_07 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
@@ -436,7 +436,7 @@ If SAR_H_COMPLEM_GCIAS.count() > 0 Then
                                bruto_oe = bruto_oe + (SAR_H_COMPLEM_GCIAS.SAR_BRUTO * dif_meses_13)
                             EndIf                                
 
-                            ' Retencion
+                            ' Retención
                             If (SAR_H_COMPLEM_GCIAS.SAR_RETENCION > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_RETENCION) = M4_False ) Then
                                retencion_oe = retencion_oe + (SAR_H_COMPLEM_GCIAS.SAR_RETENCION * dif_meses_13)
                             EndIf                                
@@ -470,7 +470,7 @@ If SAR_H_COMPLEM_GCIAS.count() > 0 Then
                                 bruto_oe = bruto_oe + (SAR_H_COMPLEM_GCIAS.SAR_BRUTO * dif_meses_13)
                             EndIf                                
 
-                            ' Retencion
+                            ' Retención
                             If (SAR_H_COMPLEM_GCIAS.SAR_RETENCION > 0 And IsNull(SAR_H_COMPLEM_GCIAS.SAR_RETENCION) = M4_False ) Then
                                retencion_oe = retencion_oe + (SAR_H_COMPLEM_GCIAS.SAR_RETENCION * dif_meses_13)
                             EndIf                                
@@ -509,7 +509,7 @@ If SAR_H_COMPLEM_GCIAS.count() > 0 Then
                         EndIf                                
                     endif
                     frec_15 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
-                elseif entidad = "16" then '--vehiculos corredores y viajantes de comercio--                    
+                elseif entidad = "16" then '--vehículos corredores y viajantes de comercio--                    
                         IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti OR (SAR_TP_IMPUT = "99") ) THEN                            
                             If(SAR_TP_IMPUT = "99")Then
                                     dif_meses_16 = DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) - DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) + 1
@@ -608,7 +608,7 @@ If SAR_H_COMPLEM_GCIAS.count() > 0 Then
                     endif
                     frec_06 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
         
-                elseif entidad = "07" then '--Honorarios Medicos--
+                elseif entidad = "07" then '--Honorarios Médicos--
     
                     if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
                         imp_tot_07 = imp_tot_07 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL                          
@@ -746,7 +746,7 @@ ENDIF
 'correspondiente a los conceptos acumulados a ser utilizados en el cpto.v5002
 
 
-'total de Jubilacion por otros empleadores
+'total de Jubilación por otros empleadores
 If IsNull(jubilacion_oe) = M4_False Then
     SAR_JUBILACION_OE = jubilacion_oe 
 Else
@@ -785,7 +785,7 @@ Else
     SAR_BRUTO_OE = 0
 EndIf
 
-'total de Retencion por otros empleadores
+'total de Retención por otros empleadores
 If IsNull(retencion_oe) = M4_False Then
     SAR_IMP_OTROS_EMP = retencion_oe 
 Else
@@ -918,7 +918,7 @@ EndIf
 
 
 
-'--Honorarios Medicos--
+'--Honorarios Médicos--
 If IsNull(imp_tot_07) = M4_False Then
     SAR_HONORAR_MEDICOS = imp_tot_07
     SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_HONORAR_MEDICOS",-1,imp_tot_07)
@@ -971,7 +971,7 @@ Else
 EndIf
 
 
-'Garantias Reciprocas
+'Garantías Recíprocas
 If IsNull(imp_tot_14) = M4_False Then
    IF imp_tot_14 > 0 Then
      SAR_JUR_GTIA_RECIP = imp_tot_14
@@ -991,7 +991,7 @@ Else
     SAR_PAG_CUENT_EXT = 0
 EndIf
 
-'Vehiculos corredores y viajantes de comercio
+'Vehículos corredores y viajantes de comercio
 If IsNull(imp_tot_16) = M4_False Then
    IF imp_tot_16 > 0 Then
      SAR_JUR_VEHIC_COR = imp_tot_16

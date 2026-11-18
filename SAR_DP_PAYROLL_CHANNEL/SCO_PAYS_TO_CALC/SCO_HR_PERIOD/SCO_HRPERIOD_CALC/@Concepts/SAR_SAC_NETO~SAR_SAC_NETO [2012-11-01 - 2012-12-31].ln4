@@ -3,20 +3,20 @@
 // Nombre: SAR_SAC_NETO                                                      //
 // Tipo: Variable                                                            //
 // Id. : 5900                                                                //
-// Clasificacion: 2                                                          //
-// G. de Ejecucion: 4                                                        //
+// Clasificación: 2                                                          //
+// G. de Ejecución: 4                                                        //
 // Salida acumulado: Si                                                      //
 // Retroactividad: Si                                                        //
 // Entrada por valores: No                                                   //
 // Retorno: N/A                                                              //
-// Parametros: N/A                                                           //
+// Parámetros: N/A                                                           //
 // ------------------------------------------------------------------------  //
 // Autor: N/A                                                                //
-// Fecha de Creacion: N/A                                                    //
-// Asunto: Calcula el SAC neto realizando la suma del SAC del 2? semestre    //
-//         con el SAC de egreso del 2?, a esta suma se le resta la suma de   //
-//         los descuentos por ley, jubilacion, O.S, etc. Para ser aplicado   //
-//         al calculo de la deduccion especial segun decreto 2191/2012.      //
+// Fecha de Creación: N/A                                                    //
+// Asunto: Calcula el SAC neto realizando la suma del SAC del 2° semestre    //
+//         con el SAC de egreso del 2°, a esta suma se le resta la suma de   //
+//         los descuentos por ley, jubilación, O.S, etc. Para ser aplicado   //
+//         al calculo de la deducción especial según decreto 2191/2012.      //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -24,8 +24,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 // Autor: DAV                                                                //
-// Fecha de Modificacion: 27/02/2013                                         //
-// Asunto: Nueva validacion: Si la fecha de baja se encuentra entre          //
+// Fecha de Modificación: 27/02/2013                                         //
+// Asunto: Nueva validación: Si la fecha de baja se encuentra entre          //
 // 01/01/2013 y 31/03/2013 este concepto retorna valor cero (0)              //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-'El metodo asigna los tramos que tienen valor nulo al ejecutar la retroactividad de una baja 
+'El método asigna los tramos que tienen valor nulo al ejecutar la retroactividad de una baja 
 
 'Argumentos y constantes
 sNodeDif = "SCO_DIF_HRPERIOD_CALC"  'Nodo de diferencias
@@ -15,7 +15,7 @@ For i = 0 to (nNumTramos-1)
 
     'Comprobamos si en el tramo el empleado es baja, o estamos en el caso de baja retroactiva
     If dFecIniTramo > SCO_DT_END_CALC or SCO_RETRO_TERM = STD_ID_HR Then 
-        'Leemos el valor del nodo de acumulado, y lo asignamos en el tramo con prioridad maxima
+        'Leemos el valor del nodo de acumulado, y lo asignamos en el tramo con prioridad máxima
         vValor = GetValue(sNodeAc,sIdItemAc,-1)
         SetValuePriority(0,sNodeDif,sIdItemDif,-1,i,vValor)
 

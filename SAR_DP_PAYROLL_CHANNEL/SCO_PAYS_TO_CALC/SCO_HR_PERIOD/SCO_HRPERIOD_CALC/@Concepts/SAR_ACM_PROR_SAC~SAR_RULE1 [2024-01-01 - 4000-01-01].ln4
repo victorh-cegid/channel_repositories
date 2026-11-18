@@ -6,7 +6,7 @@ importe = valoracum + valormes
 
 sum_tot_sac = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_PROR_SAC + SAR_TOT_PROR_SAC
 
-'Tierra de fuego no se consider el sac pagado en esa situacion
+'Tierra de fuego no se consider el sac pagado en esa situación
 tfuego_tot_sac = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TFUEG_DIF_SAC + SAR_TFUEG_DIF_SAC
 sum_tot_sac = sum_tot_sac - tfuego_tot_sac
 
@@ -20,14 +20,14 @@ If (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") Or indReli
     Endif
 EndIf    
 
-'Control retroactividad a?os anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
+'Control retroactividad años anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
 sac_anio_ant = SAR_IND_SAC_ANIO_ANT
 If sac_anio_ant = 1 Then
     mes_orig = SAR_AC_SAC_REV[0].SAR_DIF_SAC_RG3976
     sac_dif = SAR_TOT_PROR_SAC - SAR_AC_SAC_REV[0].SAR_TOT_PROR_SAC
     dif_sac_RG3976 = mes_orig + sac_dif
     importe = SAR_AC_SAC_REV[0].SAR_ACM_PROR_SAC
-    'Tierra de fuego no se consider el sac pagado en esa situacion
+    'Tierra de fuego no se consider el sac pagado en esa situación
     If SAR_TFUEG_IND = 1 Then dif_sac_RG3976 = mes_orig
 EndIf
 

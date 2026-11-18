@@ -1,0 +1,24 @@
+'Obtenermos el Porcentaje FAL y lo tenemos en cuenta en caso de nulo
+
+porc_fal = SAR_PORC_PAT_FAL
+If IsNull(porc_fal) = TRUE Then
+    porc_fal = 0
+EndIf
+val_tot_propor =0
+
+'Obtenemos el valor total para realizar la proporcion
+
+val_porc_pat_jub = SAR_PORC_PAT_JUBIL
+val_porc_f_emp   = SAR_PORC_F_EMPLEO 
+val_porc_pat_l9032 = SAR_P_PAT_L_19032
+val_porc_pat_casfec = SAR_P_PAT_CASFEC_PI
+
+val_tot_propor = val_porc_pat_jub +val_porc_f_emp+ val_porc_pat_l9032+ val_porc_pat_casfec
+
+
+If porc_fal = 0  Then Return(val_porc_pat_casfec)
+
+'Modalidad Contratacion 710 no hay proprcion FAL toma el valor del % informado en tablas de valor
+If SAR_ID_MOD_CONTRAT = "710" Then Return(val_porc_pat_casfec)
+
+Return(Round(val_porc_pat_casfec - porc_fal * (val_porc_pat_casfec / val_tot_propor), 6))

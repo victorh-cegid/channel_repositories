@@ -1,32 +1,32 @@
 'Inicializo variables
-indZonaPat          = SAR_IND_ZONA_PAT              'indicador zona patagonica
-indDeduc            = SAR_IND_DED_IG_2010           'indicador deduccion 2010
-ano_pago_act        = DxYear(SAR_FEC_IMPUT_IG)      'A?o fecha calculo actual
-mes_pago_act        = DxMonth(SAR_FEC_IMPUT_IG)     'Mes fecha calculo actual
-dia_pago_act        = DaysOfMonth(SAR_FEC_IMPUT_IG) 'Dia fecha calculo actual
+indZonaPat          = SAR_IND_ZONA_PAT              'indicador zona patagónica
+indDeduc            = SAR_IND_DED_IG_2010           'indicador deducción 2010
+ano_pago_act        = DxYear(SAR_FEC_IMPUT_IG)      'Año fecha cálculo actual
+mes_pago_act        = DxMonth(SAR_FEC_IMPUT_IG)     'Mes fecha cálculo actual
+dia_pago_act        = DaysOfMonth(SAR_FEC_IMPUT_IG) 'Día fecha cálculo actual
 
-'Desde el periodo fiscal 2023, usa la ganancia no imponible porque debe afectarse por la reduccion de zona patagonica.
+'Desde el periodo fiscal 2023, usa la ganancia no imponible porque debe afectarse por la reducción de zona patagónica.
 ganNoImp = SAR_GAN_NO_IMP
 If ano_pago_act > 2022 Then Return(ganNoImp)
 
 'Control, baja debe calcularse respecto a la fecha de pago IG
 If SAR_ES_BAJA = 1 Then
-    ano_pago_act        = DxYear(SAR_FEC_PAGO_IG)      'A?o fecha calculo actual
-    mes_pago_act        = DxMonth(SAR_FEC_PAGO_IG)     'Mes fecha calculo actual
-    dia_pago_act        = DaysOfMonth(SAR_FEC_PAGO_IG) 'Dia fecha calculo actual
+    ano_pago_act        = DxYear(SAR_FEC_PAGO_IG)      'Año fecha cálculo actual
+    mes_pago_act        = DxMonth(SAR_FEC_PAGO_IG)     'Mes fecha cálculo actual
+    dia_pago_act        = DaysOfMonth(SAR_FEC_PAGO_IG) 'Día fecha cálculo actual
 EndIf
 
 valorMensual = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_TOPE_SER_DOM",DxDate(dia_pago_act,mes_pago_act,ano_pago_act),indDeduc))/12
 
 If IsNull(valorMensual) = True Then valorMensual = 0
 
-'Fecha inicio y fin, en enero un empleado no diferido seran 01/01/a?oIG y 31/01/a?oIG, un empleado diferido seran 01/01/a?oIG y 28/02/a?oIG
-fec_mes_ini  = DxDate("01","01",ano_pago_act)                   'Fecha mes inicio a?o fiscal
+'Fecha inicio y fin, en enero un empleado no diferido serán 01/01/añoIG y 31/01/añoIG, un empleado diferido serán 01/01/añoIG y 28/02/añoIG
+fec_mes_ini  = DxDate("01","01",ano_pago_act)                   'Fecha mes inicio año fiscal
 fec_mes_fin  = DxDate(dia_pago_act,mes_pago_act,ano_pago_act)   'Fecha mes fin imput actual
 
 meses = DateDiff (fec_mes_ini,fec_mes_fin+1,M4_MONTH)
 
-'Si el empleado es baja y el indicador "Calcula ganancias a Diciembre" activo se calculara el importe anual
+'Si el empleado es baja y el indicador "Calcula ganancias a Diciembre" activo se calculará el importe anual
 If SAR_ES_BAJA = 1 And SAR_IG_DICIEMBRE = 1 Then meses = 12
 
 importe = valorMensual * meses

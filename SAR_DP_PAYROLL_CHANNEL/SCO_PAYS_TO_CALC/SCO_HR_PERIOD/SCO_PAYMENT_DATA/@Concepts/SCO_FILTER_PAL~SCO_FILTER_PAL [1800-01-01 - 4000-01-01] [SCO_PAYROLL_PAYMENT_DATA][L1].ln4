@@ -1,4 +1,4 @@
-'Este filtro que evita que se carguen los registros que no se desean para pagos despues de la baja.
+'Este filtro que evita que se carguen los registros que no se desean para pagos después de la baja.
 filter = ""
 If SCO_HR_PERIOD.SCO_IS_PAL = 1 Then
     filter = "FROM &SCO_PAYMENT_DATA A WHERE NOT EXISTS (SELECT B.SCO_ID_HR FROM &SCO_PAYMENT_DATA_PAL B WHERE B.ID_ORGANIZATION = A.ID_ORGANIZATION AND B.SCO_ID_HR = A.SCO_ID_HR AND B.SCO_ID_ORIGIN_TYPE = A.SCO_ID_ORIGIN_TYPE AND B.SCO_OR_HR_PERIOD = A.SCO_OR_HR_PERIOD AND B.SCO_OR_PAYMENTDATA = A.SCO_OR_PAYMENTDATA AND B.SCO_DT_PAYMENT = @SCO_DT_PAYMENT AND B.SCO_ID_PAY_FREQUENCY = @SCO_PAY_FREQ_PAYM)"

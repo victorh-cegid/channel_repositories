@@ -78,7 +78,7 @@ FOR I = primerreg TO ultimoreg
 	  ELSE
         	fecha_tope = Min(fecha_baja_impuesto,SAR_FEC_IMPUT_IG)
 	  ENDIF
-'        Si no es hijo incapacitado, verIfico los a?os contra el tope de la edad para ganancias.(24 a?os) 
+'        Si no es hijo incapacitado, verIfico los años contra el tope de la edad para ganancias.(24 años) 
                
         IF edad = SAR_TOPE_EDAD_FAMILIAR AND DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_IMPUT_IG) THEN
             DIAT = DXDAY(fec_nac)
@@ -131,8 +131,8 @@ FOR I = primerreg TO ultimoreg
             EndIf
         Endif
 
-        'Verficacion que permite obtener lafecha de inicio cuando existe incapacidad en meses mayores al inicio del 
-        'a?o fiscal, con familiares de 24 a?os o mas.
+        'Verficación que permite obtener lafecha de inicio cuando existe incapacidad en meses mayores al inicio del 
+        'año fiscal, con familiares de 24 años o mas.
         If(edad >= SAR_TOPE_EDAD_FAMILIAR And Existe_hijo_inc = 1) Then 
            If(SAR_FEC_IMPUT_IG >= SAR_INCAPACIDADES.SCO_DT_START And DxYear(SAR_INCAPACIDADES.SCO_DT_START) = DxYear(SAR_FEC_IMPUT_IG))Then
               fecha_ini = SAR_INCAPACIDADES.SCO_DT_START
@@ -195,5 +195,5 @@ If isNull(importe) = M4_TRUE Then
     importe = 0
 EndIf
  
-'Se redondea el importe antes de su devolucion
+'Se redondea el importe antes de su devolución
 RETURN(Round(importe,2))

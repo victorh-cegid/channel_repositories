@@ -1,4 +1,4 @@
-'Segun el inciso a del articulo 9 de la ley 23660. 
+'Según el inciso a del artículo 9 de la ley 23660. 
 '
 IF SAR_FAMILIARES.COUNT() = 0 THEN
     Return(0)

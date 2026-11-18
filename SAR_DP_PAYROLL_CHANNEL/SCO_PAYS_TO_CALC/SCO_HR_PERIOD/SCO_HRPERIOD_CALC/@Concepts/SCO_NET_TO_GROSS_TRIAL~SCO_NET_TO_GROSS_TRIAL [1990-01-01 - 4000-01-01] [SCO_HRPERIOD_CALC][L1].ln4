@@ -5,8 +5,8 @@ iError = SCO_ERROR
 SetSliceMode(SCO_PAYS_TO_CALC.SCO_SLICE_MODE)
 
 If SCO_AGREED_NET..SysSliceNumber > 1 and iError <> 1 then
-'El neto acordado no puede tener tramos, el valor debe ser unico a lo largo de la paga
-'Con el iError <> 1 controlamos que el setlog solo se muestre una vez
+'El neto acordado no puede tener tramos, el valor debe ser único a lo largo de la paga
+'Con el iError <> 1 controlamos que el setlog sólo se muestre una vez
     Setlog(-1,1,101,66,SCO_OR_HR_PERIOD,SCO_ID_HR)
     SetSliceMode(M4_FALSE)
     SCO_ERROR = 1

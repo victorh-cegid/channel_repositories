@@ -7,4 +7,15 @@ prec: 9
 scale: 4
 scope: RECORD
 default_value: "0"
+internal_type: null
+item_aux: null
 id_cstype: 2
+totalize_type: 4
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: null
+variable_arguments: 0
+item_aux_prorat: SCO_DT_SLICE
+dimension: null
+conv_function: 1

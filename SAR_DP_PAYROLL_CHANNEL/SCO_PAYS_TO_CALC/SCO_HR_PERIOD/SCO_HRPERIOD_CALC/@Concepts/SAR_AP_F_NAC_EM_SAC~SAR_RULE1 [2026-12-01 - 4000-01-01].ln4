@@ -1,0 +1,6 @@
+'El concepto 631 (% de contribución fondo nacional de empleo) tomará su valor de zonas dgi o de valores modalidades de 
+'contratación para cada modalidad vigente.
+
+valor = SAR_SAC_IMPO_CNT * SAR_PORC_F_EMPLEO_FAL / 100
+
+RETURN(valor)

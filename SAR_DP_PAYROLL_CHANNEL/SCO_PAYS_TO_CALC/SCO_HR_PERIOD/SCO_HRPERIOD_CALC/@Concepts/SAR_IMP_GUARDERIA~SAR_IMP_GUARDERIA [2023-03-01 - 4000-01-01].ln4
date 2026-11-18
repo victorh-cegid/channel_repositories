@@ -33,7 +33,7 @@ For i = 0 To numHijos -1
     fecNacHijo = SAR_GASTOS_GUARDERIA[i].STD_DT_BIRTH
     gastGuardHijo = ToDouble(SAR_GASTOS_GUARDERIA[i].SAR_IMPORTE)
 
-    'Evalua si el hijo tiene entre 45 dias (agrega 44 a la fec. nac.) y 3 a?os en el mes de proceso
+    'Evalua si el hijo tiene entre 45 días (agrega 44 a la fec. nac.) y 3 años en el mes de proceso
     corresponde = 0
     iniHijoCorresponde = DateAdd(fecNacHijo,44,M4_DAY)
     finHijoCorresponde = AddYears(fecNacHijo,4)
@@ -52,7 +52,7 @@ For i = 0 To numHijos -1
         EndIf
         prop = prop * SAR_COEF_JORNADA_PER
 
-        'La proporcion no debe superar el importe informado
+        'La proporción no debe superar el importe informado
         prop = Min(prop,1)
         gastGuardHijo = gastGuardHijo * prop
 
@@ -77,7 +77,7 @@ For i = 0 To numHijos -1
 Next
 
 'Segunda quincena considera pagado en primera quincena, mira si valor <> 0 por si en 1ra quincena hubiera ido forzado y en segunda no
-'sino en caso de forzado en 1ra pero no en segunda, se lo restaria.
+'sino en caso de forzado en 1ra pero no en segunda, se lo restaría.
 If SAR_TP_IMPUT = "4" and valor <> 0 Then valor = valor - gastoPagaAnt
 
 Return Round(valor,SAR_NUM_DEC)

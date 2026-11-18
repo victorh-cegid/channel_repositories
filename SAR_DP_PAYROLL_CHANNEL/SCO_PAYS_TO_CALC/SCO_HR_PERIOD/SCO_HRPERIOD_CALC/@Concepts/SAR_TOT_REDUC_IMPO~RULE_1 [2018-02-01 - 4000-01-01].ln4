@@ -1,2 +1,2 @@
-'Para evitar reduccion negativa
+'Para evitar reducción negativa
 Return Max(SAR_TOT_REDUC_IMPO,0)

@@ -1,7 +1,7 @@
 /*
-'Las incidencias a sumar son aquellas cuya caracteristica es INTERRUPCION
-' A continuacion se listan:
-    '2	Suspension:                               SAR_DIAS_SUS_DISCI     #480
+'Las incidencias a sumar son aquellas cuya característica es INTERRUPCION
+' A continuación se listan:
+    '2	Suspensión:                               SAR_DIAS_SUS_DISCI     #480
     '5	Lic. sin Goce de Sueldo:                  SAR_LIC_S_GOS_SUELDO   #470
     '6	Excedencia:                               SAR_DIAS_EXCEDENCIA    #475
     '7	Ausencia Injustificada:                   SAR_DIAS_AUSENCIA      #540

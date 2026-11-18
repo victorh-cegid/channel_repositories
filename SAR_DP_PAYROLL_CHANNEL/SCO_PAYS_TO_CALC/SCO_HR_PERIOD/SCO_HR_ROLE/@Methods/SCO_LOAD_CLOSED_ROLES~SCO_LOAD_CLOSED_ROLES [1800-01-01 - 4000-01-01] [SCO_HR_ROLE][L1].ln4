@@ -1,6 +1,6 @@
-'Carga de roles cerrados que deberian ser tenidos en cuenta para el calculo de la retroactividad
-'Solo la lanzamos si estamos en revision, el nodo solo se ha cargado una vez para este period (SCO_LOAD_AGAIN = 1),
-'y ademas ha encontrado algun registro (como minimo debe haber un main role)
+'Carga de roles cerrados que deberían ser tenidos en cuenta para el cálculo de la retroactividad
+'Sólo la lanzamos si estamos en revisión, el nodo sólo se ha cargado una vez para este period (SCO_LOAD_AGAIN = 1),
+'y además ha encontrado algún registro (como mínimo debe haber un main role)
 If SCO_PAYS_TO_CALC.SCO_REVISION = 0 or SCO_LOAD_AGAIN = 0 then 
     SCO_LOAD_AGAIN = 1
     return(0)
@@ -18,7 +18,7 @@ Else
             sRoles = sRoles + ToString(SCO_OR_HR_ROLE,0) + ","
             GONEXT()
         Wend
-        'al terminar, hay una coma de mas. La eliminamos y cerramos el parentesis
+        'al terminar, hay una coma de más. La eliminamos y cerramos el paréntesis
         sRoles = Mid(sRoles, 0, Length(sRoles)-1) + ") "
         
         'Cargamos los roles con fechas de inicio y fin las de la paga para que el SCO_CALCHRP ejecute correctamente el SCO_CALCROLE
@@ -30,18 +30,18 @@ Else
 
     SCO_LOAD_CLOSED_ROLES_SYSS = sSysSentence
     Load_Blk()
-    'Dejamos la syssentence vacia para que no afecte a la carga del siguiente period
+    'Dejamos la syssentence vacía para que no afecte a la carga del siguiente period
     SCO_LOAD_CLOSED_ROLES_SYSS = ""
 
     'Para roles cerrados buscamos los nuevos roles que hemos cargado para marcar sus acumulados como pagados
-    if iPos <> -1 and iPos <> count()-1 then 'Estamos en el caso de roles cerrados y ha cargado algun role mas
+    if iPos <> -1 and iPos <> count()-1 then 'Estamos en el caso de roles cerrados y ha cargado algún role más
         moveTo(iPos+1)
         sClosedRoles = " ("
         While IsEOF() = M4_FALSE
             sClosedRoles = sClosedRoles + ToString(SCO_OR_HR_ROLE,0) + ","
             GONEXT()
         wend
-        'al terminar, hay una coma de mas. La eliminamos y cerramos el parentesis
+        'al terminar, hay una coma de más. La eliminamos y cerramos el paréntesis
         sClosedRoles = Mid(sClosedRoles , 0, Length(sClosedRoles )-1) + ") "
 
         Begin()

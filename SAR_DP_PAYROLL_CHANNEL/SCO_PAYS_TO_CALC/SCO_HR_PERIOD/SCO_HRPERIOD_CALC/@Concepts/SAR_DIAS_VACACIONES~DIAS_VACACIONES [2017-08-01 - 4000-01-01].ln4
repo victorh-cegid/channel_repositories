@@ -1,50 +1,50 @@
-'Excluimos del calculo los tipos de paga: Extra(2), Anticipo de Vacaciones(88), Reliquidacion impuesto(99).
+'Excluimos del calculo los tipos de paga: Extra(2), Anticipo de Vacaciones(88), Reliquidación impuesto(99).
 If (SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1) Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Then Return(0)
 
-'Evaluamos si se esta ejecutando una Paga Especial de Licencia por Vacaciones. En este tipo de paga se liquidan las vacaciones y no se descuentan.
+'Evaluamos si se está ejecutando una Paga Especial de Licencia por Vacaciones. En este tipo de paga se liquidan las vacaciones y no se descuentan.
 If SAR_TP_IMPUT = "77" Then Return(0)
 
 
-'1.- Asignamos los valores iniciales a las variables de calculo que van a intervenir en la definicion de los periodos vacacionales que vamos a gestionar. 
+'1.- Asignamos los valores iniciales a las variables de cálculo que van a intervenir en la definición de los periodos vacacionales que vamos a gestionar. 
 fec_ini_paga  = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC                 'Fecha de inicio de la paga procesada
 fec_fin_paga  = SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC                   'Fecha de fin de la paga procesada
-num_dias_paga = DaysOfMonth(SAR_PAYS_TO_CALC.SCO_DT_ALLOCATION)     'Numero de dias de la paga procesada
+num_dias_paga = DaysOfMonth(SAR_PAYS_TO_CALC.SCO_DT_ALLOCATION)     'Número de días de la paga procesada
 
-'Tenemos que tener en cuenta la posibilidad de que exista un tramado en el calculo de nomina. Realizamos todos los calculos en el primer tramo.
+'Tenemos que tener en cuenta la posibilidad de que exista un tramado en el cálculo de nómina. Realizamos todos los cálculos en el primer tramo.
 num_tramos = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysSliceNumber
 
 If num_tramos > 1 Then
-    ini_prim_tramo = GetStartDate()         'Fecha de incio del primer tramo del calculo
+    ini_prim_tramo = GetStartDate()         'Fecha de incio del primer tramo del cálculo
 
-    fecha_ini_tram = GetRunningStartDate()  'Fecha de incio del tramo en ejecucion
+    fecha_ini_tram = GetRunningStartDate()  'Fecha de incio del tramo en ejecución
 
 'Permitimos trabajar con tramos
-'Solo continuamos con el calculo si nos encontramos en el primer tramo.
+'Sólo continuamos con el cálculo si nos encontramos en el primer tramo.
 '    If ini_prim_tramo <> fecha_ini_tram Then Return(0)
 EndIf
 
-'En Febrero ajustamos la fecha de fin de la paga para considerar 30 dias, al igual que hacemos con el resto de meses.
+'En Febrero ajustamos la fecha de fin de la paga para considerar 30 días, al igual que hacemos con el resto de meses.
 If DxMonth(fec_fin_paga) = 2 Then fec_fin_paga = fec_fin_paga + (30 - DxDay(fec_fin_paga))
 
-'Para delimitar el tramo a considerar en el calculo del empleado debemos de tener en cuenta su situacion (Altas y/o Bajas en el mes).
+'Para delimitar el tramo a considerar en el cálculo del empleado debemos de tener en cuenta su situación (Altas y/o Bajas en el mes).
 fec_ini_tramo  = Max(SAR_FECHA_ALTA,fec_ini_paga)                   'Fecha de inicio del periodo del empleado en la paga
 fec_fin_tramo  = Min(SAR_FECHA_BAJA,fec_fin_paga)                   'Fecha de inicio del periodo del empleado en la paga
-dias_tot_tramo = DateDiff(fec_ini_tramo,fec_fin_tramo,M4_DAY) + 1   'Total dias en el tramo analizado para empleado
+dias_tot_tramo = DateDiff(fec_ini_tramo,fec_fin_tramo,M4_DAY) + 1   'Total días en el tramo analizado para empleado
 
-'Para empleados mensuales se deben de considerar meses de 30 dias, incluido Febrero.    
+'Para empleados mensuales se deben de considerar meses de 30 días, incluido Febrero.    
 dias_tot_tramo = Min(dias_tot_tramo,30)
 
-dias_lic_no_desc = SAR_DIAS_LIC_NO_RETRIB..SysTotalslices(M4_TOTAL_SUM)     'Total dias en el mes con Licencia no retribuida
+dias_lic_no_desc = SAR_DIAS_LIC_NO_RETRIB..SysTotalslices(M4_TOTAL_SUM)     'Total días en el mes con Licencia no retribuida
 
-'Si el numero de dias de Licencia no retribuida abarca todo el mes procesado normalizamos a 30 dias para equiparar con los dias de salario.
+'Si el número de días de Licencia no retribuida abarca todo el mes procesado normalizamos a 30 días para equiparar con los días de salario.
 If dias_lic_no_desc = num_dias_paga Then dias_lic_no_desc = dias_tot_tramo
 
-dias_disp_desc = dias_tot_tramo - dias_lic_no_desc                  'Total dias disponibles para descontar vacaciones
+dias_disp_desc = dias_tot_tramo - dias_lic_no_desc                  'Total días disponibles para descontar vacaciones
 
-dias_desc_vac_ant = 0                                               'Total dias pendientes de descuento de pagas anteriores
-dias_desc_vac_act = 0                                               'Total dias pendientes de descuento de la paga actual
-dias_vac_ant_desc = 0                                               'Total dias descontados pendientes de pagas anteriores
-dias_tot_desc_vac = 0                                               'Total dias Descuento Licencia por Vacaciones en la paga procesada
+dias_desc_vac_ant = 0                                               'Total días pendientes de descuento de pagas anteriores
+dias_desc_vac_act = 0                                               'Total días pendientes de descuento de la paga actual
+dias_vac_ant_desc = 0                                               'Total días descontados pendientes de pagas anteriores
+dias_tot_desc_vac = 0                                               'Total días Descuento Licencia por Vacaciones en la paga procesada
 
 
 '2.- Comprobamos si existen descuentos pendientes de aplicar procedentes de periodos vacacionales anteriores al mes calculado. 
@@ -54,57 +54,57 @@ If SAR_ACM_ULT_MES.Count() > 0 Then
     dias_desc_vac_ant = SAR_ACM_ULT_MES.SAR_EXC_DIAS_VAC..SysTotalslices(M4_TOTAL_SUM)
 
     If dias_desc_vac_ant > 0 Then
-'Existen dias de vacaciones pendientes de descontar. Comprobamos si se pueden descontar en el mes que estamos procesando.
+'Existen días de vacaciones pendientes de descontar. Comprobamos si se pueden descontar en el mes que estamos procesando.
         If SAR_ES_BAJA = 0 Then
             If dias_disp_desc >= dias_desc_vac_ant Then
-            'Contabilizo el descuento de los dias pendientes de pagas anteriores.
+            'Contabilizo el descuento de los días pendientes de pagas anteriores.
                 dias_tot_desc_vac = dias_tot_desc_vac + dias_desc_vac_ant
             
-            'Almaceno el valor de los dias pendientes descontados en la paga actual.
+            'Almaceno el valor de los días pendientes descontados en la paga actual.
                 dias_vac_ant_desc = dias_desc_vac_ant
                
-            'Actualizo el saldo de la variable que contiene los dias disponibles.
+            'Actualizo el saldo de la variable que contiene los días disponibles.
                 dias_disp_desc = dias_disp_desc - dias_desc_vac_ant
 
-            'Actualizo el saldo de la variable que contiene los dias pendientes de descontar.
+            'Actualizo el saldo de la variable que contiene los días pendientes de descontar.
                 dias_desc_vac_ant = 0
             Else
-            'Saldo el maximo numero de dias pendientes posibles, en funcion del numero de dias disponibles.
+            'Saldo el máximo número de días pendientes posibles, en función del número de días disponibles.
                 dias_tot_desc_vac = dias_tot_desc_vac + dias_disp_desc
             
-            'Almaceno el valor de las unidades, precio e importe de los dias pendientes descontados en la paga actual.
+            'Almaceno el valor de las unidades, precio e importe de los días pendientes descontados en la paga actual.
                 dias_vac_ant_desc = dias_disp_desc
             
-            'Actualizo el saldo de la variable que contiene los dias pendientes de descontar.
+            'Actualizo el saldo de la variable que contiene los días pendientes de descontar.
                 dias_desc_vac_ant = dias_desc_vac_ant - dias_disp_desc
                 
-            'Actualizo el saldo de la variable que contiene los dias disponibles -> Hemos agotado el numero de dias disponibles.  
+            'Actualizo el saldo de la variable que contiene los días disponibles -> Hemos agotado el número de días disponibles.  
                 dias_disp_desc = 0
             EndIf
         Else
-        'Si el empleado es baja en el mes no debemos limitar el tope de dias disponibles para descontar ya que no van a poder descontarse a futuro.
+        'Si el empleado es baja en el mes no debemos limitar el tope de días disponibles para descontar ya que no van a poder descontarse a futuro.
             dias_tot_desc_vac = dias_tot_desc_vac + dias_desc_vac_ant
 
-        'Almaceno el valor de los dias pendientes descontados en la paga actual.
+        'Almaceno el valor de los días pendientes descontados en la paga actual.
             dias_vac_ant_desc = dias_desc_vac_ant
         
-        'Actualizo el saldo de la variable que contiene los dias pendientes de descontar. 
+        'Actualizo el saldo de la variable que contiene los días pendientes de descontar. 
             dias_desc_vac_ant = 0
         EndIf
     EndIf
 Else
-'No existen registros de calculos anteriores, por lo tanto no tenemos ningun dias pendiente de descontar.     
+'No existen registros de cálculos anteriores, por lo tanto no tenemos ningún días pendiente de descontar.     
     dias_desc_vac_ant = 0
 
-'Almaceno el valor de las unidades, precio e importe de los dias pendientes descontados en la paga actual.
+'Almaceno el valor de las unidades, precio e importe de los días pendientes descontados en la paga actual.
     dias_vac_ant_desc = dias_desc_vac_ant
 EndIf
 
 
-'3.- Comprobamos si existe algun periodo vacacional que comience en el mes de calculo y deba ser descontado. 
+'3.- Comprobamos si existe algún periodo vacacional que comience en el mes de cálculo y deba ser descontado. 
 num_reg_vac = SAR_VACACIONES.Count()
 
-'Si no obtengo dias de Licencia por vacaciones a descontar no opero con el saldo de dias disponibles a descontar y continuo con la cantidad calculada.
+'Si no obtengo días de Licencia por vacaciones a descontar no opero con el saldo de días disponibles a descontar y continuo con la cantidad calculada.
 If num_reg_vac > 0 Then
     primerreg = 0
     ultimoreg = SAR_VACACIONES.Count() - 1
@@ -115,41 +115,41 @@ If num_reg_vac > 0 Then
         fec_ini_vac = SAR_VACACIONES.SCO_DT_START
         fec_fin_vac = SAR_VACACIONES.SCO_DT_END
         
-        'Calculo el total de dias del periodo vacacional procesado que comienza en el mes de calculo.
+        'Cálculo el total de días del periodo vacacional procesado que comienza en el mes de cálculo.
         dias_tot_vac_act = DateDiff(fec_ini_vac,fec_fin_vac,M4_DAY) + 1
     
-        'Calculo de los dias a descontar del periodo vacacional procesado que comienza en el mes de calculo.
+        'Calculo de los días a descontar del periodo vacacional procesado que comienza en el mes de cálculo.
         dias_desc_vac_act = CommonTime(fec_ini_tramo,fec_fin_tramo,fec_ini_vac,fec_fin_vac)
 
-        'Verifico si puedo actualizar el saldo de dias disponibles a descontar en el mes.
+        'Verifico si puedo actualizar el saldo de días disponibles a descontar en el mes.
         If SAR_ES_BAJA = 0 Then
             If dias_disp_desc >= dias_desc_vac_act Then
-            'Contabilizo el descuento de los dias de la paga actual.
+            'Contabilizo el descuento de los días de la paga actual.
                 dias_tot_desc_vac = dias_tot_desc_vac + dias_desc_vac_act
                 
-            'Actualizo el saldo de la variable que contiene los dias disponibles.
+            'Actualizo el saldo de la variable que contiene los días disponibles.
                 dias_disp_desc = dias_disp_desc - dias_desc_vac_act
             
-            'Actualizo el saldo de la variable que contiene los dias pendientes de descontar.
+            'Actualizo el saldo de la variable que contiene los días pendientes de descontar.
                 dias_desc_vac_ant = (dias_tot_vac_act - dias_desc_vac_act)
                 
-            'Actualizo el saldo de la variable que contiene los dias actuales a descontar.
+            'Actualizo el saldo de la variable que contiene los días actuales a descontar.
                 dias_desc_vac_act = 0
             Else
-            'Saldo el maximo numero de dias pendientes posibles, en funcion del numero de dias disponibles.
+            'Saldo el máximo número de días pendientes posibles, en función del número de días disponibles.
                 dias_tot_desc_vac = dias_tot_desc_vac + dias_disp_desc
                            
-            'Actualizo el saldo de la variable que contiene los dias pendientes de descontar.
+            'Actualizo el saldo de la variable que contiene los días pendientes de descontar.
                 dias_desc_vac_ant = dias_desc_vac_ant + (dias_desc_vac_act - dias_disp_desc) + (dias_tot_vac_act - dias_desc_vac_act)
                 
-            'Actualizo el saldo de la variable que contiene los dias disponibles. Hemos agotado el numero de dias disponibles.
+            'Actualizo el saldo de la variable que contiene los días disponibles. Hemos agotado el número de días disponibles.
                 dias_disp_desc = 0
             EndIf
         Else
-        'Si el empleado es baja en el mes no debemos limitar el tope de dias disponibles para descontar ya que no van a poder descontarse a futuro.
+        'Si el empleado es baja en el mes no debemos limitar el tope de días disponibles para descontar ya que no van a poder descontarse a futuro.
             dias_tot_desc_vac = dias_tot_desc_vac + dias_tot_vac_act
         
-        'Actualizo el valor de la variable que contiene los dias pendientes de descontar. 
+        'Actualizo el valor de la variable que contiene los días pendientes de descontar. 
             dias_desc_vac_ant = 0
         EndIf
     Next
@@ -157,7 +157,7 @@ EndIf
 
 
 '4.- Actualizo el valor de los conceptos que acumulan los datos para el descuento de vacaciones.
-SAR_EXC_DIAS_VAC      = dias_desc_vac_ant      'Total dias pendientes de descuento de pagas anteriores
-SAR_EXC_DIAS_VAC_DESC = dias_vac_ant_desc      'Total dias pendientes de descuento descontados en paga actual
+SAR_EXC_DIAS_VAC      = dias_desc_vac_ant      'Total días pendientes de descuento de pagas anteriores
+SAR_EXC_DIAS_VAC_DESC = dias_vac_ant_desc      'Total días pendientes de descuento descontados en paga actual
 
 Return(dias_tot_desc_vac)

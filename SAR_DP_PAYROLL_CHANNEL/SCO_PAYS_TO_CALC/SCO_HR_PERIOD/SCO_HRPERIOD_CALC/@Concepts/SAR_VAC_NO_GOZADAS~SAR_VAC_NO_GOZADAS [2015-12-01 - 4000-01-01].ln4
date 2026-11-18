@@ -3,7 +3,7 @@ If (SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "77" Or SAR_TP_
 EndIf
 
 
-If SAR_ES_BAJA <> 1 Or SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" Then 'Por modificacion del empleado
+If SAR_ES_BAJA <> 1 Or SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" Then 'Por modificación del empleado
     Return(0)
 EndIf
 

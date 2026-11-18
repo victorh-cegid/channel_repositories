@@ -8,7 +8,7 @@ If DxMonth(SCO_DT_PAYMENT) = 6 And (SAR_TP_IMPUT = "3" or SAR_TP_IMPUT = "4") AN
    Return(0)
 EndIf
 
-'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+'Por modificación del empleado se agregó: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
 IF ((mes = 12) OR (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") OR (SAR_TP_IMPUT = "3" AND SAR_IND_AGUINALDO = 0)) THEN
     RETURN(0)
 ENDIF

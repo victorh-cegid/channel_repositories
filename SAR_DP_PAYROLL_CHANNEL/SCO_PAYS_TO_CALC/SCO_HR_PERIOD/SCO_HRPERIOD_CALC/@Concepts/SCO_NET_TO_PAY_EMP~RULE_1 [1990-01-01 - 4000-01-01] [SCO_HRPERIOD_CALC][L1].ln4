@@ -20,7 +20,7 @@ Else
 		While I< nmPaymentData and nmValue>=0
 			SCO_PAYROLL_PAYMENT_DATA.MoveTo(I)
 			If SCO_PAYROLL_PAYMENT_DATA.SCO_EMP_CHECK="0" AND SCO_PAYROLL_PAYMENT_DATA.SCO_DT_START <= SCO_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA AND SCO_PAYROLL_PAYMENT_DATA.SCO_DT_END >= SCO_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA Then
-                  //Si el dato pago esta fuera de fechas, se anula su orden de pago
+                  //Si el dato pago está fuera de fechas, se anula su orden de pago
   
                         
 				SCO_PAYROLL_PAYMENT_DATA.SCO_VALUE()

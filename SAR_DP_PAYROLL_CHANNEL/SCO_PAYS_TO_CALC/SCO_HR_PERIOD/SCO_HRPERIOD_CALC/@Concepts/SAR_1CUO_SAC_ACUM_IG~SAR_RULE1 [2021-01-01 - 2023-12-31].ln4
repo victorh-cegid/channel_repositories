@@ -1,4 +1,4 @@
-'Importe SAC para reportes IG. Se resta importe de SAC imputado a a?os anteriores
+'Importe SAC para reportes IG. Se resta importe de SAC imputado a años anteriores
 If SAR_TP_IMPUT <> "99" And SAR_ES_BAJA = 0 And SAR_IND_AJUSTE_SAC = 0 Then Return(0) 
 'para agregar dependencias:
 a = SAR_CALC_SAC_27617
@@ -6,7 +6,7 @@ cuota_acum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_SAC_1_GRAV_MES
 cuota_act = SAR_SAC_1_GRAV_MES
 cuota_anio_ant = SAR_SAC_1_ANIO_ANT
 
-'Solo 2023 correccion de ajustes de SAC1 realizadas posteriormente a octubre que han quedado en ambos periodos fiscales, se saca del periodo desde octubre
+'Sólo 2023 corrección de ajustes de SAC1 realizadas posteriormente a octubre que han quedado en ambos periodos fiscales, se saca del periodo desde octubre
 indReliq = SAR_IND_PAGA_RELIQ
 If indReliq = 1 And DxYear(SAR_FEC_PAGO_IG) = 2023 And SCO_DT_ALLOCATION = SCO_DT_PAYMENT And DxMonth(SCO_DT_ALLOCATION) = 12 Then
     ajusteSobra = 0
@@ -21,6 +21,6 @@ If indReliq = 1 And DxYear(SAR_FEC_PAGO_IG) = 2023 And SCO_DT_ALLOCATION = SCO_D
     Next
     cuota_acum = cuota_acum - ajusteSobra
 EndIf
-'Fin solo 2023
+'Fin sólo 2023
 
 Return Round(cuota_acum + cuota_act - cuota_anio_ant,SAR_NUM_DEC)

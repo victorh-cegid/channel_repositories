@@ -1,5 +1,5 @@
-'we aren't saving this data in the year-to-date and we only need this data in presentation, so 
-'we don't need to execute this concept if we are launching the payroll in the server with 
+'we aren´t saving this data in the year-to-date and we only need this data in presentation, so 
+'we don´t need to execute this concept if we are launching the payroll in the server with 
 'job scheduler.
 
 NumRec = 0

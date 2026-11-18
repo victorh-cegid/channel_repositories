@@ -5,7 +5,7 @@ If SCO_FROM_JS = 0 then
 	Code = "Return("+GetChannelId()+"!GETPROPERTY("+CHR(DOUBLE_QUOTE)+"ID_ORGANIZATION"+CHR(DOUBLE_QUOTE)+"))"
 	Org = clcExecuteLN4JIT (Code)
 ElseIf SCO_MONO <> 0 Then
-	//Cogemos la sociedad del parametro.
+	//Cogemos la sociedad del parámetro.
 	If SCO_JS_PAYS_TO_CALC.IsEOF() <> TRUE Then
 		Org = SCO_JS_PAYS_TO_CALC.ID_ORGANIZATION
 	EndIf

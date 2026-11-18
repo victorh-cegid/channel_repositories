@@ -26,7 +26,7 @@ vBaseQuincAnterio   = 0
 
 
 If (base > 0) Then
-    'Aplicamos el minimo imponible considerando los dias trabajados si la base  > 0:
+    'Aplicamos el mínimo imponible considerando los días trabajados si la base  > 0:
     If SCO_PAY_FREQ_ALLOC = "004" Then 'Frecuencia de pago mensual
         base_min_trab = (tope_min / 30 * dias_trabajados) - SAR_BASE_COTIZ_ART_OS
         base_min_trab = base_min_trab / SAR_DIAS_NORM_COTIZ * (SAR_DIAS_NORM_COTIZ - SAR_DIAS_VACACIONES )
@@ -41,7 +41,7 @@ If (base > 0) Then
 EndIf   
 
 'Horas Extras RG3976
-'calculamos los descuentos de jubilacion por las horas extra
+'calculamos los descuentos de jubilación por las horas extra
 base_extras_trib = SAR_TOT_HS_EX_IG 
 base_extras_exen = SAR_TOT_HS_EX_EX_IG
 
@@ -53,7 +53,7 @@ valor_exen_ad = 0
 'Obra Social
 porc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
 
-'Si estamos en tope SIPA, hacemos la proporcion para hallar la parte del descuento que corresponde
+'Si estamos en tope SIPA, hacemos la proporción para hallar la parte del descuento que corresponde
 If base = tope and real <> 0 Then
     desc_tot_os = base * (porc/100)
     porc_prop_trib = base_extras_trib/real
@@ -72,7 +72,7 @@ EndIf
 'Obra Social Adicional
 porc_ad = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100) 
 If SAR_FAM_CARGO_OS > 0 Then
-    'Si estamos en tope SIPA, hacemos la proporcion para hallar la parte del descuento que corresponde
+    'Si estamos en tope SIPA, hacemos la proporción para hallar la parte del descuento que corresponde
     If base = tope and real <> 0 Then
         desc_tot_ad = base * SAR_FAM_CARGO_OS * (porc_ad/100)
         porc_prop_trib = base_extras_trib/real

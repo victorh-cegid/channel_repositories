@@ -4,7 +4,7 @@ EndIf
 
 porc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
 
-'En baja o reliquidacion retornamos la diferencia entre el descuento del pago y el que se ha ido descontando mes a mes
+'En baja o reliquidación retornamos la diferencia entre el descuento del pago y el que se ha ido descontando mes a mes
 If SAR_IND_PAGA_RELIQ = 1 OR SAR_ES_BAJA = 1 Then 
     tot_desc_sac_pago = SAR_JUR_SAC * porc / 100
     tot_desc_sac_pago = tot_desc_sac_pago * SAR_FAM_CARGO_OS_OE

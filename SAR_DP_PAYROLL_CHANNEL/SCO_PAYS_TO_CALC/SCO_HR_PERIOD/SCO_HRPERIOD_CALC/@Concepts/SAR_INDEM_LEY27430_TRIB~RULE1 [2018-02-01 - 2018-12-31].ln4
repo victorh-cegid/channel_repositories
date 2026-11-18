@@ -1,4 +1,4 @@
-'Ley 27430: Tributa. Retorna el excedente entre la indemnizacion de acuerdos consensuados 
+'Ley 27430: Tributa. Retorna el excedente entre la indemnización de acuerdos consensuados 
 '(agregados a este concepto a modo de total) y el tope (precio indemnizacion despido)
 If SAR_IND_INDEM_LEY27430 = 0 Then Return(0)
 indem = SAR_INDEM_LEY27430_TRIB

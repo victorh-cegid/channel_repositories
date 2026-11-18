@@ -1,7 +1,6 @@
-'
 ' Toma el valor de convenio
 
-'Se agrega el calculo del Coeficiente por Jornada Reducida(#675)
+'Se agrega el cálculo del Coeficiente por Jornada Reducida(#675)
 
 coef = SAR_HRROLE_CALC.SAR_COEF_JORNADA
 

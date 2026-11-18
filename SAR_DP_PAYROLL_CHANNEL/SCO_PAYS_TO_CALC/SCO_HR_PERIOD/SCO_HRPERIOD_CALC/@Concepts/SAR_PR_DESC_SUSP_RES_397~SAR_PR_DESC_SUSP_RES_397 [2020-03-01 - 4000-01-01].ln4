@@ -1,5 +1,5 @@
-'Si el concepto se informa por tabla de valor continuara tomando el importe informado, 
-'pero si no se informa nada devolvera el importe del concepto 4040 (SAR_TOT_P_COMP_EA) 
+'Si el concepto se informa por tabla de valor continuará tomando el importe informado, 
+'pero si no se informa nada devolverá el importe del concepto 4040 (SAR_TOT_P_COMP_EA) 
 importe = SAR_PR_DESC_SUSP_RES_397
 precio = 0
 dias = SAR_DIAS_SUSP_RES_397

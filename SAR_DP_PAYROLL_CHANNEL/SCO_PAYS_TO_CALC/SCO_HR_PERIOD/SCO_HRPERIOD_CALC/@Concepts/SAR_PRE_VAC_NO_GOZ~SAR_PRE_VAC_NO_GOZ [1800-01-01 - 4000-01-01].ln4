@@ -6,7 +6,7 @@ IF SAR_ES_BAJA <> 1 THEN
    RETURN(0)
 ENDIF
 
-'Por modificacion del empleado
+'Por modificación del empleado
 IF SAR_ES_BAJA <> 1 Or SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" THEN 
     Return(0)
 ENDIF

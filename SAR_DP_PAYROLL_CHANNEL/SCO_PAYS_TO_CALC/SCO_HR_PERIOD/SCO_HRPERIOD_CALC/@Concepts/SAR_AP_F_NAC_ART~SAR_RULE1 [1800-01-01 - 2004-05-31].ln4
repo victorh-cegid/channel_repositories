@@ -1,5 +1,5 @@
-'El concepto 631 (% de contribucion fondo nacional de empleo) tomara su valor de zonas dgi o de valores modalidades de 
-'contratacion para cada modalidad vigente.
+'El concepto 631 (% de contribución fondo nacional de empleo) tomará su valor de zonas dgi o de valores modalidades de 
+'contratación para cada modalidad vigente.
 
 valor = SAR_BASE_COTIZ_ART * SAR_PORC_F_EMPLEO / 100
 

@@ -2,7 +2,7 @@
 importe = 0
 If DxYear(SAR_FEC_IMPUT_IG)>2023 Then importe = SAR_IMP_GUARDERIA
 
-'Esta parte es para recuperar en 2024 retroactivas a a?os anteriores, si los hubiera, y que entren en el impuesto
+'Esta parte es para recuperar en 2024 retroactivas a años anteriores, si los hubiera, y que entren en el impuesto
 importe_guard_dic = 0
 If DxYear(SAR_FEC_IMPUT_IG) = 2024 Then
     ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()

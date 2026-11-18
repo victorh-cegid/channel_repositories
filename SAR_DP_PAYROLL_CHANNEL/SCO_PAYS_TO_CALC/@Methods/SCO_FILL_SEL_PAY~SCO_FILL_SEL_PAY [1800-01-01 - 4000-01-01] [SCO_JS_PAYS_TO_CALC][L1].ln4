@@ -1,4 +1,4 @@
-If SCO_JS_HT_PAYS.SME_IND_CLC_SDI = 1 Then     ' Calculo del SDI
+If SCO_JS_HT_PAYS.SME_IND_CLC_SDI = 1 Then     ' Cálculo del SDI
     Call("","SME_FILL_SEL_PAY_SDI")
     Return(0)
 EndIf

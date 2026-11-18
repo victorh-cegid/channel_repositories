@@ -55,7 +55,7 @@ While SCO_LN_QUOTAS_PAYROLL.IsEOF() = False
     
     If (fecha_cuota < fin_fecha_pago) or (mes_cuota = mes_fecha_pago and anyo_cuota = anyo_fecha_pago and (cuota_paga_extra = extra or (fecha_cuota > fin_fecha_pago))) Then
         '
-        'Agregado para nomina argentina. Si esta dado de baja en el mes, se le cobra todo
+        'Agregado para nómina argentina. Si está dado de baja en el mes, se le cobra todo
         '
         IF SAR_ES_BAJA = 1 THEN
             saldo = SCO_LN_QUOTAS_PAYROLL.SCO_AMT_LOAN_LEFT

@@ -1,4 +1,4 @@
-'Ley 27617 quedara exento hasta el 40% de la gni si las retribuciones del mes no superan un limite.
+'Ley 27617 quedará exento hasta el 40% de la gni si las retribuciones del mes no superan un límite.
 exenMes = 0
 similarNatPrevMesIG = 0
 similarNatPagaAct = 0
@@ -44,11 +44,11 @@ Else
 EndIf
 
 If DxYear(SAR_FEC_IMPUT_IG) < 2023 Then
-    'Similar naturaleza pagados en el a?o fiscal incluida la paga de proceso
+    'Similar naturaleza pagados en el año fiscal incluida la paga de proceso
     similarNatAnioIG = SAR_TOT_SIMILAR_NAT_27617 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_SIMILAR_NAT_27617 + SAR_IMP_SIMILAR_NAT_OE_PAGA + SAR_ACM_IG_ANIO_IMPUT[0].SAR_IMP_SIMILAR_NAT_OE_PAGA
     If esBajaReliq = 1 Then similarNatAnioIG = SAR_TOT_SIMILAR_NAT_27617 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_SIMILAR_NAT_27617 + SAR_IMP_SIMILAR_NAT_OE
 Else
-    'Similar naturaleza pagados en el a?o fiscal incluida la paga de proceso
+    'Similar naturaleza pagados en el año fiscal incluida la paga de proceso
     similarNatAnioIG = SAR_TOT_SIMILAR_NAT_27617 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_SIMILAR_NAT_27617
     If esBajaReliq = 1 Then similarNatAnioIG = SAR_TOT_SIMILAR_NAT_27617 + SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_SIMILAR_NAT_27617
 EndIf    
@@ -59,13 +59,13 @@ exenPagaAntMismoMes = SAR_ACM_MESACT_IMPIG[0].SAR_SIMILAR_NAT_EXEN_MES
 'Similar naturaleza grabados calculados en las pagas anteriores del mismo mes IG de proceso, sin incluir la paga de proceso
 grabPagaAntMismoMes = SAR_ACM_MESACT_IMPIG[0].SAR_SIMILAR_NAT_GRAV_MES
 
-'Similar naturaleza exentos calculados en el a?o fiscal sin considerar los del mes IG de proceso
+'Similar naturaleza exentos calculados en el año fiscal sin considerar los del mes IG de proceso
 exenGastadoHastaMesAnt = SAR_ACM_IG_ANIO_IMPUT[0].SAR_SIMILAR_NAT_EXEN_MES - exenPagaAntMismoMes
 
-'Similar naturaleza exentos teoricos calculados en las pagas anteriores del mismo mes IG de proceso, sin incluir la paga de proceso
+'Similar naturaleza exentos teóricos calculados en las pagas anteriores del mismo mes IG de proceso, sin incluir la paga de proceso
 exenTeorPagaAntMismoMes = SAR_ACM_MESACT_IMPIG[0].SAR_SIMILAR_NAT_EXEN_MES_TEOR
 
-'Similar naturaleza exentos teoricos calculados en el a?o fiscal sin considerar los del mes IG de proceso
+'Similar naturaleza exentos teóricos calculados en el año fiscal sin considerar los del mes IG de proceso
 exenTeorGastadoHastaMesAnt = SAR_ACM_IG_ANIO_IMPUT[0].SAR_SIMILAR_NAT_EXEN_MES_TEOR - exenTeorPagaAntMismoMes
 
 'Porcentajes para calculo de aportes
@@ -91,20 +91,20 @@ adosPagaAntMismoMesTeo = SAR_ACM_MESACT_IMPIG[0].SAR_SIMILAR_NAT_IG_ADOS_TEO
 sindPagaAntMismoMes = SAR_ACM_MESACT_IMPIG[0].SAR_SIMILAR_NAT_IG_SIND
 sindPagaAntMismoMesTeo = SAR_ACM_MESACT_IMPIG[0].SAR_SIMILAR_NAT_IG_SIND_TEO
 
-'Tope exento para aplicar en el a?o fiscal
+'Tope exento para aplicar en el año fiscal
 topeMaxExen = Percentage(40,SAR_NO_IMP_27617)
 
 If similarNatAnioIG = 0 Or (similarNatMesIG = 0 And esBajaReliq = 0) Or (SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1) Then calcula_SimilarNat_mes = 0
 
 If calcula_SimilarNat_mes = 1 Then
-    'En el calculo del mes se comprueba si esta alcanzado tomando lo menor entre el promedio y el mes
+    'En el cálculo del mes se comprueba si está alcanzado tomando lo menor entre el promedio y el mes
     If esBajaReliq = 0 Then
-        'La exencion teorica se calcula siempre, puede hacer falta para la paga de reliquidacion
+        'La exención teórica se calcula siempre, puede hacer falta para la paga de reliquidación
         disponibleExenTeor = Max(topeMaxExen - exenTeorGastadoHastaMesAnt,0)
         exenMesTeor = Min(disponibleExenTeor,similarNatMesIG) - exenTeorPagaAntMismoMes
         SAR_SIMILAR_NAT_EXEN_MES_TEOR = exenMesTeor
     
-        'Valida si el empleado esta alcanzado por la exencion
+        'Valida si el empleado está alcanzado por la exención
         retrib = SAR_PROM_27617_BONOS
         
         'En paga especial reliq. septiembre, se considera el promedio de la paga normal que origina la retroactividad
@@ -148,7 +148,7 @@ If calcula_SimilarNat_mes = 1 Then
         aporteSindTeor = Percentage(porcSind,exenTotalDelMesTeor) - sindPagaAntMismoMesTeo
         SAR_SIMILAR_NAT_IG_SIND = aporteSind
             SAR_SIMILAR_NAT_IG_SIND_TEO = aporteSindTeor            
-    'En el calculo de baja o reliquidacion solo se toma el promedio y se ajusta la situacion final
+    'En el cálculo de baja o reliquidación sólo se toma el promedio y se ajusta la situación final
     Else
         retrib = SAR_PROM_27617_BONOS
     
@@ -156,10 +156,10 @@ If calcula_SimilarNat_mes = 1 Then
         'En paga especial reliq. septiembre, se considera el promedio de la paga normal que origina la retroactividad
         If SAR_IND_PAGA_RELIQ = 1 And SCO_DT_ALLOCATION = DxDate(30,9,2023) Then retrib = SAR_PROM_BONOS_ULTIMO
 
-        'En caso de baja o paga de reliquidacion se mira la fecha de pago IG
+        'En caso de baja o paga de reliquidación se mira la fecha de pago IG
         vValor = SAR_DED_ESP_INC.SAR_RETORNA_VAL_TRAM(3,SAR_FEC_PAGO_IG,ID_CURRENCY)
     
-        'Si esta alcanzado por la exencion se toma la exencion teorica para los aportes
+        'Si está alcanzado por la exención se toma la exención teórica para los aportes
         If vValor >= retrib Then
             exenSimilarNatFinal = Min(topeMaxExen,similarNatAnioIG)
             gravSimilarNatFinal = similarNatAnioIG - exenSimilarNatFinal
@@ -187,13 +187,13 @@ If calcula_SimilarNat_mes = 1 Then
                 SAR_SIMILAR_NAT_IG_SIND_TEO = aporteSindTeor   
             EndIf
     
-            'Aportes: en baja o reliquidacion seran los teoricos, agregamos los del mes en caso de baja
+            'Aportes: en baja o reliquidación serán los teóricos, agregamos los del mes en caso de baja
             aporteJubFinal = SAR_ACM_IG_ANIO_IMPUT[0].SAR_SIMILAR_NAT_IG_JUB_TEO + aporteJubTeor
             aporteLeyFinal = SAR_ACM_IG_ANIO_IMPUT[0].SAR_SIMILAR_NAT_IG_LEY_TEO + aporteLeyTeor
             aporteOsocFinal = SAR_ACM_IG_ANIO_IMPUT[0].SAR_SIMILAR_NAT_IG_OSOC_TEO + aporteOsocTeor
             aporteAdosFinal = SAR_ACM_IG_ANIO_IMPUT[0].SAR_SIMILAR_NAT_IG_ADOS_TEO + aporteAdosTeor
             aporteSindFinal = SAR_ACM_IG_ANIO_IMPUT[0].SAR_SIMILAR_NAT_IG_SIND_TEO + aporteSindTeor
-        'Si no esta alcanzado todo Similar naturaleza sera grabado. Parte exenta y aportes quedan a 0
+        'Si no está alcanzado todo Similar naturaleza será grabado. Parte exenta y aportes quedan a 0
         Else
             gravSimilarNatFinal = similarNatAnioIG
             exenSimilarNatFinal = 0
@@ -204,7 +204,7 @@ If calcula_SimilarNat_mes = 1 Then
             aporteSindFinal = 0
         EndIf
     
-        'Graba la diferencia entre lo calculado y lo acumulado en el a?o fiscal
+        'Graba la diferencia entre lo calculado y lo acumulado en el año fiscal
         exenMes = exenSimilarNatFinal - SAR_ACM_IG_ANIO_IMPUT[0].SAR_SIMILAR_NAT_EXEN_MES
     
         gravMes = gravSimilarNatFinal - SAR_ACM_IG_ANIO_IMPUT[0].SAR_SIMILAR_NAT_GRAV_MES

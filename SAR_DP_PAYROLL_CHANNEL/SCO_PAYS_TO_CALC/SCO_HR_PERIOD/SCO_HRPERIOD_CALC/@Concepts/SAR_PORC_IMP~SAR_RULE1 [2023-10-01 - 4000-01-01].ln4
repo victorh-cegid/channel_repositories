@@ -4,8 +4,8 @@ If base < 0 And SAR_BASE_IMPUESTO > 0 Then base = 0
 fec_imp = SAR_FEC_PAGO_IG
 If SAR_IND_IMPUESTO_RETRO = 1 Or SAR_IND_D473_IMP_PER_ANT = 1 Then fec_imp = SAR_FEC_IMPUT_IG
 
-'Decreto 473/23 Segun AFIP excepcionalmente octubre y noviembre 2023 se miran tablas por devengado
-'Decreto 473/23 Segun AFIP excepcionalmente octubre y noviembre 2023 se miran tablas por devengado
+'Decreto 473/23 Según AFIP excepcionalmente octubre y noviembre 2023 se miran tablas por devengado
+'Decreto 473/23 Según AFIP excepcionalmente octubre y noviembre 2023 se miran tablas por devengado
 esBaja = 0
 If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
 If DxYear(SAR_FEC_IMPUT_IG) = 2023 And esBaja = 0 Then fec_imp = SCO_DT_ALLOCATION

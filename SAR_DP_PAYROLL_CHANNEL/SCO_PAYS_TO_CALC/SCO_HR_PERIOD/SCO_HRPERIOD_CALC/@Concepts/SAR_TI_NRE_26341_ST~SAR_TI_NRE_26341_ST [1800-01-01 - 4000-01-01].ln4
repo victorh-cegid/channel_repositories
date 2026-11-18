@@ -1,5 +1,5 @@
 'Se ingresa por valores, y debe reflejar de acuerdo a la Ley 26.341, el importe de las prestanciones comprendidas
-'en los incisos derogados del articulo 103 bis de la Ley 20.744, este concepto sera base de la distribucion de  
-'acuerdo a los porcentajes establecidos en el Decreto 198/2008. Este valor no debera ser modificado excepto
-'homolgacion de un acuerdo que incremente el mismo.
+'en los incisos derogados del artículo 103 bis de la Ley 20.744, este concepto será base de la distribución de  
+'acuerdo a los porcentajes establecidos en el Decreto 198/2008. Este valor no deberá ser modificado excepto
+'homolgación de un acuerdo que incremente el mismo.
 return(#SAR_TI_NRE_26341_ST)

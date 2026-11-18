@@ -26,7 +26,7 @@ If SAR_TIPO_SALARIO = "003" Or coef <> 1 Then
     horasPaga = SAR_CALC_HORAS_TEORICAS (FecIni,FecFin)
 
     'Si en la paga hay horas informadas, se calcula el total en base a las horas promedio informadas, 
-    'en cualquier otra situacion se toma el calendario de referencia
+    'en cualquier otra situación se toma el calendario de referencia
     If SAR_CANT_HS_TRABAJADAS > 0 Then horasPaga = 180 * SAR_HS_DIARIAS_PROM
 
     If horasTotales > 0 Then coefJornada = horasPaga / horasTotales

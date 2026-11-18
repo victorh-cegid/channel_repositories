@@ -3,7 +3,7 @@ if (SCO_AUX_AC_HRPERIOD_1.SCO_TOT_DEDUCTIONS<>0 OR SCO_AUX_AC_HRPERIOD_1.SCO_TOT
     AUX=1
 endif
 
-'Modificacion para el ajuste de horas extras ya devengadas al RG3976
+'Modificación para el ajuste de horas extras ya devengadas al RG3976
 'Se inicia la regla a 01/12/2016 para tener en cuenta empleados diferidos 
 If (SAR_HRPERIOD_CALC.SAR_IND_ADJ_EXTRAS_RG3976 = 1) Then
     AUX = 1

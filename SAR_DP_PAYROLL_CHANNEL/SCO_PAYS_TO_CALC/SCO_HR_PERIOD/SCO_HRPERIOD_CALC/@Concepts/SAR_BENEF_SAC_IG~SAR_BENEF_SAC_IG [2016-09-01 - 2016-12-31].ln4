@@ -50,31 +50,31 @@ IF SAR_IND_EXEN_IG = 1 AND SAR_IND_EXEN_IG_EMPRE = 1 THEN
 		I = I - 1
 	Wend
 
-     'Alta a partir de Julio, se calcula el beneficio integro solo una vez, el primer mes que presenta el beneficio
+     'Alta a partir de Julio, se calcula el beneficio íntegro solo una vez, el primer mes que presenta el beneficio
       IF se_aplico_antes <> 0 AND  DxMonth (SAR_FECHA_ALTA) >= 7 And DxYear(SAR_FECHA_ALTA) = 2016 Then 
            return (0)
       Endif
 	
-	'Obtenemos la base sin deduccion por SAC  
+	'Obtenemos la base sin deducción por SAC  
 	base = SAR_BASE_IMPUESTO + SAR_SAC_NETO  - SAR_DIF_TOPE_CMA_SAC_IG - SAR_DIF_TOPE_HONO_SAC_IG -SAR_DIF_TOPE_DONAC_SAC_IG
 
 	If (base < 0) Then Return(0)
 
-	'El porcentaje correspondiente a la base sin deduccion por SAC:
+	'El porcentaje correspondiente a la base sin deducción por SAC:
 	val_porc = SAR_IMPUESTO.SAR_RETORNA_PORCENTAJE(base,SAR_FEC_PAGO_IG,ID_CURRENCY)
 
-	'La cuota fija correspondiente a la base sin deduccion por SAC:    
+	'La cuota fija correspondiente a la base sin deducción por SAC:    
 	val_cuota_fija = SAR_IMPUESTO.SAR_RETORNA_CUOTA_FIJA(base,SAR_FEC_PAGO_IG,ID_CURRENCY)
 
-	'El valor en tablas correspondiente a la base sin deduccion por SAC:    
+	'El valor en tablas correspondiente a la base sin deducción por SAC:    
 	val_imp = SAR_IMPUESTO.SAR_RETORNA_VALOR(base,SAR_FEC_PAGO_IG,ID_CURRENCY)
 
-	'El valor del impuesto correspondiente a la base sin deduccion por SAC    
+	'El valor del impuesto correspondiente a la base sin deducción por SAC    
 	valor_sin_sac = val_cuota_fija + val_porc * (base - val_imp) / 100
 
 	If IsNull(valor_sin_sac) = M4_True Then valor_sin_sac = 0
 
-	'Beneficio - Devolucion IG SAC Ley 27.260, Art. 63
+	'Beneficio - Devolución IG SAC Ley 27.260, Art. 63
 	diferencia = SAR_IMPUESTO_TOTAL - valor_sin_sac
 
       'Restamos lo aplicado en meses anteriores para obtener el beneficio mensual
@@ -82,7 +82,7 @@ IF SAR_IND_EXEN_IG = 1 AND SAR_IND_EXEN_IG_EMPRE = 1 THEN
 
 ENDIF
 
-'Paga de Reliquidacion
+'Paga de Reliquidación
 If (SAR_TP_IMPUT = "99") Then
     ' Si ya se ha percibido beneficio no debe volver a percibirse en la reliquidacion IG.
     If se_aplico_antes <> 0 Then
@@ -93,7 +93,7 @@ If (SAR_TP_IMPUT = "99") Then
 EndIf
 
 'En caso de bajas retroactivas,se debe aumentar el valor recalculado con el valor de la paga original,
-'para que por comportamiento en diferencias resulte calculando el valor de la revision, que es el valor correcto en baja.    
+'para que por comportamiento en diferencias resulte calculando el valor de la revisión, que es el valor correcto en baja.    
 IF (SCO_DT_PAYMENT <> SCO_DT_ALLOCATION) AND (SAR_ES_BAJA = 1)THEN
      diferencia = diferencia + val_paga_original   
 ENDIF

@@ -1,3 +1,3 @@
 'Toma valor del retorna valor complemento
-' Corresponde a la entidad "Aportes a Sociedades de Garantia Reciproca Aportes Efectuados por los Socios Protectores de Sociedades de Garantia Reciproca"
+' Corresponde a la entidad "Aportes a Sociedades de Garantía Recíproca Aportes Efectuados por los Socios Protectores de Sociedades de Garantía Reciproca"
 Return(SAR_JUR_GTIA_RECIP)

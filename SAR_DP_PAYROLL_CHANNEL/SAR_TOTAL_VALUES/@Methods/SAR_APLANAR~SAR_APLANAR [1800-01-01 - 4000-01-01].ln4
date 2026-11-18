@@ -1,6 +1,6 @@
 'Se ha ordenado SAR_TOTAL_VALUES por ID_ITEM_USED ASC y IS_SUM ASC
 'Cuando detecta 2 veces el mismo item en el total, el primero anulado (IS_SUM=-1) y el segundo sumando (IS_SUM=1) marca ambos como descartados SAR_DESCARTADO = 1.
-'Esto permite usar la herencia para descartar items del total estandar cuando usamos el total como una lista de objetos.
+'Esto permite usar la herencia para descartar items del total estándar cuando usamos el total como una lista de objetos.
 
 contador = Count() - 1
 
@@ -33,7 +33,7 @@ For i = 0 To contador
         moveTo(i)
         SAR_DESCARTADO = 1
 
-        ' Despues de descartar un par, reiniciamos prevIndex
+        ' Después de descartar un par, reiniciamos prevIndex
         prevIndex = -1
         prevIsSum = 999
 

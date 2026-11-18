@@ -9,12 +9,12 @@ solapa = SOLAP
 BASE = 0
 fecImpuesto = DxDate(1,DxMonth(fecImpuesto),DxYear(fecImpuesto))
 
-'Comprueba a que tramo corresponde el impuesto (calculando el impuesto minimo y maximo de cada tramo y viendo en cual se encuentra el recibido como parametro), y hace la "inversa" para calcular su base
+'Comprueba a que tramo corresponde el impuesto (calculando el impuesto mínimo y máximo de cada tramo y viendo en cual se encuentra el recibido como parámetro), y hace la "inversa" para calcular su base
 For i=0 To SAR_IMPUESTO.Count()-1
     If fecImpuesto = SAR_IMPUESTO[i].SAR_DT_START And solapa = SAR_IMPUESTO[i].SAR_SOLAP Then
         impuestoMin = SAR_IMPUESTO[i].SAR_CUOTA_FIJA
         impuestoMax = (SAR_IMPUESTO[i].SAR_DT_HASTA - SAR_IMPUESTO[i].SAR_DT_DESDE)*(SAR_IMPUESTO[i].SAR_PORCENTAJE/100) + SAR_IMPUESTO[i].SAR_CUOTA_FIJA
-        'Si el impuesto que viene por argumento esta en el rango, hacemos la inversa para convertirlo en base
+        'Si el impuesto que viene por argumento está en el rango, hacemos la inversa para convertirlo en base
         If imp >= impuestoMin And imp <= impuestoMax Then
             baseConv = (imp - SAR_IMPUESTO[i].SAR_CUOTA_FIJA)/(SAR_IMPUESTO[i].SAR_PORCENTAJE/100) + SAR_IMPUESTO[i].SAR_DT_DESDE 
             BASE = Round (baseConv,SAR_NUM_DEC)

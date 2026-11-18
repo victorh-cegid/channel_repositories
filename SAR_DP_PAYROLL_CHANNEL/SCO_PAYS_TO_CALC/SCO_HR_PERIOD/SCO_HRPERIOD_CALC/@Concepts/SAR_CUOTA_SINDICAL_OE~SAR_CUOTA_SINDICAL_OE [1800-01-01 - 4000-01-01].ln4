@@ -1,4 +1,4 @@
 'Regla creada el 02/11/2011 Fernando M. Siri
 
-'toma su valor en el metodo SAR_RET_VALOR_COMPL
+'toma su valor en el método SAR_RET_VALOR_COMPL
 return(SAR_CUOTA_SINDICAL_OE)

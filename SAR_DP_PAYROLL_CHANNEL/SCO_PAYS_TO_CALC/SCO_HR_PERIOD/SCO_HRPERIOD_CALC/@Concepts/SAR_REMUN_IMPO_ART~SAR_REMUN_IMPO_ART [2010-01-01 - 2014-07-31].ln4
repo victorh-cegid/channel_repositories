@@ -27,7 +27,7 @@ base4 = 0
         
         real1= SAR_TOT_DEV_COTIZ 
         If(SAR_ASIGNACION_ESTIMULO > 0)Then 
-           real1= real1 + SAR_ASIGNACION_ESTIMULO 'Sumamos la asignacion estimulo para pasantes
+           real1= real1 + SAR_ASIGNACION_ESTIMULO 'Sumamos la asignación estimulo para pasantes
         EndIf   
         base1 = Max(real1,0)
         base1 = Min(tope1,base1)

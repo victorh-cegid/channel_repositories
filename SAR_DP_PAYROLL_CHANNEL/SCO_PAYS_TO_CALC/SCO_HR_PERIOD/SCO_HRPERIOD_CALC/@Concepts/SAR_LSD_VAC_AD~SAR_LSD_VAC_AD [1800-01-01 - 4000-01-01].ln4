@@ -1,10 +1,10 @@
 If SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "88" Then Return(0)
 
-'Este concepto es para exponer en LSD las vacaciones en modalidad plus vacacional AFIP 151000 (cotizacion conjunta)
+'Este concepto es para exponer en LSD las vacaciones en modalidad plus vacacional AFIP 151000 (cotización conjunta)
 importe = 0
 If SAR_LSD_IND_VAC_AD = 1 Then importe = SAR_LSD_TOT_VAC
 
-'Puede cambiar de adelanto vacacional a plus vacacional, solo hay que considerar la diferencia, no el importe completo
+'Puede cambiar de adelanto vacacional a plus vacacional, sólo hay que considerar la diferencia, no el importe completo
 If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then 
     importe = 0
     vacAdOrig = SCO_AC_HR_PERIOD_REV_1.SAR_LSD_VAC_AD

@@ -4,7 +4,7 @@ Begin()
 If IsEOF() = True Then
 	Return(0)
 Else
-	//Actualizo la check del lanzador que me indica si el calculo es solo para empleado erroneos o no.
+	//Actualizo la check del lanzador que me indica si el cálculo es sólo para empleado erroneos o no.
 	If IsNull(SCO_JS_HR_PERIOD.SYSSENTENCE_ERROR) = FALSE Then
 		SCO_JS_HT_PAYS.SCO_EXE_ERROR_EMP = 1
 	Else

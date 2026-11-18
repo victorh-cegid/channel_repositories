@@ -1,5 +1,5 @@
 'Este concepto lleva los aportes de sindicato OE correspondientes al SAC OE, que se va a descontar de los aportes informados de OE
-'ya que los aportes finales que deben considerarse seran los que correspondan al SAC gravado.
+'ya que los aportes finales que deben considerarse serán los que correspondan al SAC gravado.
 
 'dependencias
 a = SAR_OE_SAC_DESC_BASE

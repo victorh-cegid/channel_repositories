@@ -1,8 +1,8 @@
 /*
-Descripcion: Se crea la variable con la finalidad de ajustar los saldos que no fueron tenidos en cuenta en la paga del Junio o Diciembre
+Descripción: Se crea la variable con la finalidad de ajustar los saldos que no fueron tenidos en cuenta en la paga del Junio o Diciembre
              en la paga extra de SAC.
              El mismo ajusta el valor y recalcula el Concepto Final 3613 o 3623 de SAC
-             Solo tomara valor en Junio o Diciembre si existe un saldo pendiente de abonar, quedando el mismo registrado en dicha variable.
+             Solo tomará valor en Junio o Diciembre si existe un saldo pendiente de abonar, quedando el mismo registrado en dicha variable.
 */
 
 IntValor        = 0
@@ -51,9 +51,9 @@ If DxMonth(SCO_DT_ALLOCATION) = 6 Or DxMonth(SCO_DT_ALLOCATION) = 12 Then
             vPrSacAnt_v3605  = SAR_AJUSTE_PARA_SAC.SAR_PR_AGUINALDO 
         Endif
 
-        'Para Jornales el precio del SAC concepto 3605 se tomara de de la TI SAR_AJUSTE_PARA_SAC
+        'Para Jornales el precio del SAC concepto 3605 se tomará de de la TI SAR_AJUSTE_PARA_SAC
         
-        ' Caso1: Donde se carga la licencia por accidente despues de la paga extra de sac, de debe descontar los dias de accidente.
+        ' Caso1: Donde se carga la licencia por accidente despues de la paga extra de sac, de debe descontar los días de accidente.
         If vPrSacAnt_v3605 = SAR_PR_AGUINALDO And vDiasLicSac_v585 = 0 And SAR_TOT_D_DTO_AGUIN > 0 Then
             intValorAux = SAR_PR_AGUINALDO
         Else
@@ -67,7 +67,7 @@ If DxMonth(SCO_DT_ALLOCATION) = 6 Or DxMonth(SCO_DT_ALLOCATION) = 12 Then
                         If (vPrSacDic_v3600 > 0 or vPrSacAnt_v3605 > 0)  And (vPrSacDic_v3644 = 0 Or vPrSacDic_v3633 = 0) Then 
 
                             vTotalDic = SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) + vPrSacDic_v3600
-                            ' Usamos la mejor remuneracion de los 6 meses
+                            ' Usamos la mejor remuneración de los 6 meses
                             vMejorSalario = Max(SAR_ACM_6_MESES_SAC.SAR_M_REMUN_INDEM,vTotalDic)
                             Nuevo_v3605 = vMejorSalario / 2
 
@@ -108,7 +108,7 @@ If DxMonth(SCO_DT_ALLOCATION) = 6 Or DxMonth(SCO_DT_ALLOCATION) = 12 Then
                         If (vPrSacDic_v3600 > 0 or vPrSacAnt_v3605 > 0)  And (vPrSacDic_v3644 = 0 Or vPrSacDic_v3633 = 0) Then 
                         
                             vTotalDic = SAR_TOTAL_P_SAC..sysTotalSlices(M4_TOTAL_SUM) + vPrSacDic_v3600
-                            ' Usamos la mejor remuneracion de los 6 meses
+                            ' Usamos la mejor remuneración de los 6 meses
                             vMejorSalario = Max(SAR_ACM_6_MESES_SAC.SAR_M_REMUN_INDEM, vTotalDic)
                             Nuevo_v3605 = vMejorSalario  / 2
                             If (Nuevo_v3605 <> vPrSacAnt_v3605) Then

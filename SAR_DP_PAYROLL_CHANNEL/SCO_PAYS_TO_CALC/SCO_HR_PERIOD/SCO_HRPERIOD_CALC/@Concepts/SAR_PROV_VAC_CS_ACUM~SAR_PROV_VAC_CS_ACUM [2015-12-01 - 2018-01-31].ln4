@@ -25,7 +25,7 @@ Else
     SAR_ACM_ULT_MES.begin()
     IF  SAR_ACM_ULT_MES.count() > 0 Then        
          val_acum =  SAR_ACM_ULT_MES.SAR_PROV_VAC_CS_ACUM
-         if isnull(val_acum) = true then val_acum = 0'se reindento para mejor lectura
+         if isnull(val_acum) = true then val_acum = 0'se reindentó para mejor lectura
          val = valor_total -  SAR_ACM_ULT_MES.SAR_PROV_VAC_CS_ACUM
     Else
          val = valor_total

@@ -1,4 +1,4 @@
-//Solo se graba el historico si se ha chequeado en el lanzador que se graben los pagos y si no ha dado error el calculo
+//Sólo se graba el histórico si se ha chequeado en el lanzador que se graben los pagos y si no ha dado error el cálculo
 If SCO_HT_PAYS.SCO_GEN_PAYMENTS <> 1 or SCO_HR_PERIOD.SCO_ERROR = 1 Then
     return(0)
 EndIf

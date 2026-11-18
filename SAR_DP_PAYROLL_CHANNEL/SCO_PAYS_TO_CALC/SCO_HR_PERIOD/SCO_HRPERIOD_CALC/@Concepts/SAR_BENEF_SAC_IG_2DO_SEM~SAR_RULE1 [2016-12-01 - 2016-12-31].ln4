@@ -15,7 +15,7 @@ If (SCO_DT_PAYMENT <> SCO_DT_ALLOCATION) Then
     Next
     
 'En casos retroactivos que no sean baja, se retorna el valor de la paga original para que por comportamiento en diferencias resulte calculando 0.
-'Es decir en pagas retroactivas no se calcula el beneficio para este 2? SAC, porque ese beneficio ya se calculo en la paga original.
+'Es decir en pagas retroactivas no se calcula el beneficio para este 2º SAC, porque ese beneficio ya se calculó en la paga original.
     If SAR_ES_BAJA <> 1 Then
         Return(val_paga_original)
     EndIf
@@ -29,7 +29,7 @@ If (DxYear(SAR_FEC_PAGO_IG) <> 2016)  Then
     EndIf
 EndIf
 
-'Este concepto se calculara en la Paga Normal y nunca en la Paga Especial de Aguinaldo (Ind. Aguinaldo = 1)
+'Este concepto se calculará en la Paga Normal y nunca en la Paga Especial de Aguinaldo (Ind. Aguinaldo = 1)
 If SAR_SAC_NETO_2DO_SEM = 0 Then Return(0)
 
 'No se ejecuta en la primera quincena
@@ -37,13 +37,13 @@ If (SAR_TP_IMPUT = "3" AND SAR_ES_BAJA = 0) Then Return (0)
 
 
 
-'Calculamos el beneficio del 2? SAC a partir del total del impuesto calculado, descontando la parte exenta del mismo.  
-imp_tot_impuesto  = SAR_IMPUESTO_TOTAL          'Impuesto Total acumulado 2? SAC      
+'Calculamos el beneficio del 2º SAC a partir del total del impuesto calculado, descontando la parte exenta del mismo.  
+imp_tot_impuesto  = SAR_IMPUESTO_TOTAL          'Impuesto Total acumulado 2º SAC      
 imp_neto_exen_imp = SAR_SAC_NETO_2DO_SEM        'Ganancia Neta Exenta del Impuesto
 
 
 'Recorro el nodo de lectura para buscar, en pagas normales, el beneficio del primer SAC acumulado hasta Noviembre (mes anterior a la paga Especial
-'de SAC 2? semestre)
+'de SAC 2º semestre)
 diferencia = 0
 benef_sac_nov = 0
 
@@ -63,26 +63,26 @@ While j >= 0
 Wend
 
 '------------------------------------------------------
-'Calculo Ganancia neta sujeta impuesto (c5002) Simulada
+'Cálculo Ganancia neta sujeta impuesto (c5002) Simulada
 '------------------------------------------------------
-'Obtenemos la base sin deduccion por SAC  
+'Obtenemos la base sin deducción por SAC  
 base = SAR_BASE_IMPUESTO + SAR_SAC_NETO + SAR_SAC_NETO_2DO_SEM - SAR_DIF_TOPE_CMA_SAC_IG - SAR_DIF_TOPE_HONO_SAC_IG - SAR_DIF_TOPE_DONAC_SAC_IG
 
 If (base < 0) Then Return(0)
 
 '-----------------------------------------------------
-'Calculo Impuesto sobre las ganancias (c5008) Simulado
+'Cálculo Impuesto sobre las ganancias (c5008) Simulado
 '-----------------------------------------------------
-'El porcentaje correspondiente a la base sin deduccion por SAC:
+'El porcentaje correspondiente a la base sin deducción por SAC:
 val_porc = SAR_IMPUESTO.SAR_RETORNA_PORCENTAJE(base,SAR_FEC_PAGO_IG,ID_CURRENCY)
 
-'La cuota fija correspondiente a la base sin deduccion por SAC:    
+'La cuota fija correspondiente a la base sin deducción por SAC:    
 val_cuota_fija = SAR_IMPUESTO.SAR_RETORNA_CUOTA_FIJA(base,SAR_FEC_PAGO_IG,ID_CURRENCY)
 
-'El valor en tablas correspondiente a la base sin deduccion por SAC:    
+'El valor en tablas correspondiente a la base sin deducción por SAC:    
 val_imp = SAR_IMPUESTO.SAR_RETORNA_VALOR(base,SAR_FEC_PAGO_IG,ID_CURRENCY)
 
-'El valor del impuesto correspondiente a la base sin deduccion por SAC    
+'El valor del impuesto correspondiente a la base sin deducción por SAC    
 valor_sin_sac = val_cuota_fija + val_porc * (base - val_imp) / 100
 
 If IsNull(valor_sin_sac) = M4_TRUE Then valor_sin_sac = 0
@@ -91,7 +91,7 @@ If IsNull(valor_sin_sac) = M4_TRUE Then valor_sin_sac = 0
 diferencia = SAR_IMPUESTO_TOTAL - valor_sin_sac - SAR_ACM_BENEF_SAC_IG - SAR_BENEF_FINAL
 
 'En caso de bajas retroactivas, se debe aumentar el valor recalculado con el valor de la paga original, para que por comportamiento en diferencias 
-'resulte calculando el valor de la revision, que es el valor correcto en baja.    
+'resulte calculando el valor de la revisión, que es el valor correcto en baja.    
 If (SCO_DT_PAYMENT <> SCO_DT_ALLOCATION) AND (SAR_ES_BAJA = 1) Then
      diferencia = diferencia + val_paga_original   
 EndIf

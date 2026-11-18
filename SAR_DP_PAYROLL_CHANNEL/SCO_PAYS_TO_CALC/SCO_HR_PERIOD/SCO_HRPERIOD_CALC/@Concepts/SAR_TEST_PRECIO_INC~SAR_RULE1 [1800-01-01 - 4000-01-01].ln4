@@ -1,0 +1,10 @@
+'Dependencias
+a = SAR_IMPORTE_LICENCIAS
+
+incidenciaCliente = "444"
+incidenciaClonar = "5"
+precioInc = 0
+
+SAR_AUS_CALC_PRECIOS(incidenciaCliente,incidenciaClonar,precioInc)
+
+Return(precioInc)

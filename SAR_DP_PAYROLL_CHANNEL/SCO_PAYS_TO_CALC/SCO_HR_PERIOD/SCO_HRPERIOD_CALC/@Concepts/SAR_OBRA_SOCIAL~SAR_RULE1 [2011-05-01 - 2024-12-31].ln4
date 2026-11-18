@@ -16,13 +16,13 @@ If SCO_PAY_FREQ_ALLOC <> "004" Then
         vBaseQuincAnt = SAR_ACM_ACT_CONTRIB.SAR_TOT_DEV_COTIZ
         vBaseQuincAnt = vBaseQuincAnt + SAR_ACM_ACT_CONTRIB.SAR_PREST_SUSP_RES_397
         
-        ' Si toma valor Rem Impo O.S. realizo el calculo
+        ' Si toma valor Rem Impo O.S. realizo el cálculo
         IF SAR_REMUN_IMPO_OS > 0 Then                    
             If vBaseQuincAnt > 0 Then
                 base = base + vBaseQuincAnt
             EndIf
             
-            ' Busco el valor de la contribucon de la 1Quincena
+            ' Busco el valor de la contribucón de la 1Quincena
             vOS = SAR_ACM_ACT_CONTRIB.SAR_OBRA_SOCIAL   
 
             If IsNull(vOS) = M4_False Then

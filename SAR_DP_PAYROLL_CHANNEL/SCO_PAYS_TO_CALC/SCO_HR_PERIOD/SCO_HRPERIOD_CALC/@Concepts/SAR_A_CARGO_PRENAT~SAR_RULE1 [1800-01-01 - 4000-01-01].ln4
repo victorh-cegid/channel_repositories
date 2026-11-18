@@ -1,6 +1,6 @@
 '
-'con la linea #716 = 0 se controla si le corresponde cobrar o no asignacion
-'por hijo, en el caso de que el valor sea 0 el concepto valdra 0 y de esta forma se grabara en el acumulado
+'con la línea #716 = 0 se controla si le corresponde cobrar o no asignacion
+'por hijo, en el caso de que el valor sea 0 el concepto valdrá 0 y de esta forma se grabará en el acumulado
 'la cantidad correcta de prenatales abonados.
 '
 

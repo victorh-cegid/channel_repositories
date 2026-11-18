@@ -1,4 +1,4 @@
-'Se limita para paga normal, primera y segunda quincena. Si se requiere que se genere en otra paga debe cambiarse la condicion
+'Se limita para paga normal, primera y segunda quincena. Si se requiere que se genere en otra paga debe cambiarse la condición
 If SAR_TP_IMPUT <> "1" And SAR_TP_IMPUT <> "3" And SAR_TP_IMPUT <> "4" Then Return(0)
 valor = SAR_ASIG_NO_REMUN * SAR_COEF_JORNADA_PER
 Return Round(valor,SAR_NUM_DEC)

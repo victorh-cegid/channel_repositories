@@ -1,2 +1,2 @@
 desp = SAR_DED_ESPECIAL..SYSTOTALSLICES(TOTAL_SUM)
-Return(desp)
+Return (Round(desp,SAR_NUM_DEC))

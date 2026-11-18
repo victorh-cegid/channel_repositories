@@ -26,7 +26,7 @@ vBaseQuincAnterio   = 0
 
 
 If (base > 0) Then
-    'Aplicamos el minimo imponible considerando los dias trabajados si la base  > 0:
+    'Aplicamos el mínimo imponible considerando los días trabajados si la base  > 0:
     If SCO_PAY_FREQ_ALLOC = "004" Then 'Frecuencia de pago mensual
         base_min_trab = (tope_min / 30 * dias_trabajados) - SAR_BASE_COTIZ_ART_OS
         base_min_trab = base_min_trab / SAR_DIAS_NORM_COTIZ * (SAR_DIAS_NORM_COTIZ - SAR_DIAS_VACACIONES )

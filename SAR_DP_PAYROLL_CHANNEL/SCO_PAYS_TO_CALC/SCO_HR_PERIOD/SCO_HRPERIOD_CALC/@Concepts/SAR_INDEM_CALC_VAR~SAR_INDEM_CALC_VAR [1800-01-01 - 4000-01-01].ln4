@@ -1,45 +1,45 @@
-'Este concepto recibe 4 parametros de entrada:
+'Este concepto recibe 4 parámetros de entrada:
 '
 'ID_CONCEPTO:
 '    Identificador del concepto cuyo importe se obtiene de la tabla SCO_AC_HR_PERIOD_READ_1.
-'    Cuando INC_MES_BAJA = 1, tambien puede obtenerse de la propia paga de proceso
-'    (SCO_HRPERIOD_CALC), ya que dicho importe debe integrarse en el calculo.
+'    Cuando INC_MES_BAJA = 1, también puede obtenerse de la propia paga de proceso
+'    (SCO_HRPERIOD_CALC), ya que dicho importe debe integrarse en el cálculo.
 '
 'PERIODO_COMPLETO:
-'    Numero de meses que definen el periodo completo a evaluar.
-'    - Si INC_MES_BAJA = 0: se cuentan meses hacia atras desde la fecha de imputacion
+'    Número de meses que definen el periodo completo a evaluar.
+'    - Si INC_MES_BAJA = 0: se cuentan meses hacia atrás desde la fecha de imputación
 '      SCO_DT_ALLOCATION, sin incluir el mes de la baja.
-'      Ejemplo: PERIODO_COMPLETO = 12 y fecha imputacion 26/06/2026 --> periodo desde
+'      Ejemplo: PERIODO_COMPLETO = 12 y fecha imputación 26/06/2026 --> periodo desde
 '      01/06/2025 hasta 31/05/2026.
 '
 '    - Si INC_MES_BAJA = 1: el periodo se desplaza para incluir el mes de la baja,
-'      manteniendo el mismo numero de meses.
-'      Ejemplo: PERIODO_COMPLETO = 12 y fecha imputacion 26/06/2026 --> periodo desde
+'      manteniendo el mismo número de meses.
+'      Ejemplo: PERIODO_COMPLETO = 12 y fecha imputación 26/06/2026 --> periodo desde
 '      01/07/2025 hasta 30/06/2026.
 '
-'    Este valor tambien se utiliza como divisor para calcular el promedio del periodo completo,
-'    independientemente del numero de meses con registros.
+'    Este valor también se utiliza como divisor para calcular el promedio del periodo completo,
+'    independientemente del número de meses con registros.
 '
 'PERIODO_MITAD:
-'    Numero de meses que definen el periodo reducido (o periodo mitad).
-'    - Si INC_MES_BAJA = 0: se cuentan meses hacia atras desde la fecha de imputacion,
+'    Número de meses que definen el periodo reducido (o periodo mitad).
+'    - Si INC_MES_BAJA = 0: se cuentan meses hacia atrás desde la fecha de imputación,
 '      sin incluir el mes de la baja.
-'      Ejemplo: PERIODO_MITAD = 6 y fecha imputacion 26/06/2026 --> periodo desde
+'      Ejemplo: PERIODO_MITAD = 6 y fecha imputación 26/06/2026 --> periodo desde
 '      01/12/2025 hasta 31/05/2026.
 '
 '    - Si INC_MES_BAJA = 1: el periodo se desplaza para incluir el mes de la baja.
 '      Ejemplo: PERIODO_MITAD = 6 --> periodo desde 01/01/2026 hasta 30/06/2026.
 '
-'    Este valor tambien se utiliza como divisor para calcular el promedio del periodo mitad.
+'    Este valor también se utiliza como divisor para calcular el promedio del periodo mitad.
 '
 'INC_MES_BAJA:
-'    Indicador (0/1) que determina si el mes de la baja debe incluirse en el calculo.
+'    Indicador (0/1) que determina si el mes de la baja debe incluirse en el cálculo.
 '    - Si INC_MES_BAJA = 0: se ignora la paga de proceso y no se incluye el mes de la baja.
 '    - Si INC_MES_BAJA = 1: se integra el importe del concepto en la paga de proceso,
-'      fusionandolo con cualquier otra paga del mismo mes existente en el READ.
+'      fusionándolo con cualquier otra paga del mismo mes existente en el READ.
 '
 '
-'El concepto devuelve dos parametros de salida:
+'El concepto devuelve dos parámetros de salida:
 '
 'PROMCOMPLETO:
 '    Promedio del concepto evaluado dentro del periodo completo.
@@ -48,39 +48,39 @@
 '    Promedio del concepto evaluado dentro del periodo mitad.
 '
 '
-'Condicion para devolver valores:
+'Condición para devolver valores:
 '    Para que PROMCOMPLETO y PROMCORTO tomen valor distinto de cero, debe existir importe
-'    del concepto (ID_CONCEPTO) en un numero de meses igual o superior al definido en PERIODO_MITAD.
+'    del concepto (ID_CONCEPTO) en un número de meses igual o superior al definido en PERIODO_MITAD.
 '
 '
-'Consideracion importante:
+'Consideración importante:
 '    Un mismo mes puede contener varias pagas o retroactivos imputados desde pagas posteriores.
-'    Para determinar si un mes debe considerarse, se agrupan todas las fechas de imputacion
-'    SCO_DT_ALLOCATION del mismo mes y a?o, se suman los importes del concepto, y si la suma
+'    Para determinar si un mes debe considerarse, se agrupan todas las fechas de imputación
+'    SCO_DT_ALLOCATION del mismo mes y año, se suman los importes del concepto, y si la suma
 '    resultante es distinta de cero, ese mes se contabiliza.
 '
 '    Cuando INC_MES_BAJA = 1:
 '       - El mes de la baja se trata igual que cualquier mes del READ.
 '       - Si existen pagas del READ en ese mes, se fusionan con la paga de proceso.
-'       - Si no existen, se crea un mes ?virtual? para aplicar la misma logica.
+'       - Si no existen, se crea un mes “virtual” para aplicar la misma lógica.
 '
 '
 '---------------------------------------------------------
-' INICIALIZACION DE PARAMETROS Y VARIABLES PRINCIPALES
+' INICIALIZACIÓN DE PARÁMETROS Y VARIABLES PRINCIPALES
 '---------------------------------------------------------
 idConcepto = ID_CONCEPTO : mesAtrasCompleto = PERIODO_COMPLETO : mesAtrasMitad = PERIODO_MITAD
 PROMCOMPLETO = 0 : PROMCORTO = 0 : incMesBaja = INC_MES_BAJA : valorMesBaja = 0
 
-'Mes y a?o de la paga de proceso (mes de la baja)
+'Mes y año de la paga de proceso (mes de la baja)
 mesBaja = DxMonth(SCO_DT_ALLOCATION)
 anyoBaja = DxYear(SCO_DT_ALLOCATION)
 
 'Importe del concepto en la paga de proceso
 If incMesBaja = 1 Then valorMesBaja = GetValue("SCO_HRPERIOD_CALC", idConcepto, -1)
 
-'Fechas de inicio y fin segun inclusion del mes de la baja
+'Fechas de inicio y fin según inclusion del mes de la baja
 If incMesBaja = 0 Then
-    'Logica original: no se incluye el mes de la baja
+    'Lógica original: no se incluye el mes de la baja
     fecIni = AddMonths(SCO_DT_ALLOCATION, -mesAtrasCompleto)
     fecIni = DxDate(1, DxMonth(fecIni), DxYear(fecIni))
 
@@ -90,14 +90,14 @@ If incMesBaja = 0 Then
     fecFin = AddMonths(SCO_DT_ALLOCATION, -1)
     fecFin = DxDate(DaysOfMonth(fecFin), DxMonth(fecFin), DxYear(fecFin))
 Else
-    'Nueva logica: incluir el mes de la baja desplazando el periodo
+    'Nueva lógica: incluir el mes de la baja desplazando el periodo
     fecIni = AddMonths(SCO_DT_ALLOCATION, -(mesAtrasCompleto - 1))
     fecIni = DxDate(1, DxMonth(fecIni), DxYear(fecIni))
 
     fecCorte = AddMonths(SCO_DT_ALLOCATION, -(mesAtrasMitad - 1))
     fecCorte = DxDate(1, DxMonth(fecCorte), DxYear(fecCorte))
 
-    'El fin del periodo es el ultimo dia del mes de la baja
+    'El fin del periodo es el último día del mes de la baja
     fecFin = DxDate(DaysOfMonth(SCO_DT_ALLOCATION), DxMonth(SCO_DT_ALLOCATION), DxYear(SCO_DT_ALLOCATION))
 EndIf
 
@@ -107,7 +107,7 @@ valorLargo = 0 : valorCorto = 0
 'Variables para agrupar por mes
 mesActual = -1 : anyoActual = -1 : sumaMes = 0 : contadorMeses = 0
 
-'Indicador para saber si el mes de la baja aparecio en el READ
+'Indicador para saber si el mes de la baja apareció en el READ
 mesBajaProcesado = 0
 
 ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
@@ -118,12 +118,12 @@ For acum = 0 To ult_reg - 1
     fecImp = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION
     payType = SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT
 
-    'Filtrado por fechas de pago e imputacion dentro del periodo definido
+    'Filtrado por fechas de pago e imputación dentro del periodo definido
     If fecPay <= SCO_DT_PAYMENT And fecPay >= fecIni And fecImp <= fecFin And fecImp >= fecIni And fecImp <> SCO_DT_ALLOCATION And payType <> "99" And payType <> "88" Then
 
         valorRegistro = GetValue("SCO_AC_HR_PERIOD_READ_1", idConcepto, acum)
 
-        'Detectar cambio de mes para aplicar la logica de agrupacion
+        'Detectar cambio de mes para aplicar la lógica de agrupación
         If DxMonth(fecImp) <> mesActual Or DxYear(fecImp) <> anyoActual Then
 
             'Cerrar mes anterior si su suma es distinta de cero
@@ -160,10 +160,10 @@ For acum = 0 To ult_reg - 1
     EndIf
 Next
 
-'El mes de la baja no se encontro en la READ (no habia otras pagas del mismo mes alloc)
+'El mes de la baja no se encontró en la READ (no habia otras pagas del mismo mes alloc)
 If incMesBaja = 1 And mesBajaProcesado = 0 Then
 
-    'Cerrar el ultimo mes procesado si corresponde
+    'Cerrar el último mes procesado si corresponde
     If sumaMes <> 0 Then contadorMeses = contadorMeses + 1
 
     'Crear mes virtual para el mes de la baja
@@ -175,10 +175,10 @@ If incMesBaja = 1 And mesBajaProcesado = 0 Then
     If SCO_DT_ALLOCATION >= fecCorte Then valorCorto = valorCorto + valorMesBaja
 EndIf
 
-'Cierre del ultimo mes procesado
+'Cierre del último mes procesado
 If sumaMes <> 0 Then contadorMeses = contadorMeses + 1
 
-'Aplicar condicion de meses minimos
+'Aplicar condición de meses mínimos
 If contadorMeses >= mesAtrasMitad Then
     If mesAtrasCompleto <> 0 Then PROMCOMPLETO = valorLargo / mesAtrasCompleto
     If mesAtrasMitad <> 0 Then PROMCORTO = valorCorto / mesAtrasMitad

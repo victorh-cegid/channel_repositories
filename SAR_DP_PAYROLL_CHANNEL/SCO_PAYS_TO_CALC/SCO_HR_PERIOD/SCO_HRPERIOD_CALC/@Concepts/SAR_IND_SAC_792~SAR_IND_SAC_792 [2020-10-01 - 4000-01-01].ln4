@@ -1,4 +1,4 @@
-'Si este indicador se encuentra activo y el empleado todo el mes en dec 792 se anulan contribuciones jubilacion.
+'Si este indicador se encuentra activo y el empleado todo el mes en dec 792 se anulan contribuciones jubilación.
 indicador = SAR_IND_SAC_792
 inc = SAR_INC_MES_COMPLETO("23")
 If indicador = 1 And inc = 1 Then

@@ -1,5 +1,5 @@
-'Antes de realizar cualquier calculo del impuesto verificamos que la modificacion se realizo a fin del mes
-'de la paga para de esta forma dejar el calculo al nuevo periodo.
+'Antes de realizar cualquier calculo del impuesto verificamos que la modificación se realizó a fin del mes
+'de la paga para de esta forma dejar el calculo al nuevo período.
 
 'En casos retroactivos que no sean baja, se retorna el valor de la paga original para que por comportamiento en diferencias resulte calculando 0.
 'Es decir en pagas retroactivas no se calcula el 5011.

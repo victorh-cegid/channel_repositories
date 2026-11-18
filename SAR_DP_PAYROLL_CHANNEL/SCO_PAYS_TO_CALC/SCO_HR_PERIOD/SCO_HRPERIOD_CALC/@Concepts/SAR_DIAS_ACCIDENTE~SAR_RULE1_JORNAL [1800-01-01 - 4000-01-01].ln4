@@ -4,10 +4,10 @@ IF (tope = 0) or (SAR_IND_ACCIDENTE = 0) THEN
     Return(0)
 ENDIF
 
-'inicializacion de variables
+'inicialización de variables
 quedan = tope   'dias de empresa que quedan
-totdemp = 0     'total dias de empresa	
-totdart = 0     'total dias ART
+totdemp = 0     'total días de empresa	
+totdart = 0     'total días ART
 totdart_ag = 0
 demp = 0        'dias de empresa
 dart = 0        'dias ART
@@ -48,8 +48,8 @@ WHILE SAR_ACCID_ACT.ISEOF() = FALSE
     IF ordact <> ordant THEN
         dias_rec_ant = 0
         total_dias_rec_ant = 0
-	  Ini_calc_horas = Max(fec_ini, fec_ini_pag)	      'Fecha de inicio para el calculo de horas en la paga 
-        Fin_calc_horas = Min(fec_fin, fec_fin_pag)	      'Fecha de fin para el calculo de horas en la paga
+	  Ini_calc_horas = Max(fec_ini, fec_ini_pag)	      'Fecha de inicio para el cálculo de horas en la paga 
+        Fin_calc_horas = Min(fec_fin, fec_fin_pag)	      'Fecha de fin para el cálculo de horas en la paga
         dias_acc_pag = Fin_calc_horas - Ini_calc_horas + 1	'dias del accidente en la paga
         dias_acc_ant = COMMONTIME(fec_ini,fec_fin, fec_ini,(SAR_ACCID_ACT.SAR_DT_ALLOC_START - 1))	'dias del accidente anteriores que vienen arrastrados
     
@@ -68,7 +68,7 @@ WHILE SAR_ACCID_ACT.ISEOF() = FALSE
         quedan = quedan - total_dias_rec_ant
     ENDIF
 
-    IF quedan > 0 THEN                 'todavia quedan dias para la empresa
+    IF quedan > 0 THEN                 'todavía quedan dias para la empresa
         IF quedan < dias_acc_pag THEN
             demp = demp + quedan
 		fin_demp = Ini_calc_horas + quedan - 1
@@ -126,7 +126,7 @@ WEND
 
 
 SAR_DIAS_ART = tothart
-'Asignacion de los dias a los concepto de dias
+'Asignación de los días a los concepto de días
 SAR_D_ACC_ART_H = totdart
 SAR_D_ACCIDENTE_H = totdemp
 

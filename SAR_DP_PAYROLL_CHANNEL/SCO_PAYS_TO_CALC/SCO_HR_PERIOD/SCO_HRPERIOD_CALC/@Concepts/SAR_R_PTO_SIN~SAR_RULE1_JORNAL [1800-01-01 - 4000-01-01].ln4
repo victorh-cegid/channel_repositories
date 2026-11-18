@@ -6,20 +6,20 @@ IF SAR_TP_IMPUT = "99" THEN
 ENDIF
 
 id_Incidencia = "32" 'Reserva de puesto por actividad sindical
-horas = 0 		   'Inicializacion de las horas totales de Reserva de puesto por actividad sindical
-horas_teor_abs = 0   'Inicializacion de las horas teoricas de cada registro de Reserva de puesto por actividad sindical
-dias_abs_tot = 0     'dias totales del ausentismo 
+horas = 0 		   'Inicialización de las horas totales de Reserva de puesto por actividad sindical
+horas_teor_abs = 0   'Inicialización de las horas teóricas de cada registro de Reserva de puesto por actividad sindical
+dias_abs_tot = 0     'días totales del ausentismo 
 
 'Tramos
 INICIO_TRAMO = SAR_TOT_P_COMP_EA_AUX..SysStartDate
 FIN_TRAMO = SAR_TOT_P_COMP_EA_AUX..SysEndDate
 
-'Cargamos el nodo de incidencias del periodo, en caso de que no este ya cargado.
+'Cargamos el nodo de incidencias del periodo, en caso de que no esté ya cargado.
 IF SAR_REAL_TIME_PERIOD.COUNT()= 0 THEN
     SAR_REAL_TIME_PERIOD.LOAD_BLK()
 ENDIF
 
-'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de Reserva de puesto por actividad sindical
+'Añadimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de Reserva de puesto por actividad sindical
 sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
 SAR_REAL_TIME_PERIOD.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", id_Incidencia)
 
@@ -29,8 +29,8 @@ WHILE SAR_REAL_TIME_PERIOD.ISEOF() = FALSE
         	
     fec_ini_abs = SAR_REAL_TIME_PERIOD.SCO_DT_START 	' fecha de inicio del ausentismo
     fec_fin_abs = SAR_REAL_TIME_PERIOD.SCO_DT_END	' fecha de fin del ausentismo
-    t_unid = SAR_REAL_TIME_PERIOD.SCO_ID_TIME_UNIT 	' tipo de unidades del ausentismo, Horas o Dias
-    unid = SAR_REAL_TIME_PERIOD.SCO_UNITS 		' numero de unidades del ausentismo
+    t_unid = SAR_REAL_TIME_PERIOD.SCO_ID_TIME_UNIT 	' tipo de unidades del ausentismo, Horas o Días
+    unid = SAR_REAL_TIME_PERIOD.SCO_UNITS 		' número de unidades del ausentismo
     
     IF commontime(INICIO_TRAMO,FIN_TRAMO,fec_ini_abs,fec_fin_abs) > 0 THEN		
         IF fec_fin_abs > FIN_TRAMO then
@@ -40,15 +40,15 @@ WHILE SAR_REAL_TIME_PERIOD.ISEOF() = FALSE
             fec_ini_abs = INICIO_TRAMO
         ENDIF
 		
-	  IF SCO_NUM_HOURS_THEO > 0 THEN 'tiene asignado un modelo teorico
-		horas_teor_abs = SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs) 'las horas se calculan en funcion del tiempo teorico
+	  IF SCO_NUM_HOURS_THEO > 0 THEN 'tiene asignado un modelo teórico
+		horas_teor_abs = SAR_CALC_HORAS_TEORICAS(fec_ini_abs,fec_fin_abs) 'las horas se calculan en función del tiempo teórico
 		IF t_unid = "05" THEN 'Horas
-			horas = horas + Min(unid, horas_teor_abs) 'si las horas informadas superan el numero de horas de tiempo teorico de la jornada, nos quedamos con las teoricas. 
-		ELSE 'Dias
+			horas = horas + Min(unid, horas_teor_abs) 'si las horas informadas superan el número de horas de tiempo teórico de la jornada, nos quedamos con las teóricas. 
+		ELSE 'Días
 			horas = horas + horas_teor_abs
-                  'Calculo de los dias del ausentismo
-                  dias_abs = fec_fin_abs - fec_ini_abs + 1 'dias del ausentismo en el tramo
-                  dias_abs_tot = dias_abs_tot + dias_abs   'dias totales del ausentismo
+                  'Cálculo de los días del ausentismo
+                  dias_abs = fec_fin_abs - fec_ini_abs + 1 'días del ausentismo en el tramo
+                  dias_abs_tot = dias_abs_tot + dias_abs   'días totales del ausentismo
 		ENDIF
 	  ENDIF	
     ENDIF    
@@ -58,7 +58,7 @@ WEND
 'Se elimina el filtro RAM aplicado al nodo
 SAR_REAL_TIME_PERIOD.REMOVEFILTER()
 
-'Asignacion de los dias totales del ausentismo al concepto
+'Asignación de los días totales del ausentismo al concepto
 SAR_D_R_PTO_SIN_H = dias_abs_tot
 
 'Return las horas de Reserva de puesto por actividad sindical

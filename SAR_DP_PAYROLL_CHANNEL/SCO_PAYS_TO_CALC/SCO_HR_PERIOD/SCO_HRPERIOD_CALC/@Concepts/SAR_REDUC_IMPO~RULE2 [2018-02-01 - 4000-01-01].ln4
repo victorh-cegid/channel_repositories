@@ -1,5 +1,5 @@
 importe = SAR_REDUC_IMPO
-'Para SAC el coeficiente se calculara por el semestre
+'Para SAC el coeficiente se calculará por el semestre
 SAR_REDUC_IMPO_SAC = importe
 coef = SAR_COEF_JORNADA_PER
 coefJornales = 1
@@ -9,7 +9,7 @@ If SAR_TIPO_SALARIO = "003" Then
     coefJornales = 0
     horasPaga = 0
     horasTotales = SAR_HORAS_MES
-    'Si en la paga hay horas informadas, hace precio diario, en cualquier otra situacion, se usara el modelo de semana.
+    'Si en la paga hay horas informadas, hace precio diario, en cualquier otra situación, se usará el modelo de semana.
     If SAR_CANT_HS_TRABAJADAS > 0 THEN
         precio_hora = importe / horasTotales
         Return(precio_hora)

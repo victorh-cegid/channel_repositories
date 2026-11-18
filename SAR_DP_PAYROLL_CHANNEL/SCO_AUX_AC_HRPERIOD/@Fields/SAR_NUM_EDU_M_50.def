@@ -1,5 +1,5 @@
 item: SAR_NUM_EDU_M_50
-name: Cantidad de hijos entre 18 y 24 a?os al 50%
+name: Cantidad de hijos entre 18 y 24 años al 50%
 column_name: SAR_NUM_EDU_M_50
 item_type: FIELD
 type: NUMBER
@@ -11,3 +11,12 @@ default_value: "0"
 internal_type: 1
 item_aux: null
 id_cstype: null
+totalize_type: 4
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: 2
+variable_arguments: 0
+item_aux_prorat: null
+dimension: null
+conv_function: 1

@@ -1,5 +1,5 @@
 '
-'Retorna 1 si la baja se efectuo en el periodo de imputacion
+'Retorna 1 si la baja se efectuó en el período de imputación
 '
 IF SCO_HR_PERIOD.SCO_DT_ALLOC_START <= SCO_HR_PERIOD.STD_DT_END AND SCO_HR_PERIOD.STD_DT_END <= SCO_HR_PERIOD.SCO_DT_ALLOC_END THEN
     ESBAJA = 1

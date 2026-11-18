@@ -5,7 +5,7 @@ PAR_FECHA_IG = ARG_FECHA_IG
 ind = ARG_IND_IG
 
 '---------------------------------------------------------------------------
-'Modificacion ante la circular 1/2011 de al AFIP respecto a la RES 3008.
+'Modificación ante la circular 1/2011 de al AFIP respecto a la RES 3008.
 '---------------------------------------------------------------------------
 anio_ig = DxYear(PAR_FECHA_IG)
 

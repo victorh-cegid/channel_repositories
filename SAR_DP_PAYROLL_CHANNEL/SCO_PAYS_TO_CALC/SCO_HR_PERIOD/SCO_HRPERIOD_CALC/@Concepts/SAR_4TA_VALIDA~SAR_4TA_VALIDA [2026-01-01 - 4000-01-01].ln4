@@ -8,9 +8,9 @@ resultado = " "
 
 totRemGravValida = 0
 
-'Abonadas por el agente de retencion:
+'Abonadas por el agente de retención:
 
-'Remuneracion bruta #5560 - SAR_REM_BRUTA_4CATEG
+'Remuneración bruta #5560 - SAR_REM_BRUTA_4CATEG
 importe = SAR_REM_BRUTA_4CATEG
 idConcepto = "SAR_REM_BRUTA_4CATEG"
 'Control de negativos
@@ -50,7 +50,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemGravValida = totRemGravValida + importe
 
-'Ajustes de Periodos Anteriores sobre Remuneraciones Gravadas #6564 - SAR_PER_ANT_GRAV
+'Ajustes de Períodos Anteriores sobre Remuneraciones Gravadas #6564 - SAR_PER_ANT_GRAV
 importe = SAR_PER_ANT_GRAV
 idConcepto = "SAR_PER_ANT_GRAV"
 'Control de negativos
@@ -62,7 +62,7 @@ totRemGravValida = totRemGravValida + importe
 
 'Otros empleos:
 
-'Otros Empleos - Remuneracion Bruta #5567 - SAR_REM_OE_4CATEG
+'Otros Empleos - Remuneración Bruta #5567 - SAR_REM_OE_4CATEG
 importe = SAR_REM_OE_4CATEG
 idConcepto = "SAR_REM_OE_4CATEG"
 'Control de negativos
@@ -102,7 +102,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemGravValida = totRemGravValida + importe
 
-'Otros Empleos - Ajustes de Periodos Anteriores sobre Remuneraciones Gravadas #6943 - SAR_PER_ANT_GRAV_OE
+'Otros Empleos - Ajustes de Períodos Anteriores sobre Remuneraciones Gravadas #6943 - SAR_PER_ANT_GRAV_OE
 importe = SAR_PER_ANT_GRAV_OE
 idConcepto = "SAR_PER_ANT_GRAV_OE"
 'Control de negativos
@@ -112,7 +112,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemGravValida = totRemGravValida + importe
 
-'TOTAL REMUNERACION GRAVADA #5062 - SAR_IG_TOT_C_IM
+'TOTAL REMUNERACIÓN GRAVADA #5062 - SAR_IG_TOT_C_IM
 importe = SAR_IG_TOT_C_IM
 idConcepto = "SAR_IG_TOT_C_IM"
 'Control de negativos
@@ -128,7 +128,7 @@ If totRemGravValida <> importe Then resultado = resultado + "/" + idConcepto + "
 
 totRemExenValida = 0
 
-'Abonadas por el agente de retencion:
+'Abonadas por el agente de retención:
 
 'Asignaciones Familiares #5664 - SAR_TOT_ASIG_FAM_ACM
 importe = SAR_TOT_ASIG_FAM_ACM
@@ -140,7 +140,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemExenValida = totRemExenValida + importe
 
-'Intereses por prestamos al empleador / Remuneracion Judiciales #5667 - SAR_4TA_PREST_JUD
+'Intereses por préstamos al empleador / Remuneración Judiciales #5667 - SAR_4TA_PREST_JUD
 importe = SAR_4TA_PREST_JUD
 idConcepto = "SAR_4TA_PREST_JUD"
 'Control de negativos
@@ -160,7 +160,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemExenValida = totRemExenValida + importe
 
-'Remuneraciones bajo el Art. 1? de la Ley N? 19.640 "Territorio Nacional de Tierra del Fuego A.I.A.S." #5703 - SAR_TFUEG_REM_IMP_ACM
+'Remuneraciones bajo el Art. 1° de la Ley N° 19.640 "Territorio Nacional de Tierra del Fuego A.I.A.S." #5703 - SAR_TFUEG_REM_IMP_ACM
 importe = SAR_TFUEG_REM_IMP_ACM
 idConcepto = "SAR_TFUEG_REM_IMP_ACM"
 'Control de negativos
@@ -170,7 +170,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemExenValida = totRemExenValida + importe
 
-'Remuneraciones bajo el CCT 396/2204 "Petroleros Personal de Pozo" - Art. 1? Ley N? 26.176 #5669 - SAR_4TA_PETRO
+'Remuneraciones bajo el CCT 396/2204 "Petroleros Personal de Pozo" - Art. 1° Ley N° 26.176 #5669 - SAR_4TA_PETRO
 importe = SAR_4TA_PETRO
 idConcepto = "SAR_4TA_PETRO"
 'Control de negativos
@@ -200,7 +200,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemExenValida = totRemExenValida + importe
 
-'Ajustes de Periodos Anteriores sobre Remuneraciones Exentas o No Alcanzadas #6566 - SAR_PER_ANT_NO_GRAV
+'Ajustes de Períodos Anteriores sobre Remuneraciones Exentas o No Alcanzadas #6566 - SAR_PER_ANT_NO_GRAV
 importe = SAR_PER_ANT_NO_GRAV
 idConcepto = "SAR_PER_ANT_NO_GRAV"
 'Control de negativos
@@ -210,7 +210,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemExenValida = totRemExenValida + importe
 
-'Remuneraciones del Poder Judicial no alcanzadas por el segundo parrafo del Inc a) del Art. 82 de la LIG #5475 (SAR_REM_PODER_JUDIC_ACM)
+'Remuneraciones del Poder Judicial no alcanzadas por el segundo párrafo del Inc a) del Art. 82 de la LIG #5475 (SAR_REM_PODER_JUDIC_ACM)
 importe = SAR_REM_PODER_JUDIC_ACM
 idConcepto = "SAR_REM_PODER_JUDIC_ACM"
 'Control de negativos
@@ -232,7 +232,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemExenValida = totRemExenValida + importe
 
-'Otros Empleos Intereses por prestamos al empleador/ Remuneracion Judiciales #5658 - SAR_INT_PRES_EMP_OE
+'Otros Empleos Intereses por préstamos al empleador/ Remuneración Judiciales #5658 - SAR_INT_PRES_EMP_OE
 importe = SAR_INT_PRES_EMP_OE
 idConcepto = "SAR_INT_PRES_EMP_OE"
 'Control de negativos
@@ -252,7 +252,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemExenValida = totRemExenValida + importe
 
-'Otros Empleos Remuneraciones bajo el Art. 1? de la Ley N? 19.640 "Territorio Nacional de Tierra del Fuego #5660 - SAR_REMUN_LEY19640_OE
+'Otros Empleos Remuneraciones bajo el Art. 1° de la Ley N° 19.640 "Territorio Nacional de Tierra del Fuego #5660 - SAR_REMUN_LEY19640_OE
 importe = SAR_REMUN_LEY19640_OE
 idConcepto = "SAR_REMUN_LEY19640_OE"
 'Control de negativos
@@ -312,7 +312,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemExenValida = totRemExenValida + importe
 
-'TOTAL REMUNERACION NO GRAVADA / NO ALCANZADA / EXENTA #5671 - SAR_4TA_TOT_REM_EXEN
+'TOTAL REMUNERACIÓN NO GRAVADA / NO ALCANZADA / EXENTA #5671 - SAR_4TA_TOT_REM_EXEN
 importe = SAR_4TA_TOT_REM_EXEN
 idConcepto = "SAR_4TA_TOT_REM_EXEN"
 'Control de negativos
@@ -333,7 +333,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totRemSum = totRemGravValida + totRemExenValida
 
-'Hacemos de este modo la comprobacion de este campo porque numeros altos se desborda la memoria y genera decimales ficticios
+'Hacemos de este modo la comprobación de este campo porque numeros altos se desborda la memoria y genera decimales ficticios
 cuadreTotRem = Round (totRemSum - importe,4)
 
 If cuadreTotRem <> 0 Then resultado = resultado + "/" + idConcepto + " SUM"
@@ -343,7 +343,7 @@ If cuadreTotRem <> 0 Then resultado = resultado + "/" + idConcepto + " SUM"
 
 totDedGenValida = 0
 
-'Abonadas por el agente de retencion:
+'Abonadas por el agente de retención:
 
 'Aportes para fondos de Jubilaciones - ANSES #5568 - SAR_AP_FON_JUB_4CATEG
 importe = SAR_AP_FON_JUB_4CATEG
@@ -385,7 +385,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totDedGenValida = totDedGenValida + importe
 
-'Cuotas Medico Asistenciales #5043 - SAR_IG_CMASIS_REMUN
+'Cuotas Médico Asistenciales #5043 - SAR_IG_CMASIS_REMUN
 importe = SAR_IG_CMASIS_REMUN
 idConcepto = "SAR_IG_CMASIS_REMUN"
 'Control de negativos
@@ -424,7 +424,7 @@ totDedGenValida = totDedGenValida + importe
 tope = SAR_TOPE_SEG_RET
 If importe > tope Then resultado = resultado + "/" + idConcepto + " TOPE"
 
-'Adquisicion de Cuotapartes de FCI con fines de Retiro #5590 - SAR_DED_FONDOS
+'Adquisición de Cuotapartes de FCI con fines de Retiro #5590 - SAR_DED_FONDOS
 importe = SAR_DED_FONDOS
 idConcepto = "SAR_DED_FONDOS"
 'Control de negativos
@@ -450,7 +450,7 @@ totDedGenValida = totDedGenValida + importe
 tope = SAR_TOPE_GAST_SEP
 If importe > tope Then resultado = resultado + "/" + idConcepto + " TOPE"
 
-'Amortizacion Impositiva e Intereses por adquisicion de Rodados para Corredores y Viajantes de Comercio #5038 - SAR_IG_GTOS_COR
+'Amortización Impositiva e Intereses por adquisición de Rodados para Corredores y Viajantes de Comercio #5038 - SAR_IG_GTOS_COR
 importe = SAR_IG_GTOS_COR
 idConcepto = "SAR_IG_GTOS_COR"
 'Control de negativos
@@ -473,7 +473,7 @@ totDedGenValida = totDedGenValida + importe
 tope = Round(SAR_BASE_IMP_SUBDONAC,2) * 0.05
 If importe > tope Then resultado = resultado + "/" + idConcepto + " TOPE"
 
-'Alquileres de Inmuebles destinados a Casa-Habitacion para Inquilinos No Propietarios - Art. 85 inc. h) - 40% #4962 - SAR_DED_IG_ALQUILER
+'Alquileres de Inmuebles destinados a Casa-Habitación para Inquilinos No Propietarios - Art. 85 inc. h) - 40% #4962 - SAR_DED_IG_ALQUILER
 importe = SAR_DED_IG_ALQUILER
 idConcepto = "SAR_DED_IG_ALQUILER"
 'Control de negativos
@@ -496,7 +496,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totDedGenValida = totDedGenValida + importe
 
-'Honorarios por Servicios de Asistencia Sanitaria, Medica y Paramedica #5069 - SAR_IMP_DED_HON_MED
+'Honorarios por Servicios de Asistencia Sanitaria, Médica y Paramédica #5069 - SAR_IMP_DED_HON_MED
 importe = SAR_IMP_DED_HON_MED
 idConcepto = "SAR_IMP_DED_HON_MED"
 'Control de negativos
@@ -509,7 +509,7 @@ totDedGenValida = totDedGenValida + importe
 tope = Round(SAR_BASE_IMP_SUBDONAC,2) * 0.05
 If importe > tope Then resultado = resultado + "/" + idConcepto + " TOPE"
 
-'Intereses Creditos Hipotecarios #5068 - SAR_IMP_D_IN_HIP
+'Intereses Créditos Hipotecarios #5068 - SAR_IMP_D_IN_HIP
 importe = SAR_IMP_D_IN_HIP
 idConcepto = "SAR_IMP_D_IN_HIP"
 'Control de negativos
@@ -532,7 +532,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totDedGenValida = totDedGenValida + importe
 
-'Empleados del Servicio Domestico #5077 - SAR_DED_SER_DOM
+'Empleados del Servicio Doméstico #5077 - SAR_DED_SER_DOM
 importe = SAR_DED_SER_DOM
 idConcepto = "SAR_DED_SER_DOM"
 'Control de negativos
@@ -545,7 +545,7 @@ totDedGenValida = totDedGenValida + importe
 tope = SAR_TOPE_SER_DOM
 If importe > tope Then resultado = resultado + "/" + idConcepto + " TOPE"
 
-'Cajas Complementarias de Prevision #6589 - SAR_FOND_COMP_PREV
+'Cajas Complementarias de Previsión #6589 - SAR_FOND_COMP_PREV
 importe = SAR_FOND_COMP_PREV
 idConcepto = "SAR_FOND_COMP_PREV"
 'Control de negativos
@@ -555,7 +555,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totDedGenValida = totDedGenValida + importe
 
-'Fondos Compensadores de Prevision #6588 - SAR_DED_FONDOS_PREV
+'Fondos Compensadores de Previsión #6588 - SAR_DED_FONDOS_PREV
 importe = SAR_DED_FONDOS_PREV
 idConcepto = "SAR_DED_FONDOS_PREV"
 'Control de negativos
@@ -565,7 +565,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totDedGenValida = totDedGenValida + importe
 
-'Otros Aportes para fondos de Jubilaciones, retiros, pensiones o subsidios - incluido ANSES Autonomos #5143 - SAR_IG_DESC_LEY_NAC_PROV
+'Otros Aportes para fondos de Jubilaciones, retiros, pensiones o subsidios - incluido ANSES Autónomos #5143 - SAR_IG_DESC_LEY_NAC_PROV
 importe = SAR_IG_DESC_LEY_NAC_PROV
 idConcepto = "SAR_IG_DESC_LEY_NAC_PROV"
 'Control de negativos
@@ -588,7 +588,7 @@ totDedGenValida = totDedGenValida + importe
 tope = SAR_TOPE_SEG_RET
 If importe > tope Then resultado = resultado + "/" + idConcepto + " TOPE"
 
-'Indumentaria/ y Equipamiento -Uso exclusivo y caracter obligatorio - Adquiridos por empleado #5591 - SAR_DED_INDUM
+'Indumentaria/ y Equipamiento -Uso exclusivo y carácter obligatorio - Adquiridos por empleado #5591 - SAR_DED_INDUM
 importe = SAR_DED_INDUM
 idConcepto = "SAR_DED_INDUM"
 'Control de negativos
@@ -611,7 +611,7 @@ totDedGenValida = totDedGenValida + importe
 tope = SAR_TOPE_SER_DOM
 If importe > tope Then resultado = resultado + "/" + idConcepto + " TOPE"
 
-'Alquileres de Inmuebles destinados a Casa-Habitacion para Inquilinos y Propietarios - Art. 85 inc. k) - 10% #5673 - SAR_4TA_DED_ALQ_ADI
+'Alquileres de Inmuebles destinados a Casa-Habitación para Inquilinos y Propietarios - Art. 85 inc. k) - 10% #5673 - SAR_4TA_DED_ALQ_ADI
 importe = SAR_4TA_DED_ALQ_ADI
 idConcepto = "SAR_4TA_DED_ALQ_ADI"
 'Control de negativos
@@ -621,7 +621,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totDedGenValida = totDedGenValida + importe
 
-'Antartida Argentina - Adicional remunerativo para personal civil y militar #5674 - SAR_4TA_ANTAR_MILIT
+'Antártida Argentina - Adicional remunerativo para personal civil y militar #5674 - SAR_4TA_ANTAR_MILIT
 importe = SAR_4TA_ANTAR_MILIT
 idConcepto = "SAR_4TA_ANTAR_MILIT"
 'Control de negativos
@@ -631,7 +631,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totDedGenValida = totDedGenValida + importe
 
-'Actores - Retribucion pagada a los representantes - RG 2442/08 #6587 - SAR_DED_ACTORES
+'Actores - Retribución pagada a los representantes - RG 2442/08 #6587 - SAR_DED_ACTORES
 importe = SAR_DED_ACTORES
 idConcepto = "SAR_DED_ACTORES"
 'Control de negativos
@@ -712,7 +712,7 @@ totDedPersValida = totDedPersValida + importe
 tope = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_GAN_NO_IMP",DxDate(1,12,DxYear(SAR_FEC_PAGO_IG)),0))
 If importe > tope Then resultado = resultado + "/" + idConcepto + " TOPE"
 
-'Conyuge #5055 - SAR_IG_CONYUGE_REM
+'Cónyuge #5055 - SAR_IG_CONYUGE_REM
 importe = SAR_IG_CONYUGE_REM
 idConcepto = "SAR_IG_CONYUGE_REM"
 'Control de negativos
@@ -765,7 +765,7 @@ totDedPersValida = totDedPersValida + importe
 'Valida SUM
 If conyuge + hijos + hijosInc <> importe Then resultado = resultado + "/" + idConcepto + " SUM"
 
-'Deduccion Especial #5041 - SAR_IG_DED_ESP
+'Deducción Especial #5041 - SAR_IG_DED_ESP
 importe = SAR_IG_DED_ESP
 idConcepto = "SAR_IG_DED_ESP"
 'Control de negativos
@@ -778,7 +778,7 @@ totDedPersValida = totDedPersValida + importe
 tope = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_DED_ESPECIAL",DxDate(1,12,DxYear(SAR_FEC_PAGO_IG)),0))
 If importe > tope Then resultado = resultado + "/" + idConcepto + " TOPE"
 
-'Deduccion Especial Adicional Doceava Parte #5392 - SAR_IG_DED_12AVA
+'Deducción Especial Adicional Doceava Parte #5392 - SAR_IG_DED_12AVA
 importe = SAR_IG_DED_12AVA
 idConcepto = "SAR_IG_DED_12AVA"
 'Control de negativos
@@ -788,7 +788,7 @@ If importe - Round(importe,SAR_NUM_DEC) <> 0 Then resultado = resultado + "/" + 
 'Totalizador
 totDedPersValida = totDedPersValida + importe
 
-'Deduccion Especifica #5678 - SAR_4TA_DED_ESPECIF
+'Deducción Específica #5678 - SAR_4TA_DED_ESPECIF
 importe = SAR_4TA_DED_ESPECIF
 idConcepto = "SAR_4TA_DED_ESPECIF"
 'Control de negativos
@@ -807,7 +807,7 @@ If importe < 0 Then resultado = resultado + "/" + idConcepto + " NEG"
 If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto + " DEC"
 'Totalizador
 If totDedPersValida <> importe Then resultado = resultado + "/" + idConcepto + " SUM"
-'Validacion
+'Validación
 If importe > SAR_4TA_TOT_REM  Then resultado = resultado + "/" + idConcepto + " VAL1"
 
 '******************************************************************************************************
@@ -824,7 +824,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totPagCtaValida = totPagCtaValida + importe
 
-'Impuesto sobre creditos y debitos en cuenta bancaria #5066 - SAR_DEBITO_BANCARIO
+'Impuesto sobre créditos y débitos en cuenta bancaria #5066 - SAR_DEBITO_BANCARIO
 importe = SAR_DEBITO_BANCARIO
 idConcepto = "SAR_DEBITO_BANCARIO"
 'Control de decimales
@@ -832,7 +832,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totPagCtaValida = totPagCtaValida + importe
 
-'Impuesto sobre creditos y debitos - sobre movimientos de fondos #6596 - SAR_DEB_PROP
+'Impuesto sobre créditos y débitos - sobre movimientos de fondos #6596 - SAR_DEB_PROP
 importe = SAR_DEB_PROP
 idConcepto = "SAR_DEB_PROP"
 'Control de decimales
@@ -848,7 +848,7 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 'Totalizador
 totPagCtaValida = totPagCtaValida + importe
 
-'Cancelaciones en Efectivo - Servicios de transporte de pasajeros con destino fuera del pais #6597 - SAR_CANC_EFECTIVO
+'Cancelaciones en Efectivo - Servicios de transporte de pasajeros con destino fuera del país #6597 - SAR_CANC_EFECTIVO
 importe = SAR_CANC_EFECTIVO
 idConcepto = "SAR_CANC_EFECTIVO"
 'Control de decimales
@@ -908,14 +908,14 @@ If totPagCtaValida <> importe Then resultado = resultado + "/" + idConcepto + " 
 ' DETERMINACION DEL IMPUESTO (REG 8)
 '******************************************************************************************************
 
-'REMUNERACION SUJETA A IMPUESTO #5681 - SAR_4TA_BASE_IMPUESTO
+'REMUNERACIÓN SUJETA A IMPUESTO #5681 - SAR_4TA_BASE_IMPUESTO
 importe = SAR_4TA_BASE_IMPUESTO
 idConcepto = "SAR_4TA_BASE_IMPUESTO"
 'Control de negativos
 If importe < 0 Then resultado = resultado + "/" + idConcepto + " NEG"
 'Control de decimales
 If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto + " DEC"
-'Validacion
+'Validación
 If importe <> SAR_IG_TOT_C_IM - SAR_4TA_TOT_DED_GEN - SAR_4TA_TOT_DED_ART30  Then resultado = resultado + "/" + idConcepto + " VAL1"
 
 'IMPUESTO DETERMINADO #5008 - SAR_IMPUESTO_TOTAL
@@ -944,12 +944,12 @@ If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto
 importe = SAR_4TA_SUBTOT_SALDO
 idConcepto = "SAR_4TA_SUBTOT_SALDO"
 'Control de negativos
-'Nota: Se considera como saldado para no generar un falso error de validacion, 
-'aunque se expondra realmente saldado tras la paga que recoge el importe de la liquidacion anual
+'Nota: Se considera como saldado para no generar un falso error de validación, 
+'aunque se expondra realmente saldado tras la paga que recoge el importe de la liquidación anual
 'If importe + SAR_SALDO_4CATEG < 0 Then resultado = resultado + "/" + idConcepto + " NEG"
 'Control de decimales
 If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto + " DEC"
-'Validacion
+'Validación
 If importe <> SAR_IMPUESTO_TOTAL - SAR_IMP_RET_4CATEG Then resultado = resultado + "/" + idConcepto + " VAL1"
 
 'SALDO DETERMINADO #5575 - SAR_SALDO_4CATEG
@@ -957,7 +957,7 @@ importe = SAR_SALDO_4CATEG
 idConcepto = "SAR_SALDO_4CATEG"
 'Control de decimales
 If importe - Round(importe,2) <> 0 Then resultado = resultado + "/" + idConcepto + " DEC"
-'Validacion
+'Validación
 If importe <> SAR_4TA_SUBTOT_SALDO - SAR_IMPUESTO_AUTORET - SAR_4TA_TOT_PAGOS_CTA  Then resultado = resultado + "/" + idConcepto + " VAL1"
 
 If resultado = " " Then resultado = "OK"

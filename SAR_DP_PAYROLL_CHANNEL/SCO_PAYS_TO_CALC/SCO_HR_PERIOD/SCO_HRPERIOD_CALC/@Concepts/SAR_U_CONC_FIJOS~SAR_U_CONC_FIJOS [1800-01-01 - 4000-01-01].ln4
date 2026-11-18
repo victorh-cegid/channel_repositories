@@ -1,4 +1,4 @@
-'Busco la cantidad de dias trabajados llamando al concepto 550
+'Busco la cantidad de días trabajados llamando al concepto 550
 
 IF SAR_TP_IMPUT = "2" THEN Return(0)
 
@@ -14,7 +14,7 @@ IF SAR_TIPO_SALARIO = "003" and SAR_CANT_HS_TRABAJADAS > 0 THEN 'Salario horario
     valor = valor - SAR_DIAS_EXCEDENCIA
 ENDIF
 
-'Guardo los dias trabajados en una propiedad para poder utilizarla desde el calculo
+'Guardo los días trabajados en una propiedad para poder utilizarla desde el calculo
 'del sueldo a nivel de Rol
 SAR_HR_ROLE.SAR_P_DIAS_TRABAJADOS = valor
 

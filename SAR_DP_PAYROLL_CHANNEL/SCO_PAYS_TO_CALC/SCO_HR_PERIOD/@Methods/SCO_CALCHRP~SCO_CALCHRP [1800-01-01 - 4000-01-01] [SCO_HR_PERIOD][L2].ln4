@@ -3,7 +3,7 @@ DtAllocation = SCO_DT_ALLOCATION
 DtPayment    = SCO_DT_PAYMENT
 NmFrequency  = SCO_PAYS_TO_CALC.SCO_NM_PAY_FREQUENCY
 
-//Variable que se inicializa para utilizarla en la conprobacion de datos cuando la moneda tiene
+//Variable que se inicializa para utilizarla en la conprobación de datos cuando la moneda tiene
 //comportamiento 'proceso'.
 BCorrectYtd = 1
 
@@ -21,9 +21,9 @@ node="SCO_HRPERIOD_CALC"
 SWP_NODES_AC_READ.SCO_CALC_MIN_MAX_DATE(node)
 
 //Antes de empezar a calcular conceptos, vamos a comprobar en caso de que el comportamiento de 
-//la moneda sea 'proceso' que los datos del acumulado son correctos para el calculo. En caso de
-//que se este seguro de que los datos estan bien, se puede comentar esta parte para mejorar el 
-//rendimiento. Se ejecuta despues del calculo de fechas de lectura del acumulado para reproducir
+//la moneda sea 'proceso' que los datos del acumulado son correctos para el cálculo. En caso de
+//que se esté seguro de que los datos están bien, se puede comentar esta parte para mejorar el 
+//rendimiento. Se ejecuta despues del cálculo de fechas de lectura del acumulado para reproducir
 //el mismo entorno.
 
 If behaviour <> "01" Then
@@ -35,14 +35,14 @@ If behaviour <> "01" Then
     DtPrevAlloc = SCO_AC_MAX_DT_ALLOC.SCO_DT_PREV_ALLOC
     DtPrevPaym = SCO_AC_MAX_DT_PAY.SCO_DT_PREV_PAYM
 
-    'Llamar al Meta4Object de comprobacion
+    'Llamar al Meta4Object de comprobación
     BCorrectYtd = SCO_COMPARE_YTD_CURR!SCO_PARAM.SCO_CHECK_DATA (STD_ID_HR,STD_OR_HR_PERIOD,NullValue(),ID_CURRENCY, DtMin, DtMax, DtAllocation, DtPayment, SCO_PAY_FREQ_ALLOC,DtPrevAlloc,DtPrevPaym)
     If BCorrectYtd = 0 Then
-        //No se puede calcular la nomina del periodo %1:n del empleado %0:s en la moneda %2:s 
-        //con comportamiento 'proceso' para la paga %5:s de pago %3:d  e imputacion %4:d, porque
-        //en el acumulado no estan todos los registros necesarios en esta moneda.
-        //Para utilizar este comportamiento de moneda (proceso) debe haber calculado las nominas
-        // anteriores en la moneda de calculo actual.
+        //No se puede calcular la nómina del periodo %1:n del empleado %0:s en la moneda %2:s 
+        //con comportamiento 'proceso' para la paga %5:s de pago %3:d  e imputación %4:d, porque
+        //en el acumulado no están todos los registros necesarios en esta moneda.
+        //Para utilizar este comportamiento de moneda (proceso) debe haber calculado las nóminas
+        // anteriores en la moneda de cálculo actual.
         SetLog (-1,1,101,51,STD_ID_HR,STD_OR_HR_PERIOD,ID_CURRENCY,DtPayment,DtAllocation,NmFrequency)
         SCO_ERROR = 1
         Return(-1)
@@ -97,9 +97,9 @@ IF SCO_PAYS_TO_CALC.SCO_REVISION=1 then
 	SCO_AC_HR_PERIOD_REV.Begin()
 
 	//Para que todas las ejecuciones en el nodo de diferencias sean en el intervalo 
-	//maximo de fechas entre el calculo y la revision. No se hace antes porque en el
-	//Count del nodo de revision necesitamos las fechas de calculo ya que se leen 
-	//datos del nodo de calculo.
+	//máximo de fechas entre el cálculo y la revisión. No se hace antes porque en el
+	//Count del nodo de revisión necesitamos las fechas de cálculo ya que se leen 
+	//datos del nodo de cálculo.
 
 	dStartRetro = SCO_DT_START_CALC_RETRO
 	dEndRetro = SCO_DT_END_CALC_RETRO
@@ -115,7 +115,7 @@ IF SCO_PAYS_TO_CALC.SCO_REVISION=1 then
 	SCO_DIF_HRPERIOD_CALC.EX_TYPE=EX_TYPE
       SCO_DIF_HRPERIOD_CALC.ID_ORGANIZATION = ID_ORGANIZATION
       
-      //Volvemos a setear las fechas de calculo del empleado
+      //Volvemos a setear las fechas de cálculo del empleado
       dStartPeriod=SCO_DT_START_CALC
 	dEndPeriod=SCO_DT_END_CALC
 	SetStartDate(dStartPeriod)
@@ -123,22 +123,22 @@ IF SCO_PAYS_TO_CALC.SCO_REVISION=1 then
 
 ENDIF
 
-If SCO_RETRO_TERM <> STD_ID_HR then    'Para baja retroactiva no ejecutamos el calculo normal, solo la parte de retro
+If SCO_RETRO_TERM <> STD_ID_HR then    'Para baja retroactiva no ejecutamos el cálculo normal, sólo la parte de retro
 
     'This is to ensure that the concepts that not depends on the currency are executed only once.
     If ind_main = 1 Then
     	SCO_EXE_LEVEL_1()
     
-    	//Los errores que se dan a nivel de un grupo de ejecucion no podemos controlarlos.
+    	//Los errores que se dan a nivel de un grupo de ejecución no podemos controlarlos.
     	//No podemos asignar la propiedad SCO_HR_PERIOD.SCO_ERROR porque al ser 'elemento de nodo' nos
-    	//obligaria a poner todos los conceptos como 'elementos de nodo'. Asi que nos creamos una propiedad
-    	//en el nodo de calculo para controlar los errores de los conceptos.
+    	//obligaría a poner todos los conceptos como 'elementos de nodo'. Así que nos creamos una propiedad
+    	//en el nodo de cálculo para controlar los errores de los conceptos.
     
-    	//Utilizamos la totalizacion en tramos porque si los conceptos que han asignado la propiedad
-    	//SCO_ERROR estan tramados, tambien lo esta la propiedad. Como en cada uno de los tramos solo
-    	//puede haber un 0 o un 1, se toma el maximo.
+    	//Utilizamos la totalización en tramos porque si los conceptos que han asignado la propiedad
+    	//SCO_ERROR están tramados, también lo está la propiedad. Como en cada uno de los tramos sólo
+    	//puede haber un 0 o un 1, se toma el máximo.
     
-    	//La generacion del error (el texto) es responsabilidad del concepto que lo produce.
+    	//La generación del error (el texto) es responsabilidad del concepto que lo produce.
     	If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
     		SCO_ERROR = 1
     		Return(-1)
@@ -146,7 +146,7 @@ If SCO_RETRO_TERM <> STD_ID_HR then    'Para baja retroactiva no ejecutamos el c
     EndIf
     
     SCO_EXE_LEVEL_2()
-    //Si se ha producido un error en el calculo del grupo, ya no seguimos calculando. La generacion
+    //Si se ha producido un error en el cálculo del grupo, ya no seguimos calculando. La generación
     //del error (el texto) es responsabilidad del concepto que lo produce.
     If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
     	SCO_ERROR = 1
@@ -179,10 +179,10 @@ SetEndDate(FF)
 SCO_HR_ROLE.Begin()
 SCO_HRROLE_CALC.End()
 
-If SCO_RETRO_TERM <> STD_ID_HR then    'Para baja retroactiva no ejecutamos el calculo normal, solo la parte de retro
+If SCO_RETRO_TERM <> STD_ID_HR then    'Para baja retroactiva no ejecutamos el cálculo normal, sólo la parte de retro
 
     SCO_EXE_LEVEL_3()
-    //Si se ha producido un error en el calculo del grupo, ya no seguimos calculando. La generacion
+    //Si se ha producido un error en el cálculo del grupo, ya no seguimos calculando. La generación
     //del error (el texto) es responsabilidad del concepto que lo produce.
     If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
     	SCO_ERROR = 1
@@ -191,7 +191,7 @@ If SCO_RETRO_TERM <> STD_ID_HR then    'Para baja retroactiva no ejecutamos el c
     
     SCO_EXE_LEVEL_4()
     
-    //Si se ha producido un error en el calculo del grupo, ya no seguimos calculando. La generacion
+    //Si se ha producido un error en el cálculo del grupo, ya no seguimos calculando. La generación
     //del error (el texto) es responsabilidad del concepto que lo produce.
     If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
     	SCO_ERROR = 1
@@ -200,19 +200,19 @@ If SCO_RETRO_TERM <> STD_ID_HR then    'Para baja retroactiva no ejecutamos el c
     
     SCO_HRPERIOD_CALC.SCO_NET_TO_GROSS_TRIAL()
     
-    //Si se ha producido un error en el calculo del grupo, ya no seguimos calculando. La generacion
+    //Si se ha producido un error en el cálculo del grupo, ya no seguimos calculando. La generación
     //del error (el texto) es responsabilidad del concepto que lo produce.
     If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
     	SCO_ERROR = 1
     	Return(-1)
     EndIf
     
-    'We don't execute this because we don't have concepts in this group.
+    'We don´t execute this because we don´t have concepts in this group.
     'If we execute an executegroup without concepts this produces a warning.     
     'SCO_EXE_LEVEL_5()
-    '//Si se ha producido un error en el calculo del grupo, ya no seguimos calculando. La generacion
-    '//del error (el texto) es responsabilidad del concepto que lo produce. Si tuvieramos que ejecutar
-    '//este grupo, habria que descomentar tambien el error.
+    '//Si se ha producido un error en el cálculo del grupo, ya no seguimos calculando. La generación
+    '//del error (el texto) es responsabilidad del concepto que lo produce. Si tuviéramos que ejecutar
+    '//este grupo, habría que descomentar también el error.
     'If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
     '	SCO_ERROR = 1
     '	Return(-1)
@@ -223,7 +223,7 @@ EndIf
 If SCO_PAYS_TO_CALC.SCO_REVISION=1 then
 
 	//Para que todas las ejecuciones en el nodo de diferencias sean en el intervalo 
-	//maximo de fechas entre el calculo y la revision
+	//máximo de fechas entre el cálculo y la revisión
 	dStartRetro = SCO_DT_START_CALC_RETRO
 	dEndRetro = SCO_DT_END_CALC_RETRO
 	SetStartDate(dStartRetro)
@@ -233,16 +233,16 @@ If SCO_PAYS_TO_CALC.SCO_REVISION=1 then
 	SCO_DIF_HRPERIOD_CALC.ExecuteGroup("1")
 	SCO_DIF_HRPERIOD_CALC.ExecuteGroup("2")     
 
-      //Carga del nodo de acumulado de donde se recuperaran los valores para la retroactividad de una baja
+      //Carga del nodo de acumulado de donde se recuperarán los valores para la retroactividad de una baja
       SCO_IDS_RETRO.Begin()
-      //Asignacion de tramos a IDs en caso de retroactividad de una baja. Debe ejecutarse sin tramos
+      //Asignación de tramos a IDs en caso de retroactividad de una baja. Debe ejecutarse sin tramos
 	SetSliceMode(M4_FALSE)
 	SCO_SLICES_TERM_RETRO()
 	SetSliceMode(SCO_PAYS_TO_CALC.SCO_SLICE_MODE)
 
 	SCO_AUX_AC_HRPERIOD.CopyRegister("","SCO_DIF_HRPERIOD_CALC",-1,SCOPE_REGISTER+SCOPE_BLOCK+TYPE_PROPERTY+TYPE_CONCEPT,SCOPE_REGISTER+TYPE_PROPERTY+TYPE_FIELD)
 
-      //Volvemos a setear las fechas de calculo del empleado
+      //Volvemos a setear las fechas de cálculo del empleado
       dStartPeriod=SCO_DT_START_CALC
 	dEndPeriod=SCO_DT_END_CALC
 	SetStartDate(dStartPeriod)
@@ -260,7 +260,7 @@ If SCO_HRPERIOD_CALC.SCO_ERROR..SysTotalSlices(M4_TOTAL_MAX) = 1 Then
 EndIf
 
 If SCO_PAYS_TO_CALC.SCO_REVISION = 1  Then
-	//Solo en caso de retroactividad volvemos a setear las fechas maximas para 
+	//Sólo en caso de retroactividad volvemos a setear las fechas máximas para 
 	//que el flatten encuentre todos los registros.
 	dStartRetro = SCO_DT_START_CALC_RETRO
 	dEndRetro = SCO_DT_END_CALC_RETRO

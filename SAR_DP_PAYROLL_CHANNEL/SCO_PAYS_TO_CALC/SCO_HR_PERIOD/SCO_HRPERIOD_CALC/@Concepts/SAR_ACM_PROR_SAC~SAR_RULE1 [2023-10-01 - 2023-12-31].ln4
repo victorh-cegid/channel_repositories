@@ -3,7 +3,7 @@ If indReliq = 1 And SCO_DT_ALLOCATION = DxDate(30,9,2023) Then indReliq = 0
 
 dif_sac_RG3976 = 0
 
-'Solo 2023 correccion de ajustes de SAC1 realizadas posteriormente a octubre que han quedado en ambos periodos fiscales, se saca del periodo desde octubre
+'Sólo 2023 corrección de ajustes de SAC1 realizadas posteriormente a octubre que han quedado en ambos periodos fiscales, se saca del periodo desde octubre
 ajusteSobraDifSac = 0
 If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 And DxYear(SCO_DT_ALLOCATION) = 2023 And DxMonth(SAR_FEC_PAGO_IG) = 12 And DxMonth(SCO_DT_ALLOCATION) > 9 Then
     mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
@@ -16,7 +16,7 @@ If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 
         EndIf
     Next
 EndIf
-'Fin solo 2023
+'Fin sólo 2023
 
 If SAR_ES_BAJA = 1 Or indReliq = 1 Or SAR_IND_AJUSTE_SAC = 1 Then
     valoracum = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_B_SAC_MES_RG3976 + SAR_ACM_IG_ANIO_COMPLETO[0].SAR_DIF_SAC_RG3976
@@ -37,7 +37,7 @@ If SAR_ES_BAJA = 1 Or indReliq = 1 Or SAR_IND_AJUSTE_SAC = 1 Then
     Endif
 EndIf    
 
-'Control retroactividad a?os anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
+'Control retroactividad años anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
 sac_anio_ant = SAR_IND_SAC_ANIO_ANT
 If sac_anio_ant = 1 Then
     mes_orig = SAR_AC_SAC_REV[0].SAR_DIF_SAC_RG3976

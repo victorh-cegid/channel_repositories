@@ -1,10 +1,10 @@
-'Calculamos la deduccion por impuesto a los debitos y creditos
-'si es una liquidacion anual o final segun la R.G. 1674/2004
+'Calculamos la deducción por impuesto a los débitos y créditos
+'si es una liquidación anual o final según la R.G. 1674/2004
 
 valor=0
 
 IF SAR_TP_IMPUT = "99" OR (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") THEN
-   'Se suman el SAR_DEBITO_BANCARIO y el SAR_PAG_CUEN_EXT por aplicacion del 15 % de devolucion en compras al exterior.
+   'Se suman el SAR_DEBITO_BANCARIO y el SAR_PAG_CUEN_EXT por aplicación del 15 % de devolución en compras al exterior.
    x = SAR_DEBITO_BANCARIO + SAR_PAG_CUENT_EXT
    valor= Min(x,SAR_IMPUESTO_TOTAL) 'Con este control verificamos que no le descontemos un importe superior al impuesto calculado
 

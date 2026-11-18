@@ -20,7 +20,7 @@ ENDIF
 
 valor = SAR_AYUDA_ESC_PRIMA * SAR_PR_AY_ESC_PRIM
 
-'Se incluye el tope al cual se tiene derecho para percibir dicha asignacion.
+'Se incluye el tope al cual se tiene derecho para percibir dicha asignación.
 if ((SAR_REMUN_P_SAL_FAM <= 4000) and  (SAR_REMUN_P_SAL_FAM >= SAR_TOPE_S_FAMIL) )then
     return(valor)
 else

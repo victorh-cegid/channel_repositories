@@ -10,7 +10,7 @@ if SAR_TP_IMPUT= "99" then
     'val_otros_empl =0
 endif
 
-' Si es Paga de RETRO modificamos la fecha para que sea el mes anterior a la fecha de imputacion.
+' Si es Paga de RETRO modificamos la fecha para que sea el mes anterior a la fecha de imputación.
 If (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT) Then
     vfecha = SCO_DT_ALLOCATION
 Else

@@ -1,5 +1,5 @@
 'RG 3976. Se cierra esta norma a 31/12/2017. Se mantiene durante 2017 por si existiesen prorrateos 
-'pendientes del SAC del a?o 2016.
+'pendientes del SAC del año 2016.
 
 IF SCO_DT_ALLOCATION <> SCO_DT_PAYMENT THEN
     mes = DxMonth(SAR_PAGA_ACTUAL_IMPUT[0].SAR_FECHA_PAGO_IG)
@@ -11,12 +11,12 @@ If DxMonth(SCO_DT_PAYMENT) = 6 And (SAR_TP_IMPUT = "3" or SAR_TP_IMPUT = "4") AN
    Return(0)
 EndIf
 
-'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+'Por modificación del empleado se agregó: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
 IF ((mes = 12) OR (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") OR (SAR_TP_IMPUT = "3" AND SAR_IND_AGUINALDO = 0)) THEN
     RETURN(0)
 ENDIF
 
-'Modificacion RG3976. En 2017 no se va a prorratear el SAC desde junio en este concepto, se hara en el concepto 5192 segun la nueva definicion legal.
+'Modificación RG3976. En 2017 no se va a prorratear el SAC desde junio en este concepto, se hará en el concepto 5192 según la nueva definición legal.
 base_mes_actual = 0
 
 

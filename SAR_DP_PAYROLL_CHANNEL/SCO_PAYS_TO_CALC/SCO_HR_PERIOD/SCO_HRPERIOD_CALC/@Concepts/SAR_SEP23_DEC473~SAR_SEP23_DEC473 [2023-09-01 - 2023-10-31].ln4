@@ -9,22 +9,22 @@ If SCO_DT_PAYMENT<>SCO_DT_ALLOCATION And SAR_SEP23_IND_AJ_NORM = 1 And SAR_IND_D
 'Retro a septiembre no debe generar diferencias
 If SCO_DT_PAYMENT<>SCO_DT_ALLOCATION and esBaja = 0 And ajusteNormal = 0 Then Return Round(SCO_AC_HR_PERIOD_REV_1.SAR_SEP23_DEC473,SAR_NUM_DEC)
 
-'Si se calculo el concepto en mes anterior, no se expone en mes actual.
+'Si se calculó el concepto en mes anterior, no se expone en mes actual.
 If SAR_ACM_ULT_MES[0].SAR_SEP23_DEC473 <> 0 Then Return(0)
 
 If DxYear(SAR_FEC_IMPUT_IG) = 2023 Then
     If SAR_SEP23_IND_AJ_NORM = 0 Then
-        'recupera el beneficio calculado en agosto, si no recupera nada se mantiene el calculo del impuesto que habia
+        'recupera el beneficio calculado en agosto, si no recupera nada se mantiene el cálculo del impuesto que había
         benef_total = SAR_ACM_ULT_MES[0].SAR_SEP23_BENEF_TOTAL
         beneficio = Round(benef_total,SAR_NUM_DEC)
-        'En caso de varias pagas en el mes, el beneficio SI debe sumarse al impuesto para que no se meta la cuota de septiembre, pero solo debe exponerse una vez
+        'En caso de varias pagas en el mes, el beneficio SI debe sumarse al impuesto para que no se meta la cuota de septiembre, pero sólo debe exponerse una vez
         beneficio = beneficio * -1
         beneficioRecibo = beneficio - SAR_ACM_MES_ACTUAL_DIF[0].SAR_SEP23_DEC473
         beneficioRecibo = beneficioRecibo
     Else
         benef_total = SAR_SEP23_BENEF_TOTAL + SAR_ACM_MES_ACTUAL_DIF[0].SAR_SEP23_BENEF_TOTAL
         beneficio = Round(benef_total,SAR_NUM_DEC)
-        'En caso de varias pagas en el mes, el beneficio SI debe sumarse al impuesto para que no se meta la cuota de septiembre, pero solo debe exponerse una vez
+        'En caso de varias pagas en el mes, el beneficio SI debe sumarse al impuesto para que no se meta la cuota de septiembre, pero sólo debe exponerse una vez
         beneficio = beneficio * -1
         beneficioRecibo = beneficio - SAR_ACM_MES_ACTUAL_DIF[0].SAR_SEP23_DEC473
         beneficioRecibo = beneficioRecibo

@@ -3,16 +3,16 @@
 
 dlm_item = ";"
 // Se utiliza el separador ## en vez de # porque en los filtros con fechas se utiliza
-// este caracter y puede provocar fallos.
+// éste caracter y puede provocar fallos.
 dlm_reg = "##"      // Separador de pagas de la misma sociedad
 dlm_desc = "@@"     // Separador del nombre de la sociedad
-dlm_exe = "$$"      // marca de tipo de calculo (normal, retroactivo ...)
+dlm_exe = "$$"      // marca de tipo de cálculo (normal, retroactivo ...)
 dlm_soc = "||"      // marca de fin de datos de una sociedad
 
-// String para almacenar los parametros
+// String para almacenar los parámetros
 str = ""
 
-// Numero de parametros
+// Número de parámetros
 numparams = Count()
 
 If numparams = 0 Then
@@ -20,8 +20,8 @@ If numparams = 0 Then
     Return("-1")
 EndIf
 
-// Bucle de lectura de los parametros
-// Los conceptos no son incluidos porque se calculan despues
+// Bucle de lectura de los parámetros
+// Los conceptos no son incluidos porque se calculan después
 // Properties, excluidas SCO_ERROR, SCO_SAVEYTD, 
 'SCO_STEP_BY_STEP,SCO_ACTUAL_PAY,SCO_DT_FILTER,SCO_DT_REV,SCO_DT_REV_PAY
 
@@ -144,18 +144,18 @@ While IsEOF() <> M4_TRUE
         EndIf
         str = str + dlm_item
         ind_sdi = ""
-        // Las propiedades SCO_P_COUNTRY y SME_IND_CLC_SDI toman valor solo en caso de calculo de SDI en Mexico
+        // Las propiedades SCO_P_COUNTRY y SME_IND_CLC_SDI toman valor sólo en caso de cálculo de SDI en México
         sCountry = GetValue("SCO_JS_HT_PAYS","SCO_P_COUNTRY",-1)
-        If (IsNull(sCountry) = M4_FALSE And sCountry = "MX") Then ' Estandar Mejicana
+        If (IsNull(sCountry) = M4_FALSE And sCountry = "MX") Then ' Estándar Mejicana
             ind_sdi = GetValue("SCO_JS_HT_PAYS","SME_IND_CLC_SDI",-1)
         Else
             sCountry = ""
         EndIf
-        If(IsNull(sCountry) = M4_FALSE) Then ' Estandar Mejicana
+        If(IsNull(sCountry) = M4_FALSE) Then ' Estándar Mejicana
             str = str + sCountry
         EndIf
         str = str + dlm_item
-        If(IsNull(ind_sdi) = M4_FALSE) Then ' Estandar Mejicana
+        If(IsNull(ind_sdi) = M4_FALSE) Then ' Estándar Mejicana
             var = ind_sdi
             str = str + ToString(Format(var,0))
         EndIf

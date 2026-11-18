@@ -1,4 +1,4 @@
-'Parametros:
+'Parámetros:
 'CONPCEPTO = Concepto desde el que se llama
 'REVISION = El valor de la retroactividad del concepto 0 - Revision / 1 - Diferencia
 
@@ -25,9 +25,9 @@ importeOrig = 0
 importeNuevo = 0
 diferencia = 0
 
-'Valor de la revision
+'Valor de la revisión
 If rev = 0 Then
-    'Primer recorrido, busca el importe de complementos que habia en la paga donde se calculo el beneficio
+    'Primer recorrido, busca el importe de complementos que había en la paga donde se calculó el beneficio
     ultPay = DxDate(1,1,1800)
     For acum = 0 To ult_reg - 1
         If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_LBASE_BENEFICIO > 0 And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT > ultPay And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <= SCO_DT_ALLOCATION Then
@@ -38,7 +38,7 @@ If rev = 0 Then
             ultPay = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT
         EndIf
     Next
-    'Segundo recorrido, busca el importe de complementos que hay actualmente en la misma paga de alloc donde se calculo el beneficio
+    'Segundo recorrido, busca el importe de complementos que hay actualmente en la misma paga de alloc donde se calculó el beneficio
     ultPay = DxDate(1,1,1800)
     If benefOrig > 0 Then
         For acum = 0 To ult_reg - 1
@@ -50,7 +50,7 @@ If rev = 0 Then
     EndIf
 'Valor de la diferencia
 Else
-    'Primer recorrido, busca el importe de complementos que habia en la paga donde se calculo el beneficio
+    'Primer recorrido, busca el importe de complementos que había en la paga donde se calculó el beneficio
     payBenef = DxDate(1,1,1800)
     For acum = 0 To ult_reg - 1
         If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_LBASE_BENEFICIO > 0 And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <= SCO_DT_ALLOCATION Then
@@ -60,7 +60,7 @@ Else
             tpImputOrig = SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT
         EndIf
     Next
-    'Segundo recorrido, busca el importe de complementos que hay actualmente en la misma paga de alloc donde se calculo el beneficio
+    'Segundo recorrido, busca el importe de complementos que hay actualmente en la misma paga de alloc donde se calculó el beneficio
     If benefOrig > 0 Then
         For acum = 0 To ult_reg - 1
             If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION = allocOrig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT = tpImputOrig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <= SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT <= payBenef Then

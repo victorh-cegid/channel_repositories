@@ -1,4 +1,4 @@
-'Copia cada registro del nodo SCO_BNFT_VALUES (que ya estan filtrados por SCO_ID_TI y SCO_ID_ITEM) y despues de copiarlo lo elimina
+'Copia cada registro del nodo SCO_BNFT_VALUES (que ya están filtrados por SCO_ID_TI y SCO_ID_ITEM) y después de copiarlo lo elimina
 dStartDate = GetStartDate()
 dEndDate = GetEndDate()
 
@@ -7,11 +7,11 @@ While SCO_BNFT_VALUES_NO_SLICES.IsEOF() = M4_FALSE
     COPYREGISTER("","SCO_BNFT_VALUES_NO_SLICES")
     SCO_BNFT_VALUES_NO_SLICES.DESTROYREGISTER()
     SCO_BNFT_VALUES_NO_SLICES.Begin()
-    'Despues de dejar el concepto tramado, hay que ejecutar un concepto que lo lea directamente (para que se ejecute una vez 
+    'Después de dejar el concepto tramado, hay que ejecutar un concepto que lo lea directamente (para que se ejecute una vez 
     'por tramo) y que luego se asigne al concepto con el setvalue
 Wend
 
-'Como ya estan copiados todos los registros correspondientes al concepto, creamos los tramos y asignamos el valor al concepto entre
+'Como ya están copiados todos los registros correspondientes al concepto, creamos los tramos y asignamos el valor al concepto entre
 'las fechas que tienen valor
 dStartRecords = SCO_DT_START..SysTotalItems(M4_TOTAL_MIN)
 dEndRecords = SCO_DT_END..SysTotalItems(M4_TOTAL_MAX)

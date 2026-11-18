@@ -1,5 +1,5 @@
 /*Se calcula la base imponible para obra social del SAC
-     Para ello se concidrara que se puede trabajar con:
+     Para ello se concidrará que se puede trabajar con:
        1 - Paga extra de aguinaldo.
        2 - Una o mas pagas donde se liquiden ajustes del aguinaldo.
 */
@@ -26,15 +26,15 @@ Sac_Del_Mes = Sac_Del_Mes / SAR_COEF_JORNADA_PER
 If(Sac <> 0)Then
     If(Sac_Del_Mes > Tope_Maximo)Then         'Si Pasamos el tope maximo....  
            Sac_Del_Mes = Tope_Maximo              '   Por lo que se toma como valor el del mismo tope maximo.
-           Base        = Sac_Del_Mes - Base_Total '   La base sera la diferencia entre el tope maximo y la base total anteriormente aplicada.                        
+           Base        = Sac_Del_Mes - Base_Total '   La base será la diferencia entre el tope maximo y la base total anteriormente aplicada.                        
     ElseIf(Sac_Del_Mes < Tope_Minimo)Then     'Si No llegamos al tope minimo.....
         If(Base_Total = Tope_Minimo)Then       '   Si Existe una base con valor del minimo.....
-            Base        = 0                      '     La base sera 0. No se realiza descuento de O.S.
+            Base        = 0                      '     La base será 0. No se realiza descuento de O.S.
         Else                                   '   Si No.....
-            Base = Tope_Minimo                   '     La base sera el valor del minimo.             
+            Base = Tope_Minimo                   '     La base será el valor del minimo.             
         EndIf                                  '
     Else                                      'Si No.... 
-        Base = Sac_Del_Mes - Base_Total         '   La base sera la diferencia entre el SAC del mes y el total de la base.  
+        Base = Sac_Del_Mes - Base_Total         '   La base será la diferencia entre el SAC del mes y el total de la base.  
     EndIf
 EndIf
 

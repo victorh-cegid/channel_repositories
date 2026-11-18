@@ -1,25 +1,25 @@
-'Excluimos del calculo los tipos de paga: Extra(2), Anticipo de Vacaciones(88), Reliquidacion Impuesto(99).
+'Excluimos del calculo los tipos de paga: Extra(2), Anticipo de Vacaciones(88), Reliquidación Impuesto(99).
 If (SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1) Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Then Return(0)
 
-'Evaluamos si se esta ejecutando una Paga Especial de Licencia por Vacaciones. En este tipo de paga se liquidan las vacaciones y no se descuentan.
+'Evaluamos si se está ejecutando una Paga Especial de Licencia por Vacaciones. En este tipo de paga se liquidan las vacaciones y no se descuentan.
 If SAR_TP_IMPUT = "77" Then Return(0)
 
-'Tenemos que tener en cuenta la posibilidad de que exista un tramado en el calculo de nomina. Realizamos todos los calculos en el primer tramo
+'Tenemos que tener en cuenta la posibilidad de que exista un tramado en el cálculo de nómina. Realizamos todos los cálculos en el primer tramo
 num_tramos = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA..SysSliceNumber
 
 If num_tramos > 1 Then
-    ini_prim_tramo = GetStartDate()         'Fecha de incio del primer tramo del calculo
-    fecha_ini_tram = GetRunningStartDate()  'Fecha de incio del tramo en ejecucion
+    ini_prim_tramo = GetStartDate()         'Fecha de incio del primer tramo del cálculo
+    fecha_ini_tram = GetRunningStartDate()  'Fecha de incio del tramo en ejecución
 EndIf
 
-'Inicializo las variables para los calculos a efectuar
+'Inicializo las variables para los cálculos a efectuar
 prec_vac_ant_desc = 0                               'Precio parcial Vacaciones descontadas periodo anterior
 prec_vac_act_desc = 0                               'Precio parcial Vacaciones descontadas periodo actual
 pre_tot_vac_desc  = 0                               'Precio total Vacaciones descontadas en paga actual
-dias_tot_desc_vac = SAR_DIAS_VACACIONES             'Total dias Descuento Licencia por Vacaciones en la paga procesada
+dias_tot_desc_vac = SAR_DIAS_VACACIONES             'Total días Descuento Licencia por Vacaciones en la paga procesada
 
-'1.- Comprobamos si existen dias pendientes descontados en la paga actual.
-dias_vac_ant_desc = SAR_EXC_DIAS_VAC_DESC        'Total dias Descuento pendientes descontados en la paga procesada
+'1.- Comprobamos si existen días pendientes descontados en la paga actual.
+dias_vac_ant_desc = SAR_EXC_DIAS_VAC_DESC        'Total días Descuento pendientes descontados en la paga procesada
 
 If dias_vac_ant_desc > 0 Then
     prec_vac_ant_desc = SAR_ACM_ULT_MES[0].SAR_EXC_PRE_VAC 'Precio descuento Vacaciones pendientes
@@ -28,10 +28,10 @@ If dias_vac_ant_desc > 0 Then
     EndIf
 EndIf
 
-'2.- Comprobamos si existe algun periodo vacacional que comience en el mes de calculo y deba ser tenido en cuenta para el calculo del precio. 
+'2.- Comprobamos si existe algún periodo vacacional que comience en el mes de cálculo y deba ser tenido en cuenta para el cálculo del precio. 
 num_reg_vac = SAR_VACACIONES.Count()
 
-'Si no obtengo dias de Licencia por vacaciones a descontar en el mes actual no los tengo en cuenta para el calculo del precio y continuo.
+'Si no obtengo días de Licencia por vacaciones a descontar en el mes actual no los tengo en cuenta para el cálculo del precio y continuo.
 If num_reg_vac > 0 Then
     dias_vac_act_desc = dias_tot_desc_vac - dias_vac_ant_desc
     promedio = SAR_PRO_VAR_ULT_6
@@ -39,7 +39,7 @@ If num_reg_vac > 0 Then
         If SAR_DIAS_NORM_SUELD = 0 Then
             prec_vac_act_desc = 0
         Else
-'Si tengo mas de un tramo en el mes y varios periodos vacacionales en el mes tengo que proporcionar el precio a cada tramo por cambio de salario.           
+'Si tengo más de un tramo en el mes y varios periodos vacacionales en el mes tengo que proporcionar el precio a cada tramo por cambio de salario.           
             If num_tramos > 1 Then 
                 For j = 0 To num_reg_vac - 1
                     SAR_VACACIONES.MoveTo(j)
@@ -71,7 +71,7 @@ If num_reg_vac > 0 Then
     EndIf
 EndIf
 
-'3.- Obtengo el precio total teniendo en cuenta si tenemos descuentos de uno o mas tramos salariales. En caso de existir mas de un tramo calculamos la media ponderada.
+'3.- Obtengo el precio total teniendo en cuenta si tenemos descuentos de uno o más tramos salariales. En caso de existir más de un tramo calculamos la media ponderada.
 If prec_vac_ant_desc > 0 And prec_vac_act_desc > 0 Then
     prec_vac_ant_desc = ((prec_vac_ant_desc * dias_vac_ant_desc))/dias_tot_desc_vac
     prec_vac_act_desc = ((prec_vac_act_desc * dias_vac_act_desc))/dias_tot_desc_vac

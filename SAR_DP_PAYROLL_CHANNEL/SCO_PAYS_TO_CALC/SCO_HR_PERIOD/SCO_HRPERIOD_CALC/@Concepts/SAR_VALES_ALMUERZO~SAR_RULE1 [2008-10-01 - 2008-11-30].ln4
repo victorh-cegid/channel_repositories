@@ -1,4 +1,4 @@
-'Se calcula de acuerdo a lo especificao en el Decreto 198/2008, hasta su finalizacion en Agosto 2009
+'Se calcula de acuerdo a lo especificao en el Decreto 198/2008, hasta su finalizaciòn en Agosto 2009
 
 If #SAR_TP_IMPUT = "88" or #SAR_TP_IMPUT = "99"  Then    Return(0)
 IF #SAR_TP_IMPUT <> "1" AND #SAR_TP_IMPUT <> "4" THEN Return(0)'Tipo mensual y quincenal

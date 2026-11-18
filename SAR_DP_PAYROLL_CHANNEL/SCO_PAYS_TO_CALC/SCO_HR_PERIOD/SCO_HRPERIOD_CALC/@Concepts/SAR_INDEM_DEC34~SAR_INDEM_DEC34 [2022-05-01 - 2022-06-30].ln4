@@ -1,4 +1,4 @@
-'Doble indemnizacion decreto 34/19 se expondra en este concepto
+'Doble indemnización decreto 34/19 se expondrá en este concepto
 total_ini = SAR_INDEM_DEC34
 
 total_ini = Percentage (25, total_ini)                  ' Decreto 886/2021

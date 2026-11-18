@@ -1,4 +1,4 @@
-'Recibe valor desde SAR_RET_VALOR_COMPL, pero solo se muestra en baja/reliquidacion o ajuste SAC
+'Recibe valor desde SAR_RET_VALOR_COMPL, pero sólo se muestra en baja/reliquidación o ajuste SAC
 valor = 0
 If SAR_IND_PAGA_RELIQ = 1 OR SAR_ES_BAJA = 1 Or SAR_IND_AJU_SAC_OE = 1 Then valor = SAR_JUR_SAC_1_OE
 Return(valor)

@@ -11,15 +11,15 @@ Else
    Num_hor_trab_x_mes = SAR_HRPERIOD_CALC.SAR_HORAS_MES
    
    If Num_hor_tiempo_teor= 0 Then
-   'Datos incorrectos.\n \nDebe introducir datos en %0:s. Esto sucedio calculando el periodo %1:n del empleado %2:s en la nomina %3:s de pago %4:d e imputacion %5:d
+   'Datos incorrectos.\n \nDebe introducir datos en %0:s. Esto sucedio calculando el periodo %1:n del empleado %2:s en la nómina %3:s de pago %4:d e imputación %5:d
         SetLog (-1,1,80,1,"El Empleado no tiene datos para la semana teorica del historico de Tiempo Teorico")
         'SCO_ERROR = 1
         'Return(-1)
    EndIf
    
    if Num_hor_trab_x_mes = 0 Then
-   'Datos incorrectos.\n \nDebe introducir datos en %0:s. Esto sucedio calculando el periodo %1:n del empleado %2:s en la nomina %3:s de pago %4:d e imputacion %5:d
-        SetLog (-1,1,80,2,"El Empleado no tiene datos para el N? de horas de trabajo al mes, ver datos de concepto #620")
+   'Datos incorrectos.\n \nDebe introducir datos en %0:s. Esto sucedio calculando el periodo %1:n del empleado %2:s en la nómina %3:s de pago %4:d e imputación %5:d
+        SetLog (-1,1,80,2,"El Empleado no tiene datos para el Nº de horas de trabajo al mes, ver datos de concepto #620")
         'SCO_ERROR = 1
         'Return(-1)
    EndIf

@@ -4,8 +4,8 @@ IF SCO_PAYS_TO_CALC.SCO_SAVEYTD=1 Then
 
 	BeginTransaction()
 
-	//Se borran siempre los datos anteriores al calculo actual. Tanto si ha dado error como si no.
-	//Los datos buenos son los ultimos calculados
+	//Se borran siempre los datos anteriores al cálculo actual. Tanto si ha dado error como si no.
+	//Los datos buenos son los últimos calculados
 	SCO_SQL_PERIOD(0,1)
 	SCO_SQL_ROLE(0,1)
 	SCO_SQL_APP_PERIOD(0,1)
@@ -23,10 +23,10 @@ IF SCO_PAYS_TO_CALC.SCO_SAVEYTD=1 Then
 		SCO_AUX_AC_HRPERIOD.Moveto(I)
 
 		//Se va a grabar si la paga es normal (no si es una retroactividad) aunque todos los conceptos tengan valor 0.
-		//De otra manera no se sabria si no se ha calculado o si da 0.
+		//De otra manera no se sabría si no se ha calculado o si da 0.
             
-            //Aunque la nomina, debido al metodo de control, no se vaya a grabar en el acumulado, la nomina se ha calculado con el cambio que provoco
-            //el recalculo y hay que dejarlo reflejado.
+            //Aunque la nómina, debido al método de control, no se vaya a grabar en el acumulado, la nómina se ha calculado con el cambio que provocó
+            //el recálculo y hay que dejarlo reflejado.
             If SCO_ERROR<>1 Then
                 num_pays=SCO_PAYS_TO_RECALC.Count()
                 For nPayRecalc = 0 to num_pays-1
@@ -39,7 +39,7 @@ IF SCO_PAYS_TO_CALC.SCO_SAVEYTD=1 Then
             Control = SCO_SAVE_CONTROL()
 		if Control = 1 THEN
 			If SCO_ERROR<>1 Then
-				//Como el calculo ha ido bien, borra los errores del empleado para esta paga.
+				//Como el cálculo ha ido bién, borra los errores del empleado para esta paga.
 				SCO_HR_PAY_ERROR.SCO_SQL_ERRORS(0,1)
 
                         
@@ -52,7 +52,7 @@ IF SCO_PAYS_TO_CALC.SCO_SAVEYTD=1 Then
 '				endif
 				SCO_AUX_AC_HRPERIOD.INSERT_BLK()
 				SCO_AUX_AC_HRROLE.INSERT_BLK()
-                        SCO_SAVE_TABLES()        ' Metodo de control de grabacion de tablas no incluidas en corporativo. 
+                        SCO_SAVE_TABLES()        ' Método de control de grabación de tablas no incluídas en corporativo. 
                         If SCO_RETRO_TERM <> STD_ID_HR then
         				SCO_LN_QUOTAS_PAYROLL.Update_Blk()              ' Prestamos
                               ' comentamos para pruebas masivas SCO_APPLYVAL_PERIOD!SCO_INTERMEDIATE_NODE_PERIOD.INSERT_BLK()

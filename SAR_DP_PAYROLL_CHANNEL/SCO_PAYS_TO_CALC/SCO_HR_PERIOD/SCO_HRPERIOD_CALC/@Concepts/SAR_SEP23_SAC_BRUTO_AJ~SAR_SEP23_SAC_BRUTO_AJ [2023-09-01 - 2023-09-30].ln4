@@ -15,7 +15,7 @@ If remun_prom <= SAR_TOPE_DEI Then
         sac_oe = 0
     EndIf
     
-    'Si es baja e iba a quedar exento sin este beneficio, no esta afectado por el decreto y por tanto no se expone el concepto en el recibo
+    'Si es baja e iba a quedar exento sin este beneficio, no está afectado por el decreto y por tanto no se expone el concepto en el recibo
     esBaja = 0
     If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then esBaja = 1
     If esBaja = 1 Then

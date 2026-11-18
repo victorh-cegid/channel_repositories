@@ -1,10 +1,10 @@
-'Antes de realizar cualquier calculo se verifica que la empresa haga la retencion correspondiente a ganancias:
+'Antes de realizar cualquier cálculo se verifica que la empresa haga la retención correspondiente a ganancias:
 If (SAR_IND_NO_RET_GAN = 1) Then 
     Return(0)
 EndIf 
 
-'Antes de realizar cualquier calculo del impuesto verificamos que la modificacion se realizo a fin del mes
-'de la paga para de esta forma dejar el calculo al nuevo periodo.
+'Antes de realizar cualquier calculo del impuesto verificamos que la modificación se realizó a fin del mes
+'de la paga para de esta forma dejar el calculo al nuevo período.
 If (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017")Then
     dia_no_5010 = DXDAY(SAR_FECHA_BAJA)'Trabajamos con la fecha de baja pues SAR_ES_BAJA = 1
     mes_no_5010 = DXMONTH(SAR_FECHA_BAJA)
@@ -74,7 +74,7 @@ WHILE I >= 0
     SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
     ' Armo los datos para SAR_ACM_IMPUESTO
     
-        'Decreto 1242/2013 - No se toma en cuenta la paga extra de la devolucion del impuesto.
+        'Decreto 1242/2013 - No se toma en cuenta la paga extra de la devolución del impuesto.
         IF SAR_FEC_INI_IG <= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG AND SAR_FEC_PAGO_IG >= SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG THEN 
             v2 = v2 + SCO_AC_HR_PERIOD_READ_1.SAR_ACM_IMPUESTO   
         ENDIF
@@ -166,7 +166,7 @@ valor_beneficio = valor_beneficio - val_paga_original
 Endif
 '--------------------------------------------------------------------------------------------------------------------------------------- 
 
-'Se contabiliza el beneficio correspondiente a Devolucion IG SAC Ley 27.260, Art. 63
+'Se contabiliza el beneficio correspondiente a Devolución IG SAC Ley 27.260, Art. 63
 valor = v1 - (v2 + v3 + v6) + v4 - v5 - SAR_IMP_DEB_BAN - valor_beneficio
  
 '--------------------------------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ base = (SAR_TOTAL_DEVENGOS + SAR_BRUTO_OE) - SAR_TI_REM_26341_ST - SAR_AJUSTE_SA
 Tope = (base + vBase) * SAR_PP_RET_GAN_ST/100
 
  
-'Si es baja y su retencion excede el tope permitido generamos la diferencia
+'Si es baja y su retención excede el tope permitido generamos la diferencia
 'Se agrega el Ind. Tope 35% segun RG 2507/2008
 if (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") Then
     If SAR_IND_APLIC_TOPE_35 = 1 Then 
@@ -190,13 +190,13 @@ if (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") Then
         '-------------------------------------- 
         
         if valor_imp_mes > tope then
-            ret_pediente = valor_imp_mes - tope 'saldo de retencion pendiente
+            ret_pediente = valor_imp_mes - tope 'saldo de retención pendiente
              beneficio_sac = SAR_BENEF_SAC_IG
             
             if beneficio_sac <>0 Then            
-                dif_retpend_benef = ret_pediente + beneficio_sac 'diferencia entre la retencion pendiente y el beneficio              
-                'Se aplica el beneficio correspondiente a Devolucion IG SAC Ley 27.260 Art. 63, al saldo pendiente de retencion.     
-                if dif_retpend_benef >= 0 then 'la retencion pendiente supera el beneficio
+                dif_retpend_benef = ret_pediente + beneficio_sac 'diferencia entre la retención pendiente y el beneficio              
+                'Se aplica el beneficio correspondiente a Devolución IG SAC Ley 27.260 Art. 63, al saldo pendiente de retención.     
+                if dif_retpend_benef >= 0 then 'la retención pendiente supera el beneficio
                     SETVALUEPRIORITY(0,"SAR_HRPERIOD_CALC","SAR_BENEF_SAC_IG_P_TOPE", 0, beneficio_sac)
                     SETVALUEPRIORITY(0,"SAR_HRPERIOD_CALC","SAR_BENEF_SAC_IG", 0, 0)
                     SETVALUEPRIORITY(0,"SAR_HRPERIOD_CALC","SAR_SALD_RET_GAN_ST", 0, dif_retpend_benef)
@@ -222,10 +222,10 @@ EndIf
 
 '-----------------------------------------------------------------------------
 'Segun lo dispuesto por la RG Afip 3831/16 se adiciona el prorrateo
-'correspondiente al recalculo del impuesto, a raiz del cambio en los
+'correspondiente al recalculo del impuesto, a raíz del cambio en los
 'importes de las deducciones a valores de Enero 2016 - Dto.394/2016.
 'Esto aplica para empleados con beneficio del dto.1242/2013 y que 
-'se encontraban en el rango 1, exceptuados de la retencion.
+'se encontraban en el rango 1, exceptuados de la retención.
 '------------------------------------------------------------------------------
 IF SAR_TP_IMPUT = "4" or SAR_TP_IMPUT = "3" or SAR_TIPO_SALARIO = "003" THEN
     SAR_ACM_PAG_QUIN_1RA.BEGIN()
@@ -332,14 +332,14 @@ valor_imp_mes = valor + vTotal_ret_mes
 if valor_imp_mes <= tope Then
      SAR_SALD_RET_GAN_ST=0
      return(ROUND(valor,2))
-else 'Modificacion de acuerdo a Devolucion IG SAC Ley 27.260, Art. 63
-    ret_pediente = valor_imp_mes - tope  'saldo de retencion pendiente
+else 'Modificación de acuerdo a Devolución IG SAC Ley 27.260, Art. 63
+    ret_pediente = valor_imp_mes - tope  'saldo de retención pendiente
     beneficio_sac = SAR_BENEF_SAC_IG
     
     if beneficio_sac <> 0 Then
-        dif_retpend_benef = ret_pediente + beneficio_sac 'diferencia entre la retencion pendiente y el beneficio
-        'Se aplica el beneficio correspondiente a Devolucion IG SAC Ley 27.260 Art. 63, al saldo pendiente de retencion.    
-        if dif_retpend_benef >= 0 then 'la retencion pendiente supera el beneficio
+        dif_retpend_benef = ret_pediente + beneficio_sac 'diferencia entre la retención pendiente y el beneficio
+        'Se aplica el beneficio correspondiente a Devolución IG SAC Ley 27.260 Art. 63, al saldo pendiente de retención.    
+        if dif_retpend_benef >= 0 then 'la retención pendiente supera el beneficio
             SETVALUEPRIORITY(0,"SAR_HRPERIOD_CALC","SAR_BENEF_SAC_IG_P_TOPE", 0, beneficio_sac)
             SETVALUEPRIORITY(0,"SAR_HRPERIOD_CALC","SAR_BENEF_SAC_IG", 0, 0)
             SETVALUEPRIORITY(0,"SAR_HRPERIOD_CALC","SAR_SALD_RET_GAN_ST", 0, dif_retpend_benef)

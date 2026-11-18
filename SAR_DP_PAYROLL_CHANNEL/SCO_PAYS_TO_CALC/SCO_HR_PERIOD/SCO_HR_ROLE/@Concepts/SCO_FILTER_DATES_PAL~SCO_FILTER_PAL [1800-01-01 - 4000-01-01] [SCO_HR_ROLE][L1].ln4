@@ -1,5 +1,5 @@
-'Este metodo filtra por fechas los roles que se deben cargar 
-'Si el periodo tiene pago despues de la baja, los registros se filtran por fecha de fin
+'Este método filtra por fechas los roles que se deben cargar 
+'Si el periodo tiene pago después de la baja, los registros se filtran por fecha de fin
 'En cualquier otro caso, se filtran por las fechas de la paga
 
 'Para la carga de roles cerrados en retroactividad, no los queremos filtrardos en fechas

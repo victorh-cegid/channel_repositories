@@ -15,35 +15,35 @@ If ISNULL(valor) = TRUE Then
     valor = 0
 EndIf
 
-' Apliacion del Art. 4 del Decreto 561/2019: "... se financiara el aporte personal de los trabajadores
-' en relacion de dependencia a que se refiere el inciso a) del articulo 10 de la Ley N? 24.241 y sus modificaciones,
-' ... durante los meses de agosto y septiembre del a?o 2019, en una suma equivalente a PESOS DOS MIL ($2.000) 
+' Apliación del Art. 4 del Decreto 561/2019: "... se financiará el aporte personal de los trabajadores
+' en relación de dependencia a que se refiere el inciso a) del artículo 10 de la Ley N° 24.241 y sus modificaciones,
+' ... durante los meses de agosto y septiembre del año 2019, en una suma equivalente a PESOS DOS MIL ($2.000) 
 ' mensuales o al CIEN POR CIENTO (100%) de su valor, lo que resulte menor."
 TopeArt4Dec561Aux = SAR_FINAN_APO_JUB_AUX
 
-If TopeArt4Dec561Aux = 4561 Then            ' Devolucion de la financiacion aplicada en pagas anteriores en el mes, en esta paga se superan los 60000 pesos de remuneracion bruta devengada
+If TopeArt4Dec561Aux = 4561 Then            ' Devolución de la financiación aplicada en pagas anteriores en el mes, en esta paga se superan los 60000 pesos de remuneración bruta devengada
 
     DifJubMesAct    = SAR_ACM_MES_ACTUAL_DIF[0].SAR_FINAN_APO_JUB_DIF
     
-    SAR_IG_JUB_MEN = SAR_IG_JUB_MEN - DifJubMesAct                          // Consideramos la financiacion para el concepto que va al impuesto
+    SAR_IG_JUB_MEN = SAR_IG_JUB_MEN - DifJubMesAct                          // Consideramos la financiación para el concepto que va al impuesto
     SAR_TOT_M_JUB()                                                         // Recalculamos total dependiente
-    SAR_FINAN_APO_JUB_DIF = -1 * DifJubMesAct                               // Pasamos el importe de la financiacion aplicado anterioremente para descontarselo de nuevo al empleado
+    SAR_FINAN_APO_JUB_DIF = -1 * DifJubMesAct                               // Pasamos el importe de la financiación aplicado anterioremente para descontarselo de nuevo al empleado
 Else
     DiferenciaValores = Min(TopeArt4Dec561Aux, valor)
     DiferenciaValores = Round(DiferenciaValores, SCO_CURR_DECIMALS)
     
-    SAR_IG_JUB_MEN = SAR_IG_JUB_MEN - DiferenciaValores                     // Consideramos la financiacion para el concepto que va al impuesto
+    SAR_IG_JUB_MEN = SAR_IG_JUB_MEN - DiferenciaValores                     // Consideramos la financiación para el concepto que va al impuesto
     SAR_TOT_M_JUB()                                                         // Recalculamos total dependiente        
-    SAR_FINAN_APO_JUB_DIF = -1 * DiferenciaValores                          // Pasamos el importe de la financiacion como negativo
+    SAR_FINAN_APO_JUB_DIF = -1 * DiferenciaValores                          // Pasamos el importe de la financiación como negativo
     SAR_FINAN_APO_JUB_AUX = SAR_FINAN_APO_JUB_AUX - DiferenciaValores
 EndIf
 
-' Forzamos a cero los conceptos de jubilacion HE tributable/exento cuando no existe jubilacion
+' Forzamos a cero los conceptos de jubilación HE tributable/exento cuando no existe jubilación
 If valor = 0 Then
     SetValuePriority ( 0 , GetThisNodeId ( ) , "SAR_JUB_HS_FINDE_TRIB" , -1 , 0)
     SetValuePriority ( 0 , GetThisNodeId ( ) , "SAR_JUB_HS_FINDE_EXEN" , -1 , 0)
 Else
-    ' Conceptos de aporte jubilacion solo para el impuesto asociados a las HE tributable/exento 
+    ' Conceptos de aporte jubilación sólo para el impuesto asociados a las HE tributable/exento 
     JubHETribut = SAR_JUB_HS_FINDE_TRIB
     JubHEExento = SAR_JUB_HS_FINDE_EXEN
     If JubHETribut <> 0 Then 

@@ -16,7 +16,7 @@ ELSE
 ENDIF
 
 IF valor > 0 THEN
-    valor = valor / 2 // 50% de la mejor remuneracion mensual.
+    valor = valor / 2 // 50% de la mejor remuneración mensual.
 ENDIF
 
 

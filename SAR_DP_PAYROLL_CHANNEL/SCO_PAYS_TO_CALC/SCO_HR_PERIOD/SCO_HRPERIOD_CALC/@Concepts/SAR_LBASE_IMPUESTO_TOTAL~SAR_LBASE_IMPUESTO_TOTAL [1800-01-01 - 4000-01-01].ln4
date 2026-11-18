@@ -63,7 +63,7 @@ EndIf
 
 
 '**********************************************************************************************
-'1? Se toma el impuesto total que existe en el acumulado, como esto es para 1 solo uso en junio se usa la read:
+'1º Se toma el impuesto total que existe en el acumulado, como esto es para 1 sólo uso en junio se usa la read:
 '**********************************************************************************************
 
 impuestoTotalCedu = 0
@@ -71,20 +71,20 @@ mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
 mes_fin_ig = DxDate(31,12,DxYear(SAR_FEC_IMPUT_IG))
 ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
 For acum = 0 To ult_reg - 1
-    'Solo la ultima paga normal con allocation igual al que se procesa donde el indicador SAR_LBASE_IND_CALC_BENEF se ha activado (es automatico)
+    'Sólo la última paga normal con allocation igual al que se procesa donde el indicador SAR_LBASE_IND_CALC_BENEF se ha activado (es automatico)
     If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION = SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT And DxMonth(SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_PAGO_IG) = DxMonth(SAR_FEC_IMPUT_IG) Then
         impuestoTotalCedu = SCO_AC_HR_PERIOD_READ_1[acum].SAR_IMPUESTO_TOTAL
     EndIf
 Next
 
 '**********************************************************************************************
-'2? Cambiamos el sentido del indicador (de cedular a 4ta) para que recupere tablas de impuesto de 4ta
+'2º Cambiamos el sentido del indicador (de cedular a 4ta) para que recupere tablas de impuesto de 4ta
 '**********************************************************************************************
 indCeduOrig = SAR_CEDU_IND_IMPUESTO
 If indCeduOrig = 1 Then SetValuePriority(1,"SCO_HRPERIOD_CALC","SAR_CEDU_IND_IMPUESTO",-1,0)
 
 '**********************************************************************************************
-'3? Calcula como si hubiera sido 4ta los equivalentes a SAR_CANT_FIJA_IMP / SAR_DESDE_IMP / SAR_PORC_IMP / SAR_IMPUESTO_TOTAL
+'3º Calcula como si hubiera sido 4ta los equivalentes a SAR_CANT_FIJA_IMP / SAR_DESDE_IMP / SAR_PORC_IMP / SAR_IMPUESTO_TOTAL
 '**********************************************************************************************
 base = SAR_LBASE_BASE_4TA - ajustesSacRetroConAP
 
@@ -107,7 +107,7 @@ Else
 EndIf
 
 '**********************************************************************************************
-'4? NO RETROACTIVIDAD: La norma indica que no se debe recalcular el beneficio hasta reliquidacion
+'4º NO RETROACTIVIDAD: La norma indica que no se debe recalcular el beneficio hasta reliquidación
 '**********************************************************************************************
 indFuerzaRecalc = SAR_LBASE_IND_FUERZA_RECALC
 

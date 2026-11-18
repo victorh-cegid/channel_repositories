@@ -2,7 +2,7 @@
 IF SAR_TP_IMPUT = "2" OR (SAR_TP_IMPUT = "4" and SAR_ES_ALTA = 0) OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_ES_BAJA = 1 THEN Return(0)
 
 '---------------------------------------------------
-'          Inicializacion de variables
+'          Inicialización de variables
 '---------------------------------------------------
 aux = 0
 base = 0           
@@ -10,7 +10,7 @@ nummes = 0              'Mes de pago
 
 fam = 0                 'Familiares a cargo
 gni_ant = 0             'Ganancia no imponible dto.1242/2013
-desp_ant = 0            'Deduccion especial dto.1242/2013
+desp_ant = 0            'Deducción especial dto.1242/2013
 val_cony_ig = 0         'Valor Conyuge dto.1242/2013
 val_h_ig = 0            'Valor Hijo dto.1242/2013
 val_o_car = 0           'Valor Otras cargas dto.1242/2013
@@ -19,7 +19,7 @@ ded_tot_mes_ant = 0     'Deducciones totales mes anterior
 bas_imp_ant = 0         'Base impuesto mes anterior sin deducciones
 
 gni_nvo = 0             'Ganancia no imponible dto.394/2016
-desp_nvo = 0            'Deduccion especial dto.394/2016
+desp_nvo = 0            'Deducción especial dto.394/2016
 val_cony_ig_nvo = 0     'Valor Conyuge dto.394/2016
 val_h_ig_nvo = 0        'Valor Hijo dto.394/2016
 val_o_car_nvo = 0       'Valor Otras cargas dto.394/2016
@@ -33,7 +33,7 @@ val_serv_dom = 0        'Servicio Domestico
 val_serv_dom_nvo = 0    'Servicio Domestico recalculo
 
 '---------------------------------------------------------------------------------------
-'                                  Inicio del calculo
+'                                  Inicio del cálculo
 '---------------------------------------------------------------------------------------
 
 'Calculamos el mes de pago.
@@ -43,7 +43,7 @@ nummes = SAR_MES_PAGO_IG - 1
 
 SCO_AC_HR_PERIOD_READ_1.BEGIN()
 ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()
-'agregar a?o para que no busque 2015
+'agregar año para que no busque 2015
 
     FOR I = 0 TO ULTIMO_REG -1
         SCO_AC_HR_PERIOD_READ_1.MOVETO(I)
@@ -59,16 +59,16 @@ ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()
         IF (nummes = mes_p_ig AND anio_ig = 2016) AND ((pay_tp = "1" or pay_tp = "4") and (SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION = SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT)) THEN 
             fec_ig_ant = SCO_AC_HR_PERIOD_READ_1.SAR_FECHA_PAGO_IG
             gni_ant = SCO_AC_HR_PERIOD_READ_1.SAR_IG_G_NO_IMP                                                           'Ganancia no imponible
-            desp_ant = SCO_AC_HR_PERIOD_READ_1.SAR_IG_DED_ESP - SCO_AC_HR_PERIOD_READ_1.SAR_IG_DEC142_AUX               'Deduccion especial
+            desp_ant = SCO_AC_HR_PERIOD_READ_1.SAR_IG_DED_ESP - SCO_AC_HR_PERIOD_READ_1.SAR_IG_DEC142_AUX               'Deducción especial
             val_cony_ig = SCO_AC_HR_PERIOD_READ_1.SAR_IMP_CONY_IG                                                       'Valor conyuge
             val_h_ig = SCO_AC_HR_PERIOD_READ_1.SAR_IMP_HIJO_IG                                                          'Valor hijo
             val_o_car = SCO_AC_HR_PERIOD_READ_1.SAR_IMP_O_CAR_IG                                                        'Valor otras cargas
 
             val_serv_dom = SCO_AC_HR_PERIOD_READ_1.SAR_SERV_DOMEST                                                      'Servicio Domestico
 
-            fam_ig = val_cony_ig + val_h_ig + val_o_car                                                                 'total deduccion por carga de familia
-            ded_tot_mes_ant = gni_ant + desp_ant + fam_ig                                                               'deduccion total mes anterior
-            ded_tot_mes_ant = ded_tot_mes_ant + val_serv_dom                                                            'deduccion total mes anterior            
+            fam_ig = val_cony_ig + val_h_ig + val_o_car                                                                 'total deducción por carga de familia
+            ded_tot_mes_ant = gni_ant + desp_ant + fam_ig                                                               'deducción total mes anterior
+            ded_tot_mes_ant = ded_tot_mes_ant + val_serv_dom                                                            'deducción total mes anterior            
             bas_imp_ant = SCO_AC_HR_PERIOD_READ_1.SAR_IG_DEC142_AUX                                                     'base impuesto mes anterior
         EndIf
     NEXT
@@ -87,16 +87,16 @@ ENDIF
 
 
 '--------------------------------------------------------------------------------------
-'A la base de impuesto del ultimo mes, cpto 5930 se le adiciona
+'A la base de impuesto del último mes, cpto 5930 se le adiciona
 'las deducciones con los valores de la tabla anterior al decreto
 '394/2016.
 '--------------------------------------------------------------------------------------
 bas_s_ded_mes_ant = bas_imp_ant + ded_tot_mes_ant
 
 '--------------------------------------------------------------------------------------
-'Tomo el valor de las deducciones con los nuevos valores segun
+'Tomo el valor de las deducciones con los nuevos valores según
 'la tabla del decrero 394 / 2016 dependiendo de la fecha de 
-'pago IG, esta puede ser el mes de Febrero o Marzo segun el caso
+'pago IG, esta puede ser el mes de Febrero o Marzo según el caso
 'que se liquide con fecha de pago diferida o no.
 '--------------------------------------------------------------------------------------
 'Importe de las deducciones acumuladas correspondientes  
@@ -104,7 +104,7 @@ gni_nvo = SAR_GAN_NO_IMP / SAR_MES_PAGO_IG * nummes
 desp_nvo = SAR_DED_ESPECIAL / SAR_MES_PAGO_IG * nummes
 
 
-'Se verifica si la carga de familia fue alta el mes anterior o desde el principio del a?o fiscal.
+'Se verifica si la carga de familia fue alta el mes anterior o desde el principio del año fiscal.
 ini_anio = SAR_FEC_INI_IG
 fam = Todouble(val_cony_ig + val_h_ig + val_o_car)
 
@@ -185,7 +185,7 @@ ENDIF
 '--------------------------------------------------------------------------------------
 
 
-'--------Servicio domestico----------------------------
+'--------Servicio doméstico----------------------------
 IF val_serv_dom > 0 Then
     serv          = val_serv_dom
     tope_serv     = SAR_TOPE_SER_DOM

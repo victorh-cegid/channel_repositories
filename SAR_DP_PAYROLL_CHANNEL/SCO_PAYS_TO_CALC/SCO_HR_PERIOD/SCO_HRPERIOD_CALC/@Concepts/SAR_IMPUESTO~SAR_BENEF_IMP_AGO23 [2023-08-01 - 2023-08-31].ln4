@@ -12,21 +12,21 @@ EndIf
 
 If DxYear(SAR_FEC_IMPUT_IG) = 2023 Then
     If esBaja = 0 Then
-        'recupera el beneficio calculado en julio, si no recupera nada se mantiene el calculo del impuesto que habia
+        'recupera el beneficio calculado en julio, si no recupera nada se mantiene el cálculo del impuesto que había
         benef_total = SAR_ACM_ULT_MES[0].SAR_AGO23_BENEF_TOTAL
         beneficio = Round(benef_total/2,SAR_NUM_DEC)
         'Se incrementa el impuesto en una cuota, ya que de forma natural, lo que va a intentar es aplicarlo en forma completa
         impuesto = impuesto + beneficio
 
-        'En caso de varias pagas en el mes, el beneficio SI debe sumarse al impuesto para que no se meta la cuota de septiembre, pero solo debe exponerse una vez
+        'En caso de varias pagas en el mes, el beneficio SI debe sumarse al impuesto para que no se meta la cuota de septiembre, pero sólo debe exponerse una vez
         beneficio = beneficio * -1
         beneficioRecibo = beneficio - SAR_ACM_MES_ACTUAL_DIF[0].SAR_AGO23_BENEF_IMP
         SAR_AGO23_BENEF_IMP = beneficioRecibo
     Else
-        'NO hay que alterar el impuesto, solo exponer el beneficio hasta julio. Recupera el beneficio calculado en julio, si no recupera nada se mantiene el calculo del impuesto que habia
+        'NO hay que alterar el impuesto, sólo exponer el beneficio hasta julio. Recupera el beneficio calculado en julio, si no recupera nada se mantiene el cálculo del impuesto que había
         benef_total = SAR_ACM_ULT_MES[0].SAR_AGO23_BENEF_TOTAL
         beneficio = Round(benef_total,SAR_NUM_DEC)
-        'Se expondra como una retencion negativa
+        'Se expondrá como una retención negativa
         SAR_AGO23_BENEF_IMP = beneficio * -1
     EndIf
 EndIf

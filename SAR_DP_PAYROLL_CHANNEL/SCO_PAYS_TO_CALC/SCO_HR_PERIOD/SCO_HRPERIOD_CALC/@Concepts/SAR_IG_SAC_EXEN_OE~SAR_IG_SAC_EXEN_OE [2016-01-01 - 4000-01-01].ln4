@@ -1,7 +1,7 @@
 'toma valor por tabla de valor del periodo
 
 
-'Solo se ejecuta si el Indicador de exencion IG y el Indicador de exencion IG Empresa estan activos 
+'Solo se ejecuta si el Indicador de exención IG y el Indicador de exención IG Empresa están activos 
 If (SAR_IND_EXEN_IG <> 1) or (SAR_IND_EXEN_IG = 1 and SAR_IND_EXEN_IG_EMPRE <> 1) Then Return(0)
 
 

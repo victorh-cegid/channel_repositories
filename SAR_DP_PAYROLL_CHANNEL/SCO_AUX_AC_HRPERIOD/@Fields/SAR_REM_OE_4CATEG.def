@@ -1,5 +1,5 @@
 item: SAR_REM_OE_4CATEG
-name: Remuneracion Otros Empleos Reporte 4?Categoria
+name: Remuneración Otros Empleos Reporte 4ªCategoría
 column_name: SAR_REM_OE_4CATEG
 item_type: FIELD
 type: CURRENCY
@@ -11,3 +11,12 @@ default_value: "0"
 internal_type: 15
 item_aux: ID_CURRENCY
 id_cstype: null
+totalize_type: 4
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: 2
+variable_arguments: 0
+item_aux_prorat: SCO_DT_SLICE
+dimension: null
+conv_function: 1

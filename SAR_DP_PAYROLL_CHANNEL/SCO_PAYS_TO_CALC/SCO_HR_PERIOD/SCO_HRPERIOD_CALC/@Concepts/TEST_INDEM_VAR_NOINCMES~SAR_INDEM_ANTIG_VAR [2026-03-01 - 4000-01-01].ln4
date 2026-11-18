@@ -1,0 +1,143 @@
+''Este concepto recoge el importe de los conceptos variables que forman parte de la indemnización por antigüedad.
+''Primero evalúa el número de meses a revisar hacia atrás tomando como referencia la fecha de indemnización (SAR_FEC_INDEM).
+''Si esa fecha es igual o superior a un año respecto a la fecha de imputación (SCO_DT_ALLOCATION),
+''    se toman los promedios de los 12 y los 6 meses anteriores al que se procesa.
+''Si la fecha de indemnización es inferior a un año respecto a la fecha de imputación (SCO_DT_ALLOCATION),
+''    se cuentan los meses desde esa fecha para el periodo completo, y la mitad para el periodo corto,
+''    redondeando esta mitad al entero superior.
+''Las fechas se toman considerando el mes completo, aunque la fecha de inicio o final sea a mitad de mes.
+'
+''Si no es baja no calcula nada
+'If SAR_ES_BAJA <> 1 Then Return(0)
+'
+''Criterio a aplicar (1 = conjunto, 2 = individual) y fecha de referencia
+'indCriterio = SAR_IND_INDEMNIZ_RL26
+'fecIndem = SAR_FEC_INDEM
+'
+''trazas
+'indTraza = 0 : idTraza = "SAR_TEST_IND_TRAZA" : separadorTraza = "-----------------------------------------"
+'If ExistNodeItemIndex("SCO_HRPERIOD_CALC", idTraza) <> -1 Then indTraza = GetValue("SCO_HRPERIOD_CALC", idTraza, -1)
+'If indTraza = 1 Then
+'    FileOut = "C:\Temp\indemVariables_" + SCO_ID_HR + ".txt" : InitFile(FileOut, "CONCEPTO SAR_INDEM_ANTIG_VAR")
+'EndIf
+''trazas
+'
+''Hace 2 recorridos, uno con criterio no incluir mes de la baja y otro si incluyendolo
+'valorCritConjNoIncMBaja = 0 : valorCritConjIncMBaja = 0 : valorCritIndNoIncMBaja = 0 : valorCritIndIncMBaja = 0
+'
+'For critMesBaja = 0 To 1
+'
+'    'Variables de meses y acumuladores
+'    mesesCompleto = 12 : mesesMitad = 6 : promLargConj = 0 : promCortConj = 0 : promMejInd = 0
+'    
+'    'Inc mes baja
+'    incMesBaja = critMesBaja
+'    
+'    'Normalización de fechas a inicio de mes
+'    fecIndem = DxDate(1, DxMonth(fecIndem), DxYear(fecIndem))
+'    fecIniPaga = DxDate(1, DxMonth(SCO_DT_ALLOCATION), DxYear(SCO_DT_ALLOCATION))
+'    
+'    'Condiciones de salida: no baja o misma mensualidad de indemnización
+'    If SAR_ES_BAJA = 0 Or fecIndem >= fecIniPaga Or indCriterio = 0 Then Return(0)
+'    
+'    'Evaluación de meses si la fecha de indemnización es menor a un año
+'    fecIniTeor = AddMonths(SCO_DT_ALLOCATION, -12)
+'    'Inc mes baja
+'    If incMesBaja = 1 Then fecIniTeor = AddMonths(SCO_DT_ALLOCATION, -11)
+'    fecIniTeor = DxDate(1, DxMonth(fecIniTeor), DxYear(fecIniTeor))
+'    
+'    fecfinTeor = AddMonths(SCO_DT_ALLOCATION, -1)
+'    'Inc mes baja
+'    If incMesBaja = 1 Then fecfinTeor = SCO_DT_ALLOCATION
+'    fecfinTeor = DxDate(DaysOfMonth(fecfinTeor), DxMonth(fecfinTeor), DxYear(fecfinTeor))
+'    
+'    If fecIndem > fecIniTeor Then
+'        mesesCompleto = DateDiff(fecIndem, fecfinTeor, M4_MONTH) + 1
+'        mesesMitad = Round(mesesCompleto / 2, 0)
+'    EndIf
+'    
+'    'Nombre del total usado para clasificar variables
+'    totalId = "SAR_TOT_INDEM_CONC_VAR"
+'    
+'    'Carga del nodo que recorre el total
+'    SAR_TOTAL_VALUES.DESTROYBLOCK()
+'    SAR_TOTAL_VALUES.SAR_ID_NODO = "SAR_HRPERIOD_CALC"
+'    SAR_TOTAL_VALUES.SAR_ID_NODO_CLI = SAR_AUX_NODO_CALC
+'    SAR_TOTAL_VALUES.SAR_ID_TOTAL = totalId
+'    SAR_TOTAL_VALUES.SAR_FEC_VIGENCIA = SCO_DT_ALLOCATION
+'    SAR_TOTAL_VALUES.Load_Blk()
+'    
+'    'Método para descartar items del total (para poder usar herencia)
+'    SAR_TOTAL_VALUES.SAR_APLANAR()
+'    
+'    'Esta linea es para forzar que la read ordene por dt_alloc ya que se queda con el orden
+'    'del ultimo nodo de acumulado cargado, lo cual puede ser aleatorio
+'    SAR_ACM_INDEMNIZ_VARIABLES.Load_Blk()
+'
+'    'trazas
+'    If indTraza = 1 Then
+'        ConcatFile(FileOut, "") : trazaIncBaja = "INCLUYENDO MES DE LA BAJA:"
+'        If incMesBaja = 0 Then trazaIncBaja = "NO INCLUYENDO MES DE LA BAJA:"
+'        ConcatFile(FileOut, separadorTraza) : ConcatFile(FileOut, trazaIncBaja) : ConcatFile(FileOut, separadorTraza) : ConcatFile(FileOut, "") : ConcatFile(FileOut, "Meses del periodo completo: " + ToString(mesesCompleto,0)) : ConcatFile(FileOut, "Meses del periodo mitad: " + ToString(mesesMitad,0)) : ConcatFile(FileOut, "") : ConcatFile(FileOut, "IMPORTES VARIABLES QUE SE HAN CONSIDERADO:") : ConcatFile(FileOut, "")
+'    EndIf
+'    'trazas
+'    
+'    'Recorre la lista de conceptos variables
+'    For i = 0 To SAR_TOTAL_VALUES.Count() - 1
+'    
+'        promLargo = 0
+'        promCorto = 0
+'        id_concepto = SAR_TOTAL_VALUES[i].ID_ITEM_USED
+'        descartado = SAR_TOTAL_VALUES[i].SAR_DESCARTADO
+'    
+'        'Si descartado = 1 significa que por herencia se ha restado del total STD y no debe considerarse
+'        If descartado = 0 Then
+'            'Para cada concepto variable recogemos su promedio del periodo completo y mitad
+'            TEST_CALC_INDEM_VAR_INCMES(id_concepto, mesesCompleto, mesesMitad , incMesBaja, promLargo, promCorto)
+'        
+'            'Acumulamos: mejor largo conjunto, mejor corto conjunto y mejor entre ambos individual
+'            promLargConj = promLargConj + promLargo
+'            promCortConj = promCortConj + promCorto
+'            promMejInd = promMejInd + Max(promLargo, promCorto)
+'
+'            'trazas
+'            If indTraza = 1 Then
+'                If promLargo <> 0 Or promCorto <> 0 Then ConcatFile(FileOut, id_concepto + ": Promedio largo = " + ToString(promLargo) + ", Promedio corto = " + ToString(promCorto))
+'            EndIf
+'            'trazas
+'
+'        EndIf
+'    
+'    Next
+'    
+'    'Guardamos en variables criterio conjunto y criterio individual
+'    valorCritConj = Round(Max(promLargConj, promCortConj), SAR_NUM_DEC)
+'    valorCritInd = Round(promMejInd, SAR_NUM_DEC)
+'
+'    'trazas
+'    If indTraza = 1 Then 
+'        ConcatFile(FileOut, "") : ConcatFile(FileOut, "Total promedios largos conjuntos = " + ToString(promLargConj)) : ConcatFile(FileOut, "Total promedios cortos conjuntos = " + ToString(promCortConj)) : ConcatFile(FileOut, "")
+'        ConcatFile(FileOut, "Variable final tomado = " + ToString(valorCritConj))        
+'    EndIf
+'    'trazas
+'    
+'    If critMesBaja = 0 Then
+'        valorCritConjNoIncMBaja = valorCritConj 
+'        valorCritIndNoIncMBaja = valorCritInd
+'    Else
+'        valorCritConjIncMBaja = valorCritConj
+'        valorCritIndIncMBaja = valorCritInd
+'    EndIf
+'    
+'
+'Next
+'
+'If indCriterio = 2 Then 
+'    TEST_INDEM_VAR_INCMES = valorCritIndIncMBaja
+'    Return(valorCritIndNoIncMBaja)
+'EndIf
+'
+'TEST_INDEM_VAR_INCMES =  valorCritConjIncMBaja
+'
+'Return(valorCritConjNoIncMBaja)
+'

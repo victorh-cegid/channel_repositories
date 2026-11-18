@@ -1,5 +1,5 @@
-'Este metodo filtra por fechas los periodos que esten de alta durante el periodo de la paga
-'Ademas permite la carga en este nodo de los periodos que tengan definidos pagos despues de la baja (siempre que no sea
+'Este método filtra por fechas los periodos que estén de alta durante el periodo de la paga
+'Además permite la carga en este nodo de los periodos que tengan definidos pagos después de la baja (siempre que no sea
 'una paga retroactiva) y los periodos para los que hay que calcular la baja retroactiva
 
 SCO_FILTER_DATES_PAL_PARAM = ToString(SCO_PAYS_TO_CALC.SCO_DT_START_ALLOC,0) + "|" + ToString(SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC,0) + "|" + ToString(SCO_PAYS_TO_CALC.SCO_DT_PAYMENT,0) + "|" + ToString(SCO_PAYS_TO_CALC.SCO_DT_ALLOCATION,0) + "|" + ToString(SCO_PAYS_TO_CALC.SCO_PAY_FREQ_PAYM,0) + "|" + ToString(SCO_PAYS_TO_CALC.SCO_DT_ALLOCATION,0) + "|" + ToString(SCO_PAYS_TO_CALC.SCO_DT_PAYMENT,0) + "|" + SCO_PAYS_TO_CALC.SCO_PAY_FREQ_ALLOC + "|" + ToString(SCO_PAYS_TO_CALC.SCO_DT_PAYMENT,0) + "|" + SCO_PAYS_TO_CALC.SCO_PAY_FREQ_PAYM

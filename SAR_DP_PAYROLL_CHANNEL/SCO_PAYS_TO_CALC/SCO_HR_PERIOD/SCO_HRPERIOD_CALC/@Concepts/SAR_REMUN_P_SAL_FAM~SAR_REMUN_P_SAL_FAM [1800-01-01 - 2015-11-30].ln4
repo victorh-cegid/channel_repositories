@@ -1,5 +1,5 @@
 ' Se descuenta del total remunerativo a abonar el importe de las horas extras y del SAC, de acuerdo al 
-' articulo 2do. del Decreto 368/2004
+' artículo 2do. del Decreto 368/2004
 
 IF SCO_PAY_FREQ_ALLOC = "004" THEN 'Frecuencia de pago mensual
     rem_men= SAR_TOT_HAB_CON_AP + SAR_MATERNIDAD - SAR_TOT_HS_EXTRAS - SAR_PAGA_EXTRA_1 - SAR_PAGA_EXTRA_2 - SAR_EGRESO_PAGA_1 - SAR_EGRESO_PAGA_2 - SAR_TOTAL_DESFA

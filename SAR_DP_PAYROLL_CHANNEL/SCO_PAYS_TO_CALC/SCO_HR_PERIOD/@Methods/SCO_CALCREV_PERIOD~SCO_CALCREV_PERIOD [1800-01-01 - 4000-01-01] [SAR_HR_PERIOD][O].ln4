@@ -28,7 +28,7 @@ else
 endif
 
 'Bug 0179811. SJR.*********************
-'Se buscaran las modificaciones desde que se ha grabado la nomina por ultima vez y la fecha de fin de pago
+'Se buscarán las modificaciones desde que se ha grabado la nómina por última vez y la fecha de fin de pago
 If SAR_PAYS_TO_CALC.SCO_MNG_LOCKED_PAYS <> "0" Then
     dt_close_proc = SAR_PAYS_TO_CALC.SCO_DT_END_PAYM + 1
     If IsNull(SCO_DT_FILTER_REV_AC.DT_LAST_UPDATE) = M4_TRUE Then

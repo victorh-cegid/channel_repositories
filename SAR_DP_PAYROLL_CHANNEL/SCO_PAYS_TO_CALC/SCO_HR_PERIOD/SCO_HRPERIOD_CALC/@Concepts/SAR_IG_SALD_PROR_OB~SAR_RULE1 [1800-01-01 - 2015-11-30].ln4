@@ -1,7 +1,7 @@
 'No se ejecuta en la primera quincena
 IF SAR_TP_IMPUT = "3" THEN RETURN (0)
 
-'No tomara valor en la paga normal de Junio si no existe ajuste:
+'No tomará valor en la paga normal de Junio si no existe ajuste:
 If (SAR_TP_IMPUT = "1" And DxMonth(SCO_DT_PAYMENT) = 6 And SAR_PAGA_EXTRA_AJ_2 = 0) Then
   Return(0)
 EndIf

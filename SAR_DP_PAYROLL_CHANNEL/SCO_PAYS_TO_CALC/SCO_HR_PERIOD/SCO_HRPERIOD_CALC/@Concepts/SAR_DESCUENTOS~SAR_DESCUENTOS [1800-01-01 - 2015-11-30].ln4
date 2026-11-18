@@ -3,7 +3,7 @@ IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
 ENDIF
 
 
-'Realizamos unos controles previos a la realizacion del descuento
+'Realizamos unos controles previos a la realización del descuento
 
 SAR_H_DESCUENTOS.BEGIN()
 
@@ -72,7 +72,7 @@ FOR  I = primerreg  TO  ultimoreg
     ARG_RETJUD = 0
     porc = SAR_H_DESCUENTOS.SAR_PORCENTAJE
     
-    // Control de grabacion para simulaciones, si se ejecuta la nomina simulada la tabla de descuentos no se modifica.  
+    // Control de grabación para simulaciones, si se ejecuta la nomina simulada la tabla de descuentos no se modifica.  
     ARG_GRABA = 0
     If SAR_PAYS_TO_CALC.SCO_SAVEYTD=1 And SAR_PAYS_TO_CALC.SCO_PAY_SIMUL = 0 Then
         ARG_GRABA = SAR_PAYS_TO_CALC.SCO_SAVEYTD 
@@ -81,7 +81,7 @@ FOR  I = primerreg  TO  ultimoreg
 
     ARG_12 = SAR_H_DESCUENTOS.SAR_OR_DESCUENTO
     If SAR_H_DESCUENTOS.SAR_PORCENTAJE <> 0 Then 
-        ARG_13 = 0          'Es Porcentaje del liquido 
+        ARG_13 = 0          'Es Porcentaje del líquido 
     Else 
         If SAR_H_DESCUENTOS.SAR_FACTOR <> 0 Then 
            ARG_13= 2          'Es factor variable 
@@ -118,7 +118,7 @@ FOR  I = primerreg  TO  ultimoreg
 
     EMBARGO      =  SAR_UN_DESCUENTOS * ARG_RETJUD + EMBARGO
     
-    ' Validacion para discriminar el Embargo cuota alimentaria.
+    ' Validación para discriminar el Embargo cuota alimentaria.
     If SAR_H_DESCUENTOS.SAR_ID_DESCUENTO = "4" Then
         
         EMB_CUO_ALIM =  SAR_UN_DESCUENTOS * ARG_DESC + EMB_CUO_ALIM 

@@ -1,0 +1,14 @@
+aux = SAR_IMPORTE_LICENCIAS
+
+IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" Or (SAR_TP_IMPUT = "77" And SAR_IND_PAGA_ESP_VAC = 0) THEN
+    Return(0)
+ENDIF
+
+base    = SAR_VACACIONES
+
+'D612 2026
+If SAR_D612_IND = 1 Then base = base - SAR_D612_PLUS_VAC_TOT
+
+valor   = base * SAR_PORC_C_SIND_OBL / 100
+
+RETURN(valor)

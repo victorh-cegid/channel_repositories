@@ -1,4 +1,4 @@
-'Se ingresara por tabla de valor empresa, 
-'para indicar cuantas veces multiplicar el Mopre a los fines de establecer el tope para aportes de Jubilacion y Ley 19032.
+'Se ingresará por tabla de valor empresa, 
+'para indicar cuántas veces multiplicar el Mopre a los fines de establecer el tope para aportes de Jubilación y Ley 19032.
 
 Return(#SAR_C_MOPRE_TOPE_SIPA)

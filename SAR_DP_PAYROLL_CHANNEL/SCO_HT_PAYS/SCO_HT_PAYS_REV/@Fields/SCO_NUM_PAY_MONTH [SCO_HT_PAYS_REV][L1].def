@@ -1,5 +1,5 @@
 item: SCO_NUM_PAY_MONTH
-name: Num. paga mes
+name: Núm. paga mes
 column_name: SCO_NUM_PAY_MONTH
 item_type: FIELD
 type: NUMBER
@@ -8,4 +8,15 @@ prec: 2
 scale: 0
 scope: RECORD
 default_value: null
+internal_type: null
+item_aux: null
 id_cstype: 7
+totalize_type: 2
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: null
+variable_arguments: 0
+item_aux_prorat: null
+dimension: null
+conv_function: 1

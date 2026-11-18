@@ -20,7 +20,7 @@ SCO_HR_PERIOD.SCO_DELETE_APP_PERIOD()
 SCO_HR_PERIOD.SCO_DELETE_APP_ROLE()
 SCO_HR_PAY_ERROR.SCO_DELETE_ERRORS()
 
-'Aqui se mira sl parametro de aplicacion para saber que tipo de flujo se esta manejando
+'Aquí se mira sl parámetro de aplicación para saber qué tipo de flujo se está manejando
 SCO_LP_MNG_LOCKED_PAYS()
 
 RETURN(0)

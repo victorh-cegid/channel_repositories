@@ -1,13 +1,13 @@
 sWriteObj = GetNodeWriteObjectId("SCO_AUX_AC_HRROLE") 
 
-//Los datos del nodo de calculo se asignan a una variable porque puede que los tramos del 
-//nodo de calculo y los tramos del nodo de revision sean diferentes 
+//Los datos del nodo de cálculo se asignan a una variable porque puede que los tramos del 
+//nodo de cálculo y los tramos del nodo de revisión sean diferentes 
 //(debido a las altas/bajas retroactivas). Las variables no tienen tramos.
 Currency = SCO_HRROLE_CALC.ID_CURRENCY
 BehavCurr = SCO_HRROLE_CALC.SCO_BEHAV_CURR
 
-//Para que en el nodo de revision se acceda a datos de fuera del intervalo de fechas del
-//calculo, tenemos que setear las fechas maximas. Es para las bajas/altas retroactivas.
+//Para que en el nodo de revisión se acceda a datos de fuera del intervalo de fechas del
+//cálculo, tenemos que setear las fechas máximas. Es para las bajas/altas retroactivas.
 //Como las fechas definitivas las tenemos despues de la carga, por ahora ponemos las fechas
 //de la paga.
 

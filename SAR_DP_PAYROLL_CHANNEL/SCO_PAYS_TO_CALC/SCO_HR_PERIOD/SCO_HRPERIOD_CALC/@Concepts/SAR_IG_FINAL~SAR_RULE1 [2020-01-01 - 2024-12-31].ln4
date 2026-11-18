@@ -1,6 +1,6 @@
 If SAR_IND_NO_RET_GAN = 1 Or SAR_TP_IMPUT <> "99" Or (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" And SAR_FECHA_BAJA < DxDate("31","12",DxYear(SAR_FEC_IMPUT_IG))) Then Return(0)
 
-'Reliquidacion especial septiembre 2023, se hace en otro concepto diferenciado (5303 - SAR_IG_SEP23).
+'Reliquidación especial septiembre 2023, se hace en otro concepto diferenciado (5303 - SAR_IG_SEP23).
 If SAR_IND_PAGA_RELIQ = 1 And DxYear(SCO_DT_ALLOCATION) = 2023 And DxMonth(SCO_DT_ALLOCATION) = 9 Then Return(0)
 
 impuesto_tot = SAR_IMPUESTO_TOTAL
@@ -29,7 +29,7 @@ If DxYear(SAR_FEC_IMPUT_IG) =  2024 And benef > 0 And impuesto_tot > 0 Then
     EndIf
 EndIf
 
-'Por ultimo se considera el impuesto abonado en el a?o y otros empleadores
+'Por último se considera el impuesto abonado en el año y otros empleadores
 valor = impuesto_tot - impuesto_acum - imp_ae - imp_oe
 
 'Reliquidacion de diciembre de 2023, debe considerar el importe de la paga especial de reliquidacion de septiembre

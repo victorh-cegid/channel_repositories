@@ -12,12 +12,12 @@ SetEndDate(FF)
 
 SCO_CALCHRP_CURRENCY()
 
-//Antes de grabar miro si se ha producido algun error que no este controlado.
+//Antes de grabar miro si se ha producido algún error que no esté controlado.
 SCO_HR_PAY_ERROR.SCO_FIND_ERROR()    
 
 //Tanto si ha dado error el empleado como si no, borro los registros. Esto es porque en 
-//caso de recalculos, se deben borrar los registros anteriores (damos por bueno el ultimo 
-//calculo aunque haya sido erroneo). Solo insertare los datos si se cumplen ciertas condiciones.
+//caso de recálculos, se deben borrar los registros anteriores (damos por bueno el último 
+//cálculo aunque haya sido erroneo). Sólo insertaré los datos si se cumplen ciertas condiciones.
 Output=SCO_SAVE_AC()
 
 If Output=M4_ERROR Then

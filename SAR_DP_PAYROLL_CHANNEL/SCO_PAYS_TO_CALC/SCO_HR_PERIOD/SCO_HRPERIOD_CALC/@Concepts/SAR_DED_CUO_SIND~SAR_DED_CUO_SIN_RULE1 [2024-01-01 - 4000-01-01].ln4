@@ -2,7 +2,7 @@ importeacum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_M_CUOSIN
 importemes = SAR_TOT_M_CUOSIN
 importe_oe = SAR_SIND_ANT_EMP + SAR_CUOTA_SINDICAL_OE
 
-'Solo 2023 correccion de ajustes imputados con origen octubre o posterior a pagas anteriores a octubre
+'Sólo 2023 corrección de ajustes imputados con origen octubre o posterior a pagas anteriores a octubre
 If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 And DxYear(SCO_DT_ALLOCATION) = 2023 And DxMonth(SAR_FEC_PAGO_IG) = 12 And DxMonth(SCO_DT_ALLOCATION) > 9 Then
     ajusteSobra = 0
     mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
@@ -16,7 +16,7 @@ If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 
     Next
     importeacum = importeacum - ajusteSobra
 EndIf
-'Fin solo 2023
+'Fin sólo 2023
 
 'Considera descuentos de aportes
 'dependencias
@@ -27,7 +27,7 @@ importe_oe = Max(importe_oe - oeApoDesc,0)
 
 importe_tot = importeacum + importemes + importe_oe
 
-'Control SAC imputado a?os anteriores no entre doble:
+'Control SAC imputado años anteriores no entre doble:
 importe_tot = importe_tot - SAR_ANT_SAC_SIND_OB - SAR_ACM_IG_ANIO_IMPUT[0].SAR_ANT_SAC_SIND_OB - SAR_ANT_SAC_SIND - SAR_ACM_IG_ANIO_IMPUT[0].SAR_ANT_SAC_SIND
 
 Return(importe_tot)

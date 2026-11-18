@@ -1,5 +1,5 @@
 item: SAR_TP_IMPUT
-name: Tipo de paga en imputacion
+name: Tipo de paga en imputación
 item_type: PROPERTY
 type: STRING
 id_m4_type: 2
@@ -10,3 +10,12 @@ default_value: "1"
 internal_type: 1
 item_aux: null
 id_cstype: 2
+totalize_type: 4
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: null
+variable_arguments: 0
+item_aux_prorat: null
+dimension: null
+conv_function: 1

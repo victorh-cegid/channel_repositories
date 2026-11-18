@@ -1,5 +1,5 @@
 'El calculo de este concepto lo realiza el concepto corporativo v1314. 
-'Lo ejecutamos si no es reliquidacion ni anticpo de vacaciones
+'Lo ejecutamos si no es reliquidación ni anticpo de vacaciones
 
 IF SAR_TP_IMPUT = "77" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
     Return(0)

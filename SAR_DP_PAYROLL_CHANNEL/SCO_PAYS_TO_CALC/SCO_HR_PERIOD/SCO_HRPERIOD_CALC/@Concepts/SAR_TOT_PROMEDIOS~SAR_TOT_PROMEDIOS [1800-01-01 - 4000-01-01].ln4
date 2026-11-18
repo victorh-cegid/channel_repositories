@@ -3,7 +3,7 @@ base_tot = Round(SAR_TOT_PROMEDIOS,2)
 
 IF SAR_TP_IMPUT = "4" THEN
     base = SAR_TOT_PROMEDIOS
-    'Adiciono la 1?quincena
+    'Adiciono la 1ºquincena
     SAR_ACM_PAG_QUIN_1RA.BEGIN()
     IF SAR_ACM_PAG_QUIN_1RA.COUNT() > 0 THEN
         base_tot = base + SAR_ACM_PAG_QUIN_1RA.SAR_TOT_PROMEDIOS

@@ -16,14 +16,14 @@ While SCO_HRP_BNFT.IsEOF() = False
     sIdTILeg = ""
     sIdItemLeg = ""
     iOperation = 0
-    'Las variables se utilizaran para agrupar los registros que corresponden al mismo concepto del mismo historico
+    'Las variables se utilizarán para agrupar los registros que corresponden al mismo concepto del mismo histórico
     sIdPlanEmp = ToString(POS,0) + "EMP" 
     sIdPlanDep = ToString(POS,0) + "DEP"
 
     SCO_H_BN_EMP_CST.Begin()
     SCO_H_BN_DEP_CST.Begin()
     If SCO_H_BN_EMP_CST.Count() > 0 Or SCO_H_BN_DEP_CST.Count() > 0 Then
-        'Dependiendo de si la retencion es antes o despues de impuestos, cambiaran los conceptos a los que salen los costes y los costes saldran en positivo o en negativo
+        'Dependiendo de si la retención es antes o después de impuestos, cambiarán los conceptos a los que salen los costes y los costes saldrán en positivo o en negativo
         If SCO_HRP_BNFT.SUS_TAX = "A" OR (SCO_HRP_BNFT.SUS_TAX = "I" AND SCO_HRP_BNFT.SUS_TAX_ELCT_D = "A") THEN
             'Si el campo Tax indica que es Post tax
             iOperation = 1 'Sumar
@@ -56,7 +56,7 @@ While SCO_HRP_BNFT.IsEOF() = False
             SCO_H_BN_EMP_CST.curExchangeRecord(ID_CURRENCY,M4_FALSE,SCO_DT_ALLOCATION,EX_TYPE)
             'Coste empleado
             cValue = SCO_H_BN_EMP_CST.SUS_PRICE
-            'Como fechas, tomamos la interseccion entre las fechas del coste y las fechas del calculo
+            'Como fechas, tomamos la intersección entre las fechas del coste y las fechas del cálculo
             dCostStart = Max(SCO_H_BN_EMP_CST.SCO_DT_START,SCO_HR_PERIOD.SCO_DT_START_CALC)
             dCostEnd = Min(SCO_H_BN_EMP_CST.SCO_DT_END,SCO_HR_PERIOD.SCO_DT_END_CALC)
              
@@ -76,8 +76,8 @@ While SCO_HRP_BNFT.IsEOF() = False
                 'El Coste empresa siempre es positivo, no hay que restar
                 'Crear el registro en el nodo SCO_BNFT_VALUES_NO_SLICES prorrateando el valor si es necesario
                 SCO_BNFT_VALUES_NO_SLICES.SCO_CREATE_RECORD(sIdTILeg, sIdItemLeg, dCostStart, dCostEnd, cValue, sIdPlanEmp)
-                'Si el concepto es distinto de SCO_DED_BNFT_LEG_ENT, ademas a?adimos un registro para este concepto, que es donde se 
-                'totalizan todos los costes empresa. Al asignarlo al concepto, se multiplicara su valor por 12 para hacerlo anual.  
+                'Si el concepto es distinto de SCO_DED_BNFT_LEG_ENT, además añadimos un registro para este concepto, que es donde se 
+                'totalizan todos los costes empresa. Al asignarlo al concepto, se multiplicará su valor por 12 para hacerlo anual.  
                 If sIdItemLeg <> "SCO_DED_BNFT_LEG_ENT" Then 
                     'Crear el registro en el nodo SCO_BNFT_VALUES_NO_SLICES prorrateando el valor si es necesario
                     SCO_BNFT_VALUES_NO_SLICES.SCO_CREATE_RECORD("SCO_HRPERIOD_CALC", "SCO_DED_BNFT_LEG_ENT", dCostStart, dCostEnd, cValue, sIdPlanEmp)
@@ -92,7 +92,7 @@ While SCO_HRP_BNFT.IsEOF() = False
             SCO_H_BN_DEP_CST.curExchangeRecord(ID_CURRENCY,M4_FALSE,SCO_DT_ALLOCATION,EX_TYPE)
             'Coste empleado
             cValue = SCO_H_BN_DEP_CST.SCO_AMT_DEP_EMP
-            'Como fechas, tomamos la interseccion entre las fechas del coste y las fechas del calculo
+            'Como fechas, tomamos la intersección entre las fechas del coste y las fechas del cálculo
             dCostStart = Max(SCO_H_BN_DEP_CST.SCO_DT_START,SCO_HR_PERIOD.SCO_DT_START_CALC)
             dCostEnd = Min(SCO_H_BN_DEP_CST.SCO_DT_END,SCO_HR_PERIOD.SCO_DT_END_CALC)
              
@@ -112,8 +112,8 @@ While SCO_HRP_BNFT.IsEOF() = False
                 'El Coste empresa siempre es positivo, no hay que restar
                 'Crear el registro en el nodo SCO_BNFT_VALUES_NO_SLICES prorrateando el valor si es necesario
                 SCO_BNFT_VALUES_NO_SLICES.SCO_CREATE_RECORD(sIdTILeg, sIdItemLeg, dCostStart, dCostEnd, cValue, sIdPlanDep)
-                'Si el concepto es distinto de SCO_DED_BNFT_LEG_ENT, ademas a?adimos un registro para este concepto, que es donde se 
-                'totalizan todos los costes empresa. Al asignarlo al concepto, se multiplicara su valor por 12 para hacerlo anual.  
+                'Si el concepto es distinto de SCO_DED_BNFT_LEG_ENT, además añadimos un registro para este concepto, que es donde se 
+                'totalizan todos los costes empresa. Al asignarlo al concepto, se multiplicará su valor por 12 para hacerlo anual.  
                 If sIdItemLeg <> "SCO_DED_BNFT_LEG_ENT" Then 
                     'Crear el registro en el nodo SCO_BNFT_VALUES_NO_SLICES prorrateando el valor si es necesario
                     SCO_BNFT_VALUES_NO_SLICES.SCO_CREATE_RECORD("SCO_HRPERIOD_CALC", "SCO_DED_BNFT_LEG_ENT", dCostStart, dCostEnd, cValue, sIdPlanDep)

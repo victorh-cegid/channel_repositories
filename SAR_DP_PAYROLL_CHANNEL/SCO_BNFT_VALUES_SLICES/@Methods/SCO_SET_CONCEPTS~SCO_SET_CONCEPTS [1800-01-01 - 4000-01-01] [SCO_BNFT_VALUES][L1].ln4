@@ -1,5 +1,5 @@
-'Este metodo se encarga de crear un filtro en RAM con los registros correspondientes a cada combinacion de SCO_ID_TI y SCO_ID_ITEM 
-'diferente. Para cada grupo de registros, ejecuta el metodo SCO_BNFT_VALUES_SLICES.SCO_SET_CONCEPTS, que es el encargado de asignar 
+'Este método se encarga de crear un filtro en RAM con los registros correspondientes a cada combinación de SCO_ID_TI y SCO_ID_ITEM 
+'diferente. Para cada grupo de registros, ejecuta el método SCO_BNFT_VALUES_SLICES.SCO_SET_CONCEPTS, que es el encargado de asignar 
 'a cada concepto los valores tramados y sumados correspondientes
 
 iSliceMode = GetSliceMode()

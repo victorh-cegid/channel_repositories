@@ -1,4 +1,4 @@
-'-- Se calcula el rango del empleado segun decreto Resolucion General 3770/2015
+'-- Se calcula el rango del empleado según decreto Resolución General 3770/2015
 
 'Nuevos Rangos segun Resolucion 3770/2015
 '------------------------------------------------
@@ -68,7 +68,7 @@
 SAR_HR_ROLE.begin()
 SAR_HRROLE_CALC.begin()
 IND_DES = SAR_HRROLE_CALC.SAR_INDIC_REDUC_ZON_DES 'Indicador de zona desfavorable
-MAX_REM = SAR_MAYOR_REM_IG_2013   'Maxima remuneracion
+MAX_REM = SAR_MAYOR_REM_IG_2013   'Maxima remuneración
 RANGO   = 0       
 
 If(SAR_RANGO_REM_IG_2013 = 1)Then

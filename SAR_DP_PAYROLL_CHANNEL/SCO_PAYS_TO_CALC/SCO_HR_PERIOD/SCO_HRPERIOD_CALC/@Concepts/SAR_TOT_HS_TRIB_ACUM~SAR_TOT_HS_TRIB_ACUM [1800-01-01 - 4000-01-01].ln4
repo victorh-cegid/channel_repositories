@@ -1,7 +1,7 @@
-'Horas extras remuneracion gravada para reporte 4ta categoria
+'Horas extras remuneración gravada para reporte 4ta categoría
 importe = SAR_TOT_HS_EX_IG + SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_HS_EX_IG - SAR_HS_EX_TRIB_OE - SAR_ACM_IG_ANIO_IMPUT[0].SAR_HS_EX_TRIB_OE
 
-'Solo 2023 correccion de ajustes DEI imputados con origen octubre o posterior a pagas anteriores a octubre
+'Sólo 2023 corrección de ajustes DEI imputados con origen octubre o posterior a pagas anteriores a octubre
 If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 And DxYear(SCO_DT_ALLOCATION) = 2023 And DxMonth(SAR_FEC_PAGO_IG) = 12 And DxMonth(SCO_DT_ALLOCATION) > 9 Then
     ajusteSobra = 0
     mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
@@ -15,6 +15,6 @@ If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 
     Next
     importe = importe - ajusteSobra
 EndIf
-'Fin solo 2023
+'Fin sólo 2023
 
 Return(importe)

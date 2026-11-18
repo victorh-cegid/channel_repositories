@@ -2,8 +2,8 @@
 ' Method:       SCO_SET_ERROR_POSITION
 ' Date:         19/03/2003
 ' Version:      1.0
-' Description:  Este metodo encuentra el texto del ultimo error generado y la posicion en 
-'		que empezara a insertar los nuevos errores.
+' Description:  Este método encuentra el texto del último error generado y la posición en 
+'		que empezará a insertar los nuevos errores.
 '
 ' Variable arguments: no. 
 '******************************************************************************************

@@ -1,7 +1,7 @@
 'Permite calcular los precios que corresponden a un ausentismo que se calcule de forma similar a otro existente. 
-'Recibe 2 parametros: argIncCliente es el ID del ausentismo propio del cliente / argIncClonar el el ID del ausentismo cuyo comportamiento queremos replicar
+'Recibe 2 parámetros: argIncCliente es el ID del ausentismo propio del cliente / argIncClonar el el ID del ausentismo cuyo comportamiento queremos replicar
 'Devuelve el precio del ausentismo.
-'Evita sobreescrituras de SAR_IMPORTE_LICENCIAS, si tiene este sobreescrito para alterar el comportamiento de una incidencia STD, el mismo cambio debera realizarse sobre este concepto
+'Evita sobreescrituras de SAR_IMPORTE_LICENCIAS, si tiene este sobreescrito para alterar el comportamiento de una incidencia STD, el mismo cambio deberá realizarse sobre este concepto
 
 argIncCliente = ARG_INC_CLIENTE
 argIncClonar = ARG_INC_CLONAR
@@ -30,7 +30,7 @@ PRECIO_HS_AUSENCIA = 0 : PRECIO_HS_50 = 0 : PRECIO_HS_100 = 0 : PRECIO_DIAS_EXCE
 PRECIO_DIAS_RE_SIN = 0 : PRECIO_PL_NOC_50 = 0 : PRECIO_PL_NOC_100 = 0 : PRECIO_FER_TRAB = 0 : PRECIO_DEC792 = 0
 
 'Contabilizamos las ausencias diarias que se cargan a nivel de period
-'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de la incidencia
+'Añadimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de la incidencia
 sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
 SAR_REAL_TIME_PERIOD.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", argIncCliente)
 
@@ -44,7 +44,7 @@ For i = primerreg To ultimoreg
     fec_ini_abs = SAR_REAL_TIME_PERIOD[i].SCO_DT_START
     fec_fin_abs = SAR_REAL_TIME_PERIOD[i].SCO_DT_END
 
-    'Si la fecha de inicio del ausentismo esta comprendida en el tramo o la fecha de fin del ausentismo esta comprendida en el tramo obtenemos los precios de las licencias 
+    'Si la fecha de inicio del ausentismo está comprendida en el tramo o la fecha de fin del ausentismo está comprendida en el tramo obtenemos los precios de las licencias 
     If (inicioTramo <= fec_ini_abs And fec_ini_abs <= finTramo) Or (inicioTramo <= fec_fin_abs And fec_ini_abs <= finTramo) Then
         
         'Si la fecha de inicio del ausentismo es menor a la fecha de inicio del tramo la reemplazamos
@@ -53,21 +53,21 @@ For i = primerreg To ultimoreg
         EndIf    
        
         If motivoabs = argIncCliente And argIncClonar = "1" Then
-            'Calculo el precio de la enfermedad para esos dias
+            'Calculo el precio de la enfermedad para esos días
             PRECIO_DIAS_ENF = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4110")
         ElseIf motivoabs = argIncCliente And argIncClonar = "23" Then
             'Calculo del precio de la compensacion dec 792
             PRECIO_DEC792 = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4110")
         ElseIf motivoabs = argIncCliente And argIncClonar = "2" Then
-            'Calculo el precio de la suspension disciplinaria para esos dias
+            'Calculo el precio de la suspensión disciplinaria para esos días
             PRECIO_DIAS_SUS_DISCI = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4180")
         ElseIf motivoabs = argIncCliente And argIncClonar = "3" Then
-            'Calculo el precio de la maternidad para esos dias
+            'Calculo el precio de la maternidad para esos días
             PRECIO_DIAS_MAT = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"NONE")
         ElseIf motivoabs = argIncCliente And argIncClonar = "4" Then
-            'Calculo el precio de licencia por convenio para esos dias
+            'Calculo el precio de licencia por convenio para esos días
             If SAR_TIPO_SALARIO = "003" Then
-                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en función de valores de la paga que se calcula
                     pr_ant = SAR_TOT_P_COMP_EA
                 Else   
                     SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
@@ -81,21 +81,21 @@ For i = primerreg To ultimoreg
                 PRECIO_DIAS_LCONV = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4060")
             EndIf
         ElseIf motivoabs = argIncCliente And argIncClonar = "5" Then
-            'Calculo el precio de licencia sin goce de sueldo para esos dias
+            'Calculo el precio de licencia sin goce de sueldo para esos días
             PRECIO_LIC_S_GOC_SUELD = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4171")
         ElseIf motivoabs = argIncCliente And argIncClonar = "6" Then
-            'Calculo el precio de la excedencia para esos dias
+            'Calculo el precio de la excedencia para esos días
             PRECIO_DIAS_EXCED = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4160")
         ElseIf motivoabs = argIncCliente And argIncClonar = "7" Then
-            'Calculo el precio de la ausencia injustificada para esos dias
+            'Calculo el precio de la ausencia injustificada para esos días
             PRECIO_DIAS_AUS_INJUST = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4170")
         ElseIf motivoabs = argIncCliente And argIncClonar = "8" Then
-            'Calculo el precio de huelga para esos dias
+            'Calculo el precio de huelga para esos días
             PRECIO_DIAS_HUELGA = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4723")
         ElseIf motivoabs = argIncCliente And argIncClonar = "10" Then
-            'Calculo el precio de la licencia por casamiento para esos dias
+            'Calculo el precio de la licencia por casamiento para esos días
             If SAR_TIPO_SALARIO = "003" Then
-                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en función de valores de la paga que se calcula
                     pr_ant = SAR_TOT_P_COMP_EA
                 Else   
                     SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
@@ -109,9 +109,9 @@ For i = primerreg To ultimoreg
                 PRECIO_DIAS_LCAS = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4070")
             EndIf
         ElseIf motivoabs = argIncCliente And argIncClonar = "11" Then
-            'Calculo el precio de la licencia por nacimiemto para esos dias
+            'Calculo el precio de la licencia por nacimiemto para esos días
             If SAR_TIPO_SALARIO = "003" Then
-                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en función de valores de la paga que se calcula
                     pr_ant = SAR_TOT_P_COMP_EA
                 Else   
                     SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
@@ -126,9 +126,9 @@ For i = primerreg To ultimoreg
             EndIf
                             
         ElseIf motivoabs = argIncCliente And argIncClonar = "12" Then
-            'Calculo el importe de la licencia por defuncion para esos dias
+            'Calculo el importe de la licencia por defunción para esos días
             If SAR_TIPO_SALARIO = "003" Then
-                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en función de valores de la paga que se calcula
                     pr_ant = SAR_TOT_P_COMP_EA
                 Else   
                     SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
@@ -143,9 +143,9 @@ For i = primerreg To ultimoreg
             EndIf
                            
         ElseIf motivoabs = argIncCliente And argIncClonar = "13" Then
-            'Calculo el precio de la licencia por examen para esos dias
+            'Calculo el precio de la licencia por examen para esos días
             If SAR_TIPO_SALARIO = "003" Then
-                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en funcion de valores de la paga que se calcula
+                If MesPaga = MesAlta and AnioPaga = AnioAlta Then 'si estamos en el mes del alta el precio se calcula en función de valores de la paga que se calcula
                     pr_ant = SAR_TOT_P_COMP_EA
                 Else   
                     SAR_ACM_ULT_PAGO_IMPUT.BEGIN()
@@ -160,7 +160,7 @@ For i = primerreg To ultimoreg
             EndIf
                             
         ElseIf motivoabs = argIncCliente And argIncClonar = "17" Then
-            'Calculo el precio para hemodonacion 
+            'Calculo el precio para hemodonación 
             PRECIO_DIAS_DSAN = SAR_HR_ROLE.SAR_CALCULA_PRECIO_FECHA(fec_ini_abs,"#4108")
         ElseIf motivoabs = argIncCliente And argIncClonar = "30" Then
             'Calculo el precio para la Reserva de Puesto por Enfermedad
@@ -184,7 +184,7 @@ hrRole = SAR_HR_ROLE.Count() - 1
 For j = 0 To hrRole
     SAR_HR_ROLE.MoveTo(j)
 
-    'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de horas de feriado trabajado
+    'Añadimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de horas de feriado trabajado
     sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
     SAR_REAL_TIME_PER_ROLE.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", argIncCliente)
 
@@ -192,14 +192,14 @@ For j = 0 To hrRole
     For k = 0 To contIncRol
         fec_ini_abs = SAR_REAL_TIME_PER_ROLE[k].SCO_DT_START
         fec_fin_abs = SAR_REAL_TIME_PER_ROLE[k].SCO_DT_END
-        'Si la fecha de inicio del ausentismo esta comprendida entre el inicio y 
+        'Si la fecha de inicio del ausentismo está comprendida entre el inicio y 
         'el fin del tramo calculo el precio a la fecha de fin de la incidencia
         If inicioTramo <= fec_ini_abs And fec_ini_abs <= finTramo Then
             If fec_fin_abs > fec_fin_paga Then
                 fec_fin_abs = fec_fin_paga
             EndIf
             fec_abs = fec_fin_abs
-            'Calculo el importe para el dia de fin de la incidencia
+            'Calculo el importe para el día de fin de la incidencia
             idabs = SAR_REAL_TIME_PER_ROLE[k].SCO_ID_INCIDENCE
 
             'Hs de ausencia

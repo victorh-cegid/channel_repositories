@@ -1,6 +1,6 @@
-'RG 3976. Se cierra esta norma a 31/12/2017. Se mantiene durante 2017 por si existiesen prorrateos pendientes del SAC del a?o 2016.
+'RG 3976. Se cierra esta norma a 31/12/2017. Se mantiene durante 2017 por si existiesen prorrateos pendientes del SAC del año 2016.
 
-'No se calcula en reliquidacion ni en paga de Vacaciones/Anticipo:
+'No se calcula en reliquidación ni en paga de Vacaciones/Anticipo:
 If SAR_TP_IMPUT = "77" or SAR_TP_IMPUT = "88" or SAR_TP_IMPUT = "99" Then Return(0)
 
 'No se ejecuta en la primera quincena
@@ -29,12 +29,12 @@ base=0
 meses_quedan=0
 valor = 0
 
-'No tomara valor en la paga normal de Junio si no existe ajuste:
+'No tomará valor en la paga normal de Junio si no existe ajuste:
 If (SAR_TP_IMPUT = "1" And DxMonth(SCO_DT_PAYMENT) = 6 And SAR_PAGA_EXTRA_AJ_1 = 0 And SAR_IND_AGUINALDO = 0) Then
   Return(0)
 EndIf
 
-'Modificacion RG3976.
+'Modificación RG3976.
 base_mes_actual = 0
 
 ' No se debe tomar el valor de la cuota en Paga Extra de Diciembre de Aguinaldo.
@@ -53,7 +53,7 @@ IF saldo < cuota_ant THEN
     cuota_ant=saldo
 ENDIF
 
-'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+'Por modificación del empleado se agregó: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
 IF((SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" ) OR mes = 12 Or mes = 1)  THEN
 
     saldo = SAR_ACM_ULT_MES.SAR_IG_SAL_PR_AD_OB

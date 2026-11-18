@@ -1,20 +1,20 @@
 '****************************************************************************************** 
 ' Method:       SCO_GEN_PAYM_ORDER
-' Description:  Este metodo genera las ordenes de pago segun la cantidad a pagar.
+' Description:  Este método genera las órdenes de pago según la cantidad a pagar.
 '               La cantidad a pagar al empleado puede ser negativa. En caso de retroactividad
-'               puede ser normal, pero si no es una retroactividad, indicaria que se ha
+'               puede ser normal, pero si no es una retroactividad, indicaría que se ha
 '               producido un error al calcular las cantidades a pagar, ya sea porque no hay
-'               datos de pago o porque se han generado pagos negativos para algun 
+'               datos de pago o porque se han generado pagos negativos para algún 
 '               beneficiario (el principal o cualquier otro).
-'               Segun lo explicado anteriormente, si es una retroactividad y la cantidad a
+'               Según lo explicado anteriormente, si es una retroactividad y la cantidad a
 '               pagar al empleado es negativa, se crea (o actualiza)la orden de pago con 
 '               el valor negativo.
 '               Si no es una retroactividad y la cantidad a pagar al empleado es negativa,
-'               si existe orden de pago para algun beneficiario (recalculo), la actualiza
-'               a 0 (por si se han generado pagos), y si no existen ordenes de pago, 
+'               si existe orden de pago para algún beneficiario (recálculo), la actualiza
+'               a 0 (por si se han generado pagos), y si no existen órdenes de pago, 
 '               no las crea.
 '               No se genera orden de pago para un beneficiario si su cantidad a pagar es 0
-'               (excepto en el caso indicado anteriormente del recalculo).
+'               (excepto en el caso indicado anteriormente del recálculo).
 '******************************************************************************************
 
 If  SCO_IND_MAIN_CURR=1 Then
@@ -51,9 +51,9 @@ If  SCO_IND_MAIN_CURR=1 Then
 						nmValue=SCO_NET_TO_PAY_EMP
                               
 					EndIf
-                                //Solo en caso de que el beneficiario principal, tenga un pago negativo (no si es 0),
-                                //supondra la anulacion de los pagos de los demas beneficiarios.
-                                //Si el dato pago esta fuera de fechas, se pone a 0 su orden de pago
+                                //Sólo en caso de que el beneficiario principal, tenga un pago negativo (no si es 0),
+                                //supondrá la anulación de los pagos de los demás beneficiarios.
+                                //Si el dato pago está fuera de fechas, se pone a 0 su orden de pago
 					if SCO_NET_TO_PAY_EMP < 0 or SCO_PAYROLL_PAYMENT_DATA.SCO_DT_END < SCO_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA or SCO_PAYROLL_PAYMENT_DATA.SCO_DT_START > SCO_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA THEN
 						nmValue=0
 					endif
@@ -81,7 +81,7 @@ If  SCO_IND_MAIN_CURR=1 Then
                                     'if the value of dtsfer is null we should get as dt_exchange the dt_payment
 						SCO_PAYROLL_PAYMENT_DATA.SCO_OPERATION="U"
 					Elseif SCO_NET_TO_PAY_EMP >= 0 AND nmValue > 0 THEN
-                                //Solo se inserta la orden de pago si el beneficiario que
+                                //Sólo se inserta la orden de pago si el beneficiario que
                                 //estamos procesando tiene un pago positivo y el beneficiario
                                 //principal tiene un pago positivo o 0 .
 					
@@ -122,7 +122,7 @@ If  SCO_IND_MAIN_CURR=1 Then
 				If SCO_PAYROLL_PAYMENT_DATA.SCO_EMP_CHECK="1" Then
                         'only in the case of the employee 
 					if SCO_PAYROLL_PAYMENT_DATA.SCO_DT_END < SCO_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA or SCO_PAYROLL_PAYMENT_DATA.SCO_DT_START > SCO_PAYROLL_PAYMENT_DATA.SCO_DT_FILTER_PAYM_DATA THEN
-					//Si el dato pago esta fuera de fechas, se pone a 0 su orden de pago
+					//Si el dato pago está fuera de fechas, se pone a 0 su orden de pago
 						nmValue=0
 					else
 						nmValue=SCO_NET_TO_PAY_EMP

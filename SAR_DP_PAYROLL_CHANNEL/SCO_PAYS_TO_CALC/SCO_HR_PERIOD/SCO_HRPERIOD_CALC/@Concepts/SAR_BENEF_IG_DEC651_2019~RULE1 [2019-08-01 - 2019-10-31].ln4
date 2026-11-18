@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------------ */
-/* SOLO DEBE CALCULARSE CUANDO LA FECHA DE IMPUTACION DE IG ES 09/2019 o 10/2019  */
+/* SÓLO DEBE CALCULARSE CUANDO LA FECHA DE IMPUTACIÓN DE IG ES 09/2019 o 10/2019  */
 /* ------------------------------------------------------------------------------ */
 MMImputIG = DxMonth(SAR_FEC_IMPUT_IG)
 AAImputIG = DxYear (SAR_FEC_IMPUT_IG)
@@ -9,7 +9,7 @@ AAAjusteDec561 = 2019
 If MMImputIG = 8 And AAImputIG = AAAjusteDec561 Then
     Return(0)
 Else
-    // Se aplica el beneficio en pagas normales para empleados mensuales y en la 1? quincena para los jornales salvo que este sea baja en la 2? quincena
+    // Se aplica el beneficio en pagas normales para empleados mensuales y en la 1ª quincena para los jornales salvo que éste sea baja en la 2ª quincena
     If ((SAR_TP_IMPUT = "1" And SAR_TIPO_SALARIO <> "003") Or (SAR_TP_IMPUT = "3" And SAR_TIPO_SALARIO = "003") Or (SAR_TP_IMPUT = "4" And SAR_ES_BAJA = 1)) Then
     
         If MMImputIG = 9 And AAImputIG = AAAjusteDec561 Then

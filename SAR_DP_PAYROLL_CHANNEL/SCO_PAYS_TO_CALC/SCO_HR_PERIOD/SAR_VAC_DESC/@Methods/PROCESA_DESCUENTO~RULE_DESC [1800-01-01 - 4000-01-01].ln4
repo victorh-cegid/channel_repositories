@@ -63,7 +63,7 @@
      'Los dias ya se calcularon 
      If(dias_calc_arg <> 0)Then
        If(INCIDENCIA_ARG = "9")Then
-        'Segun la incidencia debemos intentar sumar a dias_calc_arg algun posible desfasaje del mes anterior        
+        'Según la incidencia debemos intentar sumar a dias_calc_arg algún posible desfasaje del mes anterior        
          SYS_SENTENCE_A = ""
          SAR_VAC_DESC.DESTROYBLOCK()
          SAR_VAC_DESC.SYS_SENTENCE_A =  "SELECT @SCO_ID_HR = A.SCO_ID_HR, @DT_START_VAC = A.DT_START_VAC, @DT_END_VAC = A.DT_END_VAC, @SCO_DT_PAY = A.SCO_DT_PAY, @SCO_DT_ALLOC = A.SCO_DT_ALLOC, @SAR_DIAS_TOMADOS = A.SAR_DIAS_TOMADOS, @SAR_DIAS_DESCONT = A.SAR_DIAS_DESCONT, @SCO_ID_INCIDENCE  = A.SCO_ID_INCIDENCE  FROM &SAR_VAC_DESC A Where(A.SCO_ID_HR= '"+ SCO_ID_HR + "' And A.SCO_ID_INCIDENCE = '"+ INCIDENCIA_ARG + "' And A.DT_START_VAC = #DATE('" + fecha_de_abs + "') " + "' And A.DT_END_VAC = #DATE('" + fecha_fin_de_abs + "'))  "  
@@ -82,7 +82,7 @@
                dias_calc_arg = 0
                SAR_VAC_DESC.MoveTo(Pos) 
                If(SAR_VAC_DESC.Count() > 1)Then
-                  'Buscar cada registro correspondiente a la misma fecha de imputacion
+                  'Buscar cada registro correspondiente a la misma fecha de imputación
                   'En este caso no usamos el dias_calc_arg porque lo generamos desde la base
                    While(SAR_VAC_DESC.IsEOF() = FALSE)
                        If(SAR_VAC_DESC.SCO_DT_ALLOC = SCO_DT_ALLOCATION_ARG)Then
@@ -96,7 +96,7 @@
                 EndIf 
             EndIf
          EndIf              
-         'Calculamos segun tipo de paga (mensual o bimensual) la funcion commondtime ya ajusto los dias de incidencia en dias_calc_arg
+         'Calculamos según tipo de paga (mensual o bimensual) la función commondtime ya ajustó los dias de incidencia en dias_calc_arg
          If(DXDAY(INICIO_TRAMO_ARG) = 16)Then 'Bimensual 2da Quincena
                If(dias_calc_arg > 15)Then
                   dias_calc_arg = 15

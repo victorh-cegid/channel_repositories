@@ -1,5 +1,5 @@
-'Seran los encargados de realizar el calculo de las bases para aportes topados por devengado, tomando el importe del total prorrateable multiplicado por 
-'la remuneracion imponible y dividido por el total de devengos cotizables.
+'Serán los encargados de realizar el cálculo de las bases para aportes topados por devengado, tomando el importe del total prorrateable multiplicado por 
+'la remuneración imponible y dividido por el total de devengos cotizables.
 'Dependencias
 a = SAR_TOT_DEV_COTIZ + SAR_REMUN_IMPO + SAR_TOT_PROR_CON_AP
 importe = 0

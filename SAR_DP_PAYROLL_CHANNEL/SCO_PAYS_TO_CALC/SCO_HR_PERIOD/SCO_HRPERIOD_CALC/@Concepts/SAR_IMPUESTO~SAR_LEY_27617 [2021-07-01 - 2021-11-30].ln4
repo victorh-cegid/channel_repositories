@@ -1,11 +1,11 @@
-'En retroactiva desde paga de reliquidacion se anula todo el calculo de las cuotas
+'En retroactiva desde paga de reliquidación se anula todo el cálculo de las cuotas
 If SAR_IND_IMPUESTO_RETRO = 2 Then Return (SAR_IMPUESTO)
 
 If (SAR_TP_IMPUT = "77" And SAR_VACACIONES = 0) Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Or SAR_IND_NO_RET_GAN = 1 Then Return(0)
-'Si la baja no finaliza el ultimo dia del mes no se calcula impuesto
+'Si la baja no finaliza el último día del mes no se calcula impuesto
 If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" And (DxDay(SAR_FECHA_BAJA) <> DaysOfMonth(SAR_FECHA_BAJA) Or (SAR_FECHA_BAJA < SCO_DT_ALLOCATION and SAR_IMPUESTO_TOTAL = 0)) Then Return (0)
 
-'En revision, salvo en baja, no se calcula impuesto, devuelve valor original para no generar retencion
+'En revisión, salvo en baja, no se calcula impuesto, devuelve valor original para no generar retención
 If SAR_PAYS_TO_CALC.SAR_REVISION = 1 And SAR_IND_IMPUESTO_RETRO = 0 And ((SAR_ES_BAJA <> 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") Or (SAR_ES_BAJA = 1 And SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1)) Then 
     SAR_SALDO_PTE_27617 = SCO_AC_HR_PERIOD_REV_1.SAR_SALDO_PTE_27617
     SAR_CUOTA_APLIC_27617 = SCO_AC_HR_PERIOD_REV_1.SAR_CUOTA_APLIC_27617

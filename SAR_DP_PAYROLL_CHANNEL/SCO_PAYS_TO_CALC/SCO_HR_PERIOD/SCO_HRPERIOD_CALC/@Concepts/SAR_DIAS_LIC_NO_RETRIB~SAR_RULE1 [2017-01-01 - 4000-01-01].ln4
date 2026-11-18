@@ -1,5 +1,5 @@
 'Inicializamos las variables
-dias_lic_no_retrib = 0                                  'Contador de dias de Licencias no Retribuidas
+dias_lic_no_retrib = 0                                  'Contador de días de Licencias no Retribuidas
 fec_ini_paga  = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC     'Fecha de inicio de la paga procesada
 fec_fin_paga  = SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC       'Fecha de fin de la paga procesada
 

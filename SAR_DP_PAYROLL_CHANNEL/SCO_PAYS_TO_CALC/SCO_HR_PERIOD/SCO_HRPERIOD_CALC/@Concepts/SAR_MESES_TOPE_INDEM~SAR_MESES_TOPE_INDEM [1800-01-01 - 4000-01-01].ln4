@@ -1,4 +1,4 @@
-'valor por defecto 6 salvo que se hayan definido el numero de meses en el contrato
+'valor por defecto 6 salvo que se hayan definido el número de meses en el contrato
 meses = SAR_MESES_TOPE_INDEM
 
 If SAR_H_CONTRATOS.SAR_ID_TIME_UNIT_PRU = "02" And IsNull(SAR_H_CONTRATOS.SAR_UNITS_PRU) = M4_False Then meses = SAR_H_CONTRATOS.SAR_UNITS_PRU

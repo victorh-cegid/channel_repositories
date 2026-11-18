@@ -1,9 +1,9 @@
 // Para las bajas retroactivas
-// Debe ejecutarse al finalizar el calculo de las diferencias y antes de pasar los valores al nodo aux
+// Debe ejecutarse al finalizar el cálculo de las diferencias y antes de pasar los valores al nodo aux
 // Debe ejecutarse sin tramos
 
 // Hace dos cosas:
-// 1.- Rellena el valor de los elementos marcados como "Valor de la revision"
+// 1.- Rellena el valor de los elementos marcados como "Valor de la revisión"
 // con el valor de la paga original en el tramo en el que el empleado no existe
 
 dFecFinCalc = SCO_DT_END_CALC_ROLE 
@@ -13,7 +13,7 @@ sIdItemDif = "" ' Item de la TI de diferencias
 sIdItemAc = ""  ' Item de la TI de acumulado: SAR_IDS_RETRO
 
 'Control retroactivas
-'Situacion especial: Control para cambios de ROL sin cambio de PERIODO retroactivos, y sin dias de alta en dicho ROL en el recalculo.
+'Situación especial: Control para cambios de ROL sin cambio de PERIODO retroactivos, y sin dias de alta en dicho ROL en el recalculo.
 'Este cambio permite que se suba correctamente al periodo el coeficiente del ROL actual y se pueda calcular la diferencia respecto a lo acumulado en paga normal
 SAR_IDS_RETRO_ROLE.Load_blk()
 SAR_RETRO_H_ROL.DESTROY()
@@ -24,8 +24,8 @@ SAR_RETRO_H_ROL.SAR_FECHA_PAGO = SAR_PAYS_TO_CALC.SCO_DT_PAYMENT
 SAR_RETRO_H_ROL.SAR_FECHA_IMPUT = SAR_PAYS_TO_CALC.SCO_DT_ALLOCATION
 SAR_RETRO_H_ROL.Load_blk()
 If SAR_RETRO_H_ROL.Count()>0 Then
-    'Si el rol finalizo antes de la fecha de calculo actual, significa que estamos calculando un rol que ha sido baja
-    'posteriormente al calculo de la paga normal, en ese caso recogemos el coeficiente del nuevo rol, que se calculo antes.
+    'Si el rol finalizó antes de la fecha de cálculo actual, significa que estamos calculando un rol que ha sido baja
+    'posteriormente al cálculo de la paga normal, en ese caso recogemos el coeficiente del nuevo rol, que se calculó antes.
     If SAR_RETRO_H_ROL.SCO_DT_END < SCO_DT_ALLOC_START and dFecFinCalc >= dFecFinRetro Then
 
         'Conceptos que necesitamos guardar en ROL NO vigente con el importe del ROL vigente
@@ -46,7 +46,7 @@ Else
 EndIf
 'Fin Control retroactivas
 
-If dFecFinCalc < dFecFinRetro Then          ' Hay algun tramo donde el empleado no existe
+If dFecFinCalc < dFecFinRetro Then          ' Hay algún tramo donde el empleado no existe
 
 // 1.-     
     

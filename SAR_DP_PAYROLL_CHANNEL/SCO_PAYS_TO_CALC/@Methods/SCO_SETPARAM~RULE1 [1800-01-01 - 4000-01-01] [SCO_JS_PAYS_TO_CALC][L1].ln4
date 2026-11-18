@@ -2,10 +2,10 @@ NUM_ITEMS = 23
 
 DLM_ITEM = ";"
 // Se utiliza el separador ## en vez de # porque en los filtros con fechas se utiliza
-// este caracter y puede provocar fallos.
+// éste caracter y puede provocar fallos.
 DLM_REG = "##"      //Separador de pagas de la misma sociedad
 dlm_desc = "@@"     //Separador del nombre de la sociedad
-dlm_exe = "$$"      //marca de tipo de calculo (normal, retroactivo ...)
+dlm_exe = "$$"      //marca de tipo de cálculo (normal, retroactivo ...)
 dlm_soc = "||"      //marca de fin de datos de una sociedad
 
 // Fixed values
@@ -119,7 +119,7 @@ While (exebrk <> -1)
                 SCO_JS_HR_PERIOD.SCO_NM_FILTER = var
             ElseIf (i = 22) Then
                 sCountry = var
-            ElseIf (i = 23) And sCountry = "MX" Then   ' Estandar Mejicana
+            ElseIf (i = 23) And sCountry = "MX" Then   ' Estándar Mejicana
                 SetValue("SCO_JS_HT_PAYS","SME_IND_CLC_SDI",-1,var)
                 ind_sdi = ToInt(var)
             EndIf
@@ -128,9 +128,9 @@ While (exebrk <> -1)
         regbrk = StrIn(str_exe,dlm_reg)
         str1 = Mid(str_exe,0,regbrk)
 
-        // En el calulo SDI de la nomina mexicana no se valida que la paga este abierta por fecha de pago
-        // En el resto de los casos se valida que la paga este abierta por fecha de pago
-        If ind_sdi = 0 Then 'Si no es calulo SDI de la nomina mexicana
+        // En el cálulo SDI de la nómina mexicana no se valida que la paga esté abierta por fecha de pago
+        // En el resto de los casos se valida que la paga esté abierta por fecha de pago
+        If ind_sdi = 0 Then 'Si no es cálulo SDI de la nómina mexicana
             'We check that the payment pay is open, if it isn't, it won't be calculated. 
             If SCO_JS_HT_PAYS.Count() = 0 Then SCO_JS_HT_PAYS.Load_Blk()    'This load is needed for the edition of the parameter in JS
             iOpenPayPos = SCO_JS_HT_PAYS.FindRegister("SCO_DT_ACCRUED",SCO_DT_PAYMENT,M4_EQUAL,"SCO_ID_PAY_FREQUENCY",SCO_PAY_FREQ_PAYM,M4_EQUAL)

@@ -2,8 +2,8 @@ valor = 0
 
 If SAR_ES_BAJA <> 1 Then Return(0)
 
-'Si el cliente quiere mantener criterio anterior por ser mas favorable
-'o la baja es anterior al 6/3/2026, aplicamos el calculo anterior
+'Si el cliente quiere mantener criterio anterior por ser más favorable
+'o la baja es anterior al 6/3/2026, aplicamos el cálculo anterior
 indAplicaRl = SAR_IND_INDEMNIZ_RL26
 If SAR_FECHA_BAJA < DxDate(6,3,2026) Then indAplicaRl = 0
 
@@ -29,7 +29,7 @@ If indAplicaRl = 0 Then
     
 'RL 2026, la base indemnizatoria se compone de una parte fija y otra variable
 Else
-    'Si vale 0 significa que el importe de la base indemnizatoria sera la mejor entre calcularla incluyendo el mes de la baja o sin incluirlo, en ambos casos se calculan por un maximo de 12 meses.
+    'Si vale 0 significa que el importe de la base indemnizatoria sera la mejor entre calcularla incluyendo el mes de la baja o sin incluirlo, en ambos casos se calculan por un máximo de 12 meses.
     'Si vale 1 significa que el importe de la base indemnizatoria sera calculado sin incluir el mes de la baja.
     'Si vale 2 significa que el importe de la base indemnizatoria sera calculado incluyendo el mes de la baja.
     'Siempre es maximo 12 meses

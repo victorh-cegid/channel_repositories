@@ -4,12 +4,12 @@ a = SAR_IMPORTE_LICENCIAS
 uds = SAR_UN_HORAS_100
 precio = SAR_PR_HORAS_100
 
-precio_trib = precio / 2 'Calculamos el precio base que sera tributable
-precio_plus = precio - precio_trib 'Precio plus, que estara exento.
+precio_trib = precio / 2 'Calculamos el precio base que será tributable
+precio_plus = precio - precio_trib 'Precio plus, que estará exento.
 
 importe = Round(uds * precio,SCO_CURR_DECIMALS)
 
-'asignacion importes tributables y exentos
+'asignación importes tributables y exentos
 unid_sem = SAR_UN_HS_SEM_100
 unid_finde = SAR_UN_HS_FINDE_100
 unid_trib = (unid_sem + unid_finde)

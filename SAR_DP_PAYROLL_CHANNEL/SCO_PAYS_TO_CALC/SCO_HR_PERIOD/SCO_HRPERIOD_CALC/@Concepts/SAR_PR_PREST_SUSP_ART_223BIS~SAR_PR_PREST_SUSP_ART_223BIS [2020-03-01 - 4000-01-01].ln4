@@ -1,6 +1,6 @@
-'Si el concepto se informa por tabla de valor continuara tomando el importe informado, 
-'pero si no se informa nada devolvera el importe del concepto 4040 (SAR_TOT_P_COMP_EA)
-'aplicando el porcentaje SAR_PORC_ART_233
+'Si el concepto se informa por tabla de valor continuará tomando el importe informado, 
+'pero si no se informa nada devolverá el importe del concepto 4040 (SAR_TOT_P_COMP_EA)
+'aplicándo el porcentaje SAR_PORC_ART_233
 importe = SAR_PR_PREST_SUSP_ART_223BIS
 precio = 0
 dias = SAR_DIAS_SUSP_ART_223BIS

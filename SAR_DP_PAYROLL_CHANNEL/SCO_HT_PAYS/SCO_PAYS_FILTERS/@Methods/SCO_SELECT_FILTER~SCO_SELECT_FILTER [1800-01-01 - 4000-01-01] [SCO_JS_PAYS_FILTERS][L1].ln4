@@ -5,8 +5,8 @@ If SCO_JS_HT_PAYS.SCO_ID_PAY_FREQUENCY = "000" Then
     If GetValue("SCO_HT_PAYS","SCO_P_COUNTRY", -1) = "MX" Then ind_sdi = GetValue("SCO_JS_HT_PAYS","SME_IND_CLC_SDI",-1)
 EndIf
 
-If ind_sdi = 1 Then     ' Estandar Mejicana
-// Se realiza desde este M4O porque se necesita aplicar el filtro tambien cuando se planifica el calculo del SDI
+If ind_sdi = 1 Then     ' Estándar Mejicana
+// Se realiza desde este M4O porque se necesita aplicar el filtro también cuando se planifica el cálculo del SDI
     Call("","SME_FILTRO_SDI")
 Else
     While IsEOF() <> 1

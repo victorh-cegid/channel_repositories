@@ -29,7 +29,7 @@ IF saldo < cuota_ant THEN
     cuota_ant=saldo
 ENDIF
 
-'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+'Por modificación del empleado se agregó: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
 IF((SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" ) OR mes = 12 Or mes = 1)  THEN
     If(mes = 1 And DxMonth(SCO_DT_PAYMENT) <> DxMonth(SAR_FEC_PAGO_IG))Then
        valor = SAR_OB_SOC_ADIC_SAC

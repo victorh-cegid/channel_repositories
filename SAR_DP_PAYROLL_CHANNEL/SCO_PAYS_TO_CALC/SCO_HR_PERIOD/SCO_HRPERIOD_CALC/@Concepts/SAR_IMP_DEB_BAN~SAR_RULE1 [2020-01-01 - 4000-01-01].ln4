@@ -29,11 +29,11 @@ If (indReliq = 1 Or SAR_IND_DIC_DED_ANU = 1) Or (SAR_ES_BAJA = 1 And SAR_HR_PERI
         impuestoTotal = impuestoTotSep + impuestoAct
         If importe > impuestoTotal Then importeTopado = impuestoTotal
     Else
-        'Control de topes y asignacion topado en desglose por orden de exposicion en F1357
+        'Control de topes y asignación topado en desglose por orden de exposición en F1357
         If importe > SAR_IMPUESTO_TOTAL Then importeTopado = SAR_IMPUESTO_TOTAL    
     EndIf
 
-    'Para exposicion en reportes: Diferencia entre pagos a cuenta informado por el empleado y pagos a cuenta que han ido al impuesto
+    'Para exposición en reportes: Diferencia entre pagos a cuenta informado por el empleado y pagos a cuenta que han ido al impuesto
     SAR_DIF_PAGOS_CUENTA = importe - importeTopado
 EndIf
 Return(importeTopado)

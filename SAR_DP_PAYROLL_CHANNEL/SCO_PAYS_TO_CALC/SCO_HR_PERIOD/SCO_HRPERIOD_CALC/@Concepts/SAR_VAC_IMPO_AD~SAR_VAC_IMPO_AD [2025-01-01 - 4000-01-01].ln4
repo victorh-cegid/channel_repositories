@@ -1,6 +1,6 @@
 If SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "88" Then Return(0)
 
-'Calcula todas las remuneraciones imponibles de jubilacion y LEY. El calculo se realiza en forma mensual por mes de LSD.
+'Calcula todas las remuneraciones imponibles de jubilación y LEY. El cálculo se realiza en forma mensual por mes de LSD.
 RemImpoOrigVac = 0
 
 'dependencia
@@ -31,7 +31,7 @@ If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then
     devengosVac = devengosVac - devengosOrigVac
 EndIf
 
-'Se a?aden al calculo los devengos cotizables de pagas ANTERIORES del mismo mes de LSD, 
+'Se añaden al cálculo los devengos cotizables de pagas ANTERIORES del mismo mes de LSD, 
 'para tener el importe completo sobre el que realizar topes
 devengosVacPrev = SAR_LSD_COTIZ[0].SAR_LSD_VAC_AD
 

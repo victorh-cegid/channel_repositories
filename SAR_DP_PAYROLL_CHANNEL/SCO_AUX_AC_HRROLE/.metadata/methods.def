@@ -1,13 +1,14 @@
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
-CopyRegister | RECORD | NUMBER | 6 | 1 | 0 | Copiar registro | 
-DestroyBlock | BLOCK | NUMBER | 6 | 1 | 0 | Eliminar bloque | 
-ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor | 7
-ExecuteGroup | BLOCK | NUMBER | 6 | 0 | 0 | Ejecutar grupo | 
-Flatten | RECORD | NUMBER | 6 | 1 | 0 | Flatten | 
-LOAD_BLK | BLOCK | NUMBER | 6 | 1 | 0 | Cargar bloque | 
-SCO_CALL_SORT | NODE | NUMBER | 6 | 18 | 0 | Ordena los registros del nodo | 
-SCO_EX_CURR | RECORD | NUMBER | 6 | 1 | 0 | Cambiar moneda | 2
-SCO_GL_SELECT | BLOCK | NUMBER | 6 | 1 | 0 | Asignar sentencia de carga | 2
-SCO_MOVE_RECEIPT | BLOCK | NUMBER | 6 | 18 | 0 | Mover en el recibo en pantalla | 1
-UNFLATTEN | BLOCK | NUMBER | 6 | 4 | 0 | UNFLATTEN | 
-curExchangeRecord | NODE | NUMBER | 6 | 1 | 0 | Cambio moneda del registro | 
+# item_metadata_format: 2
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
+CopyRegister | RECORD | NUMBER | 6 | 1 | 0 | Copiar registro |  | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1
+DestroyBlock | BLOCK | NUMBER | 6 | 1 | 0 | Eliminar bloque |  | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+ERASE_ALL_L2_INSTANCES | NODE | NUMBER | 6 | 1 | 0 | Borra instancias de nivel 2 en servidor | 7 | 71 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+ExecuteGroup | BLOCK | NUMBER | 6 | 0 | 0 | Ejecutar grupo |  | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+Flatten | RECORD | NUMBER | 6 | 1 | 0 | Flatten |  | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1
+LOAD_BLK | BLOCK | NUMBER | 6 | 1 | 0 | Cargar bloque |  | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALL_SORT | NODE | NUMBER | 6 | 18 | 0 | Ordena los registros del nodo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_EX_CURR | RECORD | NUMBER | 6 | 1 | 0 | Cambiar moneda | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_GL_SELECT | BLOCK | NUMBER | 6 | 1 | 0 | Asignar sentencia de carga | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_MOVE_RECEIPT | BLOCK | NUMBER | 6 | 18 | 0 | Mover en el recibo en pantalla | 1 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+UNFLATTEN | BLOCK | NUMBER | 6 | 4 | 0 | UNFLATTEN |  | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1
+curExchangeRecord | NODE | NUMBER | 6 | 1 | 0 | Cambio moneda del registro |  | null | null | 2 | null | 4 | null | null | 1 | null | null | 1

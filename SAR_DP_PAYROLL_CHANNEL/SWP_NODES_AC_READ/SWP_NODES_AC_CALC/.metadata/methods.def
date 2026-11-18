@@ -1,3 +1,4 @@
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
-SCO_CALC_ALL_DATES | BLOCK | NUMBER | 6 | 1 | 0 | Calcular todas las fechas | 2
-SCO_CALC_DATES | RECORD | NUMBER | 6 | 1 | 0 | Calcular fecha | 2
+# item_metadata_format: 2
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
+SCO_CALC_ALL_DATES | BLOCK | NUMBER | 6 | 1 | 0 | Calcular todas las fechas | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALC_DATES | RECORD | NUMBER | 6 | 1 | 0 | Calcular fecha | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1

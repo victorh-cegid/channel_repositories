@@ -1,0 +1,63 @@
+IF SAR_TP_IMPUT = "77" or SAR_TP_IMPUT = "88" or SAR_TP_IMPUT = "99" THEN
+   Return(0)
+ENDIF
+
+'No debe tomar el valor en Pagas Extra.
+If (SAR_TP_IMPUT = "2") Then
+    Return(0)    
+EndIf
+
+if SAR_PROV_VAC_ACUM = 0 then return(0)  
+
+vac=SAR_PROV_VAC_ACUM 
+CONTR_OS= vac * SAR_P_PAT_L_23660/100 
+
+CONTR_DIF = vac * SAR_PORC_CONT_T_DIF/100  'decreto 633/2918
+
+'Detracción Ley 27430
+If SAR_TIPO_SALARIO = "003" Then 
+reduc = 0
+    If SAR_CANT_HS_TRABAJADAS > 0 Then
+        reduc = SAR_REDUC_IMPO * SAR_SALDO_VACACION * SAR_HS_DIARIAS_PROM
+    ElseIf SCO_NUM_HOURS_THEO > 0 Then
+        horasPaga = SAR_CALC_HORAS_TEORICAS (SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC,SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC)
+        precioHora = SAR_REDUC_IMPO / horasPaga
+        reduc = precioHora * SAR_SALDO_VACACION * SAR_HS_DIARIAS_PROM
+    EndIf
+Else
+    reduc = (SAR_REDUC_IMPO / SAR_DIAS_NORM_SUELD) * SAR_SALDO_VACACION
+EndIf
+base= vac - reduc
+porc = SAR_PORC_PAT_JUBIL + SAR_P_PAT_L_19032 + SAR_PORC_F_EMPLEO + SAR_P_PAT_CASFEC_PI 
+CONTR_JUB = BASE * porc / 100 
+valor_total = round(CONTR_JUB + CONTR_OS + CONTR_DIF,2) 
+
+'Asigno valor al v5883
+'------------------------------------------------------------------------------------
+val = 0
+If(SAR_ES_ALTA = 1 And SAR_HR_PERIOD.STD_ID_HRP_START_REASON = "005")Then
+    val = valor_total
+Else
+    SAR_ACM_ULT_MES.begin()
+    IF  SAR_ACM_ULT_MES.count() > 0 Then        
+         val_acum =  SAR_ACM_ULT_MES.SAR_PROV_VAC_CS_ACUM
+         if isnull(val_acum) = true then val_acum = 0'se reindentó para mejor lectura
+         val = valor_total -  SAR_ACM_ULT_MES.SAR_PROV_VAC_CS_ACUM
+    Else
+         val = valor_total
+    Endif
+    If val < 0 Then
+         dias_vac_x_mes = Truncate(SAR_DIAS_VACACION / 12,1)
+         Vac_1 = SAR_PROV_VAC_MES
+         CONTR_OS_1 = Vac_1 * SAR_P_PAT_L_23660/100
+         base_2 = Vac_1
+         CONTR_JUB_1 = base_2 * porc / 100
+         val = Round(CONTR_JUB_1 + CONTR_OS_1,2)
+    Endif
+EndIf 
+   SAR_PROV_VAC_CS_MES = val
+
+'Fin de Asignacion al v5883
+'------------------------------------------------------------------------------------ 
+
+return(valor_total)

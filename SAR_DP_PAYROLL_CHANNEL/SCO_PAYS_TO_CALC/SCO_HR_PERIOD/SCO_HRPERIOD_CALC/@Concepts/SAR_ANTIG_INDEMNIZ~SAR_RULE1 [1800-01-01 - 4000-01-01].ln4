@@ -1,5 +1,5 @@
 IF SAR_ES_BAJA <> 1  THEN RETURN(0)
- 'Calcula el num. de a?os en alta en la empresa a la fecha de proceso
+ 'Calcula el num. de años en alta en la empresa a la fecha de proceso
 
 fecantig = SAR_FEC_INDEM
 

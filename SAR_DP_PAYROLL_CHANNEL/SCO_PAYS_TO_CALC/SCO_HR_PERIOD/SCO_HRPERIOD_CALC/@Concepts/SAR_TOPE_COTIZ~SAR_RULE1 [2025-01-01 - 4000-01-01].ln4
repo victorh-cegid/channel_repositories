@@ -19,7 +19,7 @@ SAR_LSD_SAC_COTIZ.SCO_DT_END = DxDate(31,12,DxYear(SCO_DT_ALLOCATION)+1)
 SAR_LSD_SAC_COTIZ.LOAD_BLK()
 'fin carga nodo acum
 
-'Recupera el valor del tope en funcion de la fecha LSD
+'Recupera el valor del tope en función de la fecha LSD
 valor = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_TOPE_COTIZ",SAR_LSD_FECHA,0))
 If valor = 0 Then valor = SAR_VALOR_AMPO * SAR_CANT_MOPRE_TOPE
 RETURN(valor)

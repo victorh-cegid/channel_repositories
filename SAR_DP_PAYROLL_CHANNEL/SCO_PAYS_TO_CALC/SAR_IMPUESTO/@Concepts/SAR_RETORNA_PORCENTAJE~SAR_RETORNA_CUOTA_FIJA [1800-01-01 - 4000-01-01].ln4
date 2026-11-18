@@ -1,4 +1,4 @@
-'Desde 2024, se ha separado la tabla de impuesto de diciembre de la paga normal respecto a la de reliquidacion, tienen importes diferentes:
+'Desde 2024, se ha separado la tabla de impuesto de diciembre de la paga normal respecto a la de reliquidación, tienen importes diferentes:
 tablaReliq = 0
 indReliq = SAR_HRPERIOD_CALC.SAR_IND_PAGA_RELIQ
 If DxYear(SAR_HRPERIOD_CALC.SAR_FEC_PAGO_IG) > 2023 And DxMonth(ARG_DESDE) = 12 And (indReliq = 1 Or (SAR_HRPERIOD_CALC.SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" And SAR_HRPERIOD_CALC.SAR_IG_DICIEMBRE = 1)) Then tablaReliq = 1
@@ -19,7 +19,7 @@ WHILE ISEOF() = FALSE
                 IF SAR_DT_START <= ARG_DESDE AND ARG_DESDE <= SAR_DT_END AND DESDE <= ARG_BASE AND HASTA >= ARG_BASE AND SAR_SOLAP = 1 THEN 
                      Return(SAR_PORCENTAJE)
                 ENDIF
-            'Lee de la tabla de reliquidacion
+            'Lee de la tabla de reliquidación
             Else
                 IF SAR_DT_START <= ARG_DESDE AND ARG_DESDE <= SAR_DT_END AND DESDE <= ARG_BASE AND HASTA >= ARG_BASE AND SAR_SOLAP = 99 THEN 
                      Return(SAR_PORCENTAJE)

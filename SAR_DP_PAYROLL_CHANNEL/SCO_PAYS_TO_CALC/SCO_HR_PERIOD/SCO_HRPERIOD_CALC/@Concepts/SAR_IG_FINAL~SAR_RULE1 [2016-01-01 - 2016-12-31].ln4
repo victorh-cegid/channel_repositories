@@ -1,10 +1,10 @@
-'Antes de realizar cualquier calculo se verifica que la empresa haga la retencion correspondiente a ganancias:
+'Antes de realizar cualquier cálculo se verifica que la empresa haga la retención correspondiente a ganancias:
 If(SAR_IND_NO_RET_GAN = 1)Then 
     Return(0)
 EndIf  
 
-'Antes de realizar cualquier calculo del impuesto verificamos que la modificacion se realizo a fin del mes
-'de la paga para de esta forma dejar el calculo al nuevo periodo.
+'Antes de realizar cualquier calculo del impuesto verificamos que la modificación se realizó a fin del mes
+'de la paga para de esta forma dejar el calculo al nuevo período.
 If (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017")Then
     Return(0)
 EndIf
@@ -67,7 +67,7 @@ Else
     v5 = v5 - sar_acum_imp_oe
 EndIf
 
-'Se contabiliza el beneficio correspondiente a Devolucion IG SAC Ley 27.260, Art. 63
+'Se contabiliza el beneficio correspondiente a Devolución IG SAC Ley 27.260, Art. 63
 SAR_BENEF_SAC_IG()
 valor = v1 - (v2 + v3 + v5) - v4 + v6 - SAR_BENEF_FINAL
 
@@ -76,7 +76,7 @@ IF SAR_IND_APLIC_TOPE_35 = 1 THEN
     IF SAR_ACM_ULT_PAGO_IMPUT.COUNT() > 0 THEN
         IF ISNULL(SAR_ACM_ULT_PAGO_IMPUT.SAR_SALD_RET_GAN_ST) = FALSE THEN
             VALOR1 = SAR_ACM_ULT_PAGO_IMPUT.SAR_SALD_RET_GAN_ST
-            ret_pediente = VALOR1  'saldo de retencion pendiente
+            ret_pediente = VALOR1  'saldo de retención pendiente
             
             If valor <> ret_pediente Then
                ret_pediente = valor
@@ -84,9 +84,9 @@ IF SAR_IND_APLIC_TOPE_35 = 1 THEN
             
             beneficio_sac = SAR_BENEF_FINAL
             if beneficio_sac <> 0 Then 
-                dif_retpend_benef = ret_pediente + beneficio_sac 'diferencia entre la retencion pendiente y el beneficio
-                'Se aplica el beneficio correspondiente a Devolucion IG SAC Ley 27.260 Art. 63, al saldo pendiente de retencion.
-                if dif_retpend_benef >= 0 then 'la retencion pendiente supera el beneficio
+                dif_retpend_benef = ret_pediente + beneficio_sac 'diferencia entre la retención pendiente y el beneficio
+                'Se aplica el beneficio correspondiente a Devolución IG SAC Ley 27.260 Art. 63, al saldo pendiente de retención.
+                if dif_retpend_benef >= 0 then 'la retención pendiente supera el beneficio
                     SETVALUEPRIORITY(0,"SAR_HRPERIOD_CALC","SAR_BENEF_SAC_IG_P_TOPE", 0, beneficio_sac)
                     SETVALUEPRIORITY(0,"SAR_HRPERIOD_CALC","SAR_BENEF_FINAL", 0, 0)
                     SETVALUEPRIORITY(0,"SAR_HRPERIOD_CALC","SAR_BENEF_SAC_IG", 0, 0)

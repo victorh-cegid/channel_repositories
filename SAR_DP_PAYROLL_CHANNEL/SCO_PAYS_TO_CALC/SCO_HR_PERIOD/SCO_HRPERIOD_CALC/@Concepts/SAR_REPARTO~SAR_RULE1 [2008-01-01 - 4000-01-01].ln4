@@ -1,5 +1,5 @@
-'Es creado para indicar si el empleado se encuentra aportando al sistema publico de reparto (1) o al sistema privado (0). 
-'Este valor es utilizado en el impreso "Archivo de Aportes DGI" para generar los datos que permitiran al SIJP calcular 
+'Es creado para indicar si el empleado se encuentra aportando al sistema público de reparto (1) o al sistema privado (0). 
+'Este valor es utilizado en el impreso "Archivo de Aportes DGI" para generar los datos que permitirán al SIJP calcular 
 'correctamente el aporte jubilatorio de acuerdo a la RC AFIP 1208/02 e INARSS 1/02.
 
 

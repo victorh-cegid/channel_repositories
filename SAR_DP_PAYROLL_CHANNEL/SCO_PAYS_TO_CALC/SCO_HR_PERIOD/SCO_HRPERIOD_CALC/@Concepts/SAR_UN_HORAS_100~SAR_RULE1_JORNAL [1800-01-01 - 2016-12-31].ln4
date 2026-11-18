@@ -20,14 +20,14 @@ WHILE SAR_HR_ROLE.ISEOF() = FALSE
 		SAR_REAL_TIME_PER_ROLE.LOAD_BLK()
 	ENDIF	
 
-	'A?adimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de horas extras al 100%
+	'Añadimos filtro RAM al nodo cargado para quedarnos exclusivamente con los registros de horas extras al 100%
 	sFilter = "If SCO_ID_INCIDENCE = ARG_SCO_ID_INCIDENCE Then Return(M4_TRUE) Else Return(M4_FALSE)"
 	SAR_REAL_TIME_PER_ROLE.ADDFILTER(sFilter, M4_TRUE, "ARG_SCO_ID_INCIDENCE", id_Incidencia)
 	
 	'Si hay registros de horas extras al 100% los recorremos para obtener las horas
 	SAR_REAL_TIME_PER_ROLE.BEGIN()
 	WHILE SAR_REAL_TIME_PER_ROLE.ISEOF() = FALSE
-	  'fecha de inicio del ausentismo este comprendida en el tramo que se esta procesando.
+	  'fecha de inicio del ausentismo esté comprendida en el tramo que se está procesando.
         IF INICIO_TRAMO <= SAR_REAL_TIME_PER_ROLE.SCO_DT_START AND SAR_REAL_TIME_PER_ROLE.SCO_DT_START <=  FIN_TRAMO THEN 
 		horas = horas + SAR_REAL_TIME_PER_ROLE.SCO_UNITS
         ENDIF

@@ -20,10 +20,10 @@ EndIf
 
 
 
-'Obtencion del mes de pago del aguinaldo:
+'Obtención del mes de pago del aguinaldo:
 FECHA_INF =  ToDate(TOSTRING(DxYear(SCO_DT_ALLOCATION),0) + "-06" + "-01")
 FECHA_SUP =  ToDate(TOSTRING(DxYear(SCO_DT_ALLOCATION),0) + "-06" + "-30")
-'Inicializacion de las variables para acumulado de conceptos calculados de SAC:
+'Inicialización de las variables para acumulado de conceptos calculados de SAC:
 
 
 VAR_SAR_PAGA_EXTRA_1     = 0

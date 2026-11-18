@@ -46,7 +46,7 @@ If(SCO_DT_PAYMENT <> SCO_DT_ALLOCATION)Then
     
     
         SCO_AC_HR_PERIOD_READ_1.BEGIN()                 'Iniciamos el acumulado
-        CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el numero de registros
+        CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el número de registros
         
         If(CantReg >= 0) Then
           ContReg = 0                                     'Lleva el numero leido de registros 
@@ -91,7 +91,7 @@ If(SCO_DT_PAYMENT <> SCO_DT_ALLOCATION)Then
             If(Anio_de_Paga = 2015)Then
                Mes_Del_Proceso = ToDate("2015/06/01")'En 2015 se busca desde Junio. 
             Else   
-               Mes_Del_Proceso = ToDate(ToString(Anio_De_Paga, 0) + "/01/01")'Del 2016 en adelante se busca desde el principio del a?o.
+               Mes_Del_Proceso = ToDate(ToString(Anio_De_Paga, 0) + "/01/01")'Del 2016 en adelante se busca desde el principio del año.
             EndIf                        
             
             Mes_De_Vig = ToString(DxMonth(SCO_DT_PAYMENT), 0)
@@ -108,7 +108,7 @@ If(SCO_DT_PAYMENT <> SCO_DT_ALLOCATION)Then
             Fecha_De_Vig   = ToDate(ToString(DxYear(SCO_DT_PAYMENT), 0) + "/" + Mes_De_Vig + "/01")
             Fecha_De_Impu  = ToDate(ToString(DxYear(SCO_DT_ALLOCATION), 0) + "/" + Mes_De_Imput + "/01")
                 
-            SAR_HABITUALES.DESTROYBLOCK()                   'Inicializamos los conceptos no habituales del empleadoc
+            SAR_HABITUALES.DESTROYBLOCK()                   'Inicializamos los conceptos no habituales del empleadoç
             SAR_HABITUALES.SAR_P_PROCESO = Mes_Del_Proceso
             
             SAR_HABITUALES.BeginTransaction()
@@ -121,13 +121,13 @@ If(SCO_DT_PAYMENT <> SCO_DT_ALLOCATION)Then
             CantRegHab = SAR_HABITUALES.Count()
             
             SCO_AC_HR_PERIOD_READ_1.BEGIN()                  'Iniciamos el acumulado
-            CantReg = SCO_AC_HR_PERIOD_READ_1.Count() - 1    'Inicializamos el numero de registros
+            CantReg = SCO_AC_HR_PERIOD_READ_1.Count() - 1    'Inicializamos el número de registros
             SCO_AC_HR_PERIOD_READ_1.MoveTo(0)                'Vamos al primer mes             
             
             Mes = Mes_Fin  'Iniciamos desde Paga - 1
             
             Mes_Acu   = DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION) 'Mes del primer registro
-            Anio_Acu  = DxYear(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION)  'A?o del primer registro
+            Anio_Acu  = DxYear(SCO_AC_HR_PERIOD_READ_1.SCO_DT_ALLOCATION)  'Año del primer registro
             Tipo_Paga = SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_ALLOC         'Tipo de paga del primer registro    
             
                        
@@ -142,7 +142,7 @@ If(SCO_DT_PAYMENT <> SCO_DT_ALLOCATION)Then
                            SAR_HABITUALES.Moveto(ContConcep)                          
                            If(Concepto = SAR_HABITUALES.SAR_ID_DMD_COMPONENT And SAR_HABITUALES.SAR_DT_VIGENCIA = SAR_HABITUALES.SAR_DT_VIGEN_IMPUT And DxYear(SAR_HABITUALES.SAR_DT_VIGENCIA) = Anio_De_Paga)Then
         
-                                Pos_Act         = SAR_HABITUALES.GetCurrent() 'Esta posicion debe ser la de la paga normal
+                                Pos_Act         = SAR_HABITUALES.GetCurrent() 'Esta posición debe ser la de la paga normal
                                 Organizacion    = SAR_HABITUALES.ID_ORGANIZATION                
                                 Id_Del_Rh       = SAR_HABITUALES.STD_ID_HR
                                 Orden_Del_Rh    = SAR_HABITUALES.STD_OR_HR_PERIOD
@@ -180,7 +180,7 @@ If(SCO_DT_PAYMENT <> SCO_DT_ALLOCATION)Then
                                             Tipo_Paga = SCO_AC_HR_PERIOD_READ_1.SCO_PAY_TYPE_ALLOC
                                     EndIf           
                                 Wend   
-                                If((VAL_CON_PAGA = 0) And Valor_Del_Mes > 0)Then 'Se esta eliminando el valor del concepto
+                                If((VAL_CON_PAGA = 0) And Valor_Del_Mes > 0)Then 'Se está eliminando el valor del concepto
                                     Elimina_Valor = 1     'Se debe quitar la ocurrencia
                                 EndIf             
                                 'Procesa la retroactividad de habituales

@@ -6,7 +6,7 @@ mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
 mes_fin_ig = DxDate(31,12,DxYear(SAR_FEC_IMPUT_IG))
 ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
 
-'El criterio es que busca la ultima paga normal con fecha alloc junio
+'El criterio es que busca la última paga normal con fecha alloc junio
 ultAlloc = DxDate(1,1,1800)
 For acum = 0 To ult_reg - 1
     If SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG >= mes_ini_ig And SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_IMPUT_IG <= mes_fin_ig And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION <= fechaTope And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT<>"88" And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT<>"99" And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION = SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT Then

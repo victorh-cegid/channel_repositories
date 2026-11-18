@@ -47,7 +47,7 @@ ENDIF
 IF SAR_ES_BAJA = 1 THEN
     cuota = saldo
 Else
-    IF (SAR_TP_IMPUT = "1" or SAR_TP_IMPUT = "4") and aus_n_rem >= 1 THEN 'si el total de ausencias no remuneradas en el mes es mayor o igual a 30 dias 
+    IF (SAR_TP_IMPUT = "1" or SAR_TP_IMPUT = "4") and aus_n_rem >= 1 THEN 'si el total de ausencias no remuneradas en el mes es mayor o igual a 30 días 
         meses_pro = (12 - nummes) + 1
         cuota_ant = Round((saldo - cuota_no_desc_ant)/ meses_pro,2)
         cuota_no_desc = cuota_no_desc_ant + cuota_ant

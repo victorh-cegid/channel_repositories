@@ -1,4 +1,4 @@
-//Este Syssentence es necesario porque al ser la sentencia dinamica, la unica forma de 
+//Este Syssentence es necesario porque al ser la sentencia dinámica, la única forma de 
 //poner un filtro es de esta forma, calculando el objeto de lectura
 
 IDNode = GetThisNodeID()

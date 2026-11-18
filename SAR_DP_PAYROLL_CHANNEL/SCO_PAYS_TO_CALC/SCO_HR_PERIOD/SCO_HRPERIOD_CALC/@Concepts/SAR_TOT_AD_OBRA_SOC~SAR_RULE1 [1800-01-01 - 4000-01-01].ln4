@@ -1,2 +1,2 @@
-'Se utilizara para ingresar los valores de cuota medico asistencial prepaga por valores period
+'Se utilizará para ingresar los valores de cuota médico asistencial prepaga por valores period
 return(#SAR_TOT_AD_OBRA_SOC)

@@ -37,7 +37,7 @@ FOR  I = primerreg TO ultimoreg          'DESDEI
     '************************************************************************
 
             'Se condiciona para que en caso que el Accidente sea posterior al cambio del 06/11 el Precio del Accidente se calcule como 
-            'la Licencia Por Enfermedad segun se indica en el Decreto 1694/2009.
+            'la Licencia Por Enfermedad según se indica en el Decreto 1694/2009.
             '-------------------------------------------------------------------------------------------------------------------------------------.
             aux = DxDate(06,11,2009)
             mes_ini_acc = commontime(fec_ini,fec_ini,SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC,SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC)
@@ -64,7 +64,7 @@ FOR  I = primerreg TO ultimoreg          'DESDEI
 
                     
                     '---------------------------------------------------------------------------------
-                    'Resolucion 983/2010 - Verifica si el precio del accidente, no es menor al actual
+                    'Resolución 983/2010 - Verifica si el precio del accidente, no es menor al actual
                     '---------------------------------------------------------------------------------
                     IF IsNull (SAR_ACCID_ACT.SAR_PRECIO_DIARIO)=M4_FALSE Then
                         PR_DIAS_ACC_INI = SAR_ACCID_ACT.SAR_PRECIO_DIARIO
@@ -73,7 +73,7 @@ FOR  I = primerreg TO ultimoreg          'DESDEI
                     ENDIF
                     
             
-                   ' Agregado caso N? 253726-----------------------------------------------------------------------------------------
+                   ' Agregado caso N° 253726-----------------------------------------------------------------------------------------
                     ini_pag = DxDate(01,Dxmonth(fec_ini),DxYear(fec_ini))
                     Param1 = ini_pag
                     Param2 = fec_ini
@@ -129,7 +129,7 @@ FOR  I = primerreg TO ultimoreg          'DESDEI
                                 SAR_ACCID_ACT.SAR_ID_CURRENCY = ID_CURRENCY
                                 '************************* Fin Update ********************************
                     
-                                '***************** Inicio grabacion en M4SAR_PRE_ACC_ART  ***********
+                                '***************** Inicio grabación en M4SAR_PRE_ACC_ART  ***********
                                        
                                 IF (SAR_ES_ALTA = 1 And SAR_HR_PERIOD.STD_ID_HRP_START_REASON <> "005") THEN            
                                     valor_mes1 = SAR_P_SUELDO + SAR_P_COMPL_DEVENG
@@ -243,7 +243,7 @@ FOR  I = primerreg TO ultimoreg          'DESDEI
                                         NEXT	    'Fin carga Variables
                                 ENDIF         'Si #80=1            
                     
-                                '********************** Inicio grabacion en SAR_PRE_ACC_ART ******************************
+                                '********************** Inicio grabación en SAR_PRE_ACC_ART ******************************
                                     
                                 IF SAR_PRE_ACC_ART.COUNT()<> 0 THEN
                                     SAR_PRE_ACC_ART.BEGIN()
@@ -277,7 +277,7 @@ FOR  I = primerreg TO ultimoreg          'DESDEI
                                 SAR_PRE_ACC_ART.SAR_TOT_DIAS = SAR_DIAS_PR_ACC
                                 SAR_PRE_ACC_ART.EX_TYPE = EX_TYPE 
                                 SAR_PRE_ACC_ART.ID_CURRENCY = ID_CURRENCY
-                                '*********************** Fin grabacion en SAR_PRE_ACC_ART **********************
+                                '*********************** Fin grabación en SAR_PRE_ACC_ART **********************
                     ENDIF
                     ELSE
                         

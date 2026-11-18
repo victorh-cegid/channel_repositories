@@ -1,18 +1,18 @@
 'Es el componente porcentual de la cuota mensual para la ART
-'Segun el decreto 290/2000 se calcula sobre una Remuneracion Imponible de 60 MOPRES
+'Según el decreto 290/2000 se calcula sobre una Remuneración Imponible de 60 MOPRES
 
-IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Calculo sin tope+No Remunerativos
+IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Cálculo sin tope+No Remunerativos
     base = SAR_REMUN_IMPO_ART - SAR_VACACIONES
     base = base - SAR_TOT_SAC_COTIZ
 ELSE
-    IF SAR_IND_REM9_SIN_TOPE = 2 THEN 'Calculo con tope+No Remunerativos
+    IF SAR_IND_REM9_SIN_TOPE = 2 THEN 'Cálculo con tope+No Remunerativos
         IF (SAR_VACACIONES > 0 OR SAR_TOT_SAC_COTIZ > 0 ) THEN 'Si liquida SAC o VAC
             base = SAR_REMUN_IMPO + SAR_TOT_NO_REMUN
         ELSE
             base = SAR_REMUN_IMPO_ART - SAR_VACACIONES
             base = base - (SAR_TOT_SAC_COTIZ)        
         ENDIF
-    ELSE 'Indicador en 0, Calculo con tope SIN No Remunerativos
+    ELSE 'Indicador en 0, Cálculo con tope SIN No Remunerativos
         base = SAR_REMUN_IMPO
     ENDIF
 ENDIF

@@ -1,4 +1,4 @@
-'Antes de realizar cualquier calculo se verifica que la empresa haga la retencion correspondiente a ganancias
+'Antes de realizar cualquier cálculo se verifica que la empresa haga la retención correspondiente a ganancias
 If(SAR_IND_NO_RET_GAN = 1)Then 
     Return(0)
 endIf  
@@ -9,12 +9,12 @@ If SAR_TP_IMPUT = "88" Then Return(0)
 'No se ejecuta en meses anteriores a Septiembre
 If SAR_FEC_PAGO_IG < DxDate (01,09,2016) Then Return(0)
 
-'Solo se ejecuta si el Indicador de exencion IG y el Indicador de exencion IG Empresa estan activos 
+'Solo se ejecuta si el Indicador de exención IG y el Indicador de exención IG Empresa están activos 
 If (SAR_IND_EXEN_IG <> 1) or (SAR_IND_EXEN_IG = 1 and SAR_IND_EXEN_IG_EMPRE <> 1) Then Return(0)
 
-'Inicializacion de variables
+'Inicialización de variables
 sac_exen = 0	'SAC exento
-jub_exen = 0	'Jubilacion exenta
+jub_exen = 0	'Jubilación exenta
 ley_exen = 0	'Ley 19032 Exenta
 ob_exen = 0		'Obra Social y Adic. Exenta
 sind_exen = 0	'Sindicato exento
@@ -43,9 +43,9 @@ IF (SAR_TP_IMPUT = "3" AND SAR_ES_BAJA = 0) OR SAR_TP_IMPUT = "2" THEN
         		sind_exen = SAR_ACM_2QNA_MES_ANT.SAR_IG_SIND_EXEN
         	endif
       EndIf  
-	if benef_ant = 0 AND sac_exen = 0  then 'No ha percibido beneficio todavia asi que no se calculan valores para la exencion
+	if benef_ant = 0 AND sac_exen = 0  then 'No ha percibido beneficio todavía así que no se calculan valores para la exención
 		Return(0)
-	else 'Se considera exento lo que hay en la ultima paga normal anterior
+	else 'Se considera exento lo que hay en la última paga normal anterior
 		SAR_IG_JUB_EXEN= jub_exen
 		SAR_IG_LEY_EXEN= ley_exen
 		SAR_IG_OB_EXEN= ob_exen
@@ -70,7 +70,7 @@ While i >= 0
 		mes_imput= DxMonth(fec_imput)
 		anio_imput= DxYear(fec_imput)
 		
-		'Solo debemos analizar las remuneraciones devengadas hasta Junio 2016 inclusive
+		'Sólo debemos analizar las remuneraciones devengadas hasta Junio 2016 inclusive
 		If mes_imput <= 6 and anio_imput = 2016 Then
 			
 			se_prorratea= SCO_AC_HR_PERIOD_READ_1.SAR_TOT_PROR_SAC	'c5007 importe prorrateado de SAC
@@ -78,7 +78,7 @@ While i >= 0
 			cant_cuotas_prorrateo= 1
 			cant_cuotas_aplicadas= 1
 			
-			'En bajas o paga de reliquidacion tomamos el total de SAC del primer semestre para la exencion, no calculamos cuotas
+			'En bajas o paga de reliquidación tomamos el total de SAC del primer semestre para la exención, no calculamos cuotas
 			If SAR_ES_BAJA = 1 or SAR_TP_IMPUT = "99" Then
 				se_prorratea = 0
 			EndIf	
@@ -91,7 +91,7 @@ While i >= 0
 				IF Es_Paga_Diferida = 1 THEN
 				    cant_cuotas_prorrateo = 12 - mes_ig
 				    cant_cuotas_aplicadas = SAR_MES_PAGO_IG - mes_ig
-				    IF mes_imput = 6 AND mes_imput < mes_ig THEN 'se esta procesando una paga con ajuste de SAC, imputada en Junio
+				    IF mes_imput = 6 AND mes_imput < mes_ig THEN 'se está procesando una paga con ajuste de SAC, imputada en Junio
 				        cant_cuotas_prorrateo = 12 - mes_imput
 				        cant_cuotas_aplicadas = SAR_MES_PAGO_IG - mes_imput
 				    ENDIF
@@ -106,7 +106,7 @@ While i >= 0
 			valor_cuota= valor_cuota * cant_cuotas_aplicadas
 			sac_exen= sac_exen + valor_cuota               
 			 
-			'Jubilacion: calculamos valor cuota y cantidad de cuotas aplicadas
+			'Jubilación: calculamos valor cuota y cantidad de cuotas aplicadas
 			valor_cuota= SCO_AC_HR_PERIOD_READ_1.SAR_JUBILACION_SAC / cant_cuotas_prorrateo
 			valor_cuota= valor_cuota * cant_cuotas_aplicadas
 			jub_exen= jub_exen + valor_cuota

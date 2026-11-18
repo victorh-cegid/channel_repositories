@@ -7,50 +7,50 @@ If SAR_TP_IMPUT = "99" Or SAR_TP_IMPUT = "77" Or SAR_TP_IMPUT = "88" Then Return
 INICIO_TRAMO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysStartDate
 FIN_TRAMO 	 = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysEndDate
 
-'para que se ejecuten antes de hacer la asignacion y funcione en revision
-aux = SAR_DIA_DONAR_SANG     'Donacion Sangre
+'para que se ejecuten antes de hacer la asignación y funcione en revisión
+aux = SAR_DIA_DONAR_SANG     'Donación Sangre
 aux = SAR_DIAS_EXAMEN        'Lic. Examen 
-aux = SAR_DIAS_DEFUNCION     'Lic.Defuncion
+aux = SAR_DIAS_DEFUNCION     'Lic.Defunción
 aux = SAR_DIAS_NACIMIENTO    'Lic.Nacimiento
 aux = SAR_DIAS_CASAMIENTO    'Lic.Casamiento
 aux = SAR_DIAS_HUELGA        'Huelga
 aux = SAR_DIAS_LIC_CONV      'Lic.Convenio
 aux = SAR_LIC_S_GOC_SUELD    'Lic.sin Goce de Sueldo
-aux = SAR_DIAS_SUS_DISCI     'Suspension
+aux = SAR_DIAS_SUS_DISCI     'Suspensión
 aux = SAR_DIAS_ENFERMEDAD    'Enfermedad
 aux = SAR_DIAS_AUSENCIA      'Ausencia sin aviso
 aux = SAR_R_PTO_ACC          'Reserva de Puesto por Accidente
 aux = SAR_R_PTO_ENF          'Reserva de Puesto por Enfermedad
 aux = SAR_R_PTO_SIN          'Reserva de Puesto por Actividad Sindical
-'Bug(0310670) - No eliminar el codigo
+'Bug(0310670) - No eliminar el código
 'aux = SAR_UN_HORAS_150
 aux = SAR_UNIDAD_HS_AUSENCIA
 aux = SAR_UN_FER_TRAB
-aux = SAR_DIAS_DEC792        'Compensacion decreto 792
+aux = SAR_DIAS_DEC792        'Compensación decreto 792
 
-'Cantidades de dias de licencias
-dias_enf 		= 0	'dias de enfermedad
-dias_acc 		= 0 'dias accidente
-dias_lconv 		= 0 'dias de licencia convenio
-dias_lsgs 		= 0 'dias de licencia sin goce de sueldo
-dias_ausin 		= 0 'dias de ausencia injustificada
-dia_huelga 		= 0 'dias de huelga
-dias_lcas 		= 0 'dias licencia casamiento
-dias_lnac 		= 0 'dias licencia nacimiento
-dias_ldef 		= 0 'dias de licencia por defuncion
-dias_lex 		= 0 'dias de licencia por examen
-dias_dsan 		= 0 'dias donacion de sangre
-dias_susp 		= 0 'dias suspension
-dias_re_acc 	= 0 'dias de reserva de puesto por accidente
-dias_re_enf 	= 0 'dias de reserva de puesto por enfermedad
-dias_re_sin 	= 0 'dias de reserva de puesto por actividad sindical
-'Bug(0310670) - No eliminar el codigo
+'Cantidades de días de licencias
+dias_enf 		= 0	'días de enfermedad
+dias_acc 		= 0 'días accidente
+dias_lconv 		= 0 'días de licencia convenio
+dias_lsgs 		= 0 'días de licencia sin goce de sueldo
+dias_ausin 		= 0 'días de ausencia injustificada
+dia_huelga 		= 0 'días de huelga
+dias_lcas 		= 0 'días licencia casamiento
+dias_lnac 		= 0 'días licencia nacimiento
+dias_ldef 		= 0 'días de licencia por defunción
+dias_lex 		= 0 'días de licencia por examen
+dias_dsan 		= 0 'días donación de sangre
+dias_susp 		= 0 'días suspensión
+dias_re_acc 	= 0 'días de reserva de puesto por accidente
+dias_re_enf 	= 0 'días de reserva de puesto por enfermedad
+dias_re_sin 	= 0 'días de reserva de puesto por actividad sindical
+'Bug(0310670) - No eliminar el código
 'horas_150 = 0       'horas al 150%
 horas_ausencia = 0  'horas ausencia
 d_tomados = 0 
 plus_noc_100 = 0    'plus nocturno 100%
 horas_fer_trab = 0  'horas feriado trabajado
-dias_dec792 = 0     'Compensacion decreto 792
+dias_dec792 = 0     'Compensación decreto 792
 
 'Fechas para topear
 fec_fin_abs_enfer  = ToDate("1800-01-01")	'01 Enfermedad
@@ -72,7 +72,7 @@ WHILE SAR_HR_ROLE.ISEOF() = FALSE
 
         WHILE SAR_REAL_TIME_PER_ROLE.ISEOF() = FALSE
             'Para calcular las unidades de Horas Extras y ausencias se tiene en cuenta que la 
-            'fecha de inicio del ausentismo este comprendida en el tramo que se esta procesando.
+            'fecha de inicio del ausentismo esté comprendida en el tramo que se está procesando.
             IF INICIO_TRAMO <= SAR_REAL_TIME_PER_ROLE.SCO_DT_START AND SAR_REAL_TIME_PER_ROLE.SCO_DT_START <=  FIN_TRAMO THEN 
                 motivoabs = FORMAT(SAR_REAL_TIME_PER_ROLE.SCO_ID_INC_GROUP,0)
                 fec_abs = SAR_REAL_TIME_PER_ROLE.SCO_DT_END
@@ -89,7 +89,7 @@ WHILE SAR_HR_ROLE.ISEOF() = FALSE
                 '
                 idabs = FORMAT(SAR_REAL_TIME_PER_ROLE.SCO_ID_INCIDENCE,0)
                 'Calculamos las unidades de las horas extras al 50%
-                'Bug(0310670) - No eliminar el codigo
+                'Bug(0310670) - No eliminar el código
                 'IF idabs = "35" THEN
                 '   horas_150 = horas_150 + SAR_REAL_TIME_PER_ROLE.SCO_UNITS
                 'Fin Bug(0310670)
@@ -152,33 +152,33 @@ FOR I = primerreg  TO  ultimoreg
 	   Endif
     Endif
 
-    'Contabilizo la cantidad de dias y si el tipo de salario es Horario, traspaso las unidades a horas
+    'Contabilizo la cantidad de días y si el tipo de salario es Horario, traspaso las unidades a horas
     IF motivoabs = "1" THEN
         dias_enf = dias_enf + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente 
-        'Agregado por exceso de dias ---------------------------------- 
+        'Agregado por exceso de días ---------------------------------- 
         If fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
             dias_enf = dias_enf -1                                 '  |
         Endif                                                      '  |
-        'Fin agregado por exceso de dias-------------------------------
+        'Fin agregado por exceso de días-------------------------------
 
     ELSEIF motivoabs = "23" THEN
         dias_dec792 = dias_dec792 + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente 
-        'Agregado por exceso de dias ---------------------------------- 
+        'Agregado por exceso de días ---------------------------------- 
         If fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
             dias_dec792 = dias_dec792 -1                                 '  |
         Endif                                                      '  |
-        'Fin agregado por exceso de dias-------------------------------
+        'Fin agregado por exceso de días-------------------------------
     ELSEIF motivoabs = "2" THEN
         dias_susp = dias_susp + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente 
     ELSEIF motivoabs = "4" THEN
         dias_lconv = dias_lconv + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente 
     ELSEIF motivoabs = "5" THEN
         dias_lsgs = dias_lsgs + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente 
-        'Agregado por exceso de dias ---------------------------------- 
+        'Agregado por exceso de días ---------------------------------- 
         If fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
             dias_lsgs = dias_lsgs -1                               '  |
         Endif                                                      '  |
-        'Fin agregado por exceso de dias-------------------------------        
+        'Fin agregado por exceso de días-------------------------------        
     ELSEIF motivoabs = "7" THEN
         dias_ausin = dias_ausin + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente 
     ELSEIF motivoabs = "8" THEN
@@ -195,25 +195,25 @@ FOR I = primerreg  TO  ultimoreg
         dias_dsan = dias_dsan + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente 
     ELSEIF motivoabs = "30" THEN
         dias_re_enf = dias_re_enf + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente
-        'Agregado por exceso de dias ---------------------------------- 
+        'Agregado por exceso de días ---------------------------------- 
         If fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
             dias_re_enf = dias_re_enf -1                           '  |
         Endif                                                      '  |
-        'Fin agregado por exceso de dias-------------------------------          
+        'Fin agregado por exceso de días-------------------------------          
     ELSEIF motivoabs = "31" THEN
         dias_re_acc = dias_re_acc + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente
-        'Agregado por exceso de dias ---------------------------------- 
+        'Agregado por exceso de días ---------------------------------- 
         If fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
             dias_re_acc = dias_re_acc -1                           '  |
         Endif                                                      '  |
-        'Fin agregado por exceso de dias-------------------------------          
+        'Fin agregado por exceso de días-------------------------------          
     ELSEIF motivoabs = "32" THEN
         dias_re_sin = dias_re_sin + CommonTime(fec_ini_paga, fec_fin_paga, fec_ini_abs, fec_fin_abs) + excedente 
-        'Agregado por exceso de dias ---------------------------------- 
+        'Agregado por exceso de días ---------------------------------- 
         If fec_fin_abs >= FIN_TRAMO and DXDAY(FIN_TRAMO) > 30 then '  |
             dias_re_sin = dias_re_sin -1                           '  |
         Endif                                                      '  |
-        'Fin agregado por exceso de dias-------------------------------            
+        'Fin agregado por exceso de días-------------------------------            
     ENDIF           
 NEXT
  
@@ -243,10 +243,10 @@ IF DXMONTH(FIN_TRAMO) = 2 THEN
     ENDIF
 ENDIF
 
-'Calculo los dias del tramo
+'Calculo los días del tramo
 dias_tramo = (FECHA_FIN_TRAMO - INICIO_TRAMO) + 1
 
-'Calculo los dias del tramo real
+'Calculo los días del tramo real
 dias_tramo_real = FIN_TRAMO - INICIO_TRAMO + 1
 
 IF dias_lex > 0 THEN
@@ -414,7 +414,7 @@ SAR_R_PTO_SIN 		= dias_re_sin
 SAR_DIAS_SUS_DISCI 	= dias_susp 
 SAR_DIAS_ENFERMEDAD 	= dias_enf
 SAR_DIAS_AUSENCIA 	= dias_ausin
-'Bug(0310670) - No eliminar el codigo
+'Bug(0310670) - No eliminar el código
 'SAR_UN_HORAS_150 = horas_150
 SAR_UNIDAD_HS_AUSENCIA = horas_ausencia
 SAR_UN_FER_TRAB = horas_fer_trab

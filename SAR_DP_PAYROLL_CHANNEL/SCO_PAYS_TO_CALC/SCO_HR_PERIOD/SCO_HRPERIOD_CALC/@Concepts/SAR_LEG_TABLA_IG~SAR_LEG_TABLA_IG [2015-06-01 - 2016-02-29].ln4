@@ -1,6 +1,6 @@
 IF SCO_DT_PAYMENT <> SCO_DT_ALLOCATION AND SAR_FEC_PAGO_IG >= ToDate("2016-03-01") Then  Return(SCO_ID_LEG_ENT)
 
-'--- Seteamos el valor de la sociedad segun el rango del empleado
+'--- Seteamos el valor de la sociedad según el rango del empleado
 
 // Cambio Legal Ganancias 2015 - Res.3770
 If  SAR_RANGO_REM_IG_2015 = 1 or SAR_RANGO_REM_IG_2015 = 0 Then  Return(SCO_ID_LEG_ENT)

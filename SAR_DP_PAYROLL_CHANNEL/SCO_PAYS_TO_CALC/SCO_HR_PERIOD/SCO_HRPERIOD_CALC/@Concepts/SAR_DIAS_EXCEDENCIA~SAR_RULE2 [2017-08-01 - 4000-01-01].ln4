@@ -75,10 +75,10 @@ IF DXMONTH(FIN_TRAMO) = 2 THEN
     ENDIF
 ENDIF
 
-'Calculo los dias del tramo
+'Calculo los días del tramo
 dias_tramo = (FECHA_FIN_TRAMO - INICIO_TRAMO) + 1
 
-'Calculo los dias del tramo real
+'Calculo los días del tramo real
 dias_tramo_real = FIN_TRAMO - INICIO_TRAMO + 1
 
 IF dias_exced > 0 THEN

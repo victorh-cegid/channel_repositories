@@ -12,7 +12,7 @@ if SAR_PROV_VAC_ACUM = 0 then return(0)
 vac=SAR_PROV_VAC_ACUM 
 CONTR_OS= vac * SAR_P_PAT_L_23660/100 
 
-'Detraccion Ley 27430
+'Detracción Ley 27430
 If SAR_TIPO_SALARIO = "003" Then 
 reduc = 0
     If SAR_CANT_HS_TRABAJADAS > 0 Then
@@ -39,7 +39,7 @@ Else
     SAR_ACM_ULT_MES.begin()
     IF  SAR_ACM_ULT_MES.count() > 0 Then        
          val_acum =  SAR_ACM_ULT_MES.SAR_PROV_VAC_CS_ACUM
-         if isnull(val_acum) = true then val_acum = 0'se reindento para mejor lectura
+         if isnull(val_acum) = true then val_acum = 0'se reindentó para mejor lectura
          val = valor_total -  SAR_ACM_ULT_MES.SAR_PROV_VAC_CS_ACUM
     Else
          val = valor_total

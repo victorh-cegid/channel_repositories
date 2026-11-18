@@ -1,4 +1,4 @@
-'No se calcula en reliquidacion ni en paga de Vacaciones/Anticipo:
+'No se calcula en reliquidación ni en paga de Vacaciones/Anticipo:
 If SAR_TP_IMPUT = "77" OR SAR_TP_IMPUT = "88" or SAR_TP_IMPUT = "99" Then Return(0)
 
 'No se ejecuta en la primera quincena
@@ -81,7 +81,7 @@ IF (SAR_ES_BAJA = 1) Then
     EndIf
 EndIf
 
-'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+'Por modificación del empleado se agregó: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
 IF ((SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") OR mes = 12 ) THEN 
      RETURN(SAR_TOT_PROR_SAC + saldo)
 ENDIF

@@ -32,7 +32,7 @@ If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION Then
     devengosVac = devengosVac - devengosOrigVac
 EndIf
 
-'Se a?aden al calculo los devengos cotizables de pagas ANTERIORES del mismo mes de LSD, 
+'Se añaden al cálculo los devengos cotizables de pagas ANTERIORES del mismo mes de LSD, 
 'para tener el importe completo sobre el que realizar topes
 devengosVacPrev = SAR_LSD_COTIZ[0].SAR_LSD_VAC_AD_OS
 
@@ -41,7 +41,7 @@ devengosTotMesLSD = devengosVac + devengosVacPrev
 
 baseTopada = Min(topeMax,devengosTotMesLSD)
 
-'Tope minimo mes, respetando STD actual aplica solo si existe pago, en pagas de frecuencia 004. Se a?ade que en retro no aplique minimo si se va por LSD por pago
+'Tope mínimo mes, respetando STD actual aplica sólo si existe pago, en pagas de frecuencia 004. Se añade que en retro no aplique minimo si se va por LSD por pago
 aplicaMinimo = 0
 If baseTopada > 0 And SCO_PAY_FREQ_ALLOC = "004" And (SCO_DT_PAYMENT = SCO_DT_ALLOCATION Or (SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And SAR_LSD_IND_PAGO = 0)) Then aplicaMinimo = 1
 If aplicaMinimo = 1 Then baseTopada = Max(baseTopada,tope_min) 

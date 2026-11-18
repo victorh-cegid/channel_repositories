@@ -1,4 +1,4 @@
-'Se calcula de acuerdo a lo especificado en el Decreto 198/2008, hasta su finalizacion en Agosto 2009.
+'Se calcula de acuerdo a lo especificado en el Decreto 198/2008, hasta su finalización en Agosto 2009.
 If SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "77" Then Return(0)
 IF SAR_TP_IMPUT <> "1" AND SAR_TP_IMPUT <> "4"  THEN Return(0)'Tipo mensual y quincenal 
 If SCO_DT_ALLOCATION > SAR_FECHA_BAJA and SAR_ES_BAJA <> 1 Then RETURN(0) 'Condicion para que no se pague el concepto en nomina despues de la baja.    
@@ -8,7 +8,7 @@ valor       = SAR_AS_NRE_26341_ST
 adicional   = (100 - (SAR_PORC_JUBILACION + SAR_PORC_LEY_19032 + SAR_PORC_OBR_SOCIAL)) / 100
 valor       = valor / adicional
 
-'(A1 10/03/2010) Anexo para tener en cuenta los dias de la 1ra. quincena en caso de ser una paga de la 2da. quincena  
+'(A1 10/03/2010) Anexo para tener en cuenta los días de la 1ra. quincena en caso de ser una paga de la 2da. quincena  
 C_470 = 0 
 C_460 = 0 
 C_471 = 0 
@@ -33,7 +33,7 @@ If SCO_H_HR_PAY_FREQ.SCO_ID_PAY_FREQUENCY = "003" AND SAR_TP_IMPUT = "4" Then
     EndIf
 EndIf
 
-'Calculo de los dias a pagar (teniendo en cuenta A1 10/03/2010)
+'Cálculo de los días a pagar (teniendo en cuenta A1 10/03/2010)
 dias = 30 - SAR_DIAS_ANT_ALTA - SAR_DIAS_POST_BAJA - (SAR_DIAS_HUELGA + C_460) - (SAR_LIC_S_GOC_SUELD + C_470) - (SAR_R_PTO_ACC + C_471) - (SAR_R_PTO_ENF + C_472) - (SAR_R_PTO_SIN + C_473) - (SAR_DIAS_EXCEDENCIA + C_475) - (SAR_DIAS_SUS_DISCI + C_480) - (SAR_DIAS_AUSENCIA + C_540)
 
 IF dias < 0 Then Return(0)

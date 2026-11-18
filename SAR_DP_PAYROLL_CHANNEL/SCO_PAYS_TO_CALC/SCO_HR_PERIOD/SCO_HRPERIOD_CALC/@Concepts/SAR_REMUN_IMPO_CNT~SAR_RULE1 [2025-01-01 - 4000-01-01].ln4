@@ -1,5 +1,5 @@
-'De acuerdo al articulo 3? el decreto 491/04 desde el 01/10/05 no hay topes para 
-'el calculo de la base imponible de las contribuciones.
+'De acuerdo al artículo 3° el decreto 491/04 desde el 01/10/05 no hay topes para 
+'el cálculo de la base imponible de las contribuciones.
 
 real = SAR_TOT_DEV_COTIZ
 
@@ -9,7 +9,7 @@ If SAR_DIAS_NORM_SUELD > 0 Then
         reduc_impo = SAR_REDUC_IMPO
         dias_base = SAR_TIEMPO_EFVO_TR - SAR_DIAS_VACACIONES - SAR_DIAS_MATERN - SAR_LIC_ONCO_DIAS - SAR_DIAS_ART
         If SAR_CANT_HS_TRABAJADAS > 0 Then
-            'Empleados con horas quincena informadas, se multiplica precio dia reduccion por dias efectivos de la base
+            'Empleados con horas quincena informadas, se multiplica precio dia reducción por dias efectivos de la base
             coef_reduc = dias_base
         Else
             coef_reduc = dias_base/SAR_DIAS_NORM_SUELD

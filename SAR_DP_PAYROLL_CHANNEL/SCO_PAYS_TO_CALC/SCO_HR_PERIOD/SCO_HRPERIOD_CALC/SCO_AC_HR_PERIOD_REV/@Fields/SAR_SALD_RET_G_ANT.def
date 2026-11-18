@@ -1,5 +1,5 @@
 item: SAR_SALD_RET_G_ANT
-name: Saldo IG. A?o anterior por Tope RG 2437/08
+name: Saldo IG. Año anterior por Tope RG 2437/08
 column_name: SAR_SALD_RET_G_ANT
 item_type: FIELD
 type: CURRENCY
@@ -11,3 +11,12 @@ default_value: "0.00000000"
 internal_type: 15
 item_aux: ID_CURRENCY
 id_cstype: null
+totalize_type: 4
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: 2
+variable_arguments: 0
+item_aux_prorat: null
+dimension: null
+conv_function: 1

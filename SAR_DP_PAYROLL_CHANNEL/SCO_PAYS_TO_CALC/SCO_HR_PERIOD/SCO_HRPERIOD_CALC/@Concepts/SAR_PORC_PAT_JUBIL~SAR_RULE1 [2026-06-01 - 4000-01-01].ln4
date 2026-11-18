@@ -1,9 +1,0 @@
-'Su valor se ingresa por Tabla de Valores Tipo de Empresa.
-'Se modifica con fecha 1 de Junio para que al valor del porcentaje de jubilacion se le resta el porcentaje informado del Fondo Asistencia Laboral
-
-val_porc_pat_jub = SAR_PORC_PAT_JUBIL
-val_porc_pat_fal = SAR_PORC_PAT_FAL
-
-valor = SAR_PORC_PAT_JUBIL - SAR_PORC_PAT_FAL
-
-Return (valor)

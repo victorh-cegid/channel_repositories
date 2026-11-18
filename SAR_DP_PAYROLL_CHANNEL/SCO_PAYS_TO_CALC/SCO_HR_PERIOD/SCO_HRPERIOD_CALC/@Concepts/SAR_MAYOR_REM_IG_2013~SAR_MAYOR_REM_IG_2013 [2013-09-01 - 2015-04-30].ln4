@@ -38,7 +38,7 @@ If (DxYear(SCO_DT_ALLOCATION) = 2013 And DxMonth(SCO_DT_ALLOCATION) = 9 And SAR_
 
     SCO_AC_HR_PERIOD_READ_1.BEGIN()                 'Iniciamos el acumulado
     SCO_AC_HR_PERIOD_READ_1.MoveTo(0)               'Vamos al primer registro
-    CantReg = SCO_AC_HR_PERIOD_READ_1.Count() - 1   'Inicializamos el numero de registros
+    CantReg = SCO_AC_HR_PERIOD_READ_1.Count() - 1   'Inicializamos el número de registros
 
     ContReg = 0
     
@@ -250,12 +250,12 @@ ElseIf(SAR_FECHA_ALTA >= ToDate("2013-09-01") And DxMonth(SCO_DT_ALLOCATION) = 9
        EGRE_1  = SAR_EGRESO_PAGA_1   'Egreso 1er. Semestre
        EGRE_2  = SAR_EGRESO_PAGA_2   'Egreso 2do. Semestre
        DIA_GRE = SAR_DIA_GREMIO      'Dia del gremio.
-       MaxMes = SAR_P_SUELDO + SAR_TOTAL_DEVENGOS - SAR_IMPORTE_SUELDO   '1 - Primer asignacion para entender que tenemos el total de devengos.
+       MaxMes = SAR_P_SUELDO + SAR_TOTAL_DEVENGOS - SAR_IMPORTE_SUELDO   '1 - Primer asignación para entender que tenemos el total de devengos.
        MaxMes = MaxMes -  SAC_1 - SAC_2 - EGRE_1 -  EGRE_2 - DIA_GRE         '2 - Al total de devengos le restamos los conceptos de SAC y el dia del gremio 
        MaxV = MaxMes
        'Veces = 1
         
-ElseIf((DxMonth(SCO_DT_ALLOCATION) > 9 or DxYear(SCO_DT_ALLOCATION) > 2013) And SCO_DT_PAYMENT = SCO_DT_ALLOCATION)Then 'Ya se calculo la maxima remuneracion en Septiembre => leemos del acumulado el valor del v5600
+ElseIf((DxMonth(SCO_DT_ALLOCATION) > 9 or DxYear(SCO_DT_ALLOCATION) > 2013) And SCO_DT_PAYMENT = SCO_DT_ALLOCATION)Then 'Ya se calculó la maxima remuneracion en Septiembre => leemos del acumulado el valor del v5600
    'Se promueve el concepto v5600 con el valor de la paga anterior cada vez.
    ANIO_ACT = DXYEAR(SCO_DT_PAYMENT)
    MES_ACT  = DXMONTH(SCO_DT_PAYMENT)
@@ -283,7 +283,7 @@ ElseIf((DxMonth(SCO_DT_ALLOCATION) > 9 or DxYear(SCO_DT_ALLOCATION) > 2013) And 
    
    'Iniciamos la lectura del acumulado:
     SCO_AC_HR_PERIOD_READ_1.BEGIN()                 'Iniciamos el acumulado
-    CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el numero de registros
+    CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el número de registros
    
     If(CantReg >= 0) Then
         ContReg = 0                                     'Lleva el numero leido de registros 

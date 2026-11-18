@@ -18,7 +18,7 @@ IF  valor_act <> 0 THEN
     RETURN(0)
 ENDIF
 
-'Solo vamos a buscar la reliquidacion para la paga anual
+'Solo vamos a buscar la reliquidación para la paga anual
 'si estoy en una paga normal. No queremos que se calcule en retro
 If SCO_DT_ALLOCATION = SCO_DT_PAYMENT Then
     SAR_ACM_IG_ANIO_ANT.BEGIN()
@@ -31,7 +31,7 @@ If SCO_DT_ALLOCATION = SCO_DT_PAYMENT Then
          
 
 '--- En caso de ser la diferencia positiva (a favor de la AFIP) retorna 0(cero) y
-'se acumula en el concepto v5301, para ser aplicado en la reliquidacion del a?o 2011.
+'se acumula en el concepto v5301, para ser aplicado en la reliquidacion del año 2011.
 
         IF valor > 0 and SAR_ES_BAJA = 0 THEN
             valor = 0

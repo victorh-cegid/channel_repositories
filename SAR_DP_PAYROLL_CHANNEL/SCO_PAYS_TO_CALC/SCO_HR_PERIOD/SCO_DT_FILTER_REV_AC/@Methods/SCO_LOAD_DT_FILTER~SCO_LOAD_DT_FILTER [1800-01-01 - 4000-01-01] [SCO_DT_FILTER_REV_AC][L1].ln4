@@ -1,12 +1,12 @@
-'Modificamos la carga segun el parametro "gestionar pagas por tipo de bloqueo".
+'Modificamos la carga según el parámetro "gestionar pagas por tipo de bloqueo".
 
 If SCO_PAYS_TO_CALC.SCO_MNG_LOCKED_PAYS = "0" Then
     'El bloqueo va por la fecha de corte
     SYSSENTENCE = "FROM &SCO_AC_HR_PERIOD A WHERE A.SCO_DT_CLOSE_PROC < ?(4,0,0)"
     SYSPARAM = ToString(SCO_HR_PERIOD.SCO_DT_CLOSE_PROC)
 Else
-    'La paga normal no tiene por que estar bloqueada, por lo que no podemos usar la fecha de corte para buscar la paga.
-    'Ademas, se podrian seguir haciendo cambios 
+    'La paga normal no tiene por qué estar bloqueada, por lo que no podemos usar la fecha de corte para buscar la paga.
+    'Además, se podrían seguir haciendo cambios 
     SYSSENTENCE = "FROM &SCO_AC_HR_PERIOD A WHERE A.SCO_DT_END_PAYM < ?(4,0,0)"
     SYSPARAM = ToString(SCO_HR_PERIOD.SCO_DT_END_PAYM)
 EndIf

@@ -6,14 +6,14 @@ importeMaxSac = 0
 For mesProceso = mesIni To mesImput
     fechaIniProc = DxDate("01",mesProceso,DxYear(SCO_DT_ALLOCATION))
     fechaFinProc = DxDate(DaysOfMonth(fechaIniProc),mesProceso,DxYear(fechaIniProc))
-    'Limitamos hasta fecha de imputacion anterior a la actual, para no considerar acumulado actual, este se tomara directamente del calculo
+    'Limitamos hasta fecha de imputación anterior a la actual, para no considerar acumulado actual, este se tomará directamente del cálculo
     fechaFinProc = Min(fechaFinProc,SCO_DT_ALLOCATION - 1)
     SAR_ACM_PROV_SAC.DESTROY()
     SAR_ACM_PROV_SAC.SCO_DT_START = fechaIniProc
     SAR_ACM_PROV_SAC.SCO_DT_END = fechaFinProc
     SAR_ACM_PROV_SAC.LOAD_BLK()
     importeSac = SAR_ACM_PROV_SAC[0].SAR_TOTAL_P_SAC
-    'Consideramos el mes de calculo
+    'Consideramos el mes de cálculo
     If mesProceso = mesImput Then importeSac = importeSac + SAR_TOTAL_P_SAC
     importeMaxSac = Max(importeMaxSac,importeSac)
 Next

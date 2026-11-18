@@ -17,7 +17,7 @@ If SAR_ES_BAJA = 1 Or indReliq = 1 Or SAR_IND_AJUSTE_SAC = 1 Then
     Endif
 EndIf    
 
-'Control retroactividad a?os anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
+'Control retroactividad años anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
 sac_anio_ant = SAR_IND_SAC_ANIO_ANT
 If sac_anio_ant = 1 Then
     mes_orig = SAR_AC_SAC_REV[0].SAR_DIF_SAC_RG3976

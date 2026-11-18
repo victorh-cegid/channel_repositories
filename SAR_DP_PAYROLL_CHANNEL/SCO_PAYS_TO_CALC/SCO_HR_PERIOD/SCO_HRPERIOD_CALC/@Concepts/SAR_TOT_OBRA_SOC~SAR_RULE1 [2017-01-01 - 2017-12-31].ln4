@@ -5,7 +5,7 @@ val_ant_emp    = SAR_SOC_ANT_EMP
 sar_acum_ob_soc_oe = 0
 sar_acum_ob_soc_ant_emp = 0
 
-' Si es Paga de RETRO modificamos la fecha para que sea el mes anterior a la fecha de imputacion.
+' Si es Paga de RETRO modificamos la fecha para que sea el mes anterior a la fecha de imputación.
 If (SCO_DT_ALLOCATION <> SCO_DT_PAYMENT) Then
     vfecha = SCO_DT_ALLOCATION
 Else

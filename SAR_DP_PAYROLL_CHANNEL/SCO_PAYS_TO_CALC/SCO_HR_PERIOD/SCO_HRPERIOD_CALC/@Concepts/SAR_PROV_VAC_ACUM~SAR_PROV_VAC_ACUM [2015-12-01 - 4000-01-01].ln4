@@ -59,7 +59,7 @@ Else
     EndIf
 EndIf    
  
-'Paga especial de vacaciones no debe tener valor en la provision mensual
+'Paga especial de vacaciones no debe tener valor en la provisión mensual
 IF SAR_TP_IMPUT <> "77" Then SAR_PROV_VAC_MES = val   
 
 return(valor)

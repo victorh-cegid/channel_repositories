@@ -9,7 +9,7 @@ IF SAR_MES_PAGO_IG = 1  THEN Return(0)
 sal = 0
 '------------------------------------------------------------------------------------
 'El importe del impuesto recalculado al mes anterior es el saldo
-'a prorratear en el resto del a?o. Se refleja en el concepto
+'a prorratear en el resto del año. Se refleja en el concepto
 '5936 - SAR_SALDO_RET_RG3831.
 '------------------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ SAR_HT_PAYS.BEGIN()
 IF DxMonth(SCO_DT_ALLOCATION) = 3 THEN
     IF SAR_REC_BAS_IMP_RG3831 > 0 THEN
         sal = SAR_REC_BAS_IMP_RG3831
-    ELSEIF (SAR_REC_BAS_IMP_RG3831 = 0 AND SAR_TP_IMPUT = "4") and SAR_FEC_PAGO_IG > SAR_HT_PAYS.SCO_DT_END THEN 'Si el tipo de paga es segunda quincena, el saldo es el valor del recalculo del impuesto que se calculo en la primer quincena    
+    ELSEIF (SAR_REC_BAS_IMP_RG3831 = 0 AND SAR_TP_IMPUT = "4") and SAR_FEC_PAGO_IG > SAR_HT_PAYS.SCO_DT_END THEN 'Si el tipo de paga es segunda quincena, el saldo es el valor del recálculo del impuesto que se calculó en la primer quincena    
         SAR_ACM_PAG_QUIN_1RA.BEGIN()
         IF SAR_ACM_PAG_QUIN_1RA.COUNT() > 0 THEN
             saldo_1q = SAR_ACM_PAG_QUIN_1RA.SAR_SALDO_RET_RG3831

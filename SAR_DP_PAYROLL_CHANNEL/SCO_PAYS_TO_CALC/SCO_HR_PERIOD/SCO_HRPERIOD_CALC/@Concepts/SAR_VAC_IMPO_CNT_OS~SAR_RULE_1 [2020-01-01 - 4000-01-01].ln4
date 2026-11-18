@@ -1,12 +1,12 @@
-'De acuerdo al articulo 3? el decreto 491/04 desde el 01/10/05 no hay topes para 
-'el calculo de la base imponible de las contribuciones.
+'De acuerdo al artículo 3° el decreto 491/04 desde el 01/10/05 no hay topes para 
+'el cálculo de la base imponible de las contribuciones.
 
 aux = SAR_IMPORTE_LICENCIAS
 aux = SAR_AJ_VACACIONES
 base = SAR_VACACIONES + SAR_AJ_VACACIONES
 If SAR_COEF_JORNADA_PER <> 0 Then base = base / SAR_COEF_JORNADA_PER
 
-'Compara mos con el minimo imponible solo si base > 0
+'Compara mos con el mínimo imponible solo si base > 0
 If(base > 0)Then
 
     'Si hay ajuste en el pago contemplamos el ajuste en el impuesto

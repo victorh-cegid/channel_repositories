@@ -1,4 +1,4 @@
-'Por Resolucion 3770/2015 se agregaron nuevos rangos para evaluar las deducciones en el impuesto a las ganancias.
+'Por Resoluciòn 3770/2015 se agregaron nuevos rangos para evaluar las deducciones en el impuesto a las ganancias.
 'Este concepto lo mantendremos como historia de la reglamentacion anterior.
 'A partir del mes de septiembre 2015, reajustara el rango definido por existir un cambio de zona desde abril y/o por altas posteriores entre mayo y agosto inclusive.
 'Es necesario esta accion para poder propagar el rango 792 de no existir cambio de zona.
@@ -10,10 +10,10 @@ Rango                = 0
 Mejor_Remu_Acu_Abril = 0
 SAR_HR_ROLE.begin()
 
-'Primeramente vemos si existe acumulado en abril ya que fue el mes hasta el que se concidero la zona:
+'Primeramente vemos si existe acumulado en abril ya que fue el mes hasta el que se concideró la zona:
 Reg_Acu = SCO_AC_HR_PERIOD_READ_1.Count() - 1
 If(Reg_Acu >= 0)Then 
-      'Se Tendra en cuenta que en abril no haya acumulado es decir altas posteriores a abril.       
+      'Se Tendrá en cuenta que en abril no haya acumulado es decir altas posteriores a abril.       
        Mes_Abril  = 4
        Mes_Ajuste = 10 
        Cuenta_Mes = Mes_Ajuste
@@ -37,7 +37,7 @@ If(Reg_Acu >= 0)Then
             Else   
                   Zona_Mes = vIND_DES    'Indicador de zona desfavorable del mes.       
             EndIf   
-            If(DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) =  Mes_Abril)Then' Abril fue el mes hasta el que se considero la zona.
+            If(DxMonth(SCO_AC_HR_PERIOD_READ_1.SCO_DT_PAYMENT) =  Mes_Abril)Then' Abril fue el mes hasta el que se consideró la zona.
               Rango_Previo = SCO_AC_HR_PERIOD_READ_1.SAR_RANGO_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM)
               Mejor_Remu_Acu_Abril = SCO_AC_HR_PERIOD_READ_1.SAR_MAYOR_REM_IG_2013..sysTotalSlices(M4_TOTAL_SUM)
               Rango_Abril = Rango_Previo
@@ -54,7 +54,7 @@ If(Reg_Acu >= 0)Then
                            If(Zona_Mes = "1")Then
                                Rango_Ajuste = 3  
                            ElseIf(SAR_FECHA_ALTA < DxDate(1, 9, 2013))Then 
-                                Rem_Ajuste = Mejor_Remu_Acu_Abril 'La mejor remuneracion de abril    
+                                Rem_Ajuste = Mejor_Remu_Acu_Abril 'La mejor remuneración de abril    
                                 If(Mejor_Remu_Acu_Abril <= 15000)Then
                                      Rango_Ajuste = 1
                                 ElseIf(Mejor_Remu_Acu_Abril > 15000 And Mejor_Remu_Acu_Abril <= 25000)Then
@@ -85,7 +85,7 @@ EndIf
 SAR_HRROLE_CALC.Begin()
 Ind_Des = SAR_HRROLE_CALC.SAR_INDIC_REDUC_ZON_DES 'Indicador de zona desfavorable del mes de paga
 Ind_Des = ToString(ToDouble(Ind_Des), 0)
-Max_Rem = SAR_MAYOR_REM_IG_2013                'Maxima remuneracion al mes de paga
+Max_Rem = SAR_MAYOR_REM_IG_2013                'Maxima remuneración al mes de paga
 If(Zona_Previa <> Ind_Des)Then 'Se recalcula por cambio de zona en el mes.
              If(Max_Rem <= 15000 )Then 'Rango 1
                    Rango_Mes_Paga = 1
@@ -97,7 +97,7 @@ If(Zona_Previa <> Ind_Des)Then 'Se recalcula por cambio de zona en el mes.
                         If(Ind_Des = "1")Then 'Para zona desfavorable con mas de $25000 es rango 3.
                             Rango_Mes_Paga = 3  
                         ElseIf(SAR_FECHA_ALTA < DxDate(1, 9, 2013))Then 
-                                Rem_Ajuste = Mejor_Remu_Acu_Abril 'La mejor remuneracion de abril    
+                                Rem_Ajuste = Mejor_Remu_Acu_Abril 'La mejor remuneración de abril    
                                 If(Mejor_Remu_Acu_Abril <= 15000)Then
                                      Rango_Ajuste = 1
                                 ElseIf(Mejor_Remu_Acu_Abril > 15000 And Mejor_Remu_Acu_Abril <= 25000)Then

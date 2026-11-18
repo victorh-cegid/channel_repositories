@@ -8,7 +8,7 @@ EndIf
 sac=SAR_PROV_SAC_ACUM 
 CONTR_OS= sac * SAR_P_PAT_L_23660/100 
 
-'Detraccion Ley 27430
+'Detracción Ley 27430
 reduc = SAR_REDUC_IMPO_SAC * SAR_UNIDADES_PROV_SAC
 base= sac - reduc
 porc = SAR_PORC_PAT_JUBIL + SAR_P_PAT_L_19032 + SAR_PORC_F_EMPLEO + SAR_P_PAT_CASFEC_PI 

@@ -1,12 +1,12 @@
-'Imposibilidad de retencion: En caso de no presentar nota (646 = 0), y tener un liquido negativo producido por impuesto a?o anterior, 
-'se descontara hasta el limite del liquido que se pueda descontar, y el remanente se mandara a sicore como imposibilidad de retencion
+'Imposibilidad de retención: En caso de no presentar nota (646 = 0), y tener un líquido negativo producido por impuesto año anterior, 
+'se descontará hasta el límite del líquido que se pueda descontar, y el remanente se mandará a sicore como imposibilidad de retención
 dif = SAR_TOTAL_DEVENGOS..SysTotalslices(M4_TOTAL_SUM) - SAR_TOT_RETEN..SysTotalslices(M4_TOTAL_SUM)
 If SAR_IG_ANIO_ANT = 0 Or SAR_IND_APLIC_TOPE_35 <> 0 Or SCO_DT_PAYMENT<>SCO_DT_ALLOCATION Or Dif >= 0 Or Dif*-1 > SAR_IG_ANIO_ANT Then Return(0)
 
 SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_IMP_RET_IG_ANO_ANT",-1,dif*-1)
 SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_IG_ANIO_ANT",-1,SAR_IG_ANIO_ANT+dif)
 
-'Necesario recalcular para que la retencion considere el cambio:
+'Necesario recalcular para que la retención considere el cambio:
 SAR_TOT_RETEN()
 SAR_TOT_RETEN_DESC()
 SCO_TOT_DEDUCTIONS()

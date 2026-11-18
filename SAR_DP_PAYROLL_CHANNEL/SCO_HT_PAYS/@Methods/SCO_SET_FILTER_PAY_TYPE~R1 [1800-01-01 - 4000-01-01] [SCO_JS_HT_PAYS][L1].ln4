@@ -6,7 +6,7 @@ If ARG_FLAG_MENU = 7 Then sCountry = GetValue("SCO_HT_PAYS", "SCO_P_COUNTRY", -1
 
 If sCountry = "MX" Then sdi = 1
 
-If ARG_FLAG_MENU = 7 And sdi = 1 Then     ' Exclusivo para Mejico
+If ARG_FLAG_MENU = 7 And sdi = 1 Then     ' Exclusivo para Méjico
     SCO_SYSSENTENCE_PAY_TYPE = " FROM &SCO_HT_PAYS P WHERE P.SME_IND_PAGA_SDI = 1"
 Else
     SCO_SYSSENTENCE_PAY_TYPE = " FROM &SCO_HT_PAYS P WHERE (P.SME_IND_PAGA_SDI <> 1 OR P.SME_IND_PAGA_SDI IS NULL)"

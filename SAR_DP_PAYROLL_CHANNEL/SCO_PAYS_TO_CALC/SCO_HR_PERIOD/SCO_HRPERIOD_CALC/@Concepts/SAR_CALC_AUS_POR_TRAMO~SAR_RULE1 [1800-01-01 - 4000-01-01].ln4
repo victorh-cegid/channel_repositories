@@ -22,7 +22,7 @@ IF ARG_TIPO_AUSENCIA = "DIA" THEN
         unid        = SAR_REAL_TIME_PERIOD.SCO_UNITS
         excedencia = 0
         
-        'Contabilizo la cantidad de dias y si el tipo de salario es Horario, traspaso las unidades a horas
+        'Contabilizo la cantidad de días y si el tipo de salario es Horario, traspaso las unidades a horas
         IF SAR_TIPO_SALARIO <> "003" THEN    'no es horario
         
         If DxMonth(FIN_TRAMO) = 2 THEN
@@ -93,7 +93,7 @@ IF ARG_TIPO_AUSENCIA = "DIA" THEN
         ENDIF
     NEXT  
     
-    'Resto los dias de accidente
+    'Resto los días de accidente
     primerreg = 0
     ultimoreg = SAR_ACCID_ACT.COUNT() - 1
     

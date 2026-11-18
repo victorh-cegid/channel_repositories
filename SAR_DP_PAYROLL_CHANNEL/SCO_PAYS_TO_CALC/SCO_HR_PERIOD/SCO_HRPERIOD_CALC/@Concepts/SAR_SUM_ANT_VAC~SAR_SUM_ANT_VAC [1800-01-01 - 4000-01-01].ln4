@@ -2,7 +2,7 @@ IF #SAR_TP_IMPUT <> "88" THEN
     Return(0)
 ENDIF
 
-'Obtengo la proxima paga para poder eliminar e insertar el descuento de anticipo de vacaciones.
+'Obtengo la próxima paga para poder eliminar e insertar el descuento de anticipo de vacaciones.
 
 SCO_H_HR_PAY_FREQ.BEGIN()
 SAR_PROXIMA_PAGA.BEGIN()
@@ -11,7 +11,7 @@ IF POS <> -1 THEN
     SAR_PROXIMA_PAGA.MOVETO(POS)
 ENDIF
 
-'Asigno los datos de la proxima paga para filtrar el nodo de Anticipo de Vacaciones
+'Asigno los datos de la próxima paga para filtrar el nodo de Anticipo de Vacaciones
 
 SAR_ANTICIPO_VACACIONES.SAR_DT_START = SAR_PROXIMA_PAGA.SCO_DT_START
 SAR_ANTICIPO_VACACIONES.SAR_DT_END = SAR_PROXIMA_PAGA.SCO_DT_END

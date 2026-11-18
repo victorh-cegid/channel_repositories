@@ -4,7 +4,7 @@ ENDIF
 
 edad = SAR_EDAD
 valor = 0
-'Se modifica la edad de 18 a 16. Por bug 0133289. l Art. 1? de la Ley 22.276
+'Se modifica la edad de 18 a 16. Por bug 0133289. l Art. 1° de la Ley 22.276
 IF edad < 16 THEN
     porc = SAR_PORC_AHORR_MEN - (SAR_PORC_AHORR_MEN*SAR_PP_AP_AHO_MEN/100)
     valor = SAR_SAC_IMPO * porc / 100

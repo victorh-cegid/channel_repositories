@@ -4,7 +4,7 @@
 'Si el indicativo es igual a uno, significa que el empleador se hace cargo del monto ' 
 'del impuesto de acuerdo al art. 8 de la Res. Gral. AFIP 1261/02. Se practica un     '
 'grossing up del bruto del tal forma que el nuevo neto a cobrar por el empleado sea  ' 
-'igual al que cobraria originalmente antes de la retencion del impuesto. El importe  '
+'igual al que cobraria originalmente antes de la retención del impuesto. El importe  '
 'del grossing up se trata como un valor remunerativo a todos los efectos.            '
 '                                                                                    '
 '------------------------------------------------------------------------------------'
@@ -19,7 +19,7 @@ valor = 0
 '    neto1 = #1220
 '
 '    IF itera > 2 AND itera < 12 THEN
-'    valor = #5010 + neto1 - liquido_ant '#9000 de la iteracion anterior
+'    valor = #5010 + neto1 - liquido_ant '#9000 de la iteración anterior
 '    ENDIF
 '
 'MESSAGEBOX("itera",#1210)

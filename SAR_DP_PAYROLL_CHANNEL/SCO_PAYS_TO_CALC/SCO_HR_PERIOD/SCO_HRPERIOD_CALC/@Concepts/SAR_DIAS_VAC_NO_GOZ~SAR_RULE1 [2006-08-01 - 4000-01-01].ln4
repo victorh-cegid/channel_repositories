@@ -1,7 +1,7 @@
 IF SAR_ES_BAJA = 0 THEN 
     Return(0)
 ENDIF
-'Por modificacion del empleado
+'Por modificación del empleado
 IF SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" THEN 
     Return(0)
 ENDIF
@@ -15,6 +15,8 @@ contador = 0
 num_dias=0
 prop=0
 base = 0
+
+
 IF ISNULL (SAR_HR_PERIOD.SSP_FEC_ANTIGUEDAD) = FALSE AND SAR_HR_PERIOD.SSP_FEC_ANTIGUEDAD < SAR_FECHA_ALTA THEN
     fec_ini = SAR_HR_PERIOD.SSP_FEC_ANTIGUEDAD
 ELSE
@@ -30,8 +32,8 @@ FECHA = TOSTRING(SAR_PAYS_TO_CALC.SAR_ANIO_PROCESO,0) + "/" + "01" + "/" + "01"
 fec_ini_anio = TODATE(FECHA)
 fec_fin_paga = SAR_HR_PERIOD.SCO_DT_ALLOC_END
 IF dias_teor <> 0 THEN  ' tiene antiguedad mayor a seis meses
-    dias_alta = CommonTime(fec_ini_anio,fec_fin_paga,SAR_FECHA_ALTA,SAR_FECHA_BAJA) 
-    dias_alta = dias_alta - SAR_ACM_IG_ANIO_ACT[0].SAR_DIAS_LIC_NO_RETRIB
+    dias_alta = CommonTime(fec_ini_anio,fec_fin_paga,SAR_FECHA_ALTA,SAR_FECHA_BAJA)       
+    dias_alta = dias_alta - SAR_ACM_IG_ANIO_ACT[0].SAR_DIAS_LIC_NO_RETRIB    
     dias_vac = dias_teor*dias_alta/365  
 ELSE
     IF dias_20 <> 0 THEN
@@ -55,6 +57,8 @@ ELSE
             base = base + 1
         NEXT
         dias_trab = num_dias - contador
+        a=SAR_ACM_IG_ANIO_ACT[0].SAR_DIAS_LIC_NO_RETRIB
+        b=SAR_DIAS_LIC_NO_RETRIB
         dias_trab = dias_trab - SAR_ACM_IG_ANIO_ACT[0].SAR_DIAS_LIC_NO_RETRIB
         dias_vac = dias_trab/20
     ENDIF

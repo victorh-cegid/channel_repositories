@@ -211,7 +211,7 @@ For x = 0 to iItemCount - 1
                     // por este caracter no imprimible, y ahora aqui le damos la vuelta.
                     // lo hacemos igual en la Query.
                     // Bug 316166
-                    sValue = Replace(sValue,"?" , ",") 
+                    sValue = Replace(sValue,"¸" , ",") 
                     
               
                     If bIsPk = M4_FALSE AND iMatchCase = 0 Then

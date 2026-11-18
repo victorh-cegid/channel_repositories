@@ -3,7 +3,7 @@ importemes = SAR_TOT_M_JUB
 importe_oe = SAR_JUB_ANT_EMP + SAR_JUBILACION_OE
 
 'Situacion especial reliquidacion diciembre 2023: Ajustes imputados antes de octubre han quedado en reliq especial de septiembre
-'por tanto lo sacamos de la reliquidacion de diciembre
+'por tanto lo sacamos de la reliquidación de diciembre
 If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 And DxYear(SCO_DT_ALLOCATION) = 2023 And DxMonth(SAR_FEC_PAGO_IG) = 12 And DxMonth(SCO_DT_ALLOCATION) > 9 Then
     ajusteSobra = 0
     mes_ini_ig = DxDate(1,1,DxYear(SAR_FEC_IMPUT_IG))
@@ -17,7 +17,7 @@ If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 
     Next
     importeacum = importeacum - ajusteSobra
 EndIf
-'Fin solo 2023    
+'Fin sólo 2023    
 
 'Considera descuentos de aportes
 'dependencias
@@ -29,7 +29,7 @@ importe_oe = Max(importe_oe - oeApoDesc,0)
 
 total_jub = importeacum + importemes + importe_oe
 
-'Control SAC imputado a?os anteriores no entre doble:
+'Control SAC imputado años anteriores no entre doble:
 total_jub = total_jub - SAR_ANT_SAC_JUB - SAR_ACM_IG_ANIO_IMPUT[0].SAR_ANT_SAC_JUB
 
 Return (total_jub)

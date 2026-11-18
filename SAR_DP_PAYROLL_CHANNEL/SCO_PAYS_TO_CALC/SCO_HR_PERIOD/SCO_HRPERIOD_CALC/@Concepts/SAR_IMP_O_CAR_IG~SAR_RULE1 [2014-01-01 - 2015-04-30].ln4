@@ -81,7 +81,7 @@ FOR I = primerreg TO ultimoreg
         
 	  ENDIF
 
-        'Si no posee incapacidad permanente, y es un tipo de parentezco que se debe controlar la edad, verifico los a?os contra el tope de la edad para ganancias.(24 a?os)      
+        'Si no posee incapacidad permanente, y es un tipo de parentezco que se debe controlar la edad, verifico los años contra el tope de la edad para ganancias.(24 años)      
         IF (edad = SAR_TOPE_EDAD_FAMILIAR AND DXYEAR(fec_nac) + SAR_TOPE_EDAD_FAMILIAR = DXYEAR(SAR_FEC_PAGO_IG))  AND (Existe_inc <> 1) and (control_edad = 1) and (inc = "N") THEN
             DIAT = DXDAY(fec_nac)
             IF DIAT < 10 then
@@ -136,8 +136,8 @@ FOR I = primerreg TO ultimoreg
                 Existe_inc = 0
             Endif
 
-        'Calculo de la deduccion especial segun informacion recopilada del concepto 792 por Decreto 1242/2013.
-        	'792 Es el rango obtenido en el que el empleado se ubica segun su Maxima remuneracion y la zona desfavorable 
+        'Calculo de la deducción especial según información recopilada del concepto 792 por Decreto 1242/2013.
+        	'792 Es el rango obtenido en el que el empleado se ubica según su Máxima remuneración y la zona desfavorable 
         	'Y sus valores posibles para este concepto son:
         	'2: Empleado que tiene entre 15000$ y 25000$ de rem max y zona no desfavorable.
         	'3: Empleado que tiene mas de 15000$ de rem max y zona desfavorable.                        
@@ -204,8 +204,8 @@ FOR I = primerreg TO ultimoreg
                 'Toma su valor por valores empresa
                 ind = SAR_IND_DED_IG_2010                
 
-                'Calculo de la deduccion especial segun informacion recopilada del concepto 792 por Decreto 1242/2013.
-            	'792 Es el rango obtenido en el que el empleado se ubica segun su Maxima remuneracion y la zona desfavorable 
+                'Calculo de la deducción especial según información recopilada del concepto 792 por Decreto 1242/2013.
+            	'792 Es el rango obtenido en el que el empleado se ubica según su Máxima remuneración y la zona desfavorable 
             	'Y sus valores posibles para este concepto son:
             	'2: Empleado que tiene entre 15000$ y 25000$ de rem max y zona no desfavorable.
             	'3: Empleado que tiene mas de 15000$ de rem max y zona desfavorable.                        
@@ -237,5 +237,5 @@ FOR I = primerreg TO ultimoreg
     endif
 NEXT
     
-'Se redondea el importe antes de su devolucion
+'Se redondea el importe antes de su devolución
 RETURN(Round(importe,2))

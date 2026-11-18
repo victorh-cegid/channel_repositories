@@ -2,5 +2,5 @@
 unidad = SAR_DIAS_VACACIONES
 precio = SAR_PRE_DESC_VAC
 
-'Como se trata de un devengo negativo, le cambio el signo a la operacion.
+'Como se trata de un devengo negativo, le cambio el signo a la operación.
 Return((unidad*precio) * -1)

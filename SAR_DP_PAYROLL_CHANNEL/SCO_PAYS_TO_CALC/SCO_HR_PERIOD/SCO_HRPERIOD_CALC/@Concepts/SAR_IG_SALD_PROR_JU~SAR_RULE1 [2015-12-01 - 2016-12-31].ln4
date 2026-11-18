@@ -1,4 +1,4 @@
-'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+'Por modificación del empleado se agregó: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
 IF ((SAR_MES_PAGO_IG = 12 and SCO_DT_ALLOCATION = SCO_DT_PAYMENT) OR (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") ) THEN
     RETURN(0)
 ENDIF
@@ -6,7 +6,7 @@ ENDIF
 'No se ejecuta en la primera quincena
 IF SAR_TP_IMPUT = "3" THEN RETURN (0)
 
-'No tomara valor en la paga normal de Junio si no existe ajuste:
+'No tomará valor en la paga normal de Junio si no existe ajuste:
 If (SAR_TP_IMPUT = "1" And DxMonth(SCO_DT_PAYMENT) = 6 And SAR_PAGA_EXTRA_AJ_1 = 0 And SAR_IND_AGUINALDO = 0) Then
   Return(0)
 EndIf

@@ -12,7 +12,7 @@ Zona_Actual   = -1
 Zona_Mes      = -1
 Zona_Mes_Paga = -1
 ID_DMD          = "SAR_INDIC_REDUC_ZON_DES_1"
-'se modifica el indicativo de cambio de rango, al cambiar el A?o Fiscal.
+'se modifica el indicativo de cambio de rango, al cambiar el Año Fiscal.
 If ano_pago_ant <> ano_pago_act Then
  indic_cambio_rango = 0
  SAR_IND_CAMBIO_RANGO               = 0
@@ -20,8 +20,8 @@ EndIf
 
 RANGO = SAR_RANGO_REM_IG_2015 'Rango normal de la paga
 
-'La siguiente condicion permite decidir lo siguiente:
-'           Si existio cambio de zona en lo que va del a?o fiscal => 
+'La siguiente condición permite decidir lo siguiente:
+'           Si existio cambio de zona en lo que va del año fiscal => 
 '                    determina el importe resultante de las dos zonas mes a mes.
 '           Si no 
 '                    determina el importe de la dos zonas a la pga actual directo de la tabla.
@@ -157,7 +157,7 @@ If(MES_CAMBIO_PREVIO <> -1)Then
                     EndIf                    
                     
                     R = TOSTRING(RANGO,0)
-                   'Calculo de la deduccion especial segun informacion recopilada del concepto v793 por Decreto 3770/2015.
+                   'Calculo de la deducción especial según información recopilada del concepto v793 por Decreto 3770/2015.
                     If(RANGO = 3)Then
                         precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_DED_ESPECIAL",FECHA_ENERO,ind))
                     ElseIf(RANGO = 2)Then
@@ -184,7 +184,7 @@ If(MES_CAMBIO_PREVIO <> -1)Then
 
 Else
     R = TOSTRING(RANGO,0) 
-    'Calculo de la ganancia no imponible segun informacion recopilada del concepto v793 por Decreto 3770/2015.
+    'Calculo de la ganancia no imponible según información recopilada del concepto v793 por Decreto 3770/2015.
     If(RANGO = 3)Then
         precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_DED_ESPECIAL",SAR_FEC_PAGO_IG,ind))
     ElseIf(RANGO = 2)Then
@@ -200,5 +200,5 @@ EndIf
 If isNull(importe) = M4_TRUE Then
     importe = 0
 Endif
-'Se redondea el importe antes de su devolucion
+'Se redondea el importe antes de su devolución
 RETURN(Round(importe,2))

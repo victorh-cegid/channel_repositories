@@ -1,4 +1,4 @@
-'Paga 99 vale 1 / paga adicional de liquidacion vale 2 / resto 0
+'Paga 99 vale 1 / paga adicional de liquidación vale 2 / resto 0
 If SAR_TP_IMPUT = "99" And SCO_DT_ALLOCATION = DxDate(30,06,2021) Then Return(2)
 If SAR_TP_IMPUT = "99" Then Return(1)
 Return(0)

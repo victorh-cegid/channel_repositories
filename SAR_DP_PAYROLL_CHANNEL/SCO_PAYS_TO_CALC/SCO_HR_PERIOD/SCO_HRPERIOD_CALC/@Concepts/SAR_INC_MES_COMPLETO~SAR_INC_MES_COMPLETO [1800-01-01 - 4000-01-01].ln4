@@ -1,4 +1,4 @@
-'Este concepto recibe por parametro una id incidencia y retorna 1 si dicha incidencia es la situacion completa del mes (no solo de la paga)
+'Este concepto recibe por parámetro una id incidencia y retorna 1 si dicha incidencia es la situación completa del mes (no sólo de la paga)
 'no contempla carga consecutiva de una misma incidencia.
 
 'Asigna las fechas de inicio y fin del mes

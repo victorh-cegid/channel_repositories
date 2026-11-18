@@ -1,7 +1,7 @@
 /* No debe tomar valor en paga de reliq del impuesto */
 If (SAR_TP_IMPUT = "99") Then Return(0)
 
-'Obtencion del mes de pago del aguinaldo:
+'Obtención del mes de pago del aguinaldo:
 FECHA_INF = ToDate(TOSTRING(DxYear(SCO_DT_ALLOCATION),0) + "-12" + "-01")
 FECHA_SUP = ToDate(TOSTRING(DxYear(SCO_DT_ALLOCATION),0) + "-12" + "-31")
 vInicio   = DxDate("01","07","2014")
@@ -9,7 +9,7 @@ vInicio   = DxDate("01","07","2014")
 vFin      = DxDate("31","12","2014")
 
 
-'Inicializacion de las variables para acumulado de conceptos calculados de SAC:
+'Inicialización de las variables para acumulado de conceptos calculados de SAC:
 VAR_SAR_PAGA_EXTRA_2     = 0
 VAR_SAR_JUBILACION_SAC   = 0
 VAR_SAR_LEY_19032_SAC    = 0

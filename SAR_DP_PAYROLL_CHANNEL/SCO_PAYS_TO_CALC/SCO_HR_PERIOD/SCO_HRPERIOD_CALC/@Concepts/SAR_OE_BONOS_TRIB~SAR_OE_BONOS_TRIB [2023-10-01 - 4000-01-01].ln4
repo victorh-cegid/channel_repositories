@@ -1,4 +1,4 @@
-'Recorre la tabla detalle complementos y aplica un tope por cada concepto SAR_DESCRIPCION diferente que encuentre en el a?o fiscal.
+'Recorre la tabla detalle complementos y aplica un tope por cada concepto SAR_DESCRIPCION diferente que encuentre en el año fiscal.
 importe = SAR_IMP_BONOS_PROD_OE
 indGravado = SAR_OE_IND_BONOS_TRIB
 
@@ -31,7 +31,7 @@ Else
     mes_paga_efecti = DxMonth(SAR_FEC_IMPUT_IG)
 EndIf
 
-'Reliquidacion en 2023, se leen complementos desde septiembre (octubre diferidos) hasta diciembre
+'Reliquidación en 2023, se leen complementos desde septiembre (octubre diferidos) hasta diciembre
 indReliq = SAR_IND_PAGA_RELIQ
 If indReliq = 1 And DxYear(SAR_FEC_IMPUT_IG) = 2023 Then indReliq = 0
 
@@ -111,7 +111,7 @@ Next
 gravadoTot = gravadoTot + gravado
 exentoTot = exentoTot + exento
 
-'Controla si no se informo detalle, pero si importe, entonces se va a contar como un solo bono
+'Controla si no se informó detalle, pero si importe, entonces se va a contar como un sólo bono
 If numReg = 0 Then
     importe = SAR_IMP_BONOS_PROD_OE
     topeExento = Percentage(40,SAR_NO_IMP_27617)

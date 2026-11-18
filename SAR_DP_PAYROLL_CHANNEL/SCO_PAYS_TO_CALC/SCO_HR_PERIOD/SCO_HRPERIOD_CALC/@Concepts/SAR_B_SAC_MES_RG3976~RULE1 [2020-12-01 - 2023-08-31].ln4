@@ -1,28 +1,28 @@
-'Este concepto prorratea el importe del SAC tomandolo del total 3700-SAR_TOT_SAC_RG3976 para llevarlo en forma de provision al impuesto de Ganancias.
+'Este concepto prorratea el importe del SAC tomándolo del total 3700-SAR_TOT_SAC_RG3976 para llevarlo en forma de provisión al impuesto de Ganancias.
 
-'No se calcula en reliquidacion ni en paga de Anticipo de Vacaciones.
-'Si el empleado es baja no se calcula porque se sumara al impuesto el SAC realmente percibido
+'No se calcula en reliquidación ni en paga de Anticipo de Vacaciones.
+'Si el empleado es baja no se calcula porque se sumará al impuesto el SAC realmente percibido
 
 'Ley 27617        
 indAjusteRetro = SAR_IND_IMPUESTO_RETRO
 indAjusteRemun = SAR_IND_AJUSTE_REMUN_27617
 
-'indAjusteRemun = 1 remuneracion y promedio se miran por criterio percibido
+'indAjusteRemun = 1 remuneración y promedio se miran por criterio percibido
 If indAjusteRemun = 1 Then
     remun_mes = SAR_REM_27617_DEI_PERC
     remun_prom = SAR_PROM_27617_DEI_PERC
     fec_ded = SAR_FEC_IMPUT_IG
-'indAjusteRemun = 0 remuneracion y promedio se miran por criterio devengado (excepto jornalizados)
+'indAjusteRemun = 0 remuneración y promedio se miran por criterio devengado (excepto jornalizados)
 Else
     If SAR_TIPO_SALARIO = "003" Then
         remun_mes = SAR_TOT_REMUN_27617
         remun_prom = SAR_PROM_27617_DEI_IG
-        fec_ded = SAR_FEC_IMPUT_IG 'Se mantiene fecha IG por coherencia de calculo en jornalizados, cambiar por SCO_DT_ALLOCATION si se considera que debe levantarse el dato por devengado
+        fec_ded = SAR_FEC_IMPUT_IG 'Se mantiene fecha IG por coherencia de cálculo en jornalizados, cambiar por SCO_DT_ALLOCATION si se considera que debe levantarse el dato por devengado
     Else
         remun_mes = SAR_REM_27617_DEI_DEV
         remun_prom = SAR_PROM_27617_DEI_DEV
         fec_ded = SCO_DT_ALLOCATION
-        'Diferidos diciembre 2020 IG 2021 debe calcular deduccion
+        'Diferidos diciembre 2020 IG 2021 debe calcular deducción
         If indAjusteRetro = 2 And DxYear(SAR_FEC_IMPUT_IG) > DxYear(SCO_DT_ALLOCATION) Then fec_ded = SAR_FEC_IMPUT_IG
     EndIf
 EndIf
@@ -31,7 +31,7 @@ vTramo = SAR_DED_ESP_INC.SAR_RETORNA_TRAMO(retrib,fec_ded,ID_CURRENCY)
 If DxYear(SAR_FEC_IMPUT_IG) = 2023 And vTramo <> 1 And retrib <=880000 Then vTramo = 1
 'fin ley 27617
 
-'Control retroactividad reliquidacion anual 2023 no genere diferencias en el acumulado
+'Control retroactividad reliquidación anual 2023 no genere diferencias en el acumulado
 If SCO_PAYS_TO_CALC.SCO_PAY_TYPE_PAYM = "99" And DxYear(SAR_FEC_PAGO_IG) = 2023 And DxYear(SCO_DT_ALLOCATION) = 2023 And DxMonth(SAR_FEC_PAGO_IG) = 12 Then
     sac_mensual = SAR_AC_SAC_REV[0].SAR_B_SAC_MES_RG3976
     Return(sac_mensual)
@@ -42,7 +42,7 @@ If SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "88" OR SAR_ES_BAJA = 1 Or SAR_IND_AJUS
 haberes_paga = SAR_TOT_SAC_RG3976 'Total haberes de la paga actual.
 sac_mensual = haberes_paga / 12
 
-'Control retroactividad a?os anteriores: No genera diferencias en el acumulado, son para el siguiente a?o fiscal.
+'Control retroactividad años anteriores: No genera diferencias en el acumulado, son para el siguiente año fiscal.
 If DxYear(SAR_FEC_PAGO_IG)>DxYear(SAR_FEC_IMPUT_IG) Then sac_mensual = SAR_AC_SAC_REV[0].SAR_B_SAC_MES_RG3976
 
 Return(sac_mensual)

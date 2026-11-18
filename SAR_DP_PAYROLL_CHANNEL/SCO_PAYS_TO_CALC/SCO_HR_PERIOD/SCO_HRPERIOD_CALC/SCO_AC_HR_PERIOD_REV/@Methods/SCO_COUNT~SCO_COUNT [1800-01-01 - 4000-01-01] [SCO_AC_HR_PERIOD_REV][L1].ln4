@@ -1,28 +1,28 @@
-//leo este dato antes de empezar a tener tramos distintos en la ejecucion del nodo de 
-//revision que en el calculo.
+//leo este dato antes de empezar a tener tramos distintos en la ejecución del nodo de 
+//revisión que en el cálculo.
 iNumDecimals = SCO_HRPERIOD_CALC.SCO_CURR_EXCH_PRICES
 Numreg=Count()
 
 If Numreg > 0 Then
-	//Lo ordeno para que la minima fecha de inicio me aparezca en el primer registro y asi no tener
+	//Lo ordeno para que la mínima fecha de inicio me aparezca en el primer registro y así no tener
 	//que hacer otra select sobre el acumulado
 	sort(1) 
 	Begin() 
 	dStartRetro = SCO_HR_PERIOD.SCO_DT_START_CALC_RETRO(SCO_DT_START_SLICE)
 
-	//Lo ordeno para que la maxima fecha de fin me aparezca en el primer registro y asi
+	//Lo ordeno para que la máxima fecha de fin me aparezca en el primer registro y así
 	//no tener que hacer otra select sobre el acumulado
 	sort(2) 
 	Begin() 
 	dEndRetro =SCO_HR_PERIOD.SCO_DT_END_CALC_RETRO(SCO_DT_END_SLICE)
 
-	//Para que en el nodo de revision se acceda a datos de fuera del intervalo de fechas del
-	//calculo, tenemos que setear las fechas maximas. Es para las bajas/altas retroactivas.
+	//Para que en el nodo de revisión se acceda a datos de fuera del intervalo de fechas del
+	//cálculo, tenemos que setear las fechas máximas. Es para las bajas/altas retroactivas.
 	SetStartDate(dStartRetro)
 	SetEndDate(dEndRetro)
 Else
-	//Paso la fecha maxima en la fecha de inicio porque asi cualquier otra sera menor y el
-	//concepto cogera la de calculo. Lo mismo con la fecha de fin.
+	//Paso la fecha máxima en la fecha de inicio porque así cualquier otra será menor y el
+	//concepto cogerá la de cálculo. Lo mismo con la fecha de fin.
 	SCO_HR_PERIOD.SCO_DT_START_CALC_RETRO(PLUS_INF)
 	SCO_HR_PERIOD.SCO_DT_END_CALC_RETRO(MINUS_INF)
 EndIf

@@ -1,4 +1,4 @@
-//Inicializacion de variables
+//Inicialización de variables
 Type = 0
 Module = 0
 SubModule = 0
@@ -10,13 +10,13 @@ iRegErr = 0
 NumErrors = GetLogSize()
 
 
-//Recorre la pila de erores desde el punto en que la dejamos la ultima vez, hasta el ultimo error producido.
+//Recorre la pila de erores desde el punto en que la dejamos la última vez, hasta el último error producido.
 For IDError = SCO_ERROR_POSITION to NumErrors
     //Coge el error de la pila
     GetLog (IDError, Type, Module, SubModule, Code, Param)
     If Type = M4_ERROR Then
         Texto = GetErrorString(Module, Submodule, Code, param)
-        //A?ade el registro en la tabla
+        //Añade el registro en la tabla
         AddRegister()
         SCO_DT_ALLOCATION = SCO_PROC_DT_ALLOCATION
         SCO_DT_PAYMENT = SCO_PROC_DT_PAYMENT
@@ -40,11 +40,11 @@ If SCO_PAYS_TO_CALC.SCO_SAVEYTD = TRUE Then
 	BeginTransaction()
 
 	//Se lanza el borrado de los errores que se han producido para esta misma paga pero en 
-	//calculos previos. El borrado tambien se lanza cuando se va a grabar desde el metodo
+	//cálculos previos. El borrado también se lanza cuando se va a grabar desde el método
 	//SCO_SAVE_AC.
 	SCO_SQL_ERRORS(0,1)
 
-	//Se lanza la insercion de los errores que se han producido en el calculo para el empleado
+	//Se lanza la inserción de los errores que se han producido en el cálculo para el empleado
 	//y que hemos calculado al principio.
 	INSERT_BLK()
 	EndTRansaction(COMMIT)

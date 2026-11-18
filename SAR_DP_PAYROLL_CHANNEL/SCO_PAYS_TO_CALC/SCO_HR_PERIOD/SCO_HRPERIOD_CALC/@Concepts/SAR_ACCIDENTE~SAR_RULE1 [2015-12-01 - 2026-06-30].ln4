@@ -38,7 +38,7 @@ FOR I = primerreg TO ultimoreg
     '************************************************************************
     
     'Se condiciona para que en caso que el Accidente sea posterior al cambio del 06/11 el Precio del Accidente se calcule como 
-    'la Licencia Por Enfermedad segun se indica en el Decreto 1694/2009.
+    'la Licencia Por Enfermedad según se indica en el Decreto 1694/2009.
     '-------------------------------------------------------------------------------------------------------------------------------------.
     aux         = DxDate(06,11,2009)
     mes_ini_acc = commontime(fec_ini,fec_ini,SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC,SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC)
@@ -46,7 +46,7 @@ FOR I = primerreg TO ultimoreg
     IF fec_acc < aux  and mes_ini_acc = 11 THEN Return(0)
     
     IF fec_acc >= aux THEN
-        fec_calc_acc = SAR_HR_PERIOD.SCO_DT_ALLOC_START 'fecha para el calculo del precio del accidente
+        fec_calc_acc = SAR_HR_PERIOD.SCO_DT_ALLOC_START 'fecha para el cálculo del precio del accidente
         
         if SAR_ES_ALTA = 1 then
             fec_alta        = SAR_FECHA_ALTA 'fecha de alta del empleado
@@ -70,7 +70,7 @@ FOR I = primerreg TO ultimoreg
         ENDIF
         
         '---------------------------------------------------------------------------------
-        'Resolucion 983/2010 - Verifica si el precio del accidente, no es menor al actual
+        'Resolución 983/2010 - Verifica si el precio del accidente, no es menor al actual
         '---------------------------------------------------------------------------------
         IF IsNull (SAR_ACCID_ACT.SAR_PRECIO_DIARIO)=M4_FALSE Then
             PR_DIAS_ACC_INI = SAR_ACCID_ACT.SAR_PRECIO_DIARIO
@@ -234,7 +234,7 @@ FOR I = primerreg TO ultimoreg
                     NEXT	    'Fin carga Variables
                 ENDIF         'Si v80 = 1            
                 
-                '********************** Inicio grabacion en SAR_PRE_ACC_ART ******************************
+                '********************** Inicio grabación en SAR_PRE_ACC_ART ******************************
                 IF SAR_PRE_ACC_ART.COUNT()<> 0 THEN
                     SAR_PRE_ACC_ART.BEGIN()
                     SAR_PRE_ACC_ART.Deleteregister()

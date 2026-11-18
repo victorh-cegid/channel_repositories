@@ -3,11 +3,11 @@ IF (#SAR_ES_BAJA = 0) and (#SAR_FECHA_BAJA < SCO_DT_ALLOCATION)  and (#SAR_BASE_
 SAR_SICORE.BEGIN()
 
 '
-'En la primera parte de esta formula se calcula la ganancia neta sujeta a impuesto correspondiente
-'a la paga actual solo si el impuesto calculado es >= 0.
+'En la primera parte de esta fórmula se calcula la ganancia neta sujeta a impuesto correspondiente
+'a la paga actual sólo si el impuesto calculado es >= 0.
 'Para esto restamos la ganancia neta acumulada calculada en la paga actual a la calculada en 
 'la paga inmediatamente anterior.
-'Siempre dentro del mismo a?o fiscal.
+'Siempre dentro del mismo año fiscal.
 '
 aux = 0
 fecha = SAR_SICORE.SAR_FECHA_PAGO_IG
@@ -20,12 +20,12 @@ IF #SAR_IMPUESTO >= 0 THEN
 	ENDIF
 ELSE
 	
-'En la 2da. parte se calcula el ultimo impuesto retenido en la ultima paga
-'solo si el impuesto actual es < 0.
-'Para esto traemos el valor del campo IMPUESTO_ANT de la ultima paga.
-'Siempre dentro del mismo a?o fiscal.
+'En la 2da. parte se calcula el último impuesto retenido en la última paga
+'sólo si el impuesto actual es < 0.
+'Para esto traemos el valor del campo IMPUESTO_ANT de la última paga.
+'Siempre dentro del mismo año fiscal.
 'Este campo se utiliza en el reporte DGIMEN.RPT para el caso en el que
-'la retencion que haya que informar sea a favor del contribuyente. 
+'la retención que haya que informar sea a favor del contribuyente. 
 
 	IF DXYear(fecha) = DXYear(#SAR_FEC_PAGO_IG) THEN
 

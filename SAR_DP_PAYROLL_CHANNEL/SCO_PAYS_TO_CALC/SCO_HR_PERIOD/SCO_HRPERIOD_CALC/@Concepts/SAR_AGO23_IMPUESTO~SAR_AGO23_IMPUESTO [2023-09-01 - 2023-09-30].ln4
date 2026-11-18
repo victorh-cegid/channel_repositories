@@ -1,8 +1,8 @@
 If SCO_DT_PAYMENT = SCO_DT_ALLOCATION And SAR_SEP23_IND_AJ_NORM = 0 Then Return(0)
 If (SAR_TP_IMPUT = "77" And SAR_VACACIONES = 0) Or SAR_TP_IMPUT = "88" Or SAR_TP_IMPUT = "99" Or SAR_IND_NO_RET_GAN = 1 Then Return(0)
-'Si la baja no finaliza el ultimo dia del mes no se calcula impuesto
+'Si la baja no finaliza el último día del mes no se calcula impuesto
 If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" And (DxDay(SAR_FECHA_BAJA) <> DaysOfMonth(SAR_FECHA_BAJA) Or (SAR_FECHA_BAJA < SCO_DT_ALLOCATION and SAR_IMPUESTO_TOTAL = 0)) Then Return (0)
-'En revision, salvo en baja, no se calcula impuesto, devuelve valor original para no generar retencion
+'En revisión, salvo en baja, no se calcula impuesto, devuelve valor original para no generar retención
 imp_retro = 0
 
 impuesto_tot = SAR_AGO23_IMP_TOTAL
@@ -41,7 +41,7 @@ base = base + (SAR_IMP_DEC792_NRED - SAR_IMP_DEC792)
 Tope = Max((base + vBase) * SAR_PP_RET_GAN_ST/100,0)
 valor_imp_mes = valor + vTotal_ret_mes
 
-'Si es baja y su retencion excede el tope permitido generamos la diferencia
+'Si es baja y su retención excede el tope permitido generamos la diferencia
 If SAR_ES_BAJA = 0 Or (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" And SAR_IND_APLIC_TOPE_35 = 1) Then
     SAR_SALD_RET_GAN_ST = Max(valor_imp_mes - tope,0)
     If valor_imp_mes > tope Then

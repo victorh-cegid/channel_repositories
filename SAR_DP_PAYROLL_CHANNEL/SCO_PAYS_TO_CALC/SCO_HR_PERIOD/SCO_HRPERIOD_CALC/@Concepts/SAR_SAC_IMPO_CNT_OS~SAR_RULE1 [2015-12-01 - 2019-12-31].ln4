@@ -1,5 +1,5 @@
-'De acuerdo al articulo 3? el decreto 491/04 desde el 01/10/05 no hay topes para 
-'el calculo de la base imponible de las contribuciones.
+'De acuerdo al artículo 3° el decreto 491/04 desde el 01/10/05 no hay topes para 
+'el cálculo de la base imponible de las contribuciones.
 
 IF SAR_ES_BAJA = 1 THEN
     Sac         = SAR_EGRESO_PAGA_1 + SAR_EGRESO_PAGA_2
@@ -23,12 +23,12 @@ Sac_Del_Mes = Sac_Total_Previo + Sac 'Contiene el total actual del SAC con paga 
 
 If(Sac_Del_Mes < Tope_Minimo)Then         'Si No llegamos al tope minimo.....
    If(Base_Total = Tope_Minimo)Then       '   Si Existe una base con valor del minimo.....
-     Base        = 0                      '     La base sera 0. No se realiza descuento de O.S.
+     Base        = 0                      '     La base será 0. No se realiza descuento de O.S.
    Else                                   '   Si No.....
-     Base = Tope_Minimo                   '     La base sera el valor del minimo.      
+     Base = Tope_Minimo                   '     La base será el valor del minimo.      
    EndIf                                  '
 Else                                      'Si No.... 
-  Base = Sac_Del_Mes - Base_Total         '   La base sera la diferencia entre  el SAC del mes y el total de la base.  
+  Base = Sac_Del_Mes - Base_Total         '   La base será la diferencia entre  el SAC del mes y el total de la base.  
 EndIf
 
 RETURN(Base)

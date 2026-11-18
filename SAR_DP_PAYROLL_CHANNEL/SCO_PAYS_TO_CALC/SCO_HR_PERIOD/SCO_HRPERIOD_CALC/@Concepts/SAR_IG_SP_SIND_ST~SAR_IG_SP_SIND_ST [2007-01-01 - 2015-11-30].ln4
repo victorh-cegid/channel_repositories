@@ -1,4 +1,4 @@
-'Por modificacion del empleado se agrego: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
+'Por modificación del empleado se agregó: SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017"
 IF (SAR_MES_PAGO_IG=12 OR (SAR_ES_BAJA=1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017")) THEN RETURN(0)
 
 dif = 0

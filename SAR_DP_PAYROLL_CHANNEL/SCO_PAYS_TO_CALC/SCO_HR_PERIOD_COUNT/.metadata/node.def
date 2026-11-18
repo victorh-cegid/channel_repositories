@@ -1,5 +1,5 @@
 ID_NODE: SCO_HR_PERIOD_COUNT
-NAME: Numero de periodos del RH para calcular
+NAME: Número de periodos del RH para calcular
 ID_TI: SAR_HR_PERIOD_COUNT
 IS_ROOT: false
 IS_FREE: false

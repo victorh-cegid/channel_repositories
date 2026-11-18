@@ -7,10 +7,10 @@ else
 	SCO_AC_HR_PERIOD_READ.SysSentence="FROM &" + sWriteObj + " A WHERE A.ID_CURRENCY=@SCO_PROCESS_CURR AND (( ( A.SCO_DT_ALLOCATION >= @SCO_DT_START And A.SCO_DT_ALLOCATION <= @SCO_DT_END ) Or ( A.SCO_DT_PAYMENT >= @SCO_DT_START And A.SCO_DT_PAYMENT <= @SCO_DT_END ) ))"
 endif
 
-//Esto se a?ade porque la funcion YTDSearch no esta filtrando por fecha de pago.
-//No puede hacerlo porque la misma funcion se utiliza para la nomina y para las
+//Esto se añade porque la función YTDSearch no está filtrando por fecha de pago.
+//No puede hacerlo porque la misma función se utiliza para la nómina y para las
 //plantillas de acumulado y estas pueden leer valores a futuro. 
-//Por lo tanto es mejor que la carga se haga lo mas filtrada posible.
+//Por lo tanto es mejor que la carga se haga lo más filtrada posible.
 
 SCO_SYSPARAM = ToString(SCO_HRPERIOD_CALC.SCO_DT_PAYMENT) + "|" + ToString(SCO_HRPERIOD_CALC.SCO_DT_ALLOCATION) + "|" + ToString(SCO_HRPERIOD_CALC.SCO_DT_PAYMENT)
 

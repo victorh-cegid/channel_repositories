@@ -8,9 +8,9 @@ If SAR_IND_PAGA_RELIQ = 1 And SCO_DT_PAYMENT = SCO_DT_ALLOCATION Then ind_reliq 
 indNoNeg = SAR_IND_GAN_NONEG
 If base_impuesto < 0 And indNoNeg = 1 Then
     saldo = base_impuesto * -1
-    'Deduccion especial tramo 1 y 2. En pagas normales solo se minora la deduccion del propio mes
-    'que se haya calculado, no se minora el importe de deduccion consolidado de meses anteriores
-    'En reliquidacion se minora el importe acumulado de deduccion de todo el a?o.
+    'Deducción especial tramo 1 y 2. En pagas normales sólo se minora la deduccion del propio mes
+    'que se haya calculado, no se minora el importe de deducción consolidado de meses anteriores
+    'En reliquidación se minora el importe acumulado de deduccion de todo el año.
     dedTramoDos = SAR_DED_IG_27617_T2
     If ind_reliq = 1 Then dedTramoDos = SAR_DED_IG_27617_T2 + SAR_DED_IG_27617_T2_ACUM
     If saldo > 0 And dedTramoDos > 0 Then
@@ -21,7 +21,7 @@ If base_impuesto < 0 And indNoNeg = 1 Then
         SetValuePriority(1,"SCO_HRPERIOD_CALC","SAR_DED_IG_27617_T2",-1,dedTramoDosMes)
     EndIf
 
-    'Deduccion especial tramo 1
+    'Deducción especial tramo 1
     dedTramoUno = SAR_DED_IG_27617
     If ind_reliq = 1 Then dedTramoUno = SAR_DED_IG_27617 + SAR_DED_IG_27617_ACUM
     If saldo > 0 And dedTramoUno > 0 Then
@@ -32,7 +32,7 @@ If base_impuesto < 0 And indNoNeg = 1 Then
         SetValuePriority(1,"SCO_HRPERIOD_CALC","SAR_DED_IG_27617",-1,dedTramoUnoMes)
     EndIf  
 
-    'Deduccion especial 12ava
+    'Deducción especial 12ava
     dedDoceava = SAR_IG_DED_12AVA
     If saldo > 0 And dedDoceava > 0 Then
         dedDoceavaFinal = Max(dedDoceava - saldo,0)
@@ -41,7 +41,7 @@ If base_impuesto < 0 And indNoNeg = 1 Then
         SetValuePriority(1,"SCO_HRPERIOD_CALC","SAR_IG_DED_12AVA",-1,dedDoceavaFinal)
     EndIf  
 
-    'Deduccion especial
+    'Deducción especial
     dedEspec = SAR_IG_DED_ESP
     If saldo > 0 And dedEspec > 0 Then
         dedEspecFinal = Max(dedEspec - saldo,0)

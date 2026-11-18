@@ -26,7 +26,7 @@ If SCO_DT_START_ALLOC <> SCO_DT_START or SCO_DT_END_ALLOC <> SCO_DT_END Then
     cValue = SCO_PRORRATED_VALUE()
     SCO_BNFT_VALUES_SLICES.DESTROYREGISTER()
     
-    'Volvemos a las fechas de ejecucion
+    'Volvemos a las fechas de ejecución
     SetStartDate(dStartDate)
     SetEndDate(dEndDate)
 Endif

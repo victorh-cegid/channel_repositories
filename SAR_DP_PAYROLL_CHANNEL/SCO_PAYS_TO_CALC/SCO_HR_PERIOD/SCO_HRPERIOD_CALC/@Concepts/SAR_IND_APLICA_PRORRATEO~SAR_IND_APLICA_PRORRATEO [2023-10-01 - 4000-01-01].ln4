@@ -1,5 +1,5 @@
-'Si tiene valor 1 se prorratearan en el impuesto los conceptos incluidos en los totales SAR_TOT_PROR_CON_AP/SAR_TOT_PROR_SIN_AP.
-'Este concepto valdra 1 automaticamente cuando un empleado se encuentre en un tramo distinto de 1 para DEI.
+'Si tiene valor 1 se prorratearán en el impuesto los conceptos incluidos en los totales SAR_TOT_PROR_CON_AP/SAR_TOT_PROR_SIN_AP.
+'Este concepto valdrá 1 automáticamente cuando un empleado se encuentre en un tramo distinto de 1 para DEI.
 
 aplicaProrrateo = 1
 
@@ -11,22 +11,22 @@ If DxYear(SAR_FEC_IMPUT_IG) > 2023 Then Return(aplicaProrrateo)
 indAjusteRetro = SAR_IND_IMPUESTO_RETRO
 indAjusteRemun = SAR_IND_AJUSTE_REMUN_27617
 
-'indAjusteRemun = 1 remuneracion y promedio se miran por criterio percibido
+'indAjusteRemun = 1 remuneración y promedio se miran por criterio percibido
 If indAjusteRemun = 1 Then
     remun_mes = SAR_REM_27617_DEI_PERC
     remun_prom = SAR_PROM_27617_DEI_PERC
     fec_ded = SAR_FEC_IMPUT_IG
-'indAjusteRemun = 0 remuneracion y promedio se miran por criterio devengado (excepto jornalizados)
+'indAjusteRemun = 0 remuneración y promedio se miran por criterio devengado (excepto jornalizados)
 Else
     If SAR_TIPO_SALARIO = "003" Then
         remun_mes = SAR_TOT_REMUN_27617
         remun_prom = SAR_PROM_27617_DEI_IG
-        fec_ded = SAR_FEC_IMPUT_IG 'Se mantiene fecha IG por coherencia de calculo en jornalizados, cambiar por SCO_DT_ALLOCATION si se considera que debe levantarse el dato por devengado
+        fec_ded = SAR_FEC_IMPUT_IG 'Se mantiene fecha IG por coherencia de cálculo en jornalizados, cambiar por SCO_DT_ALLOCATION si se considera que debe levantarse el dato por devengado
     Else
         remun_mes = SAR_REM_27617_DEI_DEV
         remun_prom = SAR_PROM_27617_DEI_DEV
         fec_ded = SCO_DT_ALLOCATION
-        'Diferidos diciembre 2020 IG 2021 debe calcular deduccion
+        'Diferidos diciembre 2020 IG 2021 debe calcular deducción
         If indAjusteRetro = 2 And DxYear(SAR_FEC_IMPUT_IG) > DxYear(SCO_DT_ALLOCATION) Then fec_ded = SAR_FEC_IMPUT_IG
     EndIf
 EndIf

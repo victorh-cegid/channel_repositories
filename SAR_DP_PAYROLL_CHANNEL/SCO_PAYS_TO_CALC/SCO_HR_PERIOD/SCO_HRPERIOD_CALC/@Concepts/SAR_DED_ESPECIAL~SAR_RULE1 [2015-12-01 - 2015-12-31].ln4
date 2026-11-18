@@ -1,4 +1,4 @@
-' Vigencia por Decreto 152/2015 (En relacion a la aplicacion de deduccion por SAC en brutos <= $30000)
+' Vigencia por Decreto 152/2015 (En relación a la aplicacion de deducción por SAC en brutos <= $30000)
 ' Calculo la fecha de inicio de los seis meses anteriores y la inicio del mes actual
     
 FECHA_BASE    = SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC
@@ -98,7 +98,7 @@ If SCO_AC_HR_PERIOD_READ_1.COUNT() > 0 Then
 
 
     
-    /**** Calculo el mayor total de los seis meses anteriores a la fecha de imputacion ****/
+    /**** Calculo el mayor total de los seis meses anteriores a la fecha de imputación ****/
     IF valor_act > max THEN
         max = valor_act
     ENDIF
@@ -122,7 +122,7 @@ If SCO_AC_HR_PERIOD_READ_1.COUNT() > 0 Then
 EndIf
 
     
-'Calculo normal del  concepto de Deduccion especial + SAC segun se aplique el Decreto 2015.
+'Calculo normal del  concepto de Deducción especial + SAC según se aplique el Decreto 2015.
 aux     = SAR_IND_CAMBIO_RANGO
 ind     = SAR_IND_DED_IG_2010 
 importe = 0
@@ -139,7 +139,7 @@ Zona_Mes      = -1
 Zona_Mes_Paga = -1
 ID_DMD        = "SAR_INDIC_REDUC_ZON_DES_1"
 
-'se modifica el indicativo de cambio de rango, al cambiar el A?o Fiscal.
+'se modifica el indicativo de cambio de rango, al cambiar el Año Fiscal.
 If ano_pago_ant <> ano_pago_act Then
     indic_cambio_rango   = 0
     SAR_IND_CAMBIO_RANGO = 0
@@ -281,7 +281,7 @@ If (MES_CAMBIO_PREVIO <> -1) Then
         EndIf                    
                     
         R = TOSTRING(RANGO,0)
-       'Calculo de la deduccion especial segun informacion recopilada del concepto v793 por Decreto 3770/2015.
+       'Calculo de la deducción especial según información recopilada del concepto v793 por Decreto 3770/2015.
         If(RANGO = 3)Then
             precio = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_DED_ESPECIAL",FECHA_ENERO,ind))
         ElseIf(RANGO = 2)Then
@@ -311,7 +311,7 @@ If (MES_CAMBIO_PREVIO <> -1) Then
 
 Else
     R = TOSTRING(RANGO,0) 
-    'Calculo de la ganancia no imponible segun informacion recopilada del concepto v793 por Decreto 3770/2015.
+    'Calculo de la ganancia no imponible según información recopilada del concepto v793 por Decreto 3770/2015.
     If (RANGO = 3)Then
         Deduccion_Normal = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO("98","SAR_DED_ESPECIAL",SAR_FEC_PAGO_IG,ind))
     ElseIf (RANGO = 2)Then
@@ -343,7 +343,7 @@ If (SAR_TP_IMPUT <> "99") Then
 EndIf
 
 
-' Solo en la paga de reliquidacion del impuesto a las ganancias, sumamos a la deduccion especial
+' Solo en la paga de reliquidación del impuesto a las ganancias, sumamos a la deducción especial
 If (SAR_TP_IMPUT = "99") Then
     If SAR_RANGO_REM_IG_2013 = 1 Then
         Deduccion = TODOUBLE(Deduccion_Normal) + valor_ig_dec_142aux + valor_sac_neto_R        

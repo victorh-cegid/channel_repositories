@@ -1,4 +1,4 @@
-'Retorna la asignacion estimulo
+'Retorna la asignación estimulo
 
 rol = SAR_HRROLE_CALC.SAR_P_ASIG_ESTIM_ROL()
 'essagebox("Rol", "Precio", rol)

@@ -2,7 +2,7 @@
 SAR_HR_ROLE.begin()
 SAR_HRROLE_CALC.begin()
 IND_DES = SAR_HRROLE_CALC.SAR_INDIC_REDUC_ZON_DES 'Indicador de zona desfavorable
-MAX_REM = SAR_MAYOR_REM_IG_2013   'Maxima remuneracion
+MAX_REM = SAR_MAYOR_REM_IG_2013   'Maxima remuneración
 RANGO   = 0       'Rango a retornar: 0, 1, 2, 3
 
 

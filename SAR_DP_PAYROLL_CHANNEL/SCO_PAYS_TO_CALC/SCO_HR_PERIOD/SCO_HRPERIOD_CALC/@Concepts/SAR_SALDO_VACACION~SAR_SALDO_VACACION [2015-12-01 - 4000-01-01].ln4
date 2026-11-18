@@ -1,4 +1,4 @@
-'No debe calcularse en paga de reliquidacion
+'No debe calcularse en paga de reliquidación
 'If SAR_TP_IMPUT = "77" or SAR_TP_IMPUT = "88" or SAR_TP_IMPUT = "99" Then
 If SAR_TP_IMPUT = "88" or SAR_TP_IMPUT = "99" Then
    Return(0) 
@@ -13,7 +13,7 @@ saldo = 0
 SAR_ACM_DIC_SALDO.BEGIN()
 SAR_ACM_DIAS_VAC_DISFR.BEGIN()
 
-'Consideramos que la ultima paga del a?o puede ser una paga 77, debemos recuperar el saldo de dicha paga
+'Consideramos que la última paga del año puede ser una paga 77, debemos recuperar el saldo de dicha paga
 If SAR_ACM_DIC_SAL_ESP_VAC[0].SAR_UN_VACACIONES > 0 And SAR_ACM_DIC_SAL_ESP_VAC[0].SCO_DT_EXCHANGE > SAR_ACM_DIC_SALDO[0].SCO_DT_EXCHANGE Then
     saldoAnt = SAR_ACM_DIC_SAL_ESP_VAC[0].SAR_SALDO_VACACION
 Else

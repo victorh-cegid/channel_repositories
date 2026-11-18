@@ -1,7 +1,7 @@
 'Procesamos el alta del empleado en caso de serlo:
      '      Buscamos todos los conceptos candidatos:
-     '                   1- Los que estan siendo cargados en la paga o tengan valor acumulado por si existe paga extra tendran una ocurrencia.
-     '                   2- El resto no tendran ocurrencias. 
+     '                   1- Los que están siendo cargados en la paga o tengan valor acumulado por si existe paga extra tendrán una ocurrencia.
+     '                   2- El resto no tendrán ocurrencias. 
      '      y para ellos cargamos en SAR_HABITUALES una fila nueva. 
      '      Esto lo hace el metodo SAR_ALTAS_HABITUALES.
 

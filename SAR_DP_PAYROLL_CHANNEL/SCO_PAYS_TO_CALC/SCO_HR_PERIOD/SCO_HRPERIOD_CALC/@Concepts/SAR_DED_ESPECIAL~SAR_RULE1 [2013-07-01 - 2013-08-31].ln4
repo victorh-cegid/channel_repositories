@@ -1,4 +1,4 @@
-'Vigencia por decreto: 1006/2013 (En relacion a la aplicacion de deduccion por SAC en brutos <= $25000)
+'Vigencia por decreto: 1006/2013 (En relación a la aplicacion de deducción por SAC en brutos <= $25000)
 
     '
     'Calculo la fecha de inicio de los seis meses anteriores y la inicio del mes actual
@@ -104,7 +104,7 @@
          ENDIF
     NEXT
     '
-    'Calculo el mayor total de los seis meses anteriores a la fecha de imputacion
+    'Calculo el mayor total de los seis meses anteriores a la fecha de imputación
     '
     IF valor_act > max THEN
         max = valor_act
@@ -127,7 +127,7 @@
     valor = max
     
 
-'Calculo normal del  concepto de Deduccion especial + SAC segun se aplique el decreto 2191 2012.
+'Calculo normal del  concepto de Deducción especial + SAC según se aplique el decreto 2191 2012.
 
 'Cambio Ganancias Ley 26.731
 '----------------------------
@@ -153,7 +153,7 @@ Else
     SAR_SAC_NETO_2013 = 0
 EndIf
 
-'Solo en la paga de reliquidacion del impuesto a las ganancias, sumamos a la deduccion especial
+'Solo en la paga de reliquidación del impuesto a las ganancias, sumamos a la deducción especial
 'el neto obtenido por el decreto 2191/2012, correspondiente a Diciembre.
 If(SAR_TP_IMPUT = "99")Then
    Deduccion = TODOUBLE(Deduccion_Normal) + valor_sac_neto_R

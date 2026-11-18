@@ -1,6 +1,6 @@
 '0 - Desactivado = Impuesto anterior.
 '1 - Activado = Impuesto cedular desde 2024.
-'Valdra 1 automaticamente para pagas del a?o IG 2024, si no corresponde impuesto cedular debera informarse 0 para los empleados afectados este indicador por tabla de valor.
+'Valdrá 1 automáticamente para pagas del año IG 2024, si no corresponde impuesto cedular deberá informarse 0 para los empleados afectados este indicador por tabla de valor.
 '2024 Desde IG julio se deroga cedular
 
 If SCO_DT_ALLOCATION > DxDate(30,6,2024) Then Return(0)

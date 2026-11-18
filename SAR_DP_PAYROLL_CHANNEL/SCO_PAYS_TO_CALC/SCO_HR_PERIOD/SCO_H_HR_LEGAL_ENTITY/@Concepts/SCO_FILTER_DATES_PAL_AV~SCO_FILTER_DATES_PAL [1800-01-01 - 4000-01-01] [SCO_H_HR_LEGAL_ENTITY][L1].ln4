@@ -1,19 +1,19 @@
-'Si el periodo tiene nominas despues de la baja, hay que cambiar la select que lanza para que los registros del historico
+'Si el periodo tiene nóminas después de la baja, hay que cambiar la select que lanza para que los registros del histórico
 'se filtren por fecha de fin del periodo.
-'Cuando un registro del historico tiene sus fechas fuera del intervalo de la paga, el aplicavalor no carga el nodo de 
-'valores; asi que si se quieren los datos del historico pero no los de la tabla de valor, este comportamiento es el 
-'correcto, y dentro del if hay que ejecutar estas dos lineas:
+'Cuando un registro del histórico tiene sus fechas fuera del intervalo de la paga, el aplicavalor no carga el nodo de 
+'valores; así que si se quieren los datos del histórico pero no los de la tabla de valor, este comportamiento es el 
+'correcto, y dentro del if hay que ejecutar estas dos líneas:
 '    SCO_FILTER_DATES_PAL_PARAM = ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_ID_HR,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_OR_HR_PERIOD,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_DT_END_PERIOD,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_DT_END_PERIOD,0)
 '    filter = "SELECT @DT_END = A.DT_END, @DT_START = A.DT_START, @SCO_ID_HR = A.SCO_ID_HR, @SCO_ID_LEG_ENT = A.SCO_ID_LEG_ENT, @SCO_OR_HR_PERIOD = A.SCO_OR_HR_PERIOD, @SCO_ID_REASON_CHANGE = A.SCO_ID_REASON_CHANGE FROM &SCO_H_HR_LEGAL_ENTITY A WHERE A.SCO_ID_HR = ?(2,9,0) AND A.SCO_OR_HR_PERIOD = ?(6,2,0) AND A.DT_END >= ?(4,0,0) AND A.DT_START <= ?(4,0,0)"
-'Si lo que se quiere es tener los datos del historico y los de la tabla de valor, hay que asignar a los campos de 
-'fechas del historico las fechas de la paga; ademas, de esta forma los datos de la tabla de valor vienen bien filtrados. 
-'En este caso dentro del if hay que ejecutar estas dos lineas:
+'Si lo que se quiere es tener los datos del histórico y los de la tabla de valor, hay que asignar a los campos de 
+'fechas del histórico las fechas de la paga; además, de esta forma los datos de la tabla de valor vienen bien filtrados. 
+'En este caso dentro del if hay que ejecutar estas dos líneas:
 '    SCO_FILTER_DATES_PAL_PARAM = ToString(SCO_INTERMEDIATE_NODE_PERIOD.END_DT_FILTER,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.START_DT_FILTER,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_ID_HR,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_OR_HR_PERIOD,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_DT_END_PERIOD,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_DT_END_PERIOD,0)
 '    filter = "SELECT @DT_END = ?(4,0,0), @DT_START = ?(4,0,0), @SCO_ID_HR = A.SCO_ID_HR, @SCO_ID_LEG_ENT = A.SCO_ID_LEG_ENT, @SCO_OR_HR_PERIOD = A.SCO_OR_HR_PERIOD, @SCO_ID_REASON_CHANGE = A.SCO_ID_REASON_CHANGE FROM &SCO_H_HR_LEGAL_ENTITY A WHERE A.SCO_ID_HR = ?(2,9,0) AND A.SCO_OR_HR_PERIOD = ?(6,2,0) AND A.DT_END >= ?(4,0,0) AND A.DT_START <= ?(4,0,0)"
 
 filter=""
 If SCO_INTERMEDIATE_NODE_PERIOD.SCO_DT_END_PERIOD < SCO_INTERMEDIATE_NODE_PERIOD.START_DT_FILTER Then
-'Queremos tener los datos del historico y los valores correspondientes
+'Queremos tener los datos del histórico y los valores correspondientes
     SCO_FILTER_DATES_PAL_PARAM = ToString(SCO_INTERMEDIATE_NODE_PERIOD.END_DT_FILTER,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.START_DT_FILTER,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_ID_HR,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_OR_HR_PERIOD,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_DT_END_PERIOD,0) + "|" + ToString(SCO_INTERMEDIATE_NODE_PERIOD.SCO_DT_END_PERIOD,0)
     filter = "SELECT @DT_END = ?(4,0,0), @DT_START = ?(4,0,0), @SCO_ID_HR = A.SCO_ID_HR, @SCO_ID_LEG_ENT = A.SCO_ID_LEG_ENT, @SCO_OR_HR_PERIOD = A.SCO_OR_HR_PERIOD, @SCO_ID_REASON_CHANGE = A.SCO_ID_REASON_CHANGE FROM &SCO_H_HR_LEGAL_ENTITY A WHERE A.SCO_ID_HR = ?(2,9,0) AND A.SCO_OR_HR_PERIOD = ?(6,2,0) AND A.DT_END >= ?(4,0,0) AND A.DT_START <= ?(4,0,0)"
 ENDIF

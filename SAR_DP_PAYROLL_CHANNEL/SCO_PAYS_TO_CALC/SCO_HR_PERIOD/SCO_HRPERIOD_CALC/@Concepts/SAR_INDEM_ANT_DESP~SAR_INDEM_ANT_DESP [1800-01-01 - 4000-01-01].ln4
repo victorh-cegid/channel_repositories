@@ -6,7 +6,7 @@ IF SAR_ES_BAJA = 0 THEN
     Return(0)
 ENDIF
 
-'Por modificacion del empleado
+'Por modificación del empleado
 IF SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" Then
     Return(0)
 ENDIF
@@ -24,7 +24,7 @@ meses = 3
 'Contratos con antig. desde el 09/07/2024 se toma 6 meses o los informados en el concepto SAR_FEC_INDEM
 If SAR_FEC_INDEM >= DxDate(9,7,2024) Then meses = SAR_MESES_TOPE_INDEM
 
-'La antiguedad debe ser mayor a 3 meses
+'La antigüedad debe ser mayor a 3 meses
 IF ant < meses THEN
     Return(0)
 ENDIF

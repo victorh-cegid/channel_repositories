@@ -1,0 +1,21 @@
+''Este concepto devuelve la mejor remuneracion de los conceptos fijos configurados en el total SAR_TOT_INDEM_CONC_FIJ
+''en los 12 meses por imputación anteriores a la fecha de proceso (SCO_DT_ALLOCATION)
+'
+'indAplicaRl = SAR_IND_INDEMNIZ_RL26
+'If SAR_FECHA_BAJA < DxDate(6,3,2026) Then indAplicaRl = 0
+'
+''Condiciones de salida:
+'If SAR_ES_BAJA = 0 Or indAplicaRl = 0 Then Return(0)
+'
+''Inc mes baja
+'incMesBaja = 1
+'
+''Esta linea es para forzar que la read ordene por dt_alloc ya que se queda con el orden
+''del ultimo nodo de acumulado cargado, lo cual puede ser aleatorio
+'SAR_ACM_INDEMNIZ_VARIABLES.Load_Blk()
+'
+'importe = 0
+'TEST_CALC_INDEM_FIJ_INCMES("SAR_TOT_INDEM_CONC_FIJ",12,incMesBaja,importe)
+'
+'Return Round(importe,SAR_NUM_DEC)
+'

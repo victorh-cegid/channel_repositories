@@ -12,7 +12,7 @@ If SAR_TIPO_SALARIO = "003" And valor<>0 Then
     If SAR_DIAS_DEC792 >0 Then SAR_P_DEC792 = valor / SAR_DIAS_DEC792
 EndIf
 
-'Se redondean los precios de cara a visualizacion en recibo.
+'Se redondean los precios de cara a visualización en recibo.
 SAR_P_DEC792 = Round(SAR_P_DEC792,0)
 SAR_P_DEC792_NRED = Round(SAR_P_DEC792_NRED,0)
 

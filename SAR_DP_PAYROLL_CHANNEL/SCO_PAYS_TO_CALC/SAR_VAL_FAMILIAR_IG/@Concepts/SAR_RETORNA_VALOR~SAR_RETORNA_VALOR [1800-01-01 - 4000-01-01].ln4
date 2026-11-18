@@ -9,7 +9,7 @@
 'WEND
 'Return(0)
 
-'Se modifico por mail 11/10/2007 - Bug 0133840 - Validar.
+'Se modificó por mail 11/10/2007 - Bug 0133840 - Validar.
 BEGIN()
 WHILE ISEOF() = FALSE
     IF STD_ID_LEG_ENT = ARG_EMPRESA AND DT_COR_START <= ARG_FECHA AND DT_COR_END >= ARG_FECHA THEN

@@ -2,7 +2,7 @@
 ' Method:       SCO_SET_SCO_ERROR_PERIOD
 ' Date:         01/03/2003
 ' Version:      1.0
-' Description:  Este metodo elimina los tramos de la propiedad SCO_ERROR del nodo SCO_HR_PERIOD.
+' Description:  Este método elimina los tramos de la propiedad SCO_ERROR del nodo SCO_HR_PERIOD.
 '******************************************************************************************
 
 FI=SCO_PAYS_TO_CALC.SCO_DT_START_ALLOC

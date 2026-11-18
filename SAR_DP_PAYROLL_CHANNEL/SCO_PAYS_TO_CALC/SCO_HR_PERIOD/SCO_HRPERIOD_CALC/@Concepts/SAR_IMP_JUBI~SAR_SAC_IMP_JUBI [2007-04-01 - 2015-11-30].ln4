@@ -1,4 +1,4 @@
-'deberia ser dias para S.A.C.
+'debería ser días para S.A.C.
 
 tope = (SAR_TOPE_JUBIL * (SAR_U_PAGA_EX_1 + SAR_U_PAGA_EX_2) *180)/360
 sac  = SAR_PAGA_EXTRA_1 + SAR_PAGA_EXTRA_2

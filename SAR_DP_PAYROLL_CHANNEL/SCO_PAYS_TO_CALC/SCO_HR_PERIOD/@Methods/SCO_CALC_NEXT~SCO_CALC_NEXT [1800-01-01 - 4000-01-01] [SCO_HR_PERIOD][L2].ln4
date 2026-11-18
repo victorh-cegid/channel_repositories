@@ -34,7 +34,7 @@ IF ISEOF()=TRUE  then
 			Return(1)
 		Endif
 
-		//Pongo aqui esta variables porque nos estamos moviendo por el nodo de pagas 
+		//Pongo aquí esta variables porque nos estamos moviendo por el nodo de pagas 
 		//y van cambiando los valores
 		DtAllocation = SCO_DT_ALLOCATION
 		NmFrequency  = SCO_PAYS_TO_CALC.SCO_NM_PAY_FREQUENCY
@@ -76,12 +76,12 @@ Endif
 
 SCO_HR_PAY_ERROR.SCO_SET_ERROR_POSITION()
 
-//Antes de calcular se comprueba que no tiene errores anteriores que impedirian continuar el calculo.
+//Antes de calcular se comprueba que no tiene errores anteriores que impedirían continuar el cálculo.
 If SCO_HR_PAY_ERROR.Count()<>0 Then
 
-	//No se va a calcular el periodo %0:n del empleado %1:s en la nomina %2:s de pago %3:d
-	//e imputacion %4:d porque hay errores en nominas anteriores. 
-	//Debe solucionar esas nominas erroneas antes de ejecutar esta nomina.
+	//No se va a calcular el periodo %0:n del empleado %1:s en la nómina %2:s de pago %3:d
+	//e imputación %4:d porque hay errores en nóminas anteriores. 
+	//Debe solucionar esas nóminas erroneas antes de ejecutar esta nómina.
            
 	SetLog (-1,1,101,46,STD_OR_HR_PERIOD,STD_ID_HR,NmFrequency,SCO_DT_PAYMENT,DtAllocation)
 	SCO_HR_PERIOD.SCO_ERROR = 1

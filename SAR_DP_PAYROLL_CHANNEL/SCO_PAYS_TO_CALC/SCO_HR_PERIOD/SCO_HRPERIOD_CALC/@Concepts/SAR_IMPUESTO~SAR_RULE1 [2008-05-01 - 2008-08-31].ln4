@@ -61,7 +61,7 @@ valor = v1 - (v2 + v3) + v4 - v5 - SAR_IMP_DEB_BAN
 '-----------------------------------------------------------------------------------------------
 
 
-'Modificacion de acuerdo a RG 2437/08
+'Modificación de acuerdo a RG 2437/08
 base=SAR_TOTAL_DEVENGOS-SAR_TI_REM_26341_ST-SAR_AJUSTE_SAL_FAM-SAR_ASIGNAC_HIJOS-SAR_ASIG_HIJOS_INC-SAR_ASIG_PRENATAL-SAR_AYUDA_ESC_PRIM-SAR_AY_ESC_PRIM_INC-SAR_AS_REM_26341_ST
 
 IF SAR_TP_IMPUT = "4" Then
@@ -78,7 +78,7 @@ Endif
 
 Tope=base*SAR_PP_RET_GAN_ST/100
 
-'Si es baja y su retencion excede el tope permitido generamos la diferencia
+'Si es baja y su retención excede el tope permitido generamos la diferencia
 if (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") Then
   if valor > tope then
      SAR_SALD_RET_GAN_ST = valor - tope
@@ -89,7 +89,7 @@ if (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017") Then
 endif
 ' Fin baja
 
-'Si ha tenido diferencias del periodo fiscal anterior, incluimos en el tope
+'Si ha tenido diferencias del período fiscal anterior, incluimos en el tope
 if SAR_IG_ANIO_ANT > 0 then
    ig_total =  valor + SAR_IG_ANIO_ANT        ' ganancia total sumada la ganancia del mes + el resultado de la Reliq.
   
@@ -101,7 +101,7 @@ if SAR_IG_ANIO_ANT > 0 then
              RETURN(valor)
         endif  
 endif     
-'Fin incluye reliquidacion final IG
+'Fin incluye reliquidación final IG
 tope = tope - SAR_IG_ANIO_ANT
 
 

@@ -1,6 +1,6 @@
 'Esta regla es para hacer los ajustes que se hacian antes en el propio reporte 1359
 
-'Si Ajustes de Periodos Anteriores sobre Remuneraciones Gravadas es negativo, se ha solicitado que se deje a 0 y se exponga como remuneracion bruta:
+'Si Ajustes de Períodos Anteriores sobre Remuneraciones Gravadas es negativo, se ha solicitado que se deje a 0 y se exponga como remuneracion bruta:
 perAntGrav = SAR_PER_ANT_GRAV
 If perAntGrav < 0 Then
     remBruta = SAR_REM_BRUTA_4CATEG

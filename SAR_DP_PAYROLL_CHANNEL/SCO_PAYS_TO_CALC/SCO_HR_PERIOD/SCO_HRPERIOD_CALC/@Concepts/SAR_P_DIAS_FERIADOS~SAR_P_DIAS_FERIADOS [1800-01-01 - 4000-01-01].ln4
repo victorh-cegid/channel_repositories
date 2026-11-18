@@ -25,7 +25,7 @@ IF (SAR_U_DIAS_FERIADOS > 0 AND SAR_TIPO_SALARIO = "003") OR SAR_TIPO_SALARIO <>
     ENDIF
 	
     IF SAR_TIPO_SALARIO = "003" THEN 'salario horario 
-        'su promedio de remun variable es el total promedios menos el importe de feriados trabajados de los 30 dias anteriores al mes actual
+        'su promedio de remun variable es el total promedios menos el importe de feriados trabajados de los 30 días anteriores al mes actual
         if SAR_ACM_2QNA_MES_ANT.count() <> 0 Then
             SAR_ACM_2QNA_MES_ANT.begin()
 		if SAR_ACM_2QNA_MES_ANT.SAR_TOT_PROMEDIOS > 0 then 'el total promedios de la segunda quincena tiene sumado lo de la primera

@@ -1,7 +1,7 @@
 'Se filtra la paga extra de vacaciones
 If SAR_TP_IMPUT = "77" Then Return(0)
 
-IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Calculo sin tope
+IF SAR_IND_REM9_SIN_TOPE = 1 THEN 'Cálculo sin tope
     aux = SAR_ACCIDENTE
     diasart = SAR_DIAS_ART
     base = SAR_PRESTACION_ART

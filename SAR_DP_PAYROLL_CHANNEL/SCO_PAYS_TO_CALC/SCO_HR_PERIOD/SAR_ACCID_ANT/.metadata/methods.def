@@ -1,2 +1,3 @@
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
-SAR_CARGA_FECHA_ANT | BLOCK | STRING | 0 | 1 | 0 | SAR_CARGA_FECHA_ANT | 
+# item_metadata_format: 2
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
+SAR_CARGA_FECHA_ANT | BLOCK | STRING | 0 | 1 | 0 | SAR_CARGA_FECHA_ANT |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1

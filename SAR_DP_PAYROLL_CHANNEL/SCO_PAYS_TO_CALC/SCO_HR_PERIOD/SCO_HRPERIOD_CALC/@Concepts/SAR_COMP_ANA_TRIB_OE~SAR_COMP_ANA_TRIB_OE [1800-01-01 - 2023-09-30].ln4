@@ -1,4 +1,4 @@
-'Recorre la tabla detalle complementos y aplica un tope por cada concepto SAR_DESCRIPCION diferente que encuentre en el a?o fiscal.
+'Recorre la tabla detalle complementos y aplica un tope por cada concepto SAR_DESCRIPCION diferente que encuentre en el año fiscal.
 importe = SAR_COMP_ANA_TRIB_OE
 If importe = 0 Then return (0)
 

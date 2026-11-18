@@ -1,10 +1,10 @@
-'El presente metodo pretende: 
-      'Encontrar la existencia de un cambio de zona en lo que va del a?o fiscal y en caso de encontrarlo:
+'El presente método pretende: 
+      'Encontrar la existencia de un cambio de zona en lo que va del año fiscal y en caso de encontrarlo:
              '1- Obtiene el mes en la zona anterior.
              '   Se calcula para esto el SAR_ARG_MES_PREVIO
              '2- Obtiene la zona previa al cambio.
-             '   Retornado por el metodo
-      'Importante: en pagas diferidas se debe conciderar la posibilidad de leer el mes de diciembre del a?o anterior.
+             '   Retornado por el método
+      'Importante: en pagas diferidas se debe conciderar la posibilidad de leer el mes de diciembre del año anterior.
 If(SAR_LUGAR_TRABA_ZONA_DES.count() = 0)Then
     SAR_HR_ROLE.begin()
 EndIf

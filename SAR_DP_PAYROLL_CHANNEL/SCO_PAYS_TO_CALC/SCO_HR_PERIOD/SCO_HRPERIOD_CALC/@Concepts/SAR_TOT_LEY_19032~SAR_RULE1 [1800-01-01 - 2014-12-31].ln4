@@ -1,6 +1,6 @@
 ban = SAR_TOT_M_LEY_19032
 val_otros_empl = SAR_LEY_19032_OE
-val_ant_emp = SAR_L_19032_ANT_EMP     'el 5016 (SAR_JUB_ANT_EMP) por Anterior empresa de retencion de ganancias
+val_ant_emp = SAR_L_19032_ANT_EMP     'el 5016 (SAR_JUB_ANT_EMP) por Anterior empresa de retención de ganancias
 
 sar_acum_l_19032_oe = 0
 sar_acum_l_19032_ant_emp = 0

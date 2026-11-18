@@ -6,7 +6,7 @@ ind = ARG_IND_IG
 fec_baja = SAR_HR_PERIOD.STD_DT_END
 
 '---------------------------------------------------------------------------
-'Modificacion ante la circular para las bajas del a?o 2011.
+'Modificación ante la circular para las bajas del año 2011.
 '---------------------------------------------------------------------------
 anio_ig = DxYear(PAR_FECHA_IG)
 

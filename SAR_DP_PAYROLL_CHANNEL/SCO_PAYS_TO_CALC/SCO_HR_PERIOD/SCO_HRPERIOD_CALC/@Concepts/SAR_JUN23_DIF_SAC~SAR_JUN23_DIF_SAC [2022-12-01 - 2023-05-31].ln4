@@ -1,4 +1,4 @@
-'Esta regla es solo para bajas anteriores a junio en periodo fiscal 2023
+'Esta regla es sólo para bajas anteriores a junio en periodo fiscal 2023
 esBaja = 0
 If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" And DxYear(SAR_FEC_IMPUT_IG) = 2023 Then esBaja = 1
 If esBaja = 0 Then Return(0)
@@ -9,7 +9,7 @@ aplica = 0
 'Promedio anual por percibido
 retribJun = SAR_PROM_27617_BONOS
 
-'Si el ajuste sac es negativo significa que esta ajustando sac grabado para dejarlo exento. Las cuotas aplican solo para promedio entre 506230 y 880000
+'Si el ajuste sac es negativo significa que esta ajustando sac grabado para dejarlo exento. Las cuotas aplican sólo para promedio entre 506230 y 880000
 If SAR_DIF_SAC_RG3976+SAR_DIF_PROR_SAC < 0 And DxYear(SAR_FEC_IMPUT_IG) = 2023 And retribJun >= 506230 And retribJun <= 880000 And importe < 0 Then aplica = 1
 If aplica = 0 Then return (0)
 

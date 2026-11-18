@@ -2,7 +2,7 @@ IF (SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99") THEN
     RETURN(0)
 ENDIF
 
-IF SAR_ES_BAJA <> 1 Or SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" THEN 'Por modificacion del empleado
+IF SAR_ES_BAJA <> 1 Or SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017" THEN 'Por modificación del empleado
    RETURN(0)
 ENDIF
 

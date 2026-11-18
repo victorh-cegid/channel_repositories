@@ -1,15 +1,15 @@
 'Creada el 09/11/2011 Fernando Miguel Siri
 '
-'Calcula la cantidad de dias trabajados por un pasante.
+'Calcula la cantidad de días trabajados por un pasante.
 ' A saber lo siguiente:
 '    No se consideran las ausencias.
-'    El tope de dias es 30.
-'    Solo se consideraran la cantidad de dias <> 30 en el alta o en la baja. 
+'    El tope de días es 30.
+'    Solo se considerarán la cantidad de días <> 30 en el alta o en la baja. 
 
 If(SAR_ID_MOD_CONTRAT <> "27" And SAR_ID_MOD_CONTRAT <> "10")Then return(0) 'Si no es pasante no se calculan las unidades. 
       
 
-uni = 0 ' variable en la que se retornaran los dias trabajados
+uni = 0 ' variable en la que se retornarán los días trabajados
 inicio_tramo = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysStartDate
 fin_tramo    = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA_AUX..SysEndDate
 

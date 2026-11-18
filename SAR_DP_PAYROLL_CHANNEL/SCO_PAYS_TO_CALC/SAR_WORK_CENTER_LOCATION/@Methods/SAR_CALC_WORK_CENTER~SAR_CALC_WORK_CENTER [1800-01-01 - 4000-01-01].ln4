@@ -3,17 +3,17 @@
 // *******************************************************************************************
 // Calculo del Work Center al que pertenece cada Work Location en un momento dado del tiempo
 // *******************************************************************************************
-// Este metodo deja en el item STD_N_WORK_LOCATION el Nombre del Centro de Trabajo asociado al Work Location (Item: STD_ID_WL_CHILD)
-//  en un periodo de tiempo consistente. Es decir, se calcula el periodo de tiempo en el cual la Work Location solo tiene un unico Work Center.
+// Este método deja en el item STD_N_WORK_LOCATION el Nombre del Centro de Trabajo asociado al Work Location (Item: STD_ID_WL_CHILD)
+//  en un periodo de tiempo consistente. Es decir, se calcula el periodo de tiempo en el cual la Work Location solo tiene un único Work Center.
 //  El resultado es que en cada registro queda:
 //   1- El Identificador del Work Center en el Item: STD_ID_WL_PARENT
 //   2- El Identificador del Work Location en el Item: STD_ID_WL_CHILD (Este Work Location pertenece al Work Center de su registro.
 //   3- El Nombre del Work Center en el Item: STD_N_WORK_LOCATION
 //   4- La Fecha de Inicio a partir de la cual el Work Location pertenece al Work Center en el Item: STD_DT_START
 //   5- La Fecha de Fin a partir de la cual el Work Location deja de pertenecer a ese Work Center en el Item: STD_DT_END
-//  El Work Center se identifica con la condicion: STD_ID_WL_TYPE(STD_ID_WL_PARENT) = '1'
+//  El Work Center se identifica con la condición: STD_ID_WL_TYPE(STD_ID_WL_PARENT) = '1'
 // Notar que el que se hace un Join entre los campos de las Tablas: STD_REL_WORK_LOC(STD_ID_WL_PARENT) = STD_WORK_LOCATION(STD_ID_WORK_LOCAT)
-// Notar tambien que los Work Locations que son Work Centers siempre tienen que ser hijos de al menos otro Work Location. Habitualmente es el
+// Notar también que los Work Locations que son Work Centers siempre tienen que ser hijos de al menos otro Work Location. Habitualmente es el
 // Work Location 'ROOT'.
 
 mnregistros = Count()

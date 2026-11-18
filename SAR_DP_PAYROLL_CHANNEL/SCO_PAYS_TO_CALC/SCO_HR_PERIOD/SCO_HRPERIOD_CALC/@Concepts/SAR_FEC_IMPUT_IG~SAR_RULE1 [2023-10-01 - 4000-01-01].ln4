@@ -1,6 +1,6 @@
 'Este concepto realiza dos funciones:
-'1.- Se encarga de la gestion de la carga de los nodos de acumulado que se usan en el impuesto
-'2.- Calcula y retorna la fecha de IG que corresponde a la fecha de imputacion que se esta calculando
+'1.- Se encarga de la gestión de la carga de los nodos de acumulado que se usan en el impuesto
+'2.- Calcula y retorna la fecha de IG que corresponde a la fecha de imputación que se está calculando
 
 'Para generar dependencias
 a = SAR_FEC_PAGO_IG
@@ -17,35 +17,35 @@ Else
     valor = SAR_FECHAS_PAGA_IG.SAR_FECHA_PAGO
 EndIf
 
-'Asignacion de las fechas con las que se cargara el nodo de acumulado respecto a su orientacion: fecha de pago
+'Asignación de las fechas con las que se cargará el nodo de acumulado respecto a su orientación: fecha de pago
 anio = DxYear(valor)
 mes = DxMonth(valor)
 
-'Caso especial: Baja retroactiva a a?os anteriores
+'Caso especial: Baja retroactiva a años anteriores
 If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" And anio <> DxYear(SAR_FEC_PAGO_IG) Then anio = DxYear(SAR_FEC_PAGO_IG)
 
-'Se ha cambiado la orientacion del nodo por fecha de imputacion, es por ese motivo que se amplia el rango del acumulado en 1 a?o para asegurar que recupera todas las retroactivas posibles
+'Se ha cambiado la orientación del nodo por fecha de imputación, es por ese motivo que se amplia el rango del acumulado en 1 año para asegurar que recupera todas las retroactivas posibles
 fecha_ini = DxDate("01","12",anio-2)
 fecha_fin = SCO_DT_PAYMENT
 
-'Inicializamos los conceptos de filtro del nodo de acumulado, el cual tendra los siguientes filtros:
+'Inicializamos los conceptos de filtro del nodo de acumulado, el cual tendrá los siguientes filtros:
 '1.-Se filtrara el nodo de acumulado donde la fecha de pago IG del acumulado sea >= al concepto SAR_FEC_INI_FILTRO_IG
 '2.-Se filtrara el nodo de acumulado donde la fecha de pago IG del acumulado sea <= a la fecha de pago IG de la paga procesada
-'3.-Se filtrara el nodo de acumulado para no traer el registro de la paga que se esta calculando: 
-'fecha imputacion acumulado debe ser < fecha de imputacion de la paga procesada
+'3.-Se filtrara el nodo de acumulado para no traer el registro de la paga que se está calculando: 
+'fecha imputación acumulado debe ser < fecha de imputación de la paga procesada
 
 SAR_FEC_INI_FILTRO_IG = DxDate("01","01",anio) 
 SAR_FECHA_IMPUTACION = SCO_DT_ALLOCATION
 
-'2023 Carga de nodo acumulado de a?o completo
+'2023 Carga de nodo acumulado de año completo
 SAR_ACM_IG_ANIO_COMPLETO.DESTROY()
 SAR_ACM_IG_ANIO_COMPLETO.SCO_DT_START = Max(fecha_ini,DxDate("01","01","2017"))
 SAR_ACM_IG_ANIO_COMPLETO.SCO_DT_END = fecha_fin
 SAR_ACM_IG_ANIO_COMPLETO.LOAD_BLK()
-'Fin 2023 Carga de nodo acumulado de a?o completo
+'Fin 2023 Carga de nodo acumulado de año completo
 
 'Reglamentacion Decreto 473/23, desde devengado octubre comienza un nuevo periodo fiscal, 
-'ademas no se levantan pagas con fecha de pago septiembre aunque su IG sea octubre.
+'además no se levantan pagas con fecha de pago septiembre aunque su IG sea octubre.
 If anio = 2023 Then SAR_FEC_INI_FILTRO_IG = DxDate("01","10",anio) 
 
 SAR_ACM_IG_ANIO_IMPUT.DESTROY()

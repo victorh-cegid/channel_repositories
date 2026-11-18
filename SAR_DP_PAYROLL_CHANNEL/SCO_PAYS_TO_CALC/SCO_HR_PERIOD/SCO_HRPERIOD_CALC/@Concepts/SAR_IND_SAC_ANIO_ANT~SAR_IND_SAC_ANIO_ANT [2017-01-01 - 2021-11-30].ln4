@@ -1,4 +1,4 @@
-'Control retroactividad a?os anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
+'Control retroactividad años anteriores: se ajusta siempre para que entre directamente al impuesto en la siguiente paga normal
 'En baja no vamos a hacer el ajuste en la paga normal siguiente
 If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then Return(0)
 valor = 0

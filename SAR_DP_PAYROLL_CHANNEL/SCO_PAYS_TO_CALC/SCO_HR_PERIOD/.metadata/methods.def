@@ -1,32 +1,33 @@
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype
-DESTROYBLOCK | BLOCK | NUMBER | 6 | 1 | 0 | Destruir bloque | 2
-GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 2
-GOPREVIOUS | BLOCK | NUMBER | 6 | 1 | 0 | GOPREVIOUS | 7
-SAR_CARGA_FECHA_FILTRO | RECORD | NUMBER | 6 | 18 | 0 | SAR_CARGA_FECHA_FILTRO | 
-SAR_DT_BAJAS_RETRO | RECORD | STRING | 0 | 1 | 0 | Fechas bajas retroactivas General | 3
-SAR_IDS_BAJAS_RETRO | RECORD | STRING | 1 | 1 | 0 | Bajas retroactivas | 2
-SAR_IDS_GENERAL | RECORD | NUMBER | 6 | 1 | 0 | IDs bajas retroactivas General | 2
-SCO_CALCHRP | RECORD | NUMBER | 6 | 1 | 0 | Calculo para periodo de RH | 2
-SCO_CALCHRP_CURRENCY | RECORD | NUMBER | 6 | 5 | 0 | Calculo multimoneda para periodo de RH | 2
-SCO_CALCREV_PERIOD | RECORD | NUMBER | 6 | 4 | 0 | Calculo revision auto. periodo de RH | 2
-SCO_CALC_FIRST | BLOCK | NUMBER | 6 | 5 | 0 | Calcular primer empleado | 2
-SCO_CALC_FREQ_HRP | RECORD | NUMBER | 6 | 4 | 0 | Calculo frecuencia periodo de RH | 2
-SCO_CALC_NEXT | BLOCK | NUMBER | 6 | 1 | 0 | Calcular siguiente empleado | 7
-SCO_CONTROL_ERRORS | RECORD | NUMBER | 6 | 1 | 0 | Control de errores | 
-SCO_DELETE_APP_PERIOD | NODE | NUMBER | 6 | 1 | 0 | Borrar valores aplicados al periodo de  RH | 2
-SCO_DELETE_APP_ROLE | NODE | NUMBER | 6 | 1 | 0 | Borrar valores aplicados al rol | 2
-SCO_DELETE_PERIOD | NODE | NUMBER | 6 | 1 | 0 | Borrar periodo de RH del AC | 2
-SCO_DELETE_ROLE | NODE | STRING | 2 | 30 | 0 | Borrar rol del AC | 2
-SCO_ERROR_SELECT | NODE | NUMBER | 6 | 18 | 0 | Asignar sentencia de empleados erroneos | 
-SCO_EXE_LEVEL_0 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 0 | 2
-SCO_EXE_LEVEL_1 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 1 | 2
-SCO_EXE_LEVEL_2 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 2 | 2
-SCO_EXE_LEVEL_3 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 3 | 2
-SCO_EXE_LEVEL_4 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 4 | 2
-SCO_EXE_LEVEL_5 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 5 | 2
-SCO_EXE_LEVEL_6 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 6 | 2
-SCO_RESET_LEVEL_4 | RECORD | NUMBER | 6 | 4 | 0 | Borrar prioridades del nivel 4 | 2
-SCO_SAVE_AC | RECORD | NUMBER | 6 | 1 | 0 | Guardar en acumulado | 2
-SCO_SAVE_TABLES | RECORD | NUMBER | 6 | 18 | 0 | Grabacion de Tablas | 2
-SCO_SLICES_SET_IDS | RECORD | NUMBER | 6 | 1 | 0 | Asigna tramos para IDs | 2
-SCO_SLICES_TERM_RETRO | RECORD | NUMBER | 6 | 1 | 0 | Gestion de tramos para retroactividad de una baja | 2
+# item_metadata_format: 2
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
+DESTROYBLOCK | BLOCK | NUMBER | 6 | 1 | 0 | Destruir bloque | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+GOPREVIOUS | BLOCK | NUMBER | 6 | 1 | 0 | GOPREVIOUS | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SAR_CARGA_FECHA_FILTRO | RECORD | NUMBER | 6 | 18 | 0 | SAR_CARGA_FECHA_FILTRO |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SAR_DT_BAJAS_RETRO | RECORD | NUMBER | 6 | 1 | 0 | Fechas bajas retroactivas General | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SAR_IDS_BAJAS_RETRO | RECORD | STRING | 1 | 1 | 0 | Bajas retroactivas | 2 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SAR_IDS_GENERAL | RECORD | NUMBER | 6 | 1 | 0 | IDs bajas retroactivas General | 2 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALCHRP | RECORD | NUMBER | 6 | 1 | 0 | Cálculo para periodo de RH | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALCHRP_CURRENCY | RECORD | NUMBER | 6 | 5 | 0 | Cálculo multimoneda para periodo de RH | 2 | null | null | 2 | null | 1 | null | 2 | 0 | null | null | 1
+SCO_CALCREV_PERIOD | RECORD | NUMBER | 6 | 4 | 0 | Cálculo revisión auto. periodo de RH | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALC_FIRST | BLOCK | NUMBER | 6 | 5 | 0 | Calcular primer empleado | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALC_FREQ_HRP | RECORD | NUMBER | 6 | 4 | 0 | Cálculo frecuencia periodo de RH | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CALC_NEXT | BLOCK | NUMBER | 6 | 1 | 0 | Calcular siguiente empleado | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_CONTROL_ERRORS | RECORD | NUMBER | 6 | 1 | 0 | Control de errores |  | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_DELETE_APP_PERIOD | NODE | NUMBER | 6 | 1 | 0 | Borrar valores aplicados al periodo de  RH | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_DELETE_APP_ROLE | NODE | NUMBER | 6 | 1 | 0 | Borrar valores aplicados al rol | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_DELETE_PERIOD | NODE | NUMBER | 6 | 1 | 0 | Borrar periodo de RH del AC | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_DELETE_ROLE | NODE | STRING | 2 | 30 | 0 | Borrar rol del AC | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_ERROR_SELECT | NODE | NUMBER | 6 | 18 | 0 | Asignar sentencia de empleados erroneos |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_EXE_LEVEL_0 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 0 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_EXE_LEVEL_1 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 1 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_EXE_LEVEL_2 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 2 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_EXE_LEVEL_3 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 3 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_EXE_LEVEL_4 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 4 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_EXE_LEVEL_5 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 5 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_EXE_LEVEL_6 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 6 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_RESET_LEVEL_4 | RECORD | NUMBER | 6 | 4 | 0 | Borrar prioridades del nivel 4 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_SAVE_AC | RECORD | NUMBER | 6 | 1 | 0 | Guardar en acumulado | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_SAVE_TABLES | RECORD | NUMBER | 6 | 18 | 0 | Grabación de Tablas | 2 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_SLICES_SET_IDS | RECORD | NUMBER | 6 | 1 | 0 | Asigna tramos para IDs | 2 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+SCO_SLICES_TERM_RETRO | RECORD | NUMBER | 6 | 1 | 0 | Gestión de tramos para retroactividad de una baja | 2 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1

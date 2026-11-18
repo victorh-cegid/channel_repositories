@@ -1,5 +1,5 @@
-'Antes de realizar cualquier calculo del impuesto verificamos que la modificacion se realizo a fin del mes
-'de la paga para de esta forma dejar el calculo al nuevo periodo.
+'Antes de realizar cualquier calculo del impuesto verificamos que la modificación se realizó a fin del mes
+'de la paga para de esta forma dejar el calculo al nuevo período.
 If (SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON = "017")Then
          Return(0)
 EndIf
@@ -40,8 +40,8 @@ v4 = SAR_IMP_DEB_BAN
 
     
 '---------------- Res Gral.3008/2010 ------------------------------------------------------
-'Se guarda la diferencia de gcias del a?o 2010, en caso de que resulte a favor de la AFIP
-'para la reliquidacion del a?o fiscal 2011 a aplicar en el cpto.v5310.
+'Se guarda la diferencia de gcias del año 2010, en caso de que resulte a favor de la AFIP
+'para la reliquidacion del año fiscal 2011 a aplicar en el cpto.v5310.
     
     IF valor > 0 THEN
         SAR_IG_FINAL_2010 = valor

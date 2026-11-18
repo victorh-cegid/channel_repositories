@@ -22,7 +22,7 @@ SAR_SAC_AJUSTE_CONTRIB.Begin()
 vDiasLicSac_v585 = SAR_SAC_AJUSTE_CONTRIB.SAR_TOT_D_DTO_AGUIN
 vSACDic = SAR_SAC_AJUSTE_CONTRIB.SAR_PAGA_EXTRA_2
 
-' Se condiciona para que en caso que se cargue alguna licencia despues de la paga extra de sac, se debe descontar los dias
+' Se condiciona para que en caso que se cargue alguna licencia despues de la paga extra de sac, se debe descontar los días
 If vDiasLicSac_v585 <> SAR_TOT_D_DTO_AGUIN Then
     /* Se obtiene el SAC actualizado con las unidades correctas, y se le resta el SAC abonado en la Paga Extra de SAC */
     SAC_nuevo =  (SAR_U_PAGA_AJ_EX_2 * SAR_PR_AGUINALDO)

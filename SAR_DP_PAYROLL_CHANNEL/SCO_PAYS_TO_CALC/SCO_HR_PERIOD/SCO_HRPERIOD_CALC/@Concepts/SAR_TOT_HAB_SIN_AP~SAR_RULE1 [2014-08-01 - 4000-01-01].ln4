@@ -1,4 +1,4 @@
-IF (SAR_IND_REM9_SIN_TOPE = 1 OR SAR_IND_REM9_SIN_TOPE = 2) THEN 'Calculo sin tope+No Remunerativos O con tope+No Remunerativos
+IF (SAR_IND_REM9_SIN_TOPE = 1 OR SAR_IND_REM9_SIN_TOPE = 2) THEN 'Cálculo sin tope+No Remunerativos O con tope+No Remunerativos
     valor = SAR_TOT_NO_REMUN + SAR_TOT_OTROS_NO_REMUN
 ELSE
     valor = Max(SAR_TOTAL_DEVENGOS - SAR_TOT_HAB_CON_AP,0)

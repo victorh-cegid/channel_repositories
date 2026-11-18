@@ -1,19 +1,19 @@
-//Este metodo solo lo lanzamos para la ejecucion de nomina, no para la planificacion.
-//Sirve para que en el recibo en pantalla solo se vean los registros del rol correspondientes 
-//a la moneda que se esta mostrando del periodo.
-//Tambien ejecutamos este metodo para ver por tramos en el recibo (para la grabacion en el 
+//Este método sólo lo lanzamos para la ejecución de nómina, no para la planificación.
+//Sirve para que en el recibo en pantalla sólo se vean los registros del rol correspondientes 
+//a la moneda que se está mostrando del periodo.
+//También ejecutamos este método para ver por tramos en el recibo (para la grabación en el 
 //acumulado tenemos los tramos en registros y el recibo no es capaz de distinguir)
 
 //Cogemos las fechas en las que trabajamos para mantener el contexto de fechas al finalizar
-//el metodo y nos afecte a metodos con ejecucion posterior
+//el método y nos afecte a métodos con ejecución posterior
 FI = GetStartDate()
 FF = GetEndDate()
 
 If SCO_HT_PAYS.SCO_FROM_JS <> 1 AND SCO_AUX_AC_HRPERIOD.IsEOF() = FALSE Then
                      
 	//Al cambiar de paga nos podemos encontrar que estamos trabajando con los datos de
-	//una paga y viendo datos que no se corresponden a las fechas, asi que para asegurarnos
-	//seteamos el intervalo maximo.
+	//una paga y viendo datos que no se corresponden a las fechas, así que para asegurarnos
+	//seteamos el intervalo máximo.
 	SetStartDate(MINUS_INF)
 	SetEndDate(PLUS_INF)
 
@@ -21,11 +21,11 @@ If SCO_HT_PAYS.SCO_FROM_JS <> 1 AND SCO_AUX_AC_HRPERIOD.IsEOF() = FALSE Then
 	SetSliceMode(0)
 
 	If IsNull(SCO_AUX_AC_HRPERIOD.ID_CURRENCY) = FALSE Then
-		//Quito los filtros por si hubiera algun filtro anterior que pudiera molestar
+		//Quito los filtros por si hubiera algún filtro anterior que pudiera molestar
 		RemoveFilter()
 
-		//Solo se va a ejecutar el unflatten cuando vaya a mostrar el empleado despues del 
-		//calculo, y no cuando me muevo entre monedas.
+		//Sólo se va a ejecutar el unflatten cuando vaya a mostrar el empleado despues del 
+		//cálculo, y no cuando me muevo entre monedas.
 		If SCO_FIRST_TIME = 1 Then
 			SCO_AUX_AC_HRPERIOD.Unflatten("ID_CURRENCY")
 			Unflatten("SCO_OR_HR_ROLE","ID_CURRENCY")
@@ -38,13 +38,13 @@ If SCO_HT_PAYS.SCO_FROM_JS <> 1 AND SCO_AUX_AC_HRPERIOD.IsEOF() = FALSE Then
 		Filtro = "If ID_CURRENCY = " + Chr(DOUBLE_QUOTE)+ sCurrency + Chr(DOUBLE_QUOTE) + " then Return(1) Else Return(0)"
 		AddFilter(Filtro)
 
-		//El unflatten deja el nodo posicionado en el ultimo registro
+		//El unflatten deja el nodo posicionado en el último registro
 		Begin()
 	EndIf
 	//Ponemos el modo tramos que tenga definido el canal
 	SetSliceMode(SCO_PAYS_TO_CALC.SCO_SLICE_MODE)
 
-	//Seteamos las fechas con que hemos empezado la ejecucion para no cambiar nada posterior.
+	//Seteamos las fechas con que hemos empezado la ejecución para no cambiar nada posterior.
 	SetStartDate(FI)
 	SetEndDate(FF)
 

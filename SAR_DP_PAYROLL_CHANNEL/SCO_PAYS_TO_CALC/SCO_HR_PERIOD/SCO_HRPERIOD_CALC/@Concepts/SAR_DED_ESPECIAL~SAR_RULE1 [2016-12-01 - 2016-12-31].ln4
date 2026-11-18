@@ -52,7 +52,7 @@ Endif
 Deduccion_normal = importe 
 
 
-'Cambios para el Decreto 1253/2016 ?Deduccion Especial. Incremento?.
+'Cambios para el Decreto 1253/2016 “Deducción Especial. Incremento”.
 '--------------------------------------------------------------------------
 sac_neto_2d_sem = SAR_SAC_NETO_2DO_SEM
 'Se agrega validacion para que en caso que el SAC Neto 2do Semestre sea negativo, no altere el valor de la deduccion especial legal.
@@ -74,5 +74,5 @@ EndIf
 
 '--------------------------------------------------------------------------
 
-'Se redondea el importe antes de su devolucion
+'Se redondea el importe antes de su devolución
 RETURN(Round(Deduccion,2))

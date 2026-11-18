@@ -6,24 +6,24 @@ If Output=M4_ERROR Then
 	Return(-1)
 EndIf
 
-//Empieza el calculo de cada uno de los empleados
+//Empieza el cálculo de cada uno de los empleados
 current = SCO_HR_PERIOD.GetCurrent()
 SCO_HR_PERIOD.Begin()
 
 While SCO_HR_PERIOD.IsEOF()<>1
-	//Nos guardamos en que posicion del error estamos.
+	//Nos guardamos en qué posición del error estamos.
 
 	SCO_HR_PAY_ERROR.SCO_SET_ERROR_POSITION()
 
 	//variable que indica si ha habido errores en pagas anteriores para el empleado
 	bExistError = FALSE
 
-	//Antes de calcular se comprueba que no tiene errores anteriores que impedirian continuar el calculo.
+	//Antes de calcular se comprueba que no tiene errores anteriores que impedirían continuar el cálculo.
 	If SCO_HR_PAY_ERROR.Count()<>0 Then
 
-            //No se va a calcular el periodo %0:n del empleado %1:s en la nomina %2:s de pago %3:d
-            //e imputacion %4:d porque hay errores en nominas anteriores. 
-            //Debe solucionar esas nominas erroneas antes de ejecutar esta nomina.
+            //No se va a calcular el periodo %0:n del empleado %1:s en la nómina %2:s de pago %3:d
+            //e imputación %4:d porque hay errores en nóminas anteriores. 
+            //Debe solucionar esas nóminas erroneas antes de ejecutar esta nómina.
             
 		SetLog (-1,1,101,46,SCO_HR_PERIOD.STD_OR_HR_PERIOD,SCO_HR_PERIOD.STD_ID_HR,SCO_NM_PAY_FREQUENCY,SCO_DT_PAYMENT,SCO_DT_ALLOCATION)
             SCO_HR_PERIOD.SCO_ERROR = 1
@@ -57,7 +57,7 @@ While SCO_HR_PERIOD.IsEOF()<>1
 	Endif
 	If bExistError<>TRUE AND Output<>M4_ERROR Then
 
-		//Si no ha dado problemas la ejecucion de la retroactividad automatica, calculo la
+		//Si no ha dado problemas la ejecución de la retroactividad automática, calculo la
 		//paga actual.
 		'OutputCalc = SCO_HR_PERIOD.SCO_CALCHRP_CURRENCY()
             OutputCalc = SCO_HR_PERIOD.SCO_CONTROL_ERRORS()

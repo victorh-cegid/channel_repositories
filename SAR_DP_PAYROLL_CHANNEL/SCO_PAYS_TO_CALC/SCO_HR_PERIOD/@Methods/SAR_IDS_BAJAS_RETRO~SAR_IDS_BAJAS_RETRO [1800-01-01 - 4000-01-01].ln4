@@ -1,9 +1,9 @@
 // Para las bajas retroactivas
-// Debe ejecutarse al finalizar el calculo de las diferencias y antes de pasar los valores al nodo aux
+// Debe ejecutarse al finalizar el cálculo de las diferencias y antes de pasar los valores al nodo aux
 // Debe ejecutarse sin tramos
 
 // Hace dos cosas:
-// 1.- Rellena el valor de los elementos marcados como "Valor de la revision"
+// 1.- Rellena el valor de los elementos marcados como "Valor de la revisión"
 // con el valor de la paga original en el tramo en el que el empleado no existe
 
 dFecFinCalc = SCO_DT_END_CALC 
@@ -12,7 +12,7 @@ dFecFinRetro = SCO_DT_END_CALC_RETRO
 sIdItemDif = "" ' Item de la TI de diferencias
 sIdItemAc = ""  ' Item de la TI de acumulado: SAR_IDS_RETRO
 
-If dFecFinCalc < dFecFinRetro Then          ' Hay algun tramo donde el empleado no existe
+If dFecFinCalc < dFecFinRetro Then          ' Hay algún tramo donde el empleado no existe
 
 
 // 1.-     

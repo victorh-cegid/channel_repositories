@@ -1,4 +1,4 @@
 'Regla creada el 03/11/2011 Fernando M. Siri
 
-'Toma su valor en el metodo SAR_RET_VALOR_COMPL
+'Toma su valor en el método SAR_RET_VALOR_COMPL
 return(SAR_LEY_19032_OE )

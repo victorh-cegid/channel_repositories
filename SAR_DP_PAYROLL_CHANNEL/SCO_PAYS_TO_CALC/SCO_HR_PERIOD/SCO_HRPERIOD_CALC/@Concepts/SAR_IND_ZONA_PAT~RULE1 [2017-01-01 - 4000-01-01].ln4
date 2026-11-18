@@ -1,8 +1,8 @@
-'Este indicador tendra valor 0 para zona normal, y valor 1 para zona patagonica, dependera del numero de dias acumulados de 
-'cada zona en el a?o fiscal en el momento de efectuar el calculo.
+'Este indicador tendrá valor 0 para zona normal, y valor 1 para zona patagónica, dependerá del número de días acumulados de 
+'cada zona en el año fiscal en el momento de efectuar el cálculo.
 indicador = 0
 
-'Recupera el inicio de la paga menor que sea del a?o fiscal de proceso
+'Recupera el inicio de la paga menor que sea del año fiscal de proceso
 fecha_ini = SAR_ACM_FEC_INI_IG[0].SCO_DT_PAY_START
 If IsNull(fecha_ini) = M4_True Or DxYear(fecha_ini) = 0 Then fecha_ini = SAR_HR_PERIOD.SCO_DT_ALLOC_START
 'Control tope fecha inicio
@@ -13,7 +13,7 @@ fin_tope = DxDate(DaysOfMonth(fin_tope),DxMonth(fin_tope),DxYear(fin_tope))
 fecha_fin = Min(fecha_fin,fin_tope)
 If SAR_TP_IMPUT = "77" Then fecha_fin = Min(fecha_fin,DxDate(DaysOfMonth(SCO_DT_ALLOCATION),DxMonth(SCO_DT_ALLOCATION),DxYear(SCO_DT_ALLOCATION)))
 
-'Salario Quincenal, sabemos que son diferidos en 2?Q siempre, periodo tope de fechas fijo
+'Salario Quincenal, sabemos que son diferidos en 2ªQ siempre, periodo tope de fechas fijo
 If SAR_TIPO_SALARIO = "003" Then 
     fecha_ini = DxDate("16","12",DxYear(addYears(SAR_FEC_IMPUT_IG,-1)))
     fecha_fin_tope = DxDate("15","12",DxYear(SAR_FEC_IMPUT_IG))
@@ -29,7 +29,7 @@ Else
 EndIf
 fecha_fin = min (fecha_fin,SAR_FECHA_BAJA)
 
-'Cargamos TI que traera los registros de tabla de valor que cumple que el indicador de zona patagonica esta activo
+'Cargamos TI que traerá los registros de tabla de valor que cumple que el indicador de zona patagónica esta activo
 SAR_RANGO_CENTRO_TRAB.DESTROY()
 SAR_RANGO_CENTRO_TRAB.SAR_FEC_INI = fecha_ini
 SAR_RANGO_CENTRO_TRAB.SAR_FEC_FIN = fecha_fin
@@ -41,7 +41,7 @@ num_reg = SAR_RANGO_CENTRO_TRAB.Count()
 dias_tot = Max(0, fecha_fin+1 - fecha_ini)
 dias_pat = 0
 
-'Acumula los dias de zona patagonica en el rango de fechas
+'Acumula los días de zona patagónica en el rango de fechas
 For i=0 To num_reg - 1
     SAR_RANGO_CENTRO_TRAB.MoveTo(i)
     fecIniValPat = Max(SAR_RANGO_CENTRO_TRAB.DT_START,SAR_RANGO_CENTRO_TRAB.SCO_DT_START)
@@ -49,26 +49,26 @@ For i=0 To num_reg - 1
     dias_pat = dias_pat + CommonTime(fecIniValPat,fecFinValPat,fecha_ini,fecha_fin)
 Next
 
-'Dias anteriores al alta en cada zona, vendran cargados por tabla de valor.
+'Días anteriores al alta en cada zona, vendrán cargados por tabla de valor.
 dias_no_pat_alta = SAR_D_ALTA_Z_NO_PAT
 dias_pat_alta    = SAR_D_ALTA_Z_PAT
 
 dias_tot = dias_tot + dias_no_pat_alta + dias_pat_alta
 dias_pat = dias_pat + dias_pat_alta
 
-'Obtiene los dias en situacion normal
+'Obtiene los días en situación normal
 dias_norm = Max(0,dias_tot - dias_pat)
 
 If dias_pat > dias_norm Then indicador = 1
 
-'En caso de empate aplicamos la zona vigente el ultimo dia del mes procesado
+'En caso de empate aplicamos la zona vigente el último día del mes procesado
 If dias_pat = dias_norm Then indicador = ToInt(SAR_HR_ROLE.SAR_OBTENER_LUGAR_ZONA(fecha_fin))
 
-'Asignamos valor a los conceptos que totalizan los dias en cada zona
+'Asignamos valor a los conceptos que totalizan los días en cada zona
 SAR_DIAS_ZONA_PAT = dias_pat
 SAR_DIAS_ZONA_NO_PAT = dias_norm
 
-'2024 ley de bases: Se elimina reduccion por zona patagonica:
+'2024 ley de bases: Se elimina reducción por zona patagónica:
 If DxYear(SAR_FEC_IMPUT_IG)>2023 Then indicador = 0
 
 Return(indicador)

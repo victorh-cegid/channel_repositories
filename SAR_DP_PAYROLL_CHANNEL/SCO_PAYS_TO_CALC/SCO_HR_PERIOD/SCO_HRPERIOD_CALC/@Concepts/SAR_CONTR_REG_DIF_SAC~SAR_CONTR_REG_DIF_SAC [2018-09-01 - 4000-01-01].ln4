@@ -1,4 +1,4 @@
-'Contribucion Regimen Diferencial SAC
+'Contribución Régimen Diferencial SAC
 vContribDifSac = (SAR_TOT_SAC_COTIZ * SAR_PORC_CONT_T_DIF)/ 100
 
 Return Round(vContribDifSac,2)

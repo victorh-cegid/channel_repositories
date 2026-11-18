@@ -1,5 +1,5 @@
-'Antes de realizar cualquier calculo del impuesto verificamos que la modificacion se realizo a fin del mes
-'de la paga para de esta forma dejar el calculo al nuevo periodo.
+'Antes de realizar cualquier calculo del impuesto verificamos que la modificación se realizó a fin del mes
+'de la paga para de esta forma dejar el calculo al nuevo período.
 
 
 'En casos retroactivos que no sean baja, se retorna el valor de la paga original para que por comportamiento en diferencias resulte calculando 0.
@@ -59,7 +59,7 @@ Else
     val_oe = val_oe - sar_acum_imp_oe
 EndIf
 
-'Se contabiliza el beneficio correspondiente a Devolucion IG SAC Ley 27.260, Art. 63
+'Se contabiliza el beneficio correspondiente a Devolución IG SAC Ley 27.260, Art. 63
 valor = SAR_IMPUESTO + val_ant_emp + val_oe + imp_fin + SAR_BENEF_SAC_IG + SAR_BENEF_FINAL
 
 RETURN(valor)

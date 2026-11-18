@@ -1,4 +1,4 @@
-'Obtiene la fecha de alta de un periodo con ordinal inmediatamente anterior al actual
+'Obtiene la fecha de alta de un período con ordinal inmediatamente anterior al actual
 
 Ordinal_Anterior = ToString(SCO_HR_PERIOD.STD_OR_HR_PERIOD - 1, 0)
 

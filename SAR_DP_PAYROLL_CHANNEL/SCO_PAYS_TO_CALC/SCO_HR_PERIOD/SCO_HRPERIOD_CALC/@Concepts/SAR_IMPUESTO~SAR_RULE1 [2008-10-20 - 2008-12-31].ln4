@@ -79,7 +79,7 @@ endif
 'Fin Modificacion RG 2490/08---------
 
 
-'Modificacion de acuerdo a RG 2437/08
+'Modificación de acuerdo a RG 2437/08
 base=SAR_TOTAL_DEVENGOS..SysTotalSliceS(M4_TOTAL_SUM)-SAR_TI_REM_26341_ST..SysTotalSliceS(M4_TOTAL_SUM)-SAR_AJUSTE_SAL_FAM..SysTotalSliceS(M4_TOTAL_SUM)-SAR_ASIGNAC_HIJOS..SysTotalSliceS(M4_TOTAL_SUM)-SAR_ASIG_HIJOS_INC..SysTotalSliceS(M4_TOTAL_SUM)-SAR_ASIG_PRENATAL..SysTotalSliceS(M4_TOTAL_SUM)-SAR_AYUDA_ESC_PRIM..SysTotalSliceS(M4_TOTAL_SUM)-SAR_AY_ESC_PRIM_INC..SysTotalSliceS(M4_TOTAL_SUM)-SAR_AS_REM_26341_ST..SysTotalSliceS(M4_TOTAL_SUM)
 
 IF SAR_TP_IMPUT = "4" Then
@@ -97,7 +97,7 @@ Endif
 Tope=base*SAR_PP_RET_GAN_ST/100
 
 
-'Si es baja y su retencion excede el tope permitido generamos la diferencia
+'Si es baja y su retención excede el tope permitido generamos la diferencia
 'Se agrega el Ind. Tope 35% segun RG 2507/2008
 if SAR_ES_BAJA = 1 Then
   If SAR_IND_APLIC_TOPE_35 = 1 Then  
@@ -113,7 +113,7 @@ if SAR_ES_BAJA = 1 Then
 endif
 ' Fin baja
 
-'Si ha tenido diferencias del periodo fiscal anterior, incluimos en el tope
+'Si ha tenido diferencias del período fiscal anterior, incluimos en el tope
 'Se agrega el Ind. Tope 35% segun RG 2507/2008
 
 if SAR_IG_ANIO_ANT > 0 then
@@ -130,7 +130,7 @@ if SAR_IG_ANIO_ANT > 0 then
         RETURN(valor)
     EndIf 
 endif     
-'Fin incluye reliquidacion final IG
+'Fin incluye reliquidación final IG
 tope = tope - SAR_IG_ANIO_ANT..SysTotalSliceS(M4_TOTAL_SUM)
 
 if valor<=tope then

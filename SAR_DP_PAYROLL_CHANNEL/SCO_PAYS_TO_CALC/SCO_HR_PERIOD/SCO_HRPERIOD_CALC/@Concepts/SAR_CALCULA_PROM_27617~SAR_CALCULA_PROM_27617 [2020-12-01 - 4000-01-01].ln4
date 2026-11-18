@@ -1,11 +1,11 @@
 'Concepto para calcular los promedios a los que hace referencia la ley 27617 rg 5008 y rg 5076
-'Recibe 3 parametros por valor de tipo numerico:
+'Recibe 3 parámetros por valor de tipo numérico:
 
-'ARG_ORIENTACION: 1 Por devengado / 2 Por imputacion IG / 3 Por pago IG
+'ARG_ORIENTACION: 1 Por devengado / 2 Por imputación IG / 3 Por pago IG
 'ARG_MES_INI: Mes inicial a considerar en el promedio
 'ARG_MES_FIN: Mes final a considerar en el promedio
 
-'Retorna 1 parametro tipo moneda por referencia con el importe del promedio:
+'Retorna 1 parámetro tipo moneda por referencia con el importe del promedio:
 
 'IMP_PROMEDIO
 
@@ -32,21 +32,21 @@ EndIf
 Mes_orientacion = DxMonth(fec_orientacion)
 AnioOrientacion = DxYear(fec_orientacion)
 
-'Si la paga no esta en el rango no debe considerarse
+'Si la paga no está en el rango no debe considerarse
 If Mes_orientacion < mes_ini Or Mes_orientacion > mes_fin Then importe_emp_actual = 0
 
 corte_mes = mes_ini - 1
 
 divisor_prom = Mes_orientacion - corte_mes
 
-'Contempla retroactividad en modalidad por percibido para devolver a los conceptos de remuneracion por percibido el importe de la paga original excepto complementos
+'Contempla retroactividad en modalidad por percibido para devolver a los conceptos de remuneración por percibido el importe de la paga original excepto complementos
 propio_mes = 0
 If SCO_DT_PAYMENT<>SCO_DT_ALLOCATION And orientacion = 3 And mes_ini = mes_fin Then 
     propio_mes = 1
     importe_emp_actual = 0
 EndIf
 
-'Situacion especial segundo periodo fiscal de 2023, diferidos no debe levantar acumulado de septiembre
+'Situación especial segundo periodo fiscal de 2023, diferidos no debe levantar acumulado de septiembre
 mes_imp_ig = SAR_DIFERIDO_SEPT_2023[0].SAR_MES_IMPUT_IG
 excluyeSept = 0
 If mes_imp_ig = 10 And DxYear(SAR_FEC_IMPUT_IG) = 2023 And SCO_DT_ALLOCATION>=DxDate(1,10,2023) And mes_ini = 10 Then
@@ -55,7 +55,7 @@ EndIf
 
 
 '*****************************************************************************************************************************************************************
-'******************** Calculo del divisor a aplicar para el calculo del promedio 
+'******************** Calculo del divisor a aplicar para el cálculo del promedio 
 '*****************************************************************************************************************************************************************
 If divisor_prom > 1 Or propio_mes = 1 Then
 
@@ -77,7 +77,7 @@ If divisor_prom > 1 Or propio_mes = 1 Then
         
         ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
         
-        'Obtiene el acumulado de lo que se considera retribucion (devengos - sac abonado)
+        'Obtiene el acumulado de lo que se considera retribución (devengos - sac abonado)
         For acum = 0 To ult_reg - 1
         
             mes_ini_ori = DxDate(1,           mes, AnioOrientacion)
@@ -99,7 +99,7 @@ If divisor_prom > 1 Or propio_mes = 1 Then
             Else
                 FecPagoIG_READ = SCO_AC_HR_PERIOD_READ_1[acum].SAR_FEC_PAGO_IG
                 
-                'Situacion especial segundo periodo fiscal de 2023, diferidos no debe levantar acumulado de septiembre
+                'Situación especial segundo periodo fiscal de 2023, diferidos no debe levantar acumulado de septiembre
                 If excluyeSept = 0 Then
                     If FecPagoIG_READ >= mes_ini_ori And FecPagoIG_READ <= mes_fin_ori And SCO_AC_HR_PERIOD_READ_1[acum].SAR_TP_IMPUT <> "88" Then
                         devengos_mes = devengos_mes + (SCO_AC_HR_PERIOD_READ_1[acum].SAR_TOTAL_DEVENGOS - SCO_AC_HR_PERIOD_READ_1[acum].SAR_SAC_ABONADO - SCO_AC_HR_PERIOD_READ_1[acum].SAR_ANTICIPO_VAC)
@@ -133,7 +133,7 @@ If divisor_prom > 1 Or propio_mes = 1 Then
             FinComple = SAR_H_COMPLEM_GCIAS[acum].SAR_DT_END    
             Entidad = SAR_H_COMPLEM_GCIAS[acum].SAR_ID_ENTIDAD        
 
-            '--Importe de remuneraciones: Se toman unicamente las coincidentes con el mes evaluado
+            '--Importe de remuneraciones: Se toman únicamente las coincidentes con el mes evaluado
             If (IniComple <= mes_fin_imp And FinComple >= mes_ini_imp) And (entidad = "01" Or entidad = "13") Then 
                 BrutoCompl = SAR_H_COMPLEM_GCIAS[acum].SAR_BRUTO
                 ExeNoCompl = SAR_H_COMPLEM_GCIAS[acum].SAR_IMP_EXE_NO_ALC
@@ -149,7 +149,7 @@ If divisor_prom > 1 Or propio_mes = 1 Then
                 MDiExCompl = SAR_H_COMPLEM_GCIAS[acum].SAR_MAT_DIC_EXEN_OE
                 PAnTbCompl = SAR_H_COMPLEM_GCIAS[acum].SAR_PER_ANT_GRAV_OE
                 PAnExCompl = SAR_H_COMPLEM_GCIAS[acum].SAR_PER_ANT_NO_GRAV_OE
-/* SiRADIG version 1.16*/
+/* SiRADIG versión 1.16*/
                 BoProCompl = SAR_H_COMPLEM_GCIAS[acum].SAR_IMP_BONOS_PROD_OE
                 FCajaCompl = SAR_H_COMPLEM_GCIAS[acum].SAR_IMP_FCAJA_OE
                 SiNatCompl = SAR_H_COMPLEM_GCIAS[acum].SAR_IMP_SIMILAR_NAT_OE
@@ -171,7 +171,7 @@ If divisor_prom > 1 Or propio_mes = 1 Then
                 If MDiExCompl <> 0 And IsNull(MDiExCompl) = M4_False Then oe_mes = oe_mes + MDiExCompl
                 If PAnTbCompl <> 0 And IsNull(PAnTbCompl) = M4_False Then oe_mes = oe_mes + PAnTbCompl
                 If PAnExCompl <> 0 And IsNull(PAnExCompl) = M4_False Then oe_mes = oe_mes + PAnExCompl
-/* SiRADIG version 1.16*/
+/* SiRADIG versión 1.16*/
                 If BoProCompl <> 0 And IsNull(BoProCompl) = M4_False Then oe_mes = oe_mes + BoProCompl
                 If FCajaCompl <> 0 And IsNull(FCajaCompl) = M4_False Then oe_mes = oe_mes + FCajaCompl
                 If SiNatCompl <> 0 And IsNull(SiNatCompl) = M4_False Then oe_mes = oe_mes + SiNatCompl
@@ -186,7 +186,7 @@ If divisor_prom > 1 Or propio_mes = 1 Then
         
         importe_emp_actual = importe_emp_actual + retrib_mes
         
-        'Promedio: Se consideran unicamente los meses en los que se percibe algo.
+        'Promedio: Se consideran únicamente los meses en los que se percibe algo.
         If retrib_mes > 0 Then divisor_prom = divisor_prom + 1
         If propio_mes = 1 Then
             If retrib_mes > 0 Then
@@ -199,7 +199,7 @@ If divisor_prom > 1 Or propio_mes = 1 Then
 EndIf
 
 '*****************************************************************************************************************************************************************
-'******************** Fin del calculo del divisor para el promedio
+'******************** Fin del cálculo del divisor para el promedio
 '*****************************************************************************************************************************************************************
 
 If divisor_prom > 0 Then promedio = importe_emp_actual / divisor_prom

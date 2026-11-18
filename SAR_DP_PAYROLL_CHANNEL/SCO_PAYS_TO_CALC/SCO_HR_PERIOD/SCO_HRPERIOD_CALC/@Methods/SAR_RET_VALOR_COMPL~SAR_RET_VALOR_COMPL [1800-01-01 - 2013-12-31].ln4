@@ -93,7 +93,7 @@ bruto_oe = 0
   
 mes_paga_efecti = SAR_MES_PAGO_IG
 If (SAR_TP_IMPUT = "99") Then
-    'Se obtiene el valor del concepto necesario para tener el rango de la remuneracion por decreto 1242 / 2013.
+    'Se obtiene el valor del concepto necesario para tener el rango de la remuneración por decreto 1242 / 2013.
     SCO_AC_HR_PERIOD_READ_1.BEGIN()
     ULTIMO_REG = SCO_AC_HR_PERIOD_READ_1.COUNT()- 1
     FOR j = 0 TO ULTIMO_REG 
@@ -122,7 +122,7 @@ If SAR_H_COMPLEM_GCIAS.count() > 0 Then
                  entidad = SAR_H_COMPLEM_GCIAS.SAR_ID_ENTIDAD
             endif
            
-            'Si es necesario se realiza la conversion de monedas:
+            'Si es necesario se realiza la conversión de monedas:
             vRecordCurrency = SAR_H_COMPLEM_GCIAS.SAR_ID_CURRENCY
             vPayrollCurrency = SAR_HRPERIOD_CALC.ID_CURRENCY
             
@@ -332,7 +332,7 @@ If SAR_H_COMPLEM_GCIAS.count() > 0 Then
                         endif
                         frec_06 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
        
-                    elseif entidad = "07" then '--Honorarios Medicos--
+                    elseif entidad = "07" then '--Honorarios Médicos--
                                                   
                         IF (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti) AND (DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_END) >= mes_paga_efecti)  Or (SAR_TP_IMPUT = "99" and DxMonth(SAR_H_COMPLEM_GCIAS.SAR_DT_START) <= mes_paga_efecti) THEN
                            If(SAR_TP_IMPUT = "99")Then
@@ -575,7 +575,7 @@ If SAR_H_COMPLEM_GCIAS.count() > 0 Then
                         endif
                         frec_06 = SAR_H_COMPLEM_GCIAS.SAR_FREC_CARGA
         
-                    elseif entidad = "07" then '--Honorarios Medicos--
+                    elseif entidad = "07" then '--Honorarios Médicos--
         
                         if SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL > 0 Then
                             imp_tot_07 = imp_tot_07 + SAR_H_COMPLEM_GCIAS.SAR_IMPORTE_TOTAL
@@ -818,7 +818,7 @@ ENDIF
 
 'Proceso especial para entidades mensuales de empleados con baja antes de diciembre
 '----------------------------------------------------------------------------------
-'Cuota medico asistencial
+'Cuota médico asistencial
 IF (imp_02 > 0) AND frec_02 = "1" THEN
         If SAR_IG_DICIEMBRE = 1 and isnull(SAR_FECHA_BAJA) = m4_false And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then
           'Recalculo de baja
@@ -891,7 +891,7 @@ IF imp_15 > 0 AND frec_15 = "1" THEN
     SAR_PAG_CUENT_EXT = imp_15    
     SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_PAG_CUENT_EXT",-1,imp_15)
 ENDIF
-'total de Jubilacion por otros empleadores
+'total de Jubilación por otros empleadores
 SAR_JUBILACION_OE    = jubilacion_oe 
 
 'total de Ley 19032 por otros empleadores
@@ -952,7 +952,7 @@ SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_JUR_SEPELIO",-1,imp_tot_05)
 SAR_JUR_DONACIONES = imp_tot_06
 SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_JUR_DONACIONES",-1,imp_tot_06)
 
-'--Honorarios Medicos--
+'--Honorarios Médicos--
 IF imp_tot_07 > 0 AND frec_07 <> "1" THEN
     SAR_HONORAR_MEDICOS = imp_tot_07
     SetValuePriority(0,"SCO_HRPERIOD_CALC","SAR_HONORAR_MEDICOS",-1,imp_tot_07)

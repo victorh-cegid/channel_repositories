@@ -1,4 +1,4 @@
-'Se minora el precio dec792 por el % de aporte de jubilacion, teniendo en cuenta el tope para jubilacion
+'Se minora el precio dec792 por el % de aporte de jubilación, teniendo en cuenta el tope para jubilación
 a = SAR_IMPORTE_LICENCIAS
 
 If SAR_TIPO_SALARIO = "003" Then 'tipo de salario horario

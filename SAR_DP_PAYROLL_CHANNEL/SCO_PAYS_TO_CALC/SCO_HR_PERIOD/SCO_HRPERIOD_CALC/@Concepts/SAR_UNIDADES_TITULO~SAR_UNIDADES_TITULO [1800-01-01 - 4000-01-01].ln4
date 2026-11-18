@@ -1,4 +1,4 @@
-'Busco la cantidad de dias trabajados llamando al concepto 550
+'Busco la cantidad de días trabajados llamando al concepto 550
 
 INICIO_TRAMO = SAR_SLICE_UNIT..SysStartDate
 FIN_TRAMO = SAR_SLICE_UNIT..SysEndDate

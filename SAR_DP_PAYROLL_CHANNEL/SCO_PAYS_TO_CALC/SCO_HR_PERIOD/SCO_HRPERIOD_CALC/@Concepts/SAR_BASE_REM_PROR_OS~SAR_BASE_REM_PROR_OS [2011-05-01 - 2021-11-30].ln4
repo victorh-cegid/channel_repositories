@@ -12,7 +12,7 @@ ENDIF
 base= tope - (real-SAR_TOT_PROR_CON_AP)
 base= Min (base,SAR_TOT_PROR_CON_AP)
 
-'aplicamos el minimo imponible si la base es > 0
+'aplicamos el mínimo imponible si la base es > 0
 If(base > 0)Then
    base_min_trab = ((SAR_CANT_B_MIN_AP_Y_CNT_OS * SAR_TOPE_B_MIN_IMPO) / 30 * SAR_TIEMPO_EFVO_TR) - (real-SAR_TOT_PROR_CON_AP)  
    base = Max(base_min_trab, base)

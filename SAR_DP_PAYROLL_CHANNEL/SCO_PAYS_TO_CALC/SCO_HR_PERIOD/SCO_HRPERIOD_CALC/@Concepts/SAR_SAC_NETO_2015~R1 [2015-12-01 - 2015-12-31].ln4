@@ -14,7 +14,7 @@ Else
 Endif 
 
 
-'Inicializacion de las variables para acumulado de conceptos calculados de SAC:
+'Inicialización de las variables para acumulado de conceptos calculados de SAC:
 VAR_SAR_PAGA_EXTRA_2     = 0
 VAR_SAR_PAGA_EXTRA_AJ_2  = 0
 VAR_SAR_JUBILACION_SAC   = 0

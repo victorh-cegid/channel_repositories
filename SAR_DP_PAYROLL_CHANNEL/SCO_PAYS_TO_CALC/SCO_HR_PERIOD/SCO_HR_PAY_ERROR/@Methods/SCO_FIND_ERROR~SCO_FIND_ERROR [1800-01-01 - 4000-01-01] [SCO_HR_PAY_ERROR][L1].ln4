@@ -2,12 +2,12 @@
 ' Method:       SCO_FIND_ERROR
 ' Date:         01/03/2003
 ' Version:      1.0
-' Description:  Este metodo busca si se ha producido un error durante el calculo, bien sea
+' Description:  Este método busca si se ha producido un error durante el cálculo, bien sea
 '               controlado funcionalmente o no, y si se produce, lo indica asignando
 '               la propiedad de error.
 '******************************************************************************************
 
-//Inicializacion de variables
+//Inicialización de variables
 Type = 0
 Module = 0
 SubModule = 0
@@ -22,7 +22,7 @@ nError = SCO_ERROR_POSITION - 1
 
 //Seguimos buscando por si hubiera un error no controlado.
 If  SCO_ERROR_POSITION > 1 Then
-    //Como tenemos la posicion relativa, buscamos la posicion absoluta
+    //Como tenemos la posición relativa, buscamos la posición absoluta
     Do
         GetLog (nError, Type, Module, SubModule, Code, Param)
         sError = ToString(Type) + sSeparator + ToString(Module) + sSeparator + ToString(SubModule) + sSeparator + ToString(Code) + sSeparator + Param + sSeparator
@@ -39,7 +39,7 @@ SetSliceMode(SCO_PAYS_TO_CALC.SCO_SLICE_MODE)
     
 EndIf
 
-//Si el error esta controlado, la variable de error debe estar a 1.
+//Si el error está controlado, la variable de error debe estar a 1.
 
 SCO_SET_SCO_ERROR_PERIOD()
 If SCO_HR_PERIOD.SCO_ERROR  = 1 Then Return (1)

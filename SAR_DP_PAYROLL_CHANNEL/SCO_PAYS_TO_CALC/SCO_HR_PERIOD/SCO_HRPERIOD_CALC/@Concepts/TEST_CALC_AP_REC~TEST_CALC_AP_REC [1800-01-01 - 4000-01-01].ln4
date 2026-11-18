@@ -1,80 +1,65 @@
-'Porcentajes para calculo de aportes
-porcJub = 0
-porcLey = 0
-If SAR_EDAD >= 18 Then 
-    porcJub = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
-    porcLey = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032 * SAR_PP_AP_INSSJP/100)
-EndIf
-porcObSoc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
-porcAdObSoc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
-porcSindVol = SAR_PORC_C_SIND_VOL
-porcSindObl = SAR_PORC_C_SIND_OBL
+'nodos de acumulado antes de alterar:
 
-baseCot = TEST_AJCOT_TOT_COTIZ
-topeCot = TEST_TOPE_COTIZ
-
-apJubAux = Percentage(porcJub,baseCot)
-apJubMax = Percentage(porcJub,topeCot)
-
-apRetYaAplicadoJub = 0
-ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
-For acum = 0 To ult_reg - 1
-    If SCO_AC_HR_PERIOD_READ_1[acum].TEST_FECHA_LSD = TEST_FECHA_LSD And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION <> SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION<SCO_DT_ALLOCATION Then
-        apRetYaAplicadoJub = apRetYaAplicadoJub + SCO_AC_HR_PERIOD_READ_1[acum].TEST_AP_JUB_RETRO
-    EndIf
-Next     
-
-apJubMax = apJubMax - apRetYaAplicadoJub
-
-apJubAux = Min(apJubAux,apJubMax)
-
-'Levanta todos los conceptoDif con fecha lsd = fecha pago, esto se debe hacer tanto en paga normal como en retroactiva (para que esta considere ajustes saldados en la normal)
-importeDifJub = 0
-ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
-For acum = 0 To ult_reg - 1
-    If SCO_AC_HR_PERIOD_READ_1[acum].TEST_FECHA_LSD = SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION <> SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT Then
-        importeDifJub = importeDifJub + SCO_AC_HR_PERIOD_READ_1[acum].TEST_AP_JUB_RETRO
-    EndIf
-Next     
-
-
-TEST_AP_JUB_RETRO = apJubAux - importeDifJub
-
-Return(0)
+acmAprev = SAR_AC_SAC_REV[0].SAR_LEY_19032_SAC_MES
+acmBprev = SAR_ACM_ACT_CONTRIB[0].SAR_REMUN_IMPO
+acmCprev = SAR_ACM_ACT_CONTRIB[0].SAR_REMUN_IMPO
+acmDprev = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_IG_JUB
+acmEprev = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_REM_IMP
+acmFprev = SAR_LSD_COTIZ[0].SAR_REMUN_IMPO
 
 
 
 
-'anterior funcionando:
-''Porcentajes para calculo de aportes
-'porcJub = 0
-'porcLey = 0
-'If SAR_EDAD >= 18 Then 
-'    porcJub = SAR_PORC_JUBILACION - (SAR_PORC_JUBILACION * SAR_PP_AP_JUBILA / 100)
-'    porcLey = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032 * SAR_PP_AP_INSSJP/100)
-'EndIf
-'porcObSoc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
-'porcAdObSoc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
-'porcSindVol = SAR_PORC_C_SIND_VOL
-'porcSindObl = SAR_PORC_C_SIND_OBL
-'
-'baseCot = TEST_AJCOT_TOT_COTIZ
-'topeCot = TEST_TOPE_COTIZ
-'
-'apJubAux = Percentage(porcJub,baseCot)
-'apJubMax = Percentage(porcJub,topeCot)
-'apJubAux = Min(apJubAux,apJubMax)
-'
-''Levanta todos los conceptoDif con fecha lsd = fecha pago, esto se debe hacer tanto en paga normal como en retroactiva (para que esta considere ajustes saldados en la normal)
-'importeDifJub = 0
-'ult_reg = SCO_AC_HR_PERIOD_READ_1.Count()
-'For acum = 0 To ult_reg - 1
-'    If SCO_AC_HR_PERIOD_READ_1[acum].TEST_FECHA_LSD = SCO_DT_ALLOCATION And SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_ALLOCATION <> SCO_AC_HR_PERIOD_READ_1[acum].SCO_DT_PAYMENT Then
-'        importeDifJub = importeDifJub + SCO_AC_HR_PERIOD_READ_1[acum].TEST_AP_JUB_RETRO
-'    EndIf
-'Next     
-'
-'
-'TEST_AP_JUB_RETRO = apJubAux - importeDifJub
-'
-'Return(0)
+'1º Comprobacion de registros read STD con ordinal de periodo
+ult_reg_inicial = SCO_AC_HR_PERIOD_READ_1.Count()
+
+'2º Me guardo fechas de inicio y fin con la que se cargo la READ
+inicio = SCO_AC_HR_PERIOD_READ_1.SCO_DT_START
+fin = SCO_AC_HR_PERIOD_READ_1.SCO_DT_END
+
+'3º Destruyo la read
+SCO_AC_HR_PERIOD_READ_1.DESTROY()
+
+'4º Asigno de nuevo fechas inicio y fin de la read y valor a la propiedad para que no filtre por ordinal
+SCO_AC_HR_PERIOD_READ_1.SAR_NO_APLICA_ORDINAL = 1
+SCO_AC_HR_PERIOD_READ_1.SCO_DT_START = inicio
+SCO_AC_HR_PERIOD_READ_1.SCO_DT_END = fin
+
+'5º Recargo la read
+SCO_AC_HR_PERIOD_READ_1.Load_Blk()
+
+'6º Ordeno como me interes
+'Esta linea es para forzar que la read ordene por dt_alloc ya que se queda con el orden
+'del ultimo nodo de acumulado cargado, lo cual puede ser aleatorio
+SAR_ACM_INDEMNIZ_VARIABLES.Load_Blk()
+
+'7º Compruebo que me ha traido registros de todos los periodos
+ult_reg_sin_ordinal = SCO_AC_HR_PERIOD_READ_1.Count()
+
+'-----------------------------------
+'-----------------------------------
+'AQUI HACEMOS NUESTRAS MOVIDAS que requieran trabajar con acumulados de otros periodos
+'-----------------------------------
+'-----------------------------------
+
+'8º Volvemos a dejar la read como estaba y recomprobamos los registros
+SCO_AC_HR_PERIOD_READ_1.DESTROY()
+SCO_AC_HR_PERIOD_READ_1.SAR_NO_APLICA_ORDINAL = 0
+SCO_AC_HR_PERIOD_READ_1.SCO_DT_START = inicio
+SCO_AC_HR_PERIOD_READ_1.SCO_DT_END = fin
+SAR_ACM_INDEMNIZ_VARIABLES.Load_Blk()
+ult_reg_final = SCO_AC_HR_PERIOD_READ_1.Count()
+
+
+'nodos de acumulado después de alterar y revertir --> Deben dar igual:
+acmApost = SAR_AC_SAC_REV[0].SAR_LEY_19032_SAC_MES
+acmBpost = SAR_ACM_ACT_CONTRIB[0].SAR_REMUN_IMPO
+acmCpost = SAR_ACM_ACT_CONTRIB[0].SAR_REMUN_IMPO
+acmDpost = SAR_ACM_IG_ANIO_COMPLETO[0].SAR_SAC_IG_JUB
+acmEpost = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_REM_IMP
+acmFpost = SAR_LSD_COTIZ[0].SAR_REMUN_IMPO
+
+
+
+
+a = 1

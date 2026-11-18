@@ -12,7 +12,7 @@ If SAR_HR_PERIOD.STD_ID_HRP_START_REASON = "005" Then
     If dxmonth(SCO_DT_ALLOCATION) = 1 or dxmonth(SCO_DT_ALLOCATION) = 7 or SAR_ES_ALTA = 1 then  
         valor = SAR_PROV_SAC_ACUM  
     Else
-        'Se obtiene el acumulado de SAR_PROV_SAC_MES desde el mes del alta especial hasta la paga actual segun el semestre 
+        'Se obtiene el acumulado de SAR_PROV_SAC_MES desde el mes del alta especial hasta la paga actual según el semestre 
         'Nos posicionamos en el mes del alta especial
         Pos_Actual = SCO_AC_HR_PERIOD_READ_1.GetCurrent()
         SCO_AC_HR_PERIOD_READ_1.Begin()

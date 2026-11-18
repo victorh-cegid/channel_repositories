@@ -1,7 +1,7 @@
-'La siguiente formula se utiliza para indicar los tipos de paga para los cuales no debe realizarse el control 
+'La siguiente fórmula se utiliza para indicar los tipos de paga para los cuales no debe realizarse el control 
 'de la frecuencia asociada al empleado al momento de ejecutar la paga. 
-'En la formula el control no se realiza para la paga de tipo 88 (Anticipo Vacaciones) y
-'tipo 99 (Reliquidacion de Ganancias).
+'En la fórmula el control no se realiza para la paga de tipo 88 (Anticipo Vacaciones) y
+'tipo 99 (Reliquidación de Ganancias).
 
 AUX = 0
 'if SCO_PAYS_TO_CALC.SCO_PAY_TYPE_ALLOC <> "88" AND SCO_PAYS_TO_CALC.SCO_PAY_TYPE_ALLOC <> "99" THEN

@@ -1,4 +1,4 @@
-//Se busca el valor del parametro
+//Se busca el valor del parámetro
 sValue = ""
 sIdT3 = "SAV_PARAMS"
 

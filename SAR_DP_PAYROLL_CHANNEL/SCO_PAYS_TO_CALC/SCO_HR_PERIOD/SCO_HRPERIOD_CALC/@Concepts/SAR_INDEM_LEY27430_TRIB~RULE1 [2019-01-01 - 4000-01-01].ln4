@@ -1,9 +1,9 @@
-'Ley 27430: Retorna el excedente entre la indemnizacion 
+'Ley 27430: Retorna el excedente entre la indemnización 
 '(agregados a este concepto a modo de total) y el tope indemnizatorio
 If SAR_IND_INDEM_LEY27430 = 0 Then Return(0)
 indem = SAR_INDEM_LEY27430_TRIB
 
-'Si no supera 15 salarios minimos esta exento de tributacion
+'Si no supera 15 salarios mínimos está exento de tributación
 If SAR_BASE_INDEMNIZ < SAR_SALARIO_MINIMO * 15 Then Return(0)
 tope = SAR_TOPE_INDEMNIZ * SAR_ANTIG_INDEMNIZ
 If SAR_MESES_ANTIG < 3 Or SAR_ES_BAJA = 0 Then tope = 0

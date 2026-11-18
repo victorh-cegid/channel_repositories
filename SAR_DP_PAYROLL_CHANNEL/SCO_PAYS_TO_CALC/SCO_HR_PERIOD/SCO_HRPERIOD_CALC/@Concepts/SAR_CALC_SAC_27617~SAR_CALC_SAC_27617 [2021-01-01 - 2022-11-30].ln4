@@ -1,4 +1,4 @@
-'Ante ajuste de sac a?os anteriores no entra en el calculo, se retorna el importe de la paga original:
+'Ante ajuste de sac años anteriores no entra en el cálculo, se retorna el importe de la paga original:
 ajusteSacAnt = SAR_AJUSTE_SAC2_ANT
 If ajusteSacAnt <> 0 Then
     'Asigna valor a los conceptos de impuesto
@@ -50,7 +50,7 @@ porcAdObSoc = porcAdObSoc * SAR_FAM_CARGO_OS
 porcSindObl = SAR_PORC_C_SIND_OBL
 porcSindVol = SAR_PORC_C_SIND_VOL 
 
-'Determina si corresponde calcular el impuesto en SAC. Misma condicion que SAR_ACM_PROR_SAC
+'Determina si corresponde calcular el impuesto en SAC. Misma condición que SAR_ACM_PROR_SAC
 If SAR_ES_BAJA = 1 Or SAR_IND_PAGA_RELIQ = 1 Or SAR_IND_AJUSTE_SAC = 1 Then ind_ajuste_sac = 1
 
 'Si no estamos ajustando el sac abonado sigue siendo grabado.
@@ -68,7 +68,7 @@ If ind_ajuste_sac = 0 Then
 
     sac_total_grabado_oe = sac_jun_grabado_oe + sac_dic_grabado_oe
 
-    'Aportes IG sobre lo grabado, topando contra los de cotizacion para no superar el tope de cotizacion
+    'Aportes IG sobre lo grabado, topando contra los de cotización para no superar el tope de cotización
     aporte_jub = Min(Percentage(porcJub,sac_total_grabado),SAR_JUBILACION_SAC)
     aporte_ley = Min(Percentage(porcLey,sac_total_grabado),SAR_LEY_19032_SAC)
     aporte_ObSoc = Min(Percentage(porcObSoc,sac_total_grabado),SAR_OBRA_SOCIAL_SAC)
@@ -98,9 +98,9 @@ If ind_ajuste_sac = 0 Then
 
     Return(0)
 
-'Estamos ajustando, debemos evaluar si el SAC del a?o queda exento o grabado, y repartirlo.
+'Estamos ajustando, debemos evaluar si el SAC del año queda exento o grabado, y repartirlo.
 Else
-    'SAC pagado en el a?o incluida la paga de proceso
+    'SAC pagado en el año incluida la paga de proceso
     SacJunAnioIG = SAR_SAC_1_ABONADO + SAR_ACM_IG_ANIO_IMPUT[0].SAR_SAC_1_ABONADO
     SacDicAnioIG = SAR_SAC_2_ABONADO + SAR_ACM_IG_ANIO_IMPUT[0].SAR_SAC_2_ABONADO
     
@@ -130,7 +130,7 @@ Else
         EndIf
         
                 
-        'Control para los casos de ajuste (especialmente diferidos), si la paga de diciembre esta calculada
+        'Control para los casos de ajuste (especialmente diferidos), si la paga de diciembre está calculada
         'toma el promedio calculado en la misma
         If SCO_DT_PAYMENT <> SCO_DT_ALLOCATION And DxMonth(SCO_DT_ALLOCATION) = 12 Then
             fec_ini = DxDate(DxDay(SCO_DT_ALLOCATION)+1,12,DxYear(SCO_DT_ALLOCATION))
@@ -153,7 +153,7 @@ Else
     junio = DxDate(30,06,DxYear(SCO_DT_ALLOCATION))
     diciembre = DxDate(31,12,DxYear(SCO_DT_ALLOCATION))
     
-    'Recupera de la tabla de deducciones si aplica la exencion de SAC1, de SAC2, o ambas:
+    'Recupera de la tabla de deducciones si aplica la exención de SAC1, de SAC2, o ambas:
     vValorJun = 0
     vValorDic = 0
     

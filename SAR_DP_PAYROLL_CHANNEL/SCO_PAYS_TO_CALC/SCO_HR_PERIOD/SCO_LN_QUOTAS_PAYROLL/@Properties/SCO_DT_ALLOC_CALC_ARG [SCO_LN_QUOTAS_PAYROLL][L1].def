@@ -1,5 +1,5 @@
 item: SCO_DT_ALLOC_CALC_ARG
-name: Fecha de imputacion
+name: Fecha de imputación
 item_type: PROPERTY
 type: DATE
 id_m4_type: 4
@@ -10,3 +10,12 @@ default_value: null
 internal_type: 1
 item_aux: null
 id_cstype: null
+totalize_type: 4
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: null
+variable_arguments: 0
+item_aux_prorat: null
+dimension: null
+conv_function: 1

@@ -1,4 +1,4 @@
-'Es el SAC, neto proveniente de otros empleadores y su carga inicial es por valores de incidencia del periodo.
+'Es el SAC, neto proveniente de otros empleadores y su carga inicial es por valores de incidencia del período.
 
 'En caso de baja anterior al 15/11/2012, retorna 0
 IF (SAR_ES_BAJA = 1 And  SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017")Then 

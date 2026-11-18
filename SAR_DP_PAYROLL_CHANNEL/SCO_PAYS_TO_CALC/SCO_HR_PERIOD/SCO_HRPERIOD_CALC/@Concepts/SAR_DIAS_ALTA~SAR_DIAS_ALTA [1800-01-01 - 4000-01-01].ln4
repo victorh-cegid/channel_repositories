@@ -1,4 +1,4 @@
-'Calcula la cantidad real de dias trabajados en el periodo que se encuentra entre
+'Calcula la cantidad real de días trabajados en el período que se encuentra entre
 'el inicio y fin de cada tramo (el inicio y fin de tramo viene como argumento)
 
 If SAR_TP_IMPUT = "2" then Return(0)
@@ -98,7 +98,7 @@ IF SAR_DIAS_ANT_ALTA() > 0 OR SAR_DIAS_POST_BAJA() > 0 THEN ' esta de baja o de 
             dias = ROUND((dias_tramo * SAR_CANT_DIAS_TRABAJADOS) / dias_paga,2)
         ENDIF
     ELSEIF SAR_TIPO_SALARIO = "003" THEN    'tipo salario horario
-        IF SAR_CANT_HS_TRABAJADAS > 0 THEN ' si hay numero de horas efectivamente trabajadas
+        IF SAR_CANT_HS_TRABAJADAS > 0 THEN ' si hay número de horas efectivamente trabajadas
             fechaini = max(SAR_PAYS_TO_CALC.SCO_DT_START_ALLOC,SAR_FECHA_ALTA)
             fechafin = min(SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC,SAR_FECHA_BAJA)
             dias_paga = fechafin - fechaini + 1
@@ -137,9 +137,9 @@ ELSE
     ENDIF
 ENDIF
 
-'Aqui solo van los dias que no se deben pagar, o los dias que se pagan en un 
+'Aqui solo van los días que no se deben pagar, o los días que se pagan en un 
 'concepto aparte como maternidad, accidente y art.
-'Se creo el concepto 42000 el cual cuenta los dias u hs. de ausencia en cada tramo
+'Se creo el concepto 42000 el cual cuenta los días u hs. de ausencia en cada tramo
 SAR_DIAS_MATERN()
 SAR_LIC_ONCO_DIAS()
 
@@ -149,7 +149,7 @@ descuento_dias = descuento_dias + SAR_DIAS_EXCEDENCIA
 descuento_dias = descuento_dias + SAR_DIAS_MATERN
 descuento_dias = descuento_dias + SAR_LIC_ONCO_DIAS
 descuento_dias = descuento_dias + SAR_U_DIAS_FERIADOS 'Se agregan las uniddes por Feriados, para descontarlos de las unidades trabajadas y abonar el feriado aparte del salario.
-descuento_dias = descuento_dias + SAR_AUS_DIAS_DTO_ALTA 'Dias que descuentan de alta que provienen de ausentismos parametricos.
+descuento_dias = descuento_dias + SAR_AUS_DIAS_DTO_ALTA 'Días que descuentan de alta que provienen de ausentismos paramétricos.
 
 
 IF SAR_TIPO_SALARIO = "003" Then 'Salario horario

@@ -1,5 +1,5 @@
 '----------------------------------------------------------------------------------------------------------
-'Se cierra la regla de calculo a partir del 29/02/2016, debido a la publicacion del Decreto 394/2016 que
+'Se cierra la regla de cálculo a partir del 29/02/2016, debido a la publicación del Decreto 394/2016 que
 'deja sin efecto los rangos de remuneraciones para determinar los valores correspodientes a aplicar de 
 'deducciones.
 '----------------------------------------------------------------------------------------------------------
@@ -15,10 +15,10 @@ Objetivo del concepto
 
 'Iniciamos la lectura del acumulado:
 SCO_AC_HR_PERIOD_READ_1.BEGIN()                'Iniciamos el acumulado
-CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el numero de registros    
+CantReg = SCO_AC_HR_PERIOD_READ_1.Count()-1    'Inicializamos el número de registros    
 
 SAR_HR_ROLE.Begin()
-Mes_Zona_Previa = -1 'Toma valor en el metodo: SAR_HR_ROLE.SAR_OBTENER_CAMBIO_ZONA
+Mes_Zona_Previa = -1 'Toma valor en el método: SAR_HR_ROLE.SAR_OBTENER_CAMBIO_ZONA
 
 Zona_Previa = SAR_HR_ROLE.SAR_OBTENER_CAMBIO_ZONA(Mes_Zona_Previa, SCO_DT_ALLOCATION)'Obtenemos la zona previa a la vigente de la paga.
 
@@ -31,7 +31,7 @@ If(Mes_Zona_Previa = -1)Then
 
 EndIf
 
-If(Mes_Zona_Previa <> -1)Then 'Segun vigencia de esta regla. El cambio de zona entre Enero y Abril permite deducir que existe acumulado para el mes encontrado.  
+If(Mes_Zona_Previa <> -1)Then 'Según vigencia de esta regla. El cambio de zona entre Enero y Abril permite deducir que existe acumulado para el mes encontrado.  
 
     'Encontramos las fechas inicio y fin del mes encontrado para buscar en el acumulado.
     Dias_Mes = DxDaysOfMonth(Mes_Zona_Previa, DxYear(SCO_DT_PAYMENT))
@@ -45,8 +45,8 @@ If(Mes_Zona_Previa <> -1)Then 'Segun vigencia de esta regla. El cambio de zona e
     Else  
       Dias_Mes = ToString(Dias_Mes, 0)
     EndIf
-    F_MES_PREV_INI = ToDate(ToString(DxYear(SCO_DT_PAYMENT), 0) + "-" + Mes + "-01")      'Primer dia del mes a buscar en el acumulado.
-    F_MES_PREV_FIN = ToDate(ToString(DxYear(SCO_DT_PAYMENT), 0) + "-" + Mes + "-" + Dias_Mes) 'Ultimo dia del mes a buscar en el acumulado.
+    F_MES_PREV_INI = ToDate(ToString(DxYear(SCO_DT_PAYMENT), 0) + "-" + Mes + "-01")      'Primer día del mes a buscar en el acumulado.
+    F_MES_PREV_FIN = ToDate(ToString(DxYear(SCO_DT_PAYMENT), 0) + "-" + Mes + "-" + Dias_Mes) 'Ultimo día del mes a buscar en el acumulado.
     
     If(CantReg >= 0) Then
         ContReg = 0     

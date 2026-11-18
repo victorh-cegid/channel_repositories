@@ -6,7 +6,7 @@ importeInicial = importe
 
 TopeRemunBrutaDev = 60000
 
-' Financiacion aplicada en pagas anteriores dentro del mes de proceso
+' Financiación aplicada en pagas anteriores dentro del mes de proceso
 DifJubMesAct      = SAR_ACM_MES_ACTUAL_DIF[0].SAR_FINAN_APO_JUB_DIF
 DifJubSACMesAct   = SAR_ACM_MES_ACTUAL_DIF[0].SAR_FINAN_APO_JUB_SAC_DIF
 DifJubVACMesAct   = SAR_ACM_MES_ACTUAL_DIF[0].SAR_FINAN_APO_JUB_VAC_DIF 
@@ -19,7 +19,7 @@ RemunBrutaDevMes    = RemunBrutaDevPaga + RemunBrutaDevMesAct
 TopeRemunBrutaTot = TopeRemunBrutaDev
     
 If RemunBrutaDevMes > TopeRemunBrutaTot Then 
-    If TotalDifJubMesAct <> 0 Then SAR_FINAN_APO_JUB_AUX = 4561                 ' Art.4 Decreto 561, aviso para devolucion del aporte financiado en el concepto #6000   
+    If TotalDifJubMesAct <> 0 Then SAR_FINAN_APO_JUB_AUX = 4561                 ' Art.4 Decreto 561, aviso para devolución del aporte financiado en el concepto #6000   
     Return(0)
 EndIf
 
@@ -33,7 +33,7 @@ If SAR_TIPO_SALARIO = "003" Then
     coefJornales = 0
     horasPaga = 0
 
-    'Si en la paga hay horas informadas, hace precio diario, en cualquier otra situacion, se usara el modelo de semana.
+    'Si en la paga hay horas informadas, hace precio diario, en cualquier otra situación, se usará el modelo de semana.
     HorasInformadas = SAR_CANT_HS_TRABAJADAS
     horasTotales    = SAR_HORAS_MES
     If HorasInformadas > 0 THEN
@@ -45,29 +45,29 @@ If SAR_TIPO_SALARIO = "003" Then
 
     impoNor = importe * coefJornales
 
-    impoNor = Bound(impoNor - TotalDifJubMesAct, 0, importeInicial)             'Topamos la financiacion total del mes al valores recibido por valores empresa (2.000 PESOS)
+    impoNor = Bound(impoNor - TotalDifJubMesAct, 0, importeInicial)             'Topamos la financiación total del mes al valores recibido por valores empresa (2.000 PESOS)
     impoNor = Max  (impoNor + TotalDifJubMesAct, 0) 
         
     impoFin = impoNor
 'Parte proporcional para el resto de empleados
 Else
     'Parte proporcional mes alta/baja
-    DiasNormal30  = SAR_DIAS_NORM_SUELD                                         'Dias normalizados de sueldo, para topar a 30 
+    DiasNormal30  = SAR_DIAS_NORM_SUELD                                         'Días normalizados de sueldo, para topar a 30 
     DiasNormaliz = DiasNormal30  
-    If SAR_ES_BAJA = 1 Then DiasNormaliz = SAR_PAYS_TO_CALC.SCO_DAYS_NUM_ALLOC  'Dias de la paga si estamos en el mes de baja, en el caso del mes de alta no es necesario
-    DiasPostBaja  = SAR_DIAS_POST_BAJA                                          'Dias posteriores a la fecha de baja del empleado
-    DiasAnteAlta  = SAR_DIAS_ANT_ALTA                                           'Dias anteriores a la fecha de alta del empleado
-    DiasLicNoDesc = SAR_DIAS_LIC_NO_RETRIB                                      'Total dias en el mes con Licencia no retribuida
-    DiasVacacPago = SAR_UN_VACACIONES                                           'Dias de vacaciones pagadas en la paga en proceso
-    DiasVacacPago = DiasVacacPago + SAR_ACM_MES_ACTUAL_DIF[0].SAR_UN_VACACIONES     'Sumamos los Dias de vacaciones ya pagadas en el mes actual
-    DiasVacacDesc = SAR_DIAS_VACACIONES                                         'Dias de vacaciones descontadas en el mes
+    If SAR_ES_BAJA = 1 Then DiasNormaliz = SAR_PAYS_TO_CALC.SCO_DAYS_NUM_ALLOC  'Días de la paga si estamos en el mes de baja, en el caso del mes de alta no es necesario
+    DiasPostBaja  = SAR_DIAS_POST_BAJA                                          'Días posteriores a la fecha de baja del empleado
+    DiasAnteAlta  = SAR_DIAS_ANT_ALTA                                           'Días anteriores a la fecha de alta del empleado
+    DiasLicNoDesc = SAR_DIAS_LIC_NO_RETRIB                                      'Total días en el mes con Licencia no retribuida
+    DiasVacacPago = SAR_UN_VACACIONES                                           'Días de vacaciones pagadas en la paga en proceso
+    DiasVacacPago = DiasVacacPago + SAR_ACM_MES_ACTUAL_DIF[0].SAR_UN_VACACIONES     'Sumamos los Días de vacaciones ya pagadas en el mes actual
+    DiasVacacDesc = SAR_DIAS_VACACIONES                                         'Días de vacaciones descontadas en el mes
     
     DiasAltaReal  = Max(DiasNormaliz - DiasPostBaja - DiasAnteAlta - DiasLicNoDesc, 0)
     DiasAltaProp  = DiasAltaReal / DiasNormal30
 
     impoNor = importe * DiasAltaProp
     
-    impoNor = Bound(impoNor - TotalDifJubMesAct, 0, importeInicial)             'Topamos la financiacion total del mes al valores recibido por valores empresa (2.000 PESOS)
+    impoNor = Bound(impoNor - TotalDifJubMesAct, 0, importeInicial)             'Topamos la financiación total del mes al valores recibido por valores empresa (2.000 PESOS)
     impoNor = Max(impoNor + TotalDifJubMesAct, 0)    
     
     impoFin = impoNor

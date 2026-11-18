@@ -1,0 +1,6 @@
+'El concepto 628 (% Aporte Patronal Ley 19032) tomará su valor de zonas dgi o de valores modalidades de 
+'contratación para cada modalidad vigente.
+
+valor = SAR_REMUN_IMPO_CNT * SAR_P_PAT_L_19032_FAL / 100
+
+RETURN(valor)

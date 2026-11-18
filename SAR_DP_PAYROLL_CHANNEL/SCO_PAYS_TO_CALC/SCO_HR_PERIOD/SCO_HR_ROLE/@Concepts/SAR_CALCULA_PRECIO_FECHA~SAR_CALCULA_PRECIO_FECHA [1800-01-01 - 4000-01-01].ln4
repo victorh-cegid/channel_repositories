@@ -1,11 +1,12 @@
 '
 'Busco el precio del sueldo que tiene el empleado a la fecha recibida por argumento.
-'Leo dicho precio desde el tramo correspondiente al concepto 1002 si esta cargado a nivel
+'Leo dicho precio desde el tramo correspondiente al concepto 1002 si está cargado a nivel
 'de period, sino lo leo del tramo correspondiente al concepto 1000002 (nivel de rol)
-'La formula del precio se calcula segun el concepto recibido por parametro
+'La fórmula del precio se calcula según el concepto recibido por parámetro
 '
 
 SALARIO = 0
+IMP_DESC_DEC612 = 0
 PROMEDIO = SAR_HRPERIOD_CALC.SAR_PRO_VAR_ULT_6
 
 IF ISNULL(PROMEDIO) = TRUE THEN
@@ -29,12 +30,14 @@ FOR I = 0 TO NUM_TRAMOS_SUELDO_PERIOD - 1
         IF ARG_CONCEPTO = "NONE" OR  ARG_CONCEPTO = "#4110" OR ARG_CONCEPTO = "#4120" THEN         
                 IF SAR_HRPERIOD_CALC.SAR_TIPO_SALARIO = "001" THEN         
                     IF SAR_HRPERIOD_CALC.SAR_DIAS_NORM_SUELD <> 0 THEN
-                        SALARIO = (SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA[I] + PROMEDIO)/SAR_HRPERIOD_CALC.SAR_DIAS_NORM_SUELD                       
+                        SALARIO = (SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA[I] + PROMEDIO)/SAR_HRPERIOD_CALC.SAR_DIAS_NORM_SUELD
+
                     ELSE
                         SALARIO = 0
+
                     ENDIF
                 ELSE
-                    SALARIO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA[I] + (PROMEDIO/SAR_HRPERIOD_CALC.SAR_HORAS_MES)
+                    SALARIO = SAR_HRPERIOD_CALC.SAR_TOT_P_COMP_EA[I] + (PROMEDIO/SAR_HRPERIOD_CALC.SAR_HORAS_MES)                   
                 ENDIF
                 IF ARG_CONCEPTO = "#4120" THEN
                     '-------------------------------------------------------.
@@ -42,7 +45,7 @@ FOR I = 0 TO NUM_TRAMOS_SUELDO_PERIOD - 1
                     '--------------------------------------------------------.
                     
                     IF INICIO_TRAMO >= aux THEN      
-                        SALARIO = SALARIO + Round((SALARIO/12),2)
+                        SALARIO = SALARIO + Round((SALARIO/12),2)    
                     ENDIF
     
                 ENDIF
@@ -65,6 +68,8 @@ FOR I = 0 TO NUM_TRAMOS_SUELDO_PERIOD - 1
             ELSEIF SAR_HRPERIOD_CALC.SAR_TIPO_SALARIO = "003" THEN    
                 SALARIO = Round(VAL_PER + (PROMEDIO/SAR_HRPERIOD_CALC.SAR_HORAS_MES),2)
             ENDIF
+                              
+        
         ELSEIF ARG_CONCEPTO = "#4433" OR ARG_CONCEPTO = "#4423" OR ARG_CONCEPTO = "#4437" OR ARG_CONCEPTO = "#4257" OR ARG_CONCEPTO = "#4263" OR ARG_CONCEPTO = "#4463" OR ARG_CONCEPTO = "#4473"  THEN 'Licencias Horarias y Horas extras
             IF SAR_HRPERIOD_CALC.SAR_TIPO_SALARIO = "001" THEN
                 IF SAR_HRPERIOD_CALC.SAR_HORAS_MES <> 0 THEN
@@ -84,6 +89,8 @@ FOR I = 0 TO NUM_TRAMOS_SUELDO_PERIOD - 1
             ENDIF
         ENDIF
     ENDIF
+
+
 NEXT
 
 Return(SALARIO)

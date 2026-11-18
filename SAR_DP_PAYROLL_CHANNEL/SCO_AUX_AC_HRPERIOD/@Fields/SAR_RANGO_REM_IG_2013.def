@@ -1,5 +1,5 @@
 item: SAR_RANGO_REM_IG_2013
-name: Rango remuneracion por Decreto 1242/2013
+name: Rango remuneración por Decreto 1242/2013
 column_name: SAR_RANGO_REM_IG_2013
 item_type: FIELD
 type: NUMBER
@@ -11,3 +11,12 @@ default_value: "0"
 internal_type: 1
 item_aux: null
 id_cstype: null
+totalize_type: 4
+sent_tot_type: null
+transact_type: 4
+exe_group: null
+exe_level: 2
+variable_arguments: 0
+item_aux_prorat: null
+dimension: null
+conv_function: 1

@@ -1,6 +1,6 @@
 '
-'Calcula la cantidad dias trabajados menos las ausencias que generan interrupcion
-'en el periodo que se encuentra entre el inicio y fin de la paga 
+'Calcula la cantidad días trabajados menos las ausencias que generan interrupción
+'en el período que se encuentra entre el inicio y fin de la paga 
 '
 INICIO = SAR_P_SUELDO..SysStartDate
 FIN = SAR_P_SUELDO..SysEndDate
@@ -39,7 +39,7 @@ ENDIF
 
 dias_tramo = FIN - INICIO + 1
 
-'Control alta dia 31
+'Control alta día 31
 If SAR_ES_ALTA = 1 And DxDay(SAR_FECHA_ALTA)=31 Then dias_tramo = 1
 
 IF SAR_DIAS_ANT_ALTA > 0 OR SAR_DIAS_POST_BAJA > 0 THEN ' esta de baja o de alta en el mes
@@ -155,7 +155,7 @@ FOR  I = primerreg  TO  ultimoreg
         Endif
     
         '
-        'Contabilizo la cantidad de dias y si el tipo de salario es Horario, 
+        'Contabilizo la cantidad de días y si el tipo de salario es Horario, 
         'traspaso las unidades a horas
         '
         IF SAR_TIPO_SALARIO <> "003" THEN    
