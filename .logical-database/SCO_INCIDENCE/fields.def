@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_INCIDENCE
     NAME_ESP: ID Incidencia
     REAL_NAME: SCO_ID_INCIDENCE
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: SCO_TA_INCIDENCE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_NM_INCIDENCE
     NAME_ESP: Nombre de incidencia
     REAL_NAME: SCO_NM_INCIDENCE
@@ -22,7 +22,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_TA_VARCHAR62
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: DT_START
     NAME_ESP: Inicio
     REAL_NAME: DT_START
@@ -30,7 +30,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: START_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: DT_END
     NAME_ESP: Fin
     REAL_NAME: DT_END
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_INC_GROUP
     NAME_ESP: ID Grupo de incidencias
     REAL_NAME: SCO_ID_INC_GROUP
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_TA_ID_INC_GROUP
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_DEPENDENCE
     NAME_ESP: Alcance incidencia
     REAL_NAME: SCO_ID_DEPENDENCE
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_TA_DEPENDENCE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_CK_IN_PAYROLL
     NAME_ESP: Process in Payroll
     REAL_NAME: SCO_CK_IN_PAYROLL
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_APP_10_D1
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_CK_CONTR_SUSP
     NAME_ESP: Ausencia prolongada
     REAL_NAME: SCO_CK_CONTR_SUSP
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_APP_10_D0
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_CK_PAID
     NAME_ESP: Paid
     REAL_NAME: SCO_CK_PAID
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_APP_10_D1
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_INP_PAYPERIOD
     NAME_ESP: ID input payperiod
     REAL_NAME: SCO_ID_INP_PAYPERI
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_INP_PAYROLL
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SCO_COMMENT
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_COMMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_CK_INTERRUP
     NAME_ESP: Es Interrupcion
     REAL_NAME: SAR_CK_INTERRUP
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_VARCHAR_1_S_N_DEF_N
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_RAMA_INC
     NAME_ESP: Rama de la incapacidad
     REAL_NAME: SME_RAMA_INC
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_VARCHAR_1
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_RIESGO_SUA
     NAME_ESP: Riesgo SUA
     REAL_NAME: SME_RIESGO_SUA
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_VARCHAR_1
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_CK_ANTIGUEDAD
     NAME_ESP: Afecta antiguedad
     REAL_NAME: SAR_CK_ANTIGUEDAD
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_VARCHAR_1_S_N_DEF_N
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_IND_DESGLOSAR
     NAME_ESP: Desglosar por horas
     REAL_NAME: SME_IND_DESGLOSAR
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SME_CHECK_BOOLEAM
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -150,7 +150,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_IND_PRIM_DOM
     NAME_ESP: Genera prima dominical
     REAL_NAME: SME_IND_PRIM_DOM
@@ -158,7 +158,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SME_CHECK_BOOLEAM
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_ID_SIT_REVISTA
     NAME_ESP: Sit. Revista
     REAL_NAME: SAR_ID_SIT_REVISTA
@@ -166,7 +166,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_ID_SIT_REVISTA
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -174,4 +174,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

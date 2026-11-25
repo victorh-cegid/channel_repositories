@@ -8,6 +8,7 @@ prec: 0
 scale: 0
 scope: RECORD
 default_value: null
+owner_flag: 2
 internal_type: 16
 item_aux: SUS_EX_TYPE
 id_cstype: null
@@ -20,3 +21,5 @@ variable_arguments: 0
 item_aux_prorat: null
 dimension: null
 conv_function: 1
+id_synonym: null
+n_synonym: null

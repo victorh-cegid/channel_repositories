@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_ACCRUED
     NAME_ESP: Fecha acumulacion
     REAL_NAME: SCO_DT_ACCRUED
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_PAY_FREQUENCY
     NAME_ESP: ID Frecuencia pago
     REAL_NAME: SCO_ID_PAY_FREQ
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: SCO_ID_PAY_FREQUENCY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_NUM_PAY_MONTH
     NAME_ESP: Num. mes paga
     REAL_NAME: SCO_NUM_PAY_MON
@@ -30,7 +30,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_NUM_PAY_MONTH
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_START
     NAME_ESP: Inicio
     REAL_NAME: SCO_DT_START
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_END
     NAME_ESP: Fin
     REAL_NAME: SCO_DATE_END
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DAYS_NUMBER
     NAME_ESP: Num. dias
     REAL_NAME: SCO_DAYS_NUMBER
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_NUM_DAY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_PAY_TYPE
     NAME_ESP: ID Tipo paga
     REAL_NAME: SCO_ID_PAY_TYPE
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAY_TYPE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_CUTOFF
     NAME_ESP: Fecha corte
     REAL_NAME: SCO_DT_CUTOFF
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_RUN_DAY
     NAME_ESP: Fecha ejecucion
     REAL_NAME: SCO_DT_RUN_DAY
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_DT_CHECK
     NAME_ESP: Fecha compr.
     REAL_NAME: SCO_DT_CHECK
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_DT_XMIT_DAY
     NAME_ESP: Fecha transf.
     REAL_NAME: SCO_DT_XMIT_DAY
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_PAY_PUB_ST
     NAME_ESP: ID Estado de publicacion
     REAL_NAME: SCO_ID_PAY_PUB_ST
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARCHAR_2
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_LOCK_TYPE
     NAME_ESP: ID Tipo de bloqueo
     REAL_NAME: SCO_ID_LOCK_TYPE
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_LOCK_TYPE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_DT_LOCK
     NAME_ESP: Fecha bloqueo
     REAL_NAME: SCO_DT_LOCK
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_NM_PAY
     NAME_ESP: Nombre paga
     REAL_NAME: SCO_NM_PAY
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_SHORT_DESCRIPTION
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_PAY_STATUS
     NAME_ESP: ID Estado paga
     REAL_NAME: SCO_ID_PAY_STATUS
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAY_STATUS
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_PAY_FREQ_LO
     NAME_ESP: ID Frecuencia bloqueo
     REAL_NAME: SCO_ID_PAY_FREQ_LO
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAY_FREQUENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_DT_START_LOCK
     NAME_ESP: Inicio bloqueo
     REAL_NAME: SCO_DT_START_LOCK
@@ -150,7 +150,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_DT_END_LOCK
     NAME_ESP: Fin bloqueo
     REAL_NAME: SCO_DT_END_LOCK
@@ -158,7 +158,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_PERIODO_PAGO
     NAME_ESP: Periodo de pago
     REAL_NAME: SCO_PERIODO_PAGO
@@ -166,7 +166,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_PERIODO_PAGO
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_IND_PAGA_SDI
     NAME_ESP: Indicador de paga para SDI
     REAL_NAME: SME_IND_PAGA_SDI
@@ -174,7 +174,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SME_IND_PAGA_SDI
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -182,7 +182,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -190,7 +190,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -198,4 +198,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0

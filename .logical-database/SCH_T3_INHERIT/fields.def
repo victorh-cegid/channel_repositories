@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_T3_BASE
     NAME_ESP: ID Meta4Object padre
     REAL_NAME: ID_T3_BASE
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_LEVEL
     NAME_ESP: ID Nivel
     REAL_NAME: ID_LEVEL
@@ -22,7 +22,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: NUMBER8
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -30,7 +30,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -46,4 +46,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

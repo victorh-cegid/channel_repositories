@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_LEG_ENT
     NAME_ESP: ID Empresa
     REAL_NAME: STD_ID_LEG_ENT
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_LEG_ENT
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_N_LEG_ENT
     NAME_ESP: Nombre de empresa
     REAL_NAME: STD_N_LEG_ENT
@@ -22,7 +22,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SHORT_DESCRIPTION
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_DT_START
     NAME_ESP: Inicio
     REAL_NAME: STD_DT_START
@@ -30,7 +30,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: START_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_DT_END
     NAME_ESP: Fin
     REAL_NAME: STD_DT_END
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_DESCRIPTION
     NAME_ESP: Descripcion
     REAL_NAME: STD_DESCRIPTION
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_COMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_ID_RESPONSABLE
     NAME_ESP: ID Responsible
     REAL_NAME: SSP_ID_RESPONSABLE
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_HR
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_ID_TP_ID_LGAL
     NAME_ESP: ID Tipo de ID Legal
     REAL_NAME: SSP_ID_TP_ID_LGAL
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSP_VARSTRING1
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_ID_PAIS_EMISOR
     NAME_ESP: Pais emisor del documento
     REAL_NAME: SSP_ID_PAIS_EMISOR
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COUNTRY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SFR_ID_LEGAL_HOLDING
     NAME_ESP: Grupo
     REAL_NAME: SFR_ID_LEGAL_HOLDI
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_HOLDING
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SFR_ID_ACTIV_SECTOR
     NAME_ESP: Sector laboral
     REAL_NAME: SFR_ID_ACTIV_SECTO
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SFR_ID_ACTIV_SECTOR
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_ID_LEGAL
     NAME_ESP: ID Legal
     REAL_NAME: SSP_ID_LEGAL
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSPVARSTRING10
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_CARGO_CERT_HAB
     NAME_ESP: Cargo Certif. Haberes
     REAL_NAME: SSP_CARGO_CERT_HAB
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: VARCHAR40
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_COD_LOC_EMPRESA
     NAME_ESP: Codigo Local de la Empresa
     REAL_NAME: SSP_COD_LOC_EMPR
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSP_VARSTRING5
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_FIRMT_CERT_HAB
     NAME_ESP: Firmante Certif. Haberes
     REAL_NAME: SSP_FIRMT_CERT_HAB
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: VARCHAR40
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_ID_LEG_CER_HAB
     NAME_ESP: ID Leg. Certif. Haberes
     REAL_NAME: SSP_ID_LEG_CER_HAB
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSP_VARSTRING9
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_ID_TP_ALF_EMP
     NAME_ESP: ID Tipo Alf. Emp.
     REAL_NAME: SSP_ID_TP_ALF_EMP
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: NUMBER_1
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_LIT_PLURIEMPLE
     NAME_ESP: Literal Pluriempleo
     REAL_NAME: SSP_LIT_PLURIEMPLE
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSP_VARSTRING50
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_NUM_TRAB_EMPR
     NAME_ESP: Num. Trabajadores Empresa
     REAL_NAME: SSP_NUM_TRAB_EMPR
@@ -150,7 +150,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSPVARSTRING10
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_SUBCIF
     NAME_ESP: Subcif
     REAL_NAME: SSP_SUBCIF
@@ -158,7 +158,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSP_VARSTRING2
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_NID_ENT
     NAME_ESP: SIREN
     REAL_NAME: STD_NID_ENT
@@ -166,7 +166,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_NID_ENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_NID_ACT
     NAME_ESP: NAF
     REAL_NAME: STD_NID_ACT
@@ -174,7 +174,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_NID_ACT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SFR_LEGAL_ENTITY_LOGO
     NAME_ESP: Logotipo de sociedad
     REAL_NAME: SFR_LEGAL_ENTITY_L
@@ -182,7 +182,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SHORT_DESCRIPTION
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SFR_REG_LEGENT
     NAME_ESP: Regularisation toutes societes
     REAL_NAME: SFR_REG_LEGENT
@@ -190,7 +190,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_S_10_D0
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SFR_REG_SUB_LEGENT
     NAME_ESP: Regularisation tout etab.
     REAL_NAME: SFR_REG_SUB_LEGENT
@@ -198,7 +198,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_S_10_D1
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_ID_NATUREZA
     NAME_ESP: ID Naturaleza Jurid.
     REAL_NAME: SPO_ID_NATUREZA
@@ -206,7 +206,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: HCO_VARCHAR_6
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_ID_ACTIVIDADE
     NAME_ESP: ID Activ. Econom.
     REAL_NAME: SPO_ID_ACTIVIDADE
@@ -214,7 +214,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: HCO_VARCHAR_6
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_DT_PUBLIC_BT
     NAME_ESP: Fecha Public. BT
     REAL_NAME: SPO_DT_PUBLIC_BT
@@ -222,7 +222,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_DT_ULT_TAB_SAL
     NAME_ESP: Fec. Ult. Tab. Sal.
     REAL_NAME: SPO_DT_ULT_TAB_SAL
@@ -230,7 +230,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_INST_REG_TRAB
     NAME_ESP: Conv. Colectivo
     REAL_NAME: SPO_INST_REG_TRAB
@@ -238,7 +238,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: VARCHAR_60
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_CAPITAL_SOCIAL
     NAME_ESP: Capital Social
     REAL_NAME: SPO_CAPITAL_SOCIAL
@@ -246,7 +246,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SPO_NUMBER_14_4
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_VOLUME_VENDAS
     NAME_ESP: Volumen Ventas
     REAL_NAME: SPO_VOLUME_VENDAS
@@ -254,7 +254,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SPO_NUMBER_14_4
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_REPARTICAO_PERC
     NAME_ESP: Repart. Perc.
     REAL_NAME: SPO_REPARTICAO_PER
@@ -262,7 +262,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SPO_NUMBER_5_1
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_REP_PERC_ESTRA
     NAME_ESP: Reparto Perc. Extran.
     REAL_NAME: SPO_REP_PERC_ESTRA
@@ -270,7 +270,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SPO_NUMBER_5_1
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_REP_PERC_PUB
     NAME_ESP: Reparto Perc. Publica
     REAL_NAME: SPO_REP_PERC_PUB
@@ -278,7 +278,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SPO_NUMBER_5_1
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_ANO_LEG_ENT
     NAME_ESP: Ano
     REAL_NAME: SPO_ANO_LEG_ENT
@@ -286,7 +286,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: HCO_VARCHAR4
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_COD_CONCELHO
     NAME_ESP: Provincia
     REAL_NAME: SPO_COD_CONCELHO
@@ -294,7 +294,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: HCO_VARCHAR4
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_ID_ART
     NAME_ESP: ID A.R.T.
     REAL_NAME: SAR_ID_ART
@@ -302,7 +302,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_EXTERNAL_ORG
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_SIEM
     NAME_ESP: SIEM
     REAL_NAME: SME_SIEM
@@ -310,7 +310,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_NUMBER_8
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_ID_REG_FISCAL
     NAME_ESP: ID Regimen fiscal
     REAL_NAME: SME_ID_REG_FISCAL
@@ -318,7 +318,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SME_ID_REG_FISCAL
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCB_DT_FEC_MAT_MER
     NAME_ESP: Fecha de matricula mercantil
     REAL_NAME: SCB_DT_FEC_MAT_MER
@@ -326,7 +326,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCB_DT_FEC_MAT_MER
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -334,7 +334,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -342,7 +342,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_CK_PER_FIS
     NAME_ESP: Persona fisica
     REAL_NAME: SME_CK_PER_FIS
@@ -350,7 +350,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SME_CHECK_BOOL_PF
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -358,4 +358,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

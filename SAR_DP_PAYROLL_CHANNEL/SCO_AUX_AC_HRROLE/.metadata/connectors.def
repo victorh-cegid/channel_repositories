@@ -1,8 +1,8 @@
-# parent_node | parent_ti | connection_type | origin
-SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | FREE | INHERITED from SCO_DP_PAYROLL_CHANNEL
-SCO_AUX_AC_HRPERIOD | SCO_AUX_AC_HRPERIOD | FREE | INHERITED from SCO_DP_PAYROLL_CHANNEL
-SCO_HR_PERIOD | SCO_HR_PERIOD | FREE | INHERITED from SCO_DP_PAYROLL_CHANNEL
+# parent_node | parent_ti | connection_type | id_t3_used | call_order | id_sentence | expand_delete | expand_undo | id_connector_t3 | origin
+SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | FREE | SCO_DP_PAYROLL_CHANNEL | 0 | null | 0 | 0 | SCO_DP_PAYROLL_CHANNEL | INHERITED from SCO_DP_PAYROLL_CHANNEL
+SCO_AUX_AC_HRPERIOD | SCO_AUX_AC_HRPERIOD | FREE | SCO_DP_PAYROLL_CHANNEL | 0 | null | 0 | 0 | SCO_DP_PAYROLL_CHANNEL | INHERITED from SCO_DP_PAYROLL_CHANNEL
+SCO_HR_PERIOD | SCO_HR_PERIOD | FREE | SCO_DP_PAYROLL_CHANNEL | 0 | null | 0 | 0 | SCO_DP_PAYROLL_CHANNEL | INHERITED from SCO_DP_PAYROLL_CHANNEL
 
 # child_node | connection_type | origin
 
-# ti | item | parent_node | parent_ti | parent_item | precedence | id_cstype | origin
+# ti | item | parent_node | parent_ti | parent_item | precedence | id_cstype | id_t3_used | call_order | id_item_connector_t3 | id_spin_type | id_relship_type | id_context_type | trigger_mode | origin

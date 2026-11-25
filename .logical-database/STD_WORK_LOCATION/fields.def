@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_WORK_LOCATION
     NAME_ESP: Lugar trabajo
     REAL_NAME: STD_ID_WORK_LOCAT
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_WORK_LOCATION
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_URL_REF_PLAN
     NAME_ESP: URL en el mapa
     REAL_NAME: SCO_URL_REF_PLAN
@@ -22,7 +22,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SHORT_DESCRIPTION
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_NBR_COORD_X
     NAME_ESP: Coordenada X en el mapa
     REAL_NAME: SCO_NBR_COORD_X
@@ -30,7 +30,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_DEC_14_4
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_NBR_COORD_Y
     NAME_ESP: Coordenada Y en el mapa
     REAL_NAME: SCO_NBR_COORD_Y
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_DEC_14_4
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_N_WORK_LOCATION
     NAME_ESP: Nombre lugar trabajo
     REAL_NAME: STD_N_WORK_LOCAT
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SHORT_DESCRIPTION
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_DT_START
     NAME_ESP: Inicio
     REAL_NAME: STD_DT_START
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: START_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_DT_END
     NAME_ESP: Fin
     REAL_NAME: STD_DT_END
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_WL_TYPE
     NAME_ESP: ID Tipo lugar trabajo
     REAL_NAME: STD_ID_WL_TYPE
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_WL_TYPE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: STD_COMMENT
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_COMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_IS_ROOT
     NAME_ESP: Lugar de trabajo raiz
     REAL_NAME: SCO_IS_ROOT
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_S_10_D0
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_COD_LOCAL_CENTRO_ST
     NAME_ESP: Codigo local centro trabajo
     REAL_NAME: SSP_COD_LOC_CENTR
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSP_VARSTRING5
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_NUM_TRAB_CENT_ST
     NAME_ESP: Num. Trabajadores
     REAL_NAME: SSP_NUM_TRAB_CENT
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSP_NUM_8
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_ID_PERSON_RESP
     NAME_ESP: ID Responsable
     REAL_NAME: SME_ID_PERSON_RESP
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SME_ID_PERSON_RESP
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_ID_ACTIVIDADE
     NAME_ESP: ID Activ. Econom.
     REAL_NAME: SPO_ID_ACTIVIDADE
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: HCO_VARCHAR_6
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_INST_REG_TRAB
     NAME_ESP: Conv. Colectivo
     REAL_NAME: SPO_INST_REG_TRAB
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: VARCHAR_60
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_NUM_BOL_TRAB
     NAME_ESP: Num. Boletin Trab.
     REAL_NAME: SPO_NUM_BOL_TRAB
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARCHAR15
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_DT_PUBLIC_BT
     NAME_ESP: Fecha Public. BT
     REAL_NAME: SPO_DT_PUBLIC_BT
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_DT_ULT_TAB_SAL
     NAME_ESP: Fec. Ult. Tab. Sal.
     REAL_NAME: SPO_DT_ULT_TAB_SAL
@@ -150,7 +150,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SPO_NUM_CONTRIB
     NAME_ESP: Num. de Cotiz. a la S.S.
     REAL_NAME: SPO_NUM_CONTRIB
@@ -158,7 +158,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_TA_VARCHAR9
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_ID_ZONA_DGI
     NAME_ESP: Id Zona DGI
     REAL_NAME: SAR_ID_ZONA_DGI
@@ -166,7 +166,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSPVARSTRING10
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_COD_SUC_AFIP
     NAME_ESP: Codigo sucursal AFIP
     REAL_NAME: SAR_COD_SUC_AFIP
@@ -174,7 +174,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARCHAR5
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_ID_MS_ACT
     NAME_ESP: ID Actividad
     REAL_NAME: SAR_ID_MS_ACT
@@ -182,7 +182,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_VARCHAR_6
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_ID_ZON_CRED_FIS
     NAME_ESP: ID Zonas Credito Fiscal
     REAL_NAME: SAR_ID_ZON_CRED_FIS
@@ -190,7 +190,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSPVARSTRING10
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -198,7 +198,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -206,7 +206,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -214,4 +214,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

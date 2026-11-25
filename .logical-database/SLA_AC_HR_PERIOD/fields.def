@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 9
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_HR
     NAME_ESP: ID RH
     REAL_NAME: SCO_ID_HR
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_HR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_HR_PERIOD
     NAME_ESP: Num. periodo
     REAL_NAME: SCO_OR_HR_PERIOD
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: SCO_OR_HR_PERIOD
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_ALLOCATION
     NAME_ESP: Fecha de imputacion
     REAL_NAME: SCO_DT_ALLOC
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_CURRENCY
     NAME_ESP: ID Moneda
     REAL_NAME: ID_CURRENCY
@@ -38,7 +38,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: ID_CURRENCY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_START_SLICE
     NAME_ESP: Inicio de tramo
     REAL_NAME: SCO_DT_START_SLICE
@@ -46,7 +46,7 @@ fields:
     IS_PK: true
     POS_PK: 5
     ID_TYPE: START_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_PAYMENT
     NAME_ESP: Fecha de pago
     REAL_NAME: SCO_DT_PAY
@@ -54,7 +54,7 @@ fields:
     IS_PK: true
     POS_PK: 6
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_PAY_FREQ_ALLOC
     NAME_ESP: Frecuencia de imputacion
     REAL_NAME: SCO_PAY_FREQ_ALLOC
@@ -62,7 +62,7 @@ fields:
     IS_PK: true
     POS_PK: 7
     ID_TYPE: SCO_ID_PAY_FREQUENCY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_PAY_FREQ_PAYM
     NAME_ESP: Frecuencia de pago
     REAL_NAME: SCO_PAY_FREQ_PAY
@@ -70,7 +70,7 @@ fields:
     IS_PK: true
     POS_PK: 8
     ID_TYPE: SCO_ID_PAY_FREQUENCY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SLA_CONCEPTO_PRUEBA
     NAME_ESP: Concepto de Prueba SLA
     REAL_NAME: SLA_CONCEPTO_PRUEBA
@@ -78,4 +78,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0

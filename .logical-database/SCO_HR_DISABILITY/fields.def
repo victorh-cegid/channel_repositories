@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: ID_ORG_MONO
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_HR
     NAME_ESP: ID RH
     REAL_NAME: SCO_ID_HR
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_HR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_DISABILITY
     NAME_ESP: ID Discapacidad
     REAL_NAME: SCO_ID_DISABILITY
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: STD_ID_DISABILITY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_START
     NAME_ESP: Inicio
     REAL_NAME: SCO_DT_START
@@ -30,7 +30,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: START_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_END
     NAME_ESP: Fin
     REAL_NAME: SCO_DT_END
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_DT_DISABILITY
     NAME_ESP: Fecha discapacidad
     REAL_NAME: SCO_DT_DISABILITY
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_PERMANENT
     NAME_ESP: Permanente
     REAL_NAME: SCO_PERMANENT
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CHECK_DEFAULT_0
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_DISABILITY_GRADE
     NAME_ESP: ID Grado discapacidad
     REAL_NAME: SCO_ID_DISAB_GRADE
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_DISABILITY_GRADE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SFR_CK_COTOREP
     NAME_ESP: Cotorep
     REAL_NAME: SFR_CK_COTOREP
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_COTOREP_DN
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SFR_CAT_COTOREP
     NAME_ESP: Id Cat. COTOREP
     REAL_NAME: SFR_CAT_COTOREP
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SFR_CAT_COTOREP
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -102,4 +102,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

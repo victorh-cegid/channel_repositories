@@ -8,6 +8,7 @@ prec: 3
 scale: 0
 scope: NODE
 default_value: null
+owner_flag: 10
 internal_type: 36
 item_aux: null
 id_cstype: null
@@ -20,3 +21,5 @@ variable_arguments: 0
 item_aux_prorat: null
 dimension: null
 conv_function: 1
+id_synonym: null
+n_synonym: null

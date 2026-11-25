@@ -1,16 +1,16 @@
-# item_metadata_format: 2
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
-SAR_ID_ACTIVIDAD | RECORD | STRING | 2 | 4 | 0 | Id Actividad |  | 1 | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1
-SAR_ID_CENTRO_TRAB | RECORD | STRING | 2 | 8 | 0 | Centro de trabajo del empleado |  | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1
-SAR_INDIC_REDUC_ZON_DES | RECORD | NUMBER | 6 | 1 | 0 | Indicativo Reducción por zona Art 1 Ley 23272 |  | 1 | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1
-SAR_P_SAL_BASE | RECORD | CURRENCY | 8 | 18 | 6 | Precio sueldo Rol |  | 15 | ID_CURRENCY | 4 | null | 4 | 1 | 2 | 0 | null | null | 1
-SCO_DT_PRORATE_ROLE | RECORD | DATE | 4 | 0 | 0 | Fecha a considerar en prorateos |  | 1 | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1
-SCO_DT_SLICE_ROLE | RECORD | DATE | 4 | 0 | 0 | Fecha del tramo |  | 74 | SCO_DT_PRORATE_ROLE | 4 | null | 4 | 2 | 2 | 0 | null | null | 1
-SCO_ID_JOB_CODE | RECORD | STRING | 2 | 8 | 0 | Puesto del empleado |  | 1 | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1
-SCO_ID_WORK_CENTER | RECORD | STRING | 2 | 8 | 0 | ID Lugar trabajo |  | 1 | null | 2 | null | 4 | 2 | 2 | 0 | null | null | 1
-SCO_ID_WORK_UNIT | RECORD | STRING | 2 | 8 | 0 | ID Unidad org. |  | 1 | null | 2 | null | 4 | 2 | 2 | 0 | null | null | 1
-SCO_NUM_DAYS_CAL_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Número de dias festivos |  | null | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1
-SCO_NUM_DAYS_THEO_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Número de dias de tiempo teórico |  | null | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1
-SCO_NUM_PRESEN_DAYS_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Número de días de presencia |  | null | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1
-SCO_PAY_RATE | RECORD | CURRENCY | 8 | 18 | 6 | Retribución personal |  | 15 | ID_CURRENCY | 2 | null | 4 | 1 | 2 | 0 | null | null | 1
-SSP_ID_CENT_COSTO | RECORD | STRING | 2 | 15 | 0 | Centro de costo |  | 1 | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1
+# item_metadata_format: 4
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function | id_synonym | n_synonym | owner_flag
+SAR_ID_ACTIVIDAD | RECORD | STRING | 2 | 4 | 0 | Id Actividad |  | 1 | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1 | 210 | SAR_ID_ACTIVIDAD | 2
+SAR_ID_CENTRO_TRAB | RECORD | STRING | 2 | 8 | 0 | Centro de trabajo del empleado |  | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1 | 223 | SAR_ID_CENTRO_TRAB | 2
+SAR_INDIC_REDUC_ZON_DES | RECORD | NUMBER | 6 | 1 | 0 | Indicativo Reducción por zona Art 1 Ley 23272 |  | 1 | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1 | 796 | SAR_INDIC_REDUC_ZON_DES | 2
+SAR_P_SAL_BASE | RECORD | CURRENCY | 8 | 18 | 6 | Precio sueldo Rol |  | 15 | ID_CURRENCY | 4 | null | 4 | 1 | 2 | 0 | null | null | 1 | 1000002 | SAR_P_SAL_BASE | 2
+SCO_DT_PRORATE_ROLE | RECORD | DATE | 4 | 0 | 0 | Fecha a considerar en prorateos |  | 1 | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1 | 2306 | SCO_DT_PRORATE_ROLE | 10
+SCO_DT_SLICE_ROLE | RECORD | DATE | 4 | 0 | 0 | Fecha del tramo |  | 74 | SCO_DT_PRORATE_ROLE | 4 | null | 4 | 2 | 2 | 0 | null | null | 1 | 2305 | FechaTramosRol | 1
+SCO_ID_JOB_CODE | RECORD | STRING | 2 | 8 | 0 | Puesto del empleado |  | 1 | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1 | 250 | SAR_ID_PUESTO | 2
+SCO_ID_WORK_CENTER | RECORD | STRING | 2 | 8 | 0 | ID Lugar trabajo |  | 1 | null | 2 | null | 4 | 2 | 2 | 0 | null | null | 1 | 306 | IdLugarTrabajo | 10
+SCO_ID_WORK_UNIT | RECORD | STRING | 2 | 8 | 0 | ID Unidad org. |  | 1 | null | 2 | null | 4 | 2 | 2 | 0 | null | null | 1 | 307 | IdUnidadOrg | 10
+SCO_NUM_DAYS_CAL_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Número de dias festivos |  | null | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1 | 2312 | NumDiasFestivos | 10
+SCO_NUM_DAYS_THEO_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Número de dias de tiempo teórico |  | null | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1 | 2311 | NumDiasTiempoTeo | 10
+SCO_NUM_PRESEN_DAYS_ROLE | RECORD | NUMBER | 6 | 6 | 2 | Número de días de presencia |  | null | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1 | 2308 | NumDiasPresencia | 10
+SCO_PAY_RATE | RECORD | CURRENCY | 8 | 18 | 6 | Retribución personal |  | 15 | ID_CURRENCY | 2 | null | 4 | 1 | 2 | 0 | null | null | 1 | 2300 | Salario_base | 10
+SSP_ID_CENT_COSTO | RECORD | STRING | 2 | 15 | 0 | Centro de costo |  | 1 | null | 4 | null | 4 | 2 | 2 | 0 | null | null | 1 | 209 | SAR_ID_CENT_COSTO | 2

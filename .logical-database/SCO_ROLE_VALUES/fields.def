@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 7
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_HR
     NAME_ESP: ID RH
     REAL_NAME: SCO_ID_HR
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_HR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_HR_ROLE
     NAME_ESP: Num. rol
     REAL_NAME: SCO_OR_HR_ROLE
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: SCO_OR_HR_ROLE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_DMD
     NAME_ESP: ID Dominio
     REAL_NAME: ID_DMD
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_DMD_COMPONENT
     NAME_ESP: Concepto de nomina
     REAL_NAME: ID_DMD_COMPONENT
@@ -38,7 +38,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: DT_START
     NAME_ESP: Inicio
     REAL_NAME: DT_START
@@ -46,7 +46,7 @@ fields:
     IS_PK: true
     POS_PK: 5
     ID_TYPE: START_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: DT_COR_START
     NAME_ESP: Inicio correccion
     REAL_NAME: DT_COR_START
@@ -54,7 +54,7 @@ fields:
     IS_PK: true
     POS_PK: 6
     ID_TYPE: START_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_END
     NAME_ESP: Fin
     REAL_NAME: DT_END
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_COR_END
     NAME_ESP: Fin correccion
     REAL_NAME: DT_COR_END
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_VALUE
     NAME_ESP: Valor
     REAL_NAME: SCO_VALUE
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARIANT_VALUE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_CURRENCY
     NAME_ESP: ID Moneda
     REAL_NAME: SCO_ID_CURRENCY
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_DT_EXCHANGE
     NAME_ESP: Fecha cambio
     REAL_NAME: SCO_DT_EXCHANGE
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: EX_TYPE
     NAME_ESP: Tipo de cambio
     REAL_NAME: EX_TYPE
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: FIXCHAR_10
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_REASON_CHANGE
     NAME_ESP: ID Motivo cambio
     REAL_NAME: SCO_ID_REA_CHANG
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_REASON_CHANGE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_PRIORITY
     NAME_ESP: ID Prioridad
     REAL_NAME: ID_PRIORITY
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_SHORT
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: PROJ
     NAME_ESP: Proyeccion
     REAL_NAME: PROJ
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: PROJECTION_FIELD
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SCO_COMMENT
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_COMMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_M4_TYPE
     NAME_ESP: ID Tipo basico
     REAL_NAME: ID_M4_TYPE
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_SHORT
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -150,7 +150,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -158,7 +158,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -166,4 +166,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

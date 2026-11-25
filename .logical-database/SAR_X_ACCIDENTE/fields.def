@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_HR
     NAME_ESP: ID RH
     REAL_NAME: STD_ID_HR
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_HR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_OR_HR_PERIOD
     NAME_ESP: Num. periodo
     REAL_NAME: STD_OR_HR_PERIOD
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: SCO_OR_HR_PERIOD
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_ID_ORDINAL
     NAME_ESP: Num. accidente
     REAL_NAME: SAR_ID_ORDINAL
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: SAR_ORDINAL_9
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_ACC
     NAME_ESP: Fecha del accidente
     REAL_NAME: SCO_DT_ACC
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_PRECIO_DIARIO
     NAME_ESP: Precio diario
     REAL_NAME: SAR_PRECIO_DIARIO
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_EX_TYPE
     NAME_ESP: Fuente de tipo de cambio
     REAL_NAME: SAR_EX_TYPE
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: FIXCHAR_10
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_CUR_DATE
     NAME_ESP: Fecha de cambio
     REAL_NAME: SAR_CUR_DATE
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TODAY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_ID_CURRENCY
     NAME_ESP: Tipo de moneda
     REAL_NAME: SAR_ID_CURRENCY
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SAR_COMMENT
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_COMMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -102,4 +102,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

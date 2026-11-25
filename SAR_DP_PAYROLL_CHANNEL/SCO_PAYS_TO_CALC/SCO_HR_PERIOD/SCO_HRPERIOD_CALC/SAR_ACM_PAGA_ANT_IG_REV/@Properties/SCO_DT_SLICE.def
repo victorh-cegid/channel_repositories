@@ -7,6 +7,7 @@ prec: 1
 scale: 0
 scope: RECORD
 default_value: null
+owner_flag: 2
 internal_type: 74
 item_aux: SCO_DT_PRORATE
 id_cstype: 2
@@ -19,3 +20,5 @@ variable_arguments: 0
 item_aux_prorat: null
 dimension: null
 conv_function: 1
+id_synonym: 1307
+n_synonym: null

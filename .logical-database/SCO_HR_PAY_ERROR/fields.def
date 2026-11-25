@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_HR
     NAME_ESP: ID RH
     REAL_NAME: SCO_ID_HR
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_HR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_HR_PERIOD
     NAME_ESP: Num. periodo
     REAL_NAME: SCO_OR_HR_PERIOD
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: SCO_OR_HR_PERIOD
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_ERROR
     NAME_ESP: Num. error
     REAL_NAME: SCO_OR_ERROR
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: STD_ORDINAL_2
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_ALLOCATION
     NAME_ESP: Fecha de imputacion
     REAL_NAME: SCO_DT_ALLOCATION
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_PAY_FREQ_ALLOC
     NAME_ESP: Frecuencia de imputacion
     REAL_NAME: SCO_PAY_FREQ_ALLOC
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAY_FREQUENCY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_PAYMENT
     NAME_ESP: Fecha de pago
     REAL_NAME: SCO_DT_PAYMENT
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_PAY_FREQ_PAYM
     NAME_ESP: Frecuencia de pago
     REAL_NAME: SCO_PAY_FREQ_PAYM
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAY_FREQUENCY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_TEXT
     NAME_ESP: Texto del error
     REAL_NAME: SCO_TEXT
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_LONG_DATA
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -94,4 +94,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

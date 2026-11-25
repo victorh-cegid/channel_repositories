@@ -1,5 +1,5 @@
 item: SAR_BENEF_SAC_IG_2DO_SEM
-name: Devolución Ganancias Decreto 1253/2016 
+name: "Devolución Ganancias Decreto 1253/2016 "
 column_name: SAR_BENEF_SAC_IG_2DO_SEM
 item_type: FIELD
 type: CURRENCY
@@ -8,6 +8,7 @@ prec: 18
 scale: 6
 scope: RECORD
 default_value: "0"
+owner_flag: 2
 internal_type: 15
 item_aux: ID_CURRENCY
 id_cstype: null
@@ -20,3 +21,5 @@ variable_arguments: 0
 item_aux_prorat: null
 dimension: null
 conv_function: 1
+id_synonym: 5460
+n_synonym: SAR_BENEF_SAC_IG_2DO_SEM

@@ -1,7 +1,7 @@
 parents:
   - ID_PARENT_OBJECT: SCH_TOTALS
-    DELETE_CASCADE: true
-    on:
+    DELETE_CASCADE: 1
+    'on':
       - ID_FIELD: DT_END
         ID_PARENT_FIELD: DT_END
       - ID_FIELD: ID_TOTAL_TI
@@ -13,28 +13,28 @@ parents:
       - ID_FIELD: ID_TI
         ID_PARENT_FIELD: ID_TI
   - ID_PARENT_OBJECT: SCH_ITEMS
-    DELETE_CASCADE: false
-    on:
+    DELETE_CASCADE: 0
+    'on':
       - ID_FIELD: ID_ITEM_USED
         ID_PARENT_FIELD: ID_ITEM
       - ID_FIELD: ID_ITEM_USED_TI
         ID_PARENT_FIELD: ID_TI
   - ID_PARENT_OBJECT: SCH_ITEMS_WRITE
-    DELETE_CASCADE: false
-    on:
+    DELETE_CASCADE: 0
+    'on':
       - ID_FIELD: ID_ITEM_USED
         ID_PARENT_FIELD: ID_ITEM
       - ID_FIELD: ID_ITEM_USED_TI
         ID_PARENT_FIELD: ID_TI
   - ID_PARENT_OBJECT: SCH_TIS
-    DELETE_CASCADE: true
-    on:
+    DELETE_CASCADE: 1
+    'on':
       - ID_FIELD: ID_TOTAL_REF_TI
         ID_PARENT_FIELD: ID_TI
 children:
   - ID_OBJECT: SCH_TOTAL_TAGS
-    DELETE_CASCADE: true
-    on:
+    DELETE_CASCADE: 1
+    'on':
       - ID_FIELD: DT_END
         ID_PARENT_FIELD: DT_END
       - ID_FIELD: ID_TOTAL_REF_TI

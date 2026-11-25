@@ -1,14 +1,14 @@
-# item_metadata_format: 2
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
-GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SAR_CARGA_FECHA_FILTRO | RECORD | STRING | 1 | 1 | 0 | SAR_CARGA_FECHA_FILTRO |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SAR_IDS_BAJAS_RETRO | RECORD | STRING | 1 | 1 | 0 | Bajas retroactivas | 2 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SAR_IDS_GENERAL | RECORD | STRING | 0 | 1 | 0 | IDs bajas retroactivas General | 2 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SAR_OBTENER_CAMBIO_ZONA | RECORD | NUMBER | 6 | 1 | 0 | Detecta cambio de zona en el año desde una fecha | 2 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SAR_OBTENER_LUGAR_ZONA | RECORD | NUMBER | 6 | 1 | 0 | Obtiene la zona de un lugar de trabajo a una fecha | 2 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_CALCROLE | RECORD | NUMBER | 6 | 5 | 0 | Cálcular rol del RH | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_EXE_LEVEL_1 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 1 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_EXE_LEVEL_2 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 2 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_INITROLE | BLOCK | NUMBER | 6 | 5 | 0 | Iniciar cálculo  rol | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_LOAD_CLOSED_ROLES | BLOCK | NUMBER | 6 | 1 | 0 | Carga de roles cerrados en retroactividad |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_SLICES_TERM_RETRO_ROLE | RECORD | NUMBER | 6 | 1 | 0 | Gestión de tramos para retroactividad de una baja | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+# item_metadata_format: 4
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function | id_synonym | n_synonym | owner_flag
+GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SAR_CARGA_FECHA_FILTRO | RECORD | STRING | 1 | 1 | 0 | SAR_CARGA_FECHA_FILTRO |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
+SAR_IDS_BAJAS_RETRO | RECORD | STRING | 1 | 1 | 0 | Bajas retroactivas | 2 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
+SAR_IDS_GENERAL | RECORD | STRING | 0 | 1 | 0 | IDs bajas retroactivas General | 2 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
+SAR_OBTENER_CAMBIO_ZONA | RECORD | NUMBER | 6 | 1 | 0 | Detecta cambio de zona en el año desde una fecha | 2 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
+SAR_OBTENER_LUGAR_ZONA | RECORD | NUMBER | 6 | 1 | 0 | Obtiene la zona de un lugar de trabajo a una fecha | 2 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
+SCO_CALCROLE | RECORD | NUMBER | 6 | 5 | 0 | Cálcular rol del RH | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_EXE_LEVEL_1 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 1 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_EXE_LEVEL_2 | RECORD | NUMBER | 6 | 4 | 0 | Ejecuta nivel 2 | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_INITROLE | BLOCK | NUMBER | 6 | 5 | 0 | Iniciar cálculo  rol | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_LOAD_CLOSED_ROLES | BLOCK | NUMBER | 6 | 1 | 0 | Carga de roles cerrados en retroactividad |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_SLICES_TERM_RETRO_ROLE | RECORD | NUMBER | 6 | 1 | 0 | Gestión de tramos para retroactividad de una baja | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10

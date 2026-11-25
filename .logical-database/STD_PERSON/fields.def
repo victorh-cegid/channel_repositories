@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: ID_ORG_MONO
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_PERSON
     NAME_ESP: ID Persona
     REAL_NAME: STD_ID_PERSON
@@ -14,23 +14,23 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_PERSON
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_N_FAMILY_NAME_1
-    NAME_ESP: 1er apellido
+    NAME_ESP: "1er apellido"
     REAL_NAME: STD_N_FAM_NAME_1
     POSITION: 3
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_NAME
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_N_MAIDEN_NAME
-    NAME_ESP: 2? Apellido
+    NAME_ESP: "2? Apellido"
     REAL_NAME: STD_N_MAIDEN_NAME
     POSITION: 4
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_N_FIRST_NAME
     NAME_ESP: Nombre
     REAL_NAME: STD_N_FIRST_NAME
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_NAME
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_N_USUAL_NAME
     NAME_ESP: Nombre familiar
     REAL_NAME: STD_N_USUAL_NAME
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_GENDER
     NAME_ESP: ID Sexo
     REAL_NAME: STD_ID_GENDER
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_GENDER
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_SALUTATION
     NAME_ESP: ID Tratamiento
     REAL_NAME: STD_ID_SALUTATION
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARCHAR10
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_DT_BIRTH
     NAME_ESP: Fecha nacimiento
     REAL_NAME: STD_DT_BIRTH
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COUNTRY
     NAME_ESP: ID Pais nacimiento
     REAL_NAME: STD_ID_COUNTRY
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COUNTRY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_GEO_DIV
     NAME_ESP: ID Provincia nacimiento
     REAL_NAME: STD_ID_GEO_DIV
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_GEO_DIV
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_SUB_GEO_DIV
     NAME_ESP: ID Poblacion nacimiento
     REAL_NAME: STD_ID_SUB_GEO_DIV
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_SUB_GEO_DIV
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: STD_COMMENT
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_COMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_ID_PAIS_EMISOR
     NAME_ESP: Pais emisor del documento
     REAL_NAME: SSP_ID_PAIS_EMISOR
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COUNTRY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_PRIMER_APELLIDO
     NAME_ESP: Primer Apellido
     REAL_NAME: SSP_PRIM_APELLIDO
@@ -118,15 +118,15 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_SSN
-    NAME_ESP: N? de documento
+    NAME_ESP: "N? de documento"
     REAL_NAME: STD_SSN
     POSITION: 16
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SSN
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_PHOTO
     NAME_ESP: Fotografia
     REAL_NAME: SCO_PHOTO
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_PHOTO
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_HOME_PAGE
     NAME_ESP: Pag. inicial Internet
     REAL_NAME: SCO_HOME_PAGE
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_WEB_FOUND
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_ID_TP_DOC
     NAME_ESP: ID tipo documento
     REAL_NAME: SSP_ID_TP_DOC
@@ -150,15 +150,15 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARCHAR10
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SFR_N_MAIDEN_NAME
-    NAME_ESP: 2? Apellido
+    NAME_ESP: "2? Apellido"
     REAL_NAME: SFR_N_MAIDEN_NAME
     POSITION: 20
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SFR_NM_BIRTH_PLACE
     NAME_ESP: Localidad de nacimiento
     REAL_NAME: SFR_NM_BIRTH_PLACE
@@ -166,7 +166,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_GEO_PLACE
     NAME_ESP: Zona Geografica
     REAL_NAME: STD_ID_GEO_PLACE
@@ -174,7 +174,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_GEO_PLACE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_SS_KEY
     NAME_ESP: Clave Seguridad Social
     REAL_NAME: STD_SS_KEY
@@ -182,7 +182,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STRING3
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_SS_NUMBER
     NAME_ESP: CUIL
     REAL_NAME: STD_SS_NUMBER
@@ -190,7 +190,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SS_NUMBER
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_N_MARRIED_NAME
     NAME_ESP: Apellido de Casada
     REAL_NAME: SAR_N_MARRIED_NAME
@@ -198,7 +198,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: VARCHAR40
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SBR_ID_RACA
     NAME_ESP: Raza
     REAL_NAME: SBR_ID_RACA
@@ -206,7 +206,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STRING_3
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_PHOTO_INET
     NAME_ESP: Fotografia Internet
     REAL_NAME: SCO_PHOTO_INET
@@ -214,7 +214,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_PHOTO
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SGE_ID_ADD_NAME
     NAME_ESP: Titulo nobiliario
     REAL_NAME: SGE_ID_ADD_NAME
@@ -222,7 +222,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARCHAR2
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SGE_ID_TITEL
     NAME_ESP: Titulo profesional
     REAL_NAME: SGE_ID_TITEL
@@ -230,7 +230,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STRING3
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SGE_ID_VSW
     NAME_ESP: Complemento apellido
     REAL_NAME: SGE_ID_VSW
@@ -238,7 +238,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STRING_3
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SGE_N_NAME_COMPL
     NAME_ESP: Nombre completo
     REAL_NAME: SGE_N_NAME_COMPL
@@ -246,7 +246,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_KN_CONTEXT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUK_MAIDEN_NAME
     NAME_ESP: Apellido soltera
     REAL_NAME: SUK_MAIDEN_NAME
@@ -254,7 +254,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARCHAR50
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUK_OTHER_FORENAMES
     NAME_ESP: Otros nombres
     REAL_NAME: SUK_OTHER_FORENAME
@@ -262,7 +262,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARCHAR50
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUK_PREVIOUS_SURNAMES
     NAME_ESP: Otros apellidos
     REAL_NAME: SUK_PREVIOUS_SURNA
@@ -270,7 +270,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARCHAR50
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_DEATH_DATE
     NAME_ESP: Fecha defuncion
     REAL_NAME: SUS_DEATH_DATE
@@ -278,7 +278,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_SMOKER
     NAME_ESP: Fumador
     REAL_NAME: SCO_SMOKER
@@ -286,7 +286,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: BOOLEAN
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_GB_NAME
     NAME_ESP: Nombre
     REAL_NAME: SCO_GB_NAME
@@ -294,7 +294,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_COMMENT
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_REGION
     NAME_ESP: Id Region
     REAL_NAME: SCO_ID_REGION
@@ -302,7 +302,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_REGION
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_EXPEDIDO
     NAME_ESP: Expedido
     REAL_NAME: SAR_EXPEDIDO
@@ -310,7 +310,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_SHORT_DESCRIPTION
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_VETERAN
     NAME_ESP: Veteran
     REAL_NAME: SUS_VETERAN
@@ -318,7 +318,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_S_10_D0
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_VET_DIS_TY
     NAME_ESP: Veteran disable type ID
     REAL_NAME: SUS_ID_VET_DIS_TY
@@ -326,7 +326,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_VET_DIS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_VETERAN_WHERE
     NAME_ESP: Where veteran ID
     REAL_NAME: SUS_ID_VETERAN_WHE
@@ -334,7 +334,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_VETERAN_WHERE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_ETHNICITY
     NAME_ESP: Ethnicity ID
     REAL_NAME: SUS_ID_ETHNICITY
@@ -342,7 +342,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_ETHNICITY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCB_DIG_VER
     NAME_ESP: Digito de verificacion
     REAL_NAME: SCB_DIG_VER
@@ -350,7 +350,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_CHECK
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_DT_DEFUNCION
     NAME_ESP: Fecha defuncion
     REAL_NAME: SAR_DT_DEFUNCION
@@ -358,7 +358,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_BLOB_PHOTO
     NAME_ESP: Fotografia en BBDD
     REAL_NAME: SCO_BLOB_PHOTO
@@ -366,7 +366,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_BLOB
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -374,7 +374,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -382,7 +382,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_NUM_SS
     NAME_ESP: Numero SS
     REAL_NAME: SME_NUM_SS
@@ -390,7 +390,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_SHORT_DESCRIPTION
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -398,7 +398,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCL_RUT
     NAME_ESP: RUT
     REAL_NAME: SCL_RUT
@@ -406,7 +406,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SS_NUMBER
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_CUIL
     NAME_ESP: Cuil
     REAL_NAME: SAR_CUIL
@@ -414,7 +414,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SS_NUMBER
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SBR_CPF
     NAME_ESP: CPF
     REAL_NAME: SBR_CPF
@@ -422,7 +422,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SSN
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_RFC
     NAME_ESP: RFC
     REAL_NAME: SME_RFC
@@ -430,7 +430,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SS_NUMBER
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_CURP
     NAME_ESP: CURP
     REAL_NAME: SME_CURP
@@ -438,4 +438,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SSN
-    NOT_NULL: false
+    NOT_NULL: 0

@@ -1,22 +1,22 @@
 parents:
   - ID_PARENT_OBJECT: SCH_T3S
-    DELETE_CASCADE: false
-    on:
+    DELETE_CASCADE: 0
+    'on':
       - ID_FIELD: ID_T3_BASE
         ID_PARENT_FIELD: ID_T3
       - ID_FIELD: ID_T3
         ID_PARENT_FIELD: ID_T3
 children:
   - ID_OBJECT: ADB_ACTIONS
-    DELETE_CASCADE: false
-    on:
+    DELETE_CASCADE: 0
+    'on':
       - ID_FIELD: ID_NODE_T3_TARGET
         ID_PARENT_FIELD: ID_T3_BASE
       - ID_FIELD: ID_T3_TARGET
         ID_PARENT_FIELD: ID_T3
   - ID_OBJECT: SCH_CHANNEL_DEP
-    DELETE_CASCADE: false
-    on:
+    DELETE_CASCADE: 0
+    'on':
       - ID_FIELD: ID_NODE_T3_USED
         ID_PARENT_FIELD: ID_T3_BASE
       - ID_FIELD: ID_T3_USED

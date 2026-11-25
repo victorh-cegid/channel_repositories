@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 6
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_HR
     NAME_ESP: ID RH
     REAL_NAME: SCO_ID_HR
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_HR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_HR_ROLE
     NAME_ESP: Num. rol
     REAL_NAME: SCO_OR_HR_ROLE
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: SCO_OR_HR_ROLE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_INCIDENCE
     NAME_ESP: ID Incidencia
     REAL_NAME: SCO_ID_INCIDENCE
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: SCO_TA_INCIDENCE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_START
     NAME_ESP: Fecha inicio
     REAL_NAME: SCO_DT_START
@@ -38,7 +38,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: SCO_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_PART_TIME
     NAME_ESP: Num. de incidencia
     REAL_NAME: SCO_OR_PART_TIME
@@ -46,7 +46,7 @@ fields:
     IS_PK: true
     POS_PK: 5
     ID_TYPE: SCO_TA_NUMBER2
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_END
     NAME_ESP: Fecha fin
     REAL_NAME: SCO_DT_END
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_NO_DEFAULT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_START_TIME
     NAME_ESP: Hora de inicio
     REAL_NAME: SCO_START_TIME
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_TIME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_END_TIME
     NAME_ESP: Hora fin
     REAL_NAME: SCO_END_TIME
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_TIME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_TIME_UNIT
     NAME_ESP: ID Unidad tiempo
     REAL_NAME: SCO_ID_TIME_UNIT
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_TIME_UNIT
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_UNITS
     NAME_ESP: Unidades
     REAL_NAME: SCO_UNITS
@@ -86,31 +86,31 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: NUMERO16
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_LAST_DAY_PROCESS
-    NAME_ESP: SCO_LAST_DAY_PROCESS
+    NAME_ESP: null
     REAL_NAME: SCO_LAST_DAY_PROCE
     POSITION: 12
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_CK_IN_PAYROLL
-    NAME_ESP: SCO_CK_IN_PAYROLL
+    NAME_ESP: null
     REAL_NAME: SCO_CK_IN_PAYROLL
     POSITION: 13
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_APP_10_D1
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_INP_PAYPERIOD
-    NAME_ESP: SCO_ID_INP_PAYPERIOD
+    NAME_ESP: null
     REAL_NAME: SCO_ID_INP_PAYPERI
     POSITION: 14
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_INP_PAYROLL
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_ID_SIT_REVISTA
     NAME_ESP: ID Sit revista
     REAL_NAME: SAR_ID_SIT_REVISTA
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_ID_SIT_REVISTA
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCB_DT_START_APLIC
     NAME_ESP: Fecha inicio aplicacion
     REAL_NAME: SCB_DT_START_APLIC
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_DT_START_APL
     NAME_ESP: Fecha inicio aplicacion
     REAL_NAME: SME_DT_START_APL
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_NO_DEFAULT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_DT_START_APL
     NAME_ESP: Fecha inicio aplicacion
     REAL_NAME: SAR_DT_START_APL
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_NO_DEFAULT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCB_DT_END_APLIC
     NAME_ESP: Fecha fin aplicacion
     REAL_NAME: SCB_DT_END_APLIC
@@ -150,7 +150,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SME_DT_END_APL
     NAME_ESP: Fecha fin aplicacion
     REAL_NAME: SME_DT_END_APL
@@ -158,7 +158,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_NO_DEFAULT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_DT_END_APL
     NAME_ESP: Fecha fin aplicacion
     REAL_NAME: SAR_DT_END_APL
@@ -166,7 +166,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_NO_DEFAULT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SCO_COMMENT
@@ -174,7 +174,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_COMMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -182,7 +182,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -190,7 +190,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -198,7 +198,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SLA_ID_INSTANCIA_IMP
     NAME_ESP: ID Instancia
     REAL_NAME: SLA_ID_INSTANCIA_IMP
@@ -206,4 +206,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: VARCHAR_60
-    NOT_NULL: false
+    NOT_NULL: 0

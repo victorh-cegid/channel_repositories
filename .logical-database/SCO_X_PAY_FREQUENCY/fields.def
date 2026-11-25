@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_PAY_FREQUENCY
     NAME_ESP: ID Frecuencia pago
     REAL_NAME: SCO_ID_PAY_FREQ
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: SCO_ID_PAY_FREQUENCY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_NM_PAY_FREQUENCY
     NAME_ESP: Descripcion
     REAL_NAME: SCO_NM_PAY_FREQ
@@ -22,15 +22,15 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_SHORT_DESCRIPTION
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_NUM_PER_YEAR
-    NAME_ESP: Num. periodos por a?o
+    NAME_ESP: "Num. periodos por a?o"
     REAL_NAME: SCO_NUM_PER_YEAR
     POSITION: 11
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_NUMBER_3
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -38,15 +38,15 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SLA_NUM_MIN_PER_YEAR
-    NAME_ESP: Num. minimo periodos por a?o
+    NAME_ESP: "Num. minimo periodos por a?o"
     REAL_NAME: SLA_NUM_MIN_PER_YEAR
     POSITION: 12
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_NUMBER_3
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -62,4 +62,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

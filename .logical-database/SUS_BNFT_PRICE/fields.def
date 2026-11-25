@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_PLAN
     NAME_ESP: ID Beneficio
     REAL_NAME: SUS_ID_PLAN
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: SUS_ID_PLAN
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_OR_PRICE
     NAME_ESP: Ordinal
     REAL_NAME: SUS_OR_PRICE
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: STD_ORDINAL_3
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_DT_START
     NAME_ESP: Inicio
     REAL_NAME: SUS_DT_START
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_DT_END
     NAME_ESP: Fin
     REAL_NAME: SUS_DT_END
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_DT_END
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_OPTION
     NAME_ESP: ID Opcion
     REAL_NAME: SUS_ID_OPTION
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_OPTION
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_COV_CAT
     NAME_ESP: ID Categoria de cobertura
     REAL_NAME: SUS_ID_COV_CAT
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_COV_CAT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PRICE
     NAME_ESP: Cantidad fija
     REAL_NAME: SUS_PRICE
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_PERC_SAL
     NAME_ESP: Porcentaje del salario
     REAL_NAME: SCO_PERC_SAL
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DEC_8_2
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_RATE_TYPE
     NAME_ESP: Tipo de coste
     REAL_NAME: SUS_RATE_TYPE
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: COMBO_RATE_TYPE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_COV_TYPE
     NAME_ESP: Tipo de cobertura
     REAL_NAME: SUS_COV_TYPE
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: COMBO_COV_TYPE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COMP_BASIS
     NAME_ESP: ID Base de frecuencia
     REAL_NAME: STD_ID_COMP_BASIS
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COMP_BASIS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_ELG_RULE1
     NAME_ESP: Regla de elegibilidad num. 1
     REAL_NAME: SUS_ID_ELG_RULE1
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_ELG_RULE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_ELG_RULE2
     NAME_ESP: Regla de elegibilidad num. 2
     REAL_NAME: SUS_ID_ELG_RULE2
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_ELG_RULE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SUS_COMMENT
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_COMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_EX_TYPE
     NAME_ESP: Fuente de tipo de cambio
     REAL_NAME: SCO_EX_TYPE
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: FIXCHAR_10
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_CUR_DATE
     NAME_ESP: Fecha de cambio
     REAL_NAME: SCO_CUR_DATE
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TODAY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_CURRENCY
     NAME_ESP: Tipo de moneda
     REAL_NAME: SCO_ID_CURRENCY
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID_APPROLE
     REAL_NAME: ID_APPROLE
@@ -150,7 +150,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID_APP_USER
     REAL_NAME: ID_SECUSER
@@ -158,7 +158,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -166,4 +166,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

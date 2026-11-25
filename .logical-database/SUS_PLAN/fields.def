@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_PLAN
     NAME_ESP: ID Beneficio
     REAL_NAME: SUS_ID_PLAN
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: SUS_ID_PLAN
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_ID_PLAN_TYPE
     NAME_ESP: ID Tipo de beneficios
     REAL_NAME: SUS_ID_PLAN_TYPE
@@ -22,7 +22,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_PLAN_TYPE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_N_PLAN
     NAME_ESP: Nombre beneficio
     REAL_NAME: SUS_N_PLAN
@@ -30,7 +30,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_N_PLAN
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_DT_START
     NAME_ESP: Inicio
     REAL_NAME: SUS_DT_START
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_DT_END
     NAME_ESP: Fin
     REAL_NAME: SUS_DT_END
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_DT_END
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_QUALIFIED
     NAME_ESP: Plan cualificado
     REAL_NAME: SUS_QUALIFIED
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_Y_N
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_FLEX_PLAN
     NAME_ESP: Beneficios flexibles
     REAL_NAME: SUS_FLEX_PLAN
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_Y_N
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_TAX
     NAME_ESP: Antes/Despues impuestos (A/D)
     REAL_NAME: SUS_TAX
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_P_A
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_TAX_ELCT_D
     NAME_ESP: Impuestos a elegir por el empl
     REAL_NAME: SUS_TAX_ELCT_D
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: RADIO_TAX_ELCT_D
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_DOC
     NAME_ESP: Detalle conocimiento
     REAL_NAME: SCO_ID_DOC
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ORD8_PK
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_WEB_ADD_DESC
     NAME_ESP: Direccion Web
     REAL_NAME: SUS_WEB_ADD_DESC
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_COMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SUS_COMMENT
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_COMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID_APPROLE
     REAL_NAME: ID_APPROLE
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID_APP_USER
     REAL_NAME: ID_SECUSER
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -126,4 +126,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

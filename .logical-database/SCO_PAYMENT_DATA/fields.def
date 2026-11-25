@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 5
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_ORIGIN_TYPE
     NAME_ESP: ID Tipo origen
     REAL_NAME: SCO_ORIGIN_TYPE
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: SCO_ID_ORIGIN
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_HR
     NAME_ESP: ID RH
     REAL_NAME: SCO_ID_HR
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: STD_ID_HR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_HR_PERIOD
     NAME_ESP: Num. Periodo
     REAL_NAME: SCO_OR_HR_PERIOD
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: SCO_OR_HR_PERIOD
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_PAYMENTDATA
     NAME_ESP: Num. secuencia datos pago
     REAL_NAME: SCO_OR_PAYMENTDATA
@@ -38,7 +38,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: STD_ORDINAL_6
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_START
     NAME_ESP: Inicio
     REAL_NAME: SCO_DT_START
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: START_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_END
     NAME_ESP: Fin
     REAL_NAME: SCO_DT_END
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_EMP_CHECK
     NAME_ESP: Beneficiario principal
     REAL_NAME: SCO_EMP_CHECK
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BUTTON
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_PERSON
     NAME_ESP: ID Persona
     REAL_NAME: SCO_ID_PERSON
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_PERSON
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_EXTERNALORG
     NAME_ESP: ID Org. externa
     REAL_NAME: SCO_ID_EXTERNALORG
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_EXTERNAL_ORG
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_OR_ACCOUNT
     NAME_ESP: Num. secuencia cuenta
     REAL_NAME: SCO_OR_ACCOUNT
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ORDINAL_6
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_PAYM_TYPE
     NAME_ESP: ID Tipo pago
     REAL_NAME: SCO_ID_PAYM_TYPE
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAYM_TYPE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_CURRENCY_DATA
     NAME_ESP: Datos moneda
     REAL_NAME: ID_CURRENCY_DATA
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_CURRENCY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_PAY_FORMULA
     NAME_ESP: ID Formula pago
     REAL_NAME: SCO_ID_PAY_FORMULA
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAYFORMULA
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_COMP_BANK
     NAME_ESP: ID Banco empresa
     REAL_NAME: SCO_ID_COMP_BANK
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_COMP_BANK
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SCO_COMMENT
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_COMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -150,4 +150,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

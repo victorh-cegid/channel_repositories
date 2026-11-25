@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 7
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_ID_SYNONYM
     NAME_ESP: ID Sinonimo
     REAL_NAME: SAR_ID_SYNONYM
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: ID_LONG
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_ID_DMD
     NAME_ESP: Identificador de dominio
     REAL_NAME: SAR_ID_DMD
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_ID_DMD_COMPONENT
     NAME_ESP: Identificador de componente
     REAL_NAME: SAR_ID_DMD_COMPONE
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_ID_NODE
     NAME_ESP: ID Nodo
     REAL_NAME: SAR_ID_NODE
@@ -38,7 +38,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_HR
     NAME_ESP: ID RH
     REAL_NAME: STD_ID_HR
@@ -46,7 +46,7 @@ fields:
     IS_PK: true
     POS_PK: 5
     ID_TYPE: STD_ID_HR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_OR_HR_PERIOD
     NAME_ESP: Num. periodo
     REAL_NAME: STD_OR_HR_PERIOD
@@ -54,7 +54,7 @@ fields:
     IS_PK: true
     POS_PK: 6
     ID_TYPE: SCO_OR_HR_PERIOD
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_DT_VIGENCIA
     NAME_ESP: Fecha de vigencia
     REAL_NAME: SAR_DT_VIGENCIA
@@ -70,7 +70,7 @@ fields:
     IS_PK: true
     POS_PK: 7
     ID_TYPE: SAR_DT_VIGENCIA
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_DT_VIGEN_IMPUT
     NAME_ESP: Fecha de imputacion vigencia
     REAL_NAME: SAR_DT_VIGEN_IMPUT
@@ -86,7 +86,7 @@ fields:
     IS_PK: true
     POS_PK: 8
     ID_TYPE: SAR_DT_IMPUT
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_CANT_DE_OCURR
     NAME_ESP: Cantidad de ocurrencias
     REAL_NAME: SAR_CANT_DE_OCURR
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_NUMBER_2
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_PROCESADO
     NAME_ESP: Procesado
     REAL_NAME: SAR_PROCESADO
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_NUMERICO_1_DEFAULT_0
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_CONCEPTO_NUEVO
     NAME_ESP: Concepto nuevo
     REAL_NAME: SAR_CONCEPTO_NUEVO
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_NUMERICO_1_DEFAULT_0
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_DT_PAGA_NORMAL
     NAME_ESP: Paga Normal
     REAL_NAME: SAR_DT_PAGA_NORMAL
@@ -126,4 +126,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_DT_START
-    NOT_NULL: false
+    NOT_NULL: 0

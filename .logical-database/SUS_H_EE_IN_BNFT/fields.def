@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 6
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_PLAN
     NAME_ESP: ID Beneficio
     REAL_NAME: SUS_ID_PLAN
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: SUS_ID_PLAN
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_OR_H_EE_BNFT
     NAME_ESP: Num.sec.ben.asig.al empl.(Ocu)
     REAL_NAME: SUS_OR_H_EE_BNFT
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: SUS_OR_H_EE_BNFT
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_ID_HR
     NAME_ESP: ID RH
     REAL_NAME: SUS_ID_HR
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_HR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_OR_HR_PERIOD
     NAME_ESP: Num. Periodo
     REAL_NAME: SUS_OR_HR_PERIOD
@@ -38,7 +38,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: SUS_OR_HR_PERIOD
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_DT_START
     NAME_ESP: Inicio
     REAL_NAME: SUS_DT_START
@@ -46,7 +46,7 @@ fields:
     IS_PK: true
     POS_PK: 5
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_DT_END
     NAME_ESP: Fin
     REAL_NAME: SUS_DT_END
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_DT_END
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_MAIN_RL_DEDUC
     NAME_ESP: Deduccion de rol principal
     REAL_NAME: SUS_MAIN_RL_DEDUC
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_Y_N
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PERIOD_1ST
     NAME_ESP: Primer periodo
     REAL_NAME: SUS_PERIOD_1ST
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_Y_N
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PERIOD_2ND
     NAME_ESP: Segundo periodo
     REAL_NAME: SUS_PERIOD_2ND
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_Y_N
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PERIOD_3RD
     NAME_ESP: Tercer periodo
     REAL_NAME: SUS_PERIOD_3RD
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_Y_N
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PERIOD_4TH
     NAME_ESP: Cuarto periodo
     REAL_NAME: SUS_PERIOD_4TH
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_Y_N
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PERIOD_5TH
     NAME_ESP: Quinto periodo
     REAL_NAME: SUS_PERIOD_5TH
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_Y_N
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_PLAN_PERIOD
     NAME_ESP: ID Periodo del plan
     REAL_NAME: SUS_ID_PLAN_PERIOD
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_PLAN_PERIOD
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_DT_ELECT
     NAME_ESP: Fecha de eleccion
     REAL_NAME: SUS_DT_ELECT
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_CK_MODIFY
     NAME_ESP: Modificado (S/N)
     REAL_NAME: SUS_CK_MODIFY
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_Y_N
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_DT_MODIFY
     NAME_ESP: Fecha de modificacion
     REAL_NAME: SUS_DT_MODIFY
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COMP_BASIS_C
     NAME_ESP: ID Base de frecuencia de cober
     REAL_NAME: SUS_ID_CMP_BASIS_C
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COMP_BASIS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_OPTION
     NAME_ESP: ID Opcion
     REAL_NAME: SUS_ID_OPTION
@@ -150,7 +150,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_OPTION
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_COV_CAT
     NAME_ESP: ID Categoria de cobertura
     REAL_NAME: SUS_ID_COV_CAT
@@ -158,7 +158,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_COV_CAT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PCT_PRICE
     NAME_ESP: Porcentaje del salario
     REAL_NAME: SUS_PCT_PRICE
@@ -166,7 +166,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_PCT_PRICE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_COMP_BASE
     NAME_ESP: ID Base salarial
     REAL_NAME: SUS_ID_COMP_BASE
@@ -174,7 +174,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_COMP_BASE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_SMOKER
     NAME_ESP: Fumador   (S/N)
     REAL_NAME: SUS_SMOKER
@@ -182,7 +182,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_Y_N
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_TAX
     NAME_ESP: Antes/Despues impuestos (A/D)
     REAL_NAME: SUS_TAX
@@ -190,7 +190,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_BNFT_P_A
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_TAX_ELCT_D
     NAME_ESP: Impuestos a elegir por el empl
     REAL_NAME: SUS_TAX_ELCT_D
@@ -198,7 +198,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: RADIO_TAX_ELCT_D
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_DEDUCT
     NAME_ESP: ID Frecuencia de deduccion
     REAL_NAME: SUS_ID_DEDUCT
@@ -206,7 +206,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_DEDUCT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COMP_BASIS
     NAME_ESP: ID Base de frecuencia
     REAL_NAME: SUS_ID_COMP_BASIS
@@ -214,7 +214,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COMP_BASIS
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_PCT_ER_CONT
     NAME_ESP: Porcentaje de ajuste empresa
     REAL_NAME: SUS_PCT_ER_CONT
@@ -222,7 +222,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DEC_3_2
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COMP_BASIS_W
     NAME_ESP: ID Base frec.de ing. input.
     REAL_NAME: SUS_ID_CMP_BASIS_W
@@ -230,7 +230,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COMP_BASIS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_DEDUCTION
     NAME_ESP: ID Deduccion
     REAL_NAME: SUS_ID_DEDUCTION
@@ -238,7 +238,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_DEDUCTION
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PRIORITY
     NAME_ESP: Prioridad
     REAL_NAME: SUS_PRIORITY
@@ -246,7 +246,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_PRIORITY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_ARREAR
     NAME_ESP: ID Comportamiento de atraso
     REAL_NAME: SUS_ID_ARREAR
@@ -254,7 +254,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_ARREAR
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SUS_COMMENT
@@ -262,7 +262,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_COMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PLAN_HC_IND
     NAME_ESP: ID Plan de atencion sanitaria
     REAL_NAME: SUS_PLAN_HC_IND
@@ -270,7 +270,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_IND_CHAR1
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PLAN_DIS_IND
     NAME_ESP: ID Plan de Seguros de vida
     REAL_NAME: SUS_PLAN_DIS_IND
@@ -278,7 +278,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_IND_CHAR1
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_COVERAGE
     NAME_ESP: Cantidad de cobertura
     REAL_NAME: SUS_COVERAGE
@@ -286,7 +286,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_EX_TYPE
     NAME_ESP: Tipo de cambio
     REAL_NAME: SUS_EX_TYPE
@@ -294,7 +294,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: FIXCHAR_10
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_CUR_DATE
     NAME_ESP: Fecha de cambio
     REAL_NAME: SUS_CUR_DATE
@@ -302,7 +302,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TODAY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_CURRENCY
     NAME_ESP: Tipo de moneda
     REAL_NAME: SUS_ID_CURRENCY
@@ -310,7 +310,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_CREDIT
     NAME_ESP: Cantidad
     REAL_NAME: SUS_CREDIT
@@ -318,7 +318,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COMP_CR
     NAME_ESP: ID Base de frecuencia de credi
     REAL_NAME: STD_ID_COMP_CR
@@ -326,7 +326,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COMP_BASIS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ER_CONTR
     NAME_ESP: Contribucion de empresa
     REAL_NAME: SUS_ER_CONTR
@@ -334,7 +334,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COMP_EC
     NAME_ESP: ID Frec. de contr. empresa
     REAL_NAME: STD_ID_COMP_EC
@@ -342,7 +342,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COMP_BASIS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_INCOME_W
     NAME_ESP: Ingresos imputados
     REAL_NAME: SUS_INCOME_W
@@ -350,7 +350,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_POST_AN_LIMT
     NAME_ESP: Lim. anual desp. de impuestos
     REAL_NAME: SUS_POST_AN_LIMT
@@ -358,7 +358,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PRE_AN_LIMT
     NAME_ESP: Lim. anual antes de impuestos
     REAL_NAME: SUS_PRE_AN_LIMT
@@ -366,7 +366,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_PRICE
     NAME_ESP: Coste de beneficios elegido po
     REAL_NAME: SUS_PRICE
@@ -374,7 +374,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_TOTAL_PREM
     NAME_ESP: Total prima
     REAL_NAME: SUS_TOTAL_PREM
@@ -382,7 +382,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COMP_TP
     NAME_ESP: ID Total frec. de prima
     REAL_NAME: STD_ID_COMP_TP
@@ -390,7 +390,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COMP_BASIS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_TOT_AN_LIMT
     NAME_ESP: Total limite anual
     REAL_NAME: SUS_TOT_AN_LIMT
@@ -398,7 +398,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_AMT_DEP_LEG
     NAME_ESP: Contrib. dependiente empresa
     REAL_NAME: SCO_AMT_DEP_LEG
@@ -406,7 +406,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_AMT_DEP_EMP
     NAME_ESP: Coste dependiente empleado
     REAL_NAME: SCO_AMT_DEP_EMP
@@ -414,7 +414,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COMP_D_LEG
     NAME_ESP: ID Base remuneraciones
     REAL_NAME: STD_ID_COMP_D_LEG
@@ -422,7 +422,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COMP_BASIS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COMP_D_EMP
     NAME_ESP: ID Base remuneraciones
     REAL_NAME: STD_ID_COMP_D_EMP
@@ -430,7 +430,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COMP_BASIS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID_APPROLE
     REAL_NAME: ID_APPROLE
@@ -438,7 +438,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_NUM_BENEFITS
     NAME_ESP: Numero de beneficiarios
     REAL_NAME: SCO_NUM_BENEFITS
@@ -446,7 +446,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_NUM_BENEFITS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID_APP_USER
     REAL_NAME: ID_SECUSER
@@ -454,7 +454,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -462,4 +462,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

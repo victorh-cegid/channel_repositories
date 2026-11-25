@@ -1,9 +1,9 @@
-# parent_node | parent_ti | connection_type | origin
-SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | RECORD_BLOCK | OWN
+# parent_node | parent_ti | connection_type | id_t3_used | call_order | id_sentence | expand_delete | expand_undo | id_connector_t3 | origin
+SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | RECORD_BLOCK | SCO_DP_PAYROLL_CHANNEL | 0 | null | 0 | null | SAR_DP_PAYROLL_CHANNEL | OWN
 
 # child_node | connection_type | origin
 
-# ti | item | parent_node | parent_ti | parent_item | precedence | id_cstype | origin
-SAR_CORTE_DED_27617 | INSERT_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | INSERT_PRG | AFTER_PARENT | 2 | OWN
-SAR_CORTE_DED_27617 | UPDATE_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | UPDATE_PRG | BEFORE_PARENT | 2 | OWN
-SAR_CORTE_DED_27617 | DELETE_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | DELETE_PRG | BEFORE_PARENT | 2 | OWN
+# ti | item | parent_node | parent_ti | parent_item | precedence | id_cstype | id_t3_used | call_order | id_item_connector_t3 | id_spin_type | id_relship_type | id_context_type | trigger_mode | origin
+SAR_CORTE_DED_27617 | INSERT_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | INSERT_PRG | AFTER_PARENT | 2 | SCO_DP_PAYROLL_CHANNEL | 8 | SAR_DP_PAYROLL_CHANNEL | 1 | 1 | 0 | null | OWN
+SAR_CORTE_DED_27617 | UPDATE_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | UPDATE_PRG | BEFORE_PARENT | 2 | SCO_DP_PAYROLL_CHANNEL | 8 | SAR_DP_PAYROLL_CHANNEL | 1 | 1 | 0 | null | OWN
+SAR_CORTE_DED_27617 | DELETE_PRG | SCO_PAYS_TO_CALC | SCO_PAYS_TO_CALC | DELETE_PRG | BEFORE_PARENT | 2 | SCO_DP_PAYROLL_CHANNEL | 8 | SAR_DP_PAYROLL_CHANNEL | 1 | 1 | 0 | null | OWN

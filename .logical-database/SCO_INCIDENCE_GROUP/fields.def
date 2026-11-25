@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_INC_GROUP
     NAME_ESP: ID Grupo de incidencias
     REAL_NAME: SCO_ID_INC_GROUP
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: SCO_TA_ID_INC_GROUP
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_NM_INC_GROUP
     NAME_ESP: Grupo de incidencias
     REAL_NAME: SCO_NM_INC_GROUP
@@ -22,7 +22,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_TA_VARCHAR62
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_INCIDENCE_TP
     NAME_ESP: ID Tipo de incidencia
     REAL_NAME: SCO_ID_INCIDENCE_T
@@ -30,7 +30,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_TA_INCIDENCE_TYPE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SCO_COMMENT
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_COMMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SFR_ID_ITR_GROUP
     NAME_ESP: ID Grupo interno
     REAL_NAME: SFR_ID_ITR_GROUP
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SFR_ID_ITR_GROUP
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SLA_PER_DIA
     NAME_ESP: Modo Periodo por dia
     REAL_NAME: SLA_PER_DIA
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SLA_MODO_VISUALIZA
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SLA_PER_HORA
     NAME_ESP: Modo Periodo por hora
     REAL_NAME: SLA_PER_HORA
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SLA_MODO_VISUALIZA
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SLA_DIARIA_DIA
     NAME_ESP: Modo diaria por dia
     REAL_NAME: SLA_DIARIA_DIA
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SLA_MODO_VISUALIZA
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SLA_DIARIA_HORAS
     NAME_ESP: Modo diaria por horas
     REAL_NAME: SLA_DIARIA_HORAS
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SLA_MODO_VISUALIZA
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -102,4 +102,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

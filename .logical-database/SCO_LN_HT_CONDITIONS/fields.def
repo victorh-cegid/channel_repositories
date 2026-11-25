@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 6
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_HR
     NAME_ESP: ID RH
     REAL_NAME: STD_ID_HR
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_HR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_OR_HR_PERIOD
     NAME_ESP: Num. periodo
     REAL_NAME: STD_OR_HR_PERIOD
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: SCO_OR_HR_PERIOD
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_LOAN
     NAME_ESP: ID Prestamo
     REAL_NAME: SCO_ID_LOAN
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: SCO_ID_INTER_TYPE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_LOAN
     NAME_ESP: Num. prestamo
     REAL_NAME: SCO_OR_LOAN
@@ -38,7 +38,7 @@ fields:
     IS_PK: true
     POS_PK: 5
     ID_TYPE: SCO_OR_LOAN
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: DT_START
     NAME_ESP: Inicio
     REAL_NAME: DT_START
@@ -46,7 +46,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: START_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_CONDITION
     NAME_ESP: Num. condicion
     REAL_NAME: SCO_OR_CONDITION
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_OR_CONDITION
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_NUM_PER_PAY
     NAME_ESP: Num. pagos
     REAL_NAME: SCO_NUM_PER_PAY
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_NUMBER_3
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_RATE
     NAME_ESP: Interes
     REAL_NAME: SCO_RATE
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DEC_2_2
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_NUM_QUOTAS
     NAME_ESP: Num. cuotas
     REAL_NAME: SCO_NUM_QUOTAS
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_NUMBER_4
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_END
     NAME_ESP: Fin
     REAL_NAME: DT_END
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_AMT_QUOTAS
     NAME_ESP: Importe cuota
     REAL_NAME: SCO_AMT_QUOTAS
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_CURRENCY
     NAME_ESP: Tipo de moneda
     REAL_NAME: ID_CURRENCY
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: CUR_DATE
     NAME_ESP: Fecha de cambio
     REAL_NAME: CUR_DATE
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TODAY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: EX_TYPE
     NAME_ESP: Fuente de tipo de cambio
     REAL_NAME: EX_TYPE
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: FIXCHAR_10
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_AMT_PAY_OFF
     NAME_ESP: Importe amortizacion
     REAL_NAME: SCO_AMT_PAY_OFF
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_REASON
     NAME_ESP: ID Motivo cambio
     REAL_NAME: SCO_ID_REASON
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_INTER_TYPE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_PAY_OFF_FREQ
     NAME_ESP: ID Frecuencia amortizacion
     REAL_NAME: SCO_ID_PAY_OFF_FRE
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_INTER_TYPE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_PAY_FREQUENCY
     NAME_ESP: ID Frecuencia pago
     REAL_NAME: SCO_ID_PAY_FREQ
@@ -150,7 +150,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAY_FREQUENCY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -158,7 +158,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -166,7 +166,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -174,4 +174,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

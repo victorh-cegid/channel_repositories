@@ -1,5 +1,5 @@
 item: SAR_SEG_VIDA
-name: Seguro de Vida y Discapacidad 
+name: "Seguro de Vida y Discapacidad "
 column_name: SAR_SEG_VIDA
 item_type: FIELD
 type: CURRENCY
@@ -8,6 +8,7 @@ prec: 18
 scale: 6
 scope: RECORD
 default_value: "0"
+owner_flag: 2
 internal_type: 15
 item_aux: ID_CURRENCY
 id_cstype: null
@@ -20,3 +21,5 @@ variable_arguments: 0
 item_aux_prorat: SCO_DT_SLICE
 dimension: null
 conv_function: 1
+id_synonym: 3549
+n_synonym: SAR_SEG_VIDA

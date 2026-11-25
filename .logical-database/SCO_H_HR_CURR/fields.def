@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 5
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_HR
     NAME_ESP: ID RH
     REAL_NAME: SCO_ID_HR
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_HR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_HR_PERIOD
     NAME_ESP: Num. periodo
     REAL_NAME: SCO_OR_HR_PERIOD
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: SCO_OR_HR_PERIOD
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_CURRENCY
     NAME_ESP: ID Moneda
     REAL_NAME: ID_CURRENCY
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: ID_CURRENCY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_START
     NAME_ESP: Inicio
     REAL_NAME: SCO_DT_START
@@ -38,7 +38,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: START_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_END
     NAME_ESP: Fin
     REAL_NAME: SCO_DT_END
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_IND_MAIN_CURR
     NAME_ESP: Indicador moneda ppal.
     REAL_NAME: SCO_IND_MAIN_CURR
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_IND_MAIN_CURR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_BEHAV_CURR
     NAME_ESP: Comportamiento moneda
     REAL_NAME: SCO_BEHAV_CURR
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_BEHAV_CURR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: EX_TYPE
     NAME_ESP: Fuente tipo cambio
     REAL_NAME: EX_TYPE
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: FIXCHAR_10
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_REASON_CHANGE
     NAME_ESP: ID Motivo cambio
     REAL_NAME: SCO_ID_REA_CHANG
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_REASON_CHANGE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SCO_COMMENT
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_COMMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -110,4 +110,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

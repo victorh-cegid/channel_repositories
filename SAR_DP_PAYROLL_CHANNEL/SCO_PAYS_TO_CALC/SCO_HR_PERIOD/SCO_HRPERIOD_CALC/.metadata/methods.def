@@ -1,18 +1,18 @@
-# item_metadata_format: 2
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
-COPYREGISTER | RECORD | NUMBER | 6 | 1 | 0 | Copiar registro | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1
-ExecuteGroup | BLOCK | NUMBER | 6 | 0 | 0 | Ejecutar grupo | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-RESETEXECUTEGROUP | BLOCK | NUMBER | 6 | 1 | 0 | Borrar prioridades de grupo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SAR_CALC_HORAS_TEORICAS | RECORD | NUMBER | 6 | 18 | 6 | Calculo Horas Teóricas por período | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SAR_DIA_SUMADO | BLOCK | NUMBER | 6 | 18 | 0 | SAR_DIA_SUMADO |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SAR_INDIC_PAGO_MES_ACTUAL | RECORD | NUMBER | 6 | 18 | 0 | Indicador de pago de un concepto en el mes | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SAR_OBTENER_RAN_ANT_ZONA | RECORD | NUMBER | 6 | 18 | 0 | Obtener el rango anterior de una zona específica. | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SAR_RETORNA_VALOR_IG | BLOCK | NUMBER | 6 | 18 | 6 | SAR_RETORNA_VALOR_IG |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SAR_RET_VALOR_COMPL | BLOCK | NUMBER | 6 | 18 | 6 | SAR_RET_VALOR_COMPL |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_BACK_PAY | RECORD | CURRENCY | 8 | 23 | 5 | Agregar pagos atrasados |  | 15 | ID_CURRENCY | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_CALC_NUM_PRESEN_DAYS | BLOCK | NUMBER | 6 | 18 | 0 | Calcular dias de presencia |  | null | null | 4 | null | 4 | 11 | 2 | 0 | null | null | 1
-SCO_CALC_THEO_TIME | BLOCK | NUMBER | 6 | 18 | 0 | Calcular tiempo teórico |  | null | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1
-TRANSFERAPPLYVALUE | RECORD | NUMBER | 6 | 1 | 0 | Transferencia Aplicavalor | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1
-curExchangeRecord | NODE | NUMBER | 6 | 1 | 0 | Cambio moneda del registro | 2 | null | null | 2 | null | 4 | null | null | 1 | null | null | 1
+# item_metadata_format: 4
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function | id_synonym | n_synonym | owner_flag
+COPYREGISTER | RECORD | NUMBER | 6 | 1 | 0 | Copiar registro | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 2
+ExecuteGroup | BLOCK | NUMBER | 6 | 0 | 0 | Ejecutar grupo | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+LOAD_BLK | BLOCK | NUMBER | 6 | 4 | 0 | Cargar bloque | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+RESETEXECUTEGROUP | BLOCK | NUMBER | 6 | 1 | 0 | Borrar prioridades de grupo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SAR_CALC_HORAS_TEORICAS | RECORD | NUMBER | 6 | 18 | 6 | Calculo Horas Teóricas por período | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
+SAR_DIA_SUMADO | BLOCK | NUMBER | 6 | 18 | 0 | SAR_DIA_SUMADO |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
+SAR_INDIC_PAGO_MES_ACTUAL | RECORD | NUMBER | 6 | 18 | 0 | Indicador de pago de un concepto en el mes | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
+SAR_OBTENER_RAN_ANT_ZONA | RECORD | NUMBER | 6 | 18 | 0 | Obtener el rango anterior de una zona específica. | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
+SAR_RETORNA_VALOR_IG | BLOCK | NUMBER | 6 | 18 | 6 | SAR_RETORNA_VALOR_IG |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
+SAR_RET_VALOR_COMPL | BLOCK | NUMBER | 6 | 18 | 6 | SAR_RET_VALOR_COMPL |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
+SCO_BACK_PAY | RECORD | CURRENCY | 8 | 23 | 5 | Agregar pagos atrasados |  | 15 | ID_CURRENCY | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_CALC_NUM_PRESEN_DAYS | BLOCK | NUMBER | 6 | 18 | 0 | Calcular dias de presencia |  | null | null | 4 | null | 4 | 11 | 2 | 0 | null | null | 1 | null | null | 10
+SCO_CALC_THEO_TIME | BLOCK | NUMBER | 6 | 18 | 0 | Calcular tiempo teórico |  | null | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1 | null | null | 10
+TRANSFERAPPLYVALUE | RECORD | NUMBER | 6 | 1 | 0 | Transferencia Aplicavalor | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 10
+curExchangeRecord | NODE | NUMBER | 6 | 1 | 0 | Cambio moneda del registro | 2 | null | null | 2 | null | 4 | null | null | 1 | null | null | 1 | null | null | 10

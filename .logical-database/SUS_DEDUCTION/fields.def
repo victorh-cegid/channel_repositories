@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_DEDUCTION
     NAME_ESP: Codigo Deduccion
     REAL_NAME: SUS_ID_DEDUCTION
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: SUS_ID_DEDUCTION
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_NM_DEDUCTION
     NAME_ESP: Nombre Deduccion
     REAL_NAME: SUS_NM_DEDUCTION
@@ -22,7 +22,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SHORT_DESCRIPTION
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_DT_START
     NAME_ESP: Inicio
     REAL_NAME: SUS_DT_START
@@ -30,7 +30,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_DT_END
     NAME_ESP: Fin
     REAL_NAME: SUS_DT_END
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_DEDUCTION_TYPE
     NAME_ESP: ID Tipo de deduccion
     REAL_NAME: SUS_ID_DEDUCT_TP
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SUS_ID_DEDUCT_TP
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_ID_TI
     NAME_ESP: ID Tabla interna
     REAL_NAME: SUS_ID_TI
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_PAY_ITEM_DED
     NAME_ESP: Elemento de deduccion real
     REAL_NAME: SUS_ID_ITEM_DED
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAY_ITEM
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_ID_SYNONYM_DED
     NAME_ESP: ID Sinonimo de deduccion real
     REAL_NAME: ID_SYNONYM_DED
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_LONG
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SUS_ID_PAY_ITEM_ARR
     NAME_ESP: Cantidad de atraso
     REAL_NAME: SUS_ID_ITEM_ARR
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAY_ITEM
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_SYNONYM_ARR
     NAME_ESP: Sinonimo de atraso
     REAL_NAME: ID_SYNONYM_ARR
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_LONG
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_ITEM_PRE
     NAME_ESP: Deduccion antes de impuestos
     REAL_NAME: SUS_ID_ITEM_PRE
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAY_ITEM
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SUS_ID_SYNONYM_PRE
     NAME_ESP: ID Sinonimo antes de impuestos
     REAL_NAME: ID_SYNONYM_PRE
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_LONG
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_ITEM_PRE_COMP
     NAME_ESP: Deduccion antes de imp. empr
     REAL_NAME: SCO_ID_ITEM_PRE_CO
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAY_ITEM
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol de aplicacion
     REAL_NAME: ID_APPROLE
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_SYNONYM_PRE_COMP
     NAME_ESP: ID Sinonimo antes de imp. empr
     REAL_NAME: SCO_ID_SYNONYM_PRE
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_LONG
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario de aplicacion
     REAL_NAME: ID_SECUSER
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_ITEM_DED_COMP
     NAME_ESP: Deduccion despues de imp. empr
     REAL_NAME: SCO_ID_ITEM_DED_CO
@@ -150,7 +150,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_PAY_ITEM
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_SYNONYM_DED_COMP
     NAME_ESP: ID Sinonimo despues imp. empr
     REAL_NAME: SCO_ID_SYNONYM_DED
@@ -158,4 +158,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_LONG
-    NOT_NULL: false
+    NOT_NULL: 0

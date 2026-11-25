@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_WORK_LOCATION
     NAME_ESP: ID Lugar trabajo
     REAL_NAME: STD_ID_WORK_LOCAT
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_WORK_LOCATION
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_OR_WL_ADDRESS
     NAME_ESP: Num. Direccion
     REAL_NAME: SCO_OR_WL_ADDRESS
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: SCO_OR_WL_ADDRESS
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_START
     NAME_ESP: Inicio
     REAL_NAME: SCO_DT_START
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: START_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_END
     NAME_ESP: Fin
     REAL_NAME: SCO_DT_END
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_CHK_MAIN_ADDRESS
     NAME_ESP: Direccion principal
     REAL_NAME: SCO_CHK_MAIN_ADDRE
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: CHK_APP_10_D1
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_ID_SIGLA_DOMIC
     NAME_ESP: ID Tipo de via
     REAL_NAME: SSP_ID_SIGLA_DOMIC
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSP_VARSTRING5
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ADDRESS_LINE_1
     NAME_ESP: Linea direccion 1
     REAL_NAME: STD_ADDRESS_LINE_1
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ADDRESS_LINE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ADDRESS_LINE_2
     NAME_ESP: Linea direccion 2
     REAL_NAME: STD_ADDRESS_LINE_2
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ADDRESS_LINE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ADDRESS_LINE_3
     NAME_ESP: Linea direccion 3
     REAL_NAME: STD_ADDRESS_LINE_3
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ADDRESS_LINE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ADDRESS_LINE_4
     NAME_ESP: Linea direccion 4
     REAL_NAME: STD_ADDRESS_LINE_4
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: VARCHAR_60
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_TORRE
     NAME_ESP: Torre
     REAL_NAME: SAR_TORRE
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_TORRE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_NUM_VIA
     NAME_ESP: Num. de via
     REAL_NAME: SSP_NUM_VIA
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARCHAR5
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_BLOQUE
     NAME_ESP: Bloque
     REAL_NAME: SAR_BLOQUE
@@ -110,7 +110,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_BLOQUE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ZIP_CODE
     NAME_ESP: Codigo postal
     REAL_NAME: SCO_ZIP_CODE
@@ -118,7 +118,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ZIP_CODE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COUNTRY
     NAME_ESP: ID Pais
     REAL_NAME: STD_ID_COUNTRY
@@ -126,7 +126,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COUNTRY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_GEO_DIV
     NAME_ESP: ID Division geografica
     REAL_NAME: STD_ID_GEO_DIV
@@ -134,7 +134,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_GEO_DIV
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_GEO_PLACE
     NAME_ESP: ID Lugar geografico
     REAL_NAME: STD_ID_GEO_PLACE
@@ -142,7 +142,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_GEO_PLACE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_SUB_GEO_DIV
     NAME_ESP: ID Poblacion
     REAL_NAME: STD_ID_SUB_GEO_DIV
@@ -150,7 +150,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_SUB_GEO_DIV
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_REGION
     NAME_ESP: ID Region
     REAL_NAME: SCO_ID_REGION
@@ -158,7 +158,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_ID_REGION
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_GB_ADDRESS
     NAME_ESP: Direccion
     REAL_NAME: SCO_GB_ADDRESS
@@ -166,7 +166,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_GB_ADDRESS
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SCO_COMMENT
@@ -174,7 +174,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_COMMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -182,7 +182,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -190,7 +190,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -198,4 +198,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

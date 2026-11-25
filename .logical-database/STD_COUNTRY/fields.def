@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: ID_ORG_MONO
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_COUNTRY
     NAME_ESP: ID Pais
     REAL_NAME: STD_ID_COUNTRY
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_COUNTRY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_N_COUNTRY
     NAME_ESP: Pais
     REAL_NAME: STD_N_COUNTRY
@@ -22,7 +22,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SHORT_DESCRIPTION
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_COUNT_GROUP
     NAME_ESP: Grupo pais
     REAL_NAME: STD_ID_COUNT_GROUP
@@ -30,7 +30,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_COUNTRY_GROUP
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_NACIONALITY
     NAME_ESP: Nacionalidad
     REAL_NAME: STD_ID_NACIONALITY
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_NATIONALITY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_N_NACIONALITY
     NAME_ESP: Nacionalidad
     REAL_NAME: STD_N_NACIONALITY
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_SHORT_DESCRIPTION
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_CURRENCY
     NAME_ESP: ID Moneda
     REAL_NAME: STD_ID_CURRENCY
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_CURRENCY
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SFR_ID_NATIONALITY_TYPE
     NAME_ESP: ID Tipo de nacionalidad
     REAL_NAME: SFR_ID_NATIONALITY
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SFR_ID_NAT_TYPE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SSP_ID_NACION_SS
     NAME_ESP: ID Nacion SS
     REAL_NAME: SSP_ID_NACION_SS
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SSP_VARSTRING3
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_COUNT_DIAN
     NAME_ESP: Codigo paises DIAN
     REAL_NAME: STD_ID_COUNT_DIAN
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCB_NUMBER_4
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -102,4 +102,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

@@ -1,5 +1,5 @@
 item: SAR_IMP_DEC792_NRED
-name: Compensación Dec. 792 no reducido 
+name: "Compensación Dec. 792 no reducido "
 item_type: PROPERTY
 type: CURRENCY
 id_m4_type: 8
@@ -7,6 +7,7 @@ prec: 18
 scale: 6
 scope: RECORD
 default_value: "0"
+owner_flag: 2
 internal_type: null
 item_aux: ID_CURRENCY
 id_cstype: 2
@@ -19,3 +20,5 @@ variable_arguments: 0
 item_aux_prorat: SCO_DT_SLICE
 dimension: null
 conv_function: 1
+id_synonym: 4145
+n_synonym: null

@@ -1,3 +1,4 @@
 ID_TI: SAR_ACM_IG_ANIO_IMPUT
 NAME: Acumulado IG por fecha de imputación
-ID_READ_SENTENCE:
+ID_READ_SENTENCE: null
+OWNER_FLAG: 10

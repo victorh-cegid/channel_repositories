@@ -1,12 +1,12 @@
-# item_metadata_format: 2
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
-SAR_ANIO_PROCESO | RECORD | NUMBER | 6 | 9 | 4 | Año de proceso de la paga (Imputacion) |  | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1
-SAR_DIA_PROCESO | RECORD | NUMBER | 6 | 13 | 4 | Día de proceso de la paga (Imputacion) |  | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1
-SAR_FE_REGI_NVO_S | RECORD | DATE | 4 | 10 | 0 | Fecha Régimen nuevo |  | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1
-SAR_MES_PROCESO | RECORD | NUMBER | 6 | 18 | 0 | Mes de proceso de la paga (Imputacion) |  | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1
-SAR_NUM_DIAS_PAGA | RECORD | NUMBER | 6 | 18 | 0 | Número de dias de la paga | 2 | 1 | null | 2 | null | 4 | 1 | 2 | 0 | null | null | 1
-SAR_REVISION | RECORD | NUMBER | 6 | 18 | 0 | Revisión | 2 | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1
-SCO_ALLOC_DAY | RECORD | NUMBER | 6 | 4 | 0 | Día imputación | 2 | null | null | 2 | null | 4 | 1 | 2 | 0 | null | null | 1
-SCO_ALLOC_MONTH | RECORD | NUMBER | 6 | 2 | 0 | Mes imputación | 2 | null | null | 2 | null | 4 | 1 | 2 | 0 | null | null | 1
-SCO_ALLOC_YEAR | RECORD | NUMBER | 6 | 4 | 0 | Año imputación | 2 | null | null | 2 | null | 4 | 1 | 2 | 0 | null | null | 1
-SCO_REVISION | RECORD | NUMBER | 6 | 2 | 0 | Es revisión | 2 | null | null | 2 | null | 4 | 1 | 2 | 0 | null | null | 1
+# item_metadata_format: 4
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function | id_synonym | n_synonym | owner_flag
+SAR_ANIO_PROCESO | RECORD | NUMBER | 6 | 9 | 4 | Año de proceso de la paga (Imputacion) |  | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1 | 63 | SAR_ANIO_PROCESO | 2
+SAR_DIA_PROCESO | RECORD | NUMBER | 6 | 13 | 4 | Día de proceso de la paga (Imputacion) |  | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1 | 61 | SAR_DIA_PROCESO | 2
+SAR_FE_REGI_NVO_S | RECORD | DATE | 4 | 10 | 0 | Fecha Régimen nuevo |  | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1 | 37 | SAR_FE_REGI_NVO_S | 2
+SAR_MES_PROCESO | RECORD | NUMBER | 6 | 18 | 0 | Mes de proceso de la paga (Imputacion) |  | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1 | 62 | SAR_MES_PROCESO | 2
+SAR_NUM_DIAS_PAGA | RECORD | NUMBER | 6 | 18 | 0 | Número de dias de la paga | 2 | 1 | null | 2 | null | 4 | 1 | 2 | 0 | null | null | 1 | 45 | SAR_NUM_DIAS_PAGA | 2
+SAR_REVISION | RECORD | NUMBER | 6 | 18 | 0 | Revisión | 2 | 1 | null | 4 | null | 4 | 1 | 2 | 0 | null | null | 1 | 35 | IND_REVISION | 2
+SCO_ALLOC_DAY | RECORD | NUMBER | 6 | 4 | 0 | Día imputación | 2 | null | null | 2 | null | 4 | 1 | 2 | 0 | null | null | 1 | 303 | DiaImputacion | 10
+SCO_ALLOC_MONTH | RECORD | NUMBER | 6 | 2 | 0 | Mes imputación | 2 | null | null | 2 | null | 4 | 1 | 2 | 0 | null | null | 1 | 304 | MesImputacion | 10
+SCO_ALLOC_YEAR | RECORD | NUMBER | 6 | 4 | 0 | Año imputación | 2 | null | null | 2 | null | 4 | 1 | 2 | 0 | null | null | 1 | 305 | AnioImputacion | 10
+SCO_REVISION | RECORD | NUMBER | 6 | 2 | 0 | Es revisión | 2 | null | null | 2 | null | 4 | 1 | 2 | 0 | null | null | 1 | null | null | 10

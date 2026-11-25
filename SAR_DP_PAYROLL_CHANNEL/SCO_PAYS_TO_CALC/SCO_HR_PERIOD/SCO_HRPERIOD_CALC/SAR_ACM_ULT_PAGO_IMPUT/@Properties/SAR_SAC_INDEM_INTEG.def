@@ -7,6 +7,7 @@ prec: 18
 scale: 6
 scope: RECORD
 default_value: "0"
+owner_flag: 2
 internal_type: 15
 item_aux: ID_CURRENCY
 id_cstype: 2
@@ -19,3 +20,5 @@ variable_arguments: 0
 item_aux_prorat: SCO_DT_SLICE
 dimension: null
 conv_function: 1
+id_synonym: 3946
+n_synonym: null

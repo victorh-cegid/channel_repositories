@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: STD_ID_LEG_ENT
     NAME_ESP: ID Empresa
     REAL_NAME: STD_ID_LEG_ENT
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: STD_ID_LEG_ENT
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_DT_ACCRUED
     NAME_ESP: Fecha de Pago
     REAL_NAME: SCO_DT_ACCRUED
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_PAY_FREQUENCY
     NAME_ESP: ID Frecuencia pago
     REAL_NAME: SCO_ID_PAY_FREQ
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: SCO_ID_PAY_FREQUENCY
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_FECHA_PAGO
     NAME_ESP: Fecha efectiva de pago
     REAL_NAME: SAR_FECHA_PAGO
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_FECHA_DEPO
     NAME_ESP: Fecha deposito
     REAL_NAME: SAR_FECHA_DEPO
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_MES_DEPO
     NAME_ESP: Periodo depositado
     REAL_NAME: SAR_MES_DEPO
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_VARCHAR15
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: STD_ID_EXTERNAL_ORG
     NAME_ESP: ID Banco
     REAL_NAME: STD_ID_EXTERN_ORG
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_EXTERNAL_ORG
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SCO_ID_BANK_BRANCH
     NAME_ESP: ID Sucursal bancaria
     REAL_NAME: SCO_ID_BANK_BRANCH
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_ID_EXTERNAL_ORG
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SAR_COMMENT
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: STD_COMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_NUM_LIQUIDACION
     NAME_ESP: Num. liquidacion
     REAL_NAME: SAR_NUM_LIQUIDACION
@@ -94,7 +94,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SAR_NUMBER_5
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -102,7 +102,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -110,4 +110,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0

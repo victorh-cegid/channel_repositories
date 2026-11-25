@@ -1,5 +1,5 @@
-# item_metadata_format: 2
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
-GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-GOPREVIOUS | RECORD | NUMBER | 6 | 4 | 0 | Anterior | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_LOAD_REV | BLOCK | NUMBER | 6 | 1 | 0 | Carga revisiones | 2 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
+# item_metadata_format: 4
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function | id_synonym | n_synonym | owner_flag
+GONEXT | BLOCK | NUMBER | 6 | 1 | 0 | Siguiente | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+GOPREVIOUS | RECORD | NUMBER | 6 | 4 | 0 | Anterior | 7 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_LOAD_REV | BLOCK | NUMBER | 6 | 1 | 0 | Carga revisiones | 2 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10

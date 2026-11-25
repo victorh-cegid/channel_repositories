@@ -1,4 +1,4 @@
-# item_metadata_format: 2
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
-DESTROYREGISTER | RECORD | NUMBER | 6 | 1 | 0 | DESTROYREGISTER | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_SAVE | NODE | NUMBER | 6 | 1 | 0 | Guardar | 2 | null | null | 2 | null | 4 | null | null | 0 | null | null | 1
+# item_metadata_format: 4
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function | id_synonym | n_synonym | owner_flag
+DESTROYREGISTER | RECORD | NUMBER | 6 | 1 | 0 | DESTROYREGISTER | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_SAVE | NODE | NUMBER | 6 | 1 | 0 | Guardar | 2 | null | null | 2 | null | 4 | null | null | 0 | null | null | 1 | null | null | 10

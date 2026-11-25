@@ -1,9 +1,9 @@
-# item_metadata_format: 2
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
-ADD_TABLE | BLOCK | STRING | 2 | 255 | 0 | ADD_TABLE | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-APPLY_EXTERN_FILTER | NODE | NUMBER | 6 | 1 | 0 | Aplicar filtro externo | 3 | null | null | 4 | null | 4 | null | 2 | 1 | null | null | 1
-APPLY_FILTER | NODE | NUMBER | 6 | 1 | 0 | Aplicar filtro | 3 | null | null | 4 | null | 4 | null | 2 | 1 | null | null | 1
-APPLY_FILTER_LIST | NODE | NUMBER | 6 | 1 | 0 | APPLY_FILTER_LIST | 3 | null | null | 4 | null | 4 | null | 2 | 1 | null | null | 1
-APPLY_FILTER_LOAD | NODE | NUMBER | 6 | 1 | 0 | APPLY_FILTER_LOAD | 3 | null | null | 4 | null | 4 | null | 2 | 1 | null | null | 1
-FILTER_API_LEVEL | NODE | NUMBER | 6 | 1 | 0 | FILTER_API_LEVEL | 3 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SET_DEFAULT_VALUES | NODE | NUMBER | 6 | 1 | 0 | Asignar valores por defecto | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
+# item_metadata_format: 4
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function | id_synonym | n_synonym | owner_flag
+ADD_TABLE | BLOCK | STRING | 2 | 255 | 0 | ADD_TABLE | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 3
+APPLY_EXTERN_FILTER | NODE | NUMBER | 6 | 1 | 0 | Aplicar filtro externo | 3 | null | null | 4 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 3
+APPLY_FILTER | NODE | NUMBER | 6 | 1 | 0 | Aplicar filtro | 3 | null | null | 4 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 3
+APPLY_FILTER_LIST | NODE | NUMBER | 6 | 1 | 0 | APPLY_FILTER_LIST | 3 | null | null | 4 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 3
+APPLY_FILTER_LOAD | NODE | NUMBER | 6 | 1 | 0 | APPLY_FILTER_LOAD | 3 | null | null | 4 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 3
+FILTER_API_LEVEL | NODE | NUMBER | 6 | 1 | 0 | FILTER_API_LEVEL | 3 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 3
+SET_DEFAULT_VALUES | NODE | NUMBER | 6 | 1 | 0 | Asignar valores por defecto | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 3

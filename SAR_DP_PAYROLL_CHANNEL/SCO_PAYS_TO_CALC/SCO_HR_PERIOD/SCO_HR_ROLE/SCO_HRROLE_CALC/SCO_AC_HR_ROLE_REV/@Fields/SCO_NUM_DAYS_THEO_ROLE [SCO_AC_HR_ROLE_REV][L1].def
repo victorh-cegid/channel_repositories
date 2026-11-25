@@ -8,6 +8,7 @@ prec: 6
 scale: 2
 scope: RECORD
 default_value: "0"
+owner_flag: 10
 internal_type: null
 item_aux: null
 id_cstype: null
@@ -20,3 +21,5 @@ variable_arguments: 0
 item_aux_prorat: null
 dimension: null
 conv_function: 1
+id_synonym: 2311
+n_synonym: NumDiasTiempoTeo

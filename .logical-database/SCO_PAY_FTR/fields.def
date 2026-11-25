@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_PAYFTR
     NAME_ESP: Filtro paga
     REAL_NAME: SCO_ID_PAYFTR
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: ID_FILTER
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_NM_FTR
     NAME_ESP: Nombre filtro
     REAL_NAME: SCO_NM_FTR
@@ -22,7 +22,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: NM_FILTER
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_FTR_SQL
     NAME_ESP: SQL filtro
     REAL_NAME: SCO_FTR_SQL
@@ -30,7 +30,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LONG_DATA
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_ID_SENTENCE
     NAME_ESP: ID Sentencia
     REAL_NAME: SCO_ID_SENTENCE
@@ -38,7 +38,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: ID_SENTENCE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SCO_NM_SQL
     NAME_ESP: SQL filtro traducido
     REAL_NAME: SCO_NM_SQL
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_NM_SQL_FTR
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -70,4 +70,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0

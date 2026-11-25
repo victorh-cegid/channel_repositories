@@ -1,18 +1,18 @@
-# item_metadata_format: 2
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function
-SCO_DT_END_CALC | RECORD | DATE | 4 | 10 | 0 | Fecha de fin para el cálculo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_DT_END_CALC_RETRO | RECORD | DATE | 4 | 10 | 0 | Fecha de fin para el cálculo retroactivo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_DT_FILTER_BASE | RECORD | DATE | 4 | 10 | 0 | Fecha base para filtro | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_DT_FILTER_PAYM_DATA | RECORD | DATE | 4 | 10 | 0 | SCO_DT_FILTER_PAYM_DATA | 2 | null | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_DT_START_CALC | RECORD | DATE | 4 | 10 | 0 | Fecha de inicio para el cálculo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_DT_START_CALC_RETRO | RECORD | DATE | 4 | 10 | 0 | Fecha de inicio para el cálculo retroactivo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_FILTER_DATES_PAL | BLOCK | STRING | 3 | -1 | 0 | Filtro para los nóminas después de la baja |  | 20 | SCO_FILTER_DATES_PAL_PARAM | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_IS_PAL | RECORD | NUMBER | 6 | 1 | 0 | Tiene nóminas después de baja |  | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_PAY_FREQ_CONTROL | RECORD | NUMBER | 6 | 18 | 0 | Control de la frecuencia de pago |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_SAVE_CONTROL | RECORD | NUMBER | 6 | 18 | 0 | Control de la grabación |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1
-SCO_SQL_APP_PERIOD | NODE | STRING | 3 | -1 | 0 | SQL para borrar valores aplicados al periodo RH | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1
-SCO_SQL_APP_ROLE | NODE | STRING | 3 | -1 | 0 | SQL para borrar valores aplicados al rol | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1
-SCO_SQL_CLOSED_ROLES | NODE | STRING | 3 | -1 | 0 | SQL para actualizar el AC de roles cerrados | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1
-SCO_SQL_PERIOD | NODE | STRING | 3 | -1 | 0 | SQL para borrar periodo de RH en AC | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1
-SCO_SQL_RETRO_TERMINATION | NODE | STRING | 3 | -1 | 0 | SQL para actualizar la tabla de bajas retroactivas | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1
-SCO_SQL_ROLE | NODE | STRING | 3 | -1 | 0 | SQL para borrar rol en AC | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1
+# item_metadata_format: 4
+# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function | id_synonym | n_synonym | owner_flag
+SCO_DT_END_CALC | RECORD | DATE | 4 | 10 | 0 | Fecha de fin para el cálculo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_DT_END_CALC_RETRO | RECORD | DATE | 4 | 10 | 0 | Fecha de fin para el cálculo retroactivo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_DT_FILTER_BASE | RECORD | DATE | 4 | 10 | 0 | Fecha base para filtro | 2 | null | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_DT_FILTER_PAYM_DATA | RECORD | DATE | 4 | 10 | 0 | SCO_DT_FILTER_PAYM_DATA | 2 | null | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_DT_START_CALC | RECORD | DATE | 4 | 10 | 0 | Fecha de inicio para el cálculo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_DT_START_CALC_RETRO | RECORD | DATE | 4 | 10 | 0 | Fecha de inicio para el cálculo retroactivo |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_FILTER_DATES_PAL | BLOCK | STRING | 3 | -1 | 0 | Filtro para los nóminas después de la baja |  | 20 | SCO_FILTER_DATES_PAL_PARAM | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_IS_PAL | RECORD | NUMBER | 6 | 1 | 0 | Tiene nóminas después de baja |  | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_PAY_FREQ_CONTROL | RECORD | NUMBER | 6 | 18 | 0 | Control de la frecuencia de pago |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_SAVE_CONTROL | RECORD | NUMBER | 6 | 18 | 0 | Control de la grabación |  | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
+SCO_SQL_APP_PERIOD | NODE | STRING | 3 | -1 | 0 | SQL para borrar valores aplicados al periodo RH | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 10
+SCO_SQL_APP_ROLE | NODE | STRING | 3 | -1 | 0 | SQL para borrar valores aplicados al rol | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 10
+SCO_SQL_CLOSED_ROLES | NODE | STRING | 3 | -1 | 0 | SQL para actualizar el AC de roles cerrados | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 10
+SCO_SQL_PERIOD | NODE | STRING | 3 | -1 | 0 | SQL para borrar periodo de RH en AC | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 10
+SCO_SQL_RETRO_TERMINATION | NODE | STRING | 3 | -1 | 0 | SQL para actualizar la tabla de bajas retroactivas | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 10
+SCO_SQL_ROLE | NODE | STRING | 3 | -1 | 0 | SQL para borrar rol en AC | 2 | null | null | 2 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 10

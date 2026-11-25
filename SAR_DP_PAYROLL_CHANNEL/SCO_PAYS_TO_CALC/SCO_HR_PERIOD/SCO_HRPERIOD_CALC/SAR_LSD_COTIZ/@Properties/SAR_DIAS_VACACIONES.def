@@ -7,6 +7,7 @@ prec: 9
 scale: 4
 scope: RECORD
 default_value: "0"
+owner_flag: 2
 internal_type: 1
 item_aux: null
 id_cstype: 2
@@ -19,3 +20,5 @@ variable_arguments: 0
 item_aux_prorat: SCO_DT_SLICE
 dimension: null
 conv_function: 1
+id_synonym: 450
+n_synonym: null

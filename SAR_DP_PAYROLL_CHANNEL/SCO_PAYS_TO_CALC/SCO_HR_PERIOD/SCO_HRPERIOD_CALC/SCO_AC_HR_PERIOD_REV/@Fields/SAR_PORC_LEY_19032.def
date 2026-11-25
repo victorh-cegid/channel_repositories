@@ -8,6 +8,7 @@ prec: 9
 scale: 4
 scope: RECORD
 default_value: "0"
+owner_flag: 80
 internal_type: 1
 item_aux: null
 id_cstype: null
@@ -20,3 +21,5 @@ variable_arguments: 0
 item_aux_prorat: null
 dimension: null
 conv_function: 1
+id_synonym: 612
+n_synonym: SAR_PORC_LEY_19032

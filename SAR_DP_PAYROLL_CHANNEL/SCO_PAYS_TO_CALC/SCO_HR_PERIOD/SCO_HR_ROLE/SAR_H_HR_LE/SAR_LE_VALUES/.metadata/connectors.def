@@ -1,15 +1,15 @@
-# parent_node | parent_ti | connection_type | origin
-SAR_H_HR_LE | SAR_H_HR_LE | RECORD_BLOCK | OWN
+# parent_node | parent_ti | connection_type | id_t3_used | call_order | id_sentence | expand_delete | expand_undo | id_connector_t3 | origin
+SAR_H_HR_LE | SAR_H_HR_LE | RECORD_BLOCK | SAR_DP_PAYROLL_CHANNEL | 0 | null | 0 | null | SAR_DP_PAYROLL_CHANNEL | OWN
 
 # child_node | connection_type | origin
 SAR_CALENDARIO_LE | RECORD_BLOCK | OWN
 
-# ti | item | parent_node | parent_ti | parent_item | precedence | id_cstype | origin
-SAR_LE_VALUES | UPDATE_PRG | SAR_H_HR_LE | SAR_H_HR_LE | UPDATE_PRG | BEFORE_PARENT | 2 | OWN
-SAR_LE_VALUES | SAR_DT_ALLOC_END | SAR_H_HR_LE | SAR_H_HR_LE | SAR_DT_ALLOC_END | AFTER_PARENT | 2 | OWN
-SAR_LE_VALUES | SAR_DT_ALLOC_START | SAR_H_HR_LE | SAR_H_HR_LE | SAR_DT_ALLOC_START | AFTER_PARENT | 2 | OWN
-SAR_LE_VALUES | STD_ID_LEG_ENT | SAR_H_HR_LE | SAR_H_HR_LE | SCO_ID_LEG_ENT | AFTER_PARENT | 2 | OWN
-SAR_LE_VALUES | DELETE_PRG | SAR_H_HR_LE | SAR_H_HR_LE | DELETE_PRG | BEFORE_PARENT | 2 | OWN
-SAR_LE_VALUES | ID_ORGANIZATION | SAR_H_HR_LE | SAR_H_HR_LE | ID_ORGANIZATION | AFTER_PARENT | 2 | OWN
-SAR_LE_VALUES | LOAD_PRG | SAR_H_HR_LE | SAR_H_HR_LE | LOAD_PRG | AFTER_PARENT | 2 | OWN
-SAR_LE_VALUES | INSERT_PRG | SAR_H_HR_LE | SAR_H_HR_LE | INSERT_PRG | AFTER_PARENT | 2 | OWN
+# ti | item | parent_node | parent_ti | parent_item | precedence | id_cstype | id_t3_used | call_order | id_item_connector_t3 | id_spin_type | id_relship_type | id_context_type | trigger_mode | origin
+SAR_LE_VALUES | UPDATE_PRG | SAR_H_HR_LE | SAR_H_HR_LE | UPDATE_PRG | BEFORE_PARENT | 2 | SAR_DP_PAYROLL_CHANNEL | 1 | SAR_DP_PAYROLL_CHANNEL | 1 | 1 | 0 | null | OWN
+SAR_LE_VALUES | SAR_DT_ALLOC_END | SAR_H_HR_LE | SAR_H_HR_LE | SAR_DT_ALLOC_END | null | 2 | SAR_DP_PAYROLL_CHANNEL | 0 | SAR_DP_PAYROLL_CHANNEL | null | 1 | null | null | OWN
+SAR_LE_VALUES | SAR_DT_ALLOC_START | SAR_H_HR_LE | SAR_H_HR_LE | SAR_DT_ALLOC_START | null | 2 | SAR_DP_PAYROLL_CHANNEL | 0 | SAR_DP_PAYROLL_CHANNEL | null | 1 | null | null | OWN
+SAR_LE_VALUES | STD_ID_LEG_ENT | SAR_H_HR_LE | SAR_H_HR_LE | SCO_ID_LEG_ENT | null | 2 | SAR_DP_PAYROLL_CHANNEL | 0 | SAR_DP_PAYROLL_CHANNEL | null | 1 | null | null | OWN
+SAR_LE_VALUES | DELETE_PRG | SAR_H_HR_LE | SAR_H_HR_LE | DELETE_PRG | BEFORE_PARENT | 2 | SAR_DP_PAYROLL_CHANNEL | 1 | SAR_DP_PAYROLL_CHANNEL | 1 | 1 | 0 | null | OWN
+SAR_LE_VALUES | ID_ORGANIZATION | SAR_H_HR_LE | SAR_H_HR_LE | ID_ORGANIZATION | null | 2 | SAR_DP_PAYROLL_CHANNEL | 0 | SAR_DP_PAYROLL_CHANNEL | null | 1 | null | null | OWN
+SAR_LE_VALUES | LOAD_PRG | SAR_H_HR_LE | SAR_H_HR_LE | LOAD_PRG | AFTER_PARENT | 2 | SAR_DP_PAYROLL_CHANNEL | 1 | SAR_DP_PAYROLL_CHANNEL | 1 | 1 | 0 | null | OWN
+SAR_LE_VALUES | INSERT_PRG | SAR_H_HR_LE | SAR_H_HR_LE | INSERT_PRG | AFTER_PARENT | 2 | SAR_DP_PAYROLL_CHANNEL | 1 | SAR_DP_PAYROLL_CHANNEL | 1 | 1 | 0 | null | OWN

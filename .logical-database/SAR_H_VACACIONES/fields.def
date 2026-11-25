@@ -6,7 +6,7 @@ fields:
     IS_PK: true
     POS_PK: 5
     ID_TYPE: ID_ORG_MULTI
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_ID_VACACIONES
     NAME_ESP: ID Vacacion
     REAL_NAME: SAR_ID_VACACIONES
@@ -14,7 +14,7 @@ fields:
     IS_PK: true
     POS_PK: 1
     ID_TYPE: SCO_VARCHAR2
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_DESDE
     NAME_ESP: Desde
     REAL_NAME: SAR_DESDE
@@ -22,7 +22,7 @@ fields:
     IS_PK: true
     POS_PK: 3
     ID_TYPE: SCO_NUMBER_10
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_HASTA
     NAME_ESP: Hasta
     REAL_NAME: SAR_HASTA
@@ -30,7 +30,7 @@ fields:
     IS_PK: true
     POS_PK: 4
     ID_TYPE: SCO_NUMBER_10
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_DT_START
     NAME_ESP: Inicio
     REAL_NAME: SAR_DT_START
@@ -38,7 +38,7 @@ fields:
     IS_PK: true
     POS_PK: 2
     ID_TYPE: START_DATE
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_DT_END
     NAME_ESP: Fin
     REAL_NAME: SAR_DT_END
@@ -46,7 +46,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: END_DATE
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_DIAS
     NAME_ESP: Dias
     REAL_NAME: SAR_DIAS
@@ -54,7 +54,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_NUMBER6
-    NOT_NULL: true
+    NOT_NULL: 1
   - ID_FIELD: SAR_DIAS_AUMENTAR
     NAME_ESP: Dias aumentar
     REAL_NAME: SAR_DIAS_AUMENTAR
@@ -62,7 +62,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_NUMBER6
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: SAR_COMMENT
     NAME_ESP: Comentario
     REAL_NAME: SAR_COMMENT
@@ -70,7 +70,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: SCO_COMMENT
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APPROLE
     NAME_ESP: ID Rol aplicacion
     REAL_NAME: ID_APPROLE
@@ -78,7 +78,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: ID_APP_USER
     NAME_ESP: ID Usuario aplicacion
     REAL_NAME: ID_SECUSER
@@ -86,7 +86,7 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: LOGIC_NAME
-    NOT_NULL: false
+    NOT_NULL: 0
   - ID_FIELD: DT_LAST_UPDATE
     NAME_ESP: Ultima actualizacion
     REAL_NAME: DT_LAST_UPDATE
@@ -94,4 +94,4 @@ fields:
     IS_PK: false
     POS_PK: 0
     ID_TYPE: DATE_TRANS
-    NOT_NULL: false
+    NOT_NULL: 0
