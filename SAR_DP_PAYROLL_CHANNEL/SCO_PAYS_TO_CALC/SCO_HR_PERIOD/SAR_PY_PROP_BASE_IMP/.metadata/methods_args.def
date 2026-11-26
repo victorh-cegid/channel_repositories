@@ -1,5 +1,0 @@
-# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
-SAR_OBTENER_VALOR | ARG_CONCEPTO | IN | STRING | 2 | 255 | 0 | 0
-SAR_OBTENER_VALOR | ARG_FECHA_PAGA | IN | DATE | 4 | 10 | 0 | 1
-SAR_OBTENER_VALOR | ARG_FECHA_ALLOC | IN | DATE | 4 | 10 | 0 | 2
-SAR_OBTENER_VALOR | ARG_VALOR | OUT | NUMBER | 6 | 18 | 0 | 3

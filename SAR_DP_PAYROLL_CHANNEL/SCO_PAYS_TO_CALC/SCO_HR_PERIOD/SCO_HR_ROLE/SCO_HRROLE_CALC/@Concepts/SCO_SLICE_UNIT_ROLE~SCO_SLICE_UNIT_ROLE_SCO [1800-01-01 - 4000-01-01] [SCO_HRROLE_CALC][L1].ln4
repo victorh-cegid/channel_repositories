@@ -1,3 +1,0 @@
-'Here we add dependencies on the concepts that produces slices.
-var1 = SCO_PAY_RATE
-Return(SCO_SLICE_UNIT_ROLE..SysSliceNumber)

@@ -1,5 +1,0 @@
-/*Atencion:
-    Para dejar el método en su estado original comentar la línea APLICAR_ORDINAL() y copiar y pegar el código de la regla sobreescrita*/
-APLICAR_ORDINAL()
-
-RETURN(0)

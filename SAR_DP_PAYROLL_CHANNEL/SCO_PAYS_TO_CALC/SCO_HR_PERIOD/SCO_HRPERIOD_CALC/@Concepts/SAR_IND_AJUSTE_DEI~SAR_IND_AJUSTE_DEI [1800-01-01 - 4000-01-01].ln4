@@ -1,9 +1,0 @@
-'Este indicador valdrá 1 cuando la paga de proceso tenga como año de pago IG 2022 o posterior y 0 en el resto de los casos.
-'Si vale 0 implica que ajustes retroactivos de importes de conceptos tributables de la propia empresa serán considerados para la base mensual para DEI en la paga 
-'sobre la que se imputa dicho ajuste.
-'Si vale 1 implica que ajustes retroactivos de importes de conceptos tributables de la propia empresa serán considerados para la base mensual para DEI en la paga 
-'normal de origen desde la que se realiza el ajuste.
-valor = 0
-anioIg = SAR_ANIO_PAY_IG
-If anioIg > 2021 Then valor = 1
-Return(valor)

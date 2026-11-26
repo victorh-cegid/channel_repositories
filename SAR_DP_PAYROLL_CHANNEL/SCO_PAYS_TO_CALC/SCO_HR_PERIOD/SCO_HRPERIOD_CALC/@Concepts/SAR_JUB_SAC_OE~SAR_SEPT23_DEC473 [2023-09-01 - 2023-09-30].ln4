@@ -1,6 +1,0 @@
-'Dec 473, en Septiembre devuelve 12avas de julio y agosto si corresponde:
-importe = SAR_JUB_SAC_OE
-If SAR_SEP23_SAC_BRUTO_AJ + SAR_SEP23_SAC_BRUTO_AJ_OE <> 0 Then
-    importe = Round (SAR_ACM_6_MESES_SUMA[0].SAR_JUB_SAC_OE *-1,SAR_NUM_DEC)
-EndIf
-Return importe

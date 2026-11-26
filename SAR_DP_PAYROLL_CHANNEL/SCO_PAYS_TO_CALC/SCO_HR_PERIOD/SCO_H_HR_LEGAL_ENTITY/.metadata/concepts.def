@@ -1,4 +1,0 @@
-# item_metadata_format: 4
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function | id_synonym | n_synonym | owner_flag
-SCO_FILTER_DATES_PAL | BLOCK | STRING | 3 | -1 | 0 | Filtro para fechas y nóminas después de la baja |  | 20 | SCO_FILTER_DATES_PAL_PARAM | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
-SCO_FILTER_DATES_PAL_AV | BLOCK | STRING | 3 | -1 | 0 | Filtro para fechas y nóminas después de la baja |  | 20 | SCO_FILTER_DATES_PAL_PARAM | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10

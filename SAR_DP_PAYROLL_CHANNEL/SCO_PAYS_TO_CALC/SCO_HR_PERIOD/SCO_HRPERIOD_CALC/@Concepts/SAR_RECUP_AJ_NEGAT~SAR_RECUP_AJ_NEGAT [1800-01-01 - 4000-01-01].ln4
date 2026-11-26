@@ -1,9 +1,0 @@
-'Req 0165503 y 0161430 Recupero Ajuste Neto Negativo
-
-valor = 0
-If SAR_ACM_ULT_MES.count() > 0 Then
-  SAR_ACM_ULT_MES.begin()
-  valor = SAR_ACM_ULT_MES.#SAR_AJUSTE_NEGATIVO
-EndIf
-
-Return(valor)

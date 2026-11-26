@@ -1,3 +1,0 @@
-importe = SAR_TOT_CURSOS + SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_CURSOS
-
-Return Round(importe,SAR_NUM_DEC)

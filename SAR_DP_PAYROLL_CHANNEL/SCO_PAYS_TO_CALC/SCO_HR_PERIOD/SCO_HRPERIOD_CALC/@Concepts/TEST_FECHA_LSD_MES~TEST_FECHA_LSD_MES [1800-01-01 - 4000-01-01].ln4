@@ -1,2 +1,0 @@
-valor = DxMonth(TEST_FECHA_LSD)
-Return(valor)

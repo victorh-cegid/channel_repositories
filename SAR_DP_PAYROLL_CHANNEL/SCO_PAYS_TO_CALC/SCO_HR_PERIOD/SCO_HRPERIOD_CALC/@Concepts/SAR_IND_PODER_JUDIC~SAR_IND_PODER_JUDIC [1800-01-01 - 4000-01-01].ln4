@@ -1,9 +1,0 @@
-'ind = SAR_IND_PODER_JUDIC
-ind = 0
-
-empresa = SAR_REM_PODER_JUDIC_ACM
-oe = SAR_REMUN_PODER_JUDIC_OE
-
-If empresa <> 0 Or oe <> 0 Then ind = 1
-
-Return(ind)

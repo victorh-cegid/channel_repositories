@@ -1,5 +1,0 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SAR_GENERA_REG_04_EMP_AGEN | NODE | STRING | 2 | 255 | 0 | Generador Registro 04 - Emp serv. eventuales
-SAR_GENERA_REG_05 | NODE | STRING | 2 | 255 | 0 | Generador Registro 05
-SAR_INICIAR_NODOS | NODE | STRING | 2 | 255 | 0 | Inicia los nodos del metodo SAR_GENERA_REG_04
-SAR_M_GEN_SIT_REVISTA | RECORD | NUMBER | 6 | 18 | 0 | Generador de Situacion de revista

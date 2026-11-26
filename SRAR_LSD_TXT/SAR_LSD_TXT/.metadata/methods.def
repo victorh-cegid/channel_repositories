@@ -1,7 +1,0 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SAR_CARGA_SYSSENTENCE | NODE | STRING | 2 | 255 | 0 | Carga de SysSentence de los nodos 02 04 y 05
-SAR_IGUALA_PROPIEDADES | NODE | STRING | 2 | 255 | 0 | Se le pasan lo datos de pres a los registros
-SAR_INICIAR_PROCESO | NODE | STRING | 2 | 255 | 0 | Inicia el proceso para el Libro de Sueldos Digital
-SAR_LAUNCH | NODE | STRING | 2 | 1 | 0 | Ejecucion tarea planificada
-SAR_PARAM_LAUNCH | NODE | STRING | 2 | 1 | 0 | Parametos para la planificacion del proceso
-SAR_VALIDA_DATOS | NODE | STRING | 2 | 255 | 0 | Valida los datos obligatorios

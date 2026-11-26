@@ -1,5 +1,0 @@
-IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "77" THEN Return(0)
-    
-valor = SAR_U_DIAS_FERIADOS * SAR_P_DIAS_FERIADOS
-
-Return(valor)

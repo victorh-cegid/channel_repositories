@@ -1,4 +1,0 @@
-'Es la fecha de la linea de sicore perteneciente a la reliquidación, por defecto romará la misma fecha que el sicore de la paga normal
-a = SAR_FEC_PAGO_IG
-valor = SAR_FEC_SICORE_IG
-Return(valor)

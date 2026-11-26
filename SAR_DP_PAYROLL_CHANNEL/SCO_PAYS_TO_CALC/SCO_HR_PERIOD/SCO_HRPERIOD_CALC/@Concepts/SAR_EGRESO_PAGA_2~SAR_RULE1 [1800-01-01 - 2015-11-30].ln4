@@ -1,8 +1,0 @@
-IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
-    Return(0)
-ENDIF
-valor = SAR_U_EGRESO_PAGA_2 * SAR_P_PAGA_EX_2
-
-valor = Round(valor, 2)
-
-RETURN(valor)

@@ -1,4 +1,0 @@
-'Se informa por tabla de valor, no se permite negativos
-valor = SAR_LBASE_BENEF_OE
-valor = Max(valor,0)
-Return(valor)

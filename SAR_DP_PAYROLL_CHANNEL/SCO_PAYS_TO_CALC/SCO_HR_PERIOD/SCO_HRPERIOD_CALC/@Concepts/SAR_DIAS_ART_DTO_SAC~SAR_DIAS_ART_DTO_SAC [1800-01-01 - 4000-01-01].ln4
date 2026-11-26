@@ -1,5 +1,0 @@
-'Recibe el valor desde el #520
-
-aux = SAR_DIAS_ACCIDENTE
-
-return(SAR_DIAS_ART_DTO_SAC)

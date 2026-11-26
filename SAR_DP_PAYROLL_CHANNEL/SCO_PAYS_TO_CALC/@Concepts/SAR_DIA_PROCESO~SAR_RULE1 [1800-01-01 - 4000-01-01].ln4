@@ -1,2 +1,0 @@
-valor = DxDay(SCO_DT_ALLOCATION)
-RETURN(valor)

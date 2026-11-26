@@ -1,4 +1,0 @@
-# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
-SCO_SET_FILTER_PAY_TYPE | ARG_FLAG_MENU | IN | NUMBER | 6 | 2 | 0 | 1
-SCO_SET_MENU | FLAG_MENU | IN | NUMBER | 6 | 1 | 0 | 1
-SCO_SET_MENU | FLAG_JS | IN | NUMBER | 6 | 1 | 0 | 2

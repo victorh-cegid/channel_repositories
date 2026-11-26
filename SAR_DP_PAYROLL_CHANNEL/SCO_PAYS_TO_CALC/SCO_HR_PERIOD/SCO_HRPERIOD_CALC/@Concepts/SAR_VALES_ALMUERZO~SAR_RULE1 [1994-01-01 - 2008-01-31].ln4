@@ -1,9 +1,0 @@
-IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN Return(0)
-IF SAR_TP_IMPUT <> "1" AND SAR_TP_IMPUT <> "4" THEN Return(0)'Tipo mensual y quincenal
-If SCO_DT_ALLOCATION > SAR_FECHA_BAJA and SAR_ES_BAJA <> 1 Then RETURN(0) 'Condicion para que no se pague el concepto en nomina despues de la baja.
-
-valor=SAR_U_VALES_ALMUER*SAR_PP_LUNCHEON
-IF ISNULL(valor) = TRUE THEN
-    valor = 0
-ENDIF
-RETURN(valor)

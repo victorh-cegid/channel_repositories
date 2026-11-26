@@ -1,3 +1,0 @@
-'Toma el valor de la tabla de valores zonas crédito fiscal
-
-return(SAR_HRROLE_CALC.SAR_ALI_CRED_IVA_ROL)

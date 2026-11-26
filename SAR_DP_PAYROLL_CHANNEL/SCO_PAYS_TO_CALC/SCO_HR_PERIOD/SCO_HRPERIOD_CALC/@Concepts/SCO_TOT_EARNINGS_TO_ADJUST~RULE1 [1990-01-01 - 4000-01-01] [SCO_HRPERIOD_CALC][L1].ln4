@@ -1,3 +1,0 @@
-Ret = Round(SCO_TOT_EARNINGS_TO_ADJUST,SCO_CURR_DECIMALS)
-
-Return(Ret)

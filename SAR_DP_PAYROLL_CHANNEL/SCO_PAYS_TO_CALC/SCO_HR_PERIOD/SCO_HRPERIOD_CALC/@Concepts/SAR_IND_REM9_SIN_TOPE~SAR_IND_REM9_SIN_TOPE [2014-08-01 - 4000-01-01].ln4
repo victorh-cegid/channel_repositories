@@ -1,5 +1,0 @@
-'Toma Valor por Empresa
-'Valor 0 = con tope y sin No Remunerativos
-'Valor 1 = sin tope y con No Remunerativos
-'Valor 2 = con tope y con No Remunerativos
-return(SAR_IND_REM9_SIN_TOPE)

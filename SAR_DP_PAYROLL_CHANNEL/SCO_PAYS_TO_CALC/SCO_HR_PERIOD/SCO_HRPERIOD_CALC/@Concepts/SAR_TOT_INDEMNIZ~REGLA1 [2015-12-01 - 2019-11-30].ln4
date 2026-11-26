@@ -1,6 +1,0 @@
-val = SAR_TOT_INDEMNIZ
-
-' Se condiciona para que no tome Valor si estamos en presencia de la paga extra de sac de aguinaldo
-If SAR_TP_IMPUT = "2" And SAR_IND_AGUINALDO = 1 Then Return(0)
-
-Return(val)

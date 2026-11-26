@@ -1,2 +1,0 @@
-' Enables OPR_STR_ISANYOF and OPR_STR_NOT_ISANYOF operators in QBF filters 
-RETURN 1

@@ -1,6 +1,0 @@
-'Suma el importe del año fiscal de los conceptos mensuales incluidos en 6574 (SAR_PER_ANT_GRAV_MES)
-total = SAR_PER_ANT_GRAV
-importe_mes = SAR_PER_ANT_GRAV_MES
-importe_mes_acum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_PER_ANT_GRAV_MES
-total = total + importe_mes + importe_mes_acum
-Return Round(total,SAR_NUM_DEC)

@@ -1,5 +1,0 @@
-# item_metadata_format: 4
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function | id_synonym | n_synonym | owner_flag
-ADDFILTER | NODE | NUMBER | 6 | 18 | 0 | ADDFILTER |  | 1 | null | 2 | null | 4 | null | 2 | 1 | null | null | 1 | null | null | 80
-GONEXT | RECORD | NUMBER | 6 | 18 | 0 | Siguiente |  | null | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10
-REMOVEFILTER | NODE | NUMBER | 6 | 18 | 0 | REMOVEFILTER |  | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 10

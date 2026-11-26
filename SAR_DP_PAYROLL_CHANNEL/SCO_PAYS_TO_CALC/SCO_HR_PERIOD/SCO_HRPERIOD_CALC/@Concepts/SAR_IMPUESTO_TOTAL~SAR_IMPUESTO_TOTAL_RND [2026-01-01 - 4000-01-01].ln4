@@ -1,2 +1,0 @@
-/* retornamos el valor redondeado */
-return Round(SAR_IMPUESTO_TOTAL,SAR_NUM_DEC)

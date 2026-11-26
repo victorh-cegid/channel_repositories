@@ -1,9 +1,0 @@
-'
-'El concepto calcula el crédito fiscal a cuenta del IVA que puede deducirse
-'
-aux   = SAR_REMUN_IMPO_CNT + SAR_SAC_IMPO_CNT + SAR_VAC_IMPO_CNT + SAR_BASE_CO_ART_CNT + SAR_TICKET_ALIMENT
-porc = SAR_ALI_CRED_IVA/100
-
-valor = aux * porc
-
-RETURN(valor)

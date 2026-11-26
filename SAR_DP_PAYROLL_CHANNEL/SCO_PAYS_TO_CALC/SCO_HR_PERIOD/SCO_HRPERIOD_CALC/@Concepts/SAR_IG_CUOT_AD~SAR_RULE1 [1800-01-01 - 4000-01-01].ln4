@@ -1,7 +1,0 @@
-'Toma su valor del 5030
-
-'Este concepto se utiliza para el caso de que una revisión resulte en una cuota mayor a la original en
-'los prorrateos. En este caso cuando realizamos una revisión esta concepto se incrementa en la 
-'diferencia entre la gratificación original y la recalculada.
-'Luego en el cálculo del impuesto a las ganancias una TI devuelve el valor de este concepto y lo ingresa en
-'el cálculo de la nueva cuota

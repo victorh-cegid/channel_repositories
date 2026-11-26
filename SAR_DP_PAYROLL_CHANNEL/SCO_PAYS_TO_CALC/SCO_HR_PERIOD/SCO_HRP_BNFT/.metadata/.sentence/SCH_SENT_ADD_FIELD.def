@@ -1,7 +1,0 @@
-# ID_SENTENCE | ID_WHERE_TYPE | POSITION | ALIAS_OBJECT | ID_FIELD | ID_ORDER_TYPE | ID_OBJECT | ID_CALCULUS | ID_ITEM | ID_PAYROLL_ITEM | N_PAYROLL_ITEM | ID_CONCEPT_TYPE | ID_SYNONYM | N_TRANSLATED | ID_OBJECT_NEW
-SAR_HRP_BNFT | 1 | 1 | B | SUS_DT_START | 0 | SUS_BNFT_PRICE |  |  |  |  |  |  |  | 
-SAR_HRP_BNFT | 1 | 2 | B | SUS_DT_END | 0 | SUS_BNFT_PRICE |  |  |  |  |  |  |  | 
-SAR_HRP_BNFT | 1 | 3 | C | DT_START | 0 | SUS_BNFT_ER_CON |  |  |  |  |  |  |  | 
-SAR_HRP_BNFT | 1 | 4 | C | DT_END | 0 | SUS_BNFT_ER_CON |  |  |  |  |  |  |  | 
-SAR_HRP_BNFT | 1 | 5 | I | SUS_DT_START | 0 | SUS_BNFT_CREDIT |  |  |  |  |  |  |  | 
-SAR_HRP_BNFT | 1 | 6 | I | SUS_DT_END | 0 | SUS_BNFT_CREDIT |  |  |  |  |  |  |  | 

@@ -1,6 +1,0 @@
-'Creada 16/11/2011 Fernando Miguel Siri
-
-'Retorna el indicador para calcular o no el impuesto a las ganancias según:
-'       1: No calcula
-'       0: Calcula
-return(SAR_IND_NO_RET_GAN)

@@ -1,9 +1,0 @@
-'
-' si este concepto es negativo el concepto LIQ_PRIM_BENE sacará un mensaje de error avisando
-' que el importe total de las órdenes de pago excede el valor del líquido
-'
-SAR_TOTAL_DEVENGOS()
-SAR_TOT_RETEN()
-valor = SAR_TOTAL_DEVENGOS - SAR_TOT_RETEN
-
-RETURN(valor)

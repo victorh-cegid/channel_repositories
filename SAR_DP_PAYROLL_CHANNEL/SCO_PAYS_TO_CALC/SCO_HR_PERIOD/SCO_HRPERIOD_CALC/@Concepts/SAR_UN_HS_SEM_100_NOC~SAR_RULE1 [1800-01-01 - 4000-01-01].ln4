@@ -1,2 +1,0 @@
-'Tomara valor forzado por valores del periodo del RH si se precisa	
-Return (Round(SAR_UN_HS_SEM_100_NOC, SCO_CURR_DECIMALS))

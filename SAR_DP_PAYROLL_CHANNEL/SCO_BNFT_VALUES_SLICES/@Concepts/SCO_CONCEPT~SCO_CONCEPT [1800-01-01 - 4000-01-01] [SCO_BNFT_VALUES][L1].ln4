@@ -1,8 +1,0 @@
-'Lectura del valor para que, por dependencias, este concepto se ejecute una vez para cada tramo
-cValue = SCO_VALUE
-
-'En el total coste empresa se quiere el valor anual, por lo que se multiplica por 12
-If ARG_ID_ITEM = "SCO_DED_BNFT_LEG_ENT" Then cValue = cValue *12
-
-'Se asigna el valor al concepto parametrizado
-SetValue(ARG_ID_TI, ARG_ID_ITEM, -1, cValue)

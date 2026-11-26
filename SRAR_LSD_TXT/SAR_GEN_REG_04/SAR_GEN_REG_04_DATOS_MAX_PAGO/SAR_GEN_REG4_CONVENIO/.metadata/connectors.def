@@ -1,8 +1,0 @@
-# parent_node | parent_ti | connection_type | origin
-SAR_GEN_REG_04_DATOS_MAX_PAGO | SAR_GEN_REG_04_DATOS_MAX_PAGO | RECORD_BLOCK | OWN
-
-# child_node | connection_type | origin
-
-# ti | item | parent_node | parent_ti | parent_item | precedence | origin
-SAR_GEN_REG4_CONVENIO | SAR_ID_CONVENIO | SAR_GEN_REG_04_DATOS_MAX_PAGO | SAR_GEN_REG_04_DATOS_MAX_PAGO | SAR_ID_CONVENIO | AFTER_PARENT | OWN
-SAR_GEN_REG4_CONVENIO | LOAD_BLK | SAR_GEN_REG_04_DATOS_MAX_PAGO | SAR_GEN_REG_04_DATOS_MAX_PAGO | LOAD_BLK | AFTER_PARENT | OWN

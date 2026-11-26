@@ -1,9 +1,0 @@
-'Se calcula en el concepto #5002
-
-val = 0
-
-IF SAR_TOT_AP_C_SOC > 0 THEN
-    val = SAR_TOT_AP_C_SOC
-ENDIF
-
-Return(val)

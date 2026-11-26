@@ -1,9 +1,0 @@
-'En julio se expone la cuota calculada en junio, no se altera el impuesto porque esté ya ajusta el importe considerando el aplicado (superior) en el mes anterior y ajustando al importe final que corresponde.
-importe = SAR_IMPUESTO
-
-benefJun = SAR_ACM_ULT_MES[0].SAR_JUN23_CUOT_IMP
-benefJul = SAR_ACM_MES_ACTUAL_DIF[0].SAR_JUN23_CUOT_IMP
-
-If benefJun > 0 And benefJul = 0 Then SAR_JUN23_CUOT_IMP = benefJun
-
-Return(SAR_IMPUESTO)

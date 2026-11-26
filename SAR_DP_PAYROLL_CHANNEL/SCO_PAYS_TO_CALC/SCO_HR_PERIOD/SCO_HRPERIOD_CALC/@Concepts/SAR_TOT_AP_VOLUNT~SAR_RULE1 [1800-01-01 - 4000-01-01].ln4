@@ -1,3 +1,0 @@
-valor=0
-valor= SAR_JUR_AP_VOLUNT + SAR_APOR_VOLUNT
-RETURN(valor)

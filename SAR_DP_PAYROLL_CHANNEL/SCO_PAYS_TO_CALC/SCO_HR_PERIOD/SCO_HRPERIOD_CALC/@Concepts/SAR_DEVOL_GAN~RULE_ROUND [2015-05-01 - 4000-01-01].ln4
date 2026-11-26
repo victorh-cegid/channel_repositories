@@ -1,3 +1,0 @@
-'Return(Round(SAR_DEVOL_GAN,SCO_CURR_DECIMALS))
-
-Return(Round(SAR_DEVOL_GAN,SAR_NUM_DEC))

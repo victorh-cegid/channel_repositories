@@ -1,8 +1,0 @@
-base= SAR_REMUN_IMPO - SAR_BASE_REM_PRORR - SAR_ACCIDENTE
-edad = SAR_EDAD
-valor = 0
-IF edad >= 18 THEN
-    porc = SAR_PORC_LEY_19032 - (SAR_PORC_LEY_19032*SAR_PP_AP_INSSJP/100)
-    valor = base* porc / 100
-ENDIF
-RETURN(valor)

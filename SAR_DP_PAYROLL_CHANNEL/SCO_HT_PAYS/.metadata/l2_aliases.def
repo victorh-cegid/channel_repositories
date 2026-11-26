@@ -1,8 +1,0 @@
-# ti_alias: declaration
-# alias | id_ti | id_t3_used | origin
-SAV_PARAMS | SCO_JS_HT_PAYS | SAV_PARAMS | INHERITED from SCO_JS_HT_PAYS
-SAV_PARAMS1 | SLA_HT_PAYS | SAV_PARAMS | INHERITED from SLA_HT_PAYS
-
-# alias_resolution: resolution
-# alias | id_t3_used | instance | id_open_mode_tp | id_shared_policy | cs_access | id_org_type | id_organization | id_approle_used | origin
-SAV_PARAMS1 | SAV_PARAMS | SAV_PARAMS1 | 0 | 3 | 3 | 3 |  |  | INHERITED from SLA_DP_PAYROLL_CHANNEL

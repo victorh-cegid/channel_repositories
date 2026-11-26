@@ -1,3 +1,0 @@
-'Para generar dependencias
-a = SAR_ACM_PLUR_SAC
-Return(Round(SAR_DIF_PROR_SAC,SCO_CURR_DECIMALS))

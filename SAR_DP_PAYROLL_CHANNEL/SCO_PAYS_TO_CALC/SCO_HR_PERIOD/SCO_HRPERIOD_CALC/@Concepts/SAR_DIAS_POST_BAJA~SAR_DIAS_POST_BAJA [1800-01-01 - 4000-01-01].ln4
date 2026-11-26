@@ -1,6 +1,0 @@
-IF SAR_ES_BAJA() = 1 THEN
-    valor = SCO_PAYS_TO_CALC.SCO_DT_END_ALLOC - SAR_FECHA_BAJA ()
-ELSE
-    valor = 0
-ENDIF
-Return(valor)

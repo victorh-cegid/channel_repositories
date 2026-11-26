@@ -1,2 +1,0 @@
-importe = SAR_B_IMP_SIN_HEXT
-Return Round(importe,SAR_NUM_DEC)

@@ -1,2 +1,0 @@
-' Toma el valor de la Tabla de valores período
-return(#SAR_PP_SEG_VIDA_VOL)

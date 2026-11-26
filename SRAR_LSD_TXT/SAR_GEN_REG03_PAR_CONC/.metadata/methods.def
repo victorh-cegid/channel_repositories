@@ -1,3 +1,0 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-DESTROYBLOCK | NODE | NUMBER | 6 | 18 | 0 | DESTROYBLOCK
-GONEXT | NODE | STRING | 2 | 1 | 0 | GONEXT

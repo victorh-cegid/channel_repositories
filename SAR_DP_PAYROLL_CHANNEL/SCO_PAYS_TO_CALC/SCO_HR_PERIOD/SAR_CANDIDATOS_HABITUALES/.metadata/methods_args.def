@@ -1,3 +1,0 @@
-# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
-SAR_ALTAS_HABITUALES | ARG_FEC_VIG | IN | DATE | 4 | 10 | 0 | 0
-SAR_ALTAS_HABITUALES | ARG_FEC_IMP | IN | DATE | 4 | 10 | 0 | 1

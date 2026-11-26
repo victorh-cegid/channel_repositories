@@ -1,7 +1,0 @@
-SCO_AC_MAX_DT_PAY.BEGIN()
-IF SCO_AC_MAX_DT_PAY.ISEOF()<>TRUE then
-	dtLastPay=SCO_AC_MAX_DT_PAY.SCO_MAX_DT_PAY
-else
-	dtLastPay=MINUS_INF
-endif
-Return(dtLastPay)

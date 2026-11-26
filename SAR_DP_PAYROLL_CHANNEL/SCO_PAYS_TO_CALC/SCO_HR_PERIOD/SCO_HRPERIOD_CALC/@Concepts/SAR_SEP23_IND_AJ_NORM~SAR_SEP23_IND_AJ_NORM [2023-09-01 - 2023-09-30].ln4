@@ -1,8 +1,0 @@
-'Este indicador si vale 1 indica que el ajuste del decreto 473/23 va a producirse en la paga normal (no retro excepto bajas) de septiembre, por defecto sólo para bajas.
-'Sin se activa este in
-indicador = 0
-If SCO_DT_PAYMENT = SCO_DT_ALLOCATION Then indicador = 1
-If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" Then indicador = 1
-If SAR_IND_D473_IMP_PER_ANT = 1 Then indicador = 1
-
-Return(indicador)

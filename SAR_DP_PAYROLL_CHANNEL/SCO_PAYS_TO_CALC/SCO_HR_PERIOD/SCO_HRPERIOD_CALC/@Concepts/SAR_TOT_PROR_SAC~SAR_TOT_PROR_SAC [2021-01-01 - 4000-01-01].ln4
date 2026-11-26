@@ -1,4 +1,0 @@
-'Se agregan dependencias
-a = SAR_CALC_SAC_27617
-valor = SAR_TOT_PROR_SAC
-Return(valor)

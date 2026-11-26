@@ -1,9 +1,0 @@
-item: SCO_NAME_HR
-name: Nombre del RH en periodo
-item_type: PROPERTY
-type: STRING
-id_m4_type: 2
-prec: 100
-scale: 0
-scope: BLOCK
-default_value: null

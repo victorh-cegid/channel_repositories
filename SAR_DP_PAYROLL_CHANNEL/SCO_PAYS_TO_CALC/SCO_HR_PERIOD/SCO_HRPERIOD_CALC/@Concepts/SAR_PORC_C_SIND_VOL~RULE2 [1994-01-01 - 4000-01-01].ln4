@@ -1,5 +1,0 @@
-'Se suman los % de cuota sindical propios de cada cliente, que deben incluirse en el total SAR_PORC_C_SIND_LOC.
-valor = SAR_PORC_C_SIND_VOL
-valorLoc = SAR_PORC_C_SIND_LOC
-importe = valor + valorLoc
-Return(importe)

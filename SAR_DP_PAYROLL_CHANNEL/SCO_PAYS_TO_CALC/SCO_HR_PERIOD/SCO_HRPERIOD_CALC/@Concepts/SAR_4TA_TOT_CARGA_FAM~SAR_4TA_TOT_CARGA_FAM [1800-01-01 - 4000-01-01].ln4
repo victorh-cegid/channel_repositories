@@ -1,4 +1,0 @@
-'dependencias
-a = SAR_BASE_IMPUESTO
-valor = SAR_4TA_TOT_CARGA_FAM
-Return(valor)

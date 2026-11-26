@@ -1,0 +1,5 @@
+# LN4Agent EOL policy (do not edit this block)
+# m4object2disk historically writes mixed EOL (.metadata/.sentence in CRLF,
+# the rest in LF) and the VB6 Designer reads from disk as-is: git must
+# never normalize EOL here.
+* -text

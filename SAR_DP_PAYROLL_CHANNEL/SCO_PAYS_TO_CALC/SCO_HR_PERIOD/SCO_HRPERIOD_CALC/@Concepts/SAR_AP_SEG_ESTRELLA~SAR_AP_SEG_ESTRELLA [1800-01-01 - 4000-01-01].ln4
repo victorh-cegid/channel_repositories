@@ -1,6 +1,0 @@
-base = #SAR_TOT_DEV_COTIZ
-porc = #SAR_PP_SEG_ESTRELLA
-
-valor = base * porc / 100
-
-return(valor)

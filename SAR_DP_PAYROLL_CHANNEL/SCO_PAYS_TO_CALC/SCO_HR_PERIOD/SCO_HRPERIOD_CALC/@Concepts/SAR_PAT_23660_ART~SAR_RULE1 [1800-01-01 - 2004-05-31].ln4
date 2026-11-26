@@ -1,3 +1,0 @@
-valor= #SAR_BASE_COTIZ_ART * #SAR_P_PAT_L_23660 / 100
-
-RETURN(valor)

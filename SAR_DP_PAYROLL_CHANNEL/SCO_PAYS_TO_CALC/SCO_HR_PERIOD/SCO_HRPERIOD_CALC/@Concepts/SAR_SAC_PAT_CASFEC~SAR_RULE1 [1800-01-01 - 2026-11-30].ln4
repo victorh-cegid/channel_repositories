@@ -1,6 +1,0 @@
-'El concepto 630 (% de contribución asignaciones familiares) tomará su valor de zonas dgi o de valores modalidades de 
-'contratación para cada modalidad vigente.
-
-valor = SAR_SAC_IMPO_CNT * SAR_P_PAT_CASFEC_PI / 100
-
-RETURN(valor)

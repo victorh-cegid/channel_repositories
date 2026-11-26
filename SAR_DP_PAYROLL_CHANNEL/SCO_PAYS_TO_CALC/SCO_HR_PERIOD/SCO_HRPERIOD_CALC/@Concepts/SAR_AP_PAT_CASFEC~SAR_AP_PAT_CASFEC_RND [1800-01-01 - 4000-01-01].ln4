@@ -1,1 +1,0 @@
-Return(Round(#SAR_AP_PAT_CASFEC,#SAR_NUM_DEC))

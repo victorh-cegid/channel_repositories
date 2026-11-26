@@ -1,2 +1,0 @@
-valor = DxMonth(SAR_LSD_FECHA)
-Return(valor)

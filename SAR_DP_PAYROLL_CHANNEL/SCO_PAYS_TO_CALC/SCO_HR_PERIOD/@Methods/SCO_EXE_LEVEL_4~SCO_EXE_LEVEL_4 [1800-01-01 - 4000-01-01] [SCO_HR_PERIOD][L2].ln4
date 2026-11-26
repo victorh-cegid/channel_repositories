@@ -1,8 +1,0 @@
-'Execute all the period concepts after Role, depending on currency and that are implied in the net to gross
-
-SCO_HRPERIOD_CALC.ExecuteGroup("4")
-
-'Execute all the period concepts for ADB. After Role, depending on currency and that are NOT implied in the net to gross
-SCO_HRPERIOD_CALC.ExecuteGroup("ADB")
-
-Return(0)

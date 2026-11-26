@@ -1,6 +1,0 @@
-'Creada el 01/11/2011 Fernando Miguel Siri
-'Calcula el gasto adminstrativo de un pasante: asignación estimulo * porcentaje / 100 de la siguiente manera:
-
-porcentaje = Min(SAR_PORC_GTOS_ADMIN, SAR_TOPE_MAX_GTO_ADMIN)
-gasto = SAR_ASIGNACION_ESTIMULO * porcentaje / 100
-return(gasto)

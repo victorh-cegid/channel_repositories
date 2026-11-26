@@ -1,5 +1,0 @@
-importe = 0
-
-If DxYear(SAR_FEC_IMPUT_IG) > 2023 Then importe = SAR_TOT_SIMILAR_NAT_27617
-
-Return Round(importe,SAR_NUM_DEC)

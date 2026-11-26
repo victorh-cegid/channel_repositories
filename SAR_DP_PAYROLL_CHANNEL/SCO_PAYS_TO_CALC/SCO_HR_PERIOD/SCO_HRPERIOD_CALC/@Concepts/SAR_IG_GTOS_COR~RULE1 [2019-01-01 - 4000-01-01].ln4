@@ -1,7 +1,0 @@
-'-------------------------------------------------------------------------------------------    
-'Gastos de Movilidad Corredores y Viajantes de comercio RG 4003
-'-------------------------------------------------------------------------------------------
-vehic = SAR_JUR_VEHIC_COR
-tope_gastos_viajantes  = Percentage(SAR_TOPE_GTOS_COR,SAR_TOPE_SER_DOM)
-viajantes = Min(SAR_JUR_MOV_COR, tope_gastos_viajantes)
-Return (vehic + viajantes)

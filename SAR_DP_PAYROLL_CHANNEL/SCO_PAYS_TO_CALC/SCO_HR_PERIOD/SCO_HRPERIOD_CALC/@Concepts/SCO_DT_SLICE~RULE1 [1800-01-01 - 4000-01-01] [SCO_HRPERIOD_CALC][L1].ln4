@@ -1,3 +1,0 @@
-DtSlice = Min (SCO_HR_PERIOD.STD_DT_END,SCO_HR_PERIOD.SCO_DT_ALLOC_END)
-
-Return(DtSlice)

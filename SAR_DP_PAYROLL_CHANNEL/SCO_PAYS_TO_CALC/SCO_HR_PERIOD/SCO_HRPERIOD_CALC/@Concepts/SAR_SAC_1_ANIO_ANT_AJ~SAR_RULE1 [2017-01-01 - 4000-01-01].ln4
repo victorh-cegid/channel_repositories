@@ -1,9 +1,0 @@
-'Retroactividad SAC del año fiscal anterior: devuelve la diferencia entre el SAC de la paga original y el nuevo SAC
-sac_anio_ant = SAR_IND_SAC_ANIO_ANT
-importe_dif = 0
-If sac_anio_ant = 1 Then 
-    paga_orig = SAR_AC_SAC_REV[0].SAR_PAGA_EXTRA_1 + SAR_AC_SAC_REV[0].SAR_EGRESO_PAGA_1
-    paga_act = SAR_PAGA_EXTRA_1 + SAR_EGRESO_PAGA_1
-    importe_dif = paga_act - paga_orig
-EndIf
-Return Round(importe_dif,SAR_NUM_DEC)

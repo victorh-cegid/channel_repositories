@@ -1,8 +1,0 @@
-'Este concepto tendrá valor 1 cuando un empleado tenga diferido el mes fiscal respecto al mes de imputación
-indicador = 0
-fec_imput_ig = SAR_FEC_IMPUT_IG
-fec_imput_paga = SCO_DT_ALLOCATION
-
-If DxMonth(fec_imput_ig) <> DxMonth(fec_imput_paga) Then indicador = 1
-
-Return(indicador)

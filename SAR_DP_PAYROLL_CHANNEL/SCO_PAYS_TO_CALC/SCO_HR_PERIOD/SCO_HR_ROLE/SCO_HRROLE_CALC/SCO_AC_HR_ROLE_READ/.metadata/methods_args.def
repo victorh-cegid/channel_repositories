@@ -1,5 +1,0 @@
-# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
-CUREXCHANGERECORDROUNDED | DEST | IN | STRING | 2 | 10 | 0 | 1
-CUREXCHANGERECORDROUNDED | NEW | IN | STRING | 2 | 10 |  | 2
-curExchangeRecord | DEST | IN | STRING | 2 | 10 |  | 1
-curExchangeRecord | NEW | IN | STRING | 2 | 10 |  | 2

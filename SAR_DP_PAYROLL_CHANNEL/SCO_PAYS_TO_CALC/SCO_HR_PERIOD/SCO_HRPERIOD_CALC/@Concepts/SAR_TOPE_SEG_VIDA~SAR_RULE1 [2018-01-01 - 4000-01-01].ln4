@@ -1,2 +1,0 @@
-'Toma su valor por valores empresa
-Return(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_TOPE_SEG_VIDA",SAR_FEC_IMPUT_IG,0))

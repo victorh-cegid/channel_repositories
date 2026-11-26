@@ -1,2 +1,0 @@
-fechaImputIG = SAR_FEC_IMPUT_IG
-Return (DxYear(fechaImputIG))

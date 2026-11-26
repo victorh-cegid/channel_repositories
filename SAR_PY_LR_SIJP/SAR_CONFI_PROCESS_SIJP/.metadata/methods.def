@@ -1,4 +1,0 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SLA_CARGAR_CONFIGURACION | NODE | STRING | 2 | 1 | 0 | Cargar configuracion del proceso
-SLA_GET_DETALLE | NODE | NUMBER | 6 | 18 | 0 | Obtener detalle
-SLA_GET_VALOR | NODE | VARIANT | 7 | 255 | 0 | Obtener valor

@@ -1,9 +1,0 @@
-/**** Solo se ejecutará en paga de reliq del impuesto ****/
-If SAR_TP_IMPUT <> "99"  Then return(0)
-If SAR_RANGO_REM_IG_2013 <> 1  Then return(0)
- 
-
-SAR_IG_DEC142_AUX = SAR_BENEF_IG_DEC1242_2013 
-valor = 0
-
-RETURN(valor)

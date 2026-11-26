@@ -1,3 +1,0 @@
-If SAR_TP_IMPUT = "88" Then Return(0)
-
-Return(SAR_UN_VACACIONES * SAR_PRE_VACACIONES)

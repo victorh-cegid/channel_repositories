@@ -1,2 +1,0 @@
-renta_no_alcanz_acum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_RENTA_NO_ALCANZADA_IG + SAR_TOT_RENTA_NO_ALCANZADA_IG
-Return(renta_no_alcanz_acum)

@@ -1,7 +1,0 @@
-'dt_start_variable=GetStartDate()
-'dt_end_variable=GetEndDate()
-
-'SCO_TOT_EAR_ROLE..SysAddNewSlice (dt_start_variable, dt_end_variable)
-ret=SCO_TOT_EAR_ROLE+SCO_HRROLE_CALC.SCO_TOT_EARNINGS
-
-RETURN(ret)

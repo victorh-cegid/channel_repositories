@@ -1,9 +1,0 @@
-' Toma el valor de la Obra Social
-
-valor = SAR_SEG_COLECTIVO
-
-IF SAR_TP_IMPUT = "77" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
-    Return(0)
-ENDIF
-
-Return(valor)

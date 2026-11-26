@@ -1,1 +1,0 @@
-Return(Round(#SAR_AHORRO_MENORES,#SAR_NUM_DEC))

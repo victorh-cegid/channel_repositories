@@ -1,7 +1,0 @@
-valor = SAR_TFUEG_IND
-
-'Si viene por rol se toma en periodo el valor del rol
-valorRol = SAR_HRROLE_CALC.SAR_TFUEG_IND_ROL
-If valorRol <> 0 Then valor = valorRol
-
-Return(valor)

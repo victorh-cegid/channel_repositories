@@ -1,4 +1,0 @@
-base = SAR_BASE_REM_PRORR
-porc = SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100)
-valor = base* porc / 100
-RETURN(valor)

@@ -1,8 +1,0 @@
-'Incluimos el importe de la diferencia respecto al importe total de hs tributables
-valordif = SAR_HS_EX_TRIB_TOT_OE - SAR_ACM_IG_ANIO_IMPUT[0].SAR_HS_EX_TRIB_OE
-
-If SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "2" OR (SAR_TP_IMPUT = "3" AND SAR_IND_AGUINALDO = 0) Then
-    valordif = 0
-EndIf
-
-Return (valordif)

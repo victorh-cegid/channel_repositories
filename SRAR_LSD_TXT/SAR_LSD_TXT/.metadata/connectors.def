@@ -1,7 +1,0 @@
-# parent_node | parent_ti | connection_type | origin
-SAR_LSD_TXT | SAR_LSD_TXT | FREE | OWN
-
-# child_node | connection_type | origin
-SAR_LSD_TXT | FREE | OWN
-
-# ti | item | parent_node | parent_ti | parent_item | precedence | origin

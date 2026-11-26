@@ -1,7 +1,0 @@
-# ti_alias: declaration
-# alias | id_ti | id_t3_used | origin
-EXCHANGE_RATES | SCO_AC_HR_PERIOD_REV | EXCHANGE_RATES | INHERITED from SCO_AC_HR_PERIOD_REV
-
-# alias_resolution: resolution
-# alias | id_t3_used | instance | id_open_mode_tp | id_shared_policy | cs_access | id_org_type | id_organization | id_approle_used | origin
-EXCHANGE_RATES | EXCHANGE_RATES | EXCHANGE_RATES | 2 | 3 | 3 | 3 |  |  | INHERITED from SCO_DP_PAYROLL_CHANNEL

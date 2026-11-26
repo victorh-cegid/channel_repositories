@@ -1,8 +1,0 @@
-'
-'Solo para los que tengan el indicador activo
-'
-IF SAR_IND_TITULO = 0 THEN 
-    Return(0)
-ENDIF
-valor = SAR_PREVIO_TITULO
-Return(valor)

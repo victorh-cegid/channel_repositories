@@ -1,3 +1,0 @@
-Ret = Round(SCO_NET_WITHOUT_ADVANCES,SCO_CURR_DECIMALS)
-
-Return(Ret)

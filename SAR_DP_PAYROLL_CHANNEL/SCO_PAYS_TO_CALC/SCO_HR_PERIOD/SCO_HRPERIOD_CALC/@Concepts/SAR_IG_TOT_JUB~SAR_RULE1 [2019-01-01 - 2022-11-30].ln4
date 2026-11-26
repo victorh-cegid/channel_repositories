@@ -1,7 +1,0 @@
-importeacum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_M_JUB
-importemes = SAR_TOT_M_JUB
-importe_oe = SAR_JUB_ANT_EMP + SAR_JUBILACION_OE
-
-total_jub = importeacum + importemes + importe_oe
-
-Return (total_jub)

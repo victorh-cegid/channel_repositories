@@ -1,4 +1,0 @@
-'Para generar dependencias
-a = SAR_BASE_IMPUESTO
-total = SAR_DED_IG_27617_T2_4TA
-Return(total)

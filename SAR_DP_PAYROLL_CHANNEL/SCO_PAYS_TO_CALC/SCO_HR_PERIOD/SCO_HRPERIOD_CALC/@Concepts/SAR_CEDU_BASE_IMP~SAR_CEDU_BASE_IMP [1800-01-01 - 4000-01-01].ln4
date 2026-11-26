@@ -1,4 +1,0 @@
-If SAR_CEDU_IND_IMPUESTO = 0 Or DxYear(SAR_FEC_IMPUT_IG)<2024 Then Return(0)
-total = SAR_CEDU_BASE_IMP
-importe = Max(total,0)
-Return Round(importe,SAR_NUM_DEC)

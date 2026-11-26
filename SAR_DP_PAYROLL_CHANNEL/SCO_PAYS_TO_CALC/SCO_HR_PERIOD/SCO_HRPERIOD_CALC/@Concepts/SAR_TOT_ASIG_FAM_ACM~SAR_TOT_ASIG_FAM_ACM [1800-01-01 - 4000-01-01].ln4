@@ -1,2 +1,0 @@
-importe = SAR_TOT_ASIG_FAM + SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_ASIG_FAM
-Return(importe)

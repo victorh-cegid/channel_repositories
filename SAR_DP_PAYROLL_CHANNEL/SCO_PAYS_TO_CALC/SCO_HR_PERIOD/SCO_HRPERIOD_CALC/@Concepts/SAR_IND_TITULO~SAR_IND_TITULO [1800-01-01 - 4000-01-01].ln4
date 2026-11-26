@@ -1,4 +1,0 @@
-'
-' Si se indica un valor por period superior a 0 pagara segun el valor de convenio
-'
-return(#SAR_IND_TITULO)

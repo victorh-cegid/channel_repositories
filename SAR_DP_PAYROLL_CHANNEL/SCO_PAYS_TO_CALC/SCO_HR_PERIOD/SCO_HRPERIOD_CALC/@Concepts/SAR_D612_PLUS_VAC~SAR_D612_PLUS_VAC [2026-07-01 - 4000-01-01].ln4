@@ -1,7 +1,0 @@
-'Este concepto es el plus vacaciones que debe dejar de cotizar en aportes y contribuciones de sindicatos 
-'ya que en producto estándar este importe no se tiene separado.
-vacaciones = SAR_VACACIONES
-'Jornales no tienen plus
-If SAR_TIPO_SALARIO = "003" Then vacaciones = 0
-plusVac = Round (vacaciones * (1-(25/30)),SAR_NUM_DEC)
-Return(plusVac)

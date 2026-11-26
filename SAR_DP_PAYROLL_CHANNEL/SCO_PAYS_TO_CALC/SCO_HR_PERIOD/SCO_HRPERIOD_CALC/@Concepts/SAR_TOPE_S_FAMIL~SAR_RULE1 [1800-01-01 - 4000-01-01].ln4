@@ -1,7 +1,0 @@
-'Toma valor por Valores Empresa. El Decreto 452/2001 estableció un piso para que corresponda el 
-'cobro de las asignaciones familiares. Posteriormente el decreto 805/2001 modificó el régimen
-'de cálculo indicando que si el promedio era menor al piso, pero las remuneraciones devengadas el mes
-'de cobro de las asignaciones eran superiores, correspondía el cobro de las mismas. 
-
-'En este concepto se cargará el valor del piso desde el cual se accede al cobro de las asignaciones.
-return(#SAR_TOPE_S_FAMIL)

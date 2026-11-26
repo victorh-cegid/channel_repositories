@@ -1,9 +1,0 @@
-'este metodo valida que la fecha de fin no sea menor que la fecha de inicio
-' se ejecuta desde la presentacion SAR_PY_LR_SIJP, retorna 1 si las fechas
-' son correctas, caso contrario retorna 0
-
-IF SAR_P_DT_INICIO <= SAR_P_DT_FIN THEN
-    RETURN(1)
-ELSE
-    RETURN(0)
-ENDIF

@@ -1,3 +1,0 @@
-valor = SAR_LEY_19032_OE
-valor = valor + SAR_LEY_19032_SAC_OE + SAR_ACM_IG_ANIO_IMPUT[0].SAR_LEY_19032_SAC_OE
-Return(valor)

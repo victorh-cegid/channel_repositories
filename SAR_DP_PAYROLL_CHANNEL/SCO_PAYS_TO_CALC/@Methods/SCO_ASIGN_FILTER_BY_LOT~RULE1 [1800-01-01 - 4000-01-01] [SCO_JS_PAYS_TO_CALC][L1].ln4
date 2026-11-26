@@ -1,8 +1,0 @@
-'***************************************************************************************
-'Description: Aplicamos la sentencia del filtrado por lotes al nodo de empleados
-'***************************************************************************************
-
-For i= 0 to (Count() -1)
-    MoveTo(i)
-    SetValue("SCO_HR_PERIOD","SENTENCE_FILTER_BY_LOT",-1,ARG_SENTENCE)
-Next

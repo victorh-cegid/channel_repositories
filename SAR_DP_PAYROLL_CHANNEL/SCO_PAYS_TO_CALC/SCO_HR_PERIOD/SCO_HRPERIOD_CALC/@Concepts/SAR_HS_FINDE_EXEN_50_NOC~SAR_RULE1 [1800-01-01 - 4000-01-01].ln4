@@ -1,2 +1,0 @@
-'Toma valor en el #4257
-Return (Round(SAR_HS_FINDE_EXEN_50_NOC, SCO_CURR_DECIMALS))

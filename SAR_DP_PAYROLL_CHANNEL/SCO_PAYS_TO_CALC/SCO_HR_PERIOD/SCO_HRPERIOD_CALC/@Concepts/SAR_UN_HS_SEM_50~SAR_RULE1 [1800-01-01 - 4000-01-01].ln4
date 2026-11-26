@@ -1,2 +1,0 @@
-'Tomara valor desde el #410 o forzado si se precisa
-Return (Round(SAR_UN_HS_SEM_50, SCO_CURR_DECIMALS))

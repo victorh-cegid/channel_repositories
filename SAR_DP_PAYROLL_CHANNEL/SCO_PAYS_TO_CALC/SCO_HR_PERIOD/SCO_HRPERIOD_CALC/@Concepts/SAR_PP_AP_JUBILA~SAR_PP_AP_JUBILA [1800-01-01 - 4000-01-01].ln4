@@ -1,4 +1,0 @@
-'
-' Toma el valor de Contrato
-'
-return(#SAR_PP_AP_JUBILA)

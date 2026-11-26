@@ -1,9 +1,0 @@
-'Decreto 792/2020
-'Toma valor de los precio reducido si la opción de visualización es 0, toma valor del precio integro si la opción de visualización es 1.
-If SAR_IND_OP_DEC792 = 0 Then
- valor = SAR_P_DEC792
-Else
- valor = SAR_P_DEC792_NRED
-EndIf
-
-Return(Round(valor,SAR_NUM_DEC))

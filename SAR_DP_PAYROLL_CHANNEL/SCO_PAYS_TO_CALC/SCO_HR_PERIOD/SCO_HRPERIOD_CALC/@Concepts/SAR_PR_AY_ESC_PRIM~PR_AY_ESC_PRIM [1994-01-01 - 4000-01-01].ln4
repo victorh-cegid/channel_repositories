@@ -1,8 +1,0 @@
-'
-' Toma el valor de la tabla Valores Zonas
-'
-IF SAR_TP_IMPUT <> "1" AND SAR_TP_IMPUT <> "4" THEN 'Tipo mensual y quincenal
-    Return(0)
-else
-    Return(#SAR_PR_AY_ESC_PRIM)
-endif

@@ -1,3 +1,0 @@
-fecnac = SAR_HR_PERIOD.STD_DT_BIRTH
-edad =Years(fecnac,SAR_PAYS_TO_CALC.SCO_DT_END_ALLOC)         
-RETURN(edad)

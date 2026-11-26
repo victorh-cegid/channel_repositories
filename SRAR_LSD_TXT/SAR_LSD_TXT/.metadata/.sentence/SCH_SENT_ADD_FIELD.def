@@ -1,7 +1,0 @@
-# ID_SENTENCE | ID_WHERE_TYPE | POSITION | ALIAS_OBJECT | ID_FIELD | ID_ORDER_TYPE | ID_OBJECT | ID_CALCULUS | ID_ITEM | ID_PAYROLL_ITEM | N_PAYROLL_ITEM | ID_CONCEPT_TYPE | ID_SYNONYM | N_TRANSLATED | ID_OBJECT_NEW
-SAR_LSD_TXT | 1 | 1 | C | STD_ID_LEG_ENT | 0 | SAR_FECHAS_PAGA |  |  |  |  |  |  |  | 
-SAR_LSD_TXT | 1 | 2 | A | SCO_DT_ACCRUED | 0 | SCO_HT_PAYS |  |  |  |  |  |  |  | 
-SAR_LSD_TXT | 1 | 3 | A | SCO_ID_PAY_FREQUENCY | 0 | SCO_HT_PAYS |  |  |  |  |  |  |  | 
-SAR_LSD_TXT | 1 | 4 | A | SCO_DT_ACCRUED | 0 | SCO_HT_PAYS |  |  |  |  |  |  |  | 
-SAR_LSD_TXT | 1 | 5 | A | SCO_ID_PAY_FREQUENCY | 0 | SCO_HT_PAYS |  |  |  |  |  |  |  | 
-SAR_LSD_TXT | 4 | 1 | A | SCO_DT_ACCRUED | 2 | SCO_HT_PAYS |  |  |  |  |  |  |  | 

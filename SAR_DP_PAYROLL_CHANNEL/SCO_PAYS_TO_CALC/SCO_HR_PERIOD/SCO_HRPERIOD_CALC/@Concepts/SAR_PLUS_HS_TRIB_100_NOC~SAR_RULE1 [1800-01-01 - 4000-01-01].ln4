@@ -1,2 +1,0 @@
-'Toma valor en el #4263
-Return (Round(SAR_PLUS_HS_TRIB_100_NOC, SCO_CURR_DECIMALS))

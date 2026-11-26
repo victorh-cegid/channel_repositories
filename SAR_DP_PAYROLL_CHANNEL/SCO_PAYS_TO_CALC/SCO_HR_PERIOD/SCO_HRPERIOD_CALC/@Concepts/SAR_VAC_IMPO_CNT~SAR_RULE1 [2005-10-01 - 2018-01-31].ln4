@@ -1,8 +1,0 @@
-'De acuerdo al artículo 3° el decreto 491/04 desde el 01/10/05 no hay topes para 
-'el cálculo de la base imponible de las contribuciones.
-
-aux = SAR_IMPORTE_LICENCIAS
-aux = SAR_AJ_VACACIONES
-base = SAR_VACACIONES + SAR_AJ_VACACIONES
-
-RETURN(base)

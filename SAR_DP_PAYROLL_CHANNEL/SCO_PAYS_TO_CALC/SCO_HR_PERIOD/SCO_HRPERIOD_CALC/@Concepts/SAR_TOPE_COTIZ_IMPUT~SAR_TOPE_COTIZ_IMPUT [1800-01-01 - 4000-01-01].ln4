@@ -1,4 +1,0 @@
-'Recupera el valor del tope en función de la fecha de imputación
-valor = ToDouble(SAR_VAL_EMPRESA_IG.SAR_RET_VALOR_CONCEPTO(SCO_ID_LEG_ENT,"SAR_TOPE_COTIZ",SCO_DT_ALLOCATION,0))
-If valor = 0 Then valor = SAR_VALOR_AMPO * SAR_CANT_MOPRE_TOPE
-Return(valor)

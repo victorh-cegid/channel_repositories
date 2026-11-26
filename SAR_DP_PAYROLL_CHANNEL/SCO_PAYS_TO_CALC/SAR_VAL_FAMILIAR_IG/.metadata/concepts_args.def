@@ -1,4 +1,0 @@
-# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
-SAR_RETORNA_VALOR | ARG_FECHA | IN | DATE | 4 | 10 | 0 | 1
-SAR_RETORNA_VALOR | ARG_EMPRESA | IN | STRING | 2 | 9 | 0 | 2
-SAR_RETORNA_VALOR | ARG_CONCEPTO | IN | STRING | 2 | 30 | 0 | 3

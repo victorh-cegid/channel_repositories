@@ -1,6 +1,0 @@
-# parent_node | parent_ti | connection_type | id_t3_used | call_order | id_sentence | expand_delete | expand_undo | id_connector_t3 | origin
-
-# child_node | connection_type | origin
-SCO_AUX_AC_HRROLE | FREE | INHERITED from SCO_DP_PAYROLL_CHANNEL
-
-# ti | item | parent_node | parent_ti | parent_item | precedence | id_cstype | id_t3_used | call_order | id_item_connector_t3 | id_spin_type | id_relship_type | id_context_type | trigger_mode | origin

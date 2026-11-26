@@ -1,9 +1,0 @@
-IF SAR_TP_IMPUT = "77" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
-    Return(0)
-ENDIF
-
-base = SAR_P_SUELDO
-porc = SAR_PORC_SEPELIO
-valor = base * porc / 100
-
-Return(valor)

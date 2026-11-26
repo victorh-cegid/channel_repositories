@@ -1,6 +1,0 @@
-'1 Anual / 2 Final / 3 Informativa
-valor = 0
-If SAR_IND_PAGA_RELIQ = 1 Then Return(1)
-If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" And SAR_IG_DICIEMBRE = 1 And (SAR_TP_IMPUT = "1" Or SAR_TP_IMPUT = "3" Or SAR_TP_IMPUT = "4") Then Return(2)
-If SAR_ES_BAJA = 1 And SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017" And SAR_IG_DICIEMBRE = 0 And (SAR_TP_IMPUT = "1" or SAR_TP_IMPUT = "3" or SAR_TP_IMPUT = "4") Then Return(3)
-Return(valor)

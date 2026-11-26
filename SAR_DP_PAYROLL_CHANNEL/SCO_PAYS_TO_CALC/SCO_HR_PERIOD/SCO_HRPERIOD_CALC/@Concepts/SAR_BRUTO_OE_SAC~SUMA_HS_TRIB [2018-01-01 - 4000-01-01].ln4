@@ -1,8 +1,0 @@
-valor = SAR_BRUTO_OE_SAC
-valor = valor + SAR_HS_EX_TRIB_TOT_OE
-
-If SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "88" OR SAR_ES_BAJA = 1 OR SAR_TP_IMPUT = "2" OR (SAR_TP_IMPUT = "3" AND SAR_IND_AGUINALDO = 0) Then
-    valor = 0
-EndIf
-
-Return (valor)

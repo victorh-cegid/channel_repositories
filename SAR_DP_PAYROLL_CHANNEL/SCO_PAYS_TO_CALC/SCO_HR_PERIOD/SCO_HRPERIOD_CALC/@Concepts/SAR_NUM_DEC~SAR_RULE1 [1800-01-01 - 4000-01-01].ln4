@@ -1,7 +1,0 @@
-'Se utiliza el concepto corporativo 8030. La cantidad de decimales será igual al
-'valor del número de decimales que se le asocie a una moneda al darla de alta.
-'Para eso el concepto 8030 realiza una llamada de nivel dos al M4O EXCHANGE_RATES.
-
-num_dec = SCO_CURR_DECIMALS
-
-Return(num_dec)

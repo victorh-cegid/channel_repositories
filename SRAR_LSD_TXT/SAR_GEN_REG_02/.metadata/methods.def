@@ -1,3 +1,0 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SAR_CALCULAR_DIAS_TOPE | NODE | NUMBER | 6 | 2 | 0 | Calula cant. de dias para proporcionar tope
-SAR_GENERA_REG_02 | NODE | STRING | 2 | 255 | 0 | Generador Registro 02

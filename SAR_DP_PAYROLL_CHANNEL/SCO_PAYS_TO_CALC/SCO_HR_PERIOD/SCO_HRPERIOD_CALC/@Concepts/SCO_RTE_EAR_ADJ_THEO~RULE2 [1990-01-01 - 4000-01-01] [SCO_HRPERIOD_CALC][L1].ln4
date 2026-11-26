@@ -1,3 +1,0 @@
-Ret = Round(SCO_RTE_EAR_ADJ_THEO,SCO_CURR_DECIMALS)
-
-Return(Ret)

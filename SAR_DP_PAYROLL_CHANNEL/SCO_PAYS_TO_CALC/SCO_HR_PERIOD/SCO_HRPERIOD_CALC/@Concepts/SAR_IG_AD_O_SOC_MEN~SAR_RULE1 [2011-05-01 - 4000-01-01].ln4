@@ -1,5 +1,0 @@
-base = SAR_REMUN_IMPO_OS - SAR_BASE_REM_PROR_OS - SAR_ACCIDENTE
-porc = SAR_PORC_ADIC_O_SOC - (SAR_PORC_ADIC_O_SOC * SAR_PP_AP_OB_SOC/100)
-precio = base * porc / 100
-valor = precio * SAR_FAM_CARGO_OS
-return(valor)

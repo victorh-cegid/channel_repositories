@@ -1,7 +1,0 @@
-'Su valor se informa por valores
-
-'Se agrega el cálculo del Coeficiente por Jornada Reducida(#675)
-
-coef = SAR_HRROLE_CALC.#SAR_COEF_JORNADA
-
-Return(#SAR_PP_LUNCHEON * coef)

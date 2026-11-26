@@ -1,3 +1,0 @@
-importe = TEST_TOT_COTIZ
-'TEST_CALCULA_AJCOT("TEST_TOT_COTIZ","TEST_AJCOT_TOT_COTIZ",importe)
-Return(importe)

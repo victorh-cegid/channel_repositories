@@ -1,6 +1,0 @@
-# ID_SENTENCE | ID_WHERE_TYPE | POSITION | ALIAS_OBJECT | ID_FIELD | ID_ORDER_TYPE | ID_OBJECT | ID_CALCULUS | ID_ITEM | ID_PAYROLL_ITEM | N_PAYROLL_ITEM | ID_CONCEPT_TYPE | ID_SYNONYM | N_TRANSLATED | ID_OBJECT_NEW
-SAR_FAM_A_CARGO | 1 | 1 | B | STD_DT_START | 0 | STD_FAMILY |  |  |  |  |  |  |  | 
-SAR_FAM_A_CARGO | 1 | 2 | B | STD_DT_END | 0 | STD_FAMILY |  |  |  |  |  |  |  | 
-SAR_FAM_A_CARGO | 1 | 3 | B | STD_DT_END | 0 | STD_FAMILY |  |  |  |  |  |  |  | 
-SAR_FAM_A_CARGO | 1 | 4 | A | DT_START | 0 | SAR_FAMILY_LEGAL |  |  |  |  |  |  |  | 
-SAR_FAM_A_CARGO | 1 | 5 | A | DT_END | 0 | SAR_FAMILY_LEGAL |  |  |  |  |  |  |  | 

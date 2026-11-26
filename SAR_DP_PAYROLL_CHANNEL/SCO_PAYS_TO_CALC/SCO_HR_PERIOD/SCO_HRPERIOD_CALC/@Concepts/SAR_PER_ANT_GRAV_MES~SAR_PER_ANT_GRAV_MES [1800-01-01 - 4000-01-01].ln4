@@ -1,3 +1,0 @@
-'dependencias
-a = SAR_PAGA_EXTRA_2 + SAR_EGRESO_PAGA_2
-Return(SAR_PER_ANT_GRAV_MES)

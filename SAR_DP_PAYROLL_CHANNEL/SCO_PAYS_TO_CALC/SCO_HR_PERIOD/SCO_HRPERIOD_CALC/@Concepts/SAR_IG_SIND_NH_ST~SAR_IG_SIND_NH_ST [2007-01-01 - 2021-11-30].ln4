@@ -1,3 +1,0 @@
-base= SAR_TOT_PROR_CON_AP
-valor= (base * SAR_PORC_C_SIND_VOL / 100) + (base * SAR_PORC_C_SIND_OBL / 100)
-RETURN(valor)

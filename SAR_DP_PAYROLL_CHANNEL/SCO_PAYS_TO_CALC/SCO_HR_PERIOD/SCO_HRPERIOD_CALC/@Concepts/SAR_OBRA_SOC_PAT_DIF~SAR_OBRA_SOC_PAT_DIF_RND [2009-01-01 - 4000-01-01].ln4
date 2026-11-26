@@ -1,1 +1,0 @@
-return(round(SAR_OBRA_SOC_PAT_DIF,SAR_NUM_DEC))

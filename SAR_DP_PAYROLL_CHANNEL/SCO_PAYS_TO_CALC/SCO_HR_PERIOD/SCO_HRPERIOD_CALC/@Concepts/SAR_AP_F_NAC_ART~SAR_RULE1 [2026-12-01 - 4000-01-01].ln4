@@ -1,6 +1,0 @@
-' De acuerdo al artículo 3ro. del Decreto 491/2004 la base imponible de las contribuciones
-' es separada de la de los aportes desde el 01/06/2004.
-
-valor = SAR_BASE_CO_ART_CNT * SAR_PORC_F_EMPLEO_FAL / 100
-
-RETURN(valor)

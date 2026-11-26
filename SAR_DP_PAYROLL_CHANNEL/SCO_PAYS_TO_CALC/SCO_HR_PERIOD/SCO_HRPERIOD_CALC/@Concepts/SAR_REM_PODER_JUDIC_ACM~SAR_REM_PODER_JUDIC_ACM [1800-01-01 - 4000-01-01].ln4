@@ -1,5 +1,0 @@
-a = SAR_BASE_IMPUESTO
-importeMes = SAR_TOT_REM_PODER_JUDIC
-importeAc = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_REM_PODER_JUDIC
-importeTotal = Round(importeMes + importeAc,SAR_NUM_DEC)
-Return(importeTotal)

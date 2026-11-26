@@ -1,9 +1,0 @@
-'Retorna la fecha de antigüedad para indemnización
-If IsNull(SAR_HR_PERIOD.SAR_FEC_ANTIG_INDEM) = M4_FALSE Then
-    fecAntig = SAR_HR_PERIOD.SAR_FEC_ANTIG_INDEM
-ElseIf IsNull(SAR_HR_PERIOD.SSP_FEC_ANTIGUEDAD) = M4_FALSE Then
-   fecAntig = SAR_HR_PERIOD.SSP_FEC_ANTIGUEDAD
-Else
-   fecAntig = SAR_HR_PERIOD.STD_DT_START
-EndIf
-Return(fecAntig)

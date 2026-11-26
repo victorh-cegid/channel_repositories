@@ -1,5 +1,0 @@
-AUX = 0
-If (SCO_H_HR_PAY_FREQ.SCO_ID_PAY_FREQUENCY<>SCO_PAY_FREQ_ALLOC) Then
-    AUX=1
-endif
-Return(AUX)

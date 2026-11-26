@@ -1,7 +1,0 @@
-' Valor por incidencias
-
-valor = SAR_COMISIONES
-IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" THEN
-    Return(0)
-ENDIF
-Return(valor)

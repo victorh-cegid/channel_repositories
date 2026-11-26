@@ -1,2 +1,0 @@
-valor = SAR_VALOR_AMPO * SAR_CANT_MOPRE_TOPE
-RETURN(valor)

@@ -1,9 +1,0 @@
-'Ley de bases 2024, congela complementos posteriores a calculo del beneficio
-importe = SAR_JUR_CTA_MED_ASI
-diferencia = 0
-
-SAR_LBASE_CALC_CONGELA_COMPLEM("SAR_JUR_CTA_MED_ASI",0,diferencia)
-
-importe = importe - diferencia
-
-Return(importe)

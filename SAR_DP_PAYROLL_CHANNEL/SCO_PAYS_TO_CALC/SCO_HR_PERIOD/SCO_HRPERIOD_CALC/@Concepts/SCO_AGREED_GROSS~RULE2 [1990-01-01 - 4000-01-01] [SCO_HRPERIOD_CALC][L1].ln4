@@ -1,3 +1,0 @@
-Ret = Round(SCO_AGREED_GROSS,SCO_CURR_DECIMALS)
-
-Return(Ret)

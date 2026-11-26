@@ -1,9 +1,0 @@
-If SAR_TP_IMPUT = "99" Then Return(0) 'en caso de paga de reliquidacion, retorna 0 (cero)
-
-valor = SAR_REMUN_IMPO_CNT_OS * SAR_P_PAT_L_23660 / 100
-
-anssal = round(valor * SAR_PORC_ANSSAL / 100, 2)
-SAR_ANSSAL_PAT = anssal
-valor = valor - anssal
-
-RETURN(valor)

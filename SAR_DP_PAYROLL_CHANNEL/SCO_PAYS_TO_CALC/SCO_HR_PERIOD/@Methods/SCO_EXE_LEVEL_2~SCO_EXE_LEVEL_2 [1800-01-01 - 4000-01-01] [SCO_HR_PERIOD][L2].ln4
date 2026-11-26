@@ -1,5 +1,0 @@
-'Execute all the period concepts before Role and depending on currency
-
-SCO_HRPERIOD_CALC.ExecuteGroup("2")
-
-Return(0)

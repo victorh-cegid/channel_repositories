@@ -1,5 +1,0 @@
-'Recibe su valor del concepto SAR_DIAS_VACACIONES (#450)
-
-a = SAR_DIAS_VACACIONES     'Para generar dependencias
-
-Return(SAR_EXC_DIAS_VAC)

@@ -1,5 +1,0 @@
-Currency = ID_CURRENCY
-
-Decimals = EXCHANGE_RATES!CURRENCY.curGetDecimals (Currency)
-
-Return(Decimals)

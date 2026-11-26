@@ -1,6 +1,0 @@
-'Toma valor de tabla del Rol
-
-'scl_hrperiod_calc.SCL_NUM_DIAS_SEMANA_CORRIDA = scl_hrperiod_calc.SCL_NUM_DIAS_SEMANA_CORRIDA + valor
-'aux = scl_hrperiod_calc.SCL_SEMANA_CORRIDA
-
-Return(SAR_P_ASIG_ESTIM_ROL)

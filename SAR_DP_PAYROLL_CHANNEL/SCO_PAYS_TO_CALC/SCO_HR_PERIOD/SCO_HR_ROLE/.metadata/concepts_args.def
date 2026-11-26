@@ -1,5 +1,0 @@
-# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
-SAR_CALCULA_PRECIO_FECHA | ARG_FECHA | IN | DATE | 4 | 10 | 0 | 1
-SAR_CALCULA_PRECIO_FECHA | ARG_CONCEPTO | IN | STRING | 2 | 10 | 0 | 2
-SCO_DT_END_CALC_ROLE_RETRO | ARG_SCO_DT_END_RETRO | IN | DATE | 4 | 10 | 0 | 0
-SCO_DT_START_CALC_ROLE_RETRO | ARG_SCO_DT_START_RETRO | IN | DATE | 4 | 10 | 0 | 0

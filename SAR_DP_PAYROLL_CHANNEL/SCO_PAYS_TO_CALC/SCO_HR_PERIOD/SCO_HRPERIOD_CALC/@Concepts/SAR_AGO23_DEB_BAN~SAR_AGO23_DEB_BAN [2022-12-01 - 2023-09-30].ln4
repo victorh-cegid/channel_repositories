@@ -1,2 +1,0 @@
-importe = SAR_IMP_DEB_BAN
-Return Round(importe,SAR_NUM_DEC)

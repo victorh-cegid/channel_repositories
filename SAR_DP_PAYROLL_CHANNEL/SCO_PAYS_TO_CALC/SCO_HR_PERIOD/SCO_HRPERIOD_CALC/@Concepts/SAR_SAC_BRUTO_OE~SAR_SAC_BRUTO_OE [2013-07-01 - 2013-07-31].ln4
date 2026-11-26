@@ -1,6 +1,0 @@
-IF (SAR_ES_BAJA = 1 And  SAR_HR_PERIOD.STD_ID_HRP_END_REASON <> "017")Then 
-  If(SAR_FECHA_BAJA < ToDate("2013-07-26"))Then
-     Return(0)    
-  EndIf
-EndIf  
-Return(SAR_SAC_BRUTO_OE)

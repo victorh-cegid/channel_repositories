@@ -1,5 +1,0 @@
-# ti_alias_declaration: declaración del alias de TI (M4RCH_TI_ALIAS)
-# alias | id_ti | id_ti_used | alias_translated | origin
-
-# ti_alias_resolution: resolución por nodo llamador (M4RCH_ALIAS_RES)
-# alias | id_t3_used | id_node_used | id_ti | origin

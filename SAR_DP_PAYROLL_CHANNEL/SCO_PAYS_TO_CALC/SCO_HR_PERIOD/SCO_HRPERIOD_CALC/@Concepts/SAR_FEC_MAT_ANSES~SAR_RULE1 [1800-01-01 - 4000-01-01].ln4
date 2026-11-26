@@ -1,7 +1,0 @@
-mat_fec_anses = SAR_FEC_MAT_ANSES 
-
-if isnull(mat_fec_anses) = true then
-   mat_fec_anses = todate("4000-01-01")
-endif
-
-Return(mat_fec_anses)

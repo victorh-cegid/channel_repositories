@@ -1,2 +1,0 @@
-valor = DxMonth(SCO_DT_ALLOCATION)
-Return(valor)

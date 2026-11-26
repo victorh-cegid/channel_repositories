@@ -1,6 +1,0 @@
-'Indicativo Reduc. por zona desfav. Dec. 1242/2013
-'Toma su valor por valores de lugar de trabajo. Valores posibles:
-'       0: Indica que el lugar de trabajo del empleado se encuentra situado en zona no desfavorable.
-'       1: Indica que el lugar de trabajo del empleado se encuentra situado en zona desfavorable.
-
-Return(SAR_INDIC_REDUC_ZON_DES)

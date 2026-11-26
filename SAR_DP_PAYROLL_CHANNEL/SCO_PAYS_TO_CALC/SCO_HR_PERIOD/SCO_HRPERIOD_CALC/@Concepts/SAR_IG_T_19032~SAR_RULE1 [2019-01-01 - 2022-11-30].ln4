@@ -1,7 +1,0 @@
-importeacum = SAR_ACM_IG_ANIO_IMPUT[0].SAR_TOT_M_LEY_19032
-importemes = SAR_TOT_M_LEY_19032
-importe_oe = SAR_L_19032_ANT_EMP + SAR_LEY_19032_OE
-
-importe_tot = importeacum + importemes + importe_oe
-
-Return (importe_tot)

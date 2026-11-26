@@ -1,4 +1,0 @@
-unidad = SAR_LIC_CCT_U_DESC
-precio = SAR_LIC_CCT_PRECIO
-importe = Round (unidad*precio,SAR_NUM_DEC)
-Return(importe*-1)

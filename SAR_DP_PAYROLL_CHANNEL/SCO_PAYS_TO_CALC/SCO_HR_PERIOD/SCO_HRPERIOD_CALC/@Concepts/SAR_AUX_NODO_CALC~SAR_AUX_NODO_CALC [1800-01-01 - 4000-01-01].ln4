@@ -1,8 +1,0 @@
-'Este objeto trata de devolver el nivel de cálculo (XXX_HRPERIOD_CALC), "XXX" se basa en el compiezo del ID del canal del m4o
-'de nómina en ejecucion para componerlo. Permite ser sobreescrito o informado por valores en caso de que no se cumpla esa lógica en algún cliente, se ponga el suyo.
-'Se va a utilizar para filtrar en el nodo SAR_TOTAL_VALUES y que recupere items estándar + items del cliente en dicho total sin mezclar items de otros clientes.
-canal = GetChannelId()
-pos = StrIn(canal,"_")
-nodo = Mid(canal,0,pos)
-nodo = nodo+"_HRPERIOD_CALC"
-Return(nodo)

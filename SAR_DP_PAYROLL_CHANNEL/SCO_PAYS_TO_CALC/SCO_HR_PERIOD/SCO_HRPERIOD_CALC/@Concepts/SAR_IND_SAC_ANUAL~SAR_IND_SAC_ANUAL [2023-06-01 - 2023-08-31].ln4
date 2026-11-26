@@ -1,5 +1,0 @@
-'Desde junio 2023, cambio relacionado con Decreto 316/2023, se decide dejar este indicador fijo a 1. Esto implica que la determinación de la 
-'exención del SAC se realiza considerando el promedio de remuneraciones en forma ANUAL y por PERCIBIDO. Un SAC 1 exento en Junio puede quedar
-'gravado en diciembre y reversarse la exención si el empleado alcanza dicho promedio en el año
-indicador = 1
-Return(indicador)

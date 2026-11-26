@@ -1,5 +1,0 @@
-if (SCO_DT_ALLOCATION<>SCO_DT_PAYMENT) and (SCO_PAY_FREQ_ALLOC=SCO_PAY_FREQ_PAYM)then
-	return(1)
-else
-	return(0)
-endif

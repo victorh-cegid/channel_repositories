@@ -1,3 +1,0 @@
-# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
-SCO_SQL_RUN_PAY | ID_CONN | IN | NUMBER | 6 | 4 |  | 1
-SCO_SQL_RUN_PAY | MASK | IN | NUMBER | 6 | 1 |  | 2

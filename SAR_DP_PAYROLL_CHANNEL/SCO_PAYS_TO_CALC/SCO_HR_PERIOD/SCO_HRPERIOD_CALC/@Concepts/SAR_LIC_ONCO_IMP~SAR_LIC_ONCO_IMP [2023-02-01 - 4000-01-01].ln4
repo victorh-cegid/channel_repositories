@@ -1,7 +1,0 @@
-IF SAR_TP_IMPUT = "2" OR SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "77" THEN
-    Return(0)
-ENDIF
-
-valor = SAR_LIC_ONCO_DIAS * SAR_LIC_ONCO_PRE
-
-Return Round(valor,SAR_NUM_DEC)

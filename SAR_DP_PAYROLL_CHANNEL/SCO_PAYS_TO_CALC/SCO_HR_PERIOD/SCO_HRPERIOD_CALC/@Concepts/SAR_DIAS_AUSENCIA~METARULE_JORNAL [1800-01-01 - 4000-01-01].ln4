@@ -1,9 +1,0 @@
-IF SAR_TIPO_SALARIO = "003" THEN 'tipo de salario horario
-    x = SAR_DIAS_AUSENCIA()..SAR_RULE1_JORNAL
-ELSE
-    x = SAR_DIAS_AUSENCIA()..SAR_RULE1
-ENDIF
-if( SCO_PAYS_TO_CALC.SCO_REVISION = 1 ) then
-    x = SAR_DIAS_AUSENCIA()..SAR_DIAS_AUSENCIA_REV
-endif
-return( x )

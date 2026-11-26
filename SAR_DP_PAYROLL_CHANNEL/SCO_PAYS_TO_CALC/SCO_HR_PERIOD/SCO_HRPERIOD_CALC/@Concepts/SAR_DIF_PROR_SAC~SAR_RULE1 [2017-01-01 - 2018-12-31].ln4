@@ -1,3 +1,0 @@
-'Toma valor en el 5002 SAR_BASE_IMPUESTO
-
-Return(Round(SAR_DIF_PROR_SAC,SCO_CURR_DECIMALS))

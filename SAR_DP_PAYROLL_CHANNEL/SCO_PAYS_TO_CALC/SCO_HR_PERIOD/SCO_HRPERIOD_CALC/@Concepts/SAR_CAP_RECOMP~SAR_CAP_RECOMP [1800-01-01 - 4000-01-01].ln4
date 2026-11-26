@@ -1,8 +1,0 @@
-'El capital de recomposición es el monto de aportes que el afiliado hubiera acumulado en su cuenta
-'de no haber solicitado la prestación por incapacidad total permanente provisoria. Si luego esta no
-'se convierte en definitiva se deberá integrar a la cuenta de capitalización del empleado un importe
-'equivalente al monto de los aportes no realizados. 
-'El único empleador que deberá realizar este aporte es el autoasegurado.
-
-'Su importe se carga por valores incidencia y es leido por el Archivo de Aportes DGI.
-return(#SAR_CAP_RECOMP)

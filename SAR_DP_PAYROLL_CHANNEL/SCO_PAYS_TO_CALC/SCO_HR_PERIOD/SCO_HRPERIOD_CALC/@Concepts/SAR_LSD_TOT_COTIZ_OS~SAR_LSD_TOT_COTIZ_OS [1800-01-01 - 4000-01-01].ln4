@@ -1,3 +1,0 @@
-importe = SAR_LSD_TOT_COTIZ_OS
-If SAR_COEF_JORNADA_PER <> 0 Then importe = importe / SAR_COEF_JORNADA_PER
-Return(importe)

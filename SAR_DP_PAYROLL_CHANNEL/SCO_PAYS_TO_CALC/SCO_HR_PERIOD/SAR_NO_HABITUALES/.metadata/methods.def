@@ -1,6 +1,0 @@
-# item_metadata_format: 4
-# item | scope | return_type | id_m4_type | prec | scale | name | id_cstype | internal_type | item_aux | totalize_type | sent_tot_type | transact_type | exe_group | exe_level | variable_arguments | item_aux_prorat | dimension | conv_function | id_synonym | n_synonym | owner_flag
-DESTROYBLOCK | NODE | NUMBER | 6 | 1 | 0 | DESTROYBLOCK | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
-PREVALIDATE_PRG | BLOCK | NUMBER | 6 | 18 | 0 | Prevalidación "in site" | 3 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 1
-SAR_BORRAR_TODOS | NODE | NUMBER | 6 | 1 | 0 | SAR_BORRAR_TODOS | 3 | 1 | null | 2 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 80
-SET_FILTER_DATES | BLOCK | NUMBER | 6 | 1 | 0 |  | 3 | 1 | null | 4 | null | 4 | null | 2 | 0 | null | null | 1 | null | null | 3

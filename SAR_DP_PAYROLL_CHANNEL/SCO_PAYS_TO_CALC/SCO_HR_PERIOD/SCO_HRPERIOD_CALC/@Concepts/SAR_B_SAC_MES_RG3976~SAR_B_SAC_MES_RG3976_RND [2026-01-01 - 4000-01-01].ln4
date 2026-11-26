@@ -1,2 +1,0 @@
-/* retornamos el valor redondeado */
-return (Round(SAR_B_SAC_MES_RG3976,SAR_NUM_DEC))

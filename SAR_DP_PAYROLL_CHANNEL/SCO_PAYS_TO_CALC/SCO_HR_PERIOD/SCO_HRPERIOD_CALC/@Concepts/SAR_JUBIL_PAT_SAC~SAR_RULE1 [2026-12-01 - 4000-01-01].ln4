@@ -1,3 +1,0 @@
-valor = SAR_SAC_IMPO_CNT * SAR_PORC_PAT_JUB_FAL / 100
-
-RETURN(valor)

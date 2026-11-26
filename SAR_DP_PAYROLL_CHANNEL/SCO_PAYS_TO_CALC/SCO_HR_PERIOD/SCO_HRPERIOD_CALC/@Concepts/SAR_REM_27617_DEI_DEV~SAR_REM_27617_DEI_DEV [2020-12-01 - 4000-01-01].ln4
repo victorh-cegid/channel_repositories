@@ -1,5 +1,0 @@
-'Ley 27617. Este concepto contiene el importe mensual IG de la remuneración.
-'Consideramos los importes de todas las pagas del mes:
-importePaga = SAR_TOTAL_DEVENGOS + SAR_REM_27617_OE_DEI_DEV - SAR_SAC_ABONADO - SAR_ANTICIPO_VAC
-ImporteAcum = SAR_ACM_MES_ACTUAL_DIF[0].SAR_TOTAL_DEVENGOS - SAR_ACM_MES_ACTUAL_DIF[0].SAR_SAC_ABONADO - SAR_ACM_MES_ACTUAL_DIF[0].SAR_ANTICIPO_VAC
-Return Round(importePaga+ImporteAcum,SAR_NUM_DEC)

@@ -1,9 +1,0 @@
-# item | arg_id | arg_direction | arg_type | arg_id_m4_type | arg_prec | arg_scale | arg_position
-COPYREGISTER | CHANNEL | IN | STRING | 2 | 30 | 0 | 0
-COPYREGISTER | NODE | IN | STRING | 2 | 30 | 0 | 1
-SCO_CREATE_RECORD | ARG_ID_TI | IN | STRING | 2 | 30 | 0 | 0
-SCO_CREATE_RECORD | ARG_ID_ITEM | IN | STRING | 2 | 30 | 0 | 1
-SCO_CREATE_RECORD | ARG_DT_START | IN | DATE | 4 | 10 | 0 | 2
-SCO_CREATE_RECORD | ARG_DT_END | IN | DATE | 4 | 10 | 0 | 3
-SCO_CREATE_RECORD | ARG_VALUE | IN | CURRENCY | 8 | 18 | 6 | 4
-SCO_CREATE_RECORD | ARG_ID_BNFT_EMP_DEP | IN | STRING | 2 | 255 | 0 | 5

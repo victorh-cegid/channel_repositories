@@ -1,5 +1,0 @@
-'Exposición en recibo de impuesto cuando aplican beneficios
-
-impuesto = SAR_IMPUESTO - SAR_AGO23_BENEF_IMP - SAR_SEP23_DEC473 - SAR_CEDU_IMPUESTO
-
-Return Round (impuesto,SAR_NUM_DEC)

@@ -1,2 +1,0 @@
-fecPagoIg = SAR_FEC_PAGO_IG
-Return DxMonth(fecPagoIg)

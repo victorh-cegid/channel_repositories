@@ -1,5 +1,0 @@
-'Para generar dependencias
-b = SAR_ACCIDENTE
-a = SAR_IMPORTE_LICENCIAS
-c = SAR_ENFERMEDAD
-Return(SAR_D612_LIC_TOT)

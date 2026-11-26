@@ -1,4 +1,0 @@
-'Para generar dependencias
-a = SAR_BASE_IMPUESTO
-a = SAR_IMPUESTO
-Return(SAR_SALDO_4CATEG)

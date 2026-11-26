@@ -1,4 +1,0 @@
-'Calculado desde SAR_REMUN_IMPO
-'dependencias
-a = SAR_REMUN_IMPO
-Return(SAR_REM_IMPO_JUB)

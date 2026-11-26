@@ -1,5 +1,0 @@
-valor = SAR_IND_DOB_INDE
-'Decreto 34 13/12/2019. Altas posteriores a esa fecha no aplica.
-fec_indem = SAR_FEC_INDEM
-If fec_indem > DxDate("13","12","2019") Then valor = 0
-Return(valor)

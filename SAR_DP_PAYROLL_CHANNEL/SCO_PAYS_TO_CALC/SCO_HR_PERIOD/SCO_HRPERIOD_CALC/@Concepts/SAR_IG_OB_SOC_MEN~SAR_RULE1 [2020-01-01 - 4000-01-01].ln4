@@ -1,7 +1,0 @@
-accidente = SAR_ACCIDENTE
-If SAR_COEF_JORNADA_PER <> 0 Then accidente = accidente / SAR_COEF_JORNADA_PER
- 
-base = SAR_REMUN_IMPO_OS - SAR_BASE_REM_PROR_OS - accidente
-porc= SAR_PORC_OBR_SOCIAL -(SAR_PORC_OBR_SOCIAL * SAR_PP_AP_OB_SOC/100) 
-valor = base * porc / 100
-return(valor)

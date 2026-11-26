@@ -1,2 +1,0 @@
-dias = SCO_DT_END_ALLOC - SCO_DT_START_ALLOC + 1
-Return(dias)

@@ -1,4 +1,0 @@
-dEndRetro = ARG_SCO_DT_END_RETRO
-dEndCalc = SCO_DT_END_CALC
-
-Return(max(dEndCalc,dEndRetro))

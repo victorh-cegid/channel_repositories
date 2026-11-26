@@ -1,3 +1,0 @@
-'Recibe su valor por tabla de valor
-'este concepto contiene el limite decimal para no mostrar diferencia.
-Return(SAR_TOLERANCIA_DEC)

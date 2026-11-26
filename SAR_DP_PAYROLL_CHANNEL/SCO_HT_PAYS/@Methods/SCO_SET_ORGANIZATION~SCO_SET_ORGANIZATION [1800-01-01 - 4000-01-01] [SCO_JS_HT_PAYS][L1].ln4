@@ -1,6 +1,0 @@
-'If the payroll is executed by the menu option, we only show the pays corresponding to the organization
-If SCO_FROM_JS = 0 or SCO_MONO <> 0 then
-	SCO_CONTEXT_ORG()
-	SCO_SYSSENTENCE="FROM &SCO_HT_PAYS A WHERE A.ID_ORGANIZATION=@SCO_CONTEXT_ORG"
-Endif
-Return(0)

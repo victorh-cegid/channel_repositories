@@ -1,7 +1,0 @@
-IF SAR_FAMIL_CARGO.Count() > 0 THEN
-    valor = SAR_FAMIL_CARGO.Count()
-ELSE
-    valor = 0
-ENDIF
-
-RETURN(valor)

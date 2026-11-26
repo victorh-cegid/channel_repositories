@@ -1,3 +1,0 @@
-valor = #SAR_BASE_COTIZ_ART * #SAR_PORC_PAT_JUBIL / 100
-
-RETURN(valor)

@@ -1,4 +1,0 @@
-importe = SAR_SAC_1_ABONADO
-'Añade conceptos de SAC sin naturaleza de sac1 o sac2 por fecha de devengado
-If DxMonth(SCO_DT_ALLOCATION) >= 1 And DxMonth(SCO_DT_ALLOCATION) <= 6 Then importe = importe + SAR_TOT_SAC_OTROS
-Return Round(importe,SAR_NUM_DEC)

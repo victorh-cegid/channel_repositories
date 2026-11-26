@@ -1,5 +1,0 @@
-'Execute all the role concepts depending on currency 
-
-SCO_HRROLE_CALC.ExecuteGroup("2")
-
-Return(0)

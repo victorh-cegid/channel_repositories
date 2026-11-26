@@ -1,2 +1,0 @@
-Ret = Round(SCO_FIX_SALARY_CON,SCO_CURR_DECIMALS)
-Return(Ret)

@@ -1,7 +1,0 @@
-IF SAR_TP_IMPUT = "88" OR SAR_TP_IMPUT = "99" OR SAR_TP_IMPUT = "2" THEN
-    Return(0)
-ENDIF
-
-dias = MIN(SAR_DIAS_NORM_COTIZ,SAR_DIAS_VACACIONES)
-valor = dias * SAR_PRE_DESC_VAC
-Return(valor)

@@ -1,7 +1,0 @@
-sSessionCurrency = SRCO_PY_RP_QUERY_STEP.SRCO_SESSION_CURRENCY
-
-If sSessionCurrency <> ID_CURRENCY Then
-	curExchangeRecordRounded(sSessionCurrency,0)
-EndIf
-
-Return(0)

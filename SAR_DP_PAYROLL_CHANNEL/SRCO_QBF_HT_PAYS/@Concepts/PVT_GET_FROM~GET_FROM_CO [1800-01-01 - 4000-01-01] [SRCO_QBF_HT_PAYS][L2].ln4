@@ -1,6 +1,0 @@
-sAux = PVT_GET_FROM
-sAux = sAux +  ADD_TABLE ("SCO_PAY_FREQUENCY_NUM", "")
-sAux = sAux +  ADD_TABLE ("SCO_X_PAY_FREQUENCY", "")
-sAux = sAux +  ADD_TABLE ("SCO_X_PAY_TYPE", "")
-
-Return(sAux)

@@ -1,5 +1,0 @@
-'Equivalente a 90.7 veces el valor de un MOPRE exclusivo para aporte personal de jubilación. Según Decreto 279/2008
-
-
-valor = SAR_VALOR_AMPO * 90.7 
-RETURN(valor)

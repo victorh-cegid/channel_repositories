@@ -1,9 +1,0 @@
-'Cuando SAR_IND_AJUSTE_DEI = 1 en retroactividad no se tendrá en cuenta los importes que cambien (salvo OE).
-'Dichos importes no considerados en retroactividad se guardan en el concepto SAR_AJIG_XXX para considerarlos en la paga normal siguiente.
-importe = 0
-If DxYear(SAR_FEC_IMPUT_IG)<2024 Then
-    SAR_CALCULA_AJIG_27617("SAR_TOT_M_JUB","SAR_AJIG_JUB","SAR_BONO_IG_JUB","SAR_FCAJA_IG_JUB","SAR_SIMILAR_NAT_IG_JUB","SAR_JUB_SAC_MES","SAR_IG_CUOT_PROR_JU","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",importe)
-Else
-    SAR_CALCULA_AJIG_27617("SAR_TOT_M_JUB","SAR_AJIG_JUB","SAR_BONO_IG_JUB","SAR_FCAJA_IG_JUB","SAR_SIMILAR_NAT_IG_JUB","SAR_JUB_SAC_MES","SAR_IG_CUOT_PROR_JU","SAR_AJ_JUB_HS_EXEN","SAR_JUB_HS_FINDE_EXEN","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",importe)
-EndIf
-Return(importe)

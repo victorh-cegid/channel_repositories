@@ -1,7 +1,0 @@
-'Ley de bases, desde 2024 no existe esta deducción
-If DxYear(SAR_FEC_IMPUT_IG) > 2023 Then Return(0)
-
-'Recibe el valor de SAR_RET_VALOR_COMPL y se topa aquí
-tope = SAR_TOPE_SER_DOM
-importe = Min(SAR_DED_TRANS,tope)
-Return Round(importe,SAR_NUM_DEC)

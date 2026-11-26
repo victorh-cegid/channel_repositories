@@ -1,4 +1,0 @@
-# item | scope | return_type | id_m4_type | prec | scale | name
-SAR_DESTROY | NODE | NUMBER | 6 | 18 | 0 | SAR_DESTROY
-SAR_M_DESTROY | RECORD | NUMBER | 6 | 18 | 0 | SAR_M_DESTROY
-SAR_M_SORT | NODE | NUMBER | 6 | 18 | 0 | SAR_M_SORT

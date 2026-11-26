@@ -1,3 +1,0 @@
-'Retorna directamente SAR_TOPE_COTIZ
-importe = SAR_TOPE_COTIZ
-Return(importe)

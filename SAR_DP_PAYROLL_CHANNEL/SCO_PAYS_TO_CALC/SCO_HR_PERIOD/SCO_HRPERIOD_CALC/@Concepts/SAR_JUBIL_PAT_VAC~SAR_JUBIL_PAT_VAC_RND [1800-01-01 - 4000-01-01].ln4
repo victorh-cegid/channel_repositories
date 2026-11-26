@@ -1,1 +1,0 @@
-return(Round(SAR_JUBIL_PAT_VAC,SAR_NUM_DEC))

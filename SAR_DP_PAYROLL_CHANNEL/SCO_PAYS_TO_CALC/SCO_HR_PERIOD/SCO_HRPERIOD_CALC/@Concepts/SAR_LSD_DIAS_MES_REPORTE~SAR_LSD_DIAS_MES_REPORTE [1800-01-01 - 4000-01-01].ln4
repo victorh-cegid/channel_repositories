@@ -1,4 +1,0 @@
-'Para exponer en LSD: devolverá 0 salvo que existan situaciones de baja o alta
-dias_lsd = SAR_LSD_DIAS_MES
-If dias_lsd = 30 Or (SAR_TP_IMPUT <> "1" And SAR_TP_IMPUT <> "3" And SAR_TP_IMPUT <> "4" And SAR_TP_IMPUT <> "77") Then Return(0)
-Return(dias_lsd)

@@ -1,2 +1,0 @@
-importe = SAR_BASE_IMPUESTO
-Return Round(importe,SAR_NUM_DEC)

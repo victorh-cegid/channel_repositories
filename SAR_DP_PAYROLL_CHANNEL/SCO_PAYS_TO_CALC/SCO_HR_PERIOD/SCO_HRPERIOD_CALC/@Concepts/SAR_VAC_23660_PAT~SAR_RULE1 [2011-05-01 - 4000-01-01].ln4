@@ -1,7 +1,0 @@
-valor = SAR_VAC_IMPO_CNT_OS * SAR_P_PAT_L_23660 / 100
-
-anssal = round(valor * SAR_PORC_ANSSAL / 100, 2)
-SAR_ANSSAL_PAT_VAC = anssal
-valor = valor - anssal
-
-RETURN(valor)

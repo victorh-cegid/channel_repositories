@@ -1,8 +1,0 @@
-# parent_node | parent_ti | connection_type | origin
-SAR_GEN_REG_04 | SAR_GEN_REG_04 | RECORD_BLOCK | OWN
-
-# child_node | connection_type | origin
-
-# ti | item | parent_node | parent_ti | parent_item | precedence | origin
-SAR_REG02_PAYMENT_DATA | SCO_ID_HR | SAR_GEN_REG_04 | SAR_GEN_REG_04 | SCO_ID_HR | AFTER_PARENT | OWN
-SAR_REG02_PAYMENT_DATA | SCO_OR_HR_PERIOD | SAR_GEN_REG_04 | SAR_GEN_REG_04 | SCO_OR_HR_PERIOD | AFTER_PARENT | OWN

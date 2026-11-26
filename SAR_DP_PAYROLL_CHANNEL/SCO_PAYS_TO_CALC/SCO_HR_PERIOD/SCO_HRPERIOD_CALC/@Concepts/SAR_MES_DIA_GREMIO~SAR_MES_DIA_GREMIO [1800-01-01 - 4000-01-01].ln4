@@ -1,5 +1,0 @@
-'
-' Indicar el mes con numero  en que se debe abonar el "Dia del gremio"
-' Esto se indica a nivel convenio
-'
-return(#SAR_MES_DIA_GREMIO)

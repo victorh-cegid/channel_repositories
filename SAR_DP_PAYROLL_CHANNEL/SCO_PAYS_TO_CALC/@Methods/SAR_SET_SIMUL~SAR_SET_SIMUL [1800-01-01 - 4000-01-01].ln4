@@ -1,4 +1,0 @@
-'Seteamos el valor del flag de simulaciones, indicando que estamos en la nomina real
-SetValue("SCO_PAYS_TO_CALC","SCO_PAY_SIMUL",-1,0)
-
-Return(0)
