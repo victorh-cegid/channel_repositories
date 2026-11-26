@@ -1,7 +1,7 @@
 parents:
   - ID_PARENT_OBJECT: CLA_SM_AC_HR_PERIOD
-    DELETE_CASCADE: true
-    on:
+    DELETE_CASCADE: 1
+    'on':
       - ID_FIELD: ID_CURRENCY
         ID_PARENT_FIELD: ID_CURRENCY
       - ID_FIELD: ID_ORGANIZATION
@@ -24,8 +24,8 @@ parents:
         ID_PARENT_FIELD: SCO_DT_START_SLICE
 children:
   - ID_OBJECT: CAR_SM_AC_HR_PERIOD
-    DELETE_CASCADE: true
-    on:
+    DELETE_CASCADE: 1
+    'on':
       - ID_FIELD: SCO_ID_HR
         ID_PARENT_FIELD: SCO_ID_HR
       - ID_FIELD: SCO_DT_PAYMENT
